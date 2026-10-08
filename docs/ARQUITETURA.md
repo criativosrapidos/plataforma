@@ -2,21 +2,23 @@
 
 > Proposta para aprovação. Decisão final de stack é do Wellington.
 
-## Planos (definido na conversa de 08/10/2026)
+## Planos (definido em 08/10/2026)
 
 O briefing previa "Negócio R$ 100/mês" e "Agência R$ 297/mês". Foi substituído por:
 
-| Plano | Preço | Cobrança | Créditos/mês | Marcas | Usuários | Extras |
+| Plano | Anual | Mensal | Créditos/mês | Marcas | Usuários | Extras |
 | --- | --- | --- | --- | --- | --- | --- |
-| Grátis | R$ 0 | — | 10 | 1 | 1 | Sem vídeo/anúncio, marca d'água, não compra créditos |
-| Básico | R$ 49,90/mês | Anual: R$ 598,80 (Pix) ou 12x cartão | 60 | 1 | 1 | Vídeo, anúncio, compra créditos |
-| Profissional | R$ 99,90/mês | Anual: R$ 1.198,80 (Pix) ou 12x cartão | 200 | 5 | 3 | Link de aprovação, logo da agência (white-label) |
+| Grátis | R$ 0 | R$ 0 | 10 | 1 | 1 | Sem vídeo/anúncio, marca d'água, não compra créditos |
+| Básico | R$ 499,90 (12x R$ 41,66) | R$ 49,90 | 60 | 1 | 1 | Vídeo, anúncio, compra créditos |
+| Profissional | R$ 999,90 (12x R$ 83,33) | R$ 99,90 | 200 | 5 | 3 | Link de aprovação, logo da agência (white-label) |
 
+O anual é o principal (≈ 2 meses grátis); o mensal existe como referência e opção sem fidelidade.
 **Custo em créditos por peça:** post 1 · stories 1 · anúncio 1 · carrossel 2 · vídeo até 30s 4.
 Créditos do plano renovam todo mês (mesmo no anual); créditos extras não expiram.
 **Pacotes extras:** +20 por R$ 19,90 · +50 por R$ 39,90 · +120 por R$ 79,90.
+Reembolso integral em até 7 dias da compra.
 
-Conta de custo (meta do briefing: até R$ 25 de API por cliente/mês): com ~R$ 0,10–0,15 por crédito (texto via Claude + render de template + TTS no vídeo), o Profissional cheio fica em ~R$ 20–30. Precisa validar com custo real nas primeiras semanas — o registro de custo por peça existe para isso.
+Custos e margem: ver `docs/CUSTOS.md`.
 
 ## Stack proposta
 
@@ -24,8 +26,8 @@ Conta de custo (meta do briefing: até R$ 25 de API por cliente/mês): com ~R$ 0
 - **Supabase** — Auth (e-mail/senha + link mágico), Postgres com RLS, Storage para os arquivos gerados.
 - **Claude API** (Anthropic) — leitura do site/Instagram → perfil da marca; calendário do mês; textos das peças, legendas e hashtags. Saída em JSON estruturado que alimenta os templates.
 - **Templates de imagem** — componentes React renderizados para PNG (Satori/`@vercel/og` ou Playwright). Imagem por IA só quando o template pedir.
-- **Remotion** — vídeos de até 30s a partir de templates de motion + **TTS** para locução. Sem IA generativa de vídeo no MVP.
-- **Pagamento recorrente com Pix e cartão** — Asaas, Pagar.me ou Mercado Pago (todos fazem assinatura + Pix no Brasil). Sugestão: Asaas.
+- **Remotion** — vídeos de até 30s a partir de templates de motion + locução com **ElevenLabs**. Sem IA generativa de vídeo no MVP.
+- **Pagamento: HyperCash** (escolha dos sócios) — Pix e cartão em até 12x. Precisa ter API + webhook pra liberar o plano automaticamente; Asaas fica de reserva.
 - **Fila de geração** — jobs assíncronos (Supabase Queues/Inngest/Trigger.dev) para gerar o mês sem travar a tela.
 - Chaves sempre em variáveis de ambiente (`.env.example`).
 
@@ -57,14 +59,20 @@ Fases 2–4 entram sem quebrar isso: `parceiros`/`orcamentos` (audiovisual), `ag
 7. Assinatura anual com Pix e cartão, renovação mensal de créditos, compra de pacotes.
 8. Limites por plano + painel interno de custo por conta.
 
+## Decidido
+
+- Domínio: **criativosrapidos.com.br**
+- Pagamento: **HyperCash** · Locução: **ElevenLabs**
+- Reembolso: **7 dias**
+- Preço anual: **R$ 499,90** e **R$ 999,90**
+
 ## Perguntas em aberto
 
-1. **Preço anual:** confirmamos que R$ 49,90 e R$ 99,90 são **por mês, cobrados no ano** (R$ 598,80 e R$ 1.198,80)? Vai existir opção mensal mais cara?
+1. **Mensal:** manter a opção mensal (R$ 49,90 / R$ 99,90) ou vender só anual?
 2. **Créditos:** os números (10/60/200) e o peso por tipo de peça estão bons? Ajuste e "gerar de novo" consomem crédito (como na demo) ou dá alguns grátis por peça?
-3. **Plano Grátis:** fica com marca d'água e sem vídeo? Precisa de verificação (WhatsApp) pra evitar abuso de contas?
-4. **Leitura do Instagram:** via API oficial da Meta (exige login do cliente com conta profissional) ou só pelo site + prints/upload? Scraping é frágil e contra os termos.
-5. **Gateway de pagamento:** alguma preferência (Asaas, Pagar.me, Mercado Pago)? Quem tem CNPJ/conta pra cadastrar?
-6. **TTS:** voz em português — ElevenLabs, Azure ou Google? Custo por vídeo muda bastante.
-7. **Domínio e hospedagem:** criativosrapidos.com.br? Vercel + Supabase?
+3. **Plano Grátis:** fica com marca d'água e sem vídeo? Exigir verificação por WhatsApp contra abuso?
+4. **Leitura do Instagram:** API oficial da Meta (cliente faz login com conta profissional) ou só pelo site + upload de imagens?
+5. **HyperCash:** tem API e webhook? Faz 12x? Quem antecipa e qual a taxa do parcelado?
+6. **12x no cartão:** sem juros (a gente absorve a taxa) ou com juros (cliente paga)?
+7. **Contador:** regime tributário (Simples anexo III ou V muda a margem).
 8. **Logo oficial:** subir os arquivos de `/marca` no repositório (hoje há um SVG provisório).
-9. **Reembolso de 7 dias** citado no FAQ: confirmar política (CDC exige para compra online).

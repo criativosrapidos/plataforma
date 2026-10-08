@@ -1,4 +1,7 @@
-import { PLANS, brl, precoAnual } from "@/lib/plans";
+"use client";
+
+import { useState } from "react";
+import { PLANS, brl, mensalNoAnual, mesesGratis } from "@/lib/plans";
 import { BotaoLink } from "./ui";
 
 function Check({ ok = true }: { ok?: boolean }) {
@@ -16,11 +19,27 @@ function Check({ ok = true }: { ok?: boolean }) {
 }
 
 export function PlanCards({ escuro = false }: { escuro?: boolean }) {
+  const [ciclo, setCiclo] = useState<"anual" | "mensal">("anual");
   return (
+    <>
+    <div className="mb-10 flex justify-center">
+      <div className="inline-flex rounded-full bg-off p-1 ring-1 ring-linha">
+        {(["anual", "mensal"] as const).map((c) => (
+          <button
+            key={c}
+            onClick={() => setCiclo(c)}
+            className={`rounded-full px-5 py-2 text-sm font-extrabold transition ${ciclo === c ? "bg-preto text-white" : "text-cinza"}`}
+          >
+            {c === "anual" ? "Anual · 2 meses grátis" : "Mensal"}
+          </button>
+        ))}
+      </div>
+    </div>
     <div className="grid gap-4 md:grid-cols-3">
       {PLANS.map((p) => {
         const destaque = p.destaque;
-        const [reais, centavos] = p.precoMensal.toFixed(2).split(".");
+        const valor = ciclo === "anual" ? mensalNoAnual(p) : p.precoMensal;
+        const [reais, centavos] = valor.toFixed(2).split(".");
         return (
           <div
             key={p.id}
@@ -45,7 +64,9 @@ export function PlanCards({ escuro = false }: { escuro?: boolean }) {
             <p className={`mt-1 h-10 text-xs ${destaque || escuro ? "text-white/70" : "text-cinza"}`}>
               {p.precoMensal === 0
                 ? "Grátis pra sempre. Sem cartão."
-                : `Plano anual: ${brl(precoAnual(p))} à vista no Pix ou 12x de ${brl(p.precoMensal)} no cartão.`}
+                : ciclo === "anual"
+                  ? `${brl(p.precoAnual)} por ano no Pix ou 12x de ${brl(mensalNoAnual(p))} no cartão. ${mesesGratis(p)} meses grátis.`
+                  : `Cobrado todo mês. No anual sai ${brl(mensalNoAnual(p))}/mês.`}
             </p>
 
             <ul className="mt-5 flex-1 space-y-2.5 text-sm">
@@ -62,7 +83,7 @@ export function PlanCards({ escuro = false }: { escuro?: boolean }) {
             </ul>
 
             <BotaoLink
-              href={`/cadastro?plano=${p.id}`}
+              href={`/cadastro?plano=${p.id}&ciclo=${ciclo}`}
               variante={destaque ? "primario" : escuro ? "primario" : "secundario"}
               className="mt-6 w-full"
             >
@@ -72,5 +93,6 @@ export function PlanCards({ escuro = false }: { escuro?: boolean }) {
         );
       })}
     </div>
+    </>
   );
 }

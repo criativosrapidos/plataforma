@@ -7,7 +7,8 @@ export type Plan = {
   id: PlanId;
   nome: string;
   paraQuem: string;
-  precoMensal: number; // em reais, valor por mês
+  precoMensal: number; // em reais, plano mensal (sem fidelidade)
+  precoAnual: number; // em reais, total do plano anual (≈ 2 meses grátis)
   creditosMes: number; // renovam todo mês, no dia da assinatura
   marcas: number;
   usuarios: number;
@@ -39,6 +40,7 @@ export const PLANS: Plan[] = [
     nome: "Grátis",
     paraQuem: "Pra testar sem compromisso",
     precoMensal: 0,
+    precoAnual: 0,
     creditosMes: 10,
     marcas: 1,
     usuarios: 1,
@@ -62,6 +64,7 @@ export const PLANS: Plan[] = [
     nome: "Básico",
     paraQuem: "Pro dono que cuida do próprio Instagram",
     precoMensal: 49.9,
+    precoAnual: 499.9,
     creditosMes: 60,
     marcas: 1,
     usuarios: 1,
@@ -86,6 +89,7 @@ export const PLANS: Plan[] = [
     nome: "Profissional",
     paraQuem: "Pra agências e social medias",
     precoMensal: 99.9,
+    precoAnual: 999.9,
     creditosMes: 200,
     marcas: 5,
     usuarios: 3,
@@ -120,6 +124,12 @@ export function brl(valor: number) {
   return valor.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
 }
 
-export function precoAnual(plan: Plan) {
-  return Math.round(plan.precoMensal * 12 * 100) / 100;
+// Valor de cada parcela no anual (12x no cartão) — também é o "por mês" do anual.
+export function mensalNoAnual(plan: Plan) {
+  return Math.round((plan.precoAnual / 12) * 100) / 100;
+}
+
+// Quantos meses de graça o anual dá em relação ao mensal.
+export function mesesGratis(plan: Plan) {
+  return plan.precoMensal ? Math.round(12 - plan.precoAnual / plan.precoMensal) : 0;
 }

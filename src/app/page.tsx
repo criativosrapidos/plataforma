@@ -24,8 +24,8 @@ const FAQ = [
     r: `Cada peça gerada usa créditos: post, stories e anúncio usam ${CUSTO_CREDITOS.post}, carrossel usa ${CUSTO_CREDITOS.carrossel} e vídeo usa ${CUSTO_CREDITOS.video}. Os créditos do plano renovam todo mês. Se acabar antes, você compra um pacote extra, que não expira.`,
   },
   {
-    p: "Por que o pagamento é anual?",
-    r: "Assim a gente segura o menor preço. Você paga o ano à vista no Pix ou parcela em 12x no cartão, e os créditos renovam todo mês do mesmo jeito.",
+    p: "Qual a diferença entre o anual e o mensal?",
+    r: "No anual você paga 10 meses e usa 12: à vista no Pix ou em 12x no cartão. No mensal, paga mês a mês sem fidelidade. Nos dois, os créditos renovam todo mês.",
   },
   {
     p: "Preciso saber design ou usar Canva?",
@@ -33,7 +33,7 @@ const FAQ = [
   },
   {
     p: "Posso cancelar?",
-    r: "Pode. Nos primeiros 7 dias, devolvemos 100% do valor. Depois disso, o plano segue ativo até o fim do período pago.",
+    r: "Pode. Se pedir em até 7 dias da compra, devolvemos 100% do valor. Depois disso, o plano segue ativo até o fim do período pago.",
   },
   {
     p: "Serve pra agência?",
@@ -228,9 +228,9 @@ export default function Home() {
             <h2 className="mt-3 text-4xl md:text-5xl">
               Comece grátis. Cresça quando <Destaque>quiser.</Destaque>
             </h2>
-            <p className="mx-auto mt-4 max-w-lg text-cinza">Preço por mês no plano anual. Créditos renovam todo mês.</p>
+            <p className="mx-auto mt-4 max-w-lg text-cinza">No anual você paga 10 meses e usa 12. Os créditos renovam todo mês.</p>
           </div>
-          <div className="mt-12">
+          <div className="mt-10">
             <PlanCards />
           </div>
 

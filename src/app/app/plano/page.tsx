@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Botao, Cartao, Rotulo } from "@/components/ui";
 import { MES_ATUAL } from "@/lib/mock";
-import { CUSTO_CREDITOS, PACOTES_CREDITOS, PLANS, brl, getPlan, precoAnual } from "@/lib/plans";
+import { CUSTO_CREDITOS, PACOTES_CREDITOS, PLANS, brl, getPlan, mensalNoAnual } from "@/lib/plans";
 import { useStore } from "@/lib/store";
 
 export default function Plano() {
@@ -29,11 +29,11 @@ export default function Plano() {
             <p className="mt-1 text-3xl font-extrabold">{plano.nome}</p>
           </div>
           <span className="rounded-full bg-amarelo px-3 py-1 text-xs font-extrabold text-preto">
-            {plano.precoMensal ? `${brl(plano.precoMensal)}/mês` : "Grátis"}
+            {plano.precoMensal ? `${brl(plano.precoAnual)}/ano` : "Grátis"}
           </span>
         </div>
         {plano.precoMensal > 0 && (
-          <p className="mt-2 text-sm text-white/70">Anual · {brl(precoAnual(plano))} · renova em outubro de 2027</p>
+          <p className="mt-2 text-sm text-white/70">Anual · 12x de {brl(mensalNoAnual(plano))} · renova em outubro de 2027</p>
         )}
 
         <div className="mt-5">
@@ -98,7 +98,7 @@ export default function Plano() {
           <Cartao key={p.id} className={`flex items-center gap-3 p-4 ${p.id === plano.id ? "border-preto ring-1 ring-preto" : ""}`}>
             <div className="flex-1">
               <p className="font-extrabold">
-                {p.nome} <span className="font-medium text-cinza">· {p.precoMensal ? `${brl(p.precoMensal)}/mês` : "R$ 0"}</span>
+                {p.nome} <span className="font-medium text-cinza">· {p.precoMensal ? `${brl(p.precoAnual)}/ano` : "R$ 0"}</span>
               </p>
               <p className="text-sm text-cinza">
                 {p.creditosMes} créditos/mês · {p.marcas} {p.marcas === 1 ? "marca" : "marcas"} · {p.usuarios}{" "}
