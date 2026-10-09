@@ -1,0 +1,17 @@
+@import "../src/app/globals.css";
+@source "../src";
+
+:root {
+  --font-inter: "Inter";
+  color-scheme: light;
+}
+
+html,
+body {
+  background: #f6f5f0;
+}
+
+/* cabeçalhos fixos respeitam a área segura do celular */
+.sticky.top-0 {
+  top: env(safe-area-inset-top, 0px);
+}

@@ -5,14 +5,15 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { AuthShell, Campo } from "@/components/AuthShell";
 import { Botao, Destaque } from "@/components/ui";
-import { PLANS, brl, mensalNoAnual, type PlanId } from "@/lib/plans";
+import { SeletorCiclo } from "@/components/PlanCards";
+import { CICLOS, PLANS, brl, mensalNoAnual, type Ciclo, type PlanId } from "@/lib/plans";
 
 export function Cadastro() {
   const router = useRouter();
   const inicial = (useSearchParams().get("plano") as PlanId) || "gratis";
   const [plano, setPlano] = useState<PlanId>(PLANS.some((p) => p.id === inicial) ? inicial : "gratis");
   const escolhido = PLANS.find((p) => p.id === plano)!;
-  const [ciclo, setCiclo] = useState(useSearchParams().get("ciclo") === "mensal" ? "mensal" : "anual");
+  const [ciclo, setCiclo] = useState<Ciclo>(useSearchParams().get("ciclo") === "mensal" ? "mensal" : "anual");
 
   return (
     <AuthShell>
@@ -52,27 +53,26 @@ export function Cadastro() {
               </button>
             ))}
           </div>
-          {escolhido.precoMensal > 0 && (
-            <div className="mt-2 grid grid-cols-2 gap-2">
-              {(["anual", "mensal"] as const).map((c) => (
-                <button
-                  type="button"
-                  key={c}
-                  onClick={() => setCiclo(c)}
-                  className={`rounded-xl border px-3 py-2 text-left text-sm font-extrabold ${ciclo === c ? "border-preto bg-white ring-1 ring-preto" : "border-linha bg-white text-cinza"}`}
-                >
-                  {c === "anual" ? "Anual · 2 meses grátis" : "Mensal"}
-                </button>
-              ))}
+          {escolhido.precoMensal > 0 ? (
+            <div className="mt-3 space-y-2">
+              <SeletorCiclo ciclo={ciclo} onChange={setCiclo} />
+              <div className="rounded-xl border border-linha bg-white p-3 text-sm">
+                <p className="font-extrabold">
+                  {ciclo === "anual"
+                    ? `${brl(escolhido.precoAnual)} à vista no Pix ou 12x de ${brl(mensalNoAnual(escolhido))}`
+                    : `${brl(escolhido.precoMensal)} por mês`}
+                </p>
+                <ul className="mt-1.5 space-y-1 text-cinza">
+                  {CICLOS[ciclo].beneficios.slice(0, 4).map((b) => (
+                    <li key={b}>· {b}</li>
+                  ))}
+                </ul>
+              </div>
+              <p className="text-xs text-cinza">Pagamento no próximo passo. Reembolso integral em até 7 dias.</p>
             </div>
+          ) : (
+            <p className="mt-2 text-xs text-cinza">Sem cartão. Você pode mudar de plano quando quiser.</p>
           )}
-          <p className="mt-2 text-xs text-cinza">
-            {!escolhido.precoMensal
-              ? "Sem cartão. Você pode mudar de plano quando quiser."
-              : ciclo === "anual"
-                ? `${brl(escolhido.precoAnual)} no Pix ou 12x de ${brl(mensalNoAnual(escolhido))} no cartão. Pagamento no próximo passo.`
-                : `${brl(escolhido.precoMensal)} por mês, sem fidelidade. Pagamento no próximo passo.`}
-          </p>
         </fieldset>
 
         <Botao type="submit" className="w-full" tamanho="lg">

@@ -1,7 +1,7 @@
 // Dados de exemplo da "primeira cara". Tudo aqui some quando o banco entrar.
 // Modelo já no formato final: conta > marcas > conteúdos.
 
-import type { PlanId, TipoPeca } from "./plans";
+import type { Ciclo, PlanId, TipoPeca } from "./plans";
 
 export type StatusPeca = "a_aprovar" | "aprovada" | "baixada";
 export type Formato = "4:5" | "9:16";
@@ -40,7 +40,9 @@ export type Conta = {
   nome: string;
   email: string;
   plano: PlanId;
+  ciclo: Ciclo;
   creditosUsados: number;
+  creditosAcumulados: number; // sobra do mês anterior (só no anual)
   creditosExtras: number;
   renovaEm: string;
 };
@@ -49,7 +51,9 @@ export const CONTA: Conta = {
   nome: "Rafa Moreira",
   email: "rafa@brasaburger.com.br",
   plano: "profissional",
+  ciclo: "anual",
   creditosUsados: 34,
+  creditosAcumulados: 25,
   creditosExtras: 20,
   renovaEm: "2026-11-01",
 };

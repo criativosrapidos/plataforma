@@ -4,7 +4,7 @@
 
 import { createContext, useContext, useMemo, useState, type ReactNode } from "react";
 import { CONTA, MARCAS, PECAS, type Conta, type Peca, type StatusPeca } from "./mock";
-import { CUSTO_CREDITOS, getPlan, type PlanId } from "./plans";
+import { CUSTO_CREDITOS, getPlan, type Ciclo, type PlanId } from "./plans";
 
 type Store = {
   conta: Conta;
@@ -17,6 +17,8 @@ type Store = {
   setLegenda: (id: string, legenda: string) => void;
   regenerar: (id: string) => boolean;
   setPlano: (plano: PlanId) => void;
+  setCiclo: (ciclo: Ciclo) => void;
+  creditosTotais: number;
   comprarCreditos: (qtd: number) => void;
   creditosRestantes: number;
 };
@@ -31,7 +33,10 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   const plano = getPlan(conta.plano);
   const marcasVisiveis = MARCAS.slice(0, plano.marcas);
   const marcaAtiva = marcasVisiveis.find((m) => m.id === marcaId) ?? marcasVisiveis[0];
-  const creditosRestantes = Math.max(0, plano.creditosMes + conta.creditosExtras - conta.creditosUsados);
+  // Sobra do mês anterior só vale no anual de plano pago.
+  const acumulados = conta.ciclo === "anual" && plano.precoMensal > 0 ? conta.creditosAcumulados : 0;
+  const creditosTotais = plano.creditosMes + acumulados + conta.creditosExtras;
+  const creditosRestantes = Math.max(0, creditosTotais - conta.creditosUsados);
 
   const value = useMemo<Store>(
     () => ({
@@ -53,11 +58,13 @@ export function StoreProvider({ children }: { children: ReactNode }) {
         return true;
       },
       setPlano: (plano) => setConta((c) => ({ ...c, plano })),
+      setCiclo: (ciclo) => setConta((c) => ({ ...c, ciclo })),
+      creditosTotais,
       comprarCreditos: (qtd) => setConta((c) => ({ ...c, creditosExtras: c.creditosExtras + qtd })),
       creditosRestantes,
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [conta, pecas, marcaAtiva.id, creditosRestantes],
+    [conta, pecas, marcaAtiva.id, creditosRestantes, creditosTotais],
   );
 
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;

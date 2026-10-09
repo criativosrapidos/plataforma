@@ -3,14 +3,17 @@
 import { useState } from "react";
 import { Botao, Cartao, Rotulo } from "@/components/ui";
 import { MES_ATUAL } from "@/lib/mock";
-import { CUSTO_CREDITOS, PACOTES_CREDITOS, PLANS, brl, getPlan, mensalNoAnual } from "@/lib/plans";
+import { SeletorCiclo } from "@/components/PlanCards";
+import { CICLOS, CUSTO_CREDITOS, PACOTES_CREDITOS, PLANS, brl, economiaAnual, getPlan, mensalNoAnual, precoPacote } from "@/lib/plans";
 import { useStore } from "@/lib/store";
 
 export default function Plano() {
-  const { conta, setPlano, comprarCreditos, creditosRestantes, pecas, marcas } = useStore();
+  const { conta, setPlano, setCiclo, comprarCreditos, creditosRestantes, creditosTotais, pecas, marcas } = useStore();
   const plano = getPlan(conta.plano);
   const [comprado, setComprado] = useState<string | null>(null);
-  const total = plano.creditosMes + conta.creditosExtras;
+  const total = creditosTotais;
+  const pago = plano.precoMensal > 0;
+  const anual = pago && conta.ciclo === "anual";
   const pct = Math.min(100, Math.round((conta.creditosUsados / total) * 100));
   const renova = new Date(conta.renovaEm + "T12:00").toLocaleDateString("pt-BR", { day: "2-digit", month: "long" });
 
@@ -29,11 +32,15 @@ export default function Plano() {
             <p className="mt-1 text-3xl font-extrabold">{plano.nome}</p>
           </div>
           <span className="rounded-full bg-amarelo px-3 py-1 text-xs font-extrabold text-preto">
-            {plano.precoMensal ? `${brl(plano.precoAnual)}/ano` : "Grátis"}
+            {!pago ? "Grátis" : anual ? `${brl(plano.precoAnual)}/ano` : `${brl(plano.precoMensal)}/mês`}
           </span>
         </div>
-        {plano.precoMensal > 0 && (
-          <p className="mt-2 text-sm text-white/70">Anual · 12x de {brl(mensalNoAnual(plano))} · renova em outubro de 2027</p>
+        {pago && (
+          <p className="mt-2 text-sm text-white/70">
+            {anual
+              ? `Anual · 12x de ${brl(mensalNoAnual(plano))} · preço congelado até outubro de 2027`
+              : `Mensal · sem fidelidade · próxima cobrança em ${renova}`}
+          </p>
         )}
 
         <div className="mt-5">
@@ -48,6 +55,7 @@ export default function Plano() {
           </div>
           <p className="mt-2 text-xs text-white/70">
             {creditosRestantes} sobrando · {plano.creditosMes} do plano renovam em {renova}
+            {anual && conta.creditosAcumulados > 0 && ` · ${conta.creditosAcumulados} acumulados do mês passado`}
             {conta.creditosExtras > 0 && ` · ${conta.creditosExtras} extras não expiram`}
           </p>
         </div>
@@ -65,7 +73,7 @@ export default function Plano() {
       <h2 className="mt-8 text-2xl">Comprar créditos</h2>
       {plano.comprarCreditos ? (
         <>
-          <p className="mt-1 text-cinza">Pagamento no Pix ou cartão. Créditos extras não expiram.</p>
+          <p className="mt-1 text-cinza">Pagamento no Pix ou cartão. Créditos extras não expiram.{anual ? " Você tem 15% de desconto por ser anual." : " No anual, sai 15% mais barato."}</p>
           <div className="mt-4 grid grid-cols-3 gap-2">
             {PACOTES_CREDITOS.map((p) => (
               <button
@@ -81,7 +89,8 @@ export default function Plano() {
                 )}
                 <p className="text-2xl font-extrabold">+{p.creditos}</p>
                 <p className="text-xs text-cinza">créditos</p>
-                <p className="mt-2 text-sm font-extrabold">{brl(p.preco)}</p>
+                {anual && <p className="mt-2 text-xs text-cinza line-through">{brl(p.preco)}</p>}
+                <p className={`${anual ? "" : "mt-2 "}text-sm font-extrabold`}>{brl(precoPacote(p.preco, anual ? "anual" : "mensal"))}</p>
               </button>
             ))}
           </div>
@@ -91,6 +100,27 @@ export default function Plano() {
         <p className="mt-1 text-cinza">No plano Grátis não dá pra comprar créditos extras. Mude pro Básico e libere.</p>
       )}
 
+      {pago && (
+        <>
+          <h2 className="mt-8 text-2xl">Forma de pagamento</h2>
+          <p className="mt-1 text-cinza">
+            {anual
+              ? `Você economiza ${brl(economiaAnual(plano))} por ano no anual.`
+              : `No anual você economizaria ${brl(economiaAnual(plano))} por ano.`}
+          </p>
+          <div className="mt-4">
+            <SeletorCiclo ciclo={conta.ciclo} onChange={setCiclo} />
+          </div>
+          <Cartao className="mt-2 p-4">
+            <ul className="space-y-1.5 text-sm">
+              {CICLOS[conta.ciclo].beneficios.map((b) => (
+                <li key={b}>· {b}</li>
+              ))}
+            </ul>
+          </Cartao>
+        </>
+      )}
+
       <h2 className="mt-8 text-2xl">Mudar de plano</h2>
       <p className="mt-1 text-cinza">Na demonstração, a troca é na hora pra você ver como cada plano funciona.</p>
       <div className="mt-4 space-y-2">
@@ -98,7 +128,7 @@ export default function Plano() {
           <Cartao key={p.id} className={`flex items-center gap-3 p-4 ${p.id === plano.id ? "border-preto ring-1 ring-preto" : ""}`}>
             <div className="flex-1">
               <p className="font-extrabold">
-                {p.nome} <span className="font-medium text-cinza">· {p.precoMensal ? `${brl(p.precoAnual)}/ano` : "R$ 0"}</span>
+                {p.nome} <span className="font-medium text-cinza">· {!p.precoMensal ? "R$ 0" : conta.ciclo === "anual" ? `${brl(p.precoAnual)}/ano` : `${brl(p.precoMensal)}/mês`}</span>
               </p>
               <p className="text-sm text-cinza">
                 {p.creditosMes} créditos/mês · {p.marcas} {p.marcas === 1 ? "marca" : "marcas"} · {p.usuarios}{" "}

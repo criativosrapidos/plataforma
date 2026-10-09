@@ -133,3 +133,41 @@ export function mensalNoAnual(plan: Plan) {
 export function mesesGratis(plan: Plan) {
   return plan.precoMensal ? Math.round(12 - plan.precoAnual / plan.precoMensal) : 0;
 }
+
+// O que muda entre pagar no anual e no mensal (vale pros planos pagos).
+export type Ciclo = "anual" | "mensal";
+
+export const DESCONTO_PACOTE_ANUAL = 0.15;
+
+export const CICLOS: Record<Ciclo, { nome: string; selo: string; beneficios: string[] }> = {
+  anual: {
+    nome: "Anual",
+    selo: "2 meses grátis",
+    beneficios: [
+      "Paga 10 meses e usa 12",
+      "Créditos que sobram passam pro mês seguinte",
+      "15% de desconto nos créditos extras",
+      "Preço congelado por 12 meses",
+      "Pix à vista ou 12x no cartão",
+    ],
+  },
+  mensal: {
+    nome: "Mensal",
+    selo: "Sem fidelidade",
+    beneficios: [
+      "Cancela quando quiser, sem multa",
+      "Créditos do mês expiram na renovação",
+      "Créditos extras pelo preço cheio",
+      "Preço pode ser reajustado",
+      "Cobrança todo mês no cartão ou Pix",
+    ],
+  },
+};
+
+export function economiaAnual(plan: Plan) {
+  return Math.max(0, Math.round((plan.precoMensal * 12 - plan.precoAnual) * 100) / 100);
+}
+
+export function precoPacote(preco: number, ciclo: Ciclo) {
+  return ciclo === "anual" ? Math.round(preco * (1 - DESCONTO_PACOTE_ANUAL) * 100) / 100 : preco;
+}

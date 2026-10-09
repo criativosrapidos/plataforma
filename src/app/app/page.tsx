@@ -12,7 +12,7 @@ import { useStore } from "@/lib/store";
 const DIAS = ["DOM", "SEG", "TER", "QUA", "QUI", "SEX", "SÁB"];
 
 export default function Painel() {
-  const { pecasDaMarca, marcaAtiva, conta, creditosRestantes } = useStore();
+  const { pecasDaMarca, marcaAtiva, conta, creditosRestantes, creditosTotais } = useStore();
   const [visao, setVisao] = useState<"calendario" | "lista">("calendario");
   const [filtro, setFiltro] = useState<StatusPeca | "todas">("todas");
   const plano = getPlan(conta.plano);
@@ -30,7 +30,7 @@ export default function Painel() {
 
   const conta_ = (s: StatusPeca) => pecasDaMarca.filter((p) => p.status === s).length;
   const lista = pecasDaMarca.filter((p) => filtro === "todas" || p.status === filtro);
-  const usoPct = Math.min(100, Math.round((conta.creditosUsados / (plano.creditosMes + conta.creditosExtras)) * 100));
+  const usoPct = Math.min(100, Math.round((conta.creditosUsados / creditosTotais) * 100));
 
   return (
     <>
@@ -77,7 +77,7 @@ export default function Painel() {
       <Link href="/app/plano" className="mt-3 block">
         <Cartao className="p-4">
           <div className="flex items-center justify-between text-sm">
-            <span className="font-extrabold">Plano {plano.nome}</span>
+            <span className="font-extrabold">Plano {plano.nome}{plano.precoMensal > 0 && ` · ${conta.ciclo}`}</span>
             <span className="text-cinza">{creditosRestantes} créditos sobrando</span>
           </div>
           <div className="mt-2 h-2 overflow-hidden rounded-full bg-linha">

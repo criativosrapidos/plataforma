@@ -12,7 +12,16 @@ O briefing previa "Negócio R$ 100/mês" e "Agência R$ 297/mês". Foi substitu�
 | Básico | R$ 499,90 (12x R$ 41,66) | R$ 49,90 | 60 | 1 | 1 | Vídeo, anúncio, compra créditos |
 | Profissional | R$ 999,90 (12x R$ 83,33) | R$ 99,90 | 200 | 5 | 3 | Link de aprovação, logo da agência (white-label) |
 
-O anual é o principal (≈ 2 meses grátis); o mensal existe como referência e opção sem fidelidade.
+**Anual x mensal (planos pagos):**
+
+| | Anual | Mensal |
+| --- | --- | --- |
+| Preço | Paga 10 meses, usa 12 | Preço cheio |
+| Pagamento | Pix à vista ou 12x no cartão | Todo mês |
+| Fidelidade | 12 meses | Nenhuma |
+| Créditos que sobram | Acumulam pro mês seguinte (até 1 mês) | Expiram |
+| Créditos extras | 15% de desconto | Preço cheio |
+| Reajuste | Preço congelado por 12 meses | Pode mudar |
 **Custo em créditos por peça:** post 1 · stories 1 · anúncio 1 · carrossel 2 · vídeo até 30s 4.
 Créditos do plano renovam todo mês (mesmo no anual); créditos extras não expiram.
 **Pacotes extras:** +20 por R$ 19,90 · +50 por R$ 39,90 · +120 por R$ 79,90.

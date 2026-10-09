@@ -66,4 +66,6 @@ Ponto de equilíbrio: ~10 clientes no Básico anual cobrem os fixos.
 1. **Plano Grátis dá prejuízo** (~R$ 2 por usuário ativo/mês). Exigir confirmação por WhatsApp e limitar 1 conta por número.
 2. **12x sem juros no cartão**: se o gateway antecipa, a taxa pode comer 10–15% do anual. Alternativa: 12x com juros pago pelo cliente.
 3. **Reembolso de 7 dias** (obrigatório pelo CDC em compra online): os créditos gastos nesse período viram custo sem receita.
-4. **Licença do Remotion**: gratuito pra empresas de até 3 pessoas; acima disso, licença paga.
+4. **Créditos que acumulam (anual)**: aumentam o uso real. Limitar a sobra a 1 mês (no máximo o dobro dos créditos num mês) mantém o pior caso da tabela acima por mês médio.
+5. **Desconto de 15% nos pacotes (anual)**: margem do pacote cai de ~75% pra ~70%.
+6. **Licença do Remotion**: gratuito pra empresas de até 3 pessoas; acima disso, licença paga.

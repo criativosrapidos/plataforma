@@ -4,7 +4,7 @@ import { PecaPreview } from "@/components/PecaPreview";
 import { PlanCards } from "@/components/PlanCards";
 import { BotaoLink, Cartao, Destaque, Rotulo } from "@/components/ui";
 import { MARCAS, PECAS } from "@/lib/mock";
-import { CUSTO_CREDITOS, PACOTES_CREDITOS, brl } from "@/lib/plans";
+import { CUSTO_CREDITOS, PACOTES_CREDITOS, brl, precoPacote } from "@/lib/plans";
 
 const marca = MARCAS[0];
 const peca = (id: string) => PECAS.find((p) => p.id === id)!;
@@ -25,7 +25,7 @@ const FAQ = [
   },
   {
     p: "Qual a diferença entre o anual e o mensal?",
-    r: "No anual você paga 10 meses e usa 12: à vista no Pix ou em 12x no cartão. No mensal, paga mês a mês sem fidelidade. Nos dois, os créditos renovam todo mês.",
+    r: "No anual você paga 10 meses e usa 12 (à vista no Pix ou em 12x no cartão), os créditos que sobram passam pro mês seguinte, os extras saem 15% mais baratos e o preço fica congelado por 12 meses. No mensal você paga mês a mês, sem fidelidade, e os créditos do mês expiram na renovação.",
   },
   {
     p: "Preciso saber design ou usar Canva?",
@@ -228,7 +228,7 @@ export default function Home() {
             <h2 className="mt-3 text-4xl md:text-5xl">
               Comece grátis. Cresça quando <Destaque>quiser.</Destaque>
             </h2>
-            <p className="mx-auto mt-4 max-w-lg text-cinza">No anual você paga 10 meses e usa 12. Os créditos renovam todo mês.</p>
+            <p className="mx-auto mt-4 max-w-lg text-cinza">Escolha pagar por ano, com 2 meses grátis, ou por mês, sem fidelidade.</p>
           </div>
           <div className="mt-10">
             <PlanCards />
@@ -247,9 +247,9 @@ export default function Home() {
                   ["Carrossel", CUSTO_CREDITOS.carrossel],
                   ["Vídeo até 30s", CUSTO_CREDITOS.video],
                 ].map(([t, c]) => (
-                  <li key={t} className="flex justify-between rounded-lg bg-white px-3 py-2">
+                  <li key={t} className="flex justify-between gap-2 rounded-lg bg-white px-3 py-2">
                     <span>{t}</span>
-                    <span className="font-extrabold">
+                    <span className="whitespace-nowrap font-extrabold">
                       {c} {c === 1 ? "crédito" : "créditos"}
                     </span>
                   </li>
@@ -258,12 +258,15 @@ export default function Home() {
             </div>
             <div>
               <h3 className="text-2xl">Créditos extras</h3>
-              <p className="mt-2 text-cinza">Nos planos Básico e Profissional.</p>
+              <p className="mt-2 text-cinza">Nos planos Básico e Profissional. No anual, 15% de desconto.</p>
               <ul className="mt-4 space-y-2">
                 {PACOTES_CREDITOS.map((p) => (
                   <li key={p.id} className="flex items-center justify-between rounded-lg bg-white px-4 py-3">
                     <span className="font-extrabold">+{p.creditos} créditos</span>
-                    <span>{brl(p.preco)}</span>
+                    <span className="text-right">
+                      <span className="block">{brl(p.preco)}</span>
+                      <span className="block text-xs font-extrabold">{brl(precoPacote(p.preco, "anual"))} no anual</span>
+                    </span>
                   </li>
                 ))}
               </ul>

@@ -11,7 +11,7 @@ export default function Conta() {
   const itens = [
     { t: "Dados pessoais", d: `${conta.nome} · ${conta.email}` },
     { t: "Usuários", d: `1 de ${plano.usuarios} ${plano.usuarios === 1 ? "usuário" : "usuários"}` },
-    { t: "Pagamento", d: plano.precoMensal ? "Cartão final 4242 · anual" : "Nenhum (plano Grátis)" },
+    { t: "Pagamento", d: plano.precoMensal ? `Cartão final 4242 · ${conta.ciclo}` : "Nenhum (plano Grátis)" },
     { t: "Notas fiscais", d: "Enviadas por e-mail" },
     { t: "Ajuda no WhatsApp", d: plano.id === "profissional" ? "Suporte prioritário" : "Seg a sex, 9h às 18h" },
   ];

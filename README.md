@@ -26,6 +26,14 @@ npm install
 npm run dev   # http://localhost:3000
 ```
 
+## Demonstração publicável
+
+```bash
+npm run demo   # gera dist-demo/criativos-rapidos.html (site + plataforma num arquivo só)
+```
+
+Usa o mesmo código de `src/`, com um roteador em memória no lugar do roteamento do Next (`demo/`).
+
 ## Onde mexer
 
 - `src/lib/plans.ts` — planos, preços, créditos e pacotes (fonte única).
