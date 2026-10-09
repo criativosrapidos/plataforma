@@ -1,4 +1,18 @@
-# Prompt v3 (atual) — Alessandra Mendes: melasma em Goiânia
+# Prompt v4 (atual) — ajustes finais
+
+Mesma estrutura e visual da v3, com estes ajustes:
+- **Duração:** 30s cravados.
+- **Sem o aviso "imagem ilustrativa"** na tela.
+- **Dor:** no "maquiagem", a esponja de base cobre as manchas (elas somem sob a base) e elas voltam na explicação.
+- **Preço com fala nova:** "O tratamento que sai por seiscentos e noventa e sete reais, nesse dia fica por apenas duzentos e oitenta e cinco..." Na tela: "o tratamento que sai por" R$697 (riscado em "nesse dia"), "NESSE DIA, POR APENAS" R$285 e "MAIS DE 50% OFF · SÓ DIA 19".
+- **Sonho:** "sem precisar esconder nada" fica só escrito na tela.
+
+**Narração final:**
+> Goiânia, atenção! Sabe aquela mancha no rosto que não sai com nada... e que você esconde com maquiagem todo dia? Isso tem nome: melasma. Imagina se olhar no espelho e ver uma pele mais uniforme. No dia dezenove, a Alessandra Mendes vem de Brasília pra um dia de tratamento de melasma no Setor Marista. O tratamento que sai por seiscentos e noventa e sete reais, nesse dia fica por apenas duzentos e oitenta e cinco... Mas são só dez vagas. Manda MELASMA no direct e garante a sua!
+
+---
+
+# Versão 3 (anterior) — Alessandra Mendes: melasma em Goiânia
 
 **Estrutura de criativo:** Atenção → Dor → Explicação → Sonho → Solução → Objeção (preço) → Convite com urgência.
 

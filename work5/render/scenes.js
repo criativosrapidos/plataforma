@@ -1,7 +1,7 @@
 // Anúncio Alessandra Mendes v3 — atenção → dor → explicação → sonho → solução → objeção → convite.
-// Voz em velocidade natural (cortes: frase do sol e "presente"). Duração 34s.
-window.DURATION = 34;
-const T = { s1: 0, s2: 2.25, s3: 8.1, s4: 10.45, s5: 15.9, s6: 22.25, s7: 28.3, end: 34 };
+// v4: 30s. Voz = trechos do take v2 + frase de preço do take v1 (mesma voz), acelerada 6%.
+window.DURATION = 30;
+const T = { s1: 0, s2: 1.8, s3: 7.06, s4: 9.12, s5: 12.23, s6: 18.2, s7: 24.33, end: 30 };
 
 const FOTO_PERFIL = new Image(); FOTO_PERFIL.src = 'foto-perfil.jpg';       // 1066x1600 — usada só na Solução
 const FOTO_SENTADA = new Image(); FOTO_SENTADA.src = 'foto-alessandra.jpg'; // 828x1448 — usada só no Convite
@@ -133,11 +133,11 @@ function scene1(t) {
   lightLeak(t, 0.22);
   particles(t, C.GOLD, 45, 0.35);
   skyline(t, 1520, 0.9);
-  const g = 1 + 0.06 * Math.sin(prog(t, 0.38, 0.35) * Math.PI);
+  const g = 1 + 0.06 * Math.sin(prog(t, 0.17, 0.35) * Math.PI);
   ctx.save(); ctx.translate(W / 2, 700); ctx.scale(g, g);
   text('GOIÂNIA,', 0, 0, 160, C.WH, { align: 'center' });
   ctx.restore();
-  const a = 1 + 0.08 * Math.sin(prog(t, 1.1, 0.35) * Math.PI);
+  const a = 1 + 0.08 * Math.sin(prog(t, 0.85, 0.35) * Math.PI);
   ctx.save(); ctx.translate(W / 2, 870); ctx.scale(a, a);
   text('ATENÇÃO!', 0, 0, 160, C.GOLD, { align: 'center' });
   ctx.restore();
@@ -150,15 +150,15 @@ function scene2(t) {
   lightLeak(t, 0.15);
   serif('sabe aquela mancha no rosto...', W / 2, 330, 60, C.NUDE, { align: 'center', alpha: easeOut(prog(t, T.s2, 0.3)) });
   const f = easeOutBack(prog(t, T.s2 + 0.1, 0.5));
-  faceIllustration(W / 2, 870, 1.25 * lerp(0.9, 1, clamp(f)), t, 1, { sponge: easeOut(prog(t, 5.8, 0.3)) });
-  text('imagem ilustrativa', W / 2, 1265, 26, C.G, { align: 'center', weight: 500 });
-  const m = easeOutBack(prog(t, 3.9, 0.3));
-  if (m > 0 && t < 5.8) {
+  const cover = easeInOut(prog(t, 5.6, 1.3));
+  faceIllustration(W / 2, 870, 1.25 * lerp(0.9, 1, clamp(f)), t, 1 - 0.9 * cover, { sponge: easeOut(prog(t, 5.5, 0.3)) * (1 - prog(t, 6.9, 0.3)) });
+  const m = easeOutBack(prog(t, 3.3, 0.3));
+  if (m > 0 && t < 5.6) {
     ctx.save(); ctx.translate(W / 2, 1385); ctx.scale(m, m);
     text('QUE NÃO SAI COM NADA', 0, 0, 66, C.WH, { align: 'center' });
     ctx.restore();
   }
-  const k = easeOutBack(prog(t, 5.8, 0.3));
+  const k = easeOutBack(prog(t, 5.6, 0.3));
   if (k > 0) {
     ctx.save(); ctx.translate(W / 2, 1370); ctx.scale(k, k);
     text('E VOCÊ ESCONDE', 0, 0, 66, C.WH, { align: 'center' });
@@ -172,12 +172,11 @@ function scene3(t) {
   bg(C.CREAM);
   const lt = t - T.s3;
   text('ISSO TEM NOME:', W / 2, 330, 64, C.INK, { align: 'center', alpha: easeOut(prog(lt, 0, 0.2)) });
-  const m = easeOutBack(prog(t, 9.25, 0.32));
+  const m = easeOutBack(prog(t, 8.1, 0.32));
   ctx.save(); ctx.translate(W / 2, 485); ctx.scale(clamp(m), clamp(m));
   text('MELASMA', 0, 0, 150, C.INK, { align: 'center' });
   ctx.restore();
   ctx.save(); ctx.globalAlpha = clamp(m); ctx.fillStyle = C.ROSE; ctx.fillRect(W / 2 - 120, 520, 240 * clamp(m), 8); ctx.restore();
-  faceIllustration(W / 2, 1000, 1.05 + 0.05 * prog(lt, 0, 2.3), t, 1, { rings: easeOut(prog(t, 9.4, 0.5)) });
-  text('imagem ilustrativa', W / 2, 1330, 26, C.G, { align: 'center', weight: 500 });
-  pill('☀ piora com o sol  ·  ↺ volta sem cuidado', W / 2, 1420, 34, C.INK, C.CREAM, t, 9.6);
+  faceIllustration(W / 2, 1000, 1.05 + 0.05 * prog(lt, 0, 2.0), t, 1, { rings: easeOut(prog(t, 8.3, 0.5)) });
+  pill('☀ piora com o sol  ·  ↺ volta sem cuidado', W / 2, 1420, 34, C.INK, C.CREAM, t, 8.5);
 }

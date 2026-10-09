@@ -1,0 +1,30 @@
+{
+ "atencao": {
+  "pos": 0.1,
+  "orig_start": 0.0
+ },
+ "dor": {
+  "pos": 1.845,
+  "orig_start": 2.06
+ },
+ "melasma": {
+  "pos": 7.081,
+  "orig_start": 7.86
+ },
+ "sonho": {
+  "pos": 9.147,
+  "orig_start": 14.04
+ },
+ "solucao": {
+  "pos": 12.251,
+  "orig_start": 19.48
+ },
+ "preco": {
+  "pos": 18.223,
+  "orig_start": 11.86
+ },
+ "convite": {
+  "pos": 24.364,
+  "orig_start": 33.4
+ }
+}
