@@ -2,7 +2,7 @@
 # Mixagem do anúncio Alessandra Mendes: voz + SFX (+ trilha com ducking só na faixa da voz, se music.mp3 existir) e normalização em -14 LUFS
 set -e
 cd "$(dirname "$0")"
-W=(2.35 5.95 9.95 12.3 19.75 21.0); R=(15.74); K=(22.5); I=(0.57 1.22 10.74 17.14 20.1)
+W=(2.05 7.3 9.4 14.4 20.15 27.15); R=(22.85); K=(29.54); I=(0.37 1.03 8.48 23.83 26.19 27.43)
 in=(-i voice.wav); f=""; n=1; labels=""
 add() { in+=(-i "$1"); f+="[$n:a]adelay=$(python3 -c "print(int(($2-$3)*1000))"):all=1,volume=$4[x$n];"; labels+="[x$n]"; n=$((n+1)); }
 for t in "${W[@]}"; do add sfx_whoosh.wav $t 0.18 0.25; done
@@ -13,12 +13,12 @@ m=$((n))
 if [ -f music.mp3 ]; then
   in+=(-i music.mp3)
   # voz controla o ducking: trilha cai ~10 dB só enquanto há fala
-  f+="[0:a]asplit=2[v][vk];[$n:a]atrim=0:30,asetpts=PTS-STARTPTS,volume=0.35,afade=t=out:st=28.8:d=1.2[mu];[mu][vk]sidechaincompress=threshold=0.02:ratio=8:attack=20:release=350[md];"
+  f+="[0:a]asplit=2[v][vk];[$n:a]atrim=0:32,asetpts=PTS-STARTPTS,volume=0.35,afade=t=out:st=30.8:d=1.2[mu];[mu][vk]sidechaincompress=threshold=0.02:ratio=8:attack=20:release=350[md];"
   labels="[v][md]$labels"; m=$((n+1))
 else
   f+="[0:a]anull[v];"; labels="[v]$labels"
 fi
-f+="${labels}amix=inputs=$m:normalize=0,atrim=0:30[pre]"
+f+="${labels}amix=inputs=$m:normalize=0,apad=whole_dur=32,atrim=0:32[pre]"
 ffmpeg -y -v error "${in[@]}" -filter_complex "$f" -map "[pre]" -ar 48000 -ac 2 premix.wav
 # loudnorm em duas passadas para −14 LUFS integrado
 J=$(ffmpeg -hide_banner -i premix.wav -af loudnorm=I=-14:TP=-1.5:LRA=11:print_format=json -f null - 2>&1 | sed -n '/{/,/}/p')

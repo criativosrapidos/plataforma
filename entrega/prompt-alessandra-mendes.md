@@ -1,4 +1,24 @@
-# Prompt — anúncio "Dia de tratamento de melasma em Goiânia" (Alessandra Mendes)
+# Prompt v2 — Alessandra Mendes: melasma em Goiânia (estrutura de criativo)
+
+**Estrutura:** Atenção → Dor → Explicação → Sonho → Solução → Objeção (preço) → Convite com urgência.
+
+**Formato:** 9:16, 1080×1920, 30fps, 32s, sem legenda, locução feminina (Bea). Paleta: vinho, nude, rosé e dourado.
+
+**Fotos:** perfil (fundo branco) no Sonho e no fundo do Convite, com avatar; foto sentada (estante) na Solução.
+
+| Bloco | Fala | Na tela |
+|---|---|---|
+| 1. Atenção (0–2s) | "Goiânia, atenção!" | Skyline de Goiânia animado (janelas acendendo), pin dourado, "GOIÂNIA, ATENÇÃO!" + "DIA 19 · SETOR MARISTA · SÓ 10 VAGAS" (capa) |
+| 2. Dor (2–7s) | "Sabe aquela mancha no rosto que não sai com nada... e que você esconde com maquiagem todo dia?" | "MANCHA QUE NÃO SAI COM NADA?" + pele ilustrativa com esponja de base cobrindo a mancha, que volta; pílula "E VOCÊ ESCONDE COM MAQUIAGEM" |
+| 3. Explicação (7–9s) | "Isso tem nome: melasma." | "ISSO TEM NOME: MELASMA" + "piora com o sol" / "volta sem o cuidado certo" |
+| 4. Sonho (9–14s) | "Imagina se olhar no espelho e ver uma pele mais uniforme, sem precisar esconder nada." | Foto de perfil em tela cheia com zoom lento e brilhos; "PELE MAIS UNIFORME / sem precisar esconder nada" |
+| 5. Solução (14–20s) | "No dia dezenove, a Alessandra Mendes vem de Brasília pra um dia de tratamento de melasma no Setor Marista." | Foto dela + selo "DIA 19", nome, rota Brasília → Goiânia, "TRATAMENTO DE MELASMA", "SETOR MARISTA · GOIÂNIA" |
+| 6. Objeção (20–27s) | "E não precisa pagar seiscentos e noventa e sete: nesse dia, sai por duzentos e oitenta e cinco... e ainda com um presente." | R$697 riscado → R$285 com explosão dourada + "UM PRESENTE" |
+| 7. Convite (27–32s) | "Mas são só dez vagas. Manda MELASMA no direct e garante a sua!" | Foto de perfil ao fundo, "SÓ 10 VAGAS" com 10 ícones, avatar + nome, botão "MANDE 'MELASMA' NO DIRECT" com clique, @alessandramendes.x e resumo da oferta |
+
+---
+
+# Versão 1 (anterior) — anúncio "Dia de tratamento de melasma em Goiânia" (Alessandra Mendes)
 
 **Perfil:** @alessandramendes.x, de Brasília.
 

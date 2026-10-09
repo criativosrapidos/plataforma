@@ -22,7 +22,8 @@ const path = require('path');
   } else {
     const ff = spawn('ffmpeg', ['-y', '-v', 'error', '-f', 'image2pipe', '-framerate', '30', '-c:v', 'png', '-i', '-',
       '-c:v', 'libx264', '-preset', 'medium', '-crf', '16', '-pix_fmt', 'yuv420p', '-r', '30', out], { stdio: ['pipe', 'inherit', 'inherit'] });
-    for (let f = 0; f < 900; f++) {
+    const NF = Math.round(30 * (await page.evaluate(() => window.DURATION || 30)));
+    for (let f = 0; f < NF; f++) {
       const buf = await grab(f / 30, false);
       if (!ff.stdin.write(buf)) await new Promise((r) => ff.stdin.once('drain', r));
       if (f % 150 === 0) console.log('frame', f);
