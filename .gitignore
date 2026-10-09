@@ -1,0 +1,6 @@
+# gerados pelos scripts (refaça com build_voice.sh / mix.sh / render.js)
+work/audio/*.wav
+work/video_raw.mp4
+work/render/prev/
+work/check_sheet.png
+work/b64/
