@@ -5,3 +5,8 @@ work/render/prev/
 work/check_sheet.png
 work/b64/
 work/render/prev2/
+work2/audio/*.wav
+work2/video_raw.mp4
+work2/render/prev*/
+work2/render/final_sheet.png
+work/ref/*.wav
