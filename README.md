@@ -2,13 +2,31 @@
 
 Agência de marketing com IA, na palma da mão. Gera posts, carrosséis, vídeos e anúncios para Instagram com a cara da marca.
 
-## Etapa atual: "primeira cara" (seção 7 do briefing)
+## Agora: site de venda dos pacotes
+
+A página inicial (`/`) vende a produção de criativos feita pela equipe, em 3 pacotes:
+
+| Pacote | Conteúdo | Preço |
+| --- | --- | --- |
+| Start | 1 reel + 1 carrossel | R$ 150 |
+| Pro | 5 reels + 5 carrosséis | R$ 500 |
+| Max | 10 reels + 10 carrosséis | R$ 750 |
+
+`/pedido` coleta os dados do cliente e monta o pedido. Configurar em `src/lib/pacotes.ts`:
+o número do WhatsApp (`WHATSAPP`), prazos, ajustes e duração dos vídeos.
+
+## Guardado pra depois: plataforma com IA
+
+A plataforma de geração automática continua no código, sem link no site:
+página de venda antiga em `/plataforma` e área do cliente em `/app`.
+
+### Etapa anterior: "primeira cara" (seção 7 do briefing)
 
 Telas navegáveis com dados de exemplo (hamburgueria fictícia **Brasa Burger**). Ainda **sem backend, sem IA e sem pagamento**: tudo roda em memória no navegador.
 
 | Rota | Tela |
 | --- | --- |
-| `/` | Página inicial: promessa, como funciona, recursos, planos, créditos, FAQ |
+| `/plataforma` | Página de venda da plataforma: promessa, como funciona, recursos, planos, créditos, FAQ |
 | `/cadastro`, `/entrar` | Cadastro (com escolha de plano) e login |
 | `/onboarding` → `/onboarding/perfil` | Conectar Instagram/site e revisar o perfil da marca |
 | `/app` | Painel: calendário do mês com status de cada peça |
@@ -29,7 +47,7 @@ npm run dev   # http://localhost:3000
 ## Demonstração publicável
 
 ```bash
-npm run demo   # gera dist-demo/criativos-rapidos.html (site + plataforma num arquivo só)
+npm run demo   # gera dist-demo/criativos-rapidos.html (site de venda num arquivo só)
 ```
 
 Usa o mesmo código de `src/`, com um roteador em memória no lugar do roteamento do Next (`demo/`).

@@ -1,62 +1,69 @@
 import Link from "next/link";
 import { Logo } from "@/components/Logo";
 import { PecaPreview } from "@/components/PecaPreview";
-import { PlanCards } from "@/components/PlanCards";
 import { BotaoLink, Cartao, Destaque, Rotulo } from "@/components/ui";
 import { MARCAS, PECAS } from "@/lib/mock";
-import { CUSTO_CREDITOS, PACOTES_CREDITOS, brl, precoPacote } from "@/lib/plans";
+import { DETALHES, PACOTES, economia, pecas, precoPorPeca, reais } from "@/lib/pacotes";
 
-const marca = MARCAS[0];
+
 const peca = (id: string) => PECAS.find((p) => p.id === id)!;
+const marca = (id: string) => MARCAS.find((m) => m.id === id)!;
 
-const RECURSOS = [
-  { t: "Calendário do mês pronto", d: "Datas, horários e o que postar em cada dia, montado pra sua marca." },
-  { t: "Posts e carrosséis", d: "No formato do feed (4:5) e dos stories (9:16), com suas cores e logo." },
-  { t: "Vídeos de até 30s", d: "Reels com animação e locução, sem abrir CapCut." },
-  { t: "Criativos de anúncio", d: "Peças com oferta e chamada pra ação, prontas pro Meta Ads." },
-  { t: "Legenda e hashtags", d: "Cada peça já sai com texto no tom da sua marca." },
-  { t: "Aprovação com o cliente", d: "No Profissional, você manda um link e o cliente aprova sozinho." },
+const O_QUE_FAZEMOS = [
+  { t: "Reels e vídeos", d: `Vídeos verticais de ${DETALHES.duracaoVideo}, com animação, legenda na tela e música.`, ex: "p3" },
+  { t: "Carrosséis", d: `Conteúdo que ensina e vende, em ${DETALHES.slidesCarrossel}, no formato do feed.`, ex: "p8" },
+  { t: "Posts", d: "Peça única pro feed ou stories, com a sua logo e as suas cores.", ex: "p1" },
+  { t: "Anúncios", d: "Os vídeos e carrosséis saem prontos pra rodar como anúncio no Instagram e Facebook.", ex: "p4" },
+];
+
+const PASSOS = [
+  { t: "Escolha o pacote", d: "Paga no Pix ou no cartão." },
+  { t: "Conte sobre a sua marca", d: "Manda a logo, as cores e o que quer vender. Leva 5 minutos." },
+  { t: "Receba os criativos", d: "Prontos pra postar, com legenda. Não gostou de algo? A gente ajusta." },
 ];
 
 const FAQ = [
   {
-    p: "Como funcionam os créditos?",
-    r: `Cada peça gerada usa créditos: post, stories e anúncio usam ${CUSTO_CREDITOS.post}, carrossel usa ${CUSTO_CREDITOS.carrossel} e vídeo usa ${CUSTO_CREDITOS.video}. Os créditos do plano renovam todo mês. Se acabar antes, você compra um pacote extra, que não expira.`,
+    p: "Em quanto tempo eu recebo?",
+    r: `Start em até ${PACOTES[0].prazoDiasUteis} dias úteis, Pro em até ${PACOTES[1].prazoDiasUteis} e Max em até ${PACOTES[2].prazoDiasUteis}, contando a partir do envio das informações da sua marca.`,
   },
   {
-    p: "Qual a diferença entre o anual e o mensal?",
-    r: "No anual você paga 10 meses e usa 12 (à vista no Pix ou em 12x no cartão), os créditos que sobram passam pro mês seguinte, os extras saem 15% mais baratos e o preço fica congelado por 12 meses. No mensal você paga mês a mês, sem fidelidade, e os créditos do mês expiram na renovação.",
+    p: "E se eu não gostar?",
+    r: `Cada peça tem ${DETALHES.ajustesPorPeca} rodada de ajuste incluída. E se pedir em até 7 dias da compra, antes da entrega, devolvemos 100% do valor.`,
   },
   {
-    p: "Preciso saber design ou usar Canva?",
-    r: "Não. Você conecta sua marca uma vez e a plataforma cuida das cores, da logo e do tom. Você só aprova, ajusta se quiser e baixa.",
+    p: "Preciso mandar fotos e vídeos?",
+    r: "Se tiver, ajuda: fotos do produto, do espaço ou da equipe deixam tudo mais real. Se não tiver, a gente usa imagens de banco e animações.",
   },
   {
-    p: "Posso cancelar?",
-    r: "Pode. Se pedir em até 7 dias da compra, devolvemos 100% do valor. Depois disso, o plano segue ativo até o fim do período pago.",
+    p: "Os criativos servem pra anúncio?",
+    r: "Servem. Entregamos nos formatos do Instagram e do Facebook, prontos pra subir no gerenciador de anúncios.",
   },
   {
-    p: "Serve pra agência?",
-    r: "Serve. O plano Profissional tem até 5 marcas, 3 usuários, link de aprovação pro cliente e sua logo no lugar da nossa.",
+    p: "Vocês postam por mim?",
+    r: "Por enquanto, a gente entrega os arquivos com a legenda pronta e você posta ou agenda. A gestão do perfil vem em breve.",
+  },
+  {
+    p: "Como eu pago?",
+    r: "Pix à vista ou cartão de crédito.",
   },
 ];
 
 export default function Home() {
   return (
     <main className="overflow-x-hidden">
-      {/* topo */}
       <header className="sticky top-0 z-30 border-b border-linha/70 bg-off/90 backdrop-blur">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
           <Logo />
           <nav className="flex items-center gap-2">
-            <Link href="#planos" className="hidden px-3 text-sm font-extrabold sm:block">
-              Planos
+            <Link href="#exemplos" className="hidden px-3 text-sm font-extrabold sm:block">
+              Exemplos
             </Link>
-            <Link href="/entrar" className="px-3 text-sm font-extrabold">
-              Entrar
+            <Link href="#pacotes" className="hidden px-3 text-sm font-extrabold sm:block">
+              Pacotes
             </Link>
-            <BotaoLink href="/cadastro" tamanho="sm">
-              Começar grátis
+            <BotaoLink href="#pacotes" tamanho="sm">
+              Ver pacotes
             </BotaoLink>
           </nav>
         </div>
@@ -65,212 +72,151 @@ export default function Home() {
       {/* hero */}
       <section className="mx-auto grid max-w-6xl items-center gap-10 px-4 pb-16 pt-10 md:grid-cols-2 md:pt-20">
         <div>
-          <Rotulo>Agência de marketing com IA</Rotulo>
+          <Rotulo>Produção de criativos para Instagram</Rotulo>
           <h1 className="mt-4 text-[44px] md:text-6xl">
-            Um mês de conteúdo pronto em <Destaque>minutos.</Destaque>
+            Reels e carrosséis que param o <Destaque>scroll.</Destaque>
           </h1>
           <p className="mt-5 max-w-md text-lg text-cinza">
-            Posts, carrosséis, vídeos e anúncios com a cara da sua marca. Você só aprova e baixa.
+            A gente cria os vídeos, carrosséis, posts e anúncios da sua marca. Você só aprova e posta.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <BotaoLink href="/cadastro" tamanho="lg">
-              Começar grátis
+            <BotaoLink href="#pacotes" tamanho="lg">
+              Ver pacotes
             </BotaoLink>
-            <BotaoLink href="/app" variante="contorno" tamanho="lg">
-              Ver a plataforma
+            <BotaoLink href="/pedido?pacote=start" variante="contorno" tamanho="lg">
+              Começar com {reais(PACOTES[0].preco)}
             </BotaoLink>
           </div>
-          <p className="mt-4 text-sm text-cinza">10 créditos grátis por mês. Sem cartão.</p>
+          <p className="mt-4 text-sm text-cinza">1 reel + 1 carrossel por {reais(PACOTES[0].preco)}. Pronto em até {PACOTES[0].prazoDiasUteis} dias úteis.</p>
         </div>
 
         <div className="relative mx-auto w-full max-w-sm">
           <div className="absolute -inset-6 -z-10 -skew-y-3 rounded-3xl bg-amarelo" />
           <div className="grid grid-cols-2 gap-3">
             <div className="space-y-3">
-              <PecaPreview peca={peca("p1")} marca={marca} />
-              <PecaPreview peca={peca("p4")} marca={marca} />
+              <PecaPreview peca={peca("p8")} marca={marca("brasa")} />
+              <PecaPreview peca={peca("f1")} marca={marca("forno")} />
             </div>
             <div className="space-y-3 pt-10">
-              <PecaPreview peca={peca("p3")} marca={marca} />
+              <PecaPreview peca={peca("p3")} marca={marca("brasa")} />
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* o que fazemos */}
+      <section id="exemplos" className="scroll-mt-16 bg-white py-20">
+        <div className="mx-auto max-w-6xl px-4">
+          <Rotulo>O que a gente produz</Rotulo>
+          <h2 className="mt-3 max-w-2xl text-4xl md:text-5xl">
+            Tudo que o seu Instagram precisa pra <Destaque>vender.</Destaque>
+          </h2>
+          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {O_QUE_FAZEMOS.map((f) => {
+              const p = peca(f.ex);
+              return (
+                <div key={f.t}>
+                  <div className="mx-auto max-w-[260px]">
+                    <PecaPreview peca={{ ...p, formato: "4:5" }} marca={marca(p.marcaId)} />
+                  </div>
+                  <h3 className="mt-4 text-xl">{f.t}</h3>
+                  <p className="mt-1 text-cinza">{f.d}</p>
+                </div>
+              );
+            })}
+          </div>
+          <p className="mt-8 text-sm text-cinza">Exemplos com marcas fictícias.</p>
         </div>
       </section>
 
       {/* como funciona */}
-      <section className="bg-white py-20">
+      <section className="py-20">
+        <div className="mx-auto max-w-6xl px-4">
+          <Rotulo>Como funciona</Rotulo>
+          <h2 className="mt-3 text-4xl md:text-5xl">
+            Três passos e o seu conteúdo está <Destaque>pronto.</Destaque>
+          </h2>
+          <ol className="mt-10 grid gap-4 md:grid-cols-3">
+            {PASSOS.map((p, i) => (
+              <li key={p.t}>
+                <Cartao className="h-full p-6">
+                  <span className="grid h-10 w-10 place-items-center rounded-full bg-amarelo font-extrabold">{i + 1}</span>
+                  <h3 className="mt-4 text-xl">{p.t}</h3>
+                  <p className="mt-1 text-cinza">{p.d}</p>
+                </Cartao>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      {/* pacotes */}
+      <section id="pacotes" className="scroll-mt-16 bg-white py-20">
         <div className="mx-auto max-w-6xl px-4">
           <div className="text-center">
-            <Rotulo>Como funciona</Rotulo>
+            <Rotulo>Pacotes</Rotulo>
             <h2 className="mt-3 text-4xl md:text-5xl">
-              Três passos. O resto fica com a <Destaque>plataforma.</Destaque>
+              Quanto mais conteúdo, mais <Destaque>barato.</Destaque>
             </h2>
+            <p className="mx-auto mt-4 max-w-lg text-cinza">Cada pacote vem com reels e carrosséis na mesma quantidade, com legenda pronta.</p>
           </div>
 
-          <div className="mt-12 grid gap-10 md:grid-cols-3">
-            {/* passo 1 */}
-            <div>
-              <div className="rounded-3xl bg-off p-5">
-                <Cartao className="p-4">
-                  <div className="flex items-center justify-between border-b border-linha pb-3">
-                    <span className="font-extrabold">Minha marca</span>
-                    <span className="rounded-full bg-amarelo px-2.5 py-0.5 text-xs font-extrabold">Conectado</span>
+          <div className="mt-12 grid gap-4 md:grid-cols-3">
+            {PACOTES.map((p) => {
+              const d = p.destaque;
+              const apoio = d ? "text-white/70" : "text-cinza";
+              const eco = economia(p);
+              return (
+                <div key={p.id} className={`relative flex flex-col rounded-2xl border p-6 ${d ? "border-preto bg-preto text-white" : "border-linha bg-off"}`}>
+                  {d && (
+                    <span className="absolute -top-3 left-6 rounded-full bg-amarelo px-3 py-1 text-xs font-extrabold text-preto">Melhor custo</span>
+                  )}
+                  <div className="flex items-start justify-between gap-2">
+                    <h3 className="text-2xl">{p.nome}</h3>
+                    {eco > 0 && (
+                      <span className={`rounded-full px-2.5 py-0.5 text-[11px] font-extrabold ${d ? "bg-amarelo text-preto" : "bg-white"}`}>
+                        Economize {reais(eco)}
+                      </span>
+                    )}
                   </div>
-                  <div className="flex items-center justify-between py-3">
-                    <span className="font-extrabold">{marca.instagram}</span>
-                    <span className="text-sm text-cinza">Instagram</span>
-                  </div>
-                  <div className="flex items-center justify-between rounded-lg bg-off p-3">
-                    <div>
-                      <Rotulo className="!text-[10px]">Cores</Rotulo>
-                      <div className="mt-1.5 flex gap-1.5">
-                        {marca.cores.map((c) => (
-                          <span key={c} className="h-6 w-6 rounded-full border border-linha" style={{ background: c }} />
-                        ))}
-                      </div>
-                    </div>
-                    <div className="text-right">
-                      <Rotulo className="!text-[10px]">Tom</Rotulo>
-                      <span className="mt-1.5 inline-block rounded-full bg-white px-2.5 py-0.5 text-sm font-extrabold">{marca.tom}</span>
-                    </div>
-                  </div>
-                </Cartao>
-              </div>
-              <p className="mt-5 text-sm font-extrabold text-cinza">01</p>
-              <h3 className="mt-1 text-2xl">É só conectar sua marca.</h3>
-              <p className="mt-2 text-cinza">Seu Instagram ou seu site ensinam cores, tom e estilo. Você faz isso uma vez.</p>
-            </div>
+                  <p className={`mt-1 text-sm ${apoio}`}>{p.paraQuem}</p>
 
-            {/* passo 2 */}
-            <div>
-              <div className="rounded-3xl bg-off p-5">
-                <div className="flex items-center justify-between rounded-full border-2 border-preto bg-white py-2 pl-4 pr-2">
-                  <span className="text-sm">Promoção do combo de terça</span>
-                  <span className="grid h-8 w-8 place-items-center rounded-full bg-amarelo font-extrabold">→</span>
-                </div>
-                <div className="mt-4 grid grid-cols-3 gap-2">
-                  <PecaPreview peca={peca("p9")} marca={marca} tamanho="mini" />
-                  <PecaPreview peca={peca("p7")} marca={marca} tamanho="mini" />
-                  <PecaPreview peca={peca("p11")} marca={marca} tamanho="mini" />
-                </div>
-              </div>
-              <p className="mt-5 text-sm font-extrabold text-cinza">02</p>
-              <h3 className="mt-1 text-2xl">Diga o tema ou deixe com a gente.</h3>
-              <p className="mt-2 text-cinza">A plataforma monta o calendário do mês com posts, carrosséis, vídeos e anúncios.</p>
-              <div className="mt-3 flex flex-wrap gap-2">
-                {["Post", "Carrossel", "Vídeo", "Stories", "Anúncio"].map((t) => (
-                  <span key={t} className="rounded-full bg-off px-3 py-1 text-xs font-extrabold uppercase tracking-wider">
-                    {t}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            {/* passo 3 */}
-            <div>
-              <div className="rounded-3xl bg-off p-5">
-                <Cartao className="p-4">
-                  <div className="flex items-center justify-between border-b border-linha pb-3">
-                    <span className="font-extrabold">Esta semana</span>
-                    <span className="rounded-full bg-preto px-2.5 py-0.5 text-xs font-extrabold text-white">3 aprovadas</span>
+                  <div className="mt-5 flex items-end gap-1">
+                    <span className="pb-1.5 text-sm font-extrabold">R$</span>
+                    <span className="text-5xl font-extrabold tracking-tight">{p.preco}</span>
                   </div>
-                  <div className="mt-3 grid grid-cols-5 gap-1.5 text-center text-[10px] font-extrabold text-cinza">
-                    {["SEG", "TER", "QUA", "QUI", "SEX"].map((d, i) => (
-                      <div key={d}>
-                        {d}
-                        <div className="mt-1">
-                          {i % 2 === 0 ? (
-                            <PecaPreview peca={peca(["p1", "p4", "p6"][i / 2])} marca={marca} tamanho="mini" />
-                          ) : (
-                            <div className="aspect-[4/5] rounded-md bg-off" />
-                          )}
-                        </div>
+                  <p className={`mt-1 text-xs ${apoio}`}>
+                    {reais(precoPorPeca(p))} por peça · Pix ou cartão
+                  </p>
+
+                  <div className="mt-5 grid grid-cols-2 gap-2">
+                    {[
+                      [p.videos, p.videos === 1 ? "reel" : "reels"],
+                      [p.carrosseis, p.carrosseis === 1 ? "carrossel" : "carrosséis"],
+                    ].map(([n, t]) => (
+                      <div key={t} className={`rounded-xl p-3 ${d ? "bg-white/10" : "bg-white"}`}>
+                        <p className="text-3xl font-extrabold">{n}</p>
+                        <p className={`text-sm ${apoio}`}>{t}</p>
                       </div>
                     ))}
                   </div>
-                  <p className="mt-3 text-sm font-extrabold">✓ Qua, 18h · Instagram</p>
-                </Cartao>
-              </div>
-              <p className="mt-5 text-sm font-extrabold text-cinza">03</p>
-              <h3 className="mt-1 text-2xl">É só aprovar e baixar.</h3>
-              <p className="mt-2 text-cinza">Ajuste o que quiser, gere de novo se não gostar e baixe a peça pronta pra postar.</p>
-            </div>
-          </div>
-        </div>
-      </section>
 
-      {/* o que você acessa */}
-      <section className="py-20">
-        <div className="mx-auto max-w-6xl px-4">
-          <Rotulo>O que você acessa</Rotulo>
-          <h2 className="mt-3 max-w-2xl text-4xl md:text-5xl">
-            Tudo que uma agência entrega, sem a <Destaque>demora.</Destaque>
-          </h2>
-          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {RECURSOS.map((r, i) => (
-              <Cartao key={r.t} className="p-6">
-                <span className="grid h-10 w-10 place-items-center rounded-lg bg-amarelo text-sm font-extrabold">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <h3 className="mt-4 text-xl">{r.t}</h3>
-                <p className="mt-2 text-cinza">{r.d}</p>
-              </Cartao>
-            ))}
-          </div>
-        </div>
-      </section>
+                  <ul className="mt-5 flex-1 space-y-2 text-sm">
+                    <li>· Reels de {DETALHES.duracaoVideo}</li>
+                    <li>· Carrosséis de {DETALHES.slidesCarrossel}</li>
+                    <li>· Legenda e hashtags em cada peça</li>
+                    <li>· Prontos pra usar como anúncio</li>
+                    <li>· {DETALHES.ajustesPorPeca} ajuste por peça</li>
+                    <li>· Entrega em até {p.prazoDiasUteis} dias úteis</li>
+                  </ul>
 
-      {/* planos */}
-      <section id="planos" className="scroll-mt-16 bg-white py-20">
-        <div className="mx-auto max-w-6xl px-4">
-          <div className="text-center">
-            <Rotulo>Planos</Rotulo>
-            <h2 className="mt-3 text-4xl md:text-5xl">
-              Comece grátis. Cresça quando <Destaque>quiser.</Destaque>
-            </h2>
-            <p className="mx-auto mt-4 max-w-lg text-cinza">Escolha pagar por ano, com 2 meses grátis, ou por mês, sem fidelidade.</p>
-          </div>
-          <div className="mt-10">
-            <PlanCards />
-          </div>
-
-          {/* créditos */}
-          <div className="mt-10 grid gap-6 rounded-2xl bg-off p-6 md:grid-cols-2 md:p-8">
-            <div>
-              <h3 className="text-2xl">Como funcionam os créditos</h3>
-              <p className="mt-2 text-cinza">Cada peça usa uma quantidade de créditos. Acabou antes do mês virar? Compra um pacote extra, que não expira.</p>
-              <ul className="mt-4 grid grid-cols-2 gap-2 text-sm">
-                {[
-                  ["Post", CUSTO_CREDITOS.post],
-                  ["Stories", CUSTO_CREDITOS.stories],
-                  ["Anúncio", CUSTO_CREDITOS.anuncio],
-                  ["Carrossel", CUSTO_CREDITOS.carrossel],
-                  ["Vídeo até 30s", CUSTO_CREDITOS.video],
-                ].map(([t, c]) => (
-                  <li key={t} className="flex justify-between gap-2 rounded-lg bg-white px-3 py-2">
-                    <span>{t}</span>
-                    <span className="whitespace-nowrap font-extrabold">
-                      {c} {c === 1 ? "crédito" : "créditos"}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div>
-              <h3 className="text-2xl">Créditos extras</h3>
-              <p className="mt-2 text-cinza">Nos planos Básico e Profissional. No anual, 15% de desconto.</p>
-              <ul className="mt-4 space-y-2">
-                {PACOTES_CREDITOS.map((p) => (
-                  <li key={p.id} className="flex items-center justify-between rounded-lg bg-white px-4 py-3">
-                    <span className="font-extrabold">+{p.creditos} créditos</span>
-                    <span className="text-right">
-                      <span className="block">{brl(p.preco)}</span>
-                      <span className="block text-xs font-extrabold">{brl(precoPacote(p.preco, "anual"))} no anual</span>
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </div>
+                  <BotaoLink href={`/pedido?pacote=${p.id}`} variante={d ? "primario" : "secundario"} className="mt-6 w-full">
+                    Quero o {p.nome}
+                  </BotaoLink>
+                  <p className={`mt-2 text-center text-xs ${apoio}`}>{pecas(p)} peças no total</p>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -293,15 +239,14 @@ export default function Home() {
         </div>
       </section>
 
-      {/* cta final */}
       <section className="bg-preto py-20 text-white">
         <div className="mx-auto max-w-3xl px-4 text-center">
           <h2 className="text-4xl md:text-5xl">
-            Seu próximo mês de posts começa <span className="inline-block -skew-x-[9deg] text-amarelo">agora.</span>
+            Seu próximo reel pode sair <span className="inline-block -skew-x-[9deg] text-amarelo">essa semana.</span>
           </h2>
-          <p className="mt-4 text-white/70">Crie sua conta grátis e veja sua marca virar conteúdo em minutos.</p>
-          <BotaoLink href="/cadastro" tamanho="lg" className="mt-8">
-            Começar grátis
+          <p className="mt-4 text-white/70">Comece com o Start e veja a qualidade antes de fechar um pacote maior.</p>
+          <BotaoLink href="/pedido?pacote=start" tamanho="lg" className="mt-8">
+            Começar com {reais(PACOTES[0].preco)}
           </BotaoLink>
         </div>
       </section>
@@ -309,7 +254,7 @@ export default function Home() {
       <footer className="bg-preto pb-10 text-white/60">
         <div className="mx-auto flex max-w-6xl flex-col items-start justify-between gap-4 border-t border-white/10 px-4 pt-8 text-sm sm:flex-row sm:items-center">
           <Logo escuro />
-          <p>© 2026 Criativos Rápidos. Todos os direitos reservados.</p>
+          <p>© 2026 Criativos Rápidos · criativosrapidos.com.br</p>
         </div>
       </footer>
     </main>
