@@ -133,3 +133,29 @@ O esqueleto **gancho → marca → produto → loja física → CTA** não muda.
 - `audio/locucao_take1.mp3`: locução original (ElevenLabs, voz "Enzo – Professional and Warm")
 - `render_video.py`: gerador do vídeo. Edite o bloco `CONFIG` e rode `python3 render_video.py`
 - `assets/`: logo e foto da fachada usadas no vídeo
+
+---
+
+## VERSÃO 2: ANÚNCIO DE TRÁFEGO PAGO (pegada varejão de TV)
+
+Arquivo: `saida/casadocooktop_anuncio_30s.mp4` (9:16, 30 s, -14 LUFS, pronto para Reels e Stories Ads)
+
+**Estilo:** fundo de raios girando, corte seco com flash branco, tremida em cada batida, texto entrando na palavra exata que o locutor fala, letreiro amarelo correndo embaixo com endereço e WhatsApp. Os produtos são renderizados em estúdio (`produtos3d.py`): vidro preto, inox escovado, chamas e indução acesas. Nenhuma foto do Instagram foi usada.
+
+**Locução** (voz "Nassif – Persuasive Sales & Ads", ElevenLabs):
+> Atenção, Brasília! Sua cozinha nova tá aqui, na Casa do Cooktop! É cooktop a gás! É cooktop de indução! É forno de embutir! É coifa! E não para por aí: air fryer, panelas, eletroportáteis e até móveis! Corre pro JK Shopping, terceiro piso, em Taguatinga! Ou chama no WhatsApp: (61) 9 8345-7770! Casa do Cooktop! Eletros, móveis e utensílios!
+
+| Tempo | Cena |
+|---|---|
+| 0–1,5s | "ATENÇÃO, BRASÍLIA!" batendo na tela, raios vermelhos |
+| 1,5–3,4s | "SUA COZINHA NOVA, TÁ AQUI!" + cooktop acendendo |
+| 3,4–4,7s | Logo explodindo na tela |
+| 4,7–10s | Um produto por batida: gás, indução, forno, coifa |
+| 10–15s | "E NÃO PARA POR AÍ!" com 4 cards: air fryer, panelas, eletroportáteis, móveis |
+| 15–18,4s | Fachada real da loja + "JK SHOPPING / 3º PISO / TAGUATINGA-DF" |
+| 18,4–24,3s | WhatsApp: o número vai se montando junto com a fala |
+| 24,3–30s | Cartão final: logo, endereço, WhatsApp, horário, "VISITE A LOJA HOJE!" |
+
+**Para rodar de novo:** `python3 render_anuncio.py` (cerca de 3 min). Textos, cores e tempos ficam no bloco `CONFIG`; os tempos (`M`) vêm da transcrição palavra a palavra da locução.
+
+**Dica de tráfego:** suba também uma versão 4:5 para o feed e teste dois ganchos ("ATENÇÃO, BRASÍLIA!" × "SUA COZINHA TÁ VELHA?"). Os 3 primeiros segundos decidem o custo por resultado.
