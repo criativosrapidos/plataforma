@@ -65,6 +65,13 @@ export function Pedido() {
             Demonstração: o número do WhatsApp e o link de pagamento da HyperCash ainda não foram configurados.
           </p>
         )}
+        <Cartao className="mt-6 p-5">
+          <p className="font-extrabold">Depois do pagamento</p>
+          <p className="mt-1 text-sm text-cinza">Preencha o briefing da marca. É por ele que a produção começa.</p>
+          <Link href="/briefing" className="mt-4 inline-flex h-12 w-full items-center justify-center rounded-full bg-preto font-extrabold text-white">
+            Preencher o briefing
+          </Link>
+        </Cartao>
         <button onClick={() => setEnviado(null)} className="mt-4 text-sm font-extrabold underline">
           Voltar e editar
         </button>

@@ -14,6 +14,6 @@ export function useSearchParams() {
 }
 
 export function useParams<T>() {
-  const m = usePathname().match(/^\/app\/peca\/([^/]+)/);
+  const m = usePathname().match(/^\/(?:app\/peca|cliente\/entregas)\/([^/]+)$/);
   return (m ? { id: m[1] } : {}) as T;
 }

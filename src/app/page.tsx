@@ -18,8 +18,15 @@ const O_QUE_FAZEMOS = [
 
 const PASSOS = [
   { t: "Escolha o pacote", d: "Paga no Pix ou no cartão." },
-  { t: "Conte sobre a sua marca", d: "Manda a logo, as cores e o que quer vender. Leva 5 minutos." },
-  { t: "Receba os criativos", d: "Prontos pra postar, com legenda. Não gostou de algo? A gente ajusta." },
+  { t: "Preencha o briefing", d: "Um formulário online com logo, cores e o que quer vender. Leva 5 minutos." },
+  { t: "Aprove na sua área", d: "As peças chegam prontas, com legenda. Não gostou de algo? Pede ajuste ali mesmo." },
+];
+
+const AREA = [
+  { t: "Briefing online", d: "Um link pra preencher logo, cores, público e o que vender. Sem reunião." },
+  { t: "Aprovação em 1 toque", d: "Aprova ou pede ajuste em cada peça, com a conversa registrada." },
+  { t: "Calendário de postagem", d: "Dia e horário sugeridos pra cada reel e carrossel." },
+  { t: "Instagram conectado", d: "A equipe acompanha o seu feed e mantém o estilo." },
 ];
 
 const FAQ = [
@@ -62,7 +69,10 @@ export default function Home() {
             <Link href="#pacotes" className="hidden px-3 text-sm font-extrabold sm:block">
               Pacotes
             </Link>
-            <BotaoLink href="#pacotes" tamanho="sm">
+            <Link href="/acesso" className="px-3 text-sm font-extrabold">
+              Área do cliente
+            </Link>
+            <BotaoLink href="#pacotes" tamanho="sm" className="hidden sm:inline-flex">
               Ver pacotes
             </BotaoLink>
           </nav>
@@ -147,6 +157,51 @@ export default function Home() {
               </li>
             ))}
           </ol>
+        </div>
+      </section>
+
+      {/* área do cliente */}
+      <section className="bg-preto py-20 text-white">
+        <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 md:grid-cols-2">
+          <div>
+            <Rotulo className="!text-white/60">Área do cliente</Rotulo>
+            <h2 className="mt-3 text-4xl md:text-5xl">
+              Tudo num lugar só, <span className="inline-block -skew-x-[9deg] text-amarelo">sem grupo de WhatsApp.</span>
+            </h2>
+            <ul className="mt-8 grid gap-4 sm:grid-cols-2">
+              {AREA.map((a) => (
+                <li key={a.t}>
+                  <p className="font-extrabold">{a.t}</p>
+                  <p className="mt-1 text-sm text-white/70">{a.d}</p>
+                </li>
+              ))}
+            </ul>
+            <BotaoLink href="/acesso" className="mt-8">
+              Conhecer a área do cliente
+            </BotaoLink>
+          </div>
+          <div className="mx-auto w-full max-w-sm rounded-[2rem] bg-white p-3 text-preto">
+            <div className="rounded-[1.5rem] bg-off p-4">
+              <p className="text-xs font-extrabold text-cinza">Pacote Max</p>
+              <p className="text-xl font-extrabold">10 de 20 peças entregues</p>
+              <div className="mt-2 h-2 overflow-hidden rounded-full bg-linha">
+                <div className="h-full w-1/2 rounded-full bg-preto" />
+              </div>
+              <div className="mt-4 space-y-2">
+                {[
+                  ["Batata rústica nova", "Para aprovar", "bg-amarelo"],
+                  ["Monte o burger perfeito", "Para aprovar", "bg-amarelo"],
+                  ["Avaliação 4,9 no delivery", "Em ajuste", "bg-white ring-1 ring-preto"],
+                  ["Conheça o Veggie da Casa", "Aprovada", "bg-preto text-white"],
+                ].map(([t, s, c]) => (
+                  <div key={t} className="flex items-center justify-between gap-2 rounded-xl bg-white p-3 text-sm">
+                    <span className="truncate font-extrabold">{t}</span>
+                    <span className={`shrink-0 rounded-full px-2 py-0.5 text-[11px] font-extrabold ${c}`}>{s}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 

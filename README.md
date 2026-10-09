@@ -15,6 +15,21 @@ A página inicial (`/`) vende a produção de criativos feita pela equipe, em 3 
 `/pedido` coleta os dados do cliente e monta o pedido. Configurar em `src/lib/pacotes.ts`:
 o número do WhatsApp (`WHATSAPP`), prazos, ajustes e duração dos vídeos.
 
+## Área do cliente e painel da agência (sem IA)
+
+| Rota | Tela |
+| --- | --- |
+| `/acesso` | Entrada do cliente com código no WhatsApp |
+| `/cliente` | Início: andamento do pacote, peças pra aprovar, próximas postagens |
+| `/cliente/entregas` e `/cliente/entregas/[id]` | Lista por status; aprovar, pedir ajuste (com conversa), baixar |
+| `/cliente/calendario` | Calendário do mês com dia e horário sugeridos de cada peça |
+| `/cliente/marca` | Instagram conectado, resumo do briefing, link do briefing, conta |
+| `/cliente/briefing` e `/briefing` | Briefing da marca (dentro da área e pelo link público) |
+| `/agencia` | Painel da equipe: clientes, progresso, prazos, ajustes, link do briefing |
+
+Dados de exemplo em `src/lib/cliente.ts`. Pra virar real: banco + login (Supabase), upload dos arquivos
+pela equipe, aviso no WhatsApp e login oficial do Instagram (Meta).
+
 ## Guardado pra depois: plataforma com IA
 
 A plataforma de geração automática continua no código, sem link no site:
