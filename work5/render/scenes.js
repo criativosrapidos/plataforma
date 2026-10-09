@@ -52,13 +52,41 @@ function scene1(t) {
   serif('Tratamento de melasma', W / 2, 1320, 60, C.NUDE, { align: 'center' });
 }
 
-// 2. Dia 19 + "Alessandra Mendes vem direto de Brasília"
+// Foto da Alessandra
+const FOTO = new Image(); FOTO.src = 'foto-alessandra.jpg';
+// recorte (sx, sy, sw, sh) da foto original 828x1472 desenhado em retângulo arredondado
+function photoCard(cx, cy, w, h, crop, r) {
+  if (!FOTO.complete || !FOTO.naturalWidth) return;
+  ctx.save();
+  ctx.fillStyle = 'rgba(0,0,0,0.35)'; roundRect(cx - w / 2 + 14, cy - h / 2 + 20, w, h, r); ctx.fill();
+  roundRect(cx - w / 2, cy - h / 2, w, h, r); ctx.clip();
+  ctx.drawImage(FOTO, crop[0], crop[1], crop[2], crop[3], cx - w / 2, cy - h / 2, w, h);
+  ctx.restore();
+  ctx.strokeStyle = C.GOLD; ctx.lineWidth = 6; roundRect(cx - w / 2, cy - h / 2, w, h, r); ctx.stroke();
+}
+function avatar(cx, cy, r) {
+  if (!FOTO.complete || !FOTO.naturalWidth) return;
+  ctx.save(); ctx.beginPath(); ctx.arc(cx, cy, r, 0, 7); ctx.clip();
+  ctx.drawImage(FOTO, 200, 230, 460, 460, cx - r, cy - r, r * 2, r * 2);
+  ctx.restore();
+  ctx.strokeStyle = C.GOLD; ctx.lineWidth = 6; ctx.beginPath(); ctx.arc(cx, cy, r + 4, 0, 7); ctx.stroke();
+}
+
+// 2. Dia 19 + "Alessandra Mendes vem direto de Brasília" — com a foto dela
 function scene2(t) {
   bg(C.WINE);
   particles(t, C.GOLD, 35, 0.3);
-  // calendário dia 19
+  // foto entrando com leve zoom (Ken Burns)
+  const f = easeOutBack(prog(t, 2.4, 0.45));
+  ctx.save(); ctx.translate(W / 2, 560); ctx.scale(lerp(0.85, 1, clamp(f)), lerp(0.85, 1, clamp(f))); ctx.rotate(-0.02 + Math.sin(t * 1.2) * 0.01);
+  ctx.globalAlpha = clamp(f * 1.5);
+  const z = 1 - 0.06 * prog(t, 2.4, 3.5);
+  const cw = 640 * z, ch = 800 * z;
+  photoCard(0, 0, 450, 560, [430 - cw / 2, 600 - ch / 2, cw, ch], 34);
+  ctx.restore();
+  // calendário dia 19 (selo no canto da foto)
   const c = easeOutBack(prog(t, 2.45, 0.4));
-  ctx.save(); ctx.translate(W / 2, 470); ctx.scale(clamp(c), clamp(c)); ctx.rotate(-0.04);
+  ctx.save(); ctx.translate(770, 360); ctx.scale(clamp(c) * 0.62, clamp(c) * 0.62); ctx.rotate(0.08);
   ctx.fillStyle = 'rgba(0,0,0,0.3)'; roundRect(-150, -150, 310, 300, 30); ctx.fill();
   ctx.fillStyle = C.OW; roundRect(-160, -165, 320, 310, 30); ctx.fill();
   ctx.fillStyle = C.ROSE; roundRect(-160, -165, 320, 80, 30); ctx.fill(); ctx.fillRect(-160, -115, 320, 30);
@@ -67,19 +95,19 @@ function scene2(t) {
   ctx.restore();
   // nome
   const n = easeOut(prog(t, 3.55, 0.35));
-  serif('Alessandra Mendes', W / 2, 800 + (1 - n) * 40, 104, C.WH, { align: 'center', alpha: n });
+  serif('Alessandra Mendes', W / 2, 960 + (1 - n) * 40, 100, C.WH, { align: 'center', alpha: n });
   // rota Brasília → Goiânia
   const r = prog(t, 4.6, 1.2);
   if (r > 0) {
-    const ax = 760, ay = 1180, bx = 320, by = 1060;
+    const ax = 760, ay = 1260, bx = 320, by = 1150;
     ctx.save(); ctx.globalAlpha = clamp(r * 3);
     // arco pontilhado
     ctx.strokeStyle = C.GOLD; ctx.lineWidth = 6; ctx.setLineDash([4, 18]); ctx.lineCap = 'round';
-    ctx.beginPath(); ctx.moveTo(ax, ay); ctx.quadraticCurveTo((ax + bx) / 2, 900, bx, by); ctx.stroke(); ctx.setLineDash([]);
+    ctx.beginPath(); ctx.moveTo(ax, ay); ctx.quadraticCurveTo((ax + bx) / 2, 1030, bx, by); ctx.stroke(); ctx.setLineDash([]);
     // ponto viajando
     const e = easeInOut(clamp(r));
     const qx = (1 - e) * (1 - e) * ax + 2 * (1 - e) * e * ((ax + bx) / 2) + e * e * bx;
-    const qy = (1 - e) * (1 - e) * ay + 2 * (1 - e) * e * 900 + e * e * by;
+    const qy = (1 - e) * (1 - e) * ay + 2 * (1 - e) * e * 1030 + e * e * by;
     ctx.fillStyle = C.GOLD; ctx.beginPath(); ctx.arc(qx, qy, 16, 0, 7); ctx.fill();
     ctx.fillStyle = C.NUDE; ctx.beginPath(); ctx.arc(ax, ay, 12, 0, 7); ctx.fill();
     text('Brasília', ax, ay + 70, 40, C.NUDE, { align: 'center', weight: 600 });
@@ -87,7 +115,7 @@ function scene2(t) {
     if (r > 0.6) pin(bx, by - 30, 0.7, C.GOLD, t);
     text('Goiânia', bx, by + 70, 44, C.WH, { align: 'center', alpha: clamp((r - 0.6) * 3) });
   }
-  text('DIRETO DE BRASÍLIA', W / 2, 1400, 54, C.GOLD, { align: 'center', alpha: easeOut(prog(t, 4.95, 0.3)) });
+  text('DIRETO DE BRASÍLIA', W / 2, 1440, 50, C.GOLD, { align: 'center', alpha: easeOut(prog(t, 4.95, 0.3)) });
 }
 function easeInOut(x) { return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; }
 

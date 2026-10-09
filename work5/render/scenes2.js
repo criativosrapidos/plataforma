@@ -74,7 +74,9 @@ function scene7(t) {
   ctx.save(); ctx.translate(W / 2, 490); ctx.scale(clamp(g), clamp(g));
   text('GARANTE SUA VAGA', 0, 0, 82, C.GOLD, { align: 'center' });
   ctx.restore();
-  serif('Alessandra Mendes', W / 2, 640, 80, C.WH, { align: 'center', alpha: easeOut(prog(lt, 0.3, 0.3)) });
+  const av = easeOutBack(prog(lt, 0.25, 0.4));
+  ctx.save(); ctx.translate(225, 640); ctx.scale(clamp(av), clamp(av)); avatar(0, 0, 70); ctx.restore();
+  serif('Alessandra Mendes', 615, 665, 74, C.WH, { align: 'center', alpha: easeOut(prog(lt, 0.3, 0.3)) });
   // botão direct
   const b = easeOutBack(prog(t, 22.2, 0.35));
   if (b > 0) {
