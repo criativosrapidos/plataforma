@@ -1,8 +1,8 @@
 // Cenas 5 a 7
 const STEPS = [
   { n: '1', l1: 'VOCÊ MANDA', l2: 'AS INFORMAÇÕES', at: 15.52 },
-  { n: '2', l1: 'A GENTE', l2: 'CRIA', at: 17.28 },
-  { n: '3', l1: 'VOCÊ', l2: 'RECEBE', at: 18.56 },
+  { n: '2', l1: 'A GENTE', l2: 'CRIA', at: 17.0 },
+  { n: '3', l1: 'VOCÊ', l2: 'RECEBE', at: 17.95 },
 ];
 
 // 5. Prazo — três passos + contador até 24h (fundo claro: nada de texto amarelo)
@@ -31,7 +31,7 @@ function scene5(t) {
     text('em até', 110, 945, 64, C.K, { weight: 700 });
     ctx.restore();
     const label = `${v}h`;
-    const pop = c >= 1 ? 1 + 0.08 * Math.sin(prog(t, 20.26, 0.3) * Math.PI) : 1;
+    const pop = c >= 1 ? 1 + 0.08 * Math.sin(prog(t, 20.2, 0.3) * Math.PI) : 1;
     ctx.save(); ctx.translate(110, y); ctx.scale(pop, pop);
     stripWord(label, 0, 0, 230, { alpha: a, reveal: 1 });
     ctx.restore();
@@ -84,7 +84,7 @@ function scene6(t) {
 }
 
 // 7. Final — logo oficial no amarelo, frase e botão pulsando
-const CLICK_AT = 28.57;
+const CLICK_AT = 27.26;
 function scene7(t) {
   bg(C.Y);
   const lt = t - T.s7;
@@ -95,30 +95,30 @@ function scene7(t) {
   ctx.translate(W / 2, 520); ctx.scale(s, s); ctx.translate(-W / 2, -520);
   drawLogo(W / 2, 520, 640);
   ctx.restore();
-  const p = easeOut(prog(t, 25.9, 0.3));
+  const p = easeOut(prog(t, 25.7, 0.3));
   text('Seu vídeo pronto', W / 2, 860 + (1 - p) * 40, 92, C.K, { align: 'center', alpha: p });
-  const q = easeOut(prog(t, 26.95, 0.3));
+  const q = easeOut(prog(t, 26.2, 0.3));
   ctx.save(); ctx.globalAlpha = q;
   const s1 = 'em ', s2 = '24 horas.';
   const w1 = measure(s1, 92), w2 = measure(s2, 92);
   const x0 = W / 2 - (w1 + w2) / 2;
   text(s1, x0, 975, 92, C.K);
   // destaque inclinado sobre faixa preta (texto branco) — amarelo não aparece sobre amarelo
-  stripWord(s2, x0 + w1, 975, 92, { stripColor: C.K, textColor: C.WH, reveal: easeOut(prog(t, 27.5, 0.25)) });
+  stripWord(s2, x0 + w1, 975, 92, { stripColor: C.K, textColor: C.WH, reveal: easeOut(prog(t, 26.5, 0.25)) });
   ctx.restore();
   // botão
-  const b = easeOutBack(prog(t, 28.3, 0.35));
+  const b = easeOutBack(prog(t, 26.95, 0.35));
   if (b > 0) {
-    const pulse = 1 + 0.045 * Math.sin((t - 28.3) * 2 * Math.PI * 1.6) * (t > 28.9 ? 1 : 0);
+    const pulse = 1 + 0.045 * Math.sin((t - 26.95) * 2 * Math.PI * 1.6) * (t > 27.5 ? 1 : 0);
     const press = t >= CLICK_AT && t < CLICK_AT + 0.16 ? 0.93 : 1;
     const bw = 640, bh = 140, cy = 1200;
     ctx.save(); ctx.translate(W / 2, cy); ctx.scale(b * pulse * press, b * pulse * press);
     // anel pulsando
-    const ring = ((t - 28.3) * 1.6) % 1;
-    if (t > 28.9) { ctx.strokeStyle = `rgba(16,18,22,${0.35 * (1 - ring)})`; ctx.lineWidth = 8; roundRect(-bw / 2 - ring * 40, -bh / 2 - ring * 40, bw + ring * 80, bh + ring * 80, 70 + ring * 40); ctx.stroke(); }
+    const ring = ((t - 26.95) * 1.6) % 1;
+    if (t > 27.5) { ctx.strokeStyle = `rgba(16,18,22,${0.35 * (1 - ring)})`; ctx.lineWidth = 8; roundRect(-bw / 2 - ring * 40, -bh / 2 - ring * 40, bw + ring * 80, bh + ring * 80, 70 + ring * 40); ctx.stroke(); }
     ctx.fillStyle = C.K; roundRect(-bw / 2, -bh / 2, bw, bh, 70); ctx.fill();
     text('CHAMA NO DIRECT', 0, 22, 60, C.WH, { align: 'center' });
     ctx.restore();
   }
-  text('*a partir do briefing completo', W / 2, 1330, 36, C.K, { weight: 600, align: 'center', alpha: easeOut(prog(t, 27.9, 0.3)) * 0.75 });
+  text('*a partir do briefing completo', W / 2, 1330, 36, C.K, { weight: 600, align: 'center', alpha: easeOut(prog(t, 26.6, 0.3)) * 0.75 });
 }

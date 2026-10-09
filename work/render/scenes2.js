@@ -92,5 +92,5 @@ function scene4(t) {
   drawPhone(t);
   badge('ATÉ 30s', 1125, 11.0, t);
   badge('PRONTO PRA POSTAR', 1215, 13.1, t);
-  badge('PRONTO PRA ANUNCIAR', 1305, 14.0, t);
+  badge('PRONTO PRA ANUNCIAR', 1305, 13.7, t);
 }

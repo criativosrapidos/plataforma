@@ -2,7 +2,7 @@
 # Mixagem final: voz + SFX (+ trilha com ducking só na faixa da voz, se music.mp3 existir) e normalização em -14 LUFS
 set -e
 cd "$(dirname "$0")"
-W=(2.85 8.0 10.4 15.4 21.4 24.4); R=(3.62 4.58 5.6); K=(28.57)
+W=(2.68 8.4 10.45 15.4 21.4 25.0); R=(3.3 4.12 5.0); K=(27.26)
 in=(-i voice.wav); f=""; n=1; labels=""
 add() { in+=(-i "$1"); f+="[$n:a]adelay=$(python3 -c "print(int(($2-$3)*1000))"):all=1,volume=$4[x$n];"; labels+="[x$n]"; n=$((n+1)); }
 for t in "${W[@]}"; do add sfx_whoosh.wav $t 0.18 0.35; done
