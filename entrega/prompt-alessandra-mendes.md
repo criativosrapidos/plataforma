@@ -1,4 +1,31 @@
-# Prompt v2 — Alessandra Mendes: melasma em Goiânia (estrutura de criativo)
+# Prompt v3 (atual) — Alessandra Mendes: melasma em Goiânia
+
+**Estrutura de criativo:** Atenção → Dor → Explicação → Sonho → Solução → Objeção (preço) → Convite com urgência.
+
+**Formato:** 9:16, 1080×1920, 30fps, ~34s, sem legenda, locução feminina em ritmo natural (sem acelerar).
+
+**Visual premium:** preto #120E0D, dourado champanhe #E3C08D, nude #EBD3C4, rosé #C98B7B e creme #F7EFE8. Inter ExtraBold nos títulos e serifa itálica nas frases emocionais. Luz quente passando, partículas douradas, linhas douradas se desenhando, zoom suave.
+
+**Regras:**
+- Cada foto aparece **uma vez**: o retrato de perfil na Solução e a foto sentada no Convite.
+- A capa mostra só "GOIÂNIA, ATENÇÃO!".
+- Sem "presente": **o desconto é o presente**.
+- A ilustração de melasma é marcada "imagem ilustrativa".
+- Sem "Dra.", sem "biomédica", sem harmonização e sem promessa de resultado.
+
+| Bloco | Fala | Na tela |
+|---|---|---|
+| 1. Atenção | "Goiânia, atenção!" | Preto com o skyline de Goiânia em traço dourado se desenhando e "GOIÂNIA, ATENÇÃO!" (capa limpa) |
+| 2. Dor | "Sabe aquela mancha no rosto que não sai com nada... e que você esconde com maquiagem todo dia?" | Rosto ilustrado com melasma (bochechas, testa, buço) e uma esponja de base batendo na mancha. "QUE NÃO SAI COM NADA" → "E VOCÊ ESCONDE COM MAQUIAGEM TODO DIA" |
+| 3. Explicação | "Isso tem nome: melasma." | Fundo creme, "ISSO TEM NOME: MELASMA", anéis tracejados dourados nas manchas, "☀ piora com o sol · ↺ volta sem cuidado" |
+| 4. Sonho | "Imagina se olhar no espelho e ver uma pele mais uniforme, sem precisar esconder nada." | Espelho oval dourado com o mesmo rosto: as manchas suavizam, um reflexo passa e aparecem brilhos. "PELE MAIS UNIFORME", com "imagem ilustrativa · resultados variam" |
+| 5. Solução | "No dia dezenove, a Alessandra Mendes vem de Brasília pra um dia de tratamento de melasma no Setor Marista." | Retrato de perfil com moldura dourada, "DIA 19", "direto de BRASÍLIA → GOIÂNIA", nome em itálico, "TRATAMENTO DE MELASMA" e "Setor Marista" |
+| 6. Objeção | "E não precisa pagar seiscentos e noventa e sete: nesse dia, sai por duzentos e oitenta e cinco..." | Fundo creme: R$697 riscado → **R$285** em dourado sobre preto, com explosão, e "MAIS DE 50% OFF · SÓ DIA 19" |
+| 7. Convite | "Mas são só dez vagas. Manda MELASMA no direct e garante a sua!" | "SÓ 10 VAGAS" com 10 ícones, foto sentada, nome e @, botão dourado "MANDE 'MELASMA' NO DIRECT" com clique e o resumo da oferta |
+
+---
+
+# Versão 2 (anterior) — Alessandra Mendes: melasma em Goiânia (estrutura de criativo)
 
 **Estrutura:** Atenção → Dor → Explicação → Sonho → Solução → Objeção (preço) → Convite com urgência.
 

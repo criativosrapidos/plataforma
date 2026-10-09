@@ -1,7 +1,8 @@
 // Utilitários de desenho para o vídeo 1080x1920
 const W = 1080, H = 1920;
 // Paleta estética (Alessandra Mendes): vinho, nude, rosé e dourado
-const C = { Y: '#D4AF6A', K: '#3E1A24', OW: '#FBF5F0', WH: '#FFFFFF', G: '#8C6F68', WINE: '#3E1A24', WINE2: '#5C2633', NUDE: '#EAD6CA', ROSE: '#C98B7B', GOLD: '#D4AF6A', INK: '#3B2128' };
+// v3: preto, dourado champanhe e nude (estética premium)
+const C = { Y: '#E3C08D', K: '#120E0D', K2: '#1E1715', OW: '#F7EFE8', WH: '#FFFFFF', G: '#8E7B72', GOLD: '#E3C08D', GOLD2: '#C9A06A', NUDE: '#EBD3C4', ROSE: '#C98B7B', INK: '#2A1E1A', CREAM: '#F7EFE8' };
 
 // Texto serifado itálico para toques elegantes
 function serif(str, x, y, size, color, opts = {}) {

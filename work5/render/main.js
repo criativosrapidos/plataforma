@@ -4,8 +4,8 @@ const SCENES = [
   { at: T.s2, fn: scene2, zoom: true },
   { at: T.s3, fn: scene3, hardCut: true },
   { at: T.s4, fn: scene4, zoom: true },
-  { at: T.s5, fn: scene5, hardCut: true },
-  { at: T.s6, fn: scene6 },
+  { at: T.s5, fn: scene5, zoom: true },
+  { at: T.s6, fn: scene6, hardCut: true },
   { at: T.s7, fn: scene7, zoom: true },
 ];
 const WIPE = 0.22;
