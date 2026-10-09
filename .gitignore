@@ -13,3 +13,7 @@ work/ref/*.wav
 work3/audio/*.wav
 work3/video_raw.mp4
 work3/render/prev*/
+work4/audio/*.wav
+work4/video_raw.mp4
+work4/render/prev*/
+work4/marca/prev_*.png
