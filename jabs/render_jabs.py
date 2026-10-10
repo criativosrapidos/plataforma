@@ -23,7 +23,8 @@ from whatsapp_icon import wa_icon  # noqa: E402
 
 # ----------------------------------------------------------------- CONFIG ---
 W, H, FPS, DURATION = 1080, 1920, 30, 30.0
-VOICE = ROOT / "audio/locucao.mp3"   # ElevenLabs "Thales", take 1
+VOICE = ROOT / "audio/locucao.mp3"   # ElevenLabs "Thales", take 1 (cortada antes do "Fale com a gente")
+VOICE_END = 26.45  # institucional: termina em "Construtora e incorporadora."
 OUT = ROOT / "saida/jabs_30s.mp4"
 DELAY = 0.6
 WHATS = "(61) 99325-4777"
@@ -124,8 +125,9 @@ def finish(img, t):
 
 
 # -------------------------------------------------------------------- foto ---
-_src = Image.open(ROOT / "assets/obra_jl.jpg").convert("RGB").crop((0, 82, 828, 674))
-_photo = _src.resize((int(_src.width * 2.35), int(_src.height * 2.35)), Image.LANCZOS)
+# foto ampliada 4x com super-resolução (EDSR) -> nitidez real nos closes
+_src = Image.open(ROOT / "assets/obra_jl_hd.jpg").convert("RGB").crop((0, 328, 3312, 2696))
+_photo = _src
 PHOTO_COLOR = ImageEnhance.Contrast(ImageEnhance.Color(_photo).enhance(1.05)).enhance(1.08)
 _gray = ImageOps.grayscale(_photo)
 _gray = ImageOps.autocontrast(_gray, cutoff=1)
@@ -248,25 +250,18 @@ WA_W = wa_icon(64, bg=False)
 def sc6(t):
     f = black_bg().copy()
     lp = ease(prog(t, S6, 1.6))
-    ic = J.icon_anim(560, lp)
-    put(f, ic, W / 2, 610)
+    ic = J.icon_anim(470, lp)
+    put(f, ic, W / 2, 560)
     wm = J.wordmark(760)
     wp = ease(prog(t, S6 + 0.9, 1.2))
-    put(f, wm, W / 2, 950 + 20 * (1 - wp), alpha=wp)
-    rise(f, ttext("CONSTRUTORA  &  INCORPORADORA", "mont3", 30, track=8, color=(200, 200, 204)), W / 2, 1185, t,
+    put(f, wm, W / 2, 960 + 20 * (1 - wp), alpha=wp)
+    rise(f, ttext("CONSTRUTORA  &  INCORPORADORA", "mont3", 30, track=8, color=(200, 200, 204)), W / 2, 1200, t,
          M["construtora"])
-    rise(f, ttext("Especializada em obras de alto padrão", "cormi3", 50, color=(225, 225, 228)), W / 2, 1265, t,
+    rise(f, ttext("Especializada em obras de alto padrão", "cormi3", 50, color=(225, 225, 228)), W / 2, 1275, t,
          M["construtora"] + 0.8)
-    p = ease(prog(t, M["fale"] - 0.2, 0.9))
-    if p > 0:
-        row = Image.new("RGBA", (760, 110), (0, 0, 0, 0))
-        d = ImageDraw.Draw(row)
-        d.rounded_rectangle((1, 1, 758, 108), 54, outline=(230, 230, 232, 255), width=2)
-        row.alpha_composite(WA_W, (60, 23))
-        num = ttext(WHATS, "mont4", 46, track=4)
-        row.alpha_composite(num, (430 - num.width // 2, 55 - num.height // 2))
-        put(f, row, W / 2, 1430 + 20 * (1 - p), alpha=p)
-    rise(f, ttext("FALE COM A GENTE", "mont3", 24, track=8, color=(170, 170, 175)), W / 2, 1530, t, M["whats"])
+    rise(f, ttext("Precisão em cada etapa.", "cormi3", 64, color=(235, 235, 238)), W / 2, 1440, t, M["fale"] - 0.1, dur=1.2)
+    hline(f, W / 2, 1530, 120, prog(t, M["fale"] + 0.6, 1.0), alpha=150)
+    rise(f, ttext("@JABSENGENHARIA", "mont3", 24, track=8, color=(160, 160, 165)), W / 2, 1590, t, M["fale"] + 1.0)
     return f
 
 
@@ -360,7 +355,7 @@ def main():
     subprocess.run(
         ["ffmpeg", "-y", "-loglevel", "error", "-i", str(silent), "-i", str(VOICE), "-i", str(music),
          "-filter_complex",
-         f"[1:a]adelay={dl}|{dl},aresample=44100,highpass=f=70,acompressor=threshold=-22dB:ratio=3:attack=8:release=120,"
+         f"[1:a]atrim=0:{VOICE_END},afade=t=out:st={VOICE_END - 0.25}:d=0.25,adelay={dl}|{dl},aresample=44100,highpass=f=70,acompressor=threshold=-22dB:ratio=3:attack=8:release=120,"
          "volume=1.8,asplit=2[v1][v2];[2:a]volume=0.42[m];"
          "[m][v1]sidechaincompress=threshold=0.05:ratio=3:release=400[md];"
          f"[md][v2]amix=inputs=2:duration=longest:normalize=0,loudnorm=I=-14:TP=-1.0,apad,atrim=0:{DURATION}[a]",

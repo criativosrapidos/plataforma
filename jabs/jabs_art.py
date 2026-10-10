@@ -42,36 +42,43 @@ def text_width(text, f, track):
 
 # ------------------------------------------------------------------ monograma --
 def _icon_layer(size, color, line=1.0, prog=1.0):
-    """Arco fino + três torres (a do meio com mastro), linha de base. prog revela o traço."""
+    """Símbolo: portal em arco (linha dupla fina) + J serifado + linha de base. prog anima o traço."""
     s = size * K
     img = Image.new("RGBA", (s, s), (0, 0, 0, 0))
     d = ImageDraw.Draw(img)
-    lw = max(1, int(s * 0.012 * line))
     c = color + (255,)
-    # arco (de 200° a 340° passando pelo topo)
-    a0, a1 = 198, 342
-    a_end = a0 + (a1 - a0) * min(1, prog * 1.6)
-    if prog > 0:
-        d.arc((s * .10, s * .06, s * .90, s * .86), a0, a_end, fill=c, width=lw)
-    tp = max(0.0, min(1, (prog - 0.25) / 0.6))
-    # torres: (x0, x1, topo) em fração
-    towers = [(.33, .43, .40), (.445, .555, .22), (.57, .67, .34)]
-    base = .74
-    for i, (x0, x1, top) in enumerate(towers):
-        h = (base - top) * min(1, max(0, tp * 1.4 - i * 0.2))
-        if h <= 0:
-            continue
-        y0 = base - h
-        d.rectangle((s * x0, s * y0, s * x1, s * base), outline=c, width=lw)
-        # janelas: linhas horizontais finas
-        yy = base - 0.035
-        while yy > y0 + 0.03:
-            d.line((s * (x0 + .018), s * yy, s * (x1 - .018), s * yy), fill=color + (150,), width=max(1, lw // 2))
-            yy -= 0.035
-    if tp > 0.85:  # mastro
-        d.line((s * .5, s * .22, s * .5, s * .13), fill=c, width=lw)
-    bl = min(1, prog * 1.3)
-    d.line((s * (.5 - .36 * bl), s * base, s * (.5 + .36 * bl), s * base), fill=c, width=lw)
+    lw = max(2, int(s * .010 * line))
+    w = s * .56
+    x0, top, bot = (s - w) / 2, s * .07, s * .89
+    r = w / 2
+    p1 = min(1, prog / 0.55)                # contorno externo
+    p2 = max(0, min(1, (prog - 0.25) / 0.5))  # contorno interno
+    pj = max(0, min(1, (prog - 0.5) / 0.4))   # letra
+
+    def portal(inset, width, p):
+        if p <= 0:
+            return
+        leg = (bot - (top + r)) * min(1, p * 2)
+        d.line((x0 + inset, bot, x0 + inset, bot - leg), fill=c, width=width)
+        d.line((x0 + w - inset, bot, x0 + w - inset, bot - leg), fill=c, width=width)
+        if p > 0.5:
+            span = 90 * (p - 0.5) * 2
+            box = (x0 + inset, top + inset, x0 + w - inset, top + w - inset)
+            d.arc(box, 180, 180 + span, fill=c, width=width)
+            d.arc(box, 360 - span, 360, fill=c, width=width)
+
+    portal(0, lw, p1)
+    portal(s * .03, max(1, lw // 3), p2)
+    bl = min(1, prog * 1.4)
+    half = (w / 2 + s * .10) * bl
+    d.line((s / 2 - half, bot, s / 2 + half, bot), fill=c, width=lw)
+    if pj > 0:
+        jl = Image.new("RGBA", (s, s), (0, 0, 0, 0))
+        f = font("cinzel", int(s * .54))
+        ImageDraw.Draw(jl).text((s / 2 + s * .012, top + r + (bot - top - r) * .40), "J", font=f, fill=c, anchor="mm")
+        if pj < 1:
+            jl.putalpha(jl.getchannel("A").point(lambda v: int(v * pj)))
+        img.alpha_composite(jl)
     return img
 
 

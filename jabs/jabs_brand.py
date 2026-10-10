@@ -172,19 +172,25 @@ def page_identity():
 
 # ------------------------------------------------------ aplicações (página) --
 def business_cards():
-    cw, ch = 700, 400
+    cw, ch = 640, 366
     front = concrete(cw, ch, 14, 10, seed=3)
-    lk = J.lockup(260)
+    lk = J.lockup(250)
     front.alpha_composite(lk, ((cw - lk.width) // 2, (ch - lk.height) // 2))
     back = Image.new("RGBA", (cw, ch), IVORY + (255,))
     d = ImageDraw.Draw(back)
-    back.alpha_composite(J.icon(90, ONYX), (50, 40))
-    T(d, (50, 170), "Engenheiro Responsável", font("cormi", 40), ONYX)
-    T(d, (50, 238), "CONSTRUTORA & INCORPORADORA", font("mont4", 16), STONE, track=4)
-    d.line((50, 278, 140, 278), fill=ONYX, width=2)
-    T(d, (50, 300), WHATS, font("mont4", 22), ONYX)
-    T(d, (50, 336), "@jabsengenharia", font("mont3", 20), ONYX)
-    return rounded(front, 10), rounded(back, 10)
+    ic = J.icon(120, ONYX)
+    ic = ic.crop(ic.getbbox())
+    back.alpha_composite(ic, (56, 52))
+    T(d, (56, 192), "JABS ENGENHARIA", font("cinzel", 22), ONYX, track=4)
+    T(d, (56, 230), "CONSTRUTORA &", font("mont4", 12), STONE, track=3)
+    T(d, (56, 252), "INCORPORADORA", font("mont4", 12), STONE, track=3)
+    d.line((cw - 262, 64, cw - 262, ch - 64), fill=(200, 196, 188), width=1)
+    rows = [("WHATSAPP", WHATS), ("INSTAGRAM", "@jabsengenharia"), ("ATUAÇÃO", "Brasília · DF")]
+    for i, (lab, val) in enumerate(rows):
+        y = 78 + i * 78
+        T(d, (cw - 232, y), lab, font("mont5", 12), STONE, track=4)
+        T(d, (cw - 232, y + 22), val, font("mont4", 19), ONYX)
+    return rounded(front, 8), rounded(back, 8)
 
 
 def placa_obra():
@@ -208,16 +214,16 @@ def page_applications():
     T(d, (90, 90), "APLICAÇÕES", font("mont5", 22), GRAPH, track=10)
     T(d, (90, 130), "A marca no dia a dia da obra.", font("cormi", 58), ONYX)
     f, b = business_cards()
-    shadow_paste(p, f, (110, 300), rot=-4)
-    shadow_paste(p, b, (300, 640), rot=3)
+    shadow_paste(p, f, (110, 250))
+    shadow_paste(p, b, (110, 650))
     pl = placa_obra()
-    shadow_paste(p, pl, (760, 250))
+    shadow_paste(p, pl, (820, 250))
     # mockup de post
-    post = carousel_slides()[0].resize((320, 400), Image.LANCZOS)
-    shadow_paste(p, rounded(post, 8), (1570, 330), rot=-2)
-    T(d, (900, 815), "Placa de obra / tapume", font("mont4", 20), GRAPH, track=3)
-    T(d, (1600, 815), "Post de Instagram", font("mont4", 20), GRAPH, track=3)
-    T(d, (330, 1060), "Cartão de visita", font("mont4", 20), GRAPH, track=3)
+    post = carousel_slides()[0].resize((272, 340), Image.LANCZOS)
+    shadow_paste(p, rounded(post, 8), (1622, 300))
+    T(d, (820, 800), "Placa de obra / tapume", font("mont4", 20), GRAPH, track=3)
+    T(d, (1622, 670), "Post de Instagram", font("mont4", 20), GRAPH, track=3)
+    T(d, (110, 1040), "Cartão de visita  ·  frente e verso", font("mont4", 20), GRAPH, track=3)
     return p
 
 
@@ -488,8 +494,8 @@ def page_plans():
     W, H = 1920, 1080
     p = concrete(W, H, 12, 10, seed=90)
     d = ImageDraw.Draw(p)
-    T(d, (W / 2, 120), "INVESTIMENTO", font("mont5", 22), SOFT, "mm", track=12)
-    T(d, (W / 2, 200), "Escolha o seu plano.", font("cormi", 76), WHITE, "mm")
+    T(d, (W / 2, 120), "PACOTES", font("mont5", 22), SOFT, "mm", track=12)
+    T(d, (W / 2, 200), "Escolha o seu pacote.", font("cormi", 76), WHITE, "mm")
     cw, ch, gap = 540, 700, 40
     x0 = (W - (cw * 3 + gap * 2)) // 2
     for i, (name, price, items, hl) in enumerate(PLANS):
@@ -535,17 +541,56 @@ def page_video():
     return p
 
 
+def page_cover():
+    W, H = 1920, 1080
+    p = concrete(W, H, 12, 10, seed=5)
+    d = ImageDraw.Draw(p)
+    lk = J.lockup(520)
+    p.alpha_composite(lk, ((W - lk.width) // 2, 170))
+    T(d, (W / 2, 820), "PROPOSTA DE CONTEÚDO", font("mont4", 24), SOFT, "mm", track=14)
+    T(d, (W / 2, 890), "Instagram · vídeos · landing page", font("cormi", 52), WHITE, "mm")
+    d.line((W / 2 - 50, 960, W / 2 + 50, 960), fill=SOFT, width=1)
+    return p
+
+
+def page_landing():
+    W, H = 1920, 1080
+    p = Image.new("RGBA", (W, H), IVORY + (255,))
+    d = ImageDraw.Draw(p)
+    T(d, (90, 100), "LANDING PAGE  ·  EXEMPLO", font("mont5", 22), STONE, track=10)
+    T(d, (90, 150), "Uma vitrine institucional", font("corm", 64), ONYX)
+    T(d, (90, 222), "à altura da marca.", font("cormi", 64), ONYX)
+    desk = Image.open(OUT / "landing/landing_desktop.png").convert("RGBA")
+    shot = desk.crop((0, 0, desk.width, int(desk.width * 0.62))).resize((1080, 670), Image.LANCZOS)
+    frame = Image.new("RGBA", (1080, 704), (30, 30, 32, 255))
+    fd = ImageDraw.Draw(frame)
+    for i, c in enumerate([(255, 95, 86), (255, 189, 46), (39, 201, 63)]):
+        fd.ellipse((16 + i * 22, 11, 28 + i * 22, 23), fill=c)
+    frame.alpha_composite(shot, (0, 34))
+    shadow_paste(p, rounded(frame, 10), (90, 330))
+    mob = Image.open(OUT / "landing/landing_celular.png").convert("RGBA")
+    ms = mob.crop((0, 0, mob.width, int(mob.width * 2.16))).resize((330, 713), Image.LANCZOS)
+    ph = Image.new("RGBA", (354, 737), (0, 0, 0, 0))
+    ImageDraw.Draw(ph).rounded_rectangle((0, 0, 353, 736), 46, fill=(28, 28, 30), outline=(80, 80, 84), width=3)
+    ph.alpha_composite(rounded(ms, 36), (12, 12))
+    shadow_paste(p, ph, (1260, 300))
+    x0 = 1660
+    for i, t_ in enumerate(["Hero com obra real", "Sobre e manifesto", "Diferenciais", "Galeria de obras",
+                            "Processo", "Contato"]):
+        T(d, (x0, 420 + i * 62), f"0{i + 1}", font("cinzel", 20), STONE)
+        T(d, (x0 + 46, 418 + i * 62), t_, font("mont3", 22), GRAPH)
+    return p
+
+
 def main():
-    (OUT / "identidade").mkdir(parents=True, exist_ok=True)
-    (OUT / "carrossel").mkdir(parents=True, exist_ok=True)
-    (OUT / "perfil").mkdir(parents=True, exist_ok=True)
-    pages = [page_identity(), page_applications(), page_profile(), page_video(), page_plans()]
-    names = ["01_identidade", "02_aplicacoes", "03_perfil", "04_video", "05_planos"]
-    for pg, nm in zip(pages, names):
-        pg.convert("RGB").save(OUT / "identidade" / f"{nm}.png")
+    for sub in ("identidade", "carrossel", "perfil"):
+        (OUT / sub).mkdir(parents=True, exist_ok=True)
+    page_identity().convert("RGB").save(OUT / "identidade" / "jabs_identidade_visual.png")
+    page_applications().convert("RGB").save(OUT / "identidade" / "jabs_aplicacoes.png")
     for i, sl in enumerate(carousel_slides(), 1):
         sl.convert("RGB").save(OUT / "carrossel" / f"jabs_carrossel_{i}.png")
     profile_screen().convert("RGB").save(OUT / "perfil" / "jabs_perfil_instagram.png")
+    pages = [page_cover(), page_profile(), page_landing(), page_plans()]
     rgb = [pg.convert("RGB") for pg in pages]
     rgb[0].save(OUT / "proposta_jabs.pdf", save_all=True, append_images=rgb[1:], resolution=150)
     print("OK")
