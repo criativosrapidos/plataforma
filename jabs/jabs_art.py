@@ -42,43 +42,45 @@ def text_width(text, f, track):
 
 # ------------------------------------------------------------------ monograma --
 def _icon_layer(size, color, line=1.0, prog=1.0):
-    """Símbolo: portal em arco (linha dupla fina) + J serifado + linha de base. prog anima o traço."""
+    """Símbolo: Congresso Nacional estilizado (torres gêmeas, cúpula, cuia, laje). prog anima a construção."""
     s = size * K
     img = Image.new("RGBA", (s, s), (0, 0, 0, 0))
     d = ImageDraw.Draw(img)
     c = color + (255,)
-    lw = max(2, int(s * .010 * line))
-    w = s * .56
-    x0, top, bot = (s - w) / 2, s * .07, s * .89
-    r = w / 2
-    p1 = min(1, prog / 0.55)                # contorno externo
-    p2 = max(0, min(1, (prog - 0.25) / 0.5))  # contorno interno
-    pj = max(0, min(1, (prog - 0.5) / 0.4))   # letra
-
-    def portal(inset, width, p):
-        if p <= 0:
-            return
-        leg = (bot - (top + r)) * min(1, p * 2)
-        d.line((x0 + inset, bot, x0 + inset, bot - leg), fill=c, width=width)
-        d.line((x0 + w - inset, bot, x0 + w - inset, bot - leg), fill=c, width=width)
-        if p > 0.5:
-            span = 90 * (p - 0.5) * 2
-            box = (x0 + inset, top + inset, x0 + w - inset, top + w - inset)
-            d.arc(box, 180, 180 + span, fill=c, width=width)
-            d.arc(box, 360 - span, 360, fill=c, width=width)
-
-    portal(0, lw, p1)
-    portal(s * .03, max(1, lw // 3), p2)
-    bl = min(1, prog * 1.4)
-    half = (w / 2 + s * .10) * bl
-    d.line((s / 2 - half, bot, s / 2 + half, bot), fill=c, width=lw)
-    if pj > 0:
-        jl = Image.new("RGBA", (s, s), (0, 0, 0, 0))
-        f = font("cinzel", int(s * .54))
-        ImageDraw.Draw(jl).text((s / 2 + s * .012, top + r + (bot - top - r) * .40), "J", font=f, fill=c, anchor="mm")
-        if pj < 1:
-            jl.putalpha(jl.getchannel("A").point(lambda v: int(v * pj)))
-        img.alpha_composite(jl)
+    lw = max(2, int(s * .009 * line))
+    ground = s * .80
+    pg = min(1, prog / 0.3)                       # linha de base
+    pt = max(0, min(1, (prog - 0.15) / 0.5))      # torres subindo
+    ps = max(0, min(1, (prog - 0.45) / 0.3))      # laje
+    pc = max(0, min(1, (prog - 0.65) / 0.35))     # cúpula e cuia
+    half = s * .43 * pg
+    d.line((s / 2 - half, ground, s / 2 + half, ground), fill=c, width=lw)
+    if pt > 0:
+        tw, gap, top = s * .052, s * .022, s * .10
+        h = (ground - top) * pt
+        for x0 in (s / 2 - gap / 2 - tw, s / 2 + gap / 2):
+            d.rectangle((x0, ground - h, x0 + tw, ground), fill=c)
+        if pt > 0.7:
+            yb = top + (ground - top) * .30
+            d.rectangle((s / 2 - gap / 2 - tw, yb, s / 2 + gap / 2 + tw, yb + s * .022), fill=c)
+    slab_y = ground - s * .13
+    if ps > 0:
+        sw = s * .36 * ps
+        d.rectangle((s / 2 - sw, slab_y, s / 2 + sw, slab_y + s * .016), fill=c)
+        d.rectangle((s / 2 - sw * .9, slab_y + s * .016, s / 2 + sw * .9, ground), outline=c, width=max(1, lw // 2))
+    if pc > 0:
+        lay = Image.new("RGBA", (s, s), (0, 0, 0, 0))
+        ld = ImageDraw.Draw(lay)
+        r1 = s * .085   # cúpula do Senado (convexa)
+        cx1 = s / 2 - s * .21
+        ld.chord((cx1 - r1, slab_y - r1 * .95, cx1 + r1, slab_y + r1 * .95), 180, 360, fill=c)
+        r2 = s * .12    # cuia da Câmara (côncava)
+        cx2 = s / 2 + s * .22
+        ld.chord((cx2 - r2, slab_y - r2 * 1.05 - s * .055, cx2 + r2, slab_y + r2 * .95 - s * .055), 0, 180, fill=c)
+        ld.rectangle((cx2 - s * .012, slab_y - s * .06, cx2 + s * .012, slab_y), fill=c)
+        if pc < 1:
+            lay.putalpha(lay.getchannel("A").point(lambda v: int(v * pc)))
+        img.alpha_composite(lay)
     return img
 
 
