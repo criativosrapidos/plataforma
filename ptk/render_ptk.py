@@ -21,19 +21,21 @@ ROOT = Path(__file__).resolve().parent
 
 # ----------------------------------------------------------------- CONFIG ---
 W, H, FPS, DURATION = 1080, 1920, 30, 30.0
-VOICE = ROOT / "audio/locucao_raw.wav"
+VOICE = ROOT / "audio/locucao_final.wav"  # ElevenLabs "Nassif", take 2, acelerado 8%
 OUT = ROOT / "saida/ptk_fretes_30s.mp4"
 WHATS = "(61) 99851-3615"
 GREEN = (37, 211, 102)
+TEMPO = 1.08
 
-# Marcas (s) - início de cada frase/palavra da locução (Kokoro, gerada frase a frase)
-M = dict(precisa=0.0, frete=0.85, fale=1.514, patrick=2.05, ptk=2.751,
-         mudanca=4.10, moveis=5.09, eletro=5.55, caixas=6.60, entregas=7.12,
-         rapido=7.766, seguro=9.295, justo=10.62, cuidado=11.647,
-         strada=13.65, forca=14.55, atendemos=16.361, brasilia=16.95, df=17.85,
-         peca=19.196, orcamento=19.95, whats=20.6, n61=21.37, final=24.379, cta=25.6)
-DIGITS = [(22.10, "9"), (22.35, "9"), (22.60, "8"), (22.85, "5"), (23.10, "1"),
-          (23.33, "-3"), (23.55, "6"), (23.80, "1"), (24.00, "5")]
+# Marcas (s) na locução original (ElevenLabs Scribe); divididas pelo TEMPO aplicado no áudio
+_M = dict(precisa=0.0, frete=0.64, fale=1.36, patrick=1.84, ptk=2.72,
+          mudanca=4.32, moveis=5.48, eletro=5.893, caixas=7.04, entregas=7.52,
+          rapido=8.32, seguro=9.68, justo=11.12, cuidado=12.24,
+          strada=14.64, forca=15.8, atendemos=17.84, brasilia=18.4, df=19.28,
+          peca=20.8, orcamento=21.6, whats=22.48, n61=23.04, final=27.32, cta=28.4)
+M = {k: v / TEMPO for k, v in _M.items()}
+DIGITS = [(v / TEMPO, d) for v, d in [(23.96, "9"), (24.4, "9"), (24.72, "8"), (25.04, "5"), (25.52, "1"),
+                                      (25.76, "-3"), (26.12, "6"), (26.48, "1"), (26.64, "5")]]
 CUTS = ["fale", "ptk", "mudanca", "rapido", "strada", "atendemos", "peca", "final"]
 HITS = sorted(set([M[k] for k in CUTS] + [M[k] for k in (
     "precisa", "frete", "patrick", "moveis", "eletro", "caixas", "entregas", "seguro", "justo", "cuidado",
