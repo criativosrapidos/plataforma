@@ -185,86 +185,78 @@ def speed_lines(d, x, y, n=3, length=150, gap=34, width=16, color=YEL):
         d.rounded_rectangle((x - L - i * 18, y + i * gap, x - i * 18, y + i * gap + width), width // 2, fill=color)
 
 
+def _wordmark(color_ptk, color_bar, color_bar_txt, scale=1.0):
+    """PTK reto (Black) + faixa FRETES com a MESMA largura e alinhada nas duas bordas."""
+    f = font(int(300 * S * scale), "Black")
+    probe = ImageDraw.Draw(Image.new("RGBA", (1, 1)))
+    bb = probe.textbbox((0, 0), "PTK", font=f)
+    wp, hp = bb[2] - bb[0], bb[3] - bb[1]
+    gap, barh = int(hp * 0.12), int(hp * 0.42)
+    img = Image.new("RGBA", (wp, hp + gap + barh), (0, 0, 0, 0))
+    d = ImageDraw.Draw(img)
+    d.text((-bb[0], -bb[1]), "PTK", font=f, fill=color_ptk)
+    top = hp + gap
+    d.rectangle((0, top, wp, top + barh), fill=color_bar)
+    ff = font(int(barh * 0.60), "Black")
+    letters = "FRETES"
+    boxes = [probe.textbbox((0, 0), c, font=ff) for c in letters]
+    widths = [b[2] - b[0] for b in boxes]
+    margin = barh * 0.42
+    track = (wp - 2 * margin - sum(widths)) / (len(letters) - 1)
+    x = margin
+    for c, b, cw in zip(letters, boxes, widths):
+        d.text((x - b[0], top + barh / 2), c, font=ff, fill=color_bar_txt, anchor="lm")
+        x += cw + track
+    return img
+
+
 @lru_cache(None)
 def logo_icon(size=1000):
-    """Ícone redondo (foto de perfil): picape + PTK + faixa FRETES, tudo centralizado pela tinta."""
+    """Ícone redondo (foto de perfil): picape em cima, PTK + FRETES embaixo, centralizados."""
     s = size * S
     img = Image.new("RGBA", (s, s), (0, 0, 0, 0))
     d = ImageDraw.Draw(img)
     d.ellipse((0, 0, s - 1, s - 1), fill=BLACK + (255,))
     d.ellipse((s * .045, s * .045, s * .955, s * .955), fill=YEL + (255,))
     d.ellipse((s * .085, s * .085, s * .915, s * .915), outline=BLACK + (255,), width=int(s * .012))
-    # picape + linhas de velocidade, grupo centralizado
+    wm = _wordmark(BLACK, BLACK, YEL)
+    ww = int(s * .52)
+    wm = wm.resize((ww, int(wm.height * ww / wm.width)), Image.LANCZOS)
     sil = pickup_silhouette(BLACK)
-    tw = int(s * .44)
+    tw = int(s * .40)
     sil = sil.resize((tw, int(tw * sil.height / sil.width)), Image.LANCZOS)
-    lines_w = int(s * .10)
-    group_w = lines_w + int(s * .02) + tw
-    gx = (s - group_w) // 2
-    ty = int(s * .20)
-    img.alpha_composite(sil, (gx + lines_w + int(s * .02), ty))
-    lw = int(s * .018)
-    speed_lines(d, gx + lines_w, ty + int(sil.height * .42) - int(lw * 2.2), n=3, length=lines_w, gap=int(lw * 1.9),
+    lines_w, lgap = int(s * .09), int(s * .02)
+    gap = int(s * .05)
+    total_h = sil.height + gap + wm.height
+    y0 = (s - total_h) // 2
+    gx = (s - (lines_w + lgap + tw)) // 2
+    img.alpha_composite(sil, (gx + lines_w + lgap, y0))
+    lw = int(s * .017)
+    speed_lines(d, gx + lines_w, y0 + int(sil.height * .40) - int(lw * 2.2), n=3, length=lines_w, gap=int(lw * 1.9),
                 width=lw, color=BLACK)
-    # PTK centralizado pela tinta
-    f = font(int(s * .27), "BlackItalic")
-    bb = d.textbbox((0, 0), "PTK", font=f)
-    wp, hp = bb[2] - bb[0], bb[3] - bb[1]
-    x0, y0 = (s - wp) // 2, int(s * .45)
-    d.text((x0 - bb[0], y0 - bb[1]), "PTK", font=f, fill=BLACK)
-    top, barh = y0 + hp + int(hp * .14), int(hp * .40)
-    k = int(barh * .36)
-    d.polygon([(x0 + k, top), (x0 + wp + k, top), (x0 + wp, top + barh), (x0, top + barh)], fill=BLACK)
-    d.text((x0 + wp / 2 + k / 2, top + barh / 2), "F R E T E S", font=font(int(barh * .6), "Black"), fill=YEL,
-           anchor="mm")
+    img.alpha_composite(wm, ((s - wm.width) // 2, y0 + sil.height + gap))
     return img.resize((size, size), Image.LANCZOS)
 
 
 @lru_cache(None)
 def logo_horizontal(dark_bg=True, height=360):
-    """Marca horizontal alinhada: picape | PTK com a faixa FRETES exatamente da largura do PTK.
-
-    - A faixa FRETES começa e termina junto com as letras de PTK (mesma inclinação do itálico).
-    - A picape tem a base alinhada com a base da faixa e o mesmo respiro em relação ao bloco de texto.
-    """
+    """Picape (centralizada na altura do bloco) | PTK reto com faixa FRETES da mesma largura."""
     fg = WHITE if dark_bg else BLACK
-    f = font(300 * S, "BlackItalic")
-    probe = ImageDraw.Draw(Image.new("RGBA", (1, 1)))
-    bb = probe.textbbox((0, 0), "PTK", font=f)
-    wp, hp = bb[2] - bb[0], bb[3] - bb[1]
-    gap, barh = int(hp * 0.14), int(hp * 0.40)
-    block_h = hp + gap + barh
+    wm = _wordmark(fg, YEL, BLACK)
     sil = pickup_silhouette(YEL)
-    th = int(block_h * 0.66)
+    th = int(wm.height * 0.62)
     sil = sil.resize((int(sil.width * th / sil.height), th), Image.LANCZOS)
-    lines_w = int(th * 0.55)
-    pad = 20 * S
-    x_truck = pad + lines_w + int(th * 0.08)
-    x0 = x_truck + sil.width + int(hp * 0.07)
-    y0 = pad
-    W_, H_ = x0 + wp + int(barh * 0.4) + pad, y0 + block_h + pad
+    lines_w = int(th * 0.50)
+    lgap = int(th * 0.06)
+    gap = int(wm.height * 0.12)
+    W_ = lines_w + lgap + sil.width + gap + wm.width
+    H_ = wm.height
     img = Image.new("RGBA", (W_, H_), (0, 0, 0, 0))
     d = ImageDraw.Draw(img)
-    d.text((x0 - bb[0], y0 - bb[1]), "PTK", font=f, fill=fg)
-    top = y0 + hp + gap
-    k = int(barh * 0.36)  # mesma inclinação do itálico
-    d.polygon([(x0 + k, top), (x0 + wp + k, top), (x0 + wp, top + barh), (x0, top + barh)], fill=YEL)
-    # FRETES com espaçamento que preenche ~78% da faixa
-    fs = int(barh * 0.62)
-    ff = font(fs, "Black")
-    letters = "FRETES"
-    widths = [probe.textlength(c, font=ff) for c in letters]
-    target = wp * 0.78
-    track = (target - sum(widths)) / (len(letters) - 1)
-    x = x0 + k / 2 + (wp - target) / 2
-    for c, cw in zip(letters, widths):
-        d.text((x, top + barh / 2), c, font=ff, fill=BLACK, anchor="lm")
-        x += cw + track
-    # picape: base alinhada à base da faixa
-    y_truck = top + barh - sil.height
-    img.alpha_composite(sil, (x_truck, y_truck))
+    ty = (H_ - sil.height) // 2
+    img.alpha_composite(sil, (lines_w + lgap, ty))
     lw = max(4, int(th * 0.07))
-    mid = y_truck + int(sil.height * 0.42)
-    speed_lines(d, x_truck - int(th * 0.06), mid - int(lw * 2.2), n=3, length=lines_w, gap=int(lw * 1.9), width=lw)
+    speed_lines(d, lines_w, ty + int(sil.height * 0.40) - int(lw * 2.2), n=3, length=lines_w, gap=int(lw * 1.9), width=lw)
+    img.alpha_composite(wm, (W_ - wm.width, 0))
     img = img.crop(img.getbbox())
     return img.resize((int(img.width * height / img.height), height), Image.LANCZOS)

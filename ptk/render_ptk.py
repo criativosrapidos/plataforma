@@ -16,6 +16,7 @@ from PIL import Image, ImageDraw, ImageFilter
 
 import ptk_art as A
 from ptk_art import BLACK, INK, WHITE, YEL, YEL2, font
+from whatsapp_icon import wa_icon
 
 ROOT = Path(__file__).resolve().parent
 
@@ -26,6 +27,7 @@ OUT = ROOT / "saida/ptk_fretes_30s.mp4"
 WHATS = "(61) 99851-3615"
 GREEN = (37, 211, 102)
 TEMPO = 1.08
+PREROLL = 0.9  # abertura antes da voz: "PRECISA DE UM" aparece inteiro
 
 # Marcas (s) na locução original (ElevenLabs Scribe); divididas pelo TEMPO aplicado no áudio
 _M = dict(precisa=0.0, frete=0.64, fale=1.36, patrick=1.84, ptk=2.72,
@@ -33,8 +35,9 @@ _M = dict(precisa=0.0, frete=0.64, fale=1.36, patrick=1.84, ptk=2.72,
           rapido=8.32, seguro=9.68, justo=11.12, cuidado=12.24,
           strada=14.64, forca=15.8, atendemos=17.84, brasilia=18.4, df=19.28,
           peca=20.8, orcamento=21.6, whats=22.48, n61=23.04, final=27.32, cta=28.4)
-M = {k: v / TEMPO for k, v in _M.items()}
-DIGITS = [(v / TEMPO, d) for v, d in [(23.96, "9"), (24.4, "9"), (24.72, "8"), (25.04, "5"), (25.52, "1"),
+M = {k: v / TEMPO + PREROLL for k, v in _M.items()}
+M["precisa"] = 0.25
+DIGITS = [(v / TEMPO + PREROLL, d) for v, d in [(23.96, "9"), (24.4, "9"), (24.72, "8"), (25.04, "5"), (25.52, "1"),
                                       (25.76, "-3"), (26.12, "6"), (26.48, "1"), (26.64, "5")]]
 CUTS = ["fale", "ptk", "mudanca", "rapido", "strada", "atendemos", "peca", "final"]
 HITS = sorted(set([M[k] for k in CUTS] + [M[k] for k in (
@@ -216,18 +219,7 @@ LOGO_H = A.logo_horizontal(True, 230)
 LOGO_H_SM = A.logo_horizontal(True, 130)
 
 
-def wa_icon(s=140):
-    img = Image.new("RGBA", (s, s), (0, 0, 0, 0))
-    d = ImageDraw.Draw(img)
-    d.ellipse((0, 0, s - 1, s - 1), fill=GREEN)
-    d.ellipse((s * .2, s * .18, s * .8, s * .78), outline=WHITE, width=int(s * .075))
-    d.polygon([(s * .17, s * .85), (s * .25, s * .62), (s * .4, s * .74)], fill=WHITE)
-    d.rounded_rectangle((s * .38, s * .36, s * .5, s * .48), 6, fill=WHITE)
-    d.rounded_rectangle((s * .5, s * .5, s * .62, s * .62), 6, fill=WHITE)
-    return img
-
-
-WA = wa_icon()
+WA = wa_icon(140)
 
 
 def check_icon(s=110):
@@ -253,9 +245,9 @@ def pin(s=200):
 
 # --------------------------------------------------------------- cenas -----
 def sc_hook(t):
-    x = -500 + (W / 2 + 500) * ease_out(prog(t, 0.0, 1.2))
+    x = -500 + (W / 2 + 500) * ease_out(prog(t, 0.0, 1.6))
     f = road_scene(t, drive_x=x)
-    slam(f, txt("PRECISA DE UM", 104, WHITE, 8, BLACK), W / 2, 470, t, M["precisa"], rot=-3)
+    slam(f, txt("PRECISA DE UM", 104, WHITE, 8, BLACK), W / 2, 470, t, M["precisa"], rot=-3, big=1.4, dur=0.35)
     slam(f, txt("FRETE?", 250, YEL, 12, BLACK), W / 2, 680, t, M["frete"], rot=-3, big=2.2)
     return f
 
@@ -490,7 +482,7 @@ def main():
     subprocess.run(
         ["ffmpeg", "-y", "-loglevel", "error", "-i", str(silent), "-i", str(VOICE), "-i", str(music),
          "-filter_complex",
-         "[1:a]aresample=44100,highpass=f=90,equalizer=f=3500:t=q:w=1.2:g=4,equalizer=f=180:t=q:w=1:g=2,"
+         f"[1:a]adelay={int(PREROLL*1000)}|{int(PREROLL*1000)},aresample=44100,highpass=f=90,equalizer=f=3500:t=q:w=1.2:g=4,equalizer=f=180:t=q:w=1:g=2,"
          "acompressor=threshold=-22dB:ratio=4:attack=5:release=80,volume=2.2,asplit=2[v1][v2];"
          "[2:a]volume=0.30[m];[m][v1]sidechaincompress=threshold=0.04:ratio=5:release=250[md];"
          f"[md][v2]amix=inputs=2:duration=longest:normalize=0,loudnorm=I=-14:TP=-1.0,apad,atrim=0:{DURATION}[a]",
