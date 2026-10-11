@@ -37,11 +37,11 @@ def _shaded_ellipse(w, h, light, dark, cx=.38, cy=.32, power=1.25):
 
 
 @lru_cache(None)
-def roasted(size=800):
+def roasted(size=800, fried=False):
     """Codorna assada dourada, vista de cima, com coxinhas e brilho."""
     S = size * K // 2
     img = Image.new("RGBA", (S, S), (0, 0, 0, 0))
-    gl, gd = (255, 196, 96), (150, 52, 12)
+    gl, gd = ((240, 166, 62), (112, 40, 8)) if fried else ((255, 196, 96), (150, 52, 12))
     # coxas (atrás do corpo)
     for sgn in (-1, 1):
         leg = _shaded_ellipse(int(S * .30), int(S * .42), (252, 180, 84), (140, 46, 12), .4, .3, .85)
@@ -83,6 +83,13 @@ def roasted(size=800):
     # gergelim/pimenta
     rng = np.random.default_rng(4)
     d = ImageDraw.Draw(img)
+    if fried:                                               # casquinha crocante
+        for _ in range(900):
+            x, y = rng.uniform(.06, .94) * S, rng.uniform(.06, .94) * S
+            if img.getpixel((int(x), int(y)))[3] > 200:
+                r = S * rng.uniform(.003, .007)
+                c = (255, 214, 140, 150) if rng.random() < .5 else (90, 30, 6, 140)
+                d.ellipse((x - r, y - r, x + r, y + r), fill=c)
     for _ in range(70):                                     # ervas e pimenta do tempero
         x, y = rng.uniform(.25, .75) * S, rng.uniform(.14, .8) * S
         if ((x / S - .5) / .30) ** 2 + ((y / S - .47) / .36) ** 2 < 1:
@@ -188,8 +195,8 @@ def quail_icon(size=400, color=CREAM):
 
 
 @lru_cache(None)
-def logo(size=800):
-    """Selo: círculo laranja, codorna, CODORNA DO HEBER."""
+def logo(size=800, nome="ALECRIM"):
+    """Selo: círculo laranja, codorna, CODORNA DO <NOME> (com raminho de alecrim)."""
     S = size * 2
     img = Image.new("RGBA", (S, S), (0, 0, 0, 0))
     d = ImageDraw.Draw(img)
@@ -202,8 +209,13 @@ def logo(size=800):
     d.text((S / 2 + S * .008, S * .63 + S * .012), "CODORNA", font=f, fill=BG + (255,), anchor="mm")
     d.text((S / 2, S * .63), "CODORNA", font=f, fill=WHITE, anchor="mm")
     f2 = font("lil", int(S * .09))
-    tw = d.textlength("DO HEBER", font=f2)
+    sub = f"DO {nome}"
+    tw = d.textlength(sub, font=f2)
     d.rounded_rectangle((S / 2 - tw / 2 - S * .04, S * .73, S / 2 + tw / 2 + S * .04, S * .84), int(S * .05),
                         fill=BG + (255,))
-    d.text((S / 2, S * .785), "DO HEBER", font=f2, fill=GOLD, anchor="mm")
+    d.text((S / 2, S * .785), sub, font=f2, fill=GOLD, anchor="mm")
+    if nome == "ALECRIM":
+        for x, ang in ((S * .2, 35), (S * .8, -35)):
+            h = herb(int(S * .2), ang)
+            img.alpha_composite(h, (int(x - h.width / 2), int(S * .30 - h.height / 2)))
     return img.resize((size, size), Image.LANCZOS)

@@ -384,7 +384,7 @@ def wa_button():
 def sc_final(t):
     img = rays((255, 120, 30), (240, 98, 16), t, 16, .2)
     sparks(img, t, 7)
-    pop(img, A.logo(620), W / 2, 560 + 10 * math.sin(t * 2.4), t, T["codorna_do"] - .1, .45)
+    pop(img, A.logo(620, "HEBER"), W / 2, 560 + 10 * math.sin(t * 2.4), t, T["codorna_do"] - .1, .45)
     pb = prog(t, T["chama"] - .1, .35)
     if pb > 0:
         pulse = 1 + .035 * math.sin(max(0, t - T["chama"]) * 7)
