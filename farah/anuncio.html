@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Banca e Tabacaria Farah - Reels</title>
+<style>
+@font-face { font-family: Anton; src: url(fonts/anton-latin-400-normal.woff); }
+@font-face { font-family: Mont; font-weight: 700; src: url(fonts/montserrat-latin-700-normal.woff); }
+@font-face { font-family: Mont; font-weight: 800; src: url(fonts/montserrat-latin-800-normal.woff); }
+@font-face { font-family: Mont; font-weight: 900; src: url(fonts/montserrat-latin-900-normal.woff); }
+@font-face { font-family: Pacifico; src: url(fonts/pacifico-latin-400-normal.woff); }
+:root {
+  --coral: #E8473B; --coral2: #C9322A; --mar: #0B6E99; --mar2: #084C6B; --areia: #F7E6C4;
+  --sol: #FFC93C; --tinta: #0D1B2A; --branco: #FFFFFF; --verde: #25D366;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--tinta); }
+#stage { position: relative; width: 1080px; height: 1920px; overflow: hidden; font-family: Mont, sans-serif; }
+.scene { position: absolute; inset: 0; opacity: 0; }
+.bg { position: absolute; inset: -110px; background-size: cover; background-position: center; will-change: transform; }
+.shade { position: absolute; inset: 0; }
+.el { position: absolute; left: 0; right: 0; text-align: center; opacity: 0; will-change: transform, opacity; }
+.anton { font-family: Anton, sans-serif; text-transform: uppercase; line-height: .95; letter-spacing: 1px; }
+.pac { font-family: Pacifico, cursive; }
+.tag { display: inline-block; padding: 14px 34px 18px; border-radius: 18px; }
+.sombra { text-shadow: 0 6px 24px rgba(0,0,0,.45); }
+.card { display: inline-flex; align-items: center; gap: 34px; background: var(--branco); border-radius: 36px;
+        padding: 34px 54px 34px 40px; box-shadow: 0 24px 60px rgba(0,0,0,.35); }
+.card .txt { font-family: Anton; font-size: 92px; color: var(--tinta); text-transform: uppercase; line-height: 1; text-align: left; }
+.card svg { width: 170px; height: 170px; flex: none; }
+.chip { display: inline-block; background: rgba(255,255,255,.14); border: 3px solid rgba(255,255,255,.55);
+        color: #fff; font-weight: 800; font-size: 40px; padding: 14px 30px; border-radius: 60px; margin: 8px 6px; }
+.foto { display: inline-block; border: 14px solid #fff; border-radius: 26px; box-shadow: 0 30px 70px rgba(0,0,0,.45); overflow: hidden; }
+.foto img { display: block; }
+.wave { position: absolute; left: -60px; right: -60px; height: 220px; }
+</style>
+</head>
+<body>
+<div id="stage">
+
+  <!-- 1. GANCHO: Atenção, Ubatuba! -->
+  <div class="scene" id="s1" data-start="0" data-end="2.0">
+    <div class="bg" data-kb="1.15,1.05" style="background-image:url(assets/orla_hd.png)"></div>
+    <div class="shade" style="background:linear-gradient(180deg, rgba(8,76,107,.25) 0%, rgba(8,76,107,.05) 40%, rgba(13,27,42,.75) 100%)"></div>
+    <div class="el" data-in="0.25" data-a="drop" style="top:640px">
+      <span class="tag anton" style="background:var(--sol);color:var(--tinta);font-size:120px;transform:rotate(-3deg)">ATENÇÃO,</span>
+    </div>
+    <div class="el anton sombra" data-in="0.85" data-a="pop" style="top:820px;font-size:250px;color:#fff">UBATUBA!</div>
+    <div class="el pac sombra" data-in="1.2" data-a="rise" style="top:1130px;font-size:64px;color:var(--areia)">isso é pra você que mora aqui</div>
+  </div>
+
+  <!-- 2. DOR: chega na praia... faltou alguma coisa? -->
+  <div class="scene" id="s2" data-start="2.0" data-end="7.85">
+    <div class="bg" data-kb="1.05,1.18" data-blur="5.5,7.85,0,6" style="background-image:url(assets/orla_hd.png);background-position:60% center"></div>
+    <div class="shade" data-darken="5.6,0.15,0.62" style="background:rgba(13,27,42,.15)"></div>
+    <div class="el" data-in="2.07" data-out="5.6" data-a="rise" style="top:300px">
+      <div class="pac sombra" style="font-size:78px;color:#fff">sabe quando você</div>
+      <div class="anton sombra" style="font-size:150px;color:#fff;margin-top:6px">CHEGA NA PRAIA,</div>
+    </div>
+    <div class="el" data-in="3.7" data-out="5.6" data-a="rise" style="top:640px">
+      <span class="tag anton" style="background:var(--mar);color:#fff;font-size:96px">ESTENDE A CANGA...</span>
+    </div>
+    <div class="el pac sombra" data-in="5.65" data-a="fade" style="top:520px;font-size:80px;color:var(--areia)">e aí percebe que...</div>
+    <div class="el anton sombra" data-in="6.5" data-a="pop" style="top:700px;font-size:200px;color:var(--sol)">FALTOU</div>
+    <div class="el anton sombra" data-in="6.9" data-a="pop" style="top:900px;font-size:150px;color:#fff">ALGUMA COISA?</div>
+  </div>
+
+  <!-- 3. DOR em 3 cenas rápidas -->
+  <div class="scene" id="s3" data-start="7.85" data-end="12.55">
+    <div class="shade" style="background:linear-gradient(180deg,#0B6E99 0%,#084C6B 100%)"></div>
+    <svg class="wave" style="bottom:-20px" viewBox="0 0 1200 220" preserveAspectRatio="none"><path d="M0 90 Q150 30 300 90 T600 90 T900 90 T1200 90 V220 H0Z" fill="#F7E6C4"/></svg>
+    <div class="el" data-in="8.0" data-a="slideL" style="top:360px"><div class="card"><svg viewBox="0 0 100 100"><use href="#i-agua"/></svg><div class="txt">A água<br>acabou</div></div></div>
+    <div class="el" data-in="9.15" data-a="slideR" style="top:740px"><div class="card"><svg viewBox="0 0 100 100"><use href="#i-bateria"/></svg><div class="txt">Celular<br>sem bateria</div></div></div>
+    <div class="el" data-in="10.8" data-a="slideL" style="top:1120px"><div class="card"><svg viewBox="0 0 100 100"><use href="#i-chinelo-quebrado"/></svg><div class="txt">Chinelo<br>arrebentou</div></div></div>
+  </div>
+
+  <!-- 4. SOLUÇÃO: Calma! Pertinho da praia tem a Farah -->
+  <div class="scene" id="s4" data-start="12.55" data-end="15.05">
+    <div class="shade" style="background:var(--coral)"></div>
+    <div class="el anton" data-in="12.62" data-a="pop" style="top:230px;font-size:190px;color:#fff">CALMA!</div>
+    <div class="el pac" data-in="13.0" data-a="rise" style="top:470px;font-size:76px;color:var(--areia)">pertinho da praia tem a</div>
+    <div class="el anton" data-in="14.45" data-a="pop" style="top:590px;font-size:230px;color:var(--sol)">FARAH</div>
+    <div class="el" data-in="13.4" data-a="rise" style="top:900px">
+      <div class="foto" style="transform:rotate(-2deg)"><img src="assets/fachada_hd.png" style="width:900px;height:716px;object-fit:cover"></div>
+    </div>
+  </div>
+
+  <!-- 5. PRODUTOS passando rápido -->
+  <div class="scene" id="s5" data-start="15.05" data-end="22.5">
+    <div class="shade" style="background:linear-gradient(180deg,#FFC93C 0%,#FFB020 100%)"></div>
+    <div class="el anton" data-in="15.1" data-a="fade" style="top:170px;font-size:84px;color:var(--tinta)">TEM DE TUDO:</div>
+    <div id="prod"></div>
+    <div class="el" data-in="21.9" data-a="rise" style="top:1520px;padding:0 60px">
+      <span class="chip" style="background:var(--tinta);border-color:var(--tinta)">vinhos</span>
+      <span class="chip" style="background:var(--tinta);border-color:var(--tinta)">mangás</span>
+      <span class="chip" style="background:var(--tinta);border-color:var(--tinta)">chaveiros e ímãs de Ubatuba</span>
+      <span class="chip" style="background:var(--coral);border-color:var(--coral)">e muito mais</span>
+    </div>
+  </div>
+
+  <!-- 6. LOCALIZAÇÃO -->
+  <div class="scene" id="s6" data-start="22.5" data-end="27.1">
+    <div class="shade" style="background:linear-gradient(180deg,#0D1B2A 0%,#0B2E45 100%)"></div>
+    <div class="el" data-in="22.6" data-a="rise" style="top:150px">
+      <div class="pac" style="font-size:70px;color:var(--areia)">Banca e Tabacaria</div>
+      <div class="anton" style="font-size:240px;color:var(--coral);margin-top:-10px">FARAH</div>
+    </div>
+    <div class="el" data-in="23.1" data-a="rise" style="top:560px">
+      <div class="foto" style="transform:rotate(1.5deg)"><img src="assets/fachada_hd.png" style="width:860px;height:600px;object-fit:cover"></div>
+    </div>
+    <div class="el" data-in="24.2" data-a="pop" style="top:1250px">
+      <svg viewBox="0 0 100 100" style="width:120px;height:120px"><use href="#i-pin"/></svg>
+    </div>
+    <div class="el anton" data-in="24.25" data-a="rise" style="top:1390px;font-size:120px;color:#fff">AV. IPEROIG, 301</div>
+    <div class="el" data-in="26.15" data-a="rise" style="top:1540px;font-family:Mont;font-weight:800;font-size:54px;color:var(--sol)">CENTRO · UBATUBA-SP</div>
+    <div class="el pac" data-in="26.5" data-a="fade" style="top:1640px;font-size:52px;color:var(--areia)">pertinho da praia</div>
+  </div>
+
+  <!-- 7. CHAMADA FINAL -->
+  <div class="scene" id="s7" data-start="27.1" data-end="30.5">
+    <div class="shade" style="background:var(--coral)"></div>
+    <svg class="wave" style="bottom:-30px" viewBox="0 0 1200 220" preserveAspectRatio="none"><path d="M0 90 Q150 30 300 90 T600 90 T900 90 T1200 90 V220 H0Z" fill="#C9322A"/></svg>
+    <div class="el pac" data-in="27.2" data-a="rise" style="top:260px;font-size:84px;color:var(--areia)">faltou alguma coisa?</div>
+    <div class="el anton" data-in="28.6" data-a="pop" style="top:420px;font-size:170px;color:#fff">PASSA NA</div>
+    <div class="el anton" data-in="29.1" data-a="pop" style="top:590px;font-size:260px;color:var(--sol)">FARAH!</div>
+    <div class="el" data-in="28.9" data-a="rise" style="top:1010px">
+      <div style="display:inline-flex;align-items:center;gap:26px;background:var(--verde);border-radius:100px;padding:30px 56px;box-shadow:0 20px 50px rgba(0,0,0,.3)">
+        <svg viewBox="0 0 100 100" style="width:96px;height:96px"><use href="#i-whats"/></svg>
+        <div style="text-align:left;color:#fff">
+          <div style="font-weight:800;font-size:38px">WhatsApp</div>
+          <div class="anton" style="font-size:80px">(11) 99745-7700</div>
+        </div>
+      </div>
+    </div>
+    <div class="el" data-in="29.25" data-a="rise" style="top:1290px;font-weight:800;font-size:46px;color:#fff">@banca_farah_ubatuba</div>
+    <div class="el" data-in="29.35" data-a="rise" style="top:1370px;font-weight:700;font-size:40px;color:var(--areia)">Av. Iperoig, 301 · Centro · Ubatuba-SP</div>
+  </div>
+
+</div>
+
+<!-- Ícones (SVG próprios, estilo chapado) -->
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <symbol id="i-agua" viewBox="0 0 100 100"><rect x="34" y="6" width="32" height="12" rx="4" fill="#0B6E99"/><path d="M30 22h40l6 14v52a8 8 0 0 1-8 8H32a8 8 0 0 1-8-8V36z" fill="#CFEAF7" stroke="#0B6E99" stroke-width="4"/><path d="M27 80h46v6a6 6 0 0 1-6 6H33a6 6 0 0 1-6-6z" fill="#7CC4E4"/><path d="M27 46h46" stroke="#0B6E99" stroke-width="3"/></symbol>
+    <symbol id="i-bateria" viewBox="0 0 100 100"><rect x="22" y="6" width="56" height="88" rx="12" fill="#0D1B2A"/><rect x="28" y="16" width="44" height="68" rx="6" fill="#fff"/><rect x="32" y="66" width="36" height="14" rx="3" fill="#E8473B"/><path d="M52 26 40 48h10l-4 14 14-24H50z" fill="#FFC93C"/></symbol>
+    <symbol id="i-chinelo-quebrado" viewBox="0 0 100 100"><path d="M50 8c18 0 26 16 26 40s-6 44-26 44-26-20-26-44S32 8 50 8z" fill="#0B6E99"/><path d="M50 18c12 0 18 12 18 30s-4 34-18 34-18-16-18-34 6-30 18-30z" fill="#7CC4E4"/><path d="M50 30 30 52" stroke="#E8473B" stroke-width="7" stroke-linecap="round"/><path d="M50 30l12 10" stroke="#E8473B" stroke-width="7" stroke-linecap="round"/><path d="M70 42l14-6M72 50l14 2" stroke="#0D1B2A" stroke-width="4" stroke-linecap="round"/></symbol>
+    <symbol id="i-gelada" viewBox="0 0 100 100"><path d="M36 10h28v14l8 12v52a6 6 0 0 1-6 6H34a6 6 0 0 1-6-6V36l8-12z" fill="#2E9F5B"/><rect x="34" y="46" width="32" height="26" rx="3" fill="#F7E6C4"/><path d="M14 30l10 6M86 30l-10 6M12 60h10M88 60H78" stroke="#7CC4E4" stroke-width="5" stroke-linecap="round"/></symbol>
+    <symbol id="i-refri" viewBox="0 0 100 100"><path d="M30 14h40l-2 8v58l2 8H30l2-8V22z" fill="#E8473B"/><rect x="30" y="10" width="40" height="6" rx="3" fill="#B9C2CC"/><rect x="30" y="86" width="40" height="6" rx="3" fill="#B9C2CC"/><path d="M33 40c12 8 22-8 34 0v14c-12-8-22 8-34 0z" fill="#fff"/></symbol>
+    <symbol id="i-energetico" viewBox="0 0 100 100"><path d="M32 12h36l-2 8v62l2 8H32l2-8V20z" fill="#0D1B2A"/><rect x="32" y="8" width="36" height="6" rx="3" fill="#B9C2CC"/><path d="M54 28 40 54h12l-6 20 18-30H52z" fill="#FFC93C"/></symbol>
+    <symbol id="i-doce" viewBox="0 0 100 100"><path d="M8 50l14-14v28z M92 50 78 36v28z" fill="#E8473B"/><ellipse cx="50" cy="50" rx="30" ry="22" fill="#FF6FA8"/><path d="M30 42c8 6 32 6 40 0M30 58c8-6 32-6 40 0" stroke="#fff" stroke-width="5" fill="none"/></symbol>
+    <symbol id="i-chinelo" viewBox="0 0 100 100"><path d="M50 6c18 0 26 16 26 42s-6 46-26 46-26-20-26-46S32 6 50 6z" fill="#FFC93C"/><path d="M50 16c12 0 18 12 18 32s-4 36-18 36-18-16-18-36 6-32 18-32z" fill="#0B6E99"/><path d="M50 28 32 52M50 28l18 24" stroke="#fff" stroke-width="7" stroke-linecap="round"/><circle cx="50" cy="28" r="5" fill="#fff"/></symbol>
+    <symbol id="i-bone" viewBox="0 0 100 100"><path d="M14 62c0-24 16-40 36-40s36 16 36 40z" fill="#E8473B"/><path d="M50 22v40" stroke="#C9322A" stroke-width="3"/><path d="M14 62h76c4 0 6 4 4 8-4 6-26 10-46 4H14z" fill="#0D1B2A"/><circle cx="50" cy="22" r="4" fill="#C9322A"/></symbol>
+    <symbol id="i-carregador" viewBox="0 0 100 100"><rect x="30" y="18" width="40" height="38" rx="8" fill="#fff" stroke="#0D1B2A" stroke-width="4"/><path d="M40 6v14M60 6v14" stroke="#0D1B2A" stroke-width="6" stroke-linecap="round"/><path d="M50 56v12c0 14-20 10-20 24" stroke="#0D1B2A" stroke-width="6" fill="none" stroke-linecap="round"/><path d="M52 28 44 40h8l-4 10 10-14h-8z" fill="#FFC93C"/></symbol>
+    <symbol id="i-card" viewBox="0 0 100 100"><rect x="18" y="10" width="64" height="84" rx="8" fill="#FFC93C" transform="rotate(-8 50 50)"/><rect x="24" y="16" width="52" height="40" rx="4" fill="#7CC4E4" transform="rotate(-8 50 50)"/><circle cx="50" cy="36" r="12" fill="#E8473B" transform="rotate(-8 50 50)"/><rect x="26" y="62" width="48" height="6" rx="3" fill="#0D1B2A" transform="rotate(-8 50 50)"/><rect x="26" y="74" width="34" height="6" rx="3" fill="#0D1B2A" transform="rotate(-8 50 50)"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 100 100"><path d="M50 4C30 4 16 18 16 38c0 26 34 58 34 58s34-32 34-58C84 18 70 4 50 4z" fill="#E8473B"/><circle cx="50" cy="38" r="14" fill="#fff"/></symbol>
+    <symbol id="i-whats" viewBox="0 0 100 100"><path d="M50 8a42 42 0 0 0-36 63L8 92l22-6A42 42 0 1 0 50 8z" fill="#fff"/><path d="M50 15a35 35 0 0 0-30 53l-4 13 13-4a35 35 0 1 0 21-62z" fill="#25D366"/><path d="M37 30c-2 0-5 2-5 7s4 11 8 15 11 9 17 10 7-2 8-4 0-4-1-4l-7-4c-2-1-3 0-4 1l-2 2c-3-1-9-6-10-9l2-2c1-1 1-2 0-4l-3-6c0-1-2-2-3-2z" fill="#fff"/></symbol>
+  </defs>
+</svg>
+
+<script>
+const PRODUTOS = [
+  ["i-gelada", "BEBIDA<br>GELADA", 15.10], ["i-refri", "REFRI", 16.20], ["i-energetico", "ENERGÉTICO", 16.98],
+  ["i-doce", "DOCES", 17.98], ["i-chinelo", "CHINELO", 18.58], ["i-bone", "BONÉ", 19.38],
+  ["i-carregador", "CARREGADOR", 19.93], ["i-card", "CARD<br>POKÉMON", 21.25],
+];
+// cartão grande que troca a cada palavra + faixa de miniaturas que vai se acumulando
+const prod = document.getElementById("prod");
+PRODUTOS.forEach(([ic, txt, t0], i) => {
+  const big = document.createElement("div");
+  big.className = "el"; big.dataset.in = t0; big.dataset.a = "swap";
+  big.dataset.out = i + 1 < PRODUTOS.length ? PRODUTOS[i + 1][2] : 22.6;
+  big.style.top = "380px";
+  big.innerHTML = `<div class="card" style="padding:50px 70px 50px 56px"><svg viewBox="0 0 100 100" style="width:240px;height:240px"><use href="#${ic}"/></svg><div class="txt" style="font-size:118px">${txt}</div></div>`;
+  prod.appendChild(big);
+  const mini = document.createElement("div");
+  mini.className = "el"; mini.dataset.in = t0 + 0.15; mini.dataset.a = "pop";
+  const col = i % 4, row = Math.floor(i / 4);
+  mini.style.cssText = `top:${900 + row * 290}px;left:${70 + col * 240}px;right:auto;width:220px`;
+  mini.innerHTML = `<div style="background:#fff;border-radius:30px;padding:24px;box-shadow:0 12px 30px rgba(0,0,0,.2)"><svg viewBox="0 0 100 100" style="width:172px;height:172px"><use href="#${ic}"/></svg></div>`;
+  prod.appendChild(mini);
+});
+
+const clamp = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
+const eo = x => 1 - Math.pow(1 - x, 3);
+const back = (x, c = 1.8) => 1 + (c + 1) * Math.pow(x - 1, 3) + c * Math.pow(x - 1, 2);
+const XF = 0.28;
+
+function anim(el, t) {
+  const t0 = parseFloat(el.dataset.in), a = el.dataset.a;
+  const tout = el.dataset.out ? parseFloat(el.dataset.out) : 1e9;
+  const d = a === "pop" ? 0.36 : 0.45;
+  const p = clamp((t - t0) / d);
+  let op = a === "pop" ? clamp(p * 3) : eo(p), tf = "";
+  const pe = eo(p);
+  if (a === "rise") tf = `translateY(${(1 - pe) * 60}px)`;
+  if (a === "drop") tf = `translateY(${-(1 - pe) * 80}px)`;
+  if (a === "fade") tf = "";
+  if (a === "pop") tf = `scale(${p > 0 ? back(p) : 0.01})`;
+  if (a === "slideL") tf = `translateX(${-(1 - pe) * 1100}px)`;
+  if (a === "slideR") tf = `translateX(${(1 - pe) * 1100}px)`;
+  if (a === "swap") tf = `translateX(${(1 - pe) * 900}px) rotate(${(1 - pe) * 6}deg)`;
+  if (t > tout) {                       // saída
+    const q = eo(clamp((t - tout) / 0.25));
+    op *= 1 - q;
+    if (a === "swap") tf = `translateX(${-q * 900}px) rotate(${-q * 6}deg)`;
+    else tf += ` translateY(${-q * 40}px)`;
+  }
+  el.style.opacity = op;
+  el.style.transform = tf;
+}
+
+function render(t) {
+  document.querySelectorAll(".scene").forEach(s => {
+    const a = parseFloat(s.dataset.start), b = parseFloat(s.dataset.end);
+    let op = 0;
+    if (t >= a && t < b + XF) op = clamp((t - a) / XF) * (t > b ? 1 - clamp((t - b) / XF) : 1);
+    if (a === 0) op = t < b ? 1 : op;
+    s.style.opacity = op;
+    s.style.visibility = op > 0 ? "visible" : "hidden";
+    s.style.zIndex = Math.round(a * 10);
+    if (op <= 0) return;
+    s.querySelectorAll(".bg").forEach(bg => {     // Ken Burns
+      const [z0, z1] = bg.dataset.kb.split(",").map(Number);
+      const p = clamp((t - a) / (b - a + XF));
+      let f = `scale(${z0 + (z1 - z0) * p})`;
+      bg.style.transform = f;
+      if (bg.dataset.blur) {
+        const [s0, s1, v0, v1] = bg.dataset.blur.split(",").map(Number);
+        bg.style.filter = `blur(${v0 + (v1 - v0) * clamp((t - s0) / 0.6)}px) saturate(${1 - .35 * clamp((t - s0) / 0.6)})`;
+      }
+    });
+    s.querySelectorAll("[data-darken]").forEach(sh => {
+      const [s0, v0, v1] = sh.dataset.darken.split(",").map(Number);
+      sh.style.background = `rgba(13,27,42,${v0 + (v1 - v0) * clamp((t - s0) / 0.6)})`;
+    });
+    s.querySelectorAll(".el").forEach(el => anim(el, t));
+  });
+}
+window.render = render;
+render(0);
+</script>
+</body>
+</html>
