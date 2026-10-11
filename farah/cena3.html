@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Farah Reels v3</title>
+<link rel="stylesheet" href="marca/marca.css">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--grafite); }
+  body { font-family: var(--f-texto); color: var(--branco); -webkit-font-smoothing: antialiased; }
+  #palco { position: absolute; inset: 0; overflow: hidden; }
+  #cam { position: absolute; inset: 0; will-change: transform; }
+  .beat { position: absolute; inset: 0; display: none; overflow: hidden; will-change: transform; }
+  .beat.on { display: block; }
+  .fundo { position: absolute; inset: 0; }
+  .f-grafite { background: radial-gradient(110% 60% at 50% 42%, #26282C 0%, var(--grafite) 70%); }
+  .f-ouro { background: radial-gradient(120% 70% at 50% 40%, #DDAE55 0%, var(--ouro) 60%, #B98832 100%); }
+  .foto { position: absolute; inset: -3%; width: 106%; height: 106%; object-fit: cover; will-change: transform; }
+  .veu { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(23,24,26,.3) 0%, rgba(23,24,26,.6) 30%, rgba(23,24,26,.68) 60%, rgba(23,24,26,.45) 100%); }
+  .grade { position: absolute; inset: 0; opacity: .5;
+    background-image: linear-gradient(rgba(201,151,63,.12) 2px, transparent 2px), linear-gradient(90deg, rgba(201,151,63,.12) 2px, transparent 2px);
+    background-size: 120px 120px; will-change: background-position; }
+  .listras { position: absolute; inset: -200px; opacity: .14; will-change: transform;
+    background: repeating-linear-gradient(-35deg, var(--ouro) 0 26px, transparent 26px 120px); }
+  .f-ouro ~ .listras { background: repeating-linear-gradient(-35deg, var(--grafite) 0 26px, transparent 26px 120px); opacity: .08; }
+  .anel { position: absolute; left: 50%; top: 50%; width: 10px; height: 10px; border-radius: 50%; border: 14px solid var(--ouro);
+    transform: translate(-50%, -50%) scale(0); opacity: 0; will-change: transform, opacity; }
+
+  .seguro { position: absolute; left: 80px; right: 80px; top: 250px; bottom: 350px;
+    display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+  .linha { display: flex; justify-content: center; gap: 0.22em; white-space: nowrap; line-height: .95;
+    font-family: var(--f-titulo); font-weight: 900; font-stretch: 125%; text-transform: uppercase; letter-spacing: -0.02em; }
+  .linha + .linha { margin-top: 0.06em; }
+  .linha.leve { font-weight: 700; font-stretch: 112%; letter-spacing: 0; }
+  .p { display: inline-block; position: relative; will-change: transform, opacity; }
+  .p.ouro { color: var(--ouro); }
+  .p.escuro { color: var(--grafite); }
+  .p.bloco { color: var(--grafite); padding: 0 0.12em; }
+  .p.bloco::before { content: ''; position: absolute; inset: 0.04em -0.02em 0.02em; background: var(--ouro);
+    z-index: -1; transform-origin: left center; transform: scaleX(var(--k, 1)); border-radius: 0.06em; }
+  .p.bloco.noir { color: var(--ouro); }
+  .p.bloco.noir::before { background: var(--grafite); }
+  .p.nm { text-transform: none; }
+  .p .ch { display: inline-block; will-change: transform, opacity; }
+  .sombra .p { text-shadow: 0 6px 40px rgba(0,0,0,.45); }
+
+  .fantasma { position: absolute; left: 0; white-space: nowrap; font-family: var(--f-titulo); font-weight: 900;
+    font-stretch: 125%; font-size: 300px; line-height: 1; text-transform: uppercase; color: transparent;
+    -webkit-text-stroke: 3px rgba(244,242,238,.16); will-change: transform; }
+  .f-ouro + .fantasmas .fantasma { -webkit-text-stroke-color: rgba(23,24,26,.16); }
+  .prod { position: absolute; left: 50%; top: 760px; width: 0; height: 0; will-change: transform; }
+  .prod img { position: absolute; transform: translate(-50%, -50%); filter: drop-shadow(0 40px 50px rgba(0,0,0,.45)); }
+  .rotulo { position: absolute; left: 80px; right: 80px; top: 1170px; display: flex; flex-direction: column; align-items: center; }
+  .chip { display: inline-flex; align-items: center; gap: 14px; padding: 12px 26px; border-radius: 999px;
+    font-family: var(--f-texto); font-weight: 800; font-stretch: 110%; font-size: 30px; letter-spacing: .16em;
+    background: var(--grafite); color: var(--ouro); will-change: transform, opacity; white-space: nowrap; }
+  .chip.inv { background: var(--ouro); color: var(--grafite); }
+  .f-grafite ~ .rotulo .chip { background: var(--ouro); color: var(--grafite); }
+  .rotulo .chip { margin-bottom: 22px; }
+  .contador { position: absolute; top: 270px; right: 80px; font-weight: 800; font-stretch: 110%; font-size: 30px; letter-spacing: .12em; opacity: .7; }
+  .f-ouro ~ .contador { color: var(--grafite); }
+
+  #selo { position: absolute; left: 50%; top: 1468px; transform: translateX(-50%); display: flex; align-items: center; gap: 18px;
+    padding: 12px 30px 12px 12px; border-radius: 999px; background: rgba(23,24,26,.92); border: 2px solid rgba(201,151,63,.7);
+    font-weight: 700; font-stretch: 108%; font-size: 31px; letter-spacing: .04em; color: var(--branco);
+    white-space: nowrap; will-change: transform, opacity; z-index: 5; }
+  #selo .mono { font-size: 64px; }
+  #selo em { font-style: normal; color: var(--ouro); }
+
+  .pin { width: 120px; height: 120px; margin-bottom: 30px; will-change: transform; }
+  .extra { display: flex; gap: 18px; justify-content: center; margin-top: 46px; flex-wrap: nowrap; }
+  .extra .chip { font-size: 40px; padding: 14px 30px; }
+  .maior18 { display: flex; align-items: center; gap: 18px; margin-top: 40px; font-weight: 600; font-size: 32px; color: var(--areia); white-space: nowrap; }
+  .maior18 b { display: grid; place-items: center; width: 76px; height: 76px; border-radius: 50%; border: 4px solid var(--ouro);
+    color: var(--ouro); font-weight: 900; font-stretch: 112%; font-size: 30px; flex: 0 0 auto; }
+  .moto { position: absolute; top: 1250px; left: 0; width: 300px; will-change: transform; }
+  .vel { position: absolute; height: 10px; border-radius: 10px; background: var(--grafite); opacity: .5; will-change: transform, opacity; }
+
+  .final .seguro { justify-content: space-between; padding: 80px 0 0; }
+  .final .el { will-change: transform, opacity; display: flex; flex-direction: column; align-items: center; }
+  .final .logo .tag { font-size: .2em; color: var(--ouro); letter-spacing: .26em; margin-right: -.26em; }
+  .final .end { font-weight: 700; font-stretch: 105%; font-size: 44px; line-height: 1.25; white-space: nowrap; }
+  .final .end span { display: block; color: var(--areia); font-weight: 600; font-size: 34px; }
+  .final .zap { background: var(--ouro); color: var(--grafite); border-radius: 28px; padding: 22px 46px 28px; }
+  .final .zap .rot { font-weight: 800; font-stretch: 110%; font-size: 28px; letter-spacing: .26em; margin-right: -.26em; }
+  .final .zap .num { font-family: var(--f-titulo); font-weight: 900; font-stretch: 112%; font-size: 80px; letter-spacing: -0.02em; white-space: nowrap; margin-top: 4px; }
+  .final .el.linha2 { flex-direction: row; gap: 16px; }
+  .final .el.cta { display: block; }
+  .final .cta { font-family: var(--f-titulo); font-weight: 900; font-stretch: 125%; font-size: 96px; line-height: 1;
+    text-transform: uppercase; letter-spacing: -0.02em; white-space: nowrap; }
+  .final .cta i { font-style: normal; color: var(--ouro); }
+  .final .aviso { font-weight: 600; font-size: 26px; color: var(--areia); white-space: nowrap; }
+
+  .flash { position: absolute; inset: 0; background: var(--branco); opacity: 0; pointer-events: none; z-index: 9; }
+  .flash.ouro { background: var(--ouro); }
+</style>
+</head>
+<body>
+<div id="palco"><div id="cam"></div>
+  <div id="selo"><span class="mono"><b>F</b></span><span>AV. IPEROIG, 301 <em>·</em> DELIVERY</span></div>
+  <div class="flash" id="flash"></div>
+</div>
+<script>
+const D = window.DATA;               // {palavras, fotos, produtos, fps, bpm}
+const FPS = D.fps || 30, BPM = D.bpm || 118, BEAT = 60 / BPM;
+const W = i => D.palavras[i].start - 1 / FPS;
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const eo = x => 1 - Math.pow(1 - clamp(x), 3);
+const back = x => { x = clamp(x); const c = 1.9; return 1 + (c + 1) * Math.pow(x - 1, 3) + c * Math.pow(x - 1, 2); };
+const cam = document.getElementById('cam');
+const LOGO = (cls = '', tag = false) => `<div class="logo ${cls}"><div class="wm">FAR<span class="sol">A</span>H</div>${tag ? '<div class="tag">BANCA E TABACARIA</div>' : ''}</div>`;
+const P = (i, txt, st = '') => ({ i, txt, st });
+const linha = (tam, ps, cls = '') => ({ tam, ps, cls });
+
+const PRODUTOS = [
+  { i: 12, nome: ['BEBIDA', 'GELADA'], extra: 13, img: 'bebida', h: 640, fundo: 'ouro' },
+  { i: 14, nome: ['REFRI'], img: 'refri', h: 620, fundo: 'grafite' },
+  { i: 15, nome: ['ENERGÉTICO'], img: 'energetico', h: 660, fundo: 'ouro' },
+  { i: 16, nome: ['DOCES'], img: 'doces', w: 720, fundo: 'grafite', rot: -14 },
+  { i: 17, nome: ['CHINELO'], img: 'chinelo', h: 600, fundo: 'ouro' },
+];
+
+const BEATS = [
+  { de: 0, ate: 2, fundo: { foto: 'praia_hook' }, sombra: true, impacto: [0, 1], anel: 1, letras: true,
+    linhas: [linha(230, [P(0, 'ATENÇÃO,')]), linha(230, [P(1, 'UBATUBA!', 'bloco')])] },
+  { de: 2, ate: 5, fundo: { foto: 'praia_dor' }, sombra: true,
+    linhas: [linha(150, [P(2, 'TÁ'), P(3, 'NA')]), linha(250, [P(4, 'PRAIA?', 'ouro')])] },
+  { de: 5, ate: 9, fundo: 'grafite', listras: true, impacto: [6],
+    linhas: [linha(110, [P(5, 'E')], 'leve'), linha(270, [P(6, 'FALTOU', 'bloco')]), linha(124, [P(7, 'ALGUMA'), P(8, 'COISA?')])] },
+  { de: 9, ate: 12, fundo: 'ouro', listras: true, logo: 11, impacto: [11], anel: 11,
+    linhas: [linha(120, [P(9, 'PASSA', 'escuro'), P(10, 'NA', 'escuro')])] },
+  ...PRODUTOS.map((p, k) => ({ de: p.i, ate: (PRODUTOS[k + 1] || { i: 18 }).i, prod: p, n: k, fundo: p.fundo })),
+  { de: 18, ate: 20, fundo: 'grafite', listras: true, impacto: [19], anel: 19, tabacaria: true,
+    linhas: [linha(110, [P(18, 'E')], 'leve'), linha(250, [P(19, 'TABACARIA!', 'bloco')])] },
+  { de: 20, ate: 23, fundo: { foto: 'praia_perto' }, sombra: true, pin: 20,
+    linhas: [linha(250, [P(20, 'PERTINHO', 'ouro')]), linha(150, [P(21, 'DA'), P(22, 'PRAIA')])] },
+  { de: 23, ate: 30, fundo: 'grafite', grade: true, semSelo: true, impacto: [25],
+    linhas: [linha(120, [P(23, 'AVENIDA')], 'leve'), linha(170, [P(24, 'IPEROIG')]), linha(380, [P(25, '301', 'ouro')]),
+             linha(84, [P(28, 'CENTRO'), P(29, '· UBATUBA', 'ouro')], 'leve')] },
+  { de: 30, ate: 36, fundo: 'ouro', listras: true, moto: 32, impacto: [32, 35],
+    linhas: [linha(110, [P(30, 'E', 'escuro'), P(31, 'TEM', 'escuro')], 'leve'), linha(230, [P(32, 'DELIVERY!', 'bloco noir')]),
+             linha(110, [P(33, 'ATÉ', 'escuro'), P(34, 'PELO', 'escuro')], 'leve'), linha(190, [P(35, 'iFood!', 'escuro nm')])] },
+  { de: 36, ate: null, final: true, fundo: 'grafite', listras: true, semSelo: true },
+];
+
+function fundoHTML(f) {
+  if (typeof f === 'object') return `<div class="fundo f-grafite"></div><img class="foto" src="${D.fotos[f.foto]}"><div class="veu"></div>`;
+  return `<div class="fundo f-${f}"></div>`;
+}
+function linhasHTML(ls, letras) {
+  return ls.map(l => `<div class="linha ${l.cls}" data-tam="${l.tam}">${l.ps.map(p => {
+    const txt = letras ? [...p.txt].map(c => `<span class="ch">${c}</span>`).join('') : p.txt;
+    return `<span class="p ${p.st}" data-i="${p.i}">${txt}</span>`; }).join('')}</div>`).join('');
+}
+const MOTO = `<svg class="moto" viewBox="0 0 300 170"><g fill="#17181A">
+  <rect x="150" y="18" width="92" height="72" rx="10"/><rect x="160" y="30" width="72" height="10" rx="5" fill="#C9973F"/>
+  <path d="M40 120 L110 120 L140 70 L200 70 L215 105 L250 105 L262 128 L60 128 Z"/>
+  <path d="M120 70 L100 40 L80 40" stroke="#17181A" stroke-width="10" fill="none" stroke-linecap="round"/>
+  <circle cx="70" cy="135" r="30"/><circle cx="240" cy="135" r="30"/></g>
+  <circle cx="70" cy="135" r="12" fill="#C9973F"/><circle cx="240" cy="135" r="12" fill="#C9973F"/></svg>`;
+
+const beats = BEATS.map(b => {
+  const el = document.createElement('div');
+  el.className = 'beat' + (b.final ? ' final' : '') + (b.sombra ? ' sombra' : '');
+  let h = fundoHTML(b.fundo);
+  if (b.listras) h += '<div class="listras"></div>';
+  if (b.grade) h += '<div class="grade"></div>';
+  if (b.anel) h += '<div class="anel"></div>';
+  if (b.prod) {
+    const p = b.prod, nome = p.nome.join(' ');
+    h += `<div class="fantasmas">${[0, 1, 2].map(r => `<div class="fantasma" style="top:${300 + r * 330}px">${(nome + ' · ').repeat(4)}</div>`).join('')}</div>`;
+    h += `<div class="prod"><img src="${D.produtos[p.img]}" style="${p.h ? 'height:' + p.h + 'px' : 'width:' + p.w + 'px'}"></div>`;
+    h += `<div class="contador">${String(b.n + 1).padStart(2, '0')}/05</div>`;
+    h += `<div class="rotulo"><div class="chip">TEM NA FARAH</div>${linhasHTML([linha(p.nome.length > 1 ? 150 : 190,
+      p.nome.map((t, j) => P(j ? p.extra : p.i, t, b.fundo === 'ouro' ? 'escuro' : '')))])}</div>`;
+  } else if (b.final) {
+    h += `<div class="seguro">
+      <div class="el">${LOGO('', true)}</div>
+      <div class="el end">Av. Iperoig, 301<span>Centro · Ubatuba · pertinho da praia</span></div>
+      <div class="el zap"><div class="rot">WHATSAPP E DELIVERY</div><div class="num">(11) 99745-7700</div></div>
+      <div class="el"><span class="chip inv" style="text-transform:none;letter-spacing:.06em;font-size:36px">Delivery · também no iFood</span><span style="margin-top:18px;font-weight:700;font-size:38px">@banca_farah_ubatuba</span></div>
+      <div class="el cta">PASSA <i>AQUI!</i></div>
+      <div class="el aviso">Venda de produtos de tabacaria proibida para menores de 18 anos.</div></div>`;
+  } else {
+    let miolo = '';
+    if (b.pin) miolo += `<svg class="pin" viewBox="0 0 24 24" fill="#C9973F"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.7" fill="#17181A"/></svg>`;
+    miolo += linhasHTML(b.linhas || [], b.letras);
+    if (b.logo) miolo += `<div class="logoBox" style="margin-top:80px">${LOGO(b.fundo === 'ouro' ? 'sobre-ouro' : '')}</div>`;
+    if (b.tabacaria) miolo += `<div class="extra"><span class="chip inv">BANCA</span><span class="chip inv">+</span><span class="chip inv">TABACARIA</span></div>
+      <div class="maior18"><b>+18</b>Venda proibida para menores de 18 anos</div>`;
+    h += `<div class="seguro">${miolo}</div>`;
+    if (b.moto) h += [0, 1, 2].map(k => `<div class="vel" style="top:${1290 + k * 36}px;width:${180 - k * 40}px"></div>`).join('') + MOTO;
+  }
+  el.innerHTML = h;
+  cam.appendChild(el);
+  return { b, el, de: W(b.de), ate: b.ate == null ? Infinity : W(b.ate),
+    ps: [...el.querySelectorAll('.p')].map(s => ({ s, t: W(+s.dataset.i), chs: [...s.querySelectorAll('.ch')] })),
+    foto: el.querySelector('.foto'), prod: el.querySelector('.prod'), fant: [...el.querySelectorAll('.fantasma')],
+    chip: el.querySelector('.rotulo .chip'), logo: el.querySelector('.logoBox .logo'), pin: el.querySelector('.pin'),
+    listras: el.querySelector('.listras'), grade: el.querySelector('.grade'), anel: el.querySelector('.anel'),
+    extra: [...el.querySelectorAll('.extra .chip, .maior18')], moto: el.querySelector('.moto'), vel: [...el.querySelectorAll('.vel')],
+    els: [...el.querySelectorAll('.final .el')] };
+});
+
+function medir() {
+  beats.forEach(o => {
+    o.el.classList.add('on');
+    o.el.querySelectorAll('.linha').forEach(l => {
+      let s = +l.dataset.tam; l.style.fontSize = s + 'px';
+      while (l.scrollWidth > 830 && s > 40) { s -= 4; l.style.fontSize = s + 'px'; }
+    });
+    const ajustaLogo = (lg, max) => { let s = max; lg.style.fontSize = s + 'px';
+      while (lg.querySelector('.wm').scrollWidth > 840 && s > 40) { s -= 4; lg.style.fontSize = s + 'px'; } };
+    if (o.logo) ajustaLogo(o.logo, 240);
+    const lf = o.el.querySelector('.final .logo'); if (lf) ajustaLogo(lf, 190);
+    o.el.querySelectorAll('.final .zap, .final .cta').forEach(e => {
+      let s = parseFloat(getComputedStyle(e).fontSize), guard = 0;
+      while (e.scrollWidth > 900 && guard++ < 60) { s -= 1; e.style.fontSize = s + 'px';
+        e.querySelectorAll('.num, .chip').forEach(c => c.style.fontSize = (parseFloat(getComputedStyle(c).fontSize) - 1) + 'px'); }
+    });
+    o.el.classList.remove('on');
+  });
+}
+
+const flash = document.getElementById('flash'), selo = document.getElementById('selo');
+let atual = null;
+window.renderAt = function (t) {
+  const o = beats.find(o => t >= o.de && t < o.ate) || beats[beats.length - 1];
+  if (atual !== o) { if (atual) atual.el.classList.remove('on'); o.el.classList.add('on'); atual = o; }
+  const lt = t - o.de, b = o.b;
+
+  // pulso no tempo da batida
+  const fase = (t % BEAT) / BEAT, pulso = Math.exp(-fase * 6);
+
+  if (b.prod) {
+    const lado = b.n % 2 ? -1 : 1, x = eo(lt / 0.14);
+    o.el.style.transform = `translateX(${lado * (1 - x) * 420}px)`;
+    o.el.style.filter = x < 1 ? `blur(${(1 - x) * 16}px)` : 'none';
+    flash.style.opacity = 0;
+  } else {
+    o.el.style.transform = 'none'; o.el.style.filter = 'none';
+    flash.className = 'flash' + (b.fundo === 'ouro' ? '' : ' ouro');
+    flash.style.opacity = (t < 0.15 ? 0.9 : 0.35) * (1 - clamp(lt / (t < 0.15 ? 0.15 : 0.09)));
+  }
+
+  let sx = 0, sy = 0, sc = 1 + 0.012 * pulso, rot = 0;
+  (b.impacto || []).forEach(i => {
+    const d = t - W(i);
+    if (d >= 0 && d < 0.25) { const a = (1 - d / 0.25) * 20; sx += Math.sin(d * 95) * a; sy += Math.cos(d * 70) * a * 0.6;
+      sc += 0.05 * (1 - d / 0.25); rot += Math.sin(d * 60) * (1 - d / 0.25) * 1.2; }
+  });
+  cam.style.transform = `translate(${sx}px, ${sy}px) scale(${sc}) rotate(${rot}deg)`;
+
+  if (o.foto) o.foto.style.transform = `scale(${1.16 - 0.1 * eo(lt / 0.3) + 0.03 * lt + 0.01 * pulso})`;
+  if (o.listras) o.listras.style.transform = `translateX(${(t * 160) % 147}px)`;
+  if (o.grade) o.grade.style.backgroundPosition = `0 ${t * 60}px`;
+  if (o.anel) {
+    const d = t - W(b.anel);
+    o.anel.style.opacity = d < 0 ? 0 : 0.8 * (1 - clamp(d / 0.6));
+    o.anel.style.transform = `translate(-50%, -50%) scale(${d < 0 ? 0 : eo(d / 0.6) * 140})`;
+  }
+
+  o.ps.forEach(({ s, t: tw, chs }) => {
+    const d = t - tw;
+    if (d < 0) { s.style.opacity = 0; s.style.setProperty('--k', 0); return; }
+    s.style.opacity = clamp(d / 0.04);
+    s.style.setProperty('--k', eo((d - 0.02) / 0.12));
+    if (chs.length) {
+      s.style.transform = 'none';
+      chs.forEach((c, j) => { const dj = d - j * 0.03;
+        c.style.opacity = dj < 0 ? 0 : 1;
+        c.style.transform = `translateY(${(1 - eo(dj / 0.12)) * -90}px) scale(${dj < 0 ? 1.6 : 1 + 0.6 * (1 - back(dj / 0.16))})`; });
+    } else {
+      const k = back(d / 0.18);
+      s.style.transform = `translateY(${(1 - eo(d / 0.14)) * 50}px) scale(${0.6 + 0.4 * k}) rotate(${(1 - eo(d / 0.18)) * -6}deg)`;
+    }
+  });
+
+  if (b.prod) {
+    const k = back(lt / 0.28);
+    o.prod.style.transform = `translateY(${Math.sin(lt * 4) * 12 + (1 - eo(lt / 0.22)) * 140}px) rotate(${(b.prod.rot || 0) + (1 - k) * -22 + Math.sin(lt * 3) * 3}deg) scale(${(0.5 + 0.5 * k) * (1 + 0.02 * pulso)})`;
+    o.fant.forEach((f, r) => f.style.transform = `translateX(${(r % 2 ? -1 : 1) * (lt * 420 + 200) - (r % 2 ? 0 : 1400)}px)`);
+    o.chip.style.opacity = clamp(lt / 0.05);
+    o.chip.style.transform = `scale(${0.6 + 0.4 * back(lt / 0.2)})`;
+  }
+  if (o.logo) {
+    const d = t - W(b.logo);
+    o.logo.style.opacity = d < 0 ? 0 : clamp(d / 0.05);
+    o.logo.style.transform = `scale(${d < 0 ? 0.5 : 0.5 + 0.5 * back(d / 0.24)})`;
+    o.logo.style.setProperty('--sol', d < 0.1 ? 0 : back((d - 0.1) / 0.22) * (1 + 0.15 * pulso));
+  }
+  if (o.pin) {
+    const d = t - W(b.pin);
+    o.pin.style.opacity = d < -0.15 ? 0 : 1;
+    o.pin.style.transform = `translateY(${-(1 - back((d + 0.15) / 0.3)) * 220}px)`;
+  }
+  o.extra.forEach((e, k) => { const d = t - W(19) - 0.18 - k * 0.06;
+    e.style.opacity = clamp(d / 0.05); e.style.transform = `scale(${d < 0 ? 0.6 : 0.6 + 0.4 * back(d / 0.2)})`; });
+  if (o.moto) {
+    const d = t - W(b.moto) + 0.1, x = -340 + eo(d / 0.7) * 1100 + Math.max(0, d - 0.7) * 120;
+    o.moto.style.transform = `translateX(${x}px) translateY(${Math.sin(t * 30) * 3}px) rotate(${d < 0.7 ? -4 : 0}deg)`;
+    o.vel.forEach((v, k) => { v.style.opacity = d > 0 && d < 1.2 ? 0.5 : 0; v.style.transform = `translateX(${x - 140 - k * 40}px)`; });
+  }
+  if (b.final) {
+    o.els.forEach((e, k) => {
+      const at = e.classList.contains('cta') ? W(40) - o.de : k * 0.07;
+      const d = lt - at;
+      e.style.opacity = clamp(d / 0.05);
+      e.style.transform = `translateY(${(1 - eo(d / 0.18)) * 50}px) scale(${d < 0 ? 0.7 : 0.7 + 0.3 * back(d / 0.22)})`;
+    });
+    const lf = o.el.querySelector('.final .logo'); if (lf) lf.style.setProperty('--sol', back((lt - 0.12) / 0.25) * (1 + 0.15 * pulso));
+    const cta = o.el.querySelector('.final .cta'), d = lt - (W(40) - o.de);
+    if (d > 0.25) cta.style.transform = `scale(${1 + 0.05 * pulso})`;
+  }
+
+  const sv = t >= W(2) && !b.semSelo, ds = t - W(2);
+  selo.style.opacity = sv ? clamp(ds / 0.12) : 0;
+  selo.style.transform = `translateX(-50%) translateY(${sv ? (1 - eo(ds / 0.22)) * 60 : 0}px) scale(${1 + 0.02 * pulso})`;
+};
+window.PRONTO = Promise.all([...document.images].map(i => i.complete ? 1 : new Promise(r => { i.onload = i.onerror = r; })))
+  .then(() => document.fonts.ready).then(() => { medir(); renderAt(0); return true; });
+</script>
+</body>
+</html>
