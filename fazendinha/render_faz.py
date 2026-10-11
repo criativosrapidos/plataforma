@@ -202,7 +202,7 @@ def sc_sonho(t):
     return f
 
 
-BADGE = F.badge(700)
+BADGE = F.original_logo(640)  # logo original do cliente, em HD
 
 
 def sc_marca(t):

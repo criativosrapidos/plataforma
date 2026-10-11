@@ -69,7 +69,7 @@ def slides():
     # 1 capa
     s = cover("piscina", 0.5, 0.55)
     s.alpha_composite(shade(0.42, 240, top=0.22))
-    s.alpha_composite(F.badge(190), (CW // 2 - 95, 60))
+    s.alpha_composite(F.original_logo(190), (CW // 2 - 95, 60))
     put(s, ttext("Seu domingo", "script", 150), CW / 2, 860)
     put(s, ttext("dos sonhos", "script", 150, GOLD), CW / 2, 1000)
     put(s, ttext("TEM ENDEREÇO", "m8", 50), CW / 2, 1130)
@@ -104,7 +104,7 @@ def slides():
     s = cover("mural", 0.5, 0.6, 1.2).filter(ImageFilter.GaussianBlur(9))
     s = Image.blend(s, Image.new("RGBA", (CW, CH), MAROON3 + (255,)), 0.6)
     bandeirinhas(s, 2.0)
-    s.alpha_composite(F.badge(520), (CW // 2 - 260, 230))
+    s.alpha_composite(F.original_logo(520), (CW // 2 - 260, 230))
     put(s, ttext("Setor de Mansões de Taguatinga", "playi5", 46), CW / 2, 860)
     put(s, ttext("Traz a família!", "script", 140, GOLD), CW / 2, 1010)
     put(s, chip("SALVA ESSE POST E MARCA QUEM VEM", 30), CW / 2, 1160)
@@ -119,9 +119,7 @@ def main():
         s.convert("RGB").save(OUT / f"fazendinha_carrossel_{i}.jpg", quality=94)
     lg = ROOT / "saida/logo"
     lg.mkdir(parents=True, exist_ok=True)
-    F.badge(1080).save(lg / "fazendinha_logo_selo.png")
-    F.wordmark(1200).save(lg / "fazendinha_logo_creme_transparente.png")
-    F.wordmark(1200, MAROON3).save(lg / "fazendinha_logo_vinho_transparente.png")
+    F.original_logo(1600).save(lg / "fazendinha_logo_original_HD.png")
     print("OK")
 
 

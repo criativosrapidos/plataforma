@@ -154,3 +154,18 @@ def wordmark(width=900, color=CREAM):
     d.text((w / 2, y - bb[1]), "FAZENDINHA", font=f, fill=color, anchor="ma")
     d.text((w / 2, y + th * 1.55), "Self Service", font=fs, fill=GOLD, anchor="mm")
     return img.crop(img.getbbox())
+
+
+@lru_cache(None)
+def original_logo(size=1000):
+    """Logo ORIGINAL do cliente, ampliado com super-resolução (EDSR) e recortado no círculo."""
+    root = Path(__file__).resolve().parent / "assets"
+    hd = root / "hd/logo_original.png"
+    src = Image.open(hd if hd.exists() else root / "raw/logo_original.png").convert("RGB")
+    src = src.filter(ImageFilter.UnsharpMask(2, 50, 2))
+    img = src.resize((size, size), Image.LANCZOS).convert("RGBA")
+    k = 4
+    m = Image.new("L", (size * k, size * k), 0)
+    ImageDraw.Draw(m).ellipse((size * k * .012, size * k * .012, size * k * .988, size * k * .988), fill=255)
+    img.putalpha(m.resize((size, size), Image.LANCZOS))
+    return img
