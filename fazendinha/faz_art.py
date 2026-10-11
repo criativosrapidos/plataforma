@@ -169,3 +169,98 @@ def original_logo(size=1000):
     ImageDraw.Draw(m).ellipse((size * k * .012, size * k * .012, size * k * .988, size * k * .988), fill=255)
     img.putalpha(m.resize((size, size), Image.LANCZOS))
     return img
+
+
+# ------------------------------------------------- LOGO ORIGINAL RECRIADO ---
+@lru_cache(None)
+def logo_recriado(size=1600):
+    """Recriação fiel (vetorial) do logo original: mesmo desenho, nítido em qualquer tamanho."""
+    S = size * 2
+    img = Image.new("RGBA", (S, S), (0, 0, 0, 0))
+    # fundo vinho com losangos sutis
+    yy, xx = np.mgrid[0:S, 0:S].astype(np.float32) / S
+    u, v = (xx + yy) * 3.2, (xx - yy) * 3.2
+    chk = ((np.floor(u) + np.floor(v)) % 2)[..., None]
+    c1, c2 = np.array([66, 22, 22], np.float32), np.array([56, 18, 18], np.float32)
+    col = c1 * chk + c2 * (1 - chk)
+    rad = np.sqrt((xx - .5) ** 2 + (yy - .42) ** 2)[..., None]
+    col = col * np.clip(1.12 - rad * .55, .7, 1.1)
+    bg = Image.fromarray(np.concatenate([col, np.full((S, S, 1), 255, np.float32)], -1).clip(0, 255).astype(np.uint8))
+    m = Image.new("L", (S, S), 0)
+    ImageDraw.Draw(m).ellipse((0, 0, S - 1, S - 1), fill=255)
+    img.paste(bg, (0, 0), m)
+    d = ImageDraw.Draw(img)
+    BLK, WHT, GRY = (16, 12, 12, 255), (250, 250, 248, 255), (214, 214, 214, 255)
+
+    # casinha (3/4, branca com contorno preto)
+    hx, hy, hw = S * .345, S * .118, S * .31
+    P = lambda x, y: (hx + x * hw, hy + y * hw * .62)
+    lw = int(S * .0065)
+    d.polygon([P(.0, .97), P(1.0, .97), P(.97, 1.02), P(.04, 1.02)], fill=BLK)                       # base/sombra
+    d.rectangle([P(.62, .02), P(.71, .30)], fill=WHT, outline=BLK, width=lw)                          # chaminé
+    d.polygon([P(.50, .42), P(.96, .46), P(.96, .95), P(.50, .95)], fill=GRY, outline=BLK, width=lw)  # parede lateral
+    d.rectangle([P(.63, .60), P(.72, .95)], fill=BLK)                                                 # porta
+    d.rectangle([P(.79, .58), P(.88, .72)], fill=BLK)                                                 # janela lateral
+    d.polygon([P(.31, .10), P(.80, .14), P(1.02, .48), P(.55, .44)], fill=WHT, outline=BLK, width=lw)  # telhado
+    for k in range(1, 4):                                                                             # telhas
+        a = k / 4
+        d.line([P(.31 + .24 * a, .10 + .34 * a), P(.80 + .22 * a, .14 + .34 * a)], fill=BLK, width=max(1, lw // 2))
+    d.polygon([P(.31, .12), P(.10, .45), P(.10, .95), P(.52, .95), P(.52, .45)], fill=WHT, outline=BLK, width=lw)  # empena
+    d.line([P(.31, .06), P(.04, .48)], fill=BLK, width=int(lw * 2.2))                                  # beiral esq.
+    d.line([P(.31, .06), P(.56, .46)], fill=BLK, width=int(lw * 2.2))
+    d.rectangle([P(.22, .55), P(.29, .88)], fill=BLK)                                                 # janelas da frente
+    d.rectangle([P(.34, .55), P(.41, .88)], fill=BLK)
+
+    # placa de cobre/madeira
+    px0, px1, py0, py1 = S * .012, S * .988, S * .325, S * .525
+    ph = py1 - py0
+    gx = np.linspace(0, 1, int(px1 - px0))[None, :]
+    gy = np.linspace(0, 1, int(ph))[:, None]
+    tone = 1 - (np.abs(gy - .42) * 1.1) ** 1.6 * .9 - (np.abs(gx - .5) * 1.0) ** 3 * .35
+    light, dark = np.array([246, 205, 150], np.float32), np.array([196, 128, 70], np.float32)
+    pcol = dark + (light - dark) * np.clip(tone, 0, 1)[..., None]
+    plank = Image.fromarray(np.concatenate([pcol, np.full(pcol.shape[:2] + (1,), 255, np.float32)], -1).astype(np.uint8))
+    pm = Image.new("L", plank.size, 0)
+    ImageDraw.Draw(pm).rounded_rectangle((0, 0, plank.width - 1, plank.height - 1), int(ph * .45), fill=255)
+    sh = Image.new("RGBA", (S, S), (0, 0, 0, 0))
+    sh.paste((0, 0, 0, 170), (int(px0), int(py0 + S * .012)), pm)
+    img.alpha_composite(sh.filter(ImageFilter.GaussianBlur(S * .008)))
+    img.paste(plank, (int(px0), int(py0)), pm)
+    d = ImageDraw.Draw(img)
+    d.rounded_rectangle((px0, py0, px1, py1), int(ph * .45), outline=(120, 70, 36, 255), width=int(S * .005))
+    for rx in (S * .05, S * .95):
+        r = S * .016
+        d.ellipse((rx - r, (py0 + py1) / 2 - r, rx + r, (py0 + py1) / 2 + r), fill=(70, 46, 30, 255))
+        d.ellipse((rx - r * .5, (py0 + py1) / 2 - r * .6, rx + r * .05, (py0 + py1) / 2 - r * .05), fill=(190, 160, 120, 255))
+    # FAZENDINHA: Bevan comprimida na horizontal (letra alta e estreita como no original)
+    f = ImageFont.truetype(str(FONTS / "bevan-latin-400-normal.woff"), int(S * .17))
+    tb = ImageDraw.Draw(Image.new("L", (1, 1))).textbbox((0, 0), "FAZENDINHA", font=f)
+    tw_, th_ = tb[2] - tb[0], tb[3] - tb[1]
+    tl = Image.new("RGBA", (tw_ + 40, th_ + 40), (0, 0, 0, 0))
+    ImageDraw.Draw(tl).text((20 - tb[0], 20 - tb[1]), "FAZENDINHA", font=f, fill=(14, 10, 8, 255))
+    target_w, target_h = S * .84, ph * .80
+    tl = tl.resize((int(target_w), int(target_h)), Image.LANCZOS)
+    img.alpha_composite(tl, (int(S / 2 - tl.width / 2), int((py0 + py1) / 2 - tl.height / 2 + S * .004)))
+
+    # Self Service
+    d = ImageDraw.Draw(img)
+    fs = ImageFont.truetype(str(FONTS / "lobster-latin-400-normal.woff"), int(S * .125))
+    d.text((S * .515 + S * .004, S * .662 + S * .006), "Self Service", font=fs, fill=(20, 6, 6, 160), anchor="mm")
+    d.text((S * .515, S * .662), "Self Service", font=fs, fill=(236, 214, 182, 255), anchor="mm")
+    # pincelada
+    pts = []
+    for i in range(61):
+        tt = i / 60
+        x = S * (.155 + .725 * tt)
+        y = S * (.822 - .028 * tt - .014 * math.sin(tt * math.pi))
+        pts.append((x, y, S * (.004 + .014 * tt ** .7)))
+    sw = Image.new("RGBA", (S, S), (0, 0, 0, 0))
+    sd = ImageDraw.Draw(sw)
+    for x, y, r in pts:
+        sd.ellipse((x - r * 1.6, y - r * .55, x + r * 1.6, y + r * .55), fill=(228, 200, 160, 255))
+    x, y, r = pts[-1]
+    sd.ellipse((x - r * .9, y - r * .62, x + r * .9, y + r * .62), fill=(228, 200, 160, 255))
+    img.alpha_composite(sw)
+    # borda escura sutil
+    ImageDraw.Draw(img).ellipse((S * .004, S * .004, S * .996, S * .996), outline=(24, 6, 6, 255), width=int(S * .006))
+    return img.resize((size, size), Image.LANCZOS)
