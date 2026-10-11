@@ -1,3 +1,4 @@
+import { router } from 'expo-router';
 import { RefreshControl, View } from 'react-native';
 
 import { Avatar, Botao, Cartao, Tela, Texto } from '@/componentes/ui';
@@ -51,6 +52,7 @@ export default function Perfil() {
         ))}
       </Cartao>
       <Texto v="legenda">“Já doados” é contribuição, não vergonha: é o que suas multas viraram para a instituição que você escolheu.</Texto>
+      <Botao tipo="secundario" titulo="Ver como funciona (1 min)" onPress={() => router.push('/como-funciona')} />
       <Botao tipo="secundario" titulo="Sair" onPress={() => supabase.auth.signOut()} />
     </Tela>
   );

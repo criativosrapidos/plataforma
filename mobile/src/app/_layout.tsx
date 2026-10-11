@@ -56,6 +56,8 @@ function Rotas() {
           <Stack.Screen name="multa/[id]" options={{ title: 'Multa' }} />
           <Stack.Screen name="fiscalizar" options={{ title: 'Ser fiscal', presentation: 'modal' }} />
         </Stack.Protected>
+        {/* Fica por último: com rota protegida, o Router abre a primeira tela disponível. */}
+        <Stack.Screen name="como-funciona" options={{ headerShown: false, presentation: 'fullScreenModal' }} />
       </Stack>
     </>
   );

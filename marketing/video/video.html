@@ -1,0 +1,325 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="fontes/fontes.css"><style>:root{--fundo:#F6F7FB;--superficie:#FFFFFF;--tinta:#121736;--tinta-suave:#555C80;--linha:#D5D9E8;--linha-forte:#8189AD;--foco:#2B3FE0;--sobre-foco:#FFFFFF;--foco-suave:#E4E8FF;--multa:#FFC531;--sobre-multa:#121736;--multa-suave:#FFF1C7;--perda:#BF2D17;--sobre-perda:#FFFFFF;--perda-suave:#FDE7E1;--sombra-cartao:0 1px 2px rgba(18,23,54,0.06), 0 8px 24px rgba(18,23,54,0.08);--space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-6:24px;--space-8:32px;--space-12:48px;--radius-sm:8px;--radius-md:14px;--radius-lg:24px;--radius-full:999px;--font-display:"Bricolage Grotesque","Arial Narrow",system-ui,sans-serif;--font-text:"Instrument Sans",system-ui,-apple-system,"Segoe UI",sans-serif;--font-mono:"Spline Sans Mono",ui-monospace,monospace}
+.dark{--fundo:#0E1226;--superficie:#171C38;--tinta:#EEF0FA;--tinta-suave:#A4ABCB;--linha:#2B3257;--linha-forte:#6B74A0;--foco:#8E9BFF;--sobre-foco:#0E1226;--foco-suave:#1F2757;--multa:#FFC531;--sobre-multa:#121736;--multa-suave:#3A3113;--perda:#FF8A6B;--sobre-perda:#0E1226;--perda-suave:#40190F;--sombra-cartao:0 1px 2px rgba(0,0,0,0.4), 0 8px 24px rgba(0,0,0,0.35)}
+/* FocoMulta: estilos dos componentes. Todas as cores vêm de tokens.json. */
+body{margin:0;padding:var(--space-6);background:var(--fundo);color:var(--tinta);font-family:var(--font-text);font-size:16px;line-height:24px;-webkit-font-smoothing:antialiased}
+.fm-fila{display:flex;flex-wrap:wrap;gap:var(--space-3);align-items:center}
+.fm-pilha{display:flex;flex-direction:column;gap:var(--space-4)}
+.fm-rotulo{font:600 12px/16px var(--font-text);letter-spacing:.06em;text-transform:uppercase;color:var(--tinta-suave)}
+.fm-legenda{font:500 13px/18px var(--font-text);color:var(--tinta-suave)}
+.fm-valor{font:500 16px/24px var(--font-mono);font-variant-numeric:tabular-nums}
+
+.fm-logo{display:inline-flex;align-items:center;gap:.3em;font:800 28px/1 var(--font-display);letter-spacing:-.03em;color:var(--tinta);white-space:nowrap}
+.fm-logo__simbolo{width:1.35em;height:1.35em;flex:none}
+.fm-logo__bilhete{fill:var(--multa);stroke:var(--sobre-multa);stroke-width:4;stroke-linejoin:round}
+.fm-logo__ponto{fill:var(--sobre-multa)}
+.fm-logo--negativo{color:var(--fundo)}
+.fm-logo--sobre-foco{color:var(--sobre-foco)}
+.fm-logo--sobre-multa{color:var(--sobre-multa)}
+.fm-logo--sobre-multa .fm-logo__bilhete{fill:var(--sobre-multa)}
+.fm-logo--sobre-multa .fm-logo__ponto{fill:var(--multa)}
+
+.fm-btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--space-2);min-height:48px;padding:0 var(--space-6);border:2px solid transparent;border-radius:var(--radius-md);font:600 16px/24px var(--font-text);cursor:pointer;background:var(--foco);color:var(--sobre-foco)}
+.fm-btn:focus-visible,.fm-chip:focus-visible{outline:2px solid var(--tinta);outline-offset:2px}
+.fm-btn--aposta{background:var(--multa);color:var(--sobre-multa);border-color:var(--sobre-multa)}
+.fm-btn--aposta .fm-valor{font-weight:600}
+.fm-btn--secundario{background:transparent;color:var(--tinta);border-color:var(--linha-forte)}
+.fm-btn--perda{background:var(--perda);color:var(--sobre-perda)}
+.fm-btn--pequeno{min-height:36px;padding:0 var(--space-4);font-size:14px}
+
+.fm-chip{display:inline-flex;align-items:center;min-height:36px;padding:0 var(--space-4);border:1.5px solid var(--linha-forte);border-radius:var(--radius-full);background:transparent;color:var(--tinta);font:500 14px/20px var(--font-text);cursor:pointer;white-space:nowrap}
+.fm-chip[aria-pressed="true"]{background:var(--tinta);border-color:var(--tinta);color:var(--fundo)}
+
+.fm-selo{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:var(--radius-full);font:600 12px/16px var(--font-text);letter-spacing:.02em;white-space:nowrap}
+.fm-selo::before{font:600 12px/16px var(--font-mono)}
+.fm-selo--em-dia{background:var(--foco-suave);color:var(--foco)}
+.fm-selo--em-dia::before{content:"●"}
+.fm-selo--cumprida{background:var(--foco);color:var(--sobre-foco)}
+.fm-selo--cumprida::before{content:"✓"}
+.fm-selo--aguardando{background:var(--multa-suave);color:var(--tinta)}
+.fm-selo--aguardando::before{content:"…"}
+.fm-selo--multada{background:var(--perda-suave);color:var(--perda)}
+.fm-selo--multada::before{content:"✕"}
+
+.fm-bilhete{display:flex;max-width:440px;border-radius:var(--radius-lg);background:var(--superficie);box-shadow:var(--sombra-cartao);overflow:hidden}
+.fm-bilhete__corpo{flex:1;min-width:0;display:flex;flex-direction:column;gap:var(--space-2);padding:var(--space-4)}
+.fm-bilhete__titulo{margin:0;font:700 18px/24px var(--font-display)}
+.fm-bilhete__canhoto{position:relative;flex:none;width:128px;display:flex;flex-direction:column;justify-content:center;gap:2px;padding:var(--space-4);background:var(--multa);color:var(--sobre-multa);border-left:2px dashed var(--fundo)}
+.fm-bilhete__canhoto::before,.fm-bilhete__canhoto::after{content:"";position:absolute;left:-15px;width:28px;height:28px;border-radius:50%;background:var(--fundo)}
+.fm-bilhete__canhoto::before{top:-14px}
+.fm-bilhete__canhoto::after{bottom:-14px}
+.fm-bilhete__canhoto .fm-rotulo,.fm-bilhete__canhoto .fm-legenda{color:var(--sobre-multa)}
+.fm-bilhete__valor{font:600 32px/36px var(--font-mono);letter-spacing:-.04em;white-space:nowrap}
+.fm-bilhete--multada .fm-bilhete__canhoto{background:var(--perda);color:var(--sobre-perda)}
+.fm-bilhete--multada .fm-bilhete__canhoto .fm-rotulo,.fm-bilhete--multada .fm-bilhete__canhoto .fm-legenda{color:var(--sobre-perda)}
+.fm-dias{display:flex;gap:6px;margin-top:var(--space-1)}
+.fm-dias i{width:14px;height:14px;border-radius:50%;background:var(--foco-suave);border:1.5px solid var(--linha-forte);box-sizing:border-box}
+.fm-dias i.feito{background:var(--foco);border-color:var(--foco)}
+.fm-dias i.falhou{background:var(--perda);border-color:var(--perda);border-radius:3px}
+
+.fm-avatar{flex:none;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:var(--foco-suave);color:var(--foco);font:700 15px/1 var(--font-display)}
+.fm-avatar--g{width:72px;height:72px;font-size:26px}
+.fm-post{max-width:440px;display:flex;flex-direction:column;gap:var(--space-3);padding:var(--space-4);border-radius:var(--radius-lg);background:var(--superficie);border:1px solid var(--linha)}
+.fm-post__topo{display:flex;align-items:center;gap:var(--space-3)}
+.fm-post__quem{flex:1;min-width:0}
+.fm-post__nome{font:600 16px/20px var(--font-text)}
+.fm-post__texto{margin:0}
+.fm-post__foto{height:140px;border-radius:var(--radius-sm);background:var(--foco-suave);display:grid;place-items:center}
+.fm-post__rodape{display:flex;align-items:center;justify-content:space-between;gap:var(--space-3);padding-top:var(--space-3);border-top:1px dashed var(--linha)}
+
+.fm-perfil{max-width:440px;display:flex;flex-direction:column;gap:var(--space-4)}
+.fm-perfil__topo{display:flex;align-items:center;gap:var(--space-4)}
+.fm-perfil__nome{margin:0;font:700 24px/28px var(--font-display);letter-spacing:-.01em}
+.fm-perfil__numeros{display:grid;grid-template-columns:repeat(3,1fr);border-radius:var(--radius-md);background:var(--superficie);border:1px solid var(--linha)}
+.fm-perfil__numeros div{padding:var(--space-3) var(--space-4);display:flex;flex-direction:column;gap:2px;min-width:0}
+.fm-perfil__numeros div+div{border-left:1px dashed var(--linha)}
+.fm-perfil__numeros b{font:600 20px/28px var(--font-mono);letter-spacing:-.03em;white-space:nowrap}
+
+.fm-tela{width:360px;max-width:100%;margin:0 auto;border:1px solid var(--linha);border-radius:32px;background:var(--fundo);overflow:hidden;display:flex;flex-direction:column}
+.fm-tela__topo{display:flex;align-items:center;justify-content:space-between;padding:var(--space-4)}
+.fm-tela__chips{display:flex;gap:var(--space-2);padding:0 var(--space-4);overflow:hidden}
+.fm-tela__miolo{display:flex;flex-direction:column;gap:var(--space-4);padding:var(--space-4)}
+.fm-tela__abas{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--linha);background:var(--superficie)}
+.fm-tela__abas span{padding:var(--space-3) 0;text-align:center;font:600 12px/16px var(--font-text);color:var(--tinta-suave)}
+.fm-tela__abas span.ativa{color:var(--foco);box-shadow:inset 0 3px 0 var(--foco)}
+
+@page{size:1280px 720px;margin:0}
+*{box-sizing:border-box}
+body{padding:0;background:#fff}
+.pg{width:1280px;height:720px;position:relative;overflow:hidden;background:var(--fundo);color:var(--tinta);padding:56px 64px 64px;page-break-after:always;display:flex;flex-direction:column;gap:24px}
+.pg.amarelo{background:var(--multa);color:var(--sobre-multa)}
+.pg.azul{background:var(--foco);color:var(--sobre-foco)}
+.pe{position:absolute;left:64px;right:64px;bottom:24px;display:flex;justify-content:space-between;font:500 11px/16px var(--font-text);color:var(--tinta-suave);letter-spacing:.04em}
+.amarelo .pe{color:var(--sobre-multa)}
+h1,h2,h3,p{margin:0}
+.k{font:600 12px/16px var(--font-text);letter-spacing:.08em;text-transform:uppercase;color:var(--foco)}
+.amarelo .k,.azul .k{color:inherit}
+h2{font:800 44px/46px var(--font-display);letter-spacing:-.03em;max-width:900px}
+h3{font:700 20px/26px var(--font-display);letter-spacing:-.01em}
+.xl{font:800 76px/74px var(--font-display);letter-spacing:-.035em}
+p,li{font:400 16px/24px var(--font-text)}
+.s{color:var(--tinta-suave)}
+.g{display:grid;gap:24px;flex:1;min-height:0}
+.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.c{background:var(--superficie);border:1px solid var(--linha);border-radius:var(--radius-lg);padding:24px;display:flex;flex-direction:column;gap:10px}
+.c.t{background:var(--tinta);color:var(--fundo);border:0}.c.a{background:var(--multa);color:var(--sobre-multa);border:0}.c.z{background:var(--foco);color:var(--sobre-foco);border:0}
+.c.t .s{color:#A4ABCB}
+.ctr{align-items:center;justify-content:center}
+ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px}
+.num{width:36px;height:36px;border-radius:50%;background:var(--tinta);color:var(--fundo);display:grid;place-items:center;font:600 15px/1 var(--font-mono)}
+.sw{border-radius:var(--radius-lg);padding:20px;display:flex;flex-direction:column;justify-content:flex-end;gap:2px;min-height:0}
+.sw b{font:700 20px/24px var(--font-display)}.sw span{font:500 12px/16px var(--font-mono)}
+table{border-collapse:collapse;width:100%}td,th{text-align:left;padding:11px 14px;border-bottom:1px dashed var(--linha);font:400 15px/22px var(--font-text);vertical-align:top}th{font:600 12px/16px var(--font-text);letter-spacing:.06em;text-transform:uppercase;color:var(--tinta-suave)}
+.fones{display:flex;gap:40px;justify-content:center;align-items:flex-start;flex:1}
+.fone{display:flex;flex-direction:column;gap:10px;align-items:center}
+.fone .fm-tela{zoom:.8;height:668px;margin:0}
+.pl td{padding:7px 14px}.pl .c{padding:16px 24px}
+.fone .fm-tela>*{flex:none}
+.fone .fm-tela>.fm-tela__miolo{flex:1;min-height:0;overflow:hidden;gap:12px}
+.fone .fm-tela__miolo>*{flex:none}
+.campo{border:1.5px solid var(--linha-forte);border-radius:var(--radius-sm);padding:10px 12px;background:var(--superficie);font:500 15px/22px var(--font-text)}
+.fm-chip.aposta{background:var(--multa);border-color:var(--sobre-multa);color:var(--sobre-multa);font-family:var(--font-mono)}
+.lin{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px dashed var(--linha)}
+.lin>div{flex:1;min-width:0}
+.nao{position:relative}.nao::after{content:"✕";position:absolute;top:10px;right:14px;color:var(--perda);font:700 18px/1 var(--font-mono)}
+.tag{align-self:flex-start;padding:4px 10px;border-radius:999px;background:var(--multa);color:var(--sobre-multa);font:600 12px/16px var(--font-text)}
+
+html,body{width:1080px;height:1920px;overflow:hidden;background:#121736}
+.sc{position:absolute;inset:0;overflow:hidden;display:flex;flex-direction:column;align-items:center}
+.T{font:800 150px/1 var(--font-display);letter-spacing:-.04em;text-align:center}
+.w{display:inline-block}
+.fm-tela{zoom:2.2;width:360px;border-radius:36px;box-shadow:0 20px 60px rgba(18,23,54,.25)}
+.fm-tela>*{flex:none}
+.zb{zoom:2.15}
+.fm-bilhete__corpo{color:#121736}
+#mk2 .fm-logo__bilhete,#mk7 .fm-logo__bilhete{fill:#121736}#mk2 .fm-logo__ponto,#mk7 .fm-logo__ponto{fill:#FFC531}
+#a1,#a2{white-space:nowrap}
+.hd{position:absolute;left:0;right:0;top:170px;height:330px}
+.hd .T{position:absolute;left:60px;right:60px;top:0;font-size:124px}
+
+.hd{position:absolute;left:0;right:0;top:150px;height:360px}
+.hd .T{position:absolute;left:50px;right:50px;top:70px;font-size:112px}
+.passos{position:absolute;top:0;left:0;right:0;display:flex;justify-content:center;gap:20px}
+.passos i{width:30px;height:30px;border-radius:50%;border:5px solid #8189AD;display:block;box-sizing:border-box}
+.passos i.on{background:#2B3FE0;border-color:#2B3FE0}
+.fm-post__foto{height:150px;overflow:hidden;background:#D5D9E8}
+.fm-post__foto img{width:100%;height:100%;object-fit:cover;display:block}
+#ft4{height:150px;border-radius:8px;overflow:hidden;position:relative;background:#E4E8FF;display:grid;place-items:center;border:1.5px dashed #8189AD}
+#ft4 img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+#fl4{position:absolute;inset:0;background:#fff;opacity:0}
+.cms{position:absolute;top:520px;left:60px;right:60px;display:grid;grid-template-columns:1fr 1fr;gap:28px}
+.cm{background:#fff;border:3px solid #D5D9E8;border-radius:24px;padding:34px 34px 30px;display:flex;flex-direction:column;gap:14px;min-height:300px;box-sizing:border-box}
+.cm .r{font:600 26px/32px var(--font-text);letter-spacing:.06em;text-transform:uppercase;color:#555C80}
+.cm .q{font:500 28px/34px var(--font-text);color:#555C80}
+.cm b{font:800 50px/54px var(--font-display);letter-spacing:-.02em;color:#121736}
+.cm .v{margin-top:auto;font:600 30px/1 var(--font-mono);color:#121736}
+.cm.on{border-color:#2B3FE0}
+
+.ops{position:absolute;top:500px;left:50px;right:50px;display:flex;flex-direction:column;gap:36px}
+.op{background:#fff;border:5px solid #D5D9E8;border-radius:32px;padding:44px 48px;display:flex;flex-direction:column;gap:14px;box-sizing:border-box}
+.op.on{border-color:#2B3FE0}
+.op b{font:800 84px/88px var(--font-display);letter-spacing:-.02em;color:#121736}
+.op span{font:500 42px/54px var(--font-text);color:#555C80}
+.avs{display:flex;gap:30px;margin-top:20px}
+.av{display:flex;flex-direction:column;align-items:center;gap:10px}
+.av i{width:120px;height:120px;border-radius:50%;background:#E4E8FF;color:#2B3FE0;font:600 44px/120px var(--font-text);font-style:normal;text-align:center;display:block}
+.av em{font:600 34px/1 var(--font-mono);font-style:normal;background:#FFC531;color:#121736;border-radius:999px;padding:8px 14px}
+.av.perdeu i{background:#FDE7E1;color:#BF2D17}.av.perdeu em{background:#BF2D17;color:#fff}
+.ins{position:absolute;top:560px;left:50px;right:50px;display:flex;flex-direction:column;gap:36px}
+.in{background:#fff;border:5px solid #D5D9E8;border-radius:32px;padding:60px 52px;display:flex;align-items:center;justify-content:space-between;box-sizing:border-box}
+.in b{font:800 80px/84px var(--font-display);letter-spacing:-.02em;color:#121736}
+.in .ck{width:96px;height:96px;border-radius:50%;border:5px solid #8189AD;box-sizing:border-box;display:grid;place-items:center}
+.in.on{border-color:#2B3FE0}.in.on .ck{background:#2B3FE0;border-color:#2B3FE0}
+#mk2 .fm-logo__bilhete,#mk9 .fm-logo__bilhete{fill:#121736}#mk2 .fm-logo__ponto,#mk9 .fm-logo__ponto{fill:#FFC531}
+</style></head><body>
+<div class="sc" id="s1" style="background:#121736;color:#EEF0FA;justify-content:center;gap:70px">
+ <div style="position:relative"><div class="T" id="a1" style="font-size:100px"><span class="w ">Segunda</span> <span class="w ">eu</span> <span class="w ">começo.</span> </div><div id="k1" style="position:absolute;left:-20px;right:-20px;top:52%;height:18px;background:#FF8A6B;border-radius:9px;transform-origin:left"></div></div>
+ <div style="position:relative"><div class="T" id="a2" style="font-size:84px;color:#A4ABCB"><span class="w ">Na</span> <span class="w ">outra</span> <span class="w ">segunda...</span> </div><div id="k2" style="position:absolute;left:-20px;right:-20px;top:52%;height:14px;background:#FF8A6B;border-radius:9px;transform-origin:left"></div></div>
+ <div style="display:flex;gap:28px;margin-top:60px" id="dias1"><i class="dx" style="width:84px;height:84px;border-radius:50%;border:6px solid #6B74A0;display:block"></i><i class="dx" style="width:84px;height:84px;border-radius:50%;border:6px solid #6B74A0;display:block"></i><i class="dx" style="width:84px;height:84px;border-radius:50%;border:6px solid #6B74A0;display:block"></i><i class="dx" style="width:84px;height:84px;border-radius:50%;border:6px solid #6B74A0;display:block"></i><i class="dx" style="width:84px;height:84px;border-radius:50%;border:6px solid #6B74A0;display:block"></i><i class="dx" style="width:84px;height:84px;border-radius:50%;border:6px solid #6B74A0;display:block"></i><i class="dx" style="width:84px;height:84px;border-radius:50%;border:6px solid #6B74A0;display:block"></i></div>
+</div>
+<div class="sc" id="s2" style="background:#FFC531;color:#121736;justify-content:center;gap:60px">
+ <div id="mk2"><svg class="fm-logo__simbolo " viewBox="0 0 64 64" style="width:420px;height:420px"><path class="fm-logo__bilhete" d="M14 12H50A10 10 0 0 1 60 22V26A6 6 0 0 0 60 38V42A10 10 0 0 1 50 52H14A10 10 0 0 1 4 42V38A6 6 0 0 0 4 26V22A10 10 0 0 1 14 12Z"/><circle class="fm-logo__ponto" cx="32" cy="32" r="8"/></svg></div>
+ <div class="T" id="nm2" style="font-size:170px">FocoMulta</div>
+ <div class="T" id="b2" style="font-size:92px;max-width:900px"><span class="w">Sua</span> <span class="w">meta</span> <span class="w">vale</span> <span class="w">dinheiro.</span> </div>
+</div>
+<div class="sc" id="s3" style="background:#F6F7FB;color:#121736">
+ <div class="hd"><div class="passos"><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i></div><div class="T h3">Funciona assim</div><div class="T h3">Crie a meta</div><div class="T h3">Coloque um valor</div></div>
+ <div id="ph3" style="position:absolute;top:520px"><div class="fm-tela"><div class="fm-tela__topo"><span class="fm-legenda">‹ Voltar</span><svg class="fm-logo__simbolo " viewBox="0 0 64 64" style="width:28px;height:28px"><path class="fm-logo__bilhete" d="M14 12H50A10 10 0 0 1 60 22V26A6 6 0 0 0 60 38V42A10 10 0 0 1 50 52H14A10 10 0 0 1 4 42V38A6 6 0 0 0 4 26V22A10 10 0 0 1 14 12Z"/><circle class="fm-logo__ponto" cx="32" cy="32" r="8"/></svg></div>
+ <div class="fm-tela__miolo" style="gap:9px"><h3 style="font-size:22px">Nova meta</h3>
+ <span class="fm-rotulo">O que você vai cumprir?</span><div class="campo" id="tp" style="min-height:44px;box-sizing:border-box"></div>
+ <span class="fm-rotulo">Comunidade</span><div class="fm-fila" style="gap:8px;min-height:34px"><span class="fm-chip" id="cm3" aria-pressed="true" style="opacity:0">Hábitos e saúde</span></div>
+ <span class="fm-rotulo">Quanto vale cada semana?</span><div class="fm-fila" style="gap:8px"><span class="fm-chip" id="v5">R$ 5</span><span class="fm-chip" id="v10">R$ 10</span><span class="fm-chip">R$ 20</span><span class="fm-chip">Outro</span></div>
+ <span class="fm-rotulo">Quem fiscaliza?</span><div class="fm-fila" style="gap:8px"><span class="fm-chip">Só eu</span><span class="fm-chip" id="cam">Um amigo</span><span class="fm-chip">Desafio</span></div>
+ <span class="fm-legenda" id="fis" style="opacity:0">Camila confirma seus check-ins em até 24h</span>
+ <span class="fm-rotulo">Se falhar, a multa vai para</span><div class="campo">Instituição que você escolher</div>
+ <button class="fm-btn fm-btn--aposta" id="bt3" style="margin-top:10px">Apostar <span class="fm-valor" id="bv3">R$ 10</span></button></div></div></div>
+</div>
+<div class="sc" id="sF" style="background:#F6F7FB;color:#121736">
+ <div class="hd"><div class="passos"><i class="on"></i><i class="on"></i><i class="on"></i><i class=""></i><i class=""></i></div><div class="T" id="hF">Quem fiscaliza?</div></div>
+ <div class="ops">
+  <div class="op"><b>Só eu</b><span>Foto do check-in todo dia. Ela vale sozinha.</span></div>
+  <div class="op"><b>Um amigo</b><span>Ele confirma seu check-in em até 24 horas.</span></div>
+  <div class="op"><b>Desafio entre amigos</b><span>Todo mundo coloca o mesmo valor. Quem falhar paga a multa.</span>
+   <div class="avs"><div class="av" id="av0"><i>JP</i><em>R$ 10</em></div><div class="av" id="av1"><i>CA</i><em>R$ 10</em></div><div class="av" id="av2"><i>BR</i><em>R$ 10</em></div><div class="av" id="av3"><i>LU</i><em>R$ 10</em></div></div></div>
+ </div>
+</div>
+<div class="sc" id="sI" style="background:#F6F7FB;color:#121736">
+ <div class="hd"><div class="passos"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class=""></i></div><div class="T" id="hI" style="top:60px;line-height:1.02">Pra onde vai a multa?</div></div>
+ <div class="ins">
+  <div id="rI" style="font:600 36px/44px var(--font-text);letter-spacing:.06em;text-transform:uppercase;color:#555C80">Exemplos de causas</div>
+  <div class="in"><b>Abrigo de animais</b><div class="ck"><svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div></div><div class="in"><b>Hospital infantil</b><div class="ck"><svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div></div><div class="in"><b>Banco de alimentos</b><div class="ck"><svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div></div>
+  <div class="T" id="dI" style="font-size:130px;margin-top:50px">Você decide.</div>
+ </div>
+</div>
+<div class="sc" id="s4" style="background:#F6F7FB;color:#121736">
+ <div class="hd"><div class="passos"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></div><div class="T" id="h4">Faça o check-in</div></div>
+ <div id="ph4" style="position:absolute;top:520px"><div class="fm-tela"><div class="fm-tela__topo"><span class="fm-legenda">‹ Voltar</span><svg class="fm-logo__simbolo " viewBox="0 0 64 64" style="width:28px;height:28px"><path class="fm-logo__bilhete" d="M14 12H50A10 10 0 0 1 60 22V26A6 6 0 0 0 60 38V42A10 10 0 0 1 50 52H14A10 10 0 0 1 4 42V38A6 6 0 0 0 4 26V22A10 10 0 0 1 14 12Z"/><circle class="fm-logo__ponto" cx="32" cy="32" r="8"/></svg></div>
+ <div class="fm-tela__miolo" style="gap:12px"><h3 style="font-size:22px">Check-in de hoje</h3>
+ <article class="fm-bilhete "><div class="fm-bilhete__corpo"><span class="fm-rotulo">Estudos e concursos</span><h3 class="fm-bilhete__titulo">Estudar todo dia</h3><span class="fm-legenda">Semana 3 de 8 · fiscal: Camila</span></div><div class="fm-bilhete__canhoto"><span class="fm-rotulo">Em jogo</span><span class="fm-bilhete__valor">R$ 10</span><span class="fm-legenda">por semana</span></div></article>
+ <div id="ft4"><span class="fm-legenda">Tirar foto do estudo</span><img id="im4" src="fotos/estudos.jpg" style="opacity:0"><div id="fl4"></div></div>
+ <div class="fm-fila" style="justify-content:space-between;align-items:center"><span class="fm-selo fm-selo--aguardando" id="sl4">Aguardando fiscal</span><span class="fm-legenda">Camila confirma em até 24h</span></div>
+ <button class="fm-btn" id="bt4">Enviar check-in</button></div></div></div>
+</div>
+<div class="sc" id="s5" style="background:#2B3FE0;color:#fff;justify-content:center;gap:90px">
+ <div class="T" id="q5" style="font-size:190px">Cumpriu?</div>
+ <div class="zb" id="bl5" style="width:440px;--fundo:#2B3FE0"><article class="fm-bilhete "><div class="fm-bilhete__corpo"><span class="fm-rotulo">Estudos e concursos</span><h3 class="fm-bilhete__titulo">Estudar todo dia</h3><span class="fm-legenda">Semana 8 de 8 · fiscal: Camila</span><div class="fm-dias"><i class="feito"></i><i class="feito"></i><i class="feito"></i><i class="d5"></i></div></div><div class="fm-bilhete__canhoto"><span class="fm-rotulo">Em jogo</span><span class="fm-bilhete__valor">R$ 10</span><span class="fm-legenda">continua seu</span></div></article></div>
+ <div class="T" id="r5" style="font-size:104px;max-width:960px"><span class="w">Você</span> <span class="w">não</span> <span class="w">paga</span> <span class="w">nada.</span> </div>
+</div>
+<div class="sc" id="s6" style="background:#121736;color:#EEF0FA;justify-content:flex-start;padding-top:230px;gap:70px">
+ <div class="T" id="q6" style="font-size:190px">Falhou?</div>
+ <div class="zb" id="bl6" style="width:440px;position:relative;--fundo:#121736"><article class="fm-bilhete fm-bilhete--multada" style="overflow:visible;background:none;box-shadow:none"><div class="fm-bilhete__corpo" style="background:#fff;color:#121736;border-radius:24px 0 0 24px"><span class="fm-rotulo">Estudos e concursos</span><h3 class="fm-bilhete__titulo">Estudar todo dia</h3><span class="fm-legenda">Faltou na semana 5</span><div class="fm-dias"><i class="feito"></i><i class="feito"></i><i class="falhou"></i><i class=""></i></div></div><div class="fm-bilhete__canhoto" id="cn6" style="border-radius:0 24px 24px 0;border-left-color:#121736"><span class="fm-rotulo">Multa</span><span class="fm-bilhete__valor">R$ 10</span><span class="fm-legenda">vira doação</span></div></article></div>
+ <div class="T" id="r6" style="font-size:104px;max-width:960px"><span class="w">A</span> <span class="w">multa</span> <span class="w">vira</span> <span class="w">doação.</span> </div>
+ <div id="inst" style="position:absolute;bottom:170px;width:860px;border-radius:48px;background:#1F2757;border:4px dashed #6B74A0;padding:44px 52px;display:flex;justify-content:space-between;align-items:center;box-sizing:border-box"><div><div style="font:600 30px/40px var(--font-text);letter-spacing:.06em;text-transform:uppercase;color:#A4ABCB">Recebe a doação</div><div style="font:800 56px/66px var(--font-display);letter-spacing:-.02em">A instituição que você escolheu</div></div><div id="mais" style="font:600 64px/1 var(--font-mono);color:#FFC531;white-space:nowrap">+R$ 10</div></div>
+</div>
+<div class="sc" id="s7" style="background:#F6F7FB;color:#121736">
+ <div class="hd"><div class="T" id="h7" style="top:0;font-size:104px;line-height:1.02">Você não está sozinho</div><div id="sub7" style="position:absolute;top:240px;left:0;right:0;text-align:center;font:500 40px/48px var(--font-text);color:#555C80">Escolha sua comunidade e se comprometa</div></div>
+ <div class="cms">
+  <div class="cm"><span class="r">Exercício</span><span class="q">Me comprometo a</span><b>treinar 4x por semana</b><span class="v">R$ 10 por semana</span></div>
+  <div class="cm"><span class="r">Alimentação e peso</span><span class="q">Me comprometo a</span><b>perder 6 kg em 3 meses</b><span class="v">R$ 5 por semana</span></div>
+  <div class="cm"><span class="r">Estudos e concursos</span><span class="q">Me comprometo a</span><b>fazer 40 questões por dia</b><span class="v">R$ 10 por semana</span></div>
+  <div class="cm"><span class="r">Dinheiro</span><span class="q">Me comprometo a</span><b>ficar 30 dias sem delivery</b><span class="v">R$ 10 por semana</span></div>
+  <div class="cm"><span class="r">Hábitos e saúde</span><span class="q">Me comprometo a</span><b>parar de fumar</b><span class="v">R$ 10 por semana</span></div>
+  <div class="cm"><span class="r">Carreira</span><span class="q">Me comprometo a</span><b>mandar 5 currículos por semana</b><span class="v">R$ 5 por semana</span></div>
+ </div>
+</div>
+<div class="sc" id="s8" style="background:#F6F7FB;color:#121736">
+ <div class="hd"><div class="T" id="h8" style="top:30px">Mostre no feed</div></div>
+ <div id="ph8" style="position:absolute;top:420px"><div class="fm-tela" style="height:660px"><div class="fm-tela__topo"><span class="fm-logo " style="font-size:22px"><svg class="fm-logo__simbolo " viewBox="0 0 64 64"><path class="fm-logo__bilhete" d="M14 12H50A10 10 0 0 1 60 22V26A6 6 0 0 0 60 38V42A10 10 0 0 1 50 52H14A10 10 0 0 1 4 42V38A6 6 0 0 0 4 26V22A10 10 0 0 1 14 12Z"/><circle class="fm-logo__ponto" cx="32" cy="32" r="8"/></svg>FocoMulta</span><span class="fm-avatar" style="width:32px;height:32px;font-size:12px">JP</span></div>
+ <div style="flex:1;overflow:hidden;position:relative"><div class="fm-tela__miolo" id="rol" style="gap:14px">
+ <h3 style="font-size:22px">Feed</h3>
+ <article class="fm-post"><div class="fm-post__topo"><span class="fm-avatar">RA</span><div class="fm-post__quem"><div class="fm-post__nome">Rafael</div><div class="fm-legenda">Hábitos e saúde · há 10 min</div></div><span class="fm-selo fm-selo--em-dia">Em dia</span></div><p class="fm-post__texto">Me comprometo a parar de fumar. Dia 9 sem cigarro.</p><div class="fm-post__foto"><img src="fotos/fumar.jpg"></div><div class="fm-post__rodape"><span class="fm-valor">R$ 10 em jogo</span><button class="fm-btn fm-btn--secundario fm-btn--pequeno">Apoiar</button></div></article>
+ <article class="fm-post"><div class="fm-post__topo"><span class="fm-avatar">BI</span><div class="fm-post__quem"><div class="fm-post__nome">Bia</div><div class="fm-legenda">Alimentação e peso · há 35 min</div></div><span class="fm-selo fm-selo--em-dia">Em dia</span></div><p class="fm-post__texto">Me comprometo a perder 6 kg. Já foram 2,5 kg.</p><div class="fm-post__foto"><img src="fotos/balanca.jpg"></div><div class="fm-post__rodape"><span class="fm-valor">R$ 5 em jogo</span><button class="fm-btn fm-btn--secundario fm-btn--pequeno">Apoiar</button></div></article>
+ <article class="fm-post"><div class="fm-post__topo"><span class="fm-avatar">JP</span><div class="fm-post__quem"><div class="fm-post__nome">João Pedro</div><div class="fm-legenda">Exercício · há 1 h</div></div><span class="fm-selo fm-selo--em-dia">Em dia</span></div><p class="fm-post__texto">Me comprometo a treinar 4x por semana. Treino feito antes das 7h.</p><div class="fm-post__foto"><img src="fotos/academia.jpg"></div><div class="fm-post__rodape"><span class="fm-valor">R$ 10 em jogo</span><button class="fm-btn fm-btn--secundario fm-btn--pequeno">Apoiar</button></div></article>
+ <article class="fm-post"><div class="fm-post__topo"><span class="fm-avatar">MA</span><div class="fm-post__quem"><div class="fm-post__nome">Marina</div><div class="fm-legenda">Estudos e concursos · há 2 h</div></div><span class="fm-selo fm-selo--em-dia">Em dia</span></div><p class="fm-post__texto">40 questões hoje. Dia 21 de 60.</p><div class="fm-post__foto"><img src="fotos/estudos.jpg"></div><div class="fm-post__rodape"><span class="fm-valor">R$ 5 em jogo</span><button class="fm-btn fm-btn--secundario fm-btn--pequeno">Apoiar</button></div></article>
+ </div></div></div></div>
+</div>
+<div class="sc" id="s9" style="background:#FFC531;color:#121736;justify-content:center;gap:56px">
+ <div id="mk9"><svg class="fm-logo__simbolo " viewBox="0 0 64 64" style="width:360px;height:360px"><path class="fm-logo__bilhete" d="M14 12H50A10 10 0 0 1 60 22V26A6 6 0 0 0 60 38V42A10 10 0 0 1 50 52H14A10 10 0 0 1 4 42V38A6 6 0 0 0 4 26V22A10 10 0 0 1 14 12Z"/><circle class="fm-logo__ponto" cx="32" cy="32" r="8"/></svg></div>
+ <div class="T" id="nm9" style="font-size:180px">FocoMulta</div>
+ <div class="T" id="b9" style="font-size:84px;max-width:940px;line-height:1.08"><span class="w">Cumpra</span> <span class="w">a</span> <span class="w">meta,</span> <br><span class="w">ou</span> <span class="w">pague</span> <span class="w">a</span> <span class="w">multa.</span></div>
+ <div style="display:flex;gap:22px;margin-top:40px"><i class="d9" style="width:54px;height:54px;border-radius:50%;background:#121736;display:block"></i><i class="d9" style="width:54px;height:54px;border-radius:50%;background:#121736;display:block"></i><i class="d9" style="width:54px;height:54px;border-radius:50%;background:#121736;display:block"></i><i class="d9" style="width:54px;height:54px;border-radius:50%;background:#121736;display:block"></i><i class="d9" style="width:54px;height:54px;border-radius:50%;background:#121736;display:block"></i></div>
+</div>
+
+<script>
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const cl=x=>Math.max(0,Math.min(1,x)),pr=(t,a,d)=>cl((t-a)/d),eo=x=>1-Math.pow(1-x,3),io=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
+const back=x=>{const c=1.9;return 1+(c+1)*Math.pow(x-1,3)+c*Math.pow(x-1,2)};
+const pop=(e,t,a,d=.5)=>{const p=pr(t,a,d);e.style.opacity=p>0?1:0;e.style.transform=`scale(${p>0?back(p):0})`};
+const rise=(e,t,a,d=.5,y=70)=>{const p=eo(pr(t,a,d));e.style.opacity=p;e.style.transform=`translateY(${(1-p)*y}px)`};
+const words=(sel,t,a,st=.13)=>$$(sel+' .w').forEach((w,i)=>rise(w,t,a+i*st,.4,50));
+const tap=(e,t,a,k=.25)=>{e.style.transform=`scale(${1+Math.sin(pr(t,a,.4)*Math.PI)*k})`};
+// início de cada cena, alinhado à narração (narracao.mp3, 64,3 s)
+const ST={s1:0,s2:6.05,s3:9.25,sF:19.95,sI:32.95,s4:41.35,s5:44.6,s6:46.95,s7:51.45,s8:57.6,s9:60.75};
+function sw(sel,t,times){$$(sel).forEach((e,i)=>{const a=times[i],b=times[i+1]??99;const pin=eo(pr(t,a,.4)),pout=eo(pr(t,b-.25,.25));e.style.opacity=pin*(1-pout);e.style.transform=`translateY(${(1-pin)*60-pout*60}px)`})}
+const METAS=[[12.11,'Parar de fumar','Hábitos e saúde'],[13.41,'Perder 6 kg','Alimentação e peso'],[15.0,'Estudar todo dia','Estudos e concursos']];
+window.render=t=>{
+ for(const k in ST){const e=$('#'+k);if(k=='s1')continue;const p=eo(pr(t,ST[k]-.15,.6));e.style.clipPath=`circle(${p*135}% at 50% 55%)`;e.style.visibility=p>0?'visible':'hidden'}
+ // s1 · "Sabe aquela promessa..." / "Pois é. A gente sempre adia."
+ words('#a1',t,.25,.3);$('#k1').style.transform=`scaleX(${eo(pr(t,3.1,.35))})`;
+ words('#a2',t,3.97,.2);$('#k2').style.transform=`scaleX(${eo(pr(t,5.2,.3))})`;
+ $$('.dx').forEach((e,i)=>{const p=pr(t,.8+i*.62,.25);e.style.opacity=pr(t,.2,.4);if(p>0){e.style.background='#FF8A6B';e.style.borderColor='#FF8A6B';e.style.borderRadius='18px';e.style.transform=`scale(${.6+.4*back(p)}) rotate(${(1-p)*-30}deg)`}else{e.style.background='none';e.style.borderColor='#6B74A0';e.style.borderRadius='50%';e.style.transform='none'}});
+ // s2 · "No FocoMulta, sua meta vale dinheiro."
+ pop($('#mk2'),t,6.1,.55);$('#mk2').style.transform+=` rotate(${(1-eo(pr(t,6.1,.7)))*-25}deg)`;
+ rise($('#nm2'),t,6.25,.45);words('#b2',t,7.0,.3);
+ // s3 · passos 1 e 2
+ {const p=eo(pr(t,9.35,.7));$('#ph3').style.transform=`translateY(${(1-p)*1500}px)`}
+ sw('.h3',t,[9.36,10.55,16.53]);
+ $$('#s3 .passos i').forEach((e,i)=>{const a=[10.55,16.53,99,99,99][i];e.className=t>=a?'on':'';e.style.transform=`scale(${1+Math.sin(pr(t,a,.4)*Math.PI)*.5})`});
+ {let txt='',cm='';for(const [a,s,c] of METAS){if(t>=a){const n=Math.round(pr(t,a,.55)*s.length);txt=s.slice(0,n)+(n<s.length?'|':'');cm=c}}
+  if(!txt&&t>=10.55)txt=(Math.floor(t*2.5)%2)?'|':'';$('#tp').textContent=txt;const e=$('#cm3');e.textContent=cm;e.style.opacity=cm?1:0}
+ {const a5=t>=17.7&&t<18.41,a10=t>=18.41;$('#v5').className='fm-chip'+(a5?' aposta':'');$('#v10').className='fm-chip'+(a10?' aposta':'');tap($('#v5'),t,17.7);tap($('#v10'),t,18.41);$('#bv3').textContent=a5?'R$ 5':'R$ 10'}
+ // sF · "Depois, escolhe quem fiscaliza. Só você... um amigo... ou um desafio entre amigos"
+ rise($('#hF'),t,20.07,.45);
+ {const on=[22.61,24.87,27.28];$$('.op').forEach((e,i)=>{rise(e,t,20.4+i*.15,.5,80);e.classList.toggle('on',t>=on[i]&&t<(on[i+1]??99));const p=pr(t,on[i],.4);e.style.transform+=` scale(${1+Math.sin(p*Math.PI)*.04})`;e.style.opacity=Math.min(+e.style.opacity, t>=27.28&&i<2?.45:1)})}
+ $$('.av').forEach((e,i)=>{pop(e,t,29.06+i*.22,.45);e.classList.toggle('perdeu',i===3&&t>=31.01)});
+ {const p=pr(t,31.01,.4);$('#av3').style.transform+=` translateX(${Math.sin(p*Math.PI*5)*(1-p)*10}px)`;$('#av3 em').textContent=t>=31.01?'Multada':'R$ 10'}
+ // sI · "E escolhe pra onde vai o dinheiro... Um abrigo... hospital... banco. Você decide."
+ rise($('#hI'),t,33.17,.45);rise($('#rI'),t,35.6,.4,30);
+ {const on=[36.01,37.32,38.72];$$('.in').forEach((e,i)=>{rise(e,t,on[i]-.1,.45,80);e.classList.toggle('on',t>=40.12?i===0:(t>=on[i]&&t<(on[i+1]??40.12)))});tap($$('.in')[0],t,40.12,.05)}
+ rise($('#dI'),t,40.12,.45,40);
+ // s4 · "Aí, todo dia, faz o check-in com uma foto."
+ {const p=eo(pr(t,41.45,.6));$('#ph4').style.transform=`translateY(${(1-p)*1500}px)`}
+ rise($('#h4'),t,41.5,.45);
+ {const p=pr(t,43.4,.15);$('#im4').style.opacity=p;$('#fl4').style.opacity=p>0?1-pr(t,43.55,.35):0}
+ tap($('#bt4'),t,43.95,.1);{const e=$('#sl4');if(t>=44.1){e.className='fm-selo fm-selo--em-dia';e.textContent='Enviado'}else{e.className='fm-selo fm-selo--aguardando';e.textContent='Aguardando fiscal'}}
+ // s5 · "Cumpriu? Você não paga nada."
+ pop($('#q5'),t,44.75,.4);pop($('#bl5'),t,45.0,.5);words('#r5',t,45.56,.2);
+ {const p=pr(t,45.3,.3),e=$('#bl5 .d5');if(p>0){e.className='d5 feito';e.style.transform=`scale(${1+Math.sin(p*Math.PI)*1.2})`}else e.className='d5'}
+ // s6 · "Falhou? A multa vira doação, pra instituição que você escolheu."
+ pop($('#q6'),t,47.1,.4);rise($('#bl6'),t,47.35,.45);words('#r6',t,48.02,.3);rise($('#inst'),t,49.4,.5,120);
+ {const p=io(pr(t,49.7,1.0)),e=$('#cn6');const sh=Math.sin(pr(t,48.2,.5)*Math.PI*6)*(1-pr(t,48.2,.5))*4;e.style.transform=`translate(${p*-70}px,${p*330}px) rotate(${sh+p*18}deg) scale(${1-p*.35})`;e.style.opacity=1-pr(t,50.55,.15)}
+ pop($('#mais'),t,50.6,.45);
+ // s7 · "E você não tá sozinho. Tem comunidade de exercício, alimentação, estudos, dinheiro..."
+ rise($('#h7'),t,51.6,.5);rise($('#sub7'),t,52.1,.5,30);
+ {const on=[53.9,54.76,55.82,56.73,57.0,57.15];$$('.cm').forEach((e,i)=>{rise(e,t,52.2+i*.12,.5,80);const p=pr(t,on[i],.4);e.classList.toggle('on',t>=on[i]);e.style.transform+=` scale(${1+Math.sin(p*Math.PI)*.06})`})}
+ // s8 · "...e um feed com todo mundo mostrando o progresso."
+ rise($('#h8'),t,57.72,.45);
+ {const p=eo(pr(t,57.72,.6));$('#ph8').style.transform=`translateY(${(1-p)*1500}px)`}
+ {const a=io(pr(t,58.5,.7)),b=io(pr(t,59.3,.7)),c=io(pr(t,60.0,.5));$('#rol').style.transform=`translateY(${-(a*300+b*300+c*200)}px)`}
+ // s9 · "FocoMulta. Cumpra a meta... ou pague a multa."
+ pop($('#mk9'),t,60.8,.55);$('#mk9').style.transform+=` rotate(${(1-eo(pr(t,60.8,.7)))*25}deg)`;
+ rise($('#nm9'),t,60.87,.45);
+ $$('#b9 .w').forEach((w,i)=>rise(w,t,i<3?62.05+i*.2:63.26+(i-3)*.2,.4,50));
+ $$('.d9').forEach((e,i)=>pop(e,t,64.4+i*.14,.4));
+};
+render(0);
+</script></body></html>

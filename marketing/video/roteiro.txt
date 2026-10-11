@@ -1,0 +1,37 @@
+Vídeo "Como funciona" do FocoMulta · 1080x1920 · 66,5 s · 30 fps
+Narração: voz "Matheus - Calm & Clear Narrator" (ElevenLabs, eleven_v4), 64,3 s.
+
+Sabe aquela promessa de começar na segunda?... Pois é. A gente sempre adia.
+No FocoMulta, sua meta vale dinheiro. Funciona assim.
+Você cria a meta. Parar de fumar... perder seis quilos... estudar todo dia.
+Coloca um valor. Cinco, dez reais por semana.
+Depois, escolhe quem fiscaliza. Só você, com a foto do dia... um amigo, que confirma o seu
+check-in... ou um desafio entre amigos: todo mundo coloca o mesmo valor, e quem falhar paga a multa.
+E escolhe pra onde vai o dinheiro se você falhar. Um abrigo de animais... um hospital infantil...
+um banco de alimentos. Você decide.
+Aí, todo dia, faz o check-in com uma foto.
+Cumpriu? Você não paga nada.
+Falhou? A multa vira doação, pra instituição que você escolheu.
+E você não tá sozinho. Tem comunidade de exercício, alimentação, estudos, dinheiro... e um feed
+com todo mundo mostrando o progresso.
+FocoMulta. Cumpra a meta... ou pague a multa.
+
+Cenas (início em segundos, objeto ST em video.html):
+s1 0 promessa adiada · s2 6,05 logo · s3 9,25 criar meta e valor · sF 19,95 quem fiscaliza
+sI 32,95 pra onde vai a multa · s4 41,35 check-in · s5 44,6 cumpriu · s6 46,95 falhou
+s7 51,45 comunidades · s8 57,6 feed · s9 60,75 assinatura
+
+Gerar de novo:
+  npm i -g playwright   (ou use um Playwright já instalado)
+  node renderizar.js                     # 1995 quadros em fr/
+  ffmpeg -framerate 30 -i fr/%04d.jpg -i narracao.mp3 -map 0:v -map 1:a -c:v libx264 -crf 20 \
+    -pix_fmt yuv420p -af "apad,loudnorm=I=-14:TP=-1.5:LRA=11" -c:a aac -b:a 192k -t 66.5 \
+    -movflags +faststart FocoMulta-1min.mp4
+  node renderizar.js test 23.5 38        # só alguns quadros, para conferir
+
+Observações:
+- Os exemplos de instituição são categorias genéricas. Para usar o nome de uma instituição real,
+  peça autorização a ela antes.
+- As fotos do feed (fotos/) foram geradas por IA no Canva e ampliadas a partir da miniatura.
+  Troque por fotos reais de usuários antes de usar em campanha (o manual da marca pede isso).
+- O app usa uma cópia deste vídeo em mobile/assets/video/como-funciona.mp4.
