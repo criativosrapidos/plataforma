@@ -1,0 +1,16 @@
+{
+ "manual": false,
+ "fotos": {},
+ "sem_foto": [
+  "fachada",
+  "bebida",
+  "refri",
+  "energetico",
+  "doces",
+  "chinelo",
+  "bone",
+  "carregador"
+ ],
+ "excluidas_tabaco": [],
+ "nao_usadas": []
+}

@@ -1,0 +1,32 @@
+{
+  "cues": [
+    {"id":"hook",   "fala":"Atenção, Ubatuba!",                        "tela":"ATENÇÃO,|UBATUBA!",          "tipo":"titulo",  "foto":"fachada"},
+    {"id":"dor1",   "fala":"Você que tá na praia",                     "tela":"VOCÊ TÁ|NA PRAIA...",        "tipo":"titulo",  "foto":null},
+    {"id":"dor2",   "fala":"e percebeu que faltou alguma coisa...",    "tela":"...E FALTOU|ALGUMA COISA?",  "tipo":"titulo",  "foto":null, "destaque":"FALTOU"},
+    {"id":"sol",    "fala":"passa na Farah!",                          "tela":"PASSA NA|FARAH!",            "tipo":"titulo",  "foto":"fachada", "destaque":"FARAH!"},
+    {"id":"p_bebida","fala":"Bebida gelada,",                          "tela":"BEBIDA|GELADA",              "tipo":"produto", "foto":"bebida"},
+    {"id":"p_refri", "fala":"refri,",                                  "tela":"REFRI",                      "tipo":"produto", "foto":"refri"},
+    {"id":"p_energ", "fala":"energético,",                             "tela":"ENERGÉTICO",                 "tipo":"produto", "foto":"energetico"},
+    {"id":"p_doces", "fala":"doces,",                                  "tela":"DOCES",                      "tipo":"produto", "foto":"doces"},
+    {"id":"p_chinelo","fala":"chinelo,",                               "tela":"CHINELO",                    "tipo":"produto", "foto":"chinelo"},
+    {"id":"p_bone",  "fala":"boné,",                                   "tela":"BONÉ",                       "tipo":"produto", "foto":"bone"},
+    {"id":"p_carreg","fala":"carregador...",                           "tela":"CARREGADOR",                 "tipo":"produto", "foto":"carregador"},
+    {"id":"tudo",   "fala":"aqui tem de tudo.",                        "tela":"AQUI TEM|DE TUDO.",          "tipo":"titulo",  "foto":null, "destaque":"DE TUDO."},
+    {"id":"perto",  "fala":"E é pertinho da praia:",                   "tela":"PERTINHO|DA PRAIA",          "tipo":"titulo",  "foto":"fachada", "destaque":"PERTINHO"},
+    {"id":"end",    "fala":"Avenida Iperoig, trezentos e um, no Centro.","tela":"AV. IPEROIG, 301|CENTRO · UBATUBA", "tipo":"endereco", "foto":"fachada"},
+    {"id":"falta",  "fala":"Faltou alguma coisa?",                     "tela":"FALTOU|ALGUMA COISA?",       "tipo":"titulo",  "foto":null},
+    {"id":"tem",    "fala":"A Farah tem.",                             "tela":"A FARAH|TEM.",               "tipo":"titulo",  "foto":null, "destaque":"TEM."},
+    {"id":"final",  "fala":"Banca e Tabacaria Farah. Passa aqui!",     "tela":"",                           "tipo":"final",   "foto":null}
+  ],
+  "fotos_palavras": {
+    "fachada":    ["fachada","frente","loja","banca","entrada"],
+    "bebida":     ["bebida","gelad","geladeira","agua","água","cerveja","suco"],
+    "refri":      ["refri","refrigerante","coca","guarana","guaraná","fanta","pepsi"],
+    "energetico": ["energ","monster","redbull","red_bull","red-bull"],
+    "doces":      ["doce","bala","chiclete","bolacha","biscoito","chocolate","bombom"],
+    "chinelo":    ["chinelo","havaianas","crocs","sandalia","sandália"],
+    "bone":       ["bone","boné","chapeu","chapéu"],
+    "carregador": ["carreg","cabo","usb","fone"]
+  },
+  "proibidas": ["cigarr","charut","seda","tritur","narg","tabaco","fumo","isqueiro","vape","pod","essencia","essência","piteira","rolling","palheiro"]
+}

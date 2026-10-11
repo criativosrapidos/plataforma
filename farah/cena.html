@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Farah Reels</title>
+<style>
+  :root {
+    --grafite: #17181A;
+    --branco: #F4F2EE;
+    --ouro: #C9973F;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--grafite); }
+  body { font-family: 'Inter', 'Archivo', sans-serif; color: var(--branco); -webkit-font-smoothing: antialiased; }
+  #palco { position: absolute; inset: 0; overflow: hidden; background: var(--grafite); }
+  .cena { position: absolute; inset: 0; display: none; overflow: hidden; }
+  .cena.on { display: block; }
+  .bg { position: absolute; inset: -2%; width: 104%; height: 104%; object-fit: cover; will-change: transform; }
+  .veu { position: absolute; inset: 0; }
+  .liso { position: absolute; inset: 0;
+    background: radial-gradient(120% 70% at 50% 45%, #222326 0%, var(--grafite) 70%); }
+  /* área segura: 80px laterais, 250px topo, 350px base */
+  .seguro { position: absolute; left: 80px; right: 80px; top: 250px; bottom: 350px;
+    display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+  .bloco { will-change: transform, opacity; display: flex; flex-direction: column; align-items: center; }
+  .linha { display: block; white-space: nowrap; font-weight: 800; line-height: 1.0;
+    letter-spacing: -0.02em; text-transform: uppercase; text-shadow: 0 4px 30px rgba(0,0,0,.45); }
+  .linha + .linha { margin-top: 0.08em; }
+  .ouro { color: var(--ouro); }
+  .fio { height: 6px; width: 140px; background: var(--ouro); margin-top: 44px; transform-origin: center; }
+  .produto.comfoto .seguro { justify-content: flex-end; padding-bottom: 40px; }
+  .kicker { font-weight: 700; font-size: 34px; letter-spacing: 0.32em; color: var(--ouro);
+    text-transform: uppercase; margin-bottom: 26px; }
+  .flash { position: absolute; inset: 0; background: var(--branco); opacity: 0; pointer-events: none; }
+  .pin { width: 74px; height: 74px; margin-bottom: 34px; }
+  .sub { font-weight: 700; font-size: 58px; letter-spacing: 0.08em; color: var(--ouro); margin-top: 30px;
+    text-transform: uppercase; white-space: nowrap; }
+
+  /* logo */
+  .logo { display: flex; flex-direction: column; align-items: center; }
+  .logo .nome { font-weight: 800; font-size: 176px; letter-spacing: 0.3em; margin-right: -0.3em; line-height: 1; }
+  .logo .linha-ouro { width: 560px; height: 3px; background: var(--ouro); margin: 34px 0 28px; }
+  .logo .tipo { font-weight: 700; font-size: 38px; letter-spacing: 0.42em; margin-right: -0.42em; }
+
+  /* tela final */
+  .final .seguro { justify-content: space-between; padding: 60px 0 30px; }
+  .final .el { will-change: transform, opacity; display: flex; flex-direction: column; align-items: center; }
+  .final .endereco { font-weight: 700; font-size: 44px; line-height: 1.3; color: var(--branco); white-space: nowrap; }
+  .final .endereco span { color: #B9B6B0; font-size: 36px; display: block; font-weight: 600; letter-spacing: .02em; }
+  .final .zap { border: 3px solid var(--ouro); border-radius: 28px; padding: 30px 52px 36px; }
+  .final .zap .rot { font-weight: 700; font-size: 32px; letter-spacing: 0.32em; margin-right: -0.32em; color: var(--ouro); }
+  .final .zap .num { font-weight: 800; font-size: 96px; letter-spacing: -0.01em; margin-top: 10px; white-space: nowrap; }
+  .final .insta { font-weight: 700; font-size: 40px; color: #D8D5CF; white-space: nowrap; }
+  .final .cta { background: var(--ouro); color: var(--grafite); font-weight: 800; font-size: 104px;
+    padding: 18px 60px 24px; border-radius: 18px; text-transform: uppercase; letter-spacing: -0.01em; white-space: nowrap; }
+</style>
+</head>
+<body>
+<div id="palco"></div>
+<script>
+const W = 1080, SAFE_W = 920, SAFE_H = 1320;
+const D = window.DATA;   // {cues, timings, fotos}
+const palco = document.getElementById('palco');
+const cenas = [];
+
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const easeOut = x => 1 - Math.pow(1 - clamp(x), 3);
+
+function linhasHTML(c) {
+  return c.tela.split('|').map(l => {
+    const ouro = c.destaque && l.includes(c.destaque);
+    return `<span class="linha${ouro && l.trim() === c.destaque ? ' ouro' : ''}">${
+      ouro && l.trim() !== c.destaque ? l.replace(c.destaque, `<span class="ouro">${c.destaque}</span>`) : l}</span>`;
+  }).join('');
+}
+
+// mesmo tamanho para todas as linhas da cena, o maior que caiba na área segura
+function ajustar(bloco, max, maxH) {
+  const linhas = [...bloco.querySelectorAll('.linha')];
+  let s = max;
+  const caber = () => linhas.every(l => l.scrollWidth <= SAFE_W - 70) && bloco.scrollHeight <= maxH;
+  linhas.forEach(l => l.style.fontSize = s + 'px');
+  while (!caber() && s > 40) { s -= 2; linhas.forEach(l => l.style.fontSize = s + 'px'); }
+}
+
+const PIN = `<svg class="pin" viewBox="0 0 24 24" fill="none" stroke="#C9973F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.6"/></svg>`;
+
+function fundo(c) {
+  const f = c.foto && D.fotos[c.foto];
+  if (!f) return `<div class="liso"></div>`;
+  const veu = c.tipo === 'produto'
+    ? 'linear-gradient(180deg, rgba(23,24,26,.35) 0%, rgba(23,24,26,.25) 35%, rgba(23,24,26,.85) 68%, rgba(23,24,26,.95) 100%)'
+    : 'linear-gradient(180deg, rgba(23,24,26,.62) 0%, rgba(23,24,26,.76) 40%, rgba(23,24,26,.82) 70%, rgba(23,24,26,.6) 100%)';
+  return `<img class="bg" src="${f}"><div class="veu" style="background:${veu}"></div>`;
+}
+
+D.cues.forEach((c, i) => {
+  const el = document.createElement('div');
+  el.className = 'cena ' + c.tipo + (c.foto && D.fotos[c.foto] ? ' comfoto' : ' semfoto');
+  let miolo;
+  if (c.tipo === 'final') {
+    miolo = `
+      <div class="el logo"><div class="nome">FARAH</div><div class="linha-ouro"></div><div class="tipo">BANCA E TABACARIA</div></div>
+      <div class="el endereco">Av. Iperoig, 301<span>Centro · Ubatuba · SP</span></div>
+      <div class="el zap"><div class="rot">WHATSAPP</div><div class="num">(11) 99745-7700</div></div>
+      <div class="el insta">@banca_farah_ubatuba</div>
+      <div class="el cta">Passa aqui!</div>`;
+  } else if (c.tipo === 'endereco') {
+    const [a, b] = c.tela.split('|');
+    miolo = `<div class="bloco">${PIN}<span class="linha">${a}</span><div class="sub">${b}</div></div>`;
+  } else if (c.tipo === 'produto') {
+    miolo = `<div class="bloco"><div class="kicker">Tem na Farah</div>${linhasHTML(c)}<div class="fio"></div></div>`;
+  } else {
+    miolo = `<div class="bloco">${linhasHTML(c)}<div class="fio"></div></div>`;
+  }
+  el.innerHTML = (c.tipo === 'final' ? '<div class="liso"></div>' : fundo(c)) +
+    `<div class="seguro">${miolo}</div><div class="flash"></div>`;
+  palco.appendChild(el);
+  cenas.push({ c, el, t: D.timings.cenas[i],
+    bg: el.querySelector('.bg'), bloco: el.querySelector('.bloco'),
+    flash: el.querySelector('.flash'), fio: el.querySelector('.fio'),
+    els: [...el.querySelectorAll('.final .el')] });
+});
+
+// tamanhos depois do layout
+function medir() { cenas.forEach(s => {
+  s.el.classList.add('on');
+  if (s.bloco && s.c.tipo !== 'final') {
+    const max = s.c.tipo === 'produto' ? (s.c.tela.includes('|') ? 170 : 190) : 160;
+    ajustar(s.bloco, s.c.tipo === 'endereco' ? 128 : max, s.c.tipo === 'produto' && s.el.classList.contains('comfoto') ? 640 : SAFE_H - 40);
+  }
+  s.el.classList.remove('on');
+}); }
+
+let atual = null;
+window.renderAt = function (t) {
+  const s = cenas.find(s => t >= s.t.inicio && t < s.t.fim) || cenas[cenas.length - 1];
+  if (atual !== s) { if (atual) atual.el.classList.remove('on'); s.el.classList.add('on'); atual = s; }
+  const lt = t - s.t.inicio;
+  const curta = s.c.tipo === 'produto';
+  // foto: zoom curto de impacto e deriva lenta
+  if (s.bg) {
+    const imp = 1 - easeOut(lt / 0.22);
+    s.bg.style.transform = `scale(${1.0 + 0.07 * imp + 0.012 * lt})`;
+  }
+  // flash discreto no corte
+  s.flash.style.opacity = (curta ? 0.16 : 0.2) * (1 - clamp(lt / 0.12));
+  if (s.c.tipo === 'final') {
+    s.els.forEach((e, k) => {
+      const x = easeOut((lt - k * 0.09) / 0.2);
+      e.style.opacity = clamp((lt - k * 0.09) / 0.07);
+      e.style.transform = `translateY(${(1 - x) * 24}px) scale(${1 + 0.08 * (1 - x)})`;
+    });
+    // leve pulso no "Passa aqui!"
+    const cta = s.els[s.els.length - 1];
+    const p = lt > 0.8 ? 1 + 0.025 * Math.sin((lt - 0.8) * Math.PI * 1.6) : null;
+    if (p) cta.style.transform = `scale(${p})`;
+    return;
+  }
+  const x = easeOut(lt / 0.16);
+  s.bloco.style.opacity = clamp(lt / 0.05);
+  s.bloco.style.transform = `translateY(${(1 - x) * 16}px) scale(${1 + 0.1 * (1 - x)})`;
+  if (s.fio) s.fio.style.transform = `scaleX(${easeOut((lt - 0.06) / 0.2)})`;
+};
+window.PRONTO = Promise.all([...document.images].map(i => i.complete ? 1 : new Promise(r => { i.onload = i.onerror = r; })))
+  .then(() => document.fonts.ready).then(() => { medir(); renderAt(0); return true; });
+</script>
+</body>
+</html>
