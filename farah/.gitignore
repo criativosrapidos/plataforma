@@ -1,4 +1,5 @@
-build/conf/
+build/conf*/
 build/q*/
 build/folha*.jpg
+build/*.wav
 __pycache__/

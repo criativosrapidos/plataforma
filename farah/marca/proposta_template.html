@@ -1,0 +1,291 @@
+<title>Identidade Farah</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap">
+<style>
+  /* Prancha de marca: uma página escura, seções que alternam grafite e dourado, como o próprio vídeo */
+  :root {
+    color-scheme: dark;
+    --grafite: #17181A;
+    --grafite-2: #212326;
+    --linha: #34363A;
+    --branco: #F4F2EE;
+    --ouro: #C9973F;
+    --ouro-claro: #E2B866;
+    --areia: #BDB4A6;
+    --f-titulo: 'Archivo', 'Arial Black', 'Helvetica Neue', sans-serif;
+    --f-texto: 'Archivo', 'Helvetica Neue', Arial, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--grafite); color: var(--branco); font-family: var(--f-texto); font-size: 17px; line-height: 1.55; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding-inline: clamp(16px, 4vw, 48px); }
+  section { padding-block: clamp(56px, 9vw, 112px); }
+  section.ouro { background: var(--ouro); color: var(--grafite); }
+  section.claro { background: var(--branco); color: var(--grafite); }
+  .eyebrow { font-weight: 800; font-stretch: 110%; font-size: 13px; letter-spacing: .24em; text-transform: uppercase; color: var(--ouro); margin: 0 0 18px; }
+  .ouro .eyebrow, .claro .eyebrow { color: var(--grafite); opacity: .7; }
+  h2 { font-family: var(--f-titulo); font-weight: 900; font-stretch: 125%; text-transform: uppercase; letter-spacing: -0.02em;
+    font-size: clamp(34px, 6vw, 64px); line-height: .98; margin: 0 0 24px; text-wrap: balance; }
+  h3 { font-family: var(--f-titulo); font-weight: 800; font-stretch: 115%; font-size: 20px; text-transform: uppercase; letter-spacing: .02em; margin: 0 0 8px; }
+  p { margin: 0; max-width: 62ch; }
+  .lead { font-size: clamp(18px, 2.2vw, 22px); color: var(--areia); }
+  .ouro .lead, .claro .lead { color: #3A3328; }
+
+  /* logo */
+  .logo { display: inline-flex; flex-direction: column; align-items: center; color: var(--branco); --cor-sol: var(--ouro); }
+  .logo .wm { font-family: var(--f-titulo); font-weight: 900; font-stretch: 125%; letter-spacing: -0.015em; line-height: 1; white-space: nowrap; }
+  .logo .sol { position: relative; display: inline-block; }
+  .logo .sol::before { content: ''; position: absolute; left: 50%; top: -0.25em; width: .21em; height: .21em; margin-left: -.105em; border-radius: 50%; background: var(--cor-sol); }
+  .logo .tag { font-weight: 700; letter-spacing: .34em; margin-right: -.34em; font-size: .155em; margin-top: .55em; white-space: nowrap; color: var(--areia); }
+  .logo.escuro { color: var(--grafite); }
+  .logo.escuro .tag { color: #4A453D; }
+  .logo.sobre-ouro { color: var(--grafite); --cor-sol: var(--branco); }
+  .logo.sobre-ouro .tag { color: var(--grafite); }
+  .mono { position: relative; display: inline-grid; place-items: center; width: 1em; height: 1em; border-radius: .24em; background: var(--grafite);
+    color: var(--branco); font-family: var(--f-titulo); font-weight: 900; font-stretch: 125%; }
+  .mono b { font-size: .6em; line-height: 1; transform: translateX(-.08em); }
+  .mono::after { content: ''; position: absolute; width: .17em; height: .17em; border-radius: 50%; background: var(--ouro); right: .13em; top: .13em; }
+  .mono.ouro { background: var(--ouro); color: var(--grafite); }
+  .mono.ouro::after { background: var(--branco); }
+
+  /* capa */
+  .capa { padding-block: clamp(72px, 12vw, 150px) clamp(56px, 8vw, 96px); text-align: center; }
+  .capa .logo { font-size: clamp(64px, 15vw, 190px); }
+  .capa .frase { margin: 48px auto 0; font-family: var(--f-titulo); font-weight: 800; font-stretch: 112%; font-size: clamp(20px, 3vw, 30px); text-transform: uppercase; letter-spacing: .01em; max-width: none; }
+  .capa .frase em { font-style: normal; color: var(--ouro); }
+  .capa .meta { margin: 28px auto 0; color: var(--areia); font-size: 15px; max-width: none; }
+
+  .duas { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: clamp(28px, 5vw, 64px); align-items: start; }
+  .duas > * { min-width: 0; }
+
+  /* conceito */
+  .silaba { font-family: var(--f-titulo); font-weight: 900; font-stretch: 125%; font-size: clamp(48px, 9vw, 104px); line-height: 1; white-space: nowrap; }
+  .silaba span { color: rgba(23,24,26,.35); }
+  .notas { display: grid; gap: 22px; margin-top: 8px; }
+  .notas div { border-top: 2px solid rgba(23,24,26,.25); padding-top: 14px; }
+
+  /* versões do logo */
+  .versoes { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 16px; margin-top: 40px; }
+  .versao { border-radius: 14px; padding: 48px 20px; display: grid; place-items: center; min-height: 230px; position: relative; }
+  .versao .logo { font-size: min(56px, 12vw); }
+  .versao small { position: absolute; left: 18px; bottom: 14px; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; font-weight: 700; opacity: .6; }
+  .v-grafite { background: var(--grafite-2); border: 1px solid var(--linha); }
+  .v-ouro { background: var(--ouro); color: var(--grafite); }
+  .v-branco { background: var(--branco); color: var(--grafite); }
+  .monos { display: flex; gap: 22px; align-items: center; font-size: 96px; }
+  .regras { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)); gap: 24px; margin-top: 48px; }
+  .regras > div { border-top: 1px solid var(--linha); padding-top: 14px; color: var(--areia); font-size: 15px; }
+  .regras h3 { color: var(--branco); font-size: 16px; }
+
+  /* cores */
+  .cores { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr)); gap: 14px; margin-top: 36px; }
+  .cor { border-radius: 14px; overflow: hidden; border: 1px solid rgba(23,24,26,.12); background: #FFFDF9; }
+  .cor .am { height: 150px; display: flex; align-items: flex-end; padding: 14px; font-family: var(--f-titulo); font-weight: 900; font-stretch: 120%; font-size: 30px; }
+  .cor .info { padding: 14px 16px 18px; font-size: 14px; color: #3A3328; }
+  .cor .info b { display: block; font-size: 16px; color: var(--grafite); }
+  .cor code { font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 13px; }
+  .barra { display: flex; height: 18px; border-radius: 99px; overflow: hidden; margin-top: 26px; }
+  .barra + p { margin-top: 10px; font-size: 14px; color: #3A3328; }
+
+  /* tipografia */
+  .tipo { display: grid; gap: 18px; margin-top: 36px; }
+  .tipo .amostra { border: 1px solid var(--linha); border-radius: 14px; padding: clamp(22px, 4vw, 40px); background: var(--grafite-2); overflow: hidden; }
+  .tipo .amostra > * { min-width: 0; }
+  .t-display { font-family: var(--f-titulo); font-weight: 900; font-stretch: 125%; text-transform: uppercase; letter-spacing: -0.02em; font-size: clamp(40px, 8vw, 96px); line-height: .95; }
+  .t-display em { font-style: normal; background: var(--ouro); color: var(--grafite); padding: 0 .1em; border-radius: .06em; }
+  .t-sub { font-family: var(--f-texto); font-weight: 700; font-stretch: 112%; font-size: clamp(20px, 3vw, 30px); text-transform: uppercase; }
+  .t-texto { font-family: var(--f-texto); font-weight: 500; font-size: 18px; color: var(--areia); max-width: 60ch; }
+  .rotulo { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; font-weight: 700; color: var(--ouro); margin-bottom: 18px; }
+  .rotulo span:last-child { color: var(--areia); }
+
+  /* elementos */
+  .elementos { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 16px; margin-top: 36px; }
+  .elemento { background: var(--grafite-2); border: 1px solid var(--linha); border-radius: 14px; padding: 28px 22px; display: grid; gap: 18px; align-content: start; }
+  .elemento .demo { min-height: 110px; display: grid; place-items: center; }
+  .elemento p { font-size: 15px; color: var(--areia); }
+  .bloco { font-family: var(--f-titulo); font-weight: 900; font-stretch: 125%; font-size: 44px; text-transform: uppercase; background: var(--ouro); color: var(--grafite); padding: 0 .14em; border-radius: .06em; line-height: 1.05; }
+  .selo { display: inline-flex; align-items: center; gap: 12px; padding: 8px 18px 8px 8px; border-radius: 99px; background: var(--grafite); border: 2px solid rgba(201,151,63,.7);
+    font-weight: 700; font-stretch: 108%; font-size: 15px; letter-spacing: .04em; white-space: nowrap; }
+  .selo .mono { font-size: 34px; }
+  .selo em { font-style: normal; color: var(--ouro); }
+  .chip { display: inline-block; padding: 8px 18px; border-radius: 99px; background: var(--ouro); color: var(--grafite); font-weight: 800; font-stretch: 110%; font-size: 14px; letter-spacing: .18em; }
+
+  /* aplicações */
+  .telas { display: flex; gap: 16px; overflow-x: auto; padding-bottom: 12px; margin-top: 36px; scroll-snap-type: x mandatory; }
+  .telas figure { margin: 0; flex: 0 0 auto; width: min(210px, 62vw); scroll-snap-align: start; }
+  .telas img { width: 100%; aspect-ratio: 9 / 16; object-fit: cover; border-radius: 16px; display: block; border: 1px solid var(--linha); }
+  .telas figcaption { font-size: 13px; color: var(--areia); margin-top: 10px; }
+  .mocks { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 16px; margin-top: 16px; }
+  .mock { border-radius: 14px; overflow: hidden; border: 1px solid var(--linha); background: var(--grafite-2); }
+  .mock .area { aspect-ratio: 16 / 10; display: grid; place-items: center; position: relative; overflow: hidden; }
+  .mock .legenda { padding: 14px 16px; font-size: 14px; color: var(--areia); }
+  .mock .legenda b { color: var(--branco); display: block; font-size: 15px; }
+  .fachada { background: linear-gradient(#5E6B73 0 52%, #3B4247 52% 100%); }
+  .fachada .placa { position: absolute; top: 14%; left: 8%; right: 8%; height: 30%; background: var(--grafite); border-bottom: 6px solid var(--ouro); display: grid; place-items: center; }
+  .fachada .placa .logo { font-size: clamp(30px, 5vw, 44px); }
+  .fachada .porta { position: absolute; bottom: 0; left: 30%; right: 30%; height: 40%; background: #23282C; border: 4px solid #1A1D20; }
+  .fachada .porta::after { content: 'ABERTO'; position: absolute; top: 18%; left: 50%; transform: translateX(-50%); background: var(--ouro); color: var(--grafite); font-weight: 800; font-size: 11px; letter-spacing: .18em; padding: 4px 8px; border-radius: 4px; }
+  .perfil { background: var(--branco); color: var(--grafite); }
+  .perfil .ig { display: flex; align-items: center; gap: 16px; padding: 0 20px; width: 100%; }
+  .perfil .ig .mono { font-size: 84px; flex: 0 0 auto; border-radius: 50%; }
+  .perfil .ig .mono::after { right: .2em; top: .2em; }
+  .perfil .ig div { min-width: 0; }
+  .perfil .ig b { display: block; font-size: 17px; }
+  .perfil .ig span { font-size: 13px; color: #5A544B; display: block; }
+  .post { background: var(--ouro); }
+  .post .card { display: grid; justify-items: center; gap: 10px; text-align: center; color: var(--grafite); }
+  .post .card .t { font-family: var(--f-titulo); font-weight: 900; font-stretch: 125%; text-transform: uppercase; font-size: clamp(28px, 4.4vw, 40px); line-height: .95; }
+
+  /* voz */
+  .frases { display: grid; gap: 12px; margin-top: 30px; }
+  .frases div { font-family: var(--f-titulo); font-weight: 900; font-stretch: 120%; text-transform: uppercase; font-size: clamp(22px, 3.6vw, 36px); line-height: 1.05; }
+  .frases div span { color: var(--ouro); }
+  .faz { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 24px; margin-top: 40px; }
+  .faz > div { border-top: 1px solid var(--linha); padding-top: 14px; color: var(--areia); font-size: 15px; }
+  .faz ul { margin: 8px 0 0; padding-left: 18px; }
+
+  footer { border-top: 1px solid var(--linha); padding-block: 40px; color: var(--areia); font-size: 14px; }
+  footer .wrap { display: flex; justify-content: space-between; gap: 18px; flex-wrap: wrap; align-items: center; }
+  :focus-visible { outline: 3px solid var(--ouro); outline-offset: 3px; }
+</style>
+
+<header class="capa">
+  <div class="wrap">
+    <p class="eyebrow">Proposta de identidade visual</p>
+    <div class="logo"><div class="wm">FAR<span class="sol">A</span>H</div><div class="tag">BANCA E TABACARIA</div></div>
+    <p class="frase">Faltou alguma coisa? <em>A Farah tem.</em></p>
+    <p class="meta">Av. Iperoig, 301 · Centro · Ubatuba, SP · pertinho da praia</p>
+  </div>
+</header>
+
+<section class="ouro">
+  <div class="wrap duas">
+    <div>
+      <p class="eyebrow">Conceito</p>
+      <h2>O sol em cima da sílaba forte</h2>
+      <p class="lead">O ponto dourado sobre o segundo A faz duas coisas ao mesmo tempo: ensina a falar o nome certo e lembra o sol de quem está na praia, a poucos passos da loja.</p>
+    </div>
+    <div>
+      <div class="silaba" aria-label="Fa-RÁ"><span>FA·</span>RÁ</div>
+      <div class="notas">
+        <div><h3>Comércio de confiança</h3><p>Grafite e dourado dão o ar sério de loja estabelecida no Centro, sem cara de quiosque.</p></div>
+        <div><h3>Jovem na medida</h3><p>Letra larga e pesada, blocos de cor e movimento rápido. Atual, sem ficar infantil.</p></div>
+        <div><h3>Feita para o celular</h3><p>Funciona pequena: o monograma F com o sol vira foto de perfil, selo e ícone.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">Logo</p>
+    <h2>Versões</h2>
+    <p class="lead">Use a versão principal sempre que possível. Sobre dourado, o sol fica branco; sobre fundo claro, a palavra fica grafite.</p>
+    <div class="versoes">
+      <div class="versao v-grafite"><div class="logo"><div class="wm">FAR<span class="sol">A</span>H</div><div class="tag">BANCA E TABACARIA</div></div><small>Principal</small></div>
+      <div class="versao v-ouro"><div class="logo sobre-ouro"><div class="wm">FAR<span class="sol">A</span>H</div><div class="tag">BANCA E TABACARIA</div></div><small>Sobre dourado</small></div>
+      <div class="versao v-branco"><div class="logo escuro"><div class="wm">FAR<span class="sol">A</span>H</div><div class="tag">BANCA E TABACARIA</div></div><small>Sobre claro</small></div>
+      <div class="versao v-grafite"><div class="monos"><span class="mono"><b>F</b></span><span class="mono ouro"><b>F</b></span></div><small>Monograma</small></div>
+    </div>
+    <div class="regras">
+      <div><h3>Respiro</h3>Deixe em volta do logo, no mínimo, a altura da letra F livre de outros elementos.</div>
+      <div><h3>Tamanho mínimo</h3>Palavra FARAH com 24 px de altura na tela ou 12 mm no impresso. Abaixo disso, use o monograma.</div>
+      <div><h3>Não fazer</h3>Não mudar a cor do sol, não tirar o ponto, não esticar, não aplicar sombra nem contorno.</div>
+    </div>
+  </div>
+</section>
+
+<section class="claro">
+  <div class="wrap">
+    <p class="eyebrow">Cores</p>
+    <h2>Grafite, branco e um dourado</h2>
+    <p class="lead">O dourado é o destaque: preço não, nome e informação sim. Use em blocos atrás das palavras-chave, no selo e no botão de ação.</p>
+    <div class="cores">
+      <div class="cor"><div class="am" style="background:#17181A;color:#F4F2EE">Aa</div><div class="info"><b>Grafite</b><code>#17181A</code> · fundo principal</div></div>
+      <div class="cor"><div class="am" style="background:#F4F2EE;color:#17181A;border-bottom:1px solid #E2DED6">Aa</div><div class="info"><b>Branco quente</b><code>#F4F2EE</code> · texto e respiro</div></div>
+      <div class="cor"><div class="am" style="background:#C9973F;color:#17181A">Aa</div><div class="info"><b>Dourado Farah</b><code>#C9973F</code> · destaque e marca</div></div>
+      <div class="cor"><div class="am" style="background:#E2B866;color:#17181A">Aa</div><div class="info"><b>Dourado claro</b><code>#E2B866</code> · brilho e degradê</div></div>
+      <div class="cor"><div class="am" style="background:#BDB4A6;color:#17181A">Aa</div><div class="info"><b>Areia</b><code>#BDB4A6</code> · texto de apoio</div></div>
+    </div>
+    <div class="barra" role="img" aria-label="Proporção: 60% grafite, 25% branco, 15% dourado">
+      <span style="flex:60;background:#17181A"></span><span style="flex:25;background:#F4F2EE;border-block:1px solid #DDD8CF"></span><span style="flex:15;background:#C9973F"></span>
+    </div>
+    <p>Proporção de uso: 60% grafite, 25% branco, 15% dourado.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">Tipografia</p>
+    <h2>Uma família, duas larguras</h2>
+    <p class="lead">Archivo, gratuita no Google Fonts. Larga e pesada nos títulos para dar energia; normal nos textos para ler fácil no celular.</p>
+    <div class="tipo">
+      <div class="amostra"><div class="rotulo"><span>Títulos</span><span>Archivo Expanded Black · largura 125 · peso 900</span></div>
+        <div class="t-display">Aqui tem <em>de tudo!</em></div></div>
+      <div class="amostra"><div class="rotulo"><span>Subtítulos e selos</span><span>Archivo SemiExpanded Bold · largura 112 · peso 700</span></div>
+        <div class="t-sub">Bebida gelada · refri · chinelo · carregador</div></div>
+      <div class="amostra"><div class="rotulo"><span>Textos</span><span>Archivo Medium · largura 100 · peso 500</span></div>
+        <p class="t-texto">Banca e Tabacaria Farah, na Av. Iperoig, 301, no Centro de Ubatuba. Bebidas geladas, doces, chinelos, bonés, acessórios de celular, mangás, cards e lembranças da cidade.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">Elementos gráficos</p>
+    <h2>Peças que se repetem</h2>
+    <div class="elementos">
+      <div class="elemento"><div class="demo"><span class="bloco">Tudo!</span></div><h3>Bloco de destaque</h3><p>Fundo dourado atrás da palavra-chave. Entra como um traço rápido, da esquerda para a direita.</p></div>
+      <div class="elemento"><div class="demo"><span class="selo"><span class="mono"><b>F</b></span>AV. IPEROIG, 301 <em>·</em> CENTRO</span></div><h3>Selo de endereço</h3><p>Fica fixo no rodapé dos vídeos desde o segundo 2, para quem passar rápido já saber onde é.</p></div>
+      <div class="elemento"><div class="demo"><span class="chip">TEM NA FARAH</span></div><h3>Etiqueta</h3><p>Acompanha cada produto. Recortes sem fundo, sobre grafite ou dourado, alternando a cada corte.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">Aplicações</p>
+    <h2>Como fica no dia a dia</h2>
+    <p class="lead">Quadros do Reels de 23 segundos, já com a identidade.</p>
+    <div class="telas" tabindex="0" aria-label="Quadros do vídeo">
+      <figure><img src="{{gancho}}" alt="Gancho: Atenção, Ubatuba! sobre foto de praia"><figcaption>0 s · gancho</figcaption></figure>
+      <figure><img src="{{dor}}" alt="E percebeu que faltou alguma coisa?"><figcaption>4 s · a dor</figcaption></figure>
+      <figure><img src="{{produto}}" alt="Lata de refrigerante com a palavra REFRI"><figcaption>7 a 12 s · produtos</figcaption></figure>
+      <figure><img src="{{chinelo}}" alt="Chinelo sobre fundo dourado"><figcaption>um corte por palavra</figcaption></figure>
+      <figure><img src="{{tudo}}" alt="Aqui tem de tudo com miniaturas dos produtos"><figcaption>12 s · aqui tem de tudo</figcaption></figure>
+      <figure><img src="{{endereco}}" alt="Avenida Iperoig 301, Centro, Ubatuba"><figcaption>15 s · endereço</figcaption></figure>
+      <figure><img src="{{final}}" alt="Tela final com logo, endereço e WhatsApp"><figcaption>19 s · tela final</figcaption></figure>
+    </div>
+    <div class="mocks">
+      <div class="mock"><div class="area fachada"><div class="placa"><div class="logo"><div class="wm">FAR<span class="sol">A</span>H</div><div class="tag">BANCA E TABACARIA</div></div></div><div class="porta"></div></div>
+        <div class="legenda"><b>Placa da fachada</b>Grafite com filete dourado embaixo. Ilustração, não é foto da loja.</div></div>
+      <div class="mock"><div class="area perfil"><div class="ig"><span class="mono"><b>F</b></span><div><b>banca_farah_ubatuba</b><span>Banca e Tabacaria Farah</span><span>Av. Iperoig, 301 · Centro · Ubatuba</span></div></div></div>
+        <div class="legenda"><b>Perfil do Instagram</b>Monograma como foto de perfil: legível mesmo pequeno.</div></div>
+      <div class="mock"><div class="area post"><div class="card"><span class="mono" style="font-size:54px"><b>F</b></span><div class="t">Faltou?<br>A Farah tem.</div></div></div>
+        <div class="legenda"><b>Post de feed</b>Fundo dourado, frase curta, monograma em cima.</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="ouro">
+  <div class="wrap">
+    <p class="eyebrow">Jeito de falar</p>
+    <h2>Curto, direto e de vizinho</h2>
+    <div class="frases">
+      <div>Faltou alguma coisa? <span style="color:#F4F2EE">A Farah tem.</span></div>
+      <div>Tá na praia? <span style="color:#F4F2EE">Passa aqui.</span></div>
+      <div>Pertinho da praia, <span style="color:#F4F2EE">no Centro.</span></div>
+    </div>
+    <div class="faz" style="color:#3A3328">
+      <div style="border-color:rgba(23,24,26,.3);color:#3A3328"><h3>Fazer</h3><ul><li>Falar com quem mora em Ubatuba e vai à praia</li><li>Dizer o nome como se fala: Fa-RÁ</li><li>Mostrar endereço e WhatsApp sempre</li></ul></div>
+      <div style="border-color:rgba(23,24,26,.3);color:#3A3328"><h3>Evitar</h3><ul><li>Mostrar ou citar produtos de tabaco</li><li>Prometer preço, promoção ou horário sem confirmar</li><li>Visual de quiosque, muitas cores ou letra decorativa</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="logo" style="font-size:44px"><div class="wm">FAR<span class="sol">A</span>H</div></div>
+    <span>WhatsApp (11) 99745-7700 · @banca_farah_ubatuba</span>
+  </div>
+</footer>
