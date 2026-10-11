@@ -10,7 +10,7 @@ Falhou, a multa vira doação para a instituição que ela escolheu.
 | `supabase/migrations/` | Banco: tabelas, regras de acesso (RLS), regras da meta e avaliação diária |
 | `supabase/functions/` | Edge Functions do Mercado Pago (gerar pagamento da multa e webhook) |
 | `supabase/tests/` | Teste das regras do banco num Postgres embutido (PGlite) |
-| `marketing/video/` | Vídeo "Como funciona" (1 min, vertical) e a fonte para gerar de novo |
+| `marketing/video/` | Vídeo "Como funciona" (1min51, vertical, com a ciência da aversão à perda), versão curta de 1 min e a fonte para gerar de novo |
 
 ## Como a meta funciona (regras no banco)
 

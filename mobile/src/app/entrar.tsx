@@ -45,7 +45,7 @@ export default function Entrar() {
           <Simbolo tamanho={72} />
           <Texto v="tituloXl">Sua meta vale quanto?</Texto>
           <Texto cor="tintaSuave">Prometa, coloque um valor e chame um amigo para fiscalizar. Se falhar, a multa vira doação.</Texto>
-          <Botao tipo="secundario" titulo="Ver como funciona (1 min)" onPress={() => router.push('/como-funciona')} style={{ alignSelf: 'flex-start' }} />
+          <Botao tipo="secundario" titulo="Ver como funciona (2 min)" onPress={() => router.push('/como-funciona')} style={{ alignSelf: 'flex-start' }} />
         </View>
 
         {!configurado ? (

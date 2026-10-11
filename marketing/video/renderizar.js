@@ -1,5 +1,5 @@
 // Renderiza video.html quadro a quadro. Uso: node renderizar.js [test]
-const {chromium}=require('playwright');const DUR=66.5,FPS=30;(async()=>{const b=await chromium.launch();const p=await b.newPage({viewport:{width:1080,height:1920}});await p.goto('file://'+__dirname+'/video.html');
+const {chromium}=require('playwright');const DUR=111.2,FPS=30;(async()=>{const b=await chromium.launch();const p=await b.newPage({viewport:{width:1080,height:1920}});await p.goto('file://'+__dirname+'/video.html');
 await p.evaluate(()=>Promise.all([...document.fonts].map(f=>f.load())).then(()=>document.fonts.ready));
 await p.evaluate(()=>Promise.all([...document.images].map(i=>i.decode())));
 const m=process.argv[2];

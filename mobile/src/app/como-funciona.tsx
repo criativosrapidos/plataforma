@@ -4,7 +4,7 @@ import { X } from 'lucide-react-native';
 import { Pressable, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-// Vídeo de 1 minuto que explica o FocoMulta (marketing/video/ tem a fonte).
+// Vídeo de 1min51 que explica o FocoMulta e a ciência por trás (marketing/video/ tem a fonte).
 const VIDEO = require('@/assets/video/como-funciona.mp4');
 
 export default function ComoFunciona() {

@@ -1,8 +1,22 @@
-Vídeo "Como funciona" do FocoMulta · 1080x1920 · 66,5 s · 30 fps
-Narração: voz "Matheus - Calm & Clear Narrator" (ElevenLabs, eleven_v4), 64,3 s.
+Vídeo "Como funciona" do FocoMulta · 1080x1920 · 111,2 s (1min51) · 30 fps
+Arquivo: FocoMulta-como-funciona.mp4 (é o que o app mostra).
+Versão curta para anúncio, sem o trecho da ciência: FocoMulta-1min.mp4 (66,5 s).
+Narração: voz "Matheus - Calm & Clear Narrator" (ElevenLabs, eleven_v4), 109 s. O trecho
+"Mas por que dinheiro?" foi gravado à parte e encaixado aos 9,10 s.
 
 Sabe aquela promessa de começar na segunda?... Pois é. A gente sempre adia.
-No FocoMulta, sua meta vale dinheiro. Funciona assim.
+No FocoMulta, sua meta vale dinheiro.
+[trecho inserido]
+Mas por que dinheiro?... Por causa de uma coisa chamada aversão à perda.
+O psicólogo Daniel Kahneman, Prêmio Nobel de Economia, mostrou com Amos Tversky que perder dói
+cerca de duas vezes mais do que ganhar a mesma quantia. Perder dez reais incomoda mais do que
+ganhar dez reais alegra.
+E isso foi testado na prática. Na Universidade da Pensilvânia, nos Estados Unidos, um estudo
+acompanhou mais de dois mil e quinhentos fumantes. Entre quem aceitou colocar o próprio dinheiro
+em jogo, cinquenta e dois por cento ficaram seis meses sem fumar. Entre quem só podia ganhar um
+prêmio, foram dezessete por cento. Cerca de três vezes mais.
+[fim do trecho inserido]
+Funciona assim.
 Você cria a meta. Parar de fumar... perder seis quilos... estudar todo dia.
 Coloca um valor. Cinco, dez reais por semana.
 Depois, escolhe quem fiscaliza. Só você, com a foto do dia... um amigo, que confirma o seu
@@ -16,18 +30,28 @@ E você não tá sozinho. Tem comunidade de exercício, alimentação, estudos, 
 com todo mundo mostrando o progresso.
 FocoMulta. Cumpra a meta... ou pague a multa.
 
-Cenas (início em segundos, objeto ST em video.html):
+Fontes dos números (aparecem no rodapé das cenas):
+- Tversky e Kahneman (1992), Advances in prospect theory, Journal of Risk and Uncertainty:
+  coeficiente de aversão à perda ≈ 2,25. Meta-análise de Brown e colegas (2024): ≈ 1,96.
+  Kahneman recebeu o Prêmio Nobel de Economia em 2002 (Tversky morreu em 1996).
+- Halpern e colegas (2015), New England Journal of Medicine 372:2108-17, 2.538 fumantes.
+  6 meses sem fumar: 52,3% entre quem aceitou o programa com depósito (dinheiro próprio em jogo)
+  e 17,1% entre quem aceitou o programa só com prêmio. Atenção: só 13,7% aceitaram o programa com
+  depósito; contando todos os sorteados, o programa com prêmio teve mais gente parando
+  (15,7% contra 10,2%). Por isso o vídeo diz "entre quem aceitou". Não tire essa ressalva.
+
+Cenas (tempos do vídeo de 66,5 s; no longo, tudo depois de 9,10 s anda +44,72 s):
 s1 0 promessa adiada · s2 6,05 logo · s3 9,25 criar meta e valor · sF 19,95 quem fiscaliza
 sI 32,95 pra onde vai a multa · s4 41,35 check-in · s5 44,6 cumpriu · s6 46,95 falhou
 s7 51,45 comunidades · s8 57,6 feed · s9 60,75 assinatura
 
 Gerar de novo:
   npm i -g playwright   (ou use um Playwright já instalado)
-  node renderizar.js                     # 1995 quadros em fr/
-  ffmpeg -framerate 30 -i fr/%04d.jpg -i narracao.mp3 -map 0:v -map 1:a -c:v libx264 -crf 20 \
-    -pix_fmt yuv420p -af "apad,loudnorm=I=-14:TP=-1.5:LRA=11" -c:a aac -b:a 192k -t 66.5 \
-    -movflags +faststart FocoMulta-1min.mp4
-  node renderizar.js test 23.5 38        # só alguns quadros, para conferir
+  node renderizar.js                     # 3336 quadros em fr/
+  ffmpeg -framerate 30 -i fr/%04d.jpg -i narracao.mp3 -map 0:v -map 1:a -c:v libx264 -crf 21 \
+    -pix_fmt yuv420p -af "apad,loudnorm=I=-14:TP=-1.5:LRA=11" -c:a aac -b:a 160k -t 111.2 \
+    -movflags +faststart FocoMulta-como-funciona.mp4
+  node renderizar.js test 23.5 52        # só alguns quadros, para conferir
 
 Observações:
 - Os exemplos de instituição são categorias genéricas. Para usar o nome de uma instituição real,
