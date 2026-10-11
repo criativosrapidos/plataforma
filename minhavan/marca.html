@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Minha Van — Marca</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/styles.css">
+  <style>
+    .bloco { background: var(--superficie); border: 1px solid var(--borda); border-radius: var(--raio); padding: 28px; margin-bottom: 24px; }
+    .bloco h2 { font-size: 1.6rem; margin-bottom: 16px; }
+    .cores { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 14px; }
+    .cor { border-radius: 16px; overflow: hidden; border: 1px solid var(--borda); }
+    .cor div { height: 90px; }
+    .cor p { padding: 10px 12px; font-size: .88rem; }
+    .cor b { display: block; }
+    .logos { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+    .logos div { border-radius: 16px; padding: 28px; display: grid; place-items: center; min-height: 140px; }
+    .tipo p { margin-bottom: 8px; }
+    .voz { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+    .voz div { border-radius: 14px; padding: 16px; }
+  </style>
+</head>
+<body>
+<header class="topo"><div class="container"><a href="index.html" class="marca"><img src="assets/logo-mark.svg" alt="">minha<span>van</span></a><a href="index.html" class="btn btn-contorno">Ver landing page</a></div></header>
+<main class="container" style="padding-top: 48px; padding-bottom: 64px;">
+  <h1 style="font-size: clamp(2rem,5vw,3rem); margin-bottom: 8px;">Identidade visual</h1>
+  <p style="color: var(--texto-suave); margin-bottom: 32px; font-size: 1.1rem;">Guia rápido da marca Minha Van (minhavan.com.br).</p>
+
+  <div class="bloco">
+    <h2>Conceito</h2>
+    <p><b>Amarelo de transporte escolar</b> (reconhecimento imediato) + <b>azul-noite</b> (confiança e segurança) + <b>verde de “tudo certo”</b> (localização ao vivo, aviso entregue). O símbolo é uma van amigável com um ponto de localização verde: “sua van, no mapa, agora”.</p>
+    <p style="margin-top:10px">Posicionamento: <i>“Saiba exatamente quando a van chega.”</i></p>
+  </div>
+
+  <div class="bloco">
+    <h2>Logo</h2>
+    <div class="logos">
+      <div style="background:#FFFBF2"><img src="assets/logo.svg" alt="Logo Minha Van" style="width:230px"></div>
+      <div style="background:#0E1B3D"><span class="marca" style="color:#fff"><img src="assets/logo-mark.svg" alt="" style="width:56px;height:56px">minha<span style="color:#FFC21A">van</span></span></div>
+      <div style="background:#FFC21A"><img src="assets/logo-mark.svg" alt="Símbolo" style="width:96px;border-radius:22px;box-shadow:0 0 0 4px #0E1B3D"></div>
+    </div>
+    <p style="margin-top:14px;color:var(--texto-suave)">Sempre em minúsculas, “minha” em azul e “van” em amarelo-escuro. Ícone do app = símbolo quadrado arredondado.</p>
+  </div>
+
+  <div class="bloco">
+    <h2>Cores</h2>
+    <div class="cores">
+      <div class="cor"><div style="background:#FFC21A"></div><p><b>Amarelo Escolar</b>#FFC21A · principal</p></div>
+      <div class="cor"><div style="background:#E8A400"></div><p><b>Amarelo Escuro</b>#E8A400 · sombras/realce</p></div>
+      <div class="cor"><div style="background:#0E1B3D"></div><p><b>Azul Noite</b>#0E1B3D · texto/confiança</p></div>
+      <div class="cor"><div style="background:#1FB46A"></div><p><b>Verde Ao Vivo</b>#1FB46A · status/WhatsApp</p></div>
+      <div class="cor"><div style="background:#FF6B57"></div><p><b>Coral Alerta</b>#FF6B57 · atrasos/emergência</p></div>
+      <div class="cor"><div style="background:#FFFBF2"></div><p><b>Creme</b>#FFFBF2 · fundo</p></div>
+    </div>
+  </div>
+
+  <div class="bloco tipo">
+    <h2>Tipografia</h2>
+    <p style="font-family:var(--fonte-titulo);font-size:2.2rem;font-weight:600">Fredoka — títulos</p>
+    <p style="font-size:1.15rem">Nunito — textos e interface. Arredondada, legível, amigável para mães e motoristas.</p>
+  </div>
+
+  <div class="bloco">
+    <h2>Tom de voz</h2>
+    <div class="voz">
+      <div style="background:var(--verde-claro)"><b>✅ Assim</b><br>“A Júlia chegou na escola às 07:21.”<br>“Chega em 5 minutos. Já pode descer!”</div>
+      <div style="background:#FFE7E3;color:#0E1B3D"><b>❌ Assim não</b><br>“Evento de geofence disparado.”<br>“ETA atualizado: 300s.”</div>
+      <div style="background:var(--amarelo-claro)"><b>Princípios</b><br>Próximo, curto, tranquilizador. Use o nome da criança. Emojis com moderação (🚐 ⏱️ ✅ 🏫 🏠).</div>
+    </div>
+  </div>
+</main>
+</body>
+</html>

@@ -1,0 +1,407 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Minha Van</title>
+  <meta name="description" content="Rastreie a van escolar em tempo real e receba avisos automáticos no WhatsApp: chega em 10 minutos, embarcou, chegou na escola. Tranquilidade para as famílias e organização para o motorista.">
+  <meta name="theme-color" content="#FFC21A">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+
+<!-- Ícones -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.9 1.9 0 0 0 3.4 0"/></symbol>
+  <symbol id="i-whats" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3z"/></symbol>
+  <symbol id="i-school" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10l9-5 9 5-9 5-9-5z"/><path d="M7 12.5V17c0 1.1 2.2 2.5 5 2.5s5-1.4 5-2.5v-4.5"/></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-5h4v5"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4M9 15l2 2 4-4"/></symbol>
+  <symbol id="i-money" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="3"/><circle cx="12" cy="12" r="2.5"/><path d="M6 9.5v5M18 9.5v5"/></symbol>
+  <symbol id="i-route" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="19" r="2"/><circle cx="18" cy="5" r="2"/><path d="M8 19h7a3.5 3.5 0 0 0 0-7H9a3.5 3.5 0 0 1 0-7h7"/></symbol>
+  <symbol id="i-list" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h11M9 12h11M9 18h11"/><path d="M4 6l1 1 2-2M4 12l1 1 2-2M4 18l1 1 2-2"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18 14a6.5 6.5 0 0 1 3.5 6"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6l8-3z"/><path d="M9 12l2 2 4-4"/></symbol>
+  <symbol id="i-history" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5M12 7v5l3 2"/></symbol>
+  <symbol id="i-doc" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></symbol>
+  <symbol id="i-sos" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9L2 18a2 2 0 0 0 1.7 3h16.6a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></symbol>
+  <symbol id="i-gps" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></symbol>
+</svg>
+
+<header class="topo">
+  <div class="container">
+    <a href="#" class="marca"><img src="assets/logo-mark.svg" alt="">minha<span>van</span></a>
+    <nav class="menu">
+      <a href="#como-funciona">Como funciona</a>
+      <a href="#funcionalidades">Funcionalidades</a>
+      <a href="#planos">Planos</a>
+      <a href="#faq">Dúvidas</a>
+    </nav>
+    <a href="#planos" class="btn btn-primario">Testar grátis</a>
+  </div>
+</header>
+
+<main>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+      <div>
+        <span class="selo"><span class="ponto"></span> Rastreamento ao vivo + avisos no WhatsApp</span>
+        <h1>Saiba <mark>exatamente</mark> quando a van chega.</h1>
+        <p class="lead">O Minha Van mostra a van escolar no mapa em tempo real e avisa a família no WhatsApp: <b>“chega em 5 minutos”</b>, <b>“embarcou”</b>, <b>“chegou na escola”</b>. Tudo automático, sem o motorista precisar digitar nada.</p>
+        <div class="acoes">
+          <a href="#planos" class="btn btn-primario">Sou motorista — testar 14 dias grátis</a>
+          <a href="#como-funciona" class="btn btn-contorno">Sou mãe/pai — como funciona?</a>
+        </div>
+        <div class="provas">
+          <div><svg><use href="#i-check"/></svg> App grátis para as famílias</div>
+          <div><svg><use href="#i-check"/></svg> Sem cartão para testar</div>
+          <div><svg><use href="#i-check"/></svg> Pronto em 5 minutos</div>
+        </div>
+      </div>
+
+      <div class="palco" aria-hidden="true">
+        <div class="celular">
+          <div class="tela">
+            <div class="mapa">
+              <svg viewBox="0 0 276 360" preserveAspectRatio="xMidYMid slice">
+                <rect width="276" height="360" fill="#E8EEF5"/>
+                <g fill="#DCE4EE"><rect x="20" y="90" width="70" height="60" rx="8"/><rect x="110" y="70" width="60" height="80" rx="8"/><rect x="190" y="100" width="70" height="50" rx="8"/><rect x="20" y="180" width="90" height="70" rx="8"/><rect x="140" y="180" width="50" height="60" rx="8"/><rect x="210" y="175" width="50" height="80" rx="8"/><rect x="40" y="280" width="80" height="60" rx="8"/><rect x="150" y="270" width="100" height="70" rx="8"/></g>
+                <rect x="190" y="20" width="70" height="60" rx="10" fill="#CFEBD9"/>
+                <g stroke="#fff" stroke-width="14" fill="none" stroke-linecap="round"><path d="M0 165h276M100 0v360M200 0v360M0 262h276"/></g>
+                <path d="M100 340 V262 H200 V165 H230 V60" stroke="#FFC21A" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="0"/>
+                <path d="M100 340 V262 H160" stroke="#1FB46A" stroke-width="6" fill="none" stroke-linecap="round"/>
+                <circle cx="100" cy="340" r="9" fill="#fff" stroke="#1FB46A" stroke-width="4"/>
+                <g transform="translate(230 60)"><circle r="14" fill="#0E1B3D"/><path d="M-6 -4l6-4 6 4v7h-12z" fill="#FFC21A"/></g>
+                <g transform="translate(160 262)"><circle r="22" fill="#FFC21A" opacity=".25"><animate attributeName="r" values="14;26;14" dur="2s" repeatCount="indefinite"/></circle><circle r="15" fill="#FFC21A" stroke="#fff" stroke-width="3"/><path d="M-8 2v-5c0-1.4 1-2.5 2.5-2.5h7.5l4.5 5V3h-14z" fill="#0E1B3D"/><circle cx="-4" cy="4" r="2.2" fill="#0E1B3D"/><circle cx="4" cy="4" r="2.2" fill="#0E1B3D"/></g>
+              </svg>
+              <div class="tela-topo">
+                <img src="assets/logo-mark.svg" alt="">
+                <div><b>Van do Tio Carlos</b><small>Rota manhã · Colégio Aurora</small></div>
+              </div>
+            </div>
+            <div class="cartao-eta">
+              <div class="linha">
+                <div class="min">7 <small>min</small></div>
+                <span class="tag">● AO VIVO</span>
+              </div>
+              <div class="trilha"><i class="ok"></i><i class="ok"></i><i class="agora"></i><i></i></div>
+              <p>A van está a <b>2 casas</b> da sua. Prepare a Júlia! 🎒</p>
+              <div class="motorista">
+                <div class="avatar">C</div>
+                <div><b>Carlos Silva</b><small>Placa ABC-1D23 · Van branca</small></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="bolha b1"><div class="cab"><svg><use href="#i-whats"/></svg> Minha Van</div>🚐 A van saiu para a rota da manhã!<span class="hora">06:42 ✓✓</span></div>
+        <div class="bolha b2"><div class="cab"><svg><use href="#i-whats"/></svg> Minha Van</div>⏱️ A van chega em <b>5 minutos</b>. Já pode descer com a Júlia!<span class="hora">06:58 ✓✓</span></div>
+        <div class="bolha b3"><div class="cab"><svg><use href="#i-whats"/></svg> Minha Van</div>🏫 A Júlia chegou na escola às 07:21.<span class="hora">07:21 ✓✓</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAIXA -->
+  <div class="faixa">
+    <div class="container">
+      <div><b>Tempo real</b><span>posição atualizada a cada poucos segundos</span></div>
+      <div><b>0 mensagens</b><span>digitadas pelo motorista</span></div>
+      <div><b>5 avisos</b><span>automáticos por trajeto</span></div>
+      <div><b>R$ 0</b><span>para as famílias baixarem o app</span></div>
+    </div>
+  </div>
+
+  <!-- COMO FUNCIONA -->
+  <section id="como-funciona">
+    <div class="container">
+      <div class="titulo-secao">
+        <span class="sobre">Como funciona</span>
+        <h2>Simples para o motorista, tranquilo para a família</h2>
+        <p>Nada de mandar áudio no grupo dirigindo. O Minha Van faz a comunicação sozinho.</p>
+      </div>
+      <div class="passos">
+        <div class="passo">
+          <h3>O motorista liga o rastreio</h3>
+          <p>Pelo app do motorista (basta um toque em <b>“Iniciar rota”</b>) ou por um rastreador GPS instalado na van. A partir daí, a localização é enviada sozinha.</p>
+        </div>
+        <div class="passo">
+          <h3>A família conecta na van</h3>
+          <p>A mãe ou o pai baixa o app grátis e digita o <b>código da van</b> (ou lê o QR Code). Cadastra o filho, o endereço e o número de WhatsApp.</p>
+        </div>
+        <div class="passo">
+          <h3>Os avisos chegam sozinhos</h3>
+          <p>Mapa ao vivo no app e mensagens automáticas: saiu, chega em 10 min, chega em 5 min, embarcou, chegou na escola, saiu da escola e chegou em casa.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AVISOS WHATSAPP -->
+  <section class="avisos">
+    <div class="container">
+      <div class="titulo-secao">
+        <span class="sobre">Avisos no WhatsApp</span>
+        <h2>A notícia chega onde a mãe já está: no WhatsApp</h2>
+        <p>Sem precisar abrir app nenhum. Cada família recebe só os avisos do próprio filho, no momento certo.</p>
+        <ul class="lista-check">
+          <li>“A van saiu” — quando o motorista inicia a rota</li>
+          <li>“Chega em 10 / 5 minutos” — calculado pelo trânsito real</li>
+          <li>“Embarcou” e “Desembarcou” — com horário</li>
+          <li>“Chegou na escola” e “Saiu da escola” — por cerca virtual (geofence)</li>
+          <li>Avisos de atraso, trânsito ou mudança de rota</li>
+        </ul>
+      </div>
+      <div class="whats" aria-hidden="true">
+        <div class="whats-topo">
+          <img src="assets/logo-mark.svg" alt="">
+          <div><b>Minha Van ✔</b><small>conta comercial</small></div>
+        </div>
+        <div class="msg">🚐 Bom dia! A van do <b>Tio Carlos</b> saiu para a rota da manhã.<span class="hora">06:42</span></div>
+        <div class="msg">⏱️ Chega em <b>10 minutos</b> na sua casa.<span class="hora">06:53</span></div>
+        <div class="msg">⏱️ Chega em <b>5 minutos</b>! Já pode descer com a Júlia 🎒<span class="hora">06:58</span></div>
+        <div class="msg">✅ A Júlia <b>embarcou</b> às 07:03.<span class="hora">07:03</span></div>
+        <div class="msg">🏫 A Júlia <b>chegou no Colégio Aurora</b> às 07:21.<span class="hora">07:21</span></div>
+        <div class="msg">🏠 Saiu da escola. Previsão em casa: <b>12:40</b>.<span class="hora">12:15</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FUNCIONALIDADES -->
+  <section id="funcionalidades">
+    <div class="container">
+      <div class="titulo-secao">
+        <span class="sobre">Funcionalidades</span>
+        <h2>Tudo o que o transporte escolar precisa</h2>
+        <p>Um app para as famílias, um para o motorista e um painel para quem tem frota.</p>
+      </div>
+
+      <div class="abas" role="tablist">
+        <button class="aba" role="tab" aria-selected="true" aria-controls="p-familia" id="t-familia">Para as famílias</button>
+        <button class="aba" role="tab" aria-selected="false" aria-controls="p-motorista" id="t-motorista">Para o motorista</button>
+        <button class="aba" role="tab" aria-selected="false" aria-controls="p-frota" id="t-frota">Frotas e escolas</button>
+      </div>
+
+      <div class="painel" id="p-familia" role="tabpanel" aria-labelledby="t-familia">
+        <div class="grade">
+          <div class="recurso"><div class="icone"><svg><use href="#i-pin"/></svg></div><h3>Mapa em tempo real</h3><p>Veja a van se movendo no mapa, com previsão de chegada na sua casa e na escola.</p></div>
+          <div class="recurso"><div class="icone v"><svg><use href="#i-whats"/></svg></div><h3>Avisos no WhatsApp</h3><p>Saiu, chega em 10 e 5 minutos, embarcou, chegou na escola e chegou em casa.</p><span class="plano-tag">Plano Completo</span></div>
+          <div class="recurso"><div class="icone"><svg><use href="#i-bell"/></svg></div><h3>Notificações no app</h3><p>Os mesmos avisos como notificação no celular, em todos os planos.</p></div>
+          <div class="recurso"><div class="icone"><svg><use href="#i-cal"/></svg></div><h3>“Meu filho não vai hoje”</h3><p>Avise a ausência com um toque. O motorista recebe na hora e ajusta a rota.</p></div>
+          <div class="recurso"><div class="icone"><svg><use href="#i-users"/></svg></div><h3>Vários filhos e responsáveis</h3><p>Cadastre todos os filhos e compartilhe o acesso com pai, avó ou babá.</p></div>
+          <div class="recurso"><div class="icone"><svg><use href="#i-chat"/></svg></div><h3>Chat com o motorista</h3><p>Fale com o motorista sem misturar com o grupo da van. Mensagens rápidas prontas.</p></div>
+          <div class="recurso"><div class="icone"><svg><use href="#i-money"/></svg></div><h3>Mensalidade pelo app</h3><p>Pague por Pix ou boleto, veja vencimentos e baixe comprovantes.</p></div>
+          <div class="recurso"><div class="icone"><svg><use href="#i-history"/></svg></div><h3>Histórico de trajetos</h3><p>Consulte horários de embarque e chegada dos últimos dias.</p></div>
+          <div class="recurso"><div class="icone"><svg><use href="#i-shield"/></svg></div><h3>Dados do motorista e da van</h3><p>Foto, placa, modelo, cor e documentos do transporte, para saber quem está levando seu filho.</p></div>
+        </div>
+      </div>
+
+      <div class="painel" id="p-motorista" role="tabpanel" aria-labelledby="t-motorista" hidden>
+        <div class="grade">
+          <div class="recurso"><div class="icone"><svg><use href="#i-gps"/></svg></div><h3>Iniciar rota com um toque</h3><p>O celular vira rastreador. Ou conecte um rastreador GPS fixo na van, que liga junto com a ignição.</p></div>
+          <div class="recurso"><div class="icone v"><svg><use href="#i-whats"/></svg></div><h3>Comunicação automática</h3><p>Pare de mandar áudio dirigindo. O Minha Van avisa cada família no WhatsApp sozinho.</p><span class="plano-tag">Plano Completo</span></div>
+          <div class="recurso"><div class="icone"><svg><use href="#i-list"/></svg></div><h3>Lista de chamada</h3><p>Marque embarque e desembarque de cada aluno. A família é avisada na hora.</p></div>
+          <div class="recurso"><div class="icone"><svg><use href="#i-route"/></svg></div><h3>Rota otimizada</h3><p>Monte a ordem das paradas, com ajuste automático quando alguém falta.</p></div>
+          <div class="recurso"><div class="icone"><svg><use href="#i-money"/></svg></div><h3>Cobrança de mensalidades</h3><p>Cobrança recorrente por Pix, lembrete automático de vencimento e controle de quem pagou.</p></div>
+          <div class="recurso"><div class="icone"><svg><use href="#i-doc"/></svg></div><h3>Contrato digital</h3><p>Envie o contrato do transporte e receba a assinatura dos pais pelo celular.</p></div>
+          <div class="recurso"><div class="icone"><svg><use href="#i-bell"/></svg></div><h3>Comunicados em massa</h3><p>“Amanhã não tem aula”, “Rota atrasada 15 min”: avise todas as famílias de uma vez.</p></div>
+          <div class="recurso"><div class="icone"><svg><use href="#i-users"/></svg></div><h3>Cadastro de alunos</h3><p>Endereço, escola, turno, responsáveis, contatos de emergência e observações.</p></div>
+          <div class="recurso"><div class="icone"><svg><use href="#i-sos"/></svg></div><h3>Botão de emergência</h3><p>Em caso de pane ou acidente, avisa todas as famílias e contatos com a localização.</p></div>
+        </div>
+      </div>
+
+      <div class="painel" id="p-frota" role="tabpanel" aria-labelledby="t-frota" hidden>
+        <div class="grade">
+          <div class="recurso"><div class="icone"><svg><use href="#i-pin"/></svg></div><h3>Painel com todas as vans</h3><p>Acompanhe todos os veículos da frota em um só mapa, pelo computador.</p></div>
+          <div class="recurso"><div class="icone"><svg><use href="#i-users"/></svg></div><h3>Vários motoristas e monitores</h3><p>Cada um com seu acesso, sua rota e seus alunos.</p></div>
+          <div class="recurso"><div class="icone"><svg><use href="#i-chart"/></svg></div><h3>Relatórios</h3><p>Pontualidade, quilometragem, atrasos e presença dos alunos por período.</p></div>
+          <div class="recurso"><div class="icone"><svg><use href="#i-school"/></svg></div><h3>Portal da escola</h3><p>A escola vê quais vans estão chegando e quais alunos estão a bordo.</p></div>
+          <div class="recurso"><div class="icone"><svg><use href="#i-money"/></svg></div><h3>Financeiro centralizado</h3><p>Mensalidades de todas as rotas, inadimplência e repasses.</p></div>
+          <div class="recurso"><div class="icone"><svg><use href="#i-shield"/></svg></div><h3>Velocidade e alertas</h3><p>Alertas de excesso de velocidade e de desvio de rota.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PLANOS -->
+  <section id="planos" style="background: var(--superficie); border-top: 1px solid var(--borda); border-bottom: 1px solid var(--borda);">
+    <div class="container">
+      <div class="titulo-secao">
+        <span class="sobre">Planos</span>
+        <h2>Escolha o plano da sua van</h2>
+        <p>O motorista assina, as famílias usam de graça. Preço por van, com até 25 alunos.</p>
+      </div>
+
+      <div class="toggle">
+        <span>Mensal</span>
+        <button class="chave" role="switch" aria-checked="false" aria-label="Alternar cobrança anual" id="chave-anual"></button>
+        <span>Anual <span class="economia">2 meses grátis</span></span>
+      </div>
+
+      <div class="planos">
+        <div class="plano">
+          <h3>📍 Rastreio</h3>
+          <p class="desc">Para a família acompanhar a van no mapa e receber notificações no app.</p>
+          <div class="preco" data-mensal="39,90" data-anual="33,25">R$ <span class="valor">39,90</span><small>/mês</small></div>
+          <p class="preco-nota" data-mensal="Cobrado mensalmente" data-anual="R$ 399 por ano">Cobrado mensalmente</p>
+          <ul>
+            <li><svg><use href="#i-check"/></svg> Mapa em tempo real para as famílias</li>
+            <li><svg><use href="#i-check"/></svg> Previsão de chegada (casa e escola)</li>
+            <li><svg><use href="#i-check"/></svg> Notificações no app (push)</li>
+            <li><svg><use href="#i-check"/></svg> Lista de chamada e “não vai hoje”</li>
+            <li><svg><use href="#i-check"/></svg> Chat com as famílias</li>
+            <li><svg><use href="#i-check"/></svg> Histórico de 30 dias</li>
+            <li class="nao"><svg><use href="#i-x"/></svg> Avisos automáticos no WhatsApp</li>
+            <li class="nao"><svg><use href="#i-x"/></svg> Cobrança de mensalidades por Pix</li>
+          </ul>
+          <a href="#" class="btn btn-contorno">Testar 14 dias grátis</a>
+        </div>
+
+        <div class="plano destaque">
+          <span class="fita">⭐ Mais escolhido</span>
+          <h3>💬 Completo</h3>
+          <p class="desc">Rastreio + avisos automáticos no WhatsApp de cada família.</p>
+          <div class="preco" data-mensal="79,90" data-anual="66,58">R$ <span class="valor">79,90</span><small>/mês</small></div>
+          <p class="preco-nota" data-mensal="Cobrado mensalmente" data-anual="R$ 799 por ano">Cobrado mensalmente</p>
+          <ul>
+            <li><svg><use href="#i-check"/></svg> <b>Tudo do plano Rastreio</b></li>
+            <li><svg><use href="#i-check"/></svg> Avisos automáticos no WhatsApp: saiu, chega em 10 e 5 min, embarcou, chegou na escola, chegou em casa</li>
+            <li><svg><use href="#i-check"/></svg> Comunicados em massa no WhatsApp</li>
+            <li><svg><use href="#i-check"/></svg> Cobrança de mensalidades por Pix com lembrete</li>
+            <li><svg><use href="#i-check"/></svg> Contrato digital</li>
+            <li><svg><use href="#i-check"/></svg> Botão de emergência</li>
+            <li><svg><use href="#i-check"/></svg> Histórico de 12 meses</li>
+            <li><svg><use href="#i-check"/></svg> Suporte prioritário no WhatsApp</li>
+          </ul>
+          <a href="#" class="btn btn-primario">Testar 14 dias grátis</a>
+        </div>
+      </div>
+      <p class="obs-planos">Tem mais de 3 vans ou é uma escola? <a href="#" style="text-decoration: underline; font-weight: 700;">Fale com a gente</a> sobre o plano Frota.</p>
+    </div>
+  </section>
+
+  <!-- PARA QUEM -->
+  <section>
+    <div class="container">
+      <div class="titulo-secao">
+        <span class="sobre">Para quem é</span>
+        <h2>Bom para todo mundo que cuida do caminho</h2>
+      </div>
+      <div class="publicos">
+        <div class="publico p1">
+          <h3>Mães e pais</h3>
+          <p>Chega de ficar no portão esperando ou mandando “já saiu?” no grupo.</p>
+          <ul><li>Sabe a hora certa de descer</li><li>Confirmação de que chegou na escola</li><li>App grátis</li></ul>
+        </div>
+        <div class="publico p2">
+          <h3>Motoristas</h3>
+          <p>Mais profissional, menos celular na mão e as famílias mais tranquilas.</p>
+          <ul><li>Para de responder mensagem dirigindo</li><li>Cobrança organizada</li><li>Diferencial para conseguir mais alunos</li></ul>
+        </div>
+        <div class="publico p3">
+          <h3>Escolas e frotas</h3>
+          <p>Visão de todas as vans e alunos, com relatórios e controle.</p>
+          <ul><li>Painel web com todas as rotas</li><li>Portaria sabe quem está chegando</li><li>Mais segurança para os alunos</li></ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DEPOIMENTOS -->
+  <section style="padding-top: 0;">
+    <div class="container">
+      <div class="titulo-secao">
+        <span class="sobre">Quem usa</span>
+        <h2>Menos ansiedade no portão</h2>
+        <p style="font-size:.85rem">Depoimentos ilustrativos — substituir pelos reais após o piloto.</p>
+      </div>
+      <div class="depoimentos">
+        <div class="depo"><div class="estrelas">★★★★★</div><p>“Eu descia 15 minutos antes e ficava no frio com meu filho. Agora só desço quando chega o ‘5 minutos’ no WhatsApp.”</p><div class="quem"><div class="avatar">M</div><div><b>Mariana</b><small>mãe do Pedro, 7 anos</small></div></div></div>
+        <div class="depo"><div class="estrelas">★★★★★</div><p>“Eu recebia 40 mensagens por dia perguntando onde eu estava. Hoje o celular fica no suporte e eu só dirijo.”</p><div class="quem"><div class="avatar">R</div><div><b>Roberto</b><small>motorista há 11 anos</small></div></div></div>
+        <div class="depo"><div class="estrelas">★★★★★</div><p>“O aviso de ‘chegou na escola’ me deixa trabalhar tranquila. Coloquei a avó para receber também.”</p><div class="quem"><div class="avatar">A</div><div><b>Ana Paula</b><small>mãe da Lívia e do Theo</small></div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" style="padding-top: 0;">
+    <div class="container">
+      <div class="titulo-secao">
+        <span class="sobre">Dúvidas</span>
+        <h2>Perguntas frequentes</h2>
+      </div>
+      <div class="faq">
+        <details open><summary>Quem paga o Minha Van?</summary><p>O motorista (ou a empresa de transporte) assina o plano por van. As famílias baixam o app e usam de graça. Muitos motoristas incluem o valor na mensalidade, que fica em menos de R$ 4 por aluno.</p></details>
+        <details><summary>Preciso comprar um rastreador?</summary><p>Não. O próprio celular do motorista funciona como rastreador ao iniciar a rota. Se preferir, dá para conectar um rastreador GPS fixo na van, que liga junto com a ignição e não depende do celular.</p></details>
+        <details><summary>Qual a diferença entre os dois planos?</summary><p>No <b>Rastreio</b>, a família acompanha a van no mapa e recebe notificações dentro do app. No <b>Completo</b>, além disso, cada família recebe os avisos automaticamente no WhatsApp, e o motorista ganha cobrança por Pix, contrato digital e comunicados em massa.</p></details>
+        <details><summary>Como a mãe conecta na van certa?</summary><p>Cada van tem um código único (e um QR Code). A família digita o código no app, cadastra o filho e o endereço, e o motorista aprova o pedido.</p></details>
+        <details><summary>A localização fica aberta para qualquer pessoa?</summary><p>Não. Só as famílias aprovadas pelo motorista veem a van, e apenas durante a rota. Fora do horário de trajeto, a localização não é compartilhada. Seguimos a LGPD.</p></details>
+        <details><summary>Gasta muita bateria ou internet?</summary><p>O app do motorista foi pensado para rodar a manhã inteira com o celular no carregador do carro, usando poucos megas por rota.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section style="padding-top: 0;">
+    <div class="container">
+      <div class="cta">
+        <h2>Leve tranquilidade para as famílias da sua van</h2>
+        <p>Teste o plano Completo por 14 dias. Sem cartão de crédito.</p>
+        <div class="acoes">
+          <a href="#planos" class="btn btn-primario">Começar teste grátis</a>
+          <a href="#" class="btn btn-whats"><svg width="20" height="20"><use href="#i-whats"/></svg> Falar no WhatsApp</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <div>
+      <a href="#" class="marca"><img src="assets/logo-mark.svg" alt="">minha<span>van</span></a>
+      <p style="margin-top:10px; max-width: 320px;">Rastreamento e avisos automáticos para o transporte escolar. minhavan.com.br</p>
+    </div>
+    <div><h4>Produto</h4><ul><li><a href="#como-funciona">Como funciona</a></li><li><a href="#funcionalidades">Funcionalidades</a></li><li><a href="#planos">Planos</a></li></ul></div>
+    <div><h4>Apps</h4><ul><li><a href="#">App das famílias</a></li><li><a href="#">App do motorista</a></li><li><a href="#">Painel da frota</a></li></ul></div>
+    <div><h4>Contato</h4><ul><li><a href="#">WhatsApp</a></li><li><a href="#">contato@minhavan.com.br</a></li><li><a href="#">Privacidade (LGPD)</a></li></ul></div>
+  </div>
+  <div class="container"><p class="copy">© 2026 Minha Van. Todos os direitos reservados.</p></div>
+</footer>
+
+<a href="#" class="whats-flutuante" aria-label="Falar no WhatsApp"><svg><use href="#i-whats"/></svg></a>
+
+<script>
+  // Abas de funcionalidades
+  document.querySelectorAll('.aba').forEach(function (aba) {
+    aba.addEventListener('click', function () {
+      document.querySelectorAll('.aba').forEach(function (a) {
+        a.setAttribute('aria-selected', 'false');
+        document.getElementById(a.getAttribute('aria-controls')).hidden = true;
+      });
+      aba.setAttribute('aria-selected', 'true');
+      document.getElementById(aba.getAttribute('aria-controls')).hidden = false;
+    });
+  });
+
+  // Mensal / anual
+  var chave = document.getElementById('chave-anual');
+  chave.addEventListener('click', function () {
+    var anual = chave.getAttribute('aria-checked') !== 'true';
+    chave.setAttribute('aria-checked', String(anual));
+    var modo = anual ? 'anual' : 'mensal';
+    document.querySelectorAll('.preco').forEach(function (p) { p.querySelector('.valor').textContent = p.dataset[modo]; });
+    document.querySelectorAll('.preco-nota').forEach(function (n) { n.textContent = n.dataset[modo]; });
+  });
+</script>
+</body>
+</html>
