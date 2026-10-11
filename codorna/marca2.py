@@ -192,6 +192,18 @@ def etiqueta(w=520):
     return img
 
 
+GEO = {}
+# centro de cada codorna no recorte (fração da largura/altura), de cima para baixo, esquerda/direita
+PONTOS = [(.33, .10), (.74, .10), (.31, .29), (.74, .29), (.30, .49), (.73, .49), (.28, .72), (.70, .72)]
+
+
+def pontos_codornas(width):
+    """Coordenadas (na imagem da bandeja) do centro de cada uma das 8 codornas."""
+    bandeja(width)
+    x0, y0, iw, ih = GEO[width]
+    return [(x0 + fx * iw, y0 + fy * ih) for fx, fy in PONTOS]
+
+
 @lru_cache(None)
 def bandeja(width=800):
     """Bandeja de isopor branca, codornas recortadas da foto real, filme plástico e etiqueta."""
@@ -229,6 +241,7 @@ def bandeja(width=800):
         iw = int(cod.width * ih / cod.height)
     cod = cod.resize((iw, ih), Image.LANCZOS)
     cx, cy = (w - iw) // 2, (h - ih) // 2
+    GEO[width] = (pad + cx, pad + cy, iw, ih)
     csh = Image.new("RGBA", (w, h), (0, 0, 0, 0))
     csh.paste((60, 40, 30, 120), (cx + int(w * .008), cy + int(w * .014)), cod.getchannel("A"))
     tray.alpha_composite(csh.filter(ImageFilter.GaussianBlur(w * .01)))
