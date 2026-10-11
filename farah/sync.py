@@ -14,7 +14,7 @@ ROOT = Path(__file__).resolve().parent
 FPS = 30
 END_HOLD = 4.2      # segura a tela final por pelo menos isto
 TAIL = 0.6          # respiro depois da última palavra
-PRE_ROLL = 0.0      # corte exatamente no início da palavra
+PRE_ROLL = 0.033      # corta 1 quadro antes da palavra (o olho chega antes do ouvido)
 
 
 def norm(s):

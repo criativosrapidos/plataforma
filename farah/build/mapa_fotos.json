@@ -1,15 +1,20 @@
 {
  "manual": false,
- "fotos": {},
+ "fotos": {
+  "bebida": "assets/fotos/bebida.jpg",
+  "bone": "assets/fotos/bone.jpg",
+  "carregador": "assets/fotos/carregador.jpg",
+  "chinelo": "assets/fotos/chinelo.jpg",
+  "doces": "assets/fotos/doces.jpg",
+  "energetico": "assets/fotos/energetico.jpg",
+  "praia_dor": "assets/fotos/praia_dor.jpg",
+  "praia_end": "assets/fotos/praia_end.jpg",
+  "praia_hook": "assets/fotos/praia_hook.jpg",
+  "praia_perto": "assets/fotos/praia_perto.jpg",
+  "refri": "assets/fotos/refri.jpg"
+ },
  "sem_foto": [
-  "fachada",
-  "bebida",
-  "refri",
-  "energetico",
-  "doces",
-  "chinelo",
-  "bone",
-  "carregador"
+  "fachada"
  ],
  "excluidas_tabaco": [],
  "nao_usadas": []

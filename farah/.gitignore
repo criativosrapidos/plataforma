@@ -1,3 +1,4 @@
 build/conf/
 build/q*/
+build/folha*.jpg
 __pycache__/

@@ -31,6 +31,12 @@
   .produto.comfoto .seguro { justify-content: flex-end; padding-bottom: 40px; }
   .kicker { font-weight: 700; font-size: 34px; letter-spacing: 0.32em; color: var(--ouro);
     text-transform: uppercase; margin-bottom: 26px; }
+  .bg.borrado { filter: blur(36px) saturate(.8); }
+  .quadro { position: absolute; left: 80px; right: 80px; top: 250px; height: 760px; overflow: hidden;
+    border-radius: 6px; box-shadow: 0 30px 80px rgba(0,0,0,.55); background: #0E0F10; }
+  .quadro::after { content: ''; position: absolute; inset: 0; border: 2px solid rgba(201,151,63,.55); border-radius: 6px; }
+  .fg { width: 100%; height: 100%; object-fit: cover; will-change: transform; }
+  .fg.retrato { object-fit: contain; }
   .flash { position: absolute; inset: 0; background: var(--branco); opacity: 0; pointer-events: none; }
   .pin { width: 74px; height: 74px; margin-bottom: 34px; }
   .sub { font-weight: 700; font-size: 58px; letter-spacing: 0.08em; color: var(--ouro); margin-top: 30px;
@@ -88,9 +94,13 @@ const PIN = `<svg class="pin" viewBox="0 0 24 24" fill="none" stroke="#C9973F" s
 function fundo(c) {
   const f = c.foto && D.fotos[c.foto];
   if (!f) return `<div class="liso"></div>`;
-  const veu = c.tipo === 'produto'
-    ? 'linear-gradient(180deg, rgba(23,24,26,.35) 0%, rgba(23,24,26,.25) 35%, rgba(23,24,26,.85) 68%, rgba(23,24,26,.95) 100%)'
-    : 'linear-gradient(180deg, rgba(23,24,26,.62) 0%, rgba(23,24,26,.76) 40%, rgba(23,24,26,.82) 70%, rgba(23,24,26,.6) 100%)';
+  if (c.tipo === 'produto') {
+    // foto nítida num quadro, sobre a própria foto desfocada e escurecida
+    return `<img class="bg borrado" src="${f}"><div class="veu" style="background:rgba(23,24,26,.62)"></div>
+      <div class="quadro"><img class="fg" src="${f}"></div>
+      <div class="veu" style="background:linear-gradient(180deg, rgba(23,24,26,0) 54%, rgba(23,24,26,.8) 64%, rgba(23,24,26,.92) 100%)"></div>`;
+  }
+  const veu = 'linear-gradient(180deg, rgba(23,24,26,.30) 0%, rgba(23,24,26,.50) 22%, rgba(23,24,26,.72) 38%, rgba(23,24,26,.72) 58%, rgba(23,24,26,.45) 78%, rgba(23,24,26,.55) 100%)';
   return `<img class="bg" src="${f}"><div class="veu" style="background:${veu}"></div>`;
 }
 
@@ -117,17 +127,18 @@ D.cues.forEach((c, i) => {
     `<div class="seguro">${miolo}</div><div class="flash"></div>`;
   palco.appendChild(el);
   cenas.push({ c, el, t: D.timings.cenas[i],
-    bg: el.querySelector('.bg'), bloco: el.querySelector('.bloco'),
+    bg: el.querySelector('.bg'), fg: el.querySelector('.fg'), bloco: el.querySelector('.bloco'),
     flash: el.querySelector('.flash'), fio: el.querySelector('.fio'),
     els: [...el.querySelectorAll('.final .el')] });
 });
 
 // tamanhos depois do layout
 function medir() { cenas.forEach(s => {
+  if (s.fg && s.fg.naturalWidth / s.fg.naturalHeight < 0.8) s.fg.classList.add('retrato');
   s.el.classList.add('on');
   if (s.bloco && s.c.tipo !== 'final') {
     const max = s.c.tipo === 'produto' ? (s.c.tela.includes('|') ? 170 : 190) : 160;
-    ajustar(s.bloco, s.c.tipo === 'endereco' ? 128 : max, s.c.tipo === 'produto' && s.el.classList.contains('comfoto') ? 640 : SAFE_H - 40);
+    ajustar(s.bloco, s.c.tipo === 'endereco' ? 128 : max, s.c.tipo === 'produto' && s.el.classList.contains('comfoto') ? 400 : SAFE_H - 40);
   }
   s.el.classList.remove('on');
 }); }
@@ -143,6 +154,7 @@ window.renderAt = function (t) {
     const imp = 1 - easeOut(lt / 0.22);
     s.bg.style.transform = `scale(${1.0 + 0.07 * imp + 0.012 * lt})`;
   }
+  if (s.fg) s.fg.style.transform = `scale(${1.0 + 0.08 * (1 - easeOut(lt / 0.2)) + 0.03 * lt})`;
   // flash discreto no corte
   s.flash.style.opacity = (curta ? 0.16 : 0.2) * (1 - clamp(lt / 0.12));
   if (s.c.tipo === 'final') {
