@@ -199,7 +199,7 @@ def c2():  # lazer
                     "Deita, relaxa e deixa a preguiça bater."),
         photo_slide(3, "piscina", .35, .65, 1.15, "PISCINA", "PRA REFRESCAR", "💦",
                     "Sol de Brasília e água geladinha. Precisa de mais?"),
-        photo_slide(4, "mural", .62, .55, 1.3, "MÚSICA", "AO VIVO", "🎶",
+        photo_slide(4, "musica", .43, .73, 1.5, "MÚSICA", "AO VIVO", None,
                     "Som ao vivo pra deixar o almoço ainda mais gostoso."),
         cta_slide(5, "TRAZ A", "FAMÍLIA TODA", "Almoço, rede, piscina e música num lugar só.", "🤠"),
     ]

@@ -253,7 +253,7 @@ SHOTS = [
     (_w(27), "mural", .45, .5, 1.0, .10, (.04, 0)),       # Depois
     (_w(29), "rede", .38, .62, 1.05, .10, (.05, 0)),      # rede
     (_w(30), "piscina", .5, .6, 1.0, .12, (0, .05)),      # piscina
-    (_w(32), "mural", .66, .55, 1.65, .10, (0, 0)),       # música ao vivo (violão no mural)
+    (_w(32), "musica", .43, .74, 1.6, .08, (0, 0)),     # música ao vivo (foto real do show)
     (_w(36), "rede", .6, .5, 1.25, .10, (-.06, 0)),       # pra curtir
     (_w(38), "piscina", .4, .55, 1.15, .10, (.12, 0)),    # o dia todo
     (T_PRICE, "@precos"),

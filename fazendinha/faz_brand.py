@@ -78,7 +78,7 @@ def logo(size):
 PW, PH = 1920, 1080
 
 
-def page(title, sub, n, dark=False):
+def page(title, sub, n, dark=False, tag="IDENTIDADE VISUAL"):
     p = Image.new("RGBA", (PW, PH), (MAROON3 if dark else CREAM) + (255,))
     if dark:
         p = pattern(PW, PH).copy()
@@ -87,7 +87,7 @@ def page(title, sub, n, dark=False):
     d.text((90, 92), title, font=ff("bevan", 64), fill=fg, anchor="ls")
     d.text((92, 140), sub, font=fnt(600, 28), fill=(COBRE if dark else MARROM), anchor="ls")
     d.text((PW - 90, 92), f"{n:02d}", font=fnt(900, 40), fill=ORANGE, anchor="rs")
-    d.text((PW - 90, 140), "FAZENDINHA SELF SERVICE · IDENTIDADE VISUAL", font=fnt(700, 20),
+    d.text((PW - 90, 140), f"FAZENDINHA SELF SERVICE · {tag}", font=fnt(700, 20),
            fill=(COBRE if dark else MARROM), anchor="rs")
     d.line((90, 168, PW - 90, 168), fill=(fg + (90,)), width=2)
     return p
@@ -279,12 +279,12 @@ def post_rede():
 
 
 def post_musica():
-    img = cover("mural", .55, .55, 1.15)
+    img = cover("musica", .43, .73, 1.5)
     img.alpha_composite(cshade(.35))
     put(img, selo_redondo("AO", "VIVO", 280), 860, 330, rot=10)
     line(img, "FIM DE SEMANA", 840, 76)
     line(img, "TEM MÚSICA", 955, 100, box=ORANGE)
-    put(img, emoji("🎶", 160), 200, 690, rot=-10)
+    put(img, emoji("🎶", 150), 140, 560, rot=-10)
     line(img, "Almoço gostoso com som ao vivo", 1100, 40, color=CREAM)
     chrome(img, None)
     return img
@@ -374,11 +374,11 @@ def story_precos():
 
 
 def story_musica():
-    img = story_base("mural", .6, .55, 1.0)
+    img = story_base("musica", .43, .73, 1.6)
     put(img, selo_redondo("AO", "VIVO", 340), 820, 520, rot=10)
     sline(img, "HOJE TEM", 1050, 100)
     sline(img, "MÚSICA AO VIVO", 1180, 100, box=ORANGE)
-    put(img, emoji("🎶", 160), 220, 900, rot=-10)
+    put(img, emoji("🎶", 150), 150, 760, rot=-10)
     d = ImageDraw.Draw(img)
     d.rounded_rectangle((190, 1340, 890, 1450), 55, fill=(255, 255, 255, 235))
     d.text((540, 1395), "ESCREVA AQUI O HORÁRIO", font=fnt(800, 36), fill=(150, 130, 120), anchor="mm")
