@@ -6,7 +6,7 @@ const path = require("path");
   const args = process.argv.slice(2);
   const browser = await chromium.launch({ executablePath: "/opt/pw-browsers/chromium" });
   const page = await browser.newPage({ viewport: { width: 1080, height: 1920 }, deviceScaleFactor: 1 });
-  await page.goto("file://" + path.resolve(__dirname, "anuncio.html"));
+  await page.goto("file://" + path.resolve(__dirname, process.env.HTML || "anuncio.html") + (process.env.Q || ""));
   await page.evaluate(() => document.fonts.ready);
   await page.waitForTimeout(500);
   let times, dir;
