@@ -8,6 +8,7 @@
 @font-face { font-family: Mont; font-weight: 700; src: url(fonts/montserrat-latin-700-normal.woff); }
 @font-face { font-family: Mont; font-weight: 800; src: url(fonts/montserrat-latin-800-normal.woff); }
 @font-face { font-family: Mont; font-weight: 900; src: url(fonts/montserrat-latin-900-normal.woff); }
+@font-face { font-family: Cinzel; src: url(fonts/cinzel-latin-600-normal.woff); }
 @font-face { font-family: Pacifico; src: url(fonts/pacifico-latin-400-normal.woff); }
 :root {
   --coral: #E8473B; --coral2: #C9322A; --mar: #0B6E99; --mar2: #084C6B; --areia: #F7E6C4;
@@ -42,11 +43,15 @@ html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--
   <div class="scene" id="s1" data-start="0" data-end="2.0">
     <div class="bg" data-kb="1.15,1.05" style="background-image:url(assets/orla_hd.png)"></div>
     <div class="shade" style="background:linear-gradient(180deg, rgba(8,76,107,.25) 0%, rgba(8,76,107,.05) 40%, rgba(13,27,42,.75) 100%)"></div>
-    <div class="el" data-in="0.25" data-a="drop" style="top:640px">
-      <span class="tag anton" style="background:var(--sol);color:var(--tinta);font-size:120px;transform:rotate(-3deg)">ATENÇÃO,</span>
+    <div class="shade" style="background:radial-gradient(ellipse at 50% 45%, rgba(13,27,42,.62) 0%, rgba(13,27,42,.25) 70%)"></div>
+    <div class="el" data-in="0.05" data-a="drop" style="top:250px">
+      <span class="tag anton" style="background:var(--sol);color:var(--tinta);font-size:96px;transform:rotate(-3deg)">ATENÇÃO, UBATUBA!</span>
     </div>
-    <div class="el anton sombra" data-in="0.85" data-a="pop" style="top:820px;font-size:250px;color:#fff">UBATUBA!</div>
-    <div class="el pac sombra" data-in="1.2" data-a="rise" style="top:1130px;font-size:64px;color:var(--areia)">isso é pra você que mora aqui</div>
+    <div class="el sombra" data-in="0.30" data-a="fade" style="top:560px;font-family:Mont;font-weight:800;font-size:50px;letter-spacing:14px;padding-left:14px;color:var(--areia)">BANCA E</div>
+    <div class="el anton sombra" data-in="0.45" data-a="pop" style="top:640px;font-size:196px;color:#fff;letter-spacing:4px">TABACARIA</div>
+    <div class="el sombra" data-in="0.95" data-a="rise" style="top:860px;font-family:Cinzel;font-size:170px;color:var(--coral);letter-spacing:10px">FARAH</div>
+    <div class="el" data-in="1.15" data-a="fade" style="top:1075px"><div style="width:560px;height:6px;margin:0 auto;background:var(--sol);border-radius:3px"></div></div>
+    <div class="el pac sombra" data-in="1.3" data-a="rise" style="top:1120px;font-size:62px;color:var(--areia)">a tabacaria pertinho da praia</div>
   </div>
 
   <!-- 2. DOR: chega na praia... faltou alguma coisa? -->
@@ -78,17 +83,19 @@ html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--
   <div class="scene" id="s4" data-start="12.55" data-end="15.05">
     <div class="shade" style="background:var(--coral)"></div>
     <div class="el anton" data-in="12.62" data-a="pop" style="top:230px;font-size:190px;color:#fff">CALMA!</div>
-    <div class="el pac" data-in="13.0" data-a="rise" style="top:470px;font-size:76px;color:var(--areia)">pertinho da praia tem a</div>
-    <div class="el anton" data-in="14.45" data-a="pop" style="top:590px;font-size:230px;color:var(--sol)">FARAH</div>
-    <div class="el" data-in="13.4" data-a="rise" style="top:900px">
-      <div class="foto" style="transform:rotate(-2deg)"><img src="assets/fachada_hd.png" style="width:900px;height:716px;object-fit:cover"></div>
+    <div class="el pac" data-in="13.0" data-a="rise" style="top:430px;font-size:72px;color:var(--areia)">pertinho da praia tem a</div>
+    <div class="el anton" data-in="14.3" data-a="pop" style="top:610px;font-size:120px;color:#fff;letter-spacing:3px">TABACARIA</div>
+    <div class="el" data-in="14.5" data-a="pop" style="top:735px;font-family:Cinzel;font-size:190px;color:var(--sol);letter-spacing:8px">FARAH</div>
+    <div class="el" data-in="13.4" data-a="rise" style="top:1030px">
+      <div class="foto" style="transform:rotate(-2deg)"><img src="assets/fachada_hd.png" style="width:900px;height:640px;object-fit:cover"></div>
     </div>
   </div>
 
   <!-- 5. PRODUTOS passando rápido -->
   <div class="scene" id="s5" data-start="15.05" data-end="22.5">
     <div class="shade" style="background:linear-gradient(180deg,#FFC93C 0%,#FFB020 100%)"></div>
-    <div class="el anton" data-in="15.1" data-a="fade" style="top:170px;font-size:84px;color:var(--tinta)">TEM DE TUDO:</div>
+    <div class="el" data-in="15.1" data-a="fade" style="top:110px;font-family:Mont;font-weight:800;font-size:40px;letter-spacing:8px;color:var(--coral2)">NA TABACARIA FARAH</div>
+    <div class="el anton" data-in="15.1" data-a="fade" style="top:180px;font-size:84px;color:var(--tinta)">TEM DE TUDO:</div>
     <div id="prod"></div>
     <div class="el" data-in="21.9" data-a="rise" style="top:1520px;padding:0 60px">
       <span class="chip" style="background:var(--tinta);border-color:var(--tinta)">vinhos</span>
@@ -102,8 +109,8 @@ html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--
   <div class="scene" id="s6" data-start="22.5" data-end="27.1">
     <div class="shade" style="background:linear-gradient(180deg,#0D1B2A 0%,#0B2E45 100%)"></div>
     <div class="el" data-in="22.6" data-a="rise" style="top:150px">
-      <div class="pac" style="font-size:70px;color:var(--areia)">Banca e Tabacaria</div>
-      <div class="anton" style="font-size:240px;color:var(--coral);margin-top:-10px">FARAH</div>
+      <div class="anton" style="font-size:96px;color:#fff;letter-spacing:3px">BANCA E TABACARIA</div>
+      <div style="font-family:Cinzel;font-size:200px;color:var(--coral);letter-spacing:10px;margin-top:4px">FARAH</div>
     </div>
     <div class="el" data-in="23.1" data-a="rise" style="top:560px">
       <div class="foto" style="transform:rotate(1.5deg)"><img src="assets/fachada_hd.png" style="width:860px;height:600px;object-fit:cover"></div>
@@ -113,7 +120,8 @@ html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--
     </div>
     <div class="el anton" data-in="24.25" data-a="rise" style="top:1390px;font-size:120px;color:#fff">AV. IPEROIG, 301</div>
     <div class="el" data-in="26.15" data-a="rise" style="top:1540px;font-family:Mont;font-weight:800;font-size:54px;color:var(--sol)">CENTRO · UBATUBA-SP</div>
-    <div class="el pac" data-in="26.5" data-a="fade" style="top:1640px;font-size:52px;color:var(--areia)">pertinho da praia</div>
+    <div class="el pac" data-in="26.5" data-a="fade" style="top:1630px;font-size:52px;color:var(--areia)">pertinho da praia</div>
+    <div class="el" data-in="22.8" data-a="fade" style="top:1770px;font-weight:800;font-size:34px;letter-spacing:6px;color:rgba(255,255,255,.7)">REVISTARIA · TABACARIA · CONVENIÊNCIAS</div>
   </div>
 
   <!-- 7. CHAMADA FINAL -->
@@ -134,6 +142,8 @@ html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--
     </div>
     <div class="el" data-in="29.25" data-a="rise" style="top:1290px;font-weight:800;font-size:46px;color:#fff">@banca_farah_ubatuba</div>
     <div class="el" data-in="29.35" data-a="rise" style="top:1370px;font-weight:700;font-size:40px;color:var(--areia)">Av. Iperoig, 301 · Centro · Ubatuba-SP</div>
+    <div class="el" data-in="27.2" data-a="fade" style="top:1560px;font-weight:800;font-size:36px;letter-spacing:3px;color:#fff">TABACARIA · REVISTARIA · CONVENIÊNCIA</div>
+    <div class="el" data-in="27.2" data-a="fade" style="top:1760px;font-weight:700;font-size:28px;color:rgba(255,255,255,.85)">Venda de produtos de tabacaria proibida para menores de 18 anos.</div>
   </div>
 
 </div>
