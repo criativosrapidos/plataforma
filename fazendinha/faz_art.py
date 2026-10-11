@@ -192,24 +192,20 @@ def logo_recriado(size=1600):
     d = ImageDraw.Draw(img)
     BLK, WHT, GRY = (16, 12, 12, 255), (250, 250, 248, 255), (214, 214, 214, 255)
 
-    # casinha (3/4, branca com contorno preto)
-    hx, hy, hw = S * .345, S * .118, S * .31
-    P = lambda x, y: (hx + x * hw, hy + y * hw * .62)
-    lw = int(S * .0065)
-    d.polygon([P(.0, .97), P(1.0, .97), P(.97, 1.02), P(.04, 1.02)], fill=BLK)                       # base/sombra
-    d.rectangle([P(.62, .02), P(.71, .30)], fill=WHT, outline=BLK, width=lw)                          # chaminé
-    d.polygon([P(.50, .42), P(.96, .46), P(.96, .95), P(.50, .95)], fill=GRY, outline=BLK, width=lw)  # parede lateral
-    d.rectangle([P(.63, .60), P(.72, .95)], fill=BLK)                                                 # porta
-    d.rectangle([P(.79, .58), P(.88, .72)], fill=BLK)                                                 # janela lateral
-    d.polygon([P(.31, .10), P(.80, .14), P(1.02, .48), P(.55, .44)], fill=WHT, outline=BLK, width=lw)  # telhado
-    for k in range(1, 4):                                                                             # telhas
-        a = k / 4
-        d.line([P(.31 + .24 * a, .10 + .34 * a), P(.80 + .22 * a, .14 + .34 * a)], fill=BLK, width=max(1, lw // 2))
-    d.polygon([P(.31, .12), P(.10, .45), P(.10, .95), P(.52, .95), P(.52, .45)], fill=WHT, outline=BLK, width=lw)  # empena
-    d.line([P(.31, .06), P(.04, .48)], fill=BLK, width=int(lw * 2.2))                                  # beiral esq.
-    d.line([P(.31, .06), P(.56, .46)], fill=BLK, width=int(lw * 2.2))
-    d.rectangle([P(.22, .55), P(.29, .88)], fill=BLK)                                                 # janelas da frente
-    d.rectangle([P(.34, .55), P(.41, .88)], fill=BLK)
+    # casinha: traçado copiado do original (coordenadas do recorte 840x520 da região da casa)
+    def M(pts):
+        return [(S * (.312 + x / 840 * .42), S * (.08 + y / 520 * .26)) for x, y in pts]
+    BLK, WHT = (14, 10, 10, 255), (252, 252, 250, 255)
+    d.polygon(M([(28, 305), (155, 238), (262, 133), (300, 146), (392, 198), (392, 100), (484, 94), (490, 220),
+                 (712, 352), (640, 364), (600, 354), (590, 404), (624, 420), (330, 446), (108, 426), (116, 322)]), fill=BLK)
+    d.polygon(M([(16, 440), (330, 430), (706, 436), (770, 452), (330, 462), (24, 454)]), fill=BLK)       # chão
+    d.polygon(M([(126, 332), (258, 178), (344, 262), (318, 272), (312, 402), (124, 404)]), fill=WHT)     # empena
+    d.polygon(M([(296, 168), (392, 224), (488, 236), (664, 344), (470, 348), (378, 268), (338, 244)]), fill=WHT)  # telhado
+    d.polygon(M([(410, 116), (442, 112), (444, 202), (412, 206)]), fill=WHT)                              # chaminé
+    d.polygon(M([(470, 352), (588, 352), (584, 398), (470, 402)]), fill=WHT)                              # parede baixa
+    d.polygon(M([(228, 272), (318, 272), (318, 420), (228, 420)]), fill=BLK)                              # porta
+    d.polygon(M([(280, 284), (300, 284), (300, 420), (280, 420)]), fill=WHT)                              # batente
+    d.polygon(M([(318, 384), (404, 374), (408, 412), (320, 418)]), fill=WHT)
 
     # placa de cobre/madeira
     px0, px1, py0, py1 = S * .012, S * .988, S * .325, S * .525
@@ -217,7 +213,7 @@ def logo_recriado(size=1600):
     gx = np.linspace(0, 1, int(px1 - px0))[None, :]
     gy = np.linspace(0, 1, int(ph))[:, None]
     tone = 1 - (np.abs(gy - .42) * 1.1) ** 1.6 * .9 - (np.abs(gx - .5) * 1.0) ** 3 * .35
-    light, dark = np.array([246, 205, 150], np.float32), np.array([196, 128, 70], np.float32)
+    light, dark = np.array([248, 200, 138], np.float32), np.array([210, 132, 64], np.float32)
     pcol = dark + (light - dark) * np.clip(tone, 0, 1)[..., None]
     plank = Image.fromarray(np.concatenate([pcol, np.full(pcol.shape[:2] + (1,), 255, np.float32)], -1).astype(np.uint8))
     pm = Image.new("L", plank.size, 0)
@@ -238,7 +234,7 @@ def logo_recriado(size=1600):
     tw_, th_ = tb[2] - tb[0], tb[3] - tb[1]
     tl = Image.new("RGBA", (tw_ + 40, th_ + 40), (0, 0, 0, 0))
     ImageDraw.Draw(tl).text((20 - tb[0], 20 - tb[1]), "FAZENDINHA", font=f, fill=(14, 10, 8, 255))
-    target_w, target_h = S * .84, ph * .80
+    target_w, target_h = S * .87, ph * .86
     tl = tl.resize((int(target_w), int(target_h)), Image.LANCZOS)
     img.alpha_composite(tl, (int(S / 2 - tl.width / 2), int((py0 + py1) / 2 - tl.height / 2 + S * .004)))
 
@@ -247,19 +243,23 @@ def logo_recriado(size=1600):
     fs = ImageFont.truetype(str(FONTS / "lobster-latin-400-normal.woff"), int(S * .125))
     d.text((S * .515 + S * .004, S * .662 + S * .006), "Self Service", font=fs, fill=(20, 6, 6, 160), anchor="mm")
     d.text((S * .515, S * .662), "Self Service", font=fs, fill=(236, 214, 182, 255), anchor="mm")
-    # pincelada
-    pts = []
-    for i in range(61):
-        tt = i / 60
-        x = S * (.155 + .725 * tt)
-        y = S * (.822 - .028 * tt - .014 * math.sin(tt * math.pi))
-        pts.append((x, y, S * (.004 + .014 * tt ** .7)))
+    # pincelada: traço contínuo, fino à esquerda e grosso à direita, ponta arredondada
+    top, bot = [], []
+    n = 80
+    for i in range(n + 1):
+        u = i / n
+        x = S * (.16 + .72 * u)
+        y = S * (.828 - .032 * u - .012 * math.sin(u * math.pi))
+        th = S * (.002 + .0135 * u ** .75)
+        top.append((x, y - th))
+        bot.append((x, y + th * .8))
     sw = Image.new("RGBA", (S, S), (0, 0, 0, 0))
     sd = ImageDraw.Draw(sw)
-    for x, y, r in pts:
-        sd.ellipse((x - r * 1.6, y - r * .55, x + r * 1.6, y + r * .55), fill=(228, 200, 160, 255))
-    x, y, r = pts[-1]
-    sd.ellipse((x - r * .9, y - r * .62, x + r * .9, y + r * .62), fill=(228, 200, 160, 255))
+    cream = (230, 204, 164, 255)
+    sd.polygon(top + bot[::-1], fill=cream)
+    xe, ye = (top[-1][0] + bot[-1][0]) / 2, (top[-1][1] + bot[-1][1]) / 2
+    re_ = (bot[-1][1] - top[-1][1]) / 2
+    sd.ellipse((xe - re_ * 1.15, ye - re_, xe + re_ * 1.15, ye + re_), fill=cream)
     img.alpha_composite(sw)
     # borda escura sutil
     ImageDraw.Draw(img).ellipse((S * .004, S * .004, S * .996, S * .996), outline=(24, 6, 6, 255), width=int(S * .006))
