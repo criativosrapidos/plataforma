@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Farah Reels v4</title>
+<link rel="stylesheet" href="marca/marca.css">
+<style>
+  /* paleta do cliente: coral, coral escuro, mar, mar profundo, sol, areia, tinta */
+  :root { --coral: #E8473B; --coral-e: #C9322A; --mar: #0B6E99; --mar-p: #084C6B; --solar: #FFC93C; --areia: #F7E6C4; --tinta: #0D1B2A; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--tinta); }
+  body { font-family: var(--f-texto); color: var(--areia); -webkit-font-smoothing: antialiased; }
+  #palco { position: absolute; inset: 0; overflow: hidden; }
+  #cam { position: absolute; inset: 0; will-change: transform; }
+  .beat { position: absolute; inset: 0; display: none; overflow: hidden; will-change: transform; }
+  .beat.on { display: block; }
+  .fundo { position: absolute; inset: 0; }
+  .f-tinta { background: radial-gradient(110% 60% at 50% 40%, #16304A 0%, var(--tinta) 70%); }
+  .f-coral { background: radial-gradient(120% 70% at 50% 40%, #F05A4C 0%, var(--coral) 55%, var(--coral-e) 100%); }
+  .f-mar { background: radial-gradient(120% 70% at 50% 40%, #1286B8 0%, var(--mar) 55%, var(--mar-p) 100%); }
+  .f-sol { background: radial-gradient(120% 70% at 50% 40%, #FFD666 0%, var(--solar) 60%, #F2B21E 100%); }
+  .foto { position: absolute; inset: -3%; width: 106%; height: 106%; object-fit: cover; will-change: transform; }
+  .veu { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(13,27,42,.25) 0%, rgba(13,27,42,.58) 30%, rgba(13,27,42,.66) 60%, rgba(13,27,42,.4) 100%); }
+  .grade { position: absolute; inset: 0; opacity: .55; will-change: background-position;
+    background-image: linear-gradient(rgba(11,110,153,.35) 2px, transparent 2px), linear-gradient(90deg, rgba(11,110,153,.35) 2px, transparent 2px);
+    background-size: 120px 120px; }
+  .listras { position: absolute; inset: -200px; opacity: .12; will-change: transform;
+    background: repeating-linear-gradient(-35deg, var(--tinta) 0 26px, transparent 26px 120px); }
+  .f-tinta ~ .listras, .f-mar ~ .listras { background: repeating-linear-gradient(-35deg, var(--solar) 0 22px, transparent 22px 120px); opacity: .08; }
+  .anel { position: absolute; left: 50%; top: 50%; width: 10px; height: 10px; border-radius: 50%; border: 22px solid var(--solar);
+    transform: translate(-50%, -50%); opacity: 0; will-change: transform, opacity; }
+  .ondas { position: absolute; left: 0; bottom: 0; width: 1080px; height: 330px; pointer-events: none; }
+
+  .seguro { position: absolute; left: 80px; right: 80px; top: 250px; bottom: 350px;
+    display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+  .linha { display: flex; justify-content: center; gap: 0.22em; white-space: nowrap; line-height: .95; color: #FFF8EC;
+    font-family: var(--f-titulo); font-weight: 900; font-stretch: 125%; text-transform: uppercase; letter-spacing: -0.02em; }
+  .linha + .linha { margin-top: 0.06em; }
+  .linha.leve { font-weight: 700; font-stretch: 112%; letter-spacing: 0; }
+  .p { display: inline-block; position: relative; will-change: transform, opacity; }
+  .p.sol { color: var(--solar); }
+  .p.coral { color: var(--coral); }
+  .p.tinta { color: var(--tinta); }
+  .p.nm { text-transform: none; }
+  .p.bloco { color: var(--tinta); padding: 0 0.12em; }
+  .p.bloco::before { content: ''; position: absolute; inset: 0.04em -0.02em 0.02em; background: var(--solar);
+    z-index: -1; transform-origin: left center; transform: scaleX(var(--k, 1)) rotate(-1.5deg); border-radius: 0.06em; }
+  .p.bloco.noite { color: var(--solar); }
+  .p.bloco.noite::before { background: var(--tinta); }
+  .p.bloco.coralb { color: #FFF8EC; }
+  .p.bloco.coralb::before { background: var(--coral); }
+  .p .ch { display: inline-block; will-change: transform, opacity; }
+  .sombra .p { text-shadow: 0 6px 40px rgba(0,0,0,.45); }
+
+  .fantasma { position: absolute; left: 0; white-space: nowrap; font-family: var(--f-titulo); font-weight: 900;
+    font-stretch: 125%; font-size: 300px; line-height: 1; text-transform: uppercase; color: transparent;
+    -webkit-text-stroke: 3px rgba(255,248,236,.18); will-change: transform; }
+  .f-sol + .fantasmas .fantasma { -webkit-text-stroke-color: rgba(13,27,42,.14); }
+  .prod { position: absolute; left: 50%; top: 760px; width: 0; height: 0; will-change: transform; }
+  .prod img { position: absolute; transform: translate(-50%, -50%); filter: drop-shadow(0 40px 50px rgba(0,0,0,.45)); }
+  .rotulo { position: absolute; left: 80px; right: 80px; top: 1170px; display: flex; flex-direction: column; align-items: center; }
+  .chip { display: inline-flex; align-items: center; gap: 14px; padding: 12px 26px; border-radius: 999px;
+    font-family: var(--f-texto); font-weight: 800; font-stretch: 110%; font-size: 30px; letter-spacing: .16em;
+    background: var(--tinta); color: var(--solar); will-change: transform, opacity; white-space: nowrap; }
+  .chip.coral { background: var(--coral); color: #FFF8EC; }
+  .chip.sol { background: var(--solar); color: var(--tinta); }
+  .rotulo .chip { margin-bottom: 22px; }
+  .contador { position: absolute; top: 270px; right: 80px; font-weight: 800; font-stretch: 110%; font-size: 30px; letter-spacing: .12em; opacity: .75; color: #FFF8EC; }
+  .f-sol ~ .contador { color: var(--tinta); }
+
+  #selo { position: absolute; left: 50%; top: 1468px; transform: translateX(-50%); display: flex; align-items: center; gap: 18px;
+    padding: 12px 30px 12px 12px; border-radius: 999px; background: rgba(13,27,42,.94); border: 2px solid var(--coral);
+    font-weight: 700; font-stretch: 108%; font-size: 31px; letter-spacing: .04em; color: var(--areia);
+    white-space: nowrap; will-change: transform, opacity; z-index: 5; }
+  #selo .mono { font-size: 64px; background: var(--coral); }
+  #selo .mono::after { background: var(--solar); }
+  #selo em { font-style: normal; color: var(--solar); }
+
+  /* logo nas cores do cliente */
+  .logo { color: #FFF8EC; --cor-sol: var(--solar); }
+  .logo .tag { color: var(--solar); }
+  .logo.escuro { color: var(--tinta); --cor-sol: #FFF8EC; }
+  .logo.escuro .tag { color: var(--tinta); }
+
+  /* letreiro de neon da tabacaria */
+  .neon { position: relative; padding: 34px 44px 40px; border-radius: 34px; border: 8px solid var(--coral);
+    box-shadow: 0 0 26px rgba(232,71,59,.9), inset 0 0 26px rgba(232,71,59,.7); will-change: opacity, filter; }
+  .neon .txt { font-family: var(--f-titulo); font-weight: 800; font-stretch: 118%; font-size: 150px; line-height: 1; letter-spacing: .02em;
+    color: #FFF3E6; text-shadow: 0 0 8px #FFD9C9, 0 0 22px var(--coral), 0 0 46px var(--coral), 0 0 90px var(--coral-e); white-space: nowrap; }
+  .neon .sub { margin-top: 16px; font-family: var(--f-texto); font-weight: 800; font-stretch: 110%; font-size: 34px; letter-spacing: .3em;
+    color: var(--solar); text-shadow: 0 0 10px rgba(255,201,60,.9), 0 0 26px rgba(255,201,60,.6); margin-right: -.3em; }
+  .tijolos { position: absolute; inset: 0; opacity: .22;
+    background-image: linear-gradient(rgba(255,255,255,.06) 3px, transparent 3px), linear-gradient(90deg, rgba(255,255,255,.06) 3px, transparent 3px);
+    background-size: 160px 80px, 160px 160px; }
+  .brilho { position: absolute; left: 50%; top: 46%; width: 1100px; height: 900px; transform: translate(-50%, -50%);
+    background: radial-gradient(closest-side, rgba(232,71,59,.45), transparent); will-change: opacity; }
+  .maior18 { display: flex; align-items: center; gap: 18px; margin-top: 40px; font-weight: 600; font-size: 31px; color: var(--areia); white-space: nowrap; }
+  .maior18 b { display: grid; place-items: center; width: 76px; height: 76px; border-radius: 50%; border: 4px solid var(--solar);
+    color: var(--solar); font-weight: 900; font-stretch: 112%; font-size: 30px; flex: 0 0 auto; }
+
+  /* foto da fachada como cartão */
+  .polaroid { position: absolute; left: 50%; top: 860px; width: 640px; padding: 20px 20px 74px; background: #FFF8EC; border-radius: 10px;
+    box-shadow: 0 40px 80px rgba(0,0,0,.45); will-change: transform, opacity; }
+  .polaroid img { display: block; width: 100%; height: 420px; object-fit: cover; border-radius: 4px; }
+  .polaroid span { position: absolute; left: 0; right: 0; bottom: 18px; text-align: center; font-weight: 800; font-stretch: 110%; font-size: 30px;
+    letter-spacing: .14em; color: var(--coral-e); }
+
+  .pin { width: 120px; height: 120px; margin-bottom: 30px; will-change: transform; }
+  .moto { position: absolute; top: 1250px; left: 0; width: 300px; will-change: transform; }
+  .vel { position: absolute; height: 10px; border-radius: 10px; background: var(--tinta); opacity: .5; will-change: transform, opacity; }
+
+  .final .seguro { justify-content: space-between; padding: 70px 0 0; }
+  .final .el { will-change: transform, opacity; display: flex; flex-direction: column; align-items: center; }
+  .final .logo .tag { font-size: .2em; letter-spacing: .26em; margin-right: -.26em; }
+  .final .end { font-weight: 700; font-stretch: 105%; font-size: 44px; line-height: 1.25; white-space: nowrap; color: #FFF8EC; }
+  .final .end span { display: block; color: var(--areia); opacity: .8; font-weight: 600; font-size: 34px; }
+  .final .zap { background: var(--coral); color: #FFF8EC; border-radius: 28px; padding: 22px 46px 28px; }
+  .final .zap .rot { font-weight: 800; font-stretch: 110%; font-size: 28px; letter-spacing: .26em; margin-right: -.26em; color: var(--solar); }
+  .final .zap .num { font-family: var(--f-titulo); font-weight: 900; font-stretch: 112%; font-size: 80px; letter-spacing: -0.02em; white-space: nowrap; margin-top: 4px; }
+  .final .el.cta { display: block; }
+  .final .cta { font-family: var(--f-titulo); font-weight: 900; font-stretch: 125%; font-size: 92px; line-height: 1;
+    text-transform: uppercase; letter-spacing: -0.02em; white-space: nowrap; color: #FFF8EC; }
+  .final .cta i { font-style: normal; color: var(--solar); }
+  .final .aviso { font-weight: 600; font-size: 26px; color: var(--areia); opacity: .8; white-space: nowrap; }
+
+  .flash { position: absolute; inset: 0; background: #FFF8EC; opacity: 0; pointer-events: none; z-index: 9; }
+  .flash.sol { background: var(--solar); }
+</style>
+</head>
+<body>
+<div id="palco"><div id="cam"></div>
+  <div id="selo"><span class="mono"><b>F</b></span><span>AV. IPEROIG, 301 <em>·</em> DELIVERY E iFOOD</span></div>
+  <div class="flash" id="flash"></div>
+</div>
+<script>
+const D = window.DATA;               // {palavras, fotos, produtos, fps, bpm}
+const FPS = D.fps || 30, BPM = D.bpm || 118, BEAT = 60 / BPM;
+const W = i => D.palavras[i].start - 1 / FPS;
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const eo = x => 1 - Math.pow(1 - clamp(x), 3);
+const back = x => { x = clamp(x); const c = 1.9; return 1 + (c + 1) * Math.pow(x - 1, 3) + c * Math.pow(x - 1, 2); };
+const cam = document.getElementById('cam');
+const LOGO = (cls = '', tag = false) => `<div class="logo ${cls}"><div class="wm">FAR<span class="sol">A</span>H</div>${tag ? '<div class="tag">BANCA E TABACARIA</div>' : ''}</div>`;
+const P = (i, txt, st = '') => ({ i, txt, st });
+const linha = (tam, ps, cls = '') => ({ tam, ps, cls });
+const FIM_SLOGAN = 0.9;              // o slogan fica na tela um pouco depois do "Farah!"
+
+const PRODUTOS = [
+  { i: 12, nome: ['BEBIDA', 'GELADA'], extra: 13, img: 'bebida', h: 640, fundo: 'sol' },
+  { i: 14, nome: ['REFRI'], img: 'refri', h: 620, fundo: 'mar' },
+  { i: 15, nome: ['ENERGÉTICO'], img: 'energetico', h: 660, fundo: 'coral' },
+  { i: 16, nome: ['DOCES'], img: 'doces', w: 720, fundo: 'tinta', rot: -14 },
+  { i: 17, nome: ['CHINELO'], img: 'chinelo', h: 600, fundo: 'sol' },
+];
+
+const BEATS = [
+  { de: 0, ate: 2, fundo: { foto: 'praia_hook' }, sombra: true, impacto: [0, 1], anel: 1, letras: true, ondas: true,
+    linhas: [linha(230, [P(0, 'ATENÇÃO,')]), linha(230, [P(1, 'UBATUBA!', 'bloco')])] },
+  { de: 2, ate: 5, fundo: { foto: 'praia_dor' }, sombra: true, ondas: true,
+    linhas: [linha(150, [P(2, 'TÁ'), P(3, 'NA')]), linha(250, [P(4, 'PRAIA?', 'sol')])] },
+  { de: 5, ate: 9, fundo: 'coral', listras: true, impacto: [6],
+    linhas: [linha(110, [P(5, 'E')], 'leve'), linha(270, [P(6, 'FALTOU', 'bloco noite')]), linha(124, [P(7, 'ALGUMA'), P(8, 'COISA?')])] },
+  { de: 9, ate: 12, fundo: 'mar', listras: true, logo: 11, impacto: [11], anel: 11, fachada: 11, cima: true,
+    linhas: [linha(120, [P(9, 'PASSA'), P(10, 'NA')])] },
+  ...PRODUTOS.map((p, k) => ({ de: p.i, ate: (PRODUTOS[k + 1] || { i: 18 }).i, prod: p, n: k, fundo: p.fundo })),
+  { de: 18, ate: 25, fundo: 'tinta', neon: 20, impacto: [20],
+    linhas: [linha(90, [P(18, 'E'), P(19, 'UMA')], 'leve')],
+    depois: [linha(110, [P(21, 'DE'), P(22, 'TRADIÇÃO,', 'sol')]), linha(110, [P(23, 'DE'), P(24, 'FAMÍLIA!', 'sol')])] },
+  { de: 25, ate: 28, fundo: { foto: 'praia_perto' }, sombra: true, pin: 25, ondas: true,
+    linhas: [linha(250, [P(25, 'PERTINHO', 'sol')]), linha(150, [P(26, 'DA'), P(27, 'PRAIA')])] },
+  { de: 28, ate: 35, fundo: 'tinta', grade: true, semSelo: true, impacto: [30], ondas: true,
+    linhas: [linha(120, [P(28, 'AVENIDA')], 'leve'), linha(170, [P(29, 'IPEROIG')]), linha(380, [P(30, '301', 'sol')]),
+             linha(84, [P(33, 'NO'), P(34, 'CENTRO', 'coral')], 'leve')] },
+  { de: 35, ate: 41, fundo: 'sol', listras: true, moto: 37, impacto: [37, 40],
+    linhas: [linha(110, [P(35, 'E', 'tinta'), P(36, 'TEM', 'tinta')], 'leve'), linha(230, [P(37, 'DELIVERY!', 'bloco noite')]),
+             linha(110, [P(38, 'ATÉ', 'tinta'), P(39, 'PELO', 'tinta')], 'leve'), linha(190, [P(40, 'iFood!', 'tinta nm')])] },
+  { de: 41, ate: 'slogan', fundo: 'coral', listras: true, impacto: [46, 47], anel: 47, logo: 47, semSelo: true,
+    linhas: [linha(120, [P(41, 'FALOU'), P(42, 'EM'), P(43, 'UBATUBA,')], 'leve'),
+             linha(160, [P(44, 'FALOU'), P(45, 'EM')]), linha(210, [P(46, 'TABACARIA', 'bloco noite')])] },
+  { de: 'slogan', ate: null, final: true, fundo: 'tinta', semSelo: true, ondas: true },
+];
+
+function fundoHTML(f) {
+  if (typeof f === 'object') return `<div class="fundo f-tinta"></div><img class="foto" src="${D.fotos[f.foto]}"><div class="veu"></div>`;
+  return `<div class="fundo f-${f}"></div>`;
+}
+function linhasHTML(ls, letras) {
+  return ls.map(l => `<div class="linha ${l.cls}" data-tam="${l.tam}">${l.ps.map(p => {
+    const txt = letras ? [...p.txt].map(c => `<span class="ch">${c}</span>`).join('') : p.txt;
+    return `<span class="p ${p.st}" data-i="${p.i}">${txt}</span>`; }).join('')}</div>`).join('');
+}
+const ONDAS = `<svg class="ondas" viewBox="0 0 1080 330" preserveAspectRatio="none">
+  <path class="o1" fill="#0B6E99" opacity=".9"/><path class="o2" fill="#084C6B"/><path class="o3" fill="none" stroke="#F7E6C4" stroke-width="6" opacity=".7"/></svg>`;
+const MOTO = `<svg class="moto" viewBox="0 0 300 170"><g fill="#0D1B2A">
+  <rect x="150" y="18" width="92" height="72" rx="10"/><rect x="160" y="30" width="72" height="10" rx="5" fill="#E8473B"/>
+  <path d="M40 120 L110 120 L140 70 L200 70 L215 105 L250 105 L262 128 L60 128 Z"/>
+  <path d="M120 70 L100 40 L80 40" stroke="#0D1B2A" stroke-width="10" fill="none" stroke-linecap="round"/>
+  <circle cx="70" cy="135" r="30"/><circle cx="240" cy="135" r="30"/></g>
+  <circle cx="70" cy="135" r="12" fill="#E8473B"/><circle cx="240" cy="135" r="12" fill="#E8473B"/></svg>`;
+
+const tSlogan = W(47) + FIM_SLOGAN;
+const beats = BEATS.map(b => {
+  const el = document.createElement('div');
+  el.className = 'beat' + (b.final ? ' final' : '') + (b.sombra ? ' sombra' : '');
+  let h = fundoHTML(b.fundo);
+  if (b.listras) h += '<div class="listras"></div>';
+  if (b.grade) h += '<div class="grade"></div>';
+  if (b.neon) h += '<div class="tijolos"></div><div class="brilho"></div>';
+  if (b.anel) h += '<div class="anel"></div>';
+  if (b.ondas) h += ONDAS;
+  if (b.prod) {
+    const p = b.prod, nome = p.nome.join(' ');
+    h += `<div class="fantasmas">${[0, 1, 2].map(r => `<div class="fantasma" style="top:${300 + r * 330}px">${(nome + ' · ').repeat(4)}</div>`).join('')}</div>`;
+    h += `<div class="prod"><img src="${D.produtos[p.img]}" style="${p.h ? 'height:' + p.h + 'px' : 'width:' + p.w + 'px'}"></div>`;
+    h += `<div class="contador">${String(b.n + 1).padStart(2, '0')}/05</div>`;
+    const chipCls = p.fundo === 'sol' ? '' : p.fundo === 'coral' ? 'sol' : 'coral';
+    h += `<div class="rotulo"><div class="chip ${chipCls}">TEM NA FARAH</div>${linhasHTML([linha(p.nome.length > 1 ? 150 : 190,
+      p.nome.map((t, j) => P(j ? p.extra : p.i, t, p.fundo === 'sol' ? 'tinta' : '')))])}</div>`;
+  } else if (b.final) {
+    h += `<div class="seguro">
+      <div class="el">${LOGO('', true)}</div>
+      <div class="el end">Av. Iperoig, 301<span>Centro · Ubatuba · pertinho da praia</span></div>
+      <div class="el zap"><div class="rot">WHATSAPP E DELIVERY</div><div class="num">(11) 99745-7700</div></div>
+      <div class="el"><span class="chip sol" style="text-transform:none;letter-spacing:.06em;font-size:36px">Delivery · também no iFood</span><span style="margin-top:18px;font-weight:700;font-size:38px;color:#FFF8EC">@banca_farah_ubatuba</span></div>
+      <div class="el cta">PASSA <i>AQUI!</i></div>
+      <div class="el aviso">Venda de produtos de tabacaria proibida para menores de 18 anos.</div></div>`;
+  } else {
+    let miolo = '';
+    if (b.pin) miolo += `<svg class="pin" viewBox="0 0 24 24" fill="#E8473B"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.7" fill="#FFF8EC"/></svg>`;
+    miolo += linhasHTML(b.linhas || [], b.letras);
+    if (b.neon) miolo += `<div class="neon" style="margin-top:36px"><div class="txt">TABACARIA</div><div class="sub">FARAH · UBATUBA</div></div>`;
+    if (b.logo) miolo += `<div class="logoBox" style="margin-top:${b.fundo === "coral" ? 100 : 80}px">${LOGO(b.fundo === 'sol' ? 'escuro' : '')}</div>`;
+    if (b.depois) miolo += `<div style="margin-top:44px">${linhasHTML(b.depois)}</div>`;
+    if (b.neon) miolo += `<div class="maior18"><b>+18</b>Venda proibida para menores de 18 anos</div>`;
+    h += `<div class="seguro"${b.cima ? ' style="justify-content:flex-start;padding-top:60px"' : ''}>${miolo}</div>`;
+    if (b.fachada) h += `<div class="polaroid"><img src="${D.fotos.fachada_real}"><span>AV. IPEROIG, 301 · CENTRO</span></div>`;
+    if (b.moto) h += [0, 1, 2].map(k => `<div class="vel" style="top:${1290 + k * 36}px;width:${180 - k * 40}px"></div>`).join('') + MOTO;
+  }
+  el.innerHTML = h;
+  cam.appendChild(el);
+  const de = b.de === 'slogan' ? tSlogan : W(b.de), ate = b.ate == null ? Infinity : b.ate === 'slogan' ? tSlogan : W(b.ate);
+  return { b, el, de, ate,
+    ps: [...el.querySelectorAll('.p')].map(s => ({ s, t: W(+s.dataset.i), chs: [...s.querySelectorAll('.ch')] })),
+    foto: el.querySelector('.foto'), prod: el.querySelector('.prod'), fant: [...el.querySelectorAll('.fantasma')],
+    chip: el.querySelector('.rotulo .chip'), logo: el.querySelector('.logoBox .logo'), pin: el.querySelector('.pin'),
+    listras: el.querySelector('.listras'), grade: el.querySelector('.grade'), anel: el.querySelector('.anel'),
+    ondas: el.querySelector('.ondas'), neon: el.querySelector('.neon'), brilho: el.querySelector('.brilho'),
+    m18: el.querySelector('.maior18'), pol: el.querySelector('.polaroid'),
+    moto: el.querySelector('.moto'), vel: [...el.querySelectorAll('.vel')], els: [...el.querySelectorAll('.final .el')] };
+});
+
+function medir() {
+  beats.forEach(o => {
+    o.el.classList.add('on');
+    o.el.querySelectorAll('.linha').forEach(l => {
+      let s = +l.dataset.tam; l.style.fontSize = s + 'px';
+      while (l.scrollWidth > 830 && s > 40) { s -= 4; l.style.fontSize = s + 'px'; }
+    });
+    const ajustaLogo = (lg, max) => { let s = max; lg.style.fontSize = s + 'px';
+      while (lg.querySelector('.wm').scrollWidth > 840 && s > 40) { s -= 4; lg.style.fontSize = s + 'px'; } };
+    if (o.logo) ajustaLogo(o.logo, o.b.fundo === 'coral' ? 230 : 200);
+    const lf = o.el.querySelector('.final .logo'); if (lf) ajustaLogo(lf, 190);
+    if (o.neon) { const tx = o.neon.querySelector('.txt'); let s = 150; while (o.neon.scrollWidth > 900 && s > 60) { s -= 4; tx.style.fontSize = s + 'px'; } }
+    o.el.querySelectorAll('.final .zap, .final .cta').forEach(e => {
+      let s = parseFloat(getComputedStyle(e).fontSize), guard = 0;
+      while (e.scrollWidth > 900 && guard++ < 60) { s -= 1; e.style.fontSize = s + 'px';
+        e.querySelectorAll('.num').forEach(c => c.style.fontSize = (parseFloat(getComputedStyle(c).fontSize) - 1) + 'px'); }
+    });
+    o.el.classList.remove('on');
+  });
+}
+
+function onda(t, amp, fase, y, k) {
+  let d = `M0 ${y}`;
+  for (let x = 0; x <= 1080; x += 30) d += ` L${x} ${(y + Math.sin(x / 1080 * Math.PI * k + t * 2.2 + fase) * amp).toFixed(1)}`;
+  return d;
+}
+
+const flash = document.getElementById('flash'), selo = document.getElementById('selo');
+let atual = null;
+window.renderAt = function (t) {
+  const o = beats.find(o => t >= o.de && t < o.ate) || beats[beats.length - 1];
+  if (atual !== o) { if (atual) atual.el.classList.remove('on'); o.el.classList.add('on'); atual = o; }
+  const lt = t - o.de, b = o.b;
+  const fase = (t % BEAT) / BEAT, pulso = Math.exp(-fase * 6);
+
+  if (b.prod) {
+    const lado = b.n % 2 ? -1 : 1, x = eo(lt / 0.14);
+    o.el.style.transform = `translateX(${lado * (1 - x) * 420}px)`;
+    o.el.style.filter = x < 1 ? `blur(${(1 - x) * 16}px)` : 'none';
+    flash.style.opacity = 0;
+  } else {
+    o.el.style.transform = 'none'; o.el.style.filter = 'none';
+    flash.className = 'flash' + (b.fundo === 'sol' ? '' : ' sol');
+    flash.style.opacity = (t < 0.15 ? 0.9 : 0.35) * (1 - clamp(lt / (t < 0.15 ? 0.15 : 0.09)));
+  }
+
+  let sx = 0, sy = 0, sc = 1 + 0.012 * pulso, rot = 0;
+  (b.impacto || []).forEach(i => {
+    const d = t - W(i);
+    if (d >= 0 && d < 0.25) { const a = (1 - d / 0.25) * 20; sx += Math.sin(d * 95) * a; sy += Math.cos(d * 70) * a * 0.6;
+      sc += 0.05 * (1 - d / 0.25); rot += Math.sin(d * 60) * (1 - d / 0.25) * 1.2; }
+  });
+  cam.style.transform = `translate(${sx}px, ${sy}px) scale(${sc}) rotate(${rot}deg)`;
+
+  if (o.foto) o.foto.style.transform = `scale(${1.16 - 0.1 * eo(lt / 0.3) + 0.03 * lt + 0.01 * pulso})`;
+  if (o.listras) o.listras.style.transform = `translateX(${(t * 160) % 147}px)`;
+  if (o.grade) o.grade.style.backgroundPosition = `0 ${t * 60}px`;
+  if (o.ondas) {
+    o.ondas.querySelector('.o1').setAttribute('d', onda(t, 22, 0, 150, 3) + ' L1080 330 L0 330 Z');
+    o.ondas.querySelector('.o2').setAttribute('d', onda(t * 1.3, 18, 2, 215, 2.4) + ' L1080 330 L0 330 Z');
+    o.ondas.querySelector('.o3').setAttribute('d', onda(t * 1.1, 16, 1, 182, 2.8));
+  }
+  if (o.anel) {
+    const d = t - W(b.anel);
+    const r = d < 0 ? 0 : eo(d / 0.55) * 2300;
+    o.anel.style.opacity = d < 0 ? 0 : 0.85 * (1 - clamp(d / 0.55));
+    o.anel.style.width = o.anel.style.height = r + 'px';
+    o.anel.style.transform = 'translate(-50%, -50%)';
+  }
+
+  o.ps.forEach(({ s, t: tw, chs }) => {
+    const d = t - tw;
+    if (d < 0) { s.style.opacity = 0; s.style.setProperty('--k', 0); return; }
+    s.style.opacity = clamp(d / 0.04);
+    s.style.setProperty('--k', eo((d - 0.02) / 0.12));
+    if (chs.length) {
+      s.style.transform = 'none';
+      chs.forEach((c, j) => { const dj = d - j * 0.03;
+        c.style.opacity = dj < 0 ? 0 : 1;
+        c.style.transform = `translateY(${(1 - eo(dj / 0.12)) * -90}px) scale(${dj < 0 ? 1.6 : 1 + 0.6 * (1 - back(dj / 0.16))})`; });
+    } else {
+      const k = back(d / 0.18);
+      s.style.transform = `translateY(${(1 - eo(d / 0.14)) * 50}px) scale(${0.6 + 0.4 * k}) rotate(${(1 - eo(d / 0.18)) * -6}deg)`;
+    }
+  });
+
+  if (b.prod) {
+    const k = back(lt / 0.28);
+    o.prod.style.transform = `translateY(${Math.sin(lt * 4) * 12 + (1 - eo(lt / 0.22)) * 140}px) rotate(${(b.prod.rot || 0) + (1 - k) * -22 + Math.sin(lt * 3) * 3}deg) scale(${(0.5 + 0.5 * k) * (1 + 0.02 * pulso)})`;
+    o.fant.forEach((f, r) => f.style.transform = `translateX(${(r % 2 ? -1 : 1) * (lt * 420 + 200) - (r % 2 ? 0 : 1400)}px)`);
+    o.chip.style.opacity = clamp(lt / 0.05);
+    o.chip.style.transform = `scale(${0.6 + 0.4 * back(lt / 0.2)})`;
+  }
+  if (o.logo) {
+    const d = t - W(b.logo);
+    o.logo.style.opacity = d < 0 ? 0 : clamp(d / 0.05);
+    o.logo.style.transform = `scale(${d < 0 ? 0.5 : 0.5 + 0.5 * back(d / 0.24)})`;
+    o.logo.style.setProperty('--sol', d < 0.1 ? 0 : back((d - 0.1) / 0.22) * (1 + 0.15 * pulso));
+  }
+  if (o.pol) {
+    const d = t - W(b.fachada) - 0.12;
+    o.pol.style.opacity = d < 0 ? 0 : clamp(d / 0.05);
+    o.pol.style.transform = `translateX(-50%) translateY(${(1 - eo(d / 0.25)) * 260}px) rotate(${-4 + (1 - back(d / 0.3)) * 14 + Math.sin(t * 2) * 0.8}deg) scale(${d < 0 ? 0.8 : 0.8 + 0.2 * back(d / 0.28)})`;
+  }
+  if (o.neon) {
+    // o letreiro acende piscando, como lâmpada de neon
+    const d = t - W(b.neon);
+    const pisca = [[0, 0.05, 1], [0.05, 0.1, 0.15], [0.1, 0.16, 1], [0.16, 0.2, 0.3], [0.2, 9, 1]];
+    let a = d < 0 ? 0.08 : (pisca.find(([x, y]) => d >= x && d < y) || [0, 0, 1])[2];
+    a *= 0.94 + 0.06 * Math.sin(t * 37);
+    o.neon.style.opacity = a;
+    o.neon.style.transform = `scale(${d < 0 ? 0.92 : 0.92 + 0.08 * eo(d / 0.2) + 0.01 * pulso})`;
+    o.brilho.style.opacity = d < 0 ? 0 : a * (0.75 + 0.25 * pulso);
+    if (o.m18) { const d2 = t - W(24); o.m18.style.opacity = clamp(d2 / 0.08); o.m18.style.transform = `scale(${d2 < 0 ? 0.7 : 0.7 + 0.3 * back(d2 / 0.2)})`; }
+  }
+  if (o.pin) {
+    const d = t - W(b.pin);
+    o.pin.style.opacity = d < -0.15 ? 0 : 1;
+    o.pin.style.transform = `translateY(${-(1 - back((d + 0.15) / 0.3)) * 220}px)`;
+  }
+  if (o.moto) {
+    const d = t - W(b.moto) + 0.1, x = -340 + eo(d / 0.7) * 1100 + Math.max(0, d - 0.7) * 120;
+    o.moto.style.transform = `translateX(${x}px) translateY(${Math.sin(t * 30) * 3}px) rotate(${d < 0.7 ? -4 : 0}deg)`;
+    o.vel.forEach((v, k) => { v.style.opacity = d > 0 && d < 1.2 ? 0.5 : 0; v.style.transform = `translateX(${x - 140 - k * 40}px)`; });
+  }
+  if (b.final) {
+    o.els.forEach((e, k) => {
+      const at = e.classList.contains('cta') ? 0.6 : k * 0.07;
+      const d = lt - at;
+      e.style.opacity = clamp(d / 0.05);
+      e.style.transform = `translateY(${(1 - eo(d / 0.18)) * 50}px) scale(${d < 0 ? 0.7 : 0.7 + 0.3 * back(d / 0.22)})`;
+    });
+    const lf = o.el.querySelector('.final .logo'); if (lf) lf.style.setProperty('--sol', back((lt - 0.12) / 0.25) * (1 + 0.15 * pulso));
+    const cta = o.el.querySelector('.final .cta');
+    if (lt > 0.85) cta.style.transform = `scale(${1 + 0.05 * pulso})`;
+  }
+
+  const sv = t >= W(2) && !b.semSelo, ds = t - W(2);
+  selo.style.opacity = sv ? clamp(ds / 0.12) : 0;
+  selo.style.transform = `translateX(-50%) translateY(${sv ? (1 - eo(ds / 0.22)) * 60 : 0}px) scale(${1 + 0.02 * pulso})`;
+};
+window.PRONTO = Promise.all([...document.images].map(i => i.complete ? 1 : new Promise(r => { i.onload = i.onerror = r; })))
+  .then(() => document.fonts.ready).then(() => { medir(); renderAt(0); return true; });
+</script>
+</body>
+</html>
