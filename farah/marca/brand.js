@@ -46,8 +46,8 @@ window.FARAH = {
     const c = this.cores;
     const a = tema === "claro" ? c.mar2 : c.areia, b = tema === "claro" ? c.tinta : "#fff", f = tema === "coral" ? c.sol : c.coral;
     return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 280" width="${width}" height="${width * 280 / 900}">
-      <text x="450" y="80" text-anchor="middle" font-family="Pacifico" font-size="66" fill="${a}">Falou em Ubatuba,</text>
-      <text x="450" y="180" text-anchor="middle" font-family="Anton" font-size="96" letter-spacing="1" fill="${b}">FALOU EM TABACARIA</text>
+      <text x="450" y="80" text-anchor="middle" font-family="Pacifico" font-size="66" fill="${a}">Pensou em Ubatuba?</text>
+      <text x="450" y="180" text-anchor="middle" font-family="Anton" font-size="92" letter-spacing="1" fill="${b}">PENSOU EM TABACARIA</text>
       <text x="450" y="262" text-anchor="middle" font-family="Cinzel" font-size="84" letter-spacing="10" fill="${f}">FARAH.</text>
     </svg>`;
   },

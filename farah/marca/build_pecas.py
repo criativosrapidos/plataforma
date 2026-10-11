@@ -35,7 +35,7 @@ pecas.append(peca("farah_foto_perfil.jpg", 1080, 1080, "var(--tinta)",
                   '<div class="abs w100 c" style="top:60px"><span data-logo="emblema" data-w="960" data-tema="escuro"></span></div>'))
 for nome, icn, cor in (("bebidas", "i-gelada", "var(--coral)"), ("praia", "i-chinelo", "var(--mar)"),
                        ("tech", "i-carregador", "var(--tinta)"), ("geek", "i-card", "var(--sol)"),
-                       ("onde_fica", "i-pin", "var(--coral2)")):
+                       ("onde_fica", "i-pin", "var(--coral2)"), ("delivery", "i-delivery", "var(--sol)")):
     pecas.append(peca(f"destaque_{nome}.jpg", 1080, 1080, cor,
                       f'<div class="abs" style="left:240px;top:240px;width:600px;height:600px;border-radius:50%;background:#fff;'
                       f'display:flex;align-items:center;justify-content:center;box-shadow:0 20px 50px rgba(0,0,0,.25)">{ic(icn, 380)}</div>'))
@@ -55,8 +55,8 @@ pecas.append(peca("post_1_faltou.jpg", 1080, 1350, "var(--coral)", f'''
 pecas.append(peca("post_2_slogan.jpg", 1080, 1350, "radial-gradient(ellipse at 50% 30%,#12304A 0%,#0D1B2A 70%)", f'''
   {onda("var(--mar)")}
   <div class="abs w100 c" style="top:90px"><span data-logo="emblema" data-w="520" data-tema="escuro"></span></div>
-  <div class="abs w100 c pac" style="top:670px;font-size:84px;color:var(--areia)">Falou em Ubatuba,</div>
-  <div class="abs w100 c anton" style="top:820px;font-size:104px;color:#fff">FALOU EM TABACARIA</div>
+  <div class="abs w100 c pac" style="top:670px;font-size:84px;color:var(--areia)">Pensou em Ubatuba?</div>
+  <div class="abs w100 c anton" style="top:820px;font-size:100px;color:#fff">PENSOU EM TABACARIA</div>
   <div class="abs w100 c cinzel" style="top:960px;font-size:180px;color:var(--coral)">FARAH.</div>'''))
 
 itens = [("i-gelada", "Bebida gelada"), ("i-refri", "Refri"), ("i-energetico", "Energético"), ("i-doce", "Doces"),
@@ -96,6 +96,15 @@ pecas.append(peca("post_6_tabacaria.jpg", 1080, 1350, "var(--tinta)", f'''
   <div class="abs w100 c" style="top:1000px;font-weight:700;font-size:34px;color:var(--sol)">{END}</div>
   <div class="abs w100 c aviso18" style="top:1270px">Venda de produtos de tabacaria proibida para menores de 18 anos.</div>'''))
 
+pecas.append(peca("post_7_delivery.jpg", 1080, 1350, "linear-gradient(180deg,#FFC93C,#FFB020)", f'''
+  {onda("var(--mar)")}
+  <div class="abs w100 c pac" style="top:70px;font-size:76px;color:var(--coral2)">pensou em Ubatuba?</div>
+  <div class="abs w100 c anton" style="top:230px;font-size:210px;color:var(--tinta)">DELIVERY</div>
+  <div class="abs w100 c" style="top:450px">{ic("i-delivery", 380)}</div>
+  <div class="abs w100 c anton" style="top:850px;font-size:96px;color:var(--tinta)">PEDIU, A FARAH LEVA</div>
+  <div class="abs w100 c" style="top:990px"><div style="display:inline-flex;align-items:center;gap:20px;background:var(--verde);border-radius:80px;padding:20px 44px;color:#fff;font-weight:800;font-size:50px">{ic("i-whats", 70)} {WHATS}</div></div>
+  <div class="abs w100 c" style="top:1230px;font-weight:800;font-size:32px;color:#fff">em Ubatuba · consulte sua região</div>'''))
+
 # ---- stories 1080x1920
 pecas.append(peca("story_1_passa_na_farah.jpg", 1080, 1920, "var(--coral)", f'''
   {onda("var(--coral2)")}
@@ -115,6 +124,15 @@ pecas.append(peca("story_2_enquete.jpg", 1080, 1920, "linear-gradient(180deg,#0B
     {"".join(f'<div style="display:flex;align-items:center;gap:24px;background:#F1F3F5;border-radius:24px;padding:20px 30px;margin:14px 0;font-weight:800;font-size:46px;color:var(--tinta)">{ic(a, 80)}{b}</div>' for a, b in (("i-agua", "Água"), ("i-carregador", "Carregador"), ("i-chinelo", "Chinelo")))}
   </div>
   <div class="abs w100 c pac" style="top:1500px;font-size:66px;color:var(--areia)">seja o que for, a Farah tem.</div>'''))
+
+pecas.append(peca("story_4_delivery.jpg", 1080, 1920, "linear-gradient(180deg,#FFC93C,#FFB020)", f'''
+  {onda("var(--mar)")}
+  <div class="abs w100 c" style="top:150px"><span data-logo="horizontal" data-w="560" data-tema="claro"></span></div>
+  <div class="abs w100 c pac" style="top:420px;font-size:90px;color:var(--coral2)">tá na praia e faltou algo?</div>
+  <div class="abs w100 c anton" style="top:560px;font-size:240px;color:var(--tinta)">DELIVERY</div>
+  <div class="abs w100 c" style="top:860px">{ic("i-delivery", 440)}</div>
+  <div class="abs w100 c anton" style="top:1330px;font-size:104px;color:var(--tinta)">PEDIU, A FARAH LEVA</div>
+  <div class="abs w100 c" style="top:1480px"><div style="display:inline-flex;align-items:center;gap:20px;background:var(--verde);border-radius:80px;padding:22px 48px;color:#fff;font-weight:800;font-size:54px">{ic("i-whats", 76)} {WHATS}</div></div>'''))
 
 pecas.append(peca("story_3_onde_fica.jpg", 1080, 1920, "linear-gradient(180deg,#0D1B2A,#0B2E45)", f'''
   <div class="abs w100 c anton" style="top:170px;font-size:130px;color:#fff">PERTINHO DA PRAIA</div>

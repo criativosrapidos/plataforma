@@ -59,7 +59,7 @@ pages.append(pg("id_02_marca.jpg", AREIA, f'''
 pages.append(pg("id_03_slogan.jpg", "var(--coral)", f'''
   {onda("var(--coral2)", -40)}
   <div class="abs w100 c" style="top:270px">{logo("slogan", 1150, "coral")}</div>
-  <div class="abs w100 c" style="top:700px;font-weight:700;font-size:30px;color:var(--areia)">Fecha todo vídeo, post e story. Falado no fim dos anúncios, sempre com o selo.</div>
+  <div class="abs w100 c" style="top:700px;font-weight:700;font-size:30px;color:var(--areia)">Fecha todo vídeo, post e story, sempre com o selo. Junto dele: “Tem delivery! Pediu, a Farah leva.”</div>
   <div class="abs w100 c" style="top:780px;font-weight:800;font-size:28px;letter-spacing:6px;color:#fff">CHAMADA DE APOIO: “FALTOU? PASSA NA FARAH!”</div>''',
                 "Slogan", "A frase que liga a marca à cidade", 2))
 
@@ -82,7 +82,7 @@ pages.append(pg("id_04_cores_tipos.jpg", AREIA, f'''
   <div class="abs" style="left:90px;top:680px;display:flex;gap:26px">{tp}</div>''',
                 "Cores e Letras", "A paleta e as fontes do vídeo viram a regra da marca", 3, claro=True))
 
-icones = ["i-gelada", "i-refri", "i-energetico", "i-doce", "i-chinelo", "i-bone", "i-carregador", "i-card", "i-agua", "i-bateria", "i-pin", "i-whats"]
+icones = ["i-delivery", "i-gelada", "i-refri", "i-energetico", "i-doce", "i-chinelo", "i-bone", "i-carregador", "i-card", "i-agua", "i-bateria", "i-pin"]
 grid = "".join(f'<div class="ic" style="width:130px;height:130px">{ic(i, 96)}</div>' for i in icones)
 pages.append(pg("id_05_elementos.jpg", NAVY, f'''
   <div class="abs" style="left:90px;top:280px;width:840px;display:grid;grid-template-columns:repeat(6,130px);gap:26px">{grid}</div>
@@ -99,19 +99,19 @@ pages.append(pg("id_05_elementos.jpg", NAVY, f'''
 # página do Instagram: celular com o perfil montado
 grade = "".join(f'<img src="{P}{n}" style="width:100%;aspect-ratio:4/5;object-fit:cover;display:block">'
                 for n in ("post_2_slogan.jpg", "post_1_faltou.jpg", "post_3_tem_de_tudo.jpg", "post_6_tabacaria.jpg",
-                          "post_5_carregador.jpg", "post_4_onde_fica.jpg"))
+                          "post_7_delivery.jpg", "post_4_onde_fica.jpg"))
 dest = "".join(f'<div style="text-align:center"><img src="{P}destaque_{d}.jpg" style="width:82px;height:82px;border-radius:50%;border:3px solid #ddd;padding:3px;background:#fff"><div style="font-size:15px;font-weight:700;margin-top:6px">{t}</div></div>'
-               for d, t in (("bebidas", "Bebidas"), ("praia", "Praia"), ("tech", "Tech"), ("geek", "Geek"), ("onde_fica", "Onde fica")))
+               for d, t in (("delivery", "Delivery"), ("bebidas", "Bebidas"), ("praia", "Praia"), ("tech", "Tech"), ("onde_fica", "Onde fica")))
 celular = f'''<div style="width:470px;height:960px;border-radius:64px;background:#111;padding:16px;box-shadow:0 30px 70px rgba(0,0,0,.5)">
   <div style="width:100%;height:100%;border-radius:50px;background:#fff;overflow:hidden;padding:56px 0 0">
     <div style="display:flex;align-items:center;gap:22px;padding:0 22px">
       <img src="{P}farah_foto_perfil.jpg" style="width:120px;height:120px;border-radius:50%;border:4px solid var(--coral);padding:3px">
       <div style="font-size:15px;line-height:1.3"><b style="font-size:18px">banca_farah_ubatuba</b><br>
-      <b>Farah Tabacaria</b> · Ubatuba-SP<br>Falou em Ubatuba, falou em Tabacaria Farah.<br>📍 {END}</div></div>
+      <b>Farah Tabacaria</b> · Ubatuba-SP<br>Pensou em Ubatuba? Pensou em Tabacaria Farah.<br>🛵 Delivery pelo WhatsApp<br>📍 {END}</div></div>
     <div style="display:flex;justify-content:space-between;padding:22px 22px 14px">{dest}</div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:3px">{grade}</div></div></div>'''
 stories = "".join(f'<img src="{P}{s}" style="width:300px;border-radius:26px;box-shadow:0 20px 50px rgba(0,0,0,.45)">'
-                  for s in ("story_1_passa_na_farah.jpg", "story_2_enquete.jpg", "story_3_onde_fica.jpg"))
+                  for s in ("story_4_delivery.jpg", "story_1_passa_na_farah.jpg", "story_3_onde_fica.jpg"))
 pages.append(pg("id_06_instagram.jpg", "var(--mar2)", f'''
   <div class="abs" style="left:110px;top:240px;transform:scale(.82);transform-origin:top left">{celular}</div>
   <div class="abs" style="left:640px;top:290px;display:flex;gap:34px">{stories}</div>
@@ -153,7 +153,7 @@ pages.append(pg("pr_02_video.jpg", NAVY, f'''
   <div class="abs" style="left:90px;top:270px;display:flex;gap:40px">{frames}</div>
   <div class="abs" style="left:90px;top:760px;display:grid;grid-template-columns:1fr 1fr;gap:18px 80px;font-weight:700;font-size:30px;color:#fff">
     <div>● Gancho: “Atenção, Ubatuba!” + TABACARIA FARAH grande</div><div>● Dor de quem mora aqui: faltou algo na praia</div>
-    <div>● Produtos passando no ritmo da voz</div><div>● Fecha com o slogan falado e o WhatsApp</div></div>
+    <div>● Produtos passando no ritmo da voz</div><div>● Destaque para o DELIVERY e o slogan novo</div></div>
   <div class="abs" style="left:90px;top:960px;font-weight:700;font-size:22px;color:var(--areia)">Vídeo enviado junto: farah_reels.mp4 · locução feminina profissional · 34 s · 1080x1920</div>''',
                 "O Vídeo", "Reels vertical com locução, já pronto para postar", 1, tag="PROPOSTA"))
 
@@ -163,12 +163,12 @@ pages.append(pg("pr_03_identidade.jpg", AREIA, f'''
   <div class="abs w100 c" style="top:1030px;font-weight:700;font-size:20px;color:#7a6a55">Manual completo enviado junto: farah_identidade_visual.pdf</div>''',
                 "Identidade Visual", "Logo, slogan, cores, letras, elementos e aplicações", 2, claro=True, tag="PROPOSTA"))
 
-posts = "".join(f'<img src="{P}{n}" style="width:250px;border-radius:14px;box-shadow:0 14px 34px rgba(0,0,0,.4)">'
-                for n in ("post_1_faltou.jpg", "post_2_slogan.jpg", "post_3_tem_de_tudo.jpg", "post_4_onde_fica.jpg", "post_5_carregador.jpg", "post_6_tabacaria.jpg"))
+posts = "".join(f'<img src="{P}{n}" style="width:224px;border-radius:14px;box-shadow:0 14px 34px rgba(0,0,0,.4)">'
+                for n in ("post_7_delivery.jpg", "post_1_faltou.jpg", "post_2_slogan.jpg", "post_3_tem_de_tudo.jpg", "post_4_onde_fica.jpg", "post_5_carregador.jpg", "post_6_tabacaria.jpg"))
 pages.append(pg("pr_04_instagram.jpg", "var(--mar2)", f'''
-  <div class="abs" style="left:90px;top:300px;display:flex;gap:28px">{posts}</div>
-  <div class="abs" style="left:90px;top:680px;display:flex;gap:24px">{"".join(f'<img src="{P}destaque_{d}.jpg" style="width:120px;height:120px;border-radius:50%;border:5px solid #fff">' for d in ("bebidas", "praia", "tech", "geek", "onde_fica"))}</div>
-  <div class="abs" style="left:800px;top:690px;font-weight:700;font-size:30px;line-height:1.5;color:#fff">6 posts · 3 stories · 5 capas de destaque · foto de perfil<br><span style="color:var(--sol)">tudo na identidade nova, pronto para publicar</span></div>''',
+  <div class="abs" style="left:90px;top:300px;display:flex;gap:20px">{posts}</div>
+  <div class="abs" style="left:90px;top:680px;display:flex;gap:24px">{"".join(f'<img src="{P}destaque_{d}.jpg" style="width:110px;height:110px;border-radius:50%;border:5px solid #fff">' for d in ("delivery", "bebidas", "praia", "tech", "geek", "onde_fica"))}</div>
+  <div class="abs" style="left:960px;top:680px;width:860px;font-weight:700;font-size:30px;line-height:1.5;color:#fff">7 posts (incluindo DELIVERY) · 4 stories · 6 capas de destaque · foto de perfil<br><span style="color:var(--sol)">tudo na identidade nova, pronto para publicar</span></div>''',
                 "Feed e Stories", "Exemplos de conteúdo para o perfil", 3, tag="PROPOSTA"))
 
 pac = [("START", "247", ["3 vídeos com locução", "3 carrosséis", "Roteiro e legendas", "Ajustes inclusos"], False),

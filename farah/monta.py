@@ -8,7 +8,7 @@ ROOT = Path(__file__).resolve().parent
 sys.path.insert(0, str(ROOT.parent / "fazendinha"))
 import render_faz  # noqa: E402  (violão dedilhado sintetizado, reaproveitado)
 
-DUR, LEAD, SLOGAN = 34.0, 0.20, 30.0
+DUR, LEAD, SLOGAN = 36.5, 0.20, 30.0
 render_faz.DURATION = DUR
 musica = ROOT / "audio/trilha.wav"
 render_faz.trilha(musica)
@@ -16,7 +16,7 @@ out = ROOT / "saida/farah_reels.mp4"
 dl = int(LEAD * 1000)
 subprocess.run([
     "ffmpeg", "-y", "-loglevel", "error", "-framerate", "30", "-i", str(ROOT / "frames/f_%05d.jpg"),
-    "-i", str(ROOT / "audio/locucao.mp3"), "-i", str(musica), "-i", str(ROOT / "audio/slogan.mp3"),
+    "-i", str(ROOT / "audio/locucao.mp3"), "-i", str(musica), "-i", str(ROOT / "audio/silencio.mp3"),
     "-filter_complex",
     f"[3:a]adelay={int(SLOGAN * 1000)}|{int(SLOGAN * 1000)},aresample=44100[sl];[1:a]adelay={dl}|{dl},aresample=44100[vz];"
     "[vz][sl]amix=inputs=2:duration=longest:normalize=0,highpass=f=80,acompressor=threshold=-20dB:ratio=3:attack=5:release=90,"
