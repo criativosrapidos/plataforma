@@ -107,10 +107,11 @@ def chrome(img, n, swipe=False):
     img.alpha_composite(MINI, (40, 36))
     d = ImageDraw.Draw(img)
     f = fnt(800, 30)
-    lab = f"{n}/{N}"
-    w = tw(lab, f)
-    d.rounded_rectangle((CW - 70 - w, 76, CW - 40, 128), 26, fill=(0, 0, 0, 140))
-    d.text((CW - 55 - w / 2, 102), lab, font=f, fill=WHITE, anchor="mm")
+    if n is not None:  # posts únicos não levam o contador de páginas
+        lab = f"{n}/{N}"
+        w = tw(lab, f)
+        d.rounded_rectangle((CW - 70 - w, 76, CW - 40, 128), 26, fill=(0, 0, 0, 140))
+        d.text((CW - 55 - w / 2, 102), lab, font=f, fill=WHITE, anchor="mm")
     f2 = fnt(700, 28)
     d.text((CW / 2, CH - 46), INSTA, font=f2, fill=CREAM + (230,), anchor="mm")
     if swipe:
