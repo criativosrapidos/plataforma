@@ -1,0 +1,5 @@
+project_id = "focomulta"
+
+# O Mercado Pago chama o webhook sem o JWT do Supabase; a função confere a assinatura do MP.
+[functions.mp-webhook]
+verify_jwt = false
