@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Agiliza Nota - anúncio 30s</title>
+<style>
+@font-face { font-family: "Inter Display"; font-weight: 900; src: url(fonts/InterDisplay-Black.otf); }
+@font-face { font-family: "Inter Display"; font-weight: 800; src: url(fonts/InterDisplay-ExtraBold.otf); }
+@font-face { font-family: Inter; font-weight: 700; src: url(fonts/Inter-Bold.otf); }
+@font-face { font-family: Inter; font-weight: 600; src: url(fonts/Inter-SemiBold.otf); }
+@font-face { font-family: Inter; font-weight: 500; src: url(fonts/Inter-Medium.otf); }
+:root { --azul:#1660F5; --azul2:#0B3FB8; --noite:#0A1633; --ciano:#19C3FF; --verde:#22D38A; --gelo:#F3F6FB; --erro:#FF3B4E; --cinza:#5B6B86; }
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body { width:1080px; height:1920px; overflow:hidden; background:var(--noite); }
+#stage { position:relative; width:1080px; height:1920px; overflow:hidden; font-family:Inter, sans-serif; }
+.scene { position:absolute; inset:0; opacity:0; }
+.el { position:absolute; left:0; right:0; text-align:center; opacity:0; will-change:transform, opacity; }
+.disp { font-family:"Inter Display"; font-weight:900; letter-spacing:-.025em; line-height:.95; }
+.grid { position:absolute; inset:-200px; background-image:linear-gradient(rgba(255,255,255,.06) 2px, transparent 2px), linear-gradient(90deg, rgba(255,255,255,.06) 2px, transparent 2px); background-size:90px 90px; }
+.glow { position:absolute; border-radius:50%; filter:blur(120px); }
+.bolha { display:inline-block; text-align:left; background:#fff; color:var(--noite); font-weight:600; font-size:44px; line-height:1.25;
+         padding:26px 36px; border-radius:40px 40px 40px 10px; box-shadow:0 20px 50px rgba(0,0,0,.35); }
+.bolha small { display:block; font-size:26px; color:var(--cinza); font-weight:500; margin-top:6px; }
+.janela { display:inline-block; width:900px; background:#fff; border-radius:30px; overflow:hidden; box-shadow:0 30px 80px rgba(0,0,0,.5); text-align:left; }
+.barra { height:84px; background:#E6EAF0; display:flex; align-items:center; gap:14px; padding:0 30px; }
+.barra i { width:24px; height:24px; border-radius:50%; display:inline-block; }
+.barra .url { flex:1; margin-left:20px; height:48px; border-radius:24px; background:#fff; font-size:26px; color:#8592A6; display:flex; align-items:center; padding:0 24px; font-weight:500; }
+.dor { display:inline-flex; align-items:center; gap:34px; background:#fff; border-radius:34px; padding:30px 50px 30px 34px; box-shadow:0 24px 60px rgba(0,0,0,.4); }
+.dor .ico { width:130px; height:130px; border-radius:30px; background:#FFE5E8; display:flex; align-items:center; justify-content:center; flex:none; }
+.dor .txt { font-family:"Inter Display"; font-weight:900; font-size:66px; color:var(--noite); letter-spacing:-.02em; text-align:left; line-height:1; }
+.dor .txt span { display:block; font-family:Inter; font-weight:600; font-size:30px; color:var(--erro); letter-spacing:0; margin-top:8px; }
+.cel { display:inline-block; width:600px; height:1180px; background:#0B0F1A; border-radius:90px; padding:22px; box-shadow:0 40px 100px rgba(0,0,0,.55), inset 0 0 0 4px #2A3347; }
+.tela { position:relative; width:100%; height:100%; background:var(--gelo); border-radius:70px; overflow:hidden; text-align:left; }
+.campo { margin:0 40px 22px; background:#fff; border-radius:22px; padding:18px 26px; box-shadow:0 4px 14px rgba(10,22,51,.06); }
+.campo b { display:block; font-size:22px; color:var(--cinza); font-weight:600; }
+.campo span { display:block; font-size:32px; color:var(--noite); font-weight:700; margin-top:4px; }
+.pill { display:inline-block; font-weight:700; font-size:40px; padding:18px 40px; border-radius:60px; }
+</style>
+</head>
+<body>
+<div id="stage">
+
+  <!-- 1. Cliente pedindo nota -->
+  <section class="scene" data-start="0" data-end="2.9">
+    <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 30%,#1B2550 0%,#0A1633 70%)"></div>
+    <div class="grid" data-pan="1"></div>
+    <div class="glow" style="width:700px;height:700px;left:-200px;top:1100px;background:rgba(255,59,78,.35)"></div>
+    <div class="el disp" data-in="0" data-a="drop" style="top:170px;font-size:104px;color:#fff">CLIENTE PEDINDO</div>
+    <div class="el disp" data-in="0.95" data-a="pop" style="top:290px;font-size:136px;color:var(--erro)">NOTA FISCAL...</div>
+    <div class="el" data-in="0.25" data-a="slideL" style="top:600px;left:70px;right:auto;text-align:left"><div class="bolha">Oi! Me manda a nota fiscal?<small>Cliente · agora</small></div></div>
+    <div class="el" data-in="1.05" data-a="slideL" style="top:880px;left:150px;right:auto;text-align:left"><div class="bolha">Preciso da nota HOJE pra pagar.<small>Cliente · agora</small></div></div>
+    <div class="el" data-in="1.75" data-a="slideL" style="top:1160px;left:90px;right:auto;text-align:left"><div class="bolha" style="background:var(--erro);color:#fff">E a nota??? <small style="color:#FFD5DA">3 mensagens não lidas</small></div></div>
+    <div class="el" data-in="2.15" data-a="pop" style="top:1340px;left:700px;right:auto"><div style="width:190px;height:190px;border-radius:50%;background:var(--erro);color:#fff;font-family:'Inter Display';font-weight:900;font-size:110px;line-height:190px;box-shadow:0 20px 50px rgba(255,59,78,.5)">3</div></div>
+  </section>
+
+  <!-- 2. Travado no site da prefeitura -->
+  <section class="scene" data-start="2.9" data-end="4.75">
+    <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 40%,#22152E 0%,#0A1633 75%)"></div>
+    <div class="grid" data-pan="1"></div>
+    <div class="el disp" data-in="2.62" data-a="drop" style="top:170px;font-size:110px;color:#fff">E VOCÊ <span style="color:var(--erro)">TRAVADO</span></div>
+    <div class="el disp" data-in="3.4" data-a="rise" style="top:300px;font-size:84px;color:#fff">NO SITE DA PREFEITURA?</div>
+    <div class="el" data-in="2.75" data-a="rise" style="top:520px">
+      <div class="janela">
+        <div class="barra"><i style="background:#FF5F57"></i><i style="background:#FEBC2E"></i><i style="background:#28C840"></i><div class="url">portal.prefeitura.gov.br/nfse/login</div></div>
+        <div style="padding:80px 70px 100px;text-align:center">
+          <div style="font-weight:700;font-size:38px;color:#3A4660">Emissão de NFS-e</div>
+          <svg id="spin" viewBox="0 0 100 100" style="width:300px;height:300px;margin:70px auto 40px;display:block"><circle cx="50" cy="50" r="40" stroke="#E2E7EF" stroke-width="10" fill="none"/><path d="M50 10 A40 40 0 0 1 90 50" stroke="var(--azul)" stroke-width="10" fill="none" stroke-linecap="round"/></svg>
+          <div style="font-weight:600;font-size:34px;color:#8592A6">Carregando<span id="dots">...</span></div>
+          <div style="margin:40px auto 0;width:640px;height:26px;border-radius:13px;background:#E2E7EF;overflow:hidden"><div style="width:12%;height:100%;background:var(--azul)"></div></div>
+          <div style="margin-top:16px;font-weight:600;font-size:26px;color:#A0AABB">12% · tempo estimado: indefinido</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Senha, sistema, tempo -->
+  <section class="scene" data-start="4.75" data-end="9.45" data-shake="4.82,6.46">
+    <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 45%,#3A0F1F 0%,#0A1633 75%)"></div>
+    <div class="grid" data-pan="1"></div>
+    <div class="el" data-in="4.82" data-a="slideR" style="top:330px"><div class="dor"><div class="ico"><svg viewBox="0 0 100 100" style="width:84px"><rect x="18" y="44" width="64" height="46" rx="10" fill="var(--erro)"/><path d="M32 44V32a18 18 0 0 1 36 0v12" stroke="var(--erro)" stroke-width="10" fill="none"/><circle cx="50" cy="66" r="7" fill="#fff"/></svg></div><div class="txt">SENHA QUE<br>NÃO ENTRA<span>Usuário ou senha inválidos (tentativa 4 de 5)</span></div></div></div>
+    <div class="el" data-in="6.46" data-a="slideL" style="top:700px"><div class="dor"><div class="ico"><svg viewBox="0 0 100 100" style="width:84px"><path d="M50 12 92 86H8z" fill="var(--erro)"/><rect x="45" y="36" width="10" height="28" rx="4" fill="#fff"/><circle cx="50" cy="74" r="6" fill="#fff"/></svg></div><div class="txt">SISTEMA<br>QUE CAI<span>Erro 503 · serviço indisponível</span></div></div></div>
+    <div class="el" data-in="7.84" data-a="slideR" style="top:1070px"><div class="dor"><div class="ico"><svg viewBox="0 0 100 100" style="width:96px"><circle cx="50" cy="50" r="40" fill="none" stroke="var(--erro)" stroke-width="9"/><line id="ponteiro1" x1="50" y1="50" x2="50" y2="22" stroke="var(--noite)" stroke-width="7" stroke-linecap="round"/><line id="ponteiro2" x1="50" y1="50" x2="70" y2="50" stroke="var(--erro)" stroke-width="7" stroke-linecap="round"/></svg></div><div class="txt">E O TEMPO<br>INDO EMBORA<span>Mais uma hora perdida</span></div></div></div>
+    <div class="el disp" data-in="8.4" data-a="pop" style="top:1450px;font-size:72px;color:#FFB3BC">Isso não é trabalho.<br><span style="color:#fff">É castigo.</span></div>
+  </section>
+
+  <!-- 4. Chega de passar raiva -->
+  <section class="scene" data-start="9.45" data-end="10.85" data-shake="9.55,10.3">
+    <div style="position:absolute;inset:0;background:var(--erro)"></div>
+    <div class="grid"></div>
+    <div class="el disp" data-in="9.5" data-a="slam" style="top:560px;font-size:210px;color:#fff">CHEGA</div>
+    <div class="el disp" data-in="9.8" data-a="slam" style="top:780px;font-size:118px;color:var(--noite)">DE PASSAR</div>
+    <div class="el disp" data-in="10.25" data-a="slam" style="top:900px;font-size:230px;color:#fff">RAIVA!</div>
+  </section>
+
+  <!-- 5. Agiliza Nota: emite em segundos no celular -->
+  <section class="scene" data-start="10.85" data-end="16.1">
+    <div style="position:absolute;inset:0;background:linear-gradient(160deg,#1660F5 0%,#0B3FB8 55%,#0A1633 100%)"></div>
+    <div class="grid" data-pan="1"></div>
+    <div class="glow" style="width:800px;height:800px;left:400px;top:-200px;background:rgba(25,195,255,.45)"></div>
+    <div class="el" data-in="11.2" data-a="pop" style="top:110px" id="logo5"></div>
+    <div class="el" data-in="12.3" data-a="rise" style="top:430px">
+      <div class="cel"><div class="tela">
+        <div style="height:150px;background:var(--azul);display:flex;align-items:flex-end;padding:0 40px 26px;color:#fff;font-weight:700;font-size:34px">Nova nota fiscal</div>
+        <div style="height:30px"></div>
+        <div class="campo"><b>Cliente</b><span>Maria Souza ME</span></div>
+        <div class="campo"><b>Serviço</b><span>Manutenção predial</span></div>
+        <div class="campo"><b>Valor</b><span>R$ 1.250,00</span></div>
+        <div id="botao" style="margin:30px 40px 0;height:110px;border-radius:30px;background:var(--verde);color:#fff;font-family:'Inter Display';font-weight:900;font-size:44px;display:flex;align-items:center;justify-content:center">EMITIR NOTA</div>
+        <div id="dedo" style="position:absolute;left:330px;top:820px;width:110px;height:110px;border-radius:50%;background:rgba(10,22,51,.25);border:6px solid rgba(255,255,255,.9);opacity:0"></div>
+        <div id="ok" style="position:absolute;inset:0;background:var(--verde);display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0">
+          <svg viewBox="0 0 100 100" style="width:260px;height:260px"><circle cx="50" cy="50" r="44" fill="#fff"/><path id="okcheck" d="M28 52 44 67 74 36" fill="none" stroke="var(--verde)" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="70" stroke-dashoffset="70"/></svg>
+          <div style="margin-top:40px;font-family:'Inter Display';font-weight:900;font-size:64px;color:#fff">Nota emitida!</div>
+          <div style="margin-top:12px;font-weight:600;font-size:30px;color:#E6FFF4">NFS-e nº 000128 · enviada ao cliente</div>
+        </div>
+      </div></div>
+    </div>
+    <div class="el" data-in="14.15" data-a="pop" style="top:1440px;left:40px;right:auto;transform-origin:left"><div class="pill" style="background:#fff;color:var(--azul);font-family:'Inter Display';font-weight:900;font-size:58px;box-shadow:0 20px 50px rgba(0,0,0,.3)">EM SEGUNDOS</div></div>
+    <div class="el" data-in="14.95" data-a="pop" style="top:1580px;right:40px;left:auto"><div class="pill" style="background:var(--verde);color:#fff;font-family:'Inter Display';font-weight:900;font-size:58px;box-shadow:0 20px 50px rgba(0,0,0,.3)">DIRETO DO CELULAR</div></div>
+  </section>
+
+  <!-- 6. Sem limite + preço -->
+  <section class="scene" data-start="16.1" data-end="20.35">
+    <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 35%,#13306E 0%,#0A1633 75%)"></div>
+    <div class="grid" data-pan="1"></div>
+    <div class="glow" style="width:700px;height:700px;left:190px;top:200px;background:rgba(22,96,245,.5)"></div>
+    <div class="el disp" data-in="16.17" data-a="drop" style="top:180px;font-size:150px;color:#fff">SEM LIMITE</div>
+    <div class="el disp" data-in="16.7" data-a="rise" style="top:330px;font-size:96px;color:var(--ciano)">DE EMISSÕES</div>
+    <div class="el" data-in="16.4" data-a="pop" style="top:500px"><div style="display:inline-block;background:rgba(255,255,255,.08);border:3px solid rgba(255,255,255,.25);border-radius:40px;padding:26px 60px">
+      <div style="font-weight:600;font-size:34px;color:#B8C6E6">notas emitidas este mês</div>
+      <div id="contador" class="disp" style="font-size:150px;color:#fff;margin-top:6px">0</div></div></div>
+    <div class="el disp" data-in="17.95" data-a="rise" style="top:930px;font-size:70px;color:#fff">A PARTIR DE</div>
+    <div class="el" data-in="18.45" data-a="slam" style="top:1030px"><div style="display:inline-block;background:#fff;border-radius:50px;padding:30px 70px 40px;box-shadow:0 30px 80px rgba(0,0,0,.45)">
+      <span class="disp" style="font-size:90px;color:var(--cinza);vertical-align:top;line-height:1.9">R$</span><span class="disp" style="font-size:300px;color:var(--azul)">49</span><span class="disp" style="font-size:80px;color:var(--noite)">/mês</span></div></div>
+    <div class="el" data-in="19.3" data-a="rise" style="top:1480px;font-weight:700;font-size:40px;color:#B8C6E6">NF-e · NFS-e · direto no app</div>
+  </section>
+
+  <!-- 7. Teste grátis -->
+  <section class="scene" data-start="20.35" data-end="23.3">
+    <div style="position:absolute;inset:0;background:linear-gradient(170deg,#22D38A 0%,#12A86B 100%)"></div>
+    <div class="grid" data-pan="1"></div>
+    <div class="el disp" data-in="20.4" data-a="drop" style="top:250px;font-size:84px;color:var(--noite)">E O MELHOR:</div>
+    <div class="el disp" data-in="21.2" data-a="slam" style="top:400px;font-size:180px;line-height:1.08;color:#fff">TESTE<br>GRÁTIS</div>
+    <div class="el" data-in="22.3" data-a="pop" style="top:880px"><div style="display:inline-block;width:520px;height:520px;border-radius:50%;background:var(--noite);box-shadow:0 30px 80px rgba(0,0,0,.35)">
+      <div class="disp" style="font-size:300px;color:var(--verde);margin-top:70px">5</div><div class="disp" style="font-size:90px;color:#fff;margin-top:-6px">DIAS</div></div></div>
+    <div class="el" data-in="22.6" data-a="rise" style="top:1520px;font-weight:700;font-size:42px;color:var(--noite)">Sem compromisso. Cadastro em 1 minuto.</div>
+  </section>
+
+  <!-- 8. Baixe o app + slogan -->
+  <section class="scene" data-start="23.3" data-end="30.5">
+    <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 30%,#14307A 0%,#0A1633 70%)"></div>
+    <div class="grid" data-pan="1"></div>
+    <div class="glow" style="width:800px;height:800px;left:140px;top:150px;background:rgba(22,96,245,.55)"></div>
+    <div class="el disp" data-in="23.55" data-a="drop" style="top:170px;font-size:110px;color:#fff">BAIXE O APP</div>
+    <div class="el" data-in="23.9" data-a="pop" style="top:350px" id="simb8"></div>
+    <div class="el" data-in="24.25" data-a="rise" style="top:780px" id="logo8"></div>
+    <div class="el" data-in="25.3" data-a="rise" style="top:1040px" id="slogan8"></div>
+    <div class="el" data-in="26.3" data-a="pop" style="top:1250px"><div class="pill" style="background:var(--verde);color:#fff;font-family:'Inter Display';font-weight:900;font-size:56px;padding:30px 60px;box-shadow:0 20px 60px rgba(34,211,138,.45)">TESTE GRÁTIS POR 5 DIAS</div></div>
+    <div class="el" data-in="26.8" data-a="rise" style="top:1460px;font-weight:700;font-size:46px;color:#fff">agilizanota.com.br</div>
+    <div class="el" data-in="27.1" data-a="rise" style="top:1540px;font-weight:600;font-size:34px;color:#B8C6E6">Android e iPhone · @agilizanotaoficial</div>
+  </section>
+</div>
+
+<script src="marca/brand.js"></script>
+<script>
+const L = 0.10;   // atraso da locução no vídeo (s)
+document.getElementById("logo5").innerHTML = AGILIZA.horizontal(860, "escuro", "branco");
+document.getElementById("simb8").innerHTML = AGILIZA.simbolo(520, "branco", "b8");
+document.getElementById("logo8").innerHTML = AGILIZA.horizontal(900, "escuro");
+document.getElementById("slogan8").innerHTML = AGILIZA.slogan(980, "escuro");
+
+const clamp = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
+const eo = x => 1 - Math.pow(1 - x, 3);
+const back = (x, c = 1.8) => 1 + (c + 1) * Math.pow(x - 1, 3) + c * Math.pow(x - 1, 2);
+const XF = 0.22;
+
+function anim(el, t) {
+  const t0 = parseFloat(el.dataset.in), a = el.dataset.a;
+  const d = a === "pop" ? 0.36 : a === "slam" ? 0.3 : 0.42;
+  const p = clamp((t - t0) / d), pe = eo(p);
+  let op = a === "pop" || a === "slam" ? clamp(p * 4) : pe, tf = "";
+  if (a === "rise") tf = `translateY(${(1 - pe) * 70}px)`;
+  if (a === "drop") tf = `translateY(${-(1 - pe) * 90}px)`;
+  if (a === "pop") tf = `scale(${Math.max(0.02, back(p)).toFixed(4)})`;
+  if (a === "slam") tf = `scale(${p > 0 ? 1 + (1 - pe) * 1.4 : 2.4})`;
+  if (a === "slideL") tf = `translateX(${-(1 - pe) * 1100}px)`;
+  if (a === "slideR") tf = `translateX(${(1 - pe) * 1100}px)`;
+  op = op < 0.003 ? 0 : op;
+  el.style.opacity = op.toFixed(3);
+  el.style.visibility = op > 0 ? "visible" : "hidden";
+  el.style.transform = tf;
+}
+
+function render(tv) {
+  const t = tv - L;                                  // tempo da locução
+  document.querySelectorAll(".scene").forEach(s => {
+    const a = parseFloat(s.dataset.start), b = parseFloat(s.dataset.end);
+    let op = 0;
+    if (t >= a && t < b + XF) op = clamp((t - a) / XF) * (t > b ? 1 - clamp((t - b) / XF) : 1);
+    if (a === 0) op = t < b ? 1 : op;
+    s.style.opacity = op;
+    s.style.visibility = op > 0 ? "visible" : "hidden";
+    s.style.zIndex = Math.round(a * 10 + 10);
+    if (op <= 0) return;
+    // leve zoom de entrada da cena + tremida nos golpes
+    let sh = "";
+    (s.dataset.shake || "").split(",").filter(Boolean).map(Number).forEach(k => {
+      const q = t - k;
+      if (q > 0 && q < 0.35) { const amp = 18 * (1 - q / 0.35); sh = `translate(${Math.sin(q * 90) * amp}px,${Math.cos(q * 70) * amp}px)`; }
+    });
+    s.style.transform = `scale(${1 + 0.05 * (1 - eo(clamp((t - a) / 0.5)))}) ${sh}`;
+    s.querySelectorAll("[data-pan]").forEach(g => g.style.transform = `translate(${(t * 22) % 90}px,${(t * 34) % 90}px)`);
+    s.querySelectorAll(".el").forEach(el => anim(el, t));
+  });
+  // detalhes animados
+  const spin = document.getElementById("spin");
+  spin.style.transform = `rotate(${t * 400}deg)`;
+  document.getElementById("dots").textContent = ".".repeat(1 + Math.floor(t * 4) % 3).padEnd(3, " ");
+  document.getElementById("ponteiro1").setAttribute("transform", `rotate(${t * 720} 50 50)`);
+  document.getElementById("ponteiro2").setAttribute("transform", `rotate(${t * 60} 50 50)`);
+  const tap = 13.55, okT = 13.95;                     // toque no botão e nota emitida
+  const dedo = document.getElementById("dedo"), botao = document.getElementById("botao");
+  const pd = clamp((t - (tap - 0.35)) / 0.35);
+  dedo.style.opacity = t < okT ? pd : 0;
+  dedo.style.transform = `scale(${1.6 - 0.6 * eo(pd)})`;
+  botao.style.transform = `scale(${t > tap && t < okT ? 0.94 : 1})`;
+  document.getElementById("ok").style.opacity = clamp((t - okT) / 0.2);
+  document.getElementById("okcheck").setAttribute("stroke-dashoffset", 70 * (1 - eo(clamp((t - okT - 0.1) / 0.4))));
+  const n = Math.round(1280 * Math.pow(clamp((t - 16.4) / 2.4), 1.6));
+  document.getElementById("contador").textContent = n.toLocaleString("pt-BR") + (t > 18.8 ? "+" : "");
+}
+window.render = render;
+render(0);
+</script>
+</body>
+</html>
