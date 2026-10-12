@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>MultAgro - anúncio 30s</title>
+<style>
+@font-face { font-family: Baloo; font-weight: 800; src: url(fonts/baloo-2-latin-800-normal.woff); }
+@font-face { font-family: Baloo; font-weight: 700; src: url(fonts/baloo-2-latin-700-normal.woff); }
+@font-face { font-family: Inter; font-weight: 700; src: url(fonts/Inter-Bold.otf); }
+@font-face { font-family: Inter; font-weight: 600; src: url(fonts/Inter-SemiBold.otf); }
+:root { --verde:#2E8B3E; --verde2:#1E6F38; --verde3:#14472A; --claro:#72B043; --laranja:#F2A531; --laranja2:#EE9424; --creme:#F4F1E6; --terra:#5B3A1E; --tinta:#16261A; }
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body { width:1080px; height:1920px; overflow:hidden; background:var(--verde3); }
+#stage { position:relative; width:1080px; height:1920px; overflow:hidden; font-family:Inter, sans-serif; }
+.scene { position:absolute; inset:0; opacity:0; }
+.el { position:absolute; left:0; right:0; text-align:center; opacity:0; will-change:transform, opacity; }
+.b { font-family:Baloo; font-weight:800; line-height:.92; letter-spacing:-.01em; }
+.fundo-verde { position:absolute; inset:0; background:radial-gradient(ellipse at 50% 30%, #2F7A3E 0%, #1E5A2E 55%, #14472A 100%); }
+.fundo-creme { position:absolute; inset:0; background:radial-gradient(ellipse at 50% 35%, #FFFDF6 0%, #F4F1E6 60%, #E9E2CC 100%); }
+.textura { position:absolute; inset:-200px; opacity:.07; background-image:radial-gradient(circle at 20px 20px, #fff 3px, transparent 4px); background-size:60px 60px; }
+.textura.esc { background-image:radial-gradient(circle at 20px 20px, #1E6F38 3px, transparent 4px); opacity:.08; }
+.faixa { display:inline-block; padding:14px 40px 8px; border-radius:20px; }
+.bola { display:inline-flex; align-items:center; justify-content:center; width:310px; height:310px; border-radius:50%; background:var(--creme);
+        border:10px solid var(--laranja); box-shadow:0 24px 50px rgba(0,0,0,.3); }
+.bola svg { width:210px; height:210px; }
+.rot { margin-top:14px; font-family:Baloo; font-weight:800; font-size:52px; color:#fff; text-shadow:0 4px 14px rgba(0,0,0,.35); }
+.card { display:inline-flex; align-items:center; gap:34px; background:var(--creme); border-radius:40px; padding:36px 56px 36px 40px; box-shadow:0 26px 60px rgba(0,0,0,.35); border-bottom:12px solid var(--laranja); }
+.card svg { width:220px; height:220px; flex:none; }
+.card .txt { font-family:Baloo; font-weight:800; font-size:84px; line-height:.95; color:var(--verde2); text-align:left; }
+.card .txt small { display:block; font-size:44px; color:var(--laranja2); }
+.mini { background:var(--creme); border-radius:30px; padding:20px; box-shadow:0 12px 30px rgba(0,0,0,.25); }
+.mini svg { width:150px; height:150px; display:block; }
+.pill { display:inline-flex; align-items:center; gap:22px; font-family:Baloo; font-weight:800; padding:22px 48px 14px; border-radius:80px; }
+.folha { position:absolute; width:120px; height:120px; opacity:.16; }
+</style>
+</head>
+<body>
+<div id="stage">
+
+  <!-- 1. Atenção, Brasília -->
+  <section class="scene" data-start="0" data-end="1.62">
+    <div class="fundo-verde"></div><div class="textura" data-pan="1"></div>
+    <div class="el" data-in="0" data-a="slam" style="top:640px"><div class="faixa b" style="background:var(--laranja);color:var(--verde3);font-size:150px">ATENÇÃO,</div></div>
+    <div class="el b" data-in="0.62" data-a="slam" style="top:840px;font-size:178px;color:#fff;text-shadow:0 10px 30px rgba(0,0,0,.35)">BRASÍLIA!</div>
+  </section>
+
+  <!-- 2. Bichos + horta -->
+  <section class="scene" data-start="1.62" data-end="7.2">
+    <div class="fundo-creme"></div><div class="textura esc" data-pan="1"></div>
+    <div id="nome" class="el b" data-in="1.62" data-a="fade" style="top:170px;font-size:120px;color:var(--verde2)"></div>
+    <div class="el" data-in="1.77" data-a="pop" style="top:500px;left:60px;right:auto;width:320px"><div class="bola"><svg viewBox="0 0 100 100"><use href="#i-cao"/></svg></div><div class="rot" style="color:var(--verde2);text-shadow:none">CACHORRO</div></div>
+    <div class="el" data-in="2.69" data-a="pop" style="top:500px;left:380px;right:auto;width:320px"><div class="bola"><svg viewBox="0 0 100 100"><use href="#i-gato"/></svg></div><div class="rot" style="color:var(--verde2);text-shadow:none">GATO</div></div>
+    <div class="el" data-in="3.38" data-a="pop" style="top:500px;left:700px;right:auto;width:320px"><div class="bola"><svg viewBox="0 0 100 100"><use href="#i-ave"/></svg></div><div class="rot" style="color:var(--verde2);text-shadow:none">PASSARINHO</div></div>
+    <div class="el" data-in="4.46" data-a="pop" style="top:960px;left:60px;right:auto;width:320px"><div class="bola"><svg viewBox="0 0 100 100"><use href="#i-cavalo"/></svg></div><div class="rot" style="color:var(--verde2);text-shadow:none">CAVALO</div></div>
+    <div class="el" data-in="5.42" data-a="pop" style="top:960px;left:380px;right:auto;width:320px"><div class="bola"><svg viewBox="0 0 100 100"><use href="#i-boi"/></svg></div><div class="rot" style="color:var(--verde2);text-shadow:none">GADO</div></div>
+    <div class="el" data-in="6.58" data-a="pop" style="top:960px;left:700px;right:auto;width:320px"><div class="bola" style="border-color:var(--verde)"><svg viewBox="0 0 100 100"><use href="#i-horta"/></svg></div><div class="rot" style="color:var(--verde2);text-shadow:none">HORTA</div></div>
+  </section>
+
+  <!-- 3. Tudo num lugar só: MultAgro -->
+  <section class="scene" data-start="7.2" data-end="10.3">
+    <div class="fundo-verde"></div><div class="textura" data-pan="1"></div>
+    <div class="el b" data-in="7.35" data-a="drop" style="top:200px;font-size:124px;color:#fff">CUIDA DE TUDO</div>
+    <div class="el" data-in="8.43" data-a="pop" style="top:350px"><div class="faixa b" style="background:var(--laranja);color:var(--verde3);font-size:110px">NUM LUGAR SÓ</div></div>
+    <div class="el" data-in="9.45" data-a="pop" style="top:640px" id="logo3"></div>
+  </section>
+
+  <!-- 4. Pet e veterinária -->
+  <section class="scene" data-start="10.3" data-end="15.12">
+    <div class="fundo-verde"></div><div class="textura" data-pan="1"></div>
+    <div class="el b" data-in="10.3" data-a="drop" style="top:150px;font-size:70px;color:var(--laranja)">PRO PET E PRO REBANHO</div>
+    <div id="vet"></div>
+  </section>
+
+  <!-- 5. Jardim e piscina -->
+  <section class="scene" data-start="15.12" data-end="19.45">
+    <div class="fundo-creme"></div><div class="textura esc" data-pan="1"></div>
+    <div class="el b" data-in="15.12" data-a="drop" style="top:150px;font-size:70px;color:var(--verde2)">PRO JARDIM... E ATÉ A PISCINA!</div>
+    <div id="jardim"></div>
+  </section>
+
+  <!-- 6. Atendimento + endereço -->
+  <section class="scene" data-start="19.45" data-end="23.9">
+    <div class="fundo-verde"></div><div class="textura" data-pan="1"></div>
+    <div class="el b" data-in="19.54" data-a="drop" style="top:190px;font-size:110px;color:#fff">ATENDIMENTO</div>
+    <div class="el b" data-in="20.3" data-a="rise" style="top:320px;font-size:96px;color:var(--laranja)">DE QUEM ENTENDE</div>
+    <div class="el" data-in="21.7" data-a="pop" style="top:560px"><svg viewBox="0 0 100 100" style="width:230px;height:230px"><use href="#i-pin"/></svg></div>
+    <div class="el b" data-in="21.78" data-a="slam" style="top:820px;font-size:170px;color:#fff">W3 SUL · 510</div>
+    <div class="el" data-in="22.69" data-a="rise" style="top:1010px;font-weight:700;font-size:44px;color:var(--creme)">CRS 510, Bloco C, Loja 13 · Asa Sul</div>
+    <div class="el" data-in="22.95" data-a="rise" style="top:1130px"><div style="display:inline-flex;align-items:center;gap:30px;background:var(--creme);border-radius:34px;padding:26px 44px;box-shadow:0 20px 50px rgba(0,0,0,.3)">
+      <svg viewBox="0 0 100 100" style="width:110px;height:110px"><use href="#i-relogio"/></svg>
+      <div style="text-align:left;font-family:Baloo;font-weight:800;font-size:46px;line-height:1.05;color:var(--verde2)">Seg a Sex · 8h às 18h<br><span style="color:var(--laranja2)">Sábado · 8h às 14h</span></div></div></div>
+  </section>
+
+  <!-- 7. WhatsApp + slogan -->
+  <section class="scene" data-start="23.9" data-end="30.5">
+    <div class="fundo-creme"></div><div class="textura esc" data-pan="1"></div>
+    <div class="el" data-in="24.01" data-a="pop" style="top:150px"><div class="pill" style="background:#25D366;color:#fff;font-size:72px;box-shadow:0 20px 50px rgba(37,211,102,.4)"><svg viewBox="0 0 32 32" style="width:86px;height:86px;margin-top:-8px"><use href="#i-whats"/></svg>CHAMA NO WHATS!</div></div>
+    <div class="el b" data-in="24.33" data-a="slam" style="top:330px;font-size:118px;color:var(--verde2)">(61) 99307-8394</div>
+    <div class="el" data-in="25.05" data-a="pop" style="top:520px" id="logo7"></div>
+    <div class="el b" data-in="26.13" data-a="rise" style="top:1250px;font-size:84px;color:var(--verde2)">Do pet ao campo,</div>
+    <div class="el b" data-in="27.4" data-a="rise" style="top:1340px;font-size:84px;color:var(--laranja2)">tudo num lugar só.</div>
+    <div class="el" data-in="27.9" data-a="rise" style="top:1480px;font-weight:700;font-size:36px;color:var(--verde3)">W3 Sul 510 · (61) 2099-6668 · @multagro.oficial</div>
+  </section>
+</div>
+
+<script src="marca/brand.js"></script>
+<script src="marca/icones.js"></script>
+<script>
+document.body.insertAdjacentHTML("afterbegin", ICONES);
+const L = 0.15;
+document.getElementById("logo3").innerHTML = MULTAGRO.emblema(900, "badge", "l3");
+document.getElementById("logo7").innerHTML = MULTAGRO.emblema(700, "cor", "l7");
+
+// cartões grandes que trocam no ritmo da voz + miniaturas acumulando
+function lista(id, itens, fim) {
+  const box = document.getElementById(id);
+  itens.forEach(([ic, txt, t0], i) => {
+    const big = document.createElement("div");
+    big.className = "el"; big.dataset.in = t0; big.dataset.a = "swap";
+    big.dataset.out = i + 1 < itens.length ? itens[i + 1][2] : fim;
+    big.style.top = "470px";
+    big.innerHTML = `<div class="card"><svg viewBox="0 0 100 100"><use href="#${ic}"/></svg><div class="txt">${txt}</div></div>`;
+    box.appendChild(big);
+    const mini = document.createElement("div");
+    mini.className = "el"; mini.dataset.in = t0 + 0.15; mini.dataset.a = "pop";
+    mini.style.cssText = `top:1000px;left:${(1080 - itens.length * 230 + 40) / 2 + i * 230}px;right:auto;width:190px`;
+    mini.innerHTML = `<div class="mini"><svg viewBox="0 0 100 100"><use href="#${ic}"/></svg></div>`;
+    box.appendChild(mini);
+  });
+}
+lista("vet", [["i-racao", "RAÇÃO<small>das melhores marcas</small>", 10.39], ["i-pipeta", "ANTI&shy;PULGAS", 12.03],
+              ["i-seringa", "VERMÍFUGOS", 12.8], ["i-boi", "<span style=\"font-size:64px\">MEDICAMENTOS</span><small>veterinários</small>", 13.65]], 15.3);
+lista("jardim", [["i-semente", "SEMENTES", 15.24], ["i-adubo", "ADUBOS", 16.15], ["i-horta", "TUDO PRO<br>JARDIM", 16.97],
+                 ["i-cloro", "PISCINA<small>cloro e tratamento</small>", 18.11]], 19.6);
+
+const NOMES = [["SEU CACHORRO", 1.77], ["SEU GATO", 2.69], ["SEU PASSARINHO", 3.38], ["SEU CAVALO", 4.46], ["SEU GADO", 5.42], ["E ATÉ A HORTA!", 6.58]];
+
+const clamp = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
+const eo = x => 1 - Math.pow(1 - x, 3);
+const back = (x, c = 1.8) => 1 + (c + 1) * Math.pow(x - 1, 3) + c * Math.pow(x - 1, 2);
+const XF = 0.22;
+
+function anim(el, t) {
+  const t0 = parseFloat(el.dataset.in), a = el.dataset.a;
+  const tout = el.dataset.out ? parseFloat(el.dataset.out) : 1e9;
+  const d = a === "pop" ? 0.36 : a === "slam" ? 0.3 : 0.42;
+  const p = clamp((t - t0) / d), pe = eo(p);
+  let op = a === "pop" || a === "slam" ? clamp(p * 4) : pe, tf = "";
+  if (a === "rise") tf = `translateY(${(1 - pe) * 70}px)`;
+  if (a === "drop") tf = `translateY(${-(1 - pe) * 90}px)`;
+  if (a === "pop") tf = `scale(${Math.max(0.02, back(p)).toFixed(4)})`;
+  if (a === "slam") tf = `scale(${(1 + (1 - pe) * 1.4).toFixed(4)})`;
+  if (a === "swap") tf = `translateX(${(1 - pe) * 900}px) rotate(${(1 - pe) * 6}deg)`;
+  if (t > tout) {
+    const q = eo(clamp((t - tout) / 0.25));
+    op *= 1 - q;
+    if (a === "swap") tf = `translateX(${-q * 900}px) rotate(${-q * 6}deg)`;
+  }
+  op = op < 0.003 ? 0 : op;
+  el.style.opacity = op.toFixed(3);
+  el.style.visibility = op > 0 ? "visible" : "hidden";
+  el.style.transform = tf;
+}
+
+function render(tv) {
+  const t = tv - L;
+  document.querySelectorAll(".scene").forEach(s => {
+    const a = parseFloat(s.dataset.start), b = parseFloat(s.dataset.end);
+    let op = 0;
+    if (t >= a && t < b + XF) op = clamp((t - a) / XF) * (t > b ? 1 - clamp((t - b) / XF) : 1);
+    if (a === 0) op = t < b ? 1 : op;
+    s.style.opacity = op;
+    s.style.visibility = op > 0 ? "visible" : "hidden";
+    s.style.zIndex = Math.round(a * 10 + 10);
+    if (op <= 0) return;
+    s.style.transform = `scale(${(1 + 0.05 * (1 - eo(clamp((t - a) / 0.5)))).toFixed(4)})`;
+    s.querySelectorAll("[data-pan]").forEach(g => g.style.transform = `translate(${(t * 20) % 60}px,${(t * 30) % 60}px)`);
+    s.querySelectorAll(".el").forEach(el => anim(el, t));
+  });
+  let nome = "";
+  NOMES.forEach(([n, t0]) => { if (t >= t0) nome = n; });
+  const nm = document.getElementById("nome");
+  if (nm.textContent !== nome) nm.textContent = nome;
+  const ult = NOMES.filter(([, t0]) => t >= t0).pop();
+  nm.style.transform = ult ? `scale(${(1 + 0.12 * (1 - eo(clamp((t - ult[1]) / 0.25)))).toFixed(3)})` : "";
+  nm.style.color = nome.startsWith("E ATÉ") ? "var(--laranja2)" : "var(--verde2)";
+}
+window.render = render;
+render(0);
+</script>
+</body>
+</html>

@@ -94,7 +94,7 @@ pages.append(pg("pr_04_identidade.jpg", "#fff", f'''
     <div style="font-weight:600;font-size:22px;color:var(--cinza);margin-top:12px">Títulos fortes e modernos. Textos em Inter: leitura fácil no celular.</div></div>
   <div class="abs" style="left:90px;top:880px;width:1740px;font-weight:600;font-size:24px;color:var(--cinza);line-height:1.5">
     Mantivemos o que o cliente já reconhece (a nuvem, o “a” e o azul) e modernizamos: símbolo cheio, selo verde de <b style="color:var(--noite)">nota emitida</b>,
-    tipografia nova e o slogan <b style="color:var(--azul)">“Nota fiscal sem dor de cabeça.”</b> Prévia para aprovação; a identidade completa vem no plano.</div>''',
+    tipografia nova e o slogan <b style="color:var(--azul)">“Nota fiscal sem dor de cabeça.”</b> Prévia para aprovação; a identidade completa vem nos pacotes Acelera e Turbo.</div>''',
                 "Identidade Visual", "Prévia da remodelação: logo, slogan, cores e letras", 3, claro=True))
 
 # 05 aplicações (perfil, post, story)
@@ -130,12 +130,12 @@ pages.append(pg("pr_06_landing.jpg", GELO, f'''
     <div style="width:100%;height:100%;border-radius:32px;overflow:hidden"><img src="../landing/saida/lp_celular.jpg" style="width:280px;display:block"></div></div>
   <div class="abs" style="left:1330px;top:900px;width:500px;font-weight:600;font-size:21px;color:var(--cinza);line-height:1.45">
     Frase que vende no topo, um botão principal (teste grátis), dor x solução, 3 passos, recursos, <b style="color:var(--noite)">preços por mês corrigidos</b>, dúvidas e WhatsApp.</div>''',
-                "Landing Page de Vendas", "Exemplo de como fica o site remodelado (computador e celular)", 5, claro=True))
+                "Página de Vendas", "Exemplo de como fica o site remodelado (computador e celular), no pacote Turbo", 5, claro=True))
 
 # 07 planos
-pac = [("LARGADA", "247", ["Identidade visual remodelada", "2 anúncios", "2 carrosséis", "4 posts", "2 reels com locução", "4 stories", "Roteiros e legendas"], False),
-       ("ACELERA", "497", ["Identidade visual + manual da marca", "4 anúncios (teste A/B)", "4 carrosséis", "8 posts", "4 reels com locução", "8 stories", "Roteiros, legendas e calendário"], True),
-       ("TURBO", "997", ["Landing page de vendas", "Identidade visual + manual da marca", "6 anúncios (teste A/B)", "6 carrosséis", "12 posts", "6 reels com locução", "12 stories", "Prioridade + relatório mensal"], False)]
+pac = [("LARGADA", "247", ["1 anúncio", "3 carrosséis", "3 posts", "1 reels com locução", "3 stories"], False),
+       ("ACELERA", "497", ["Identidade visual", "3 anúncios", "6 carrosséis", "9 posts", "3 reels com locução", "6 stories"], True),
+       ("TURBO", "997", ["Página de vendas", "Identidade visual", "6 anúncios", "9 carrosséis", "12 posts", "6 reels com locução", "12 stories"], False)]
 cards = ""
 for nome, preco, itens, hl in pac:
     li = "".join(f'<div style="display:flex;align-items:center;gap:14px;margin:13px 0;font-weight:600;font-size:26px;color:var(--noite)">'
@@ -146,14 +146,14 @@ for nome, preco, itens, hl in pac:
               f'border:{"6px solid var(--verde)" if hl else "none"};box-shadow:0 24px 60px rgba(0,0,0,.35)">{badge}'
               f'<div class="disp" style="text-align:center;font-size:54px;color:var(--azul);letter-spacing:.02em">{nome}</div>'
               f'<div style="text-align:center;margin:6px 0 18px"><span style="font-weight:700;font-size:32px;color:var(--cinza);vertical-align:top;line-height:2.4">R$ </span>'
-              f'<span class="disp" style="font-size:118px;color:var(--noite)">{preco}</span><span style="font-weight:700;font-size:28px;color:var(--cinza)">/mês</span></div>{li}</div>')
+              f'<span class="disp" style="font-size:118px;color:var(--noite)">{preco}</span></div>{li}</div>')
 pages.append(pg("pr_07_planos.jpg", NOITE, f'''
-  <div class="abs w100 c disp" style="top:70px;font-size:78px;color:#fff">ESCOLHA O SEU PLANO</div>
-  <div class="abs w100 c" style="top:170px;font-weight:600;font-size:26px;color:#B8C6E6">Entregas por mês, nesta ordem de prioridade: anúncios, carrosséis, posts, reels e stories</div>
+  <div class="abs w100 c disp" style="top:70px;font-size:78px;color:#fff">ESCOLHA O SEU PACOTE</div>
+  <div class="abs w100 c" style="top:170px;font-weight:600;font-size:26px;color:#B8C6E6">Entregas na ordem: anúncios, carrosséis, posts, reels e stories</div>
   <div class="abs" style="left:0;right:0;top:265px;display:flex;justify-content:center;align-items:flex-end;gap:46px">{cards}</div>'''))
 
 # 08 próximos passos
-passos = [("1", "Escolhe o plano", "Largada, Acelera ou Turbo"), ("2", "Aprova a identidade", "ajustamos a prévia com você"),
+passos = [("1", "Escolhe o pacote", "Largada, Acelera ou Turbo"), ("2", "Aprova a identidade", "ajustamos a prévia com você"),
           ("3", "Liga os anúncios", "o vídeo já está pronto"), ("4", "Recebe tudo no mês", "é só aprovar e postar")]
 ps = "".join(f'<div style="width:400px;height:290px;background:#fff;border-radius:30px;padding:36px;box-shadow:0 18px 40px rgba(10,22,51,.12)">'
              f'<div class="disp" style="width:80px;height:80px;border-radius:22px;background:var(--azul);color:#fff;font-size:46px;display:flex;align-items:center;justify-content:center">{a}</div>'

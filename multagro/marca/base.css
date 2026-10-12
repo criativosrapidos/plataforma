@@ -1,0 +1,14 @@
+@font-face { font-family: Baloo; font-weight: 800; src: url(../fonts/baloo-2-latin-800-normal.woff); }
+@font-face { font-family: Baloo; font-weight: 700; src: url(../fonts/baloo-2-latin-700-normal.woff); }
+@font-face { font-family: Inter; font-weight: 700; src: url(../fonts/Inter-Bold.otf); }
+@font-face { font-family: Inter; font-weight: 600; src: url(../fonts/Inter-SemiBold.otf); }
+@font-face { font-family: Inter; font-weight: 500; src: url(../fonts/Inter-Medium.otf); }
+@font-face { font-family: Mont; font-weight: 900; src: url(../fonts/montserrat-latin-900-normal.woff); }
+:root { --verde:#2E8B3E; --verde2:#1E6F38; --verde3:#14472A; --claro:#72B043; --laranja:#F2A531; --laranja2:#EE9424; --creme:#F4F1E6; --terra:#5B3A1E; --tinta:#16261A; --cinza:#5E6B5F; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#555; font-family:Inter, sans-serif; display:flex; flex-direction:column; gap:40px; padding:40px; align-items:flex-start; }
+.b { font-family:Baloo; font-weight:800; line-height:.95; }
+.abs { position:absolute; }
+.w100 { left:0; right:0; }
+.c { text-align:center; }
+.textura { position:absolute; inset:0; opacity:.07; background-image:radial-gradient(circle at 20px 20px, #fff 3px, transparent 4px); background-size:60px 60px; }
