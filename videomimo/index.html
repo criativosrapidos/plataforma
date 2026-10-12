@@ -223,7 +223,7 @@ footer { padding-block: 40px; text-align: center; color: var(--fg-suave); font-s
       <h2>Monte seu pedido</h2>
       <div class="pedido">
         <form id="form" novalidate>
-          <label for="f-plano">Plano
+          <label for="f-plano">Seu mimo
             <select id="f-plano">
               <option value="carinho">Mimo Carinho · R$ 39,90</option>
               <option value="especial" selected>Mimo Especial · R$ 59,90</option>
@@ -277,7 +277,7 @@ footer { padding-block: 40px; text-align: center; color: var(--fg-suave); font-s
     $("total").textContent = brl(total);
     var linhas = [
       "Oi! Quero um Vídeos Mimo 💝",
-      "Plano: " + p.nome,
+      "Mimo: " + p.nome,
       "Ocasião: " + $("f-ocasiao").value,
       "Para: " + ($("f-para").value || "—"),
       "Assinado por: " + ($("f-de").value || "—"),

@@ -25,3 +25,14 @@ python3 gerador/video.py --fotos pedido_ana/ --para "Ana" --de "João" --ocasiao
 
 Ocasiões: `aniversario`, `namorados`, `maes`, `pais`, `casamento`, `presente`, `natal`
 (ou qualquer texto, que vira a frase de abertura). Um vídeo de 1 minuto leva cerca de 2 minutos para renderizar.
+
+## Vídeo de divulgação dos mimos (com narração)
+`divulgacao/promo-mimos.mp4` — 38 s, vertical, voz feminina (ElevenLabs, voz "Ana Alice").
+Mostra o site, os 3 mimos com preços, o pedido sendo preenchido e o vídeo pronto.
+
+```bash
+PW=$(npm root -g)/playwright node gerador/capturar_site.js /caminho/telas   # captura o site
+python3 gerador/musica.py trilha38.wav --estilo festa --duracao 38
+cd gerador && python3 promo_mimos.py --telas /caminho/telas --demo ../exemplo/videomimo-demo.mp4 \
+  --voz ../divulgacao/narracao-mimos.mp3 --musica ../trilha38.wav --saida ../divulgacao/promo-mimos.mp4
+```
