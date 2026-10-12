@@ -1,0 +1,337 @@
+<title>VideoMimo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=Caveat:wght@700&family=Figtree:wght@400;600&display=swap">
+<style>
+/* Layout: hero em duas colunas (promessa + celular tocando o vídeo real), depois faixas alternadas leite/blush, preços em 3 cartões, montador de pedido no fim. */
+:root {
+  --ameixa: #3A0D2E;
+  --rosa: #FF4F79;
+  --rosa-forte: #E8335F;
+  --manteiga: #FFC857;
+  --blush: #FFE9EE;
+  --leite: #FFF8F5;
+
+  --bg: var(--leite);
+  --bg-alt: var(--blush);
+  --fg: var(--ameixa);
+  --fg-suave: #6E4A63;
+  --card: #FFFFFF;
+  --linha: #F2D3DC;
+  --botao-fg: #FFFFFF;
+
+  --f-display: "Bricolage Grotesque", "Avenir Next", "Segoe UI", sans-serif;
+  --f-mao: "Caveat", "Bradley Hand", cursive;
+  --f-texto: "Figtree", "Segoe UI", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #240820; --bg-alt: #2F0C2A; --fg: #FFF1F4; --fg-suave: #D9B3C4;
+    --card: #3A1234; --linha: #52203F; --rosa: #FF6B8F; --botao-fg: #2A0722;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #240820; --bg-alt: #2F0C2A; --fg: #FFF1F4; --fg-suave: #D9B3C4;
+  --card: #3A1234; --linha: #52203F; --rosa: #FF6B8F; --botao-fg: #2A0722;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font-family: var(--f-texto); font-size: 17px; line-height: 1.6; }
+h1, h2, h3 { font-family: var(--f-display); line-height: 1.05; text-wrap: balance; margin: 0; letter-spacing: -0.02em; }
+h2 { font-size: clamp(30px, 5vw, 48px); font-weight: 800; }
+p { margin: 0; }
+a { color: inherit; }
+.mao { font-family: var(--f-mao); color: var(--rosa); font-weight: 700; }
+.wrap { max-width: 1120px; margin: 0 auto; padding-inline: 20px; }
+section { padding-block: 72px; }
+.alt { background: var(--bg-alt); }
+
+.topo { display: flex; align-items: center; justify-content: space-between; padding-block: 18px; gap: 16px; }
+.logo { display: flex; align-items: center; gap: 8px; font-family: var(--f-display); font-weight: 800; font-size: 24px; letter-spacing: -0.03em; text-decoration: none; }
+.logo svg { width: 30px; height: 28px; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: var(--rosa); color: var(--botao-fg); font-weight: 600; border: 0; border-radius: 999px; padding: 14px 26px; font-size: 17px; text-decoration: none; cursor: pointer; font-family: var(--f-texto); transition: transform .15s, background .15s; }
+.btn:hover { transform: translateY(-2px); }
+.btn:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 3px solid var(--manteiga); outline-offset: 2px; }
+.btn.claro { background: transparent; color: var(--fg); box-shadow: inset 0 0 0 2px var(--fg); }
+.topo .btn { padding: 10px 20px; font-size: 15px; }
+
+.hero { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 48px; align-items: center; padding-block: 32px 72px; }
+.hero > * { min-width: 0; }
+.hero h1 { font-size: clamp(44px, 7.4vw, 88px); font-weight: 800; }
+.hero h1 em { font-style: normal; color: var(--rosa); }
+.hero .sub { font-size: 20px; color: var(--fg-suave); max-width: 34ch; margin-top: 20px; }
+.hero .acoes { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; align-items: center; }
+.hero .preco-de { font-size: 15px; color: var(--fg-suave); }
+.hero .preco-de strong { color: var(--fg); font-size: 18px; }
+.ocasioes { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 36px; }
+.ocasioes span { border: 1.5px solid var(--linha); border-radius: 999px; padding: 6px 14px; font-size: 14px; font-weight: 600; }
+
+.celular { position: relative; justify-self: center; width: min(320px, 78vw); aspect-ratio: 9 / 19; max-width: 100%; background: #12030F; border-radius: 44px; padding: 12px; box-shadow: 0 30px 60px -20px rgba(58,13,46,.45); transform: rotate(3deg); }
+.celular video { width: 100%; height: 100%; object-fit: cover; border-radius: 34px; display: block; background: #3A0D2E; }
+.som { position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%); background: rgba(255,248,245,.92); color: #3A0D2E; border: 0; border-radius: 999px; padding: 8px 16px; font-weight: 600; font-family: var(--f-texto); font-size: 14px; cursor: pointer; white-space: nowrap; }
+.bilhete { position: absolute; top: 18%; left: -96px; background: var(--manteiga); color: #3A0D2E; font-family: var(--f-mao); font-size: 28px; line-height: 1; padding: 12px 16px; border-radius: 4px; transform: rotate(-8deg); box-shadow: 0 8px 20px -8px rgba(0,0,0,.3); }
+
+.passos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; margin-top: 44px; }
+.passo .n { font-family: var(--f-display); font-weight: 800; font-size: 64px; color: var(--rosa); line-height: 1; }
+.passo h3 { font-size: 24px; margin: 10px 0 8px; }
+.passo p { color: var(--fg-suave); }
+
+.planos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 44px; align-items: start; }
+.plano { background: var(--card); border: 1.5px solid var(--linha); border-radius: 24px; padding: 28px; display: flex; flex-direction: column; gap: 16px; position: relative; }
+.plano.destaque { border: 2.5px solid var(--rosa); }
+.selo { position: absolute; top: -14px; left: 28px; background: var(--manteiga); color: #3A0D2E; font-size: 13px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; padding: 4px 12px; border-radius: 999px; }
+.plano h3 { font-size: 26px; }
+.valor { font-family: var(--f-display); font-weight: 800; font-size: 46px; font-variant-numeric: tabular-nums; }
+.valor small { font-size: 20px; vertical-align: 18px; margin-right: 2px; }
+.plano ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+.plano li { padding-left: 26px; position: relative; }
+.plano li::before { content: ""; position: absolute; left: 2px; top: 8px; width: 12px; height: 11px; background: var(--rosa); clip-path: path("M6 11 C2 8 0 6 0 3.5 C0 1.5 1.5 0 3 0 C4.2 0 5.3 .8 6 2 C6.7 .8 7.8 0 9 0 C10.5 0 12 1.5 12 3.5 C12 6 10 8 6 11 Z"); }
+.plano .btn { width: 100%; margin-top: 4px; }
+.extras { margin-top: 24px; color: var(--fg-suave); text-align: center; }
+
+.trilhas { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 36px; }
+.trilha { display: flex; align-items: center; gap: 14px; background: var(--card); border: 1.5px solid var(--linha); border-radius: 18px; padding: 16px; }
+.trilha button { flex: none; width: 48px; height: 48px; border-radius: 50%; border: 0; background: var(--rosa); color: var(--botao-fg); cursor: pointer; font-size: 18px; }
+.trilha strong { display: block; font-family: var(--f-display); font-size: 19px; }
+.trilha span { font-size: 14px; color: var(--fg-suave); }
+
+.faq { margin-top: 32px; display: grid; gap: 12px; max-width: 760px; }
+details { background: var(--card); border: 1.5px solid var(--linha); border-radius: 16px; padding: 18px 22px; }
+summary { font-weight: 600; cursor: pointer; font-size: 18px; }
+details p { margin-top: 10px; color: var(--fg-suave); }
+
+.pedido { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 36px; align-items: start; }
+.pedido > * { min-width: 0; }
+form { display: grid; gap: 16px; }
+label { display: grid; gap: 6px; font-weight: 600; font-size: 15px; }
+input, select, textarea { font: inherit; font-weight: 400; color: var(--fg); background: var(--card); border: 1.5px solid var(--linha); border-radius: 12px; padding: 12px 14px; width: 100%; }
+textarea { min-height: 96px; resize: vertical; }
+.check { display: flex; gap: 10px; align-items: center; font-weight: 400; }
+.check input { width: auto; accent-color: var(--rosa); }
+.resumo { background: var(--ameixa); color: #FFF8F5; border-radius: 24px; padding: 28px; display: grid; gap: 14px; }
+.resumo .total { font-family: var(--f-display); font-weight: 800; font-size: 44px; font-variant-numeric: tabular-nums; }
+.resumo pre { white-space: pre-wrap; font-family: var(--f-texto); background: rgba(255,255,255,.08); border-radius: 12px; padding: 14px; margin: 0; font-size: 15px; }
+.resumo .btn { background: #FF4F79; color: #fff; }
+.aviso { font-size: 14px; color: #E9C9D6; min-height: 1.4em; }
+
+footer { padding-block: 40px; text-align: center; color: var(--fg-suave); font-size: 14px; }
+
+@media (max-width: 860px) {
+  .hero, .pedido { grid-template-columns: 1fr; }
+  .passos, .planos, .trilhas { grid-template-columns: 1fr; }
+  .bilhete { left: -10px; top: -12px; font-size: 24px; }
+  .celular { transform: none; }
+  section { padding-block: 56px; }
+}
+@media (prefers-reduced-motion: reduce) { .btn { transition: none; } .btn:hover { transform: none; } }
+</style>
+
+<header class="wrap topo">
+  <a class="logo" href="#inicio" aria-label="videomimo">
+    <svg viewBox="0 0 120 112" aria-hidden="true"><path d="M60 104 C20 78 6 58 6 38 C6 20 20 8 36 8 C47 8 55 14 60 22 C65 14 73 8 84 8 C100 8 114 20 114 38 C114 58 100 78 60 104 Z" fill="#FF4F79"/><path d="M50 36 L50 72 L80 54 Z" fill="#FFF8F5"/></svg>
+    videomimo
+  </a>
+  <a class="btn" href="#pedido">Fazer meu vídeo</a>
+</header>
+
+<main id="inicio">
+  <div class="wrap hero">
+    <div>
+      <h1>Suas fotos viram um presente que <em>emociona</em>.</h1>
+      <p class="sub">Você manda as fotos e uma mensagem. A gente devolve um vídeo com música, legendas e o nome de quem você ama, pronto pra enviar no WhatsApp.</p>
+      <div class="acoes">
+        <a class="btn" href="#pedido">Quero fazer o meu</a>
+        <span class="preco-de">a partir de <strong>R$ 29,90</strong> · entrega em até 24h</span>
+      </div>
+      <div class="ocasioes" aria-label="Ocasiões">
+        <span>Aniversário</span><span>Namorados</span><span>Dia das Mães</span><span>Dia dos Pais</span><span>Casamento</span><span>Natal</span><span>Só porque sim</span>
+      </div>
+    </div>
+    <div class="celular">
+      <span class="bilhete">feito pra Ana ♥</span>
+      <video id="demo" src="exemplo/videomimo-demo.mp4" autoplay muted loop playsinline preload="auto"></video>
+      <button class="som" id="som" type="button">▶ Ouvir com som</button>
+    </div>
+  </div>
+
+  <section class="alt">
+    <div class="wrap">
+      <h2>Pronto em 3 passos</h2>
+      <div class="passos">
+        <div class="passo"><div class="n">1</div><h3>Escolha o mimo</h3><p>Diga a ocasião, o nome da pessoa e o plano. Leva um minuto.</p></div>
+        <div class="passo"><div class="n">2</div><h3>Mande as fotos</h3><p>Direto do celular, pelo WhatsApp. Junte uma frase por foto, se quiser, e a mensagem final.</p></div>
+        <div class="passo"><div class="n">3</div><h3>Receba e emocione</h3><p>Seu vídeo chega em até 24h, em formato de Stories. É só encaminhar e esperar a reação.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="precos">
+    <div class="wrap">
+      <h2>Escolha o tamanho do carinho</h2>
+      <div class="planos">
+        <article class="plano">
+          <h3>Mimo Express</h3>
+          <div class="valor"><small>R$</small>29,90</div>
+          <ul><li>Até 10 fotos</li><li>Vídeo de 30 segundos</li><li>Nome e ocasião na abertura</li><li>Trilha da nossa biblioteca</li><li>Entrega em até 24h</li></ul>
+          <button class="btn claro" type="button" data-plano="express">Escolher Express</button>
+        </article>
+        <article class="plano destaque">
+          <span class="selo">Mais pedido</span>
+          <h3>Mimo Completo</h3>
+          <div class="valor"><small>R$</small>49,90</div>
+          <ul><li>Até 25 fotos</li><li>Vídeo de 1 minuto</li><li>Uma legenda em cada foto</li><li>Mensagem final assinada por você</li><li>Você escolhe o estilo da música</li><li>1 ajuste grátis</li><li>Entrega em até 24h</li></ul>
+          <button class="btn" type="button" data-plano="completo">Escolher Completo</button>
+        </article>
+        <article class="plano">
+          <h3>Mimo Inesquecível</h3>
+          <div class="valor"><small>R$</small>89,90</div>
+          <ul><li>Até 50 fotos</li><li>Vídeo de até 3 minutos</li><li>Trilha exclusiva, composta só pro seu vídeo</li><li>Versão Stories + versão para o feed</li><li>2 ajustes grátis</li><li>Entrega prioritária em até 6h</li></ul>
+          <button class="btn claro" type="button" data-plano="inesquecivel">Escolher Inesquecível</button>
+        </article>
+      </div>
+      <p class="extras">Extras: entrega em 2h <strong>+R$ 19,90</strong> · cartão com QR code para imprimir e entregar junto do presente <strong>+R$ 9,90</strong></p>
+    </div>
+  </section>
+
+  <section class="alt">
+    <div class="wrap">
+      <h2>Escute as trilhas</h2>
+      <p style="margin-top:12px;color:var(--fg-suave);max-width:60ch">Músicas originais, feitas pela gente. Seu vídeo pode ser postado no Instagram e no TikTok sem ser bloqueado por direitos autorais.</p>
+      <div class="trilhas">
+        <div class="trilha"><button type="button" data-audio="exemplo/trilha-romantico.mp3" aria-label="Tocar trilha Romântica">▶</button><div><strong>Romântica</strong><span>Piano suave. Namorados, casamento.</span></div></div>
+        <div class="trilha"><button type="button" data-audio="exemplo/trilha-emocionante.mp3" aria-label="Tocar trilha Emocionante">▶</button><div><strong>Emocionante</strong><span>Pra arrancar lágrima. Mães, pais, avós.</span></div></div>
+        <div class="trilha"><button type="button" data-audio="exemplo/trilha-festa.mp3" aria-label="Tocar trilha Festa">▶</button><div><strong>Festa</strong><span>Animada. Aniversário, amigos.</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <h2>Perguntas frequentes</h2>
+      <div class="faq">
+        <details><summary>Que tipo de foto eu posso mandar?</summary><p>Qualquer foto do celular, em pé ou deitada. Fotos antigas escaneadas ou fotografadas também funcionam. A gente ajusta tudo pro formato do vídeo.</p></details>
+        <details><summary>Posso escolher uma música famosa?</summary><p>Usamos só trilhas originais. Música famosa costuma ser bloqueada ou silenciada no Instagram e no TikTok, e a gente não quer que seu presente seja derrubado.</p></details>
+        <details><summary>Em que formato eu recebo?</summary><p>Um arquivo de vídeo MP4 vertical, em alta qualidade, pronto para WhatsApp, Stories e Reels. No plano Inesquecível você recebe também a versão quadrada para o feed.</p></details>
+        <details><summary>E se eu quiser mudar alguma coisa?</summary><p>O Completo inclui 1 ajuste e o Inesquecível inclui 2: trocar uma foto de lugar, corrigir uma legenda, mudar a música.</p></details>
+        <details><summary>Minhas fotos ficam guardadas?</summary><p>Usamos as fotos só para fazer o seu vídeo. Apagamos tudo 30 dias depois da entrega.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section class="alt" id="pedido">
+    <div class="wrap">
+      <h2>Monte seu pedido</h2>
+      <div class="pedido">
+        <form id="form" novalidate>
+          <label for="f-plano">Plano
+            <select id="f-plano">
+              <option value="express">Mimo Express · R$ 29,90</option>
+              <option value="completo" selected>Mimo Completo · R$ 49,90</option>
+              <option value="inesquecivel">Mimo Inesquecível · R$ 89,90</option>
+            </select>
+          </label>
+          <label for="f-ocasiao">Ocasião
+            <select id="f-ocasiao">
+              <option>Aniversário</option><option>Dia dos Namorados</option><option>Dia das Mães</option><option>Dia dos Pais</option><option>Casamento / bodas</option><option>Natal</option><option>Só porque sim</option>
+            </select>
+          </label>
+          <label for="f-para">Pra quem é?
+            <input id="f-para" type="text" value="Ana" autocomplete="off">
+          </label>
+          <label for="f-de">Quem assina?
+            <input id="f-de" type="text" value="João" autocomplete="off">
+          </label>
+          <label for="f-msg">Mensagem final
+            <textarea id="f-msg">Obrigado por transformar cada dia comum em uma lembrança bonita. Feliz aniversário!</textarea>
+          </label>
+          <label class="check" for="f-urgente"><input id="f-urgente" type="checkbox"> Entrega em 2h (+R$ 19,90)</label>
+          <label class="check" for="f-qr"><input id="f-qr" type="checkbox"> Cartão com QR code para imprimir (+R$ 9,90)</label>
+        </form>
+        <div class="resumo" aria-live="polite">
+          <span class="mao" style="color:#FFC857;font-size:30px;line-height:1">seu mimo</span>
+          <div class="total" id="total">R$ 49,90</div>
+          <pre id="texto"></pre>
+          <button class="btn" id="copiar" type="button">Copiar pedido para o WhatsApp</button>
+          <p class="aviso" id="aviso">Copie o texto e envie para o nosso WhatsApp junto com as fotos.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap">videomimo · um produto Criativos Rápidos</footer>
+
+<script>
+(function () {
+  var PLANOS = {
+    express: { nome: "Mimo Express", preco: 29.9 },
+    completo: { nome: "Mimo Completo", preco: 49.9 },
+    inesquecivel: { nome: "Mimo Inesquecível", preco: 89.9 }
+  };
+  var $ = function (id) { return document.getElementById(id); };
+  var brl = function (v) { return "R$ " + v.toFixed(2).replace(".", ","); };
+
+  function atualizar() {
+    var p = PLANOS[$("f-plano").value];
+    var total = p.preco + ($("f-urgente").checked ? 19.9 : 0) + ($("f-qr").checked ? 9.9 : 0);
+    $("total").textContent = brl(total);
+    var linhas = [
+      "Oi! Quero um VideoMimo 💝",
+      "Plano: " + p.nome,
+      "Ocasião: " + $("f-ocasiao").value,
+      "Para: " + ($("f-para").value || "—"),
+      "Assinado por: " + ($("f-de").value || "—"),
+      "Mensagem: " + ($("f-msg").value || "—")
+    ];
+    if ($("f-urgente").checked) linhas.push("Extra: entrega em 2h");
+    if ($("f-qr").checked) linhas.push("Extra: cartão com QR code");
+    linhas.push("Total: " + brl(total));
+    $("texto").textContent = linhas.join("\n");
+  }
+  ["f-plano", "f-ocasiao", "f-para", "f-de", "f-msg", "f-urgente", "f-qr"].forEach(function (id) {
+    $(id).addEventListener("input", atualizar);
+    $(id).addEventListener("change", atualizar);
+  });
+  $("form").addEventListener("submit", function (e) { e.preventDefault(); });
+
+  document.querySelectorAll("[data-plano]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      $("f-plano").value = b.getAttribute("data-plano");
+      atualizar();
+      $("pedido").scrollIntoView({ behavior: "smooth" });
+    });
+  });
+
+  $("copiar").addEventListener("click", function () {
+    var t = $("texto").textContent;
+    var ok = function () { $("aviso").textContent = "Pedido copiado. Agora cole no WhatsApp e mande as fotos."; };
+    var falhou = function () {
+      var r = document.createRange(); r.selectNodeContents($("texto"));
+      var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+      $("aviso").textContent = "Texto selecionado. Use Copiar do seu aparelho.";
+    };
+    try { navigator.clipboard.writeText(t).then(ok, falhou); } catch (e) { falhou(); }
+  });
+
+  var v = $("demo");
+  $("som").addEventListener("click", function () {
+    v.muted = !v.muted;
+    if (!v.muted) { v.currentTime = 0; v.play(); }
+    $("som").textContent = v.muted ? "▶ Ouvir com som" : "Silenciar";
+  });
+
+  var audio = new Audio(), atual = null;
+  document.querySelectorAll("[data-audio]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      if (atual === b) { audio.pause(); b.textContent = "▶"; atual = null; return; }
+      if (atual) atual.textContent = "▶";
+      v.muted = true; $("som").textContent = "▶ Ouvir com som";
+      audio.src = b.getAttribute("data-audio"); audio.play();
+      b.textContent = "❚❚"; atual = b;
+    });
+  });
+  audio.addEventListener("ended", function () { if (atual) atual.textContent = "▶"; atual = null; });
+
+  atualizar();
+})();
+</script>
