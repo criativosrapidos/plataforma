@@ -1,4 +1,4 @@
-# VideoMimo — Identidade visual
+# Vídeos Mimo — Identidade visual
 
 **Produto:** vídeo-presente personalizado com fotos, legendas, mensagem e trilha original.
 Um produto da Criativos Rápidos, feito para o público geral (não para empresas).
@@ -9,7 +9,7 @@ Frases curtas. "Você manda as fotos, a gente faz o resto."
 
 ## Símbolo
 Coração rosa com um botão de play dentro: o vídeo é o presente. Arquivos: `logo.svg`, `simbolo.svg`.
-Nome escrito sempre junto e em minúsculas: **videomimo**.
+Nome da marca: **Vídeos Mimo** (no plural). No logo, escrito junto e em minúsculas: **videosmimo**.
 
 ## Cores
 | Nome | Hex | Uso |
@@ -27,17 +27,34 @@ Nome escrito sempre junto e em minúsculas: **videomimo**.
 
 ## Formato dos vídeos
 - Vertical 1080×1920, 30 fps (Stories, Reels, Status do WhatsApp)
-- Abertura (ocasião + nome) → fotos com movimento suave e legendas → mensagem final → assinatura "videomimo"
+- Abertura (ocasião + nome) → fotos com movimento suave e legendas → mensagem final → assinatura "videosmimo"
 - Trilha instrumental original gerada pelo nosso gerador: sem bloqueio de direitos autorais no Instagram/TikTok
 
 ## Preços
 | Plano | Preço | O que inclui |
 |---|---|---|
-| Mimo Express | R$ 29,90 | até 10 fotos, 30 s, trilha da biblioteca, entrega em até 24h |
-| **Mimo Completo** (mais pedido) | **R$ 49,90** | até 25 fotos, 1 min, legenda em cada foto, mensagem final, estilo da trilha à escolha, 1 ajuste, até 24h |
-| Mimo Inesquecível | R$ 89,90 | até 50 fotos, até 3 min, trilha exclusiva, versão Stories + feed, 2 ajustes, entrega em até 6h |
+| Mimo Carinho | R$ 39,90 | até 10 fotos, 30 s, trilha da biblioteca, entrega em até 24h |
+| **Mimo Especial** (mais pedido) | **R$ 59,90** | até 20 fotos, 1 min, legenda em cada foto, mensagem final, estilo da trilha à escolha, 1 ajuste, até 24h |
+| Mimo Inesquecível | R$ 79,90 | até 30 fotos, até 2 min, trilha exclusiva, versão Stories + feed, 2 ajustes, entrega prioritária em até 6h |
 
 Extras: Entrega em 2h **+R$ 19,90** · Cartão com QR code para imprimir **+R$ 9,90**
 
 Datas fortes para campanha: Dia dos Namorados (12/06), Dia das Mães (2º domingo de maio),
 Dia dos Pais (2º domingo de agosto), Natal, aniversários (ano todo).
+
+## Vídeo de divulgação — Dia dos Namorados
+`divulgacao/promo-namorados.mp4` (34 s, vertical). Gerado por `gerador/promo_namorados.py`.
+
+Roteiro:
+1. "Flores murcham." (risca) → "Chocolate acaba." (risca)
+2. "Mas esse presente seu amor vai assistir mil vezes."
+3. Celular mostrando um vídeo: "as fotos de vocês / a história de vocês / uma música só de vocês"
+4. Marca: "O presente de Dia dos Namorados que ninguém esquece."
+5. "É simples assim: 1 Escolha o mimo · 2 Mande as fotos · 3 Receba em até 24h"
+6. "Custa menos que um buquê de rosas. A partir de R$ 39,90"
+7. "12 de junho tá chegando. Garanta o seu antes que a agenda lote." → Peça o seu agora
+
+Legenda sugerida para o post:
+> Flores murcham. Chocolate acaba. Um vídeo com as fotos de vocês, a história de vocês e uma música só de vocês fica pra sempre. 💝
+> Você manda as fotos pelo WhatsApp e recebe em até 24h. A partir de R$ 39,90.
+> Garanta o seu antes do dia 12 👉 link na bio

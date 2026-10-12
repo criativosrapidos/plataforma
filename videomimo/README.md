@@ -1,4 +1,4 @@
-# VideoMimo
+# Vídeos Mimo
 
 Vídeo-presente com fotos, legendas, mensagem e música original. Produto da Criativos Rápidos
 para o público geral: aniversário, namorados, Dia das Mães/Pais, casamento, Natal.
@@ -7,6 +7,7 @@ para o público geral: aniversário, namorados, Dia das Mães/Pais, casamento, N
 - `marca/` — identidade visual (`IDENTIDADE.md`, logo e símbolo em SVG)
 - `gerador/` — scripts que fazem o vídeo e a música
 - `exemplo/` — vídeo de demonstração e as 3 trilhas
+- `divulgacao/` — vídeo de divulgação do Dia dos Namorados (`python3 gerador/promo_namorados.py`)
 
 ## Como fazer o vídeo de um cliente
 

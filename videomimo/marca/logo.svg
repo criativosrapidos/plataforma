@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 120" role="img" aria-label="videomimo">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 120" role="img" aria-label="Vídeos Mimo">
   <path d="M60 104 C20 78 6 58 6 38 C6 20 20 8 36 8 C47 8 55 14 60 22 C65 14 73 8 84 8 C100 8 114 20 114 38 C114 58 100 78 60 104 Z" fill="#FF4F79"/>
   <path d="M50 36 L50 72 L80 54 Z" fill="#FFF8F5"/>
-  <text x="132" y="80" font-family="'Bricolage Grotesque', 'Inter', sans-serif" font-weight="800" font-size="72" letter-spacing="-2" fill="#3A0D2E">videomimo</text>
+  <text x="132" y="80" font-family="'Bricolage Grotesque', 'Inter', sans-serif" font-weight="800" font-size="72" letter-spacing="-2" fill="#3A0D2E">videosmimo</text>
 </svg>

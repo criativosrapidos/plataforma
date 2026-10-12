@@ -1,4 +1,4 @@
-"""Monta o video VideoMimo: abertura + fotos com movimento + mensagem final + musica.
+"""Monta o video Vídeos Mimo: abertura + fotos com movimento + mensagem final + musica.
 
 Uso:
   python3 video.py --fotos pasta/ --para "Ana" --de "Joao" --ocasiao aniversario \
@@ -19,7 +19,7 @@ AQUI = Path(__file__).parent
 FONTES = AQUI / "fontes"
 W, H, FPS = 1080, 1920, 30
 
-# Paleta VideoMimo
+# Paleta Vídeos Mimo
 AMEIXA = (58, 13, 46)
 ROSA = (255, 79, 121)
 MANTEIGA = (255, 200, 87)
@@ -110,10 +110,10 @@ def camada_legenda(txt):
 
 def marca(d, y, cor, tam=34):
     f = fonte("Bricolage-ExtraBold.ttf", tam)
-    larg = d.textlength("videomimo", font=f)
+    larg = d.textlength("videosmimo", font=f)
     x0 = W / 2 - (larg + tam) / 2
     coracao(d, x0 + tam * 0.4, y, tam * 0.42, ROSA)
-    d.text((x0 + tam, y), "videomimo", font=f, fill=cor, anchor="lm")
+    d.text((x0 + tam, y), "videosmimo", font=f, fill=cor, anchor="lm")
 
 
 def quadro_abertura(p, ocasiao, para):
