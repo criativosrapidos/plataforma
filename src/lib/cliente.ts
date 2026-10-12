@@ -135,15 +135,15 @@ export const CLIENTE: Cliente = {
   instagram: "@brasaburger",
   instagramConectado: false,
   seguidores: 4820,
-  pacote: "max",
+  pacote: "turbo",
   compradoEm: "2026-10-01",
   briefing: BRIEFING_BRASA,
 };
 
 // Visão da agência: todos os clientes e o andamento de cada pedido.
 export const CLIENTES_AGENCIA = [
-  { id: "c1", marca: "Brasa Burger", instagram: "@brasaburger", pacote: "max" as const, entregues: 10, aprovar: 3, ajustes: 1, briefing: true, prazo: "2026-10-15" },
-  { id: "c2", marca: "Forno Vivo Pizzaria", instagram: "@fornovivo", pacote: "pro" as const, entregues: 4, aprovar: 2, ajustes: 0, briefing: true, prazo: "2026-10-12" },
-  { id: "c3", marca: "Grão Nobre Café", instagram: "@graonobre", pacote: "start" as const, entregues: 0, aprovar: 0, ajustes: 0, briefing: false, prazo: "2026-10-13" },
-  { id: "c4", marca: "Studio Bella Estética", instagram: "@studiobella", pacote: "pro" as const, entregues: 10, aprovar: 0, ajustes: 0, briefing: true, prazo: "2026-10-05" },
+  { id: "c1", marca: "Brasa Burger", instagram: "@brasaburger", pacote: "turbo" as const, entregues: 10, aprovar: 3, ajustes: 1, briefing: true, prazo: "2026-10-15" },
+  { id: "c2", marca: "Forno Vivo Pizzaria", instagram: "@fornovivo", pacote: "acelera" as const, entregues: 4, aprovar: 2, ajustes: 0, briefing: true, prazo: "2026-10-12" },
+  { id: "c3", marca: "Grão Nobre Café", instagram: "@graonobre", pacote: "largada" as const, entregues: 0, aprovar: 0, ajustes: 0, briefing: false, prazo: "2026-10-13" },
+  { id: "c4", marca: "Studio Bella Estética", instagram: "@studiobella", pacote: "acelera" as const, entregues: 10, aprovar: 0, ajustes: 0, briefing: true, prazo: "2026-10-05" },
 ];

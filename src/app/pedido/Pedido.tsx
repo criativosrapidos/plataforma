@@ -5,21 +5,21 @@ import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { AuthShell, Campo } from "@/components/AuthShell";
 import { Botao, Cartao, Destaque } from "@/components/ui";
-import { PACOTES, linkWhatsApp, reais, type Pacote } from "@/lib/pacotes";
+import { PACOTES, linkWhatsApp, reais, resumo, type Pacote } from "@/lib/pacotes";
 
 
 type Dados = Record<string, string>;
 
 export function Pedido() {
   const inicial = useSearchParams().get("pacote");
-  const [pacoteId, setPacoteId] = useState<Pacote["id"]>(PACOTES.some((p) => p.id === inicial) ? (inicial as Pacote["id"]) : "start");
+  const [pacoteId, setPacoteId] = useState<Pacote["id"]>(PACOTES.some((p) => p.id === inicial) ? (inicial as Pacote["id"]) : PACOTES[0].id);
   const [pagamento, setPagamento] = useState<"Pix" | "Cartão">("Pix");
   const [enviado, setEnviado] = useState<Dados | null>(null);
   const pacote = PACOTES.find((p) => p.id === pacoteId)!;
 
   if (enviado) {
     const texto = [
-      `Olá! Quero o pacote ${pacote.nome} (${pacote.videos} reels + ${pacote.carrosseis} carrosséis) por ${reais(pacote.preco)}.`,
+      `Olá! Quero o pacote ${pacote.nome} (${resumo(pacote, ", ")}) por ${reais(pacote.preco)}.`,
       `Nome: ${enviado.nome}`,
       `Marca: ${enviado.marca} (${enviado.instagram})`,
       `Segmento: ${enviado.segmento}`,
@@ -39,8 +39,7 @@ export function Pedido() {
             <p className="text-xl font-extrabold">{reais(pacote.preco)}</p>
           </div>
           <p className="mt-1 text-sm text-cinza">
-            {pacote.videos} {pacote.videos === 1 ? "reel" : "reels"} + {pacote.carrosseis} {pacote.carrosseis === 1 ? "carrossel" : "carrosséis"} ·
-            entrega em até {pacote.prazoDiasUteis} dias úteis
+            {resumo(pacote)} · entrega em até {pacote.prazoDiasUteis} dias úteis
           </p>
           <dl className="mt-4 space-y-1.5 border-t border-linha pt-4 text-sm">
             {[
@@ -110,8 +109,7 @@ export function Pedido() {
             ))}
           </div>
           <p className="mt-2 text-xs text-cinza">
-            {pacote.videos} {pacote.videos === 1 ? "reel" : "reels"} + {pacote.carrosseis} {pacote.carrosseis === 1 ? "carrossel" : "carrosséis"} · entrega em até{" "}
-            {pacote.prazoDiasUteis} dias úteis
+            {resumo(pacote)} · entrega em até {pacote.prazoDiasUteis} dias úteis
           </p>
         </fieldset>
 

@@ -5,14 +5,14 @@ import { useState } from "react";
 import { Logo } from "@/components/Logo";
 import { Cartao, Rotulo } from "@/components/ui";
 import { CLIENTES_AGENCIA } from "@/lib/cliente";
-import { PACOTES, reais } from "@/lib/pacotes";
+import { PACOTES, pecas, reais } from "@/lib/pacotes";
 
 // Painel interno da agência: todos os clientes, o que falta entregar e o que está parado.
 export default function Agencia() {
   const [copiado, setCopiado] = useState<string | null>(null);
   const linhas = CLIENTES_AGENCIA.map((c) => {
     const p = PACOTES.find((x) => x.id === c.pacote)!;
-    const total = p.videos + p.carrosseis;
+    const total = pecas(p);
     return { ...c, p, total, falta: total - c.entregues };
   }).sort((a, b) => Number(a.falta === 0) - Number(b.falta === 0) || a.prazo.localeCompare(b.prazo));
 

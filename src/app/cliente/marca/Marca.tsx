@@ -183,7 +183,7 @@ export function Marca() {
           {[
             ["Responsável", cliente.nome],
             ["WhatsApp", "(71) 99999-0000"],
-            ["Pagamento", "Pix · pacote Max"],
+            ["Pagamento", "Pix · pacote Turbo"],
           ].map(([k, v]) => (
             <div key={k} className="flex justify-between gap-3 p-4 text-sm">
               <span className="text-cinza">{k}</span>

@@ -3,18 +3,19 @@ import { Logo } from "@/components/Logo";
 import { PecaPreview } from "@/components/PecaPreview";
 import { BotaoLink, Cartao, Destaque, Rotulo } from "@/components/ui";
 import { MARCAS, PECAS } from "@/lib/mock";
-import { DETALHES, PACOTES, economia, pecas, precoPorPeca, reais } from "@/lib/pacotes";
+import { AVULSOS, DETALHES, PACOTES, TIPOS, economia, pecas, precoPorPeca, reais } from "@/lib/pacotes";
 
 
 const peca = (id: string) => PECAS.find((p) => p.id === id)!;
 const marca = (id: string) => MARCAS.find((m) => m.id === id)!;
 
-const O_QUE_FAZEMOS = [
-  { t: "Reels e vídeos", d: `Vídeos verticais de ${DETALHES.duracaoVideo}, com animação, legenda na tela e música.`, ex: "p3" },
-  { t: "Carrosséis", d: `Conteúdo que ensina e vende, em ${DETALHES.slidesCarrossel}, no formato do feed.`, ex: "p8" },
-  { t: "Posts", d: "Peça única pro feed ou stories, com a sua logo e as suas cores.", ex: "p1" },
-  { t: "Anúncios", d: "Os vídeos e carrosséis saem prontos pra rodar como anúncio no Instagram e Facebook.", ex: "p4" },
-];
+// Os 5 criativos, na ordem de foco.
+const EXEMPLO: Record<string, string> = { anuncio: "p4", reel: "p3", carrossel: "p8", post: "p1", story: "p5" };
+const O_QUE_FAZEMOS = TIPOS.map((t) => ({
+  t: t.varios.charAt(0).toUpperCase() + t.varios.slice(1),
+  d: t.id === "reel" ? `${t.desc} De ${DETALHES.duracaoVideo}.` : t.id === "carrossel" ? `${t.desc} Em ${DETALHES.slidesCarrossel}.` : t.desc,
+  ex: EXEMPLO[t.id],
+}));
 
 const PASSOS = [
   { t: "Escolha o pacote", d: "Paga no Pix ou no cartão." },
@@ -32,7 +33,7 @@ const AREA = [
 const FAQ = [
   {
     p: "Em quanto tempo eu recebo?",
-    r: `Start em até ${PACOTES[0].prazoDiasUteis} dias úteis, Pro em até ${PACOTES[1].prazoDiasUteis} e Max em até ${PACOTES[2].prazoDiasUteis}, contando a partir do envio das informações da sua marca.`,
+    r: `${PACOTES[0].nome} em até ${PACOTES[0].prazoDiasUteis} dias úteis, ${PACOTES[1].nome} em até ${PACOTES[1].prazoDiasUteis} e ${PACOTES[2].nome} em até ${PACOTES[2].prazoDiasUteis}, contando a partir do envio das informações da sua marca. O anúncio avulso sai em até 24 horas.`,
   },
   {
     p: "E se eu não gostar?",
@@ -84,20 +85,20 @@ export default function Home() {
         <div>
           <Rotulo>Produção de criativos para Instagram</Rotulo>
           <h1 className="mt-4 text-[44px] md:text-6xl">
-            Reels e carrosséis que param o <Destaque>scroll.</Destaque>
+            Anúncios, reels e posts que param o <Destaque>scroll.</Destaque>
           </h1>
           <p className="mt-5 max-w-md text-lg text-cinza">
-            A gente cria os vídeos, carrosséis, posts e anúncios da sua marca. Você só aprova e posta.
+            A gente cria os anúncios, reels, carrosséis, posts e stories da sua marca. Você só aprova e posta.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <BotaoLink href="#pacotes" tamanho="lg">
               Ver pacotes
             </BotaoLink>
-            <BotaoLink href="/pedido?pacote=start" variante="contorno" tamanho="lg">
+            <BotaoLink href={`/pedido?pacote=${PACOTES[0].id}`} variante="contorno" tamanho="lg">
               Começar com {reais(PACOTES[0].preco)}
             </BotaoLink>
           </div>
-          <p className="mt-4 text-sm text-cinza">1 reel + 1 carrossel por {reais(PACOTES[0].preco)}. Pronto em até {PACOTES[0].prazoDiasUteis} dias úteis.</p>
+          <p className="mt-4 text-sm text-cinza">{pecas(PACOTES[0])} criativos por {reais(PACOTES[0].preco)} no pacote {PACOTES[0].nome}. Pronto em até {PACOTES[0].prazoDiasUteis} dias úteis.</p>
         </div>
 
         <div className="relative mx-auto w-full max-w-sm">
@@ -121,7 +122,7 @@ export default function Home() {
           <h2 className="mt-3 max-w-2xl text-4xl md:text-5xl">
             Tudo que o seu Instagram precisa pra <Destaque>vender.</Destaque>
           </h2>
-          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-5">
             {O_QUE_FAZEMOS.map((f) => {
               const p = peca(f.ex);
               return (
@@ -182,8 +183,8 @@ export default function Home() {
           </div>
           <div className="mx-auto w-full max-w-sm rounded-[2rem] bg-white p-3 text-preto">
             <div className="rounded-[1.5rem] bg-off p-4">
-              <p className="text-xs font-extrabold text-cinza">Pacote Max</p>
-              <p className="text-xl font-extrabold">10 de 20 peças entregues</p>
+              <p className="text-xs font-extrabold text-cinza">Pacote {PACOTES[2].nome}</p>
+              <p className="text-xl font-extrabold">{Math.round(pecas(PACOTES[2]) / 2)} de {pecas(PACOTES[2])} peças entregues</p>
               <div className="mt-2 h-2 overflow-hidden rounded-full bg-linha">
                 <div className="h-full w-1/2 rounded-full bg-preto" />
               </div>
@@ -213,7 +214,7 @@ export default function Home() {
             <h2 className="mt-3 text-4xl md:text-5xl">
               Quanto mais conteúdo, mais <Destaque>barato.</Destaque>
             </h2>
-            <p className="mx-auto mt-4 max-w-lg text-cinza">Cada pacote vem com reels e carrosséis na mesma quantidade, com legenda pronta.</p>
+            <p className="mx-auto mt-4 max-w-lg text-cinza">Cada pacote tem os 5 criativos: anúncios, reels, carrosséis, posts e stories, com legenda pronta.</p>
           </div>
 
           <div className="mt-12 grid gap-4 md:grid-cols-3">
@@ -227,7 +228,7 @@ export default function Home() {
                     <span className="absolute -top-3 left-6 rounded-full bg-amarelo px-3 py-1 text-xs font-extrabold text-preto">Melhor custo</span>
                   )}
                   <div className="flex items-start justify-between gap-2">
-                    <h3 className="text-2xl">{p.nome}</h3>
+                    <h3 className="text-2xl">Pacote {p.nome}</h3>
                     {eco > 0 && (
                       <span className={`rounded-full px-2.5 py-0.5 text-[11px] font-extrabold ${d ? "bg-amarelo text-preto" : "bg-white"}`}>
                         Economize {reais(eco)}
@@ -244,23 +245,19 @@ export default function Home() {
                     {reais(precoPorPeca(p))} por peça · Pix ou cartão
                   </p>
 
-                  <div className="mt-5 grid grid-cols-2 gap-2">
-                    {[
-                      [p.videos, p.videos === 1 ? "reel" : "reels"],
-                      [p.carrosseis, p.carrosseis === 1 ? "carrossel" : "carrosséis"],
-                    ].map(([n, t]) => (
-                      <div key={t} className={`rounded-xl p-3 ${d ? "bg-white/10" : "bg-white"}`}>
-                        <p className="text-3xl font-extrabold">{n}</p>
-                        <p className={`text-sm ${apoio}`}>{t}</p>
+                  <div className="mt-5 grid grid-cols-3 gap-2">
+                    {TIPOS.map((t) => (
+                      <div key={t.id} className={`rounded-xl p-2.5 ${d ? "bg-white/10" : "bg-white"}`}>
+                        <p className="text-2xl font-extrabold">{p.itens[t.id]}</p>
+                        <p className={`text-xs ${apoio}`}>{p.itens[t.id] === 1 ? t.um : t.varios}</p>
                       </div>
                     ))}
                   </div>
 
                   <ul className="mt-5 flex-1 space-y-2 text-sm">
-                    <li>· Reels de {DETALHES.duracaoVideo}</li>
+                    <li>· Vídeos de {DETALHES.duracaoVideo}</li>
                     <li>· Carrosséis de {DETALHES.slidesCarrossel}</li>
                     <li>· Legenda e hashtags em cada peça</li>
-                    <li>· Prontos pra usar como anúncio</li>
                     <li>· {DETALHES.ajustesPorPeca} ajuste por peça</li>
                     <li>· Entrega em até {p.prazoDiasUteis} dias úteis</li>
                   </ul>
@@ -268,10 +265,32 @@ export default function Home() {
                   <BotaoLink href={`/pedido?pacote=${p.id}`} variante={d ? "primario" : "secundario"} className="mt-6 w-full">
                     Quero o {p.nome}
                   </BotaoLink>
-                  <p className={`mt-2 text-center text-xs ${apoio}`}>{pecas(p)} peças no total</p>
+                  <p className={`mt-2 text-center text-xs ${apoio}`}>{pecas(p)} criativos no total</p>
                 </div>
               );
             })}
+          </div>
+
+          {/* avulsos */}
+          <div className="mt-12 rounded-2xl border border-linha bg-off p-6">
+            <div className="flex flex-col justify-between gap-2 sm:flex-row sm:items-end">
+              <div>
+                <Rotulo>À parte</Rotulo>
+                <h3 className="mt-2 text-2xl">Precisa de algo pontual?</h3>
+              </div>
+              <p className="text-sm text-cinza">Pode comprar sozinho ou junto com qualquer pacote.</p>
+            </div>
+            <div className="mt-5 grid gap-3 md:grid-cols-3">
+              {AVULSOS.map((a) => (
+                <div key={a.id} className="flex items-start justify-between gap-4 rounded-xl bg-white p-4">
+                  <div>
+                    <p className="font-extrabold">{a.nome}</p>
+                    <p className="mt-1 text-sm text-cinza">{a.desc}</p>
+                  </div>
+                  <p className="shrink-0 text-xl font-extrabold">{reais(a.preco)}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -299,8 +318,8 @@ export default function Home() {
           <h2 className="text-4xl md:text-5xl">
             Seu próximo reel pode sair <span className="inline-block -skew-x-[9deg] text-amarelo">essa semana.</span>
           </h2>
-          <p className="mt-4 text-white/70">Comece com o Start e veja a qualidade antes de fechar um pacote maior.</p>
-          <BotaoLink href="/pedido?pacote=start" tamanho="lg" className="mt-8">
+          <p className="mt-4 text-white/70">Comece com o pacote {PACOTES[0].nome} e veja a qualidade antes de fechar um pacote maior.</p>
+          <BotaoLink href={`/pedido?pacote=${PACOTES[0].id}`} tamanho="lg" className="mt-8">
             Começar com {reais(PACOTES[0].preco)}
           </BotaoLink>
         </div>

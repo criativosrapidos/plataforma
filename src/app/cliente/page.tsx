@@ -4,7 +4,7 @@ import Link from "next/link";
 import { EntregaLinha } from "@/components/EntregaCard";
 import { BotaoLink, Cartao, Rotulo } from "@/components/ui";
 import { useCliente } from "@/lib/cliente-store";
-import { PACOTES, reais } from "@/lib/pacotes";
+import { PACOTES, pecas, precoPorPeca, reais, videos } from "@/lib/pacotes";
 
 function Barra({ feito, total, rotulo }: { feito: number; total: number; rotulo: string }) {
   return (
@@ -53,12 +53,12 @@ export default function Inicio() {
           <div>
             <Rotulo className="!text-white/60">Pacote {pacote.nome}</Rotulo>
             <p className="mt-1 text-2xl font-extrabold">
-              {entregues("video") + entregues("carrossel")} de {pacote.videos + pacote.carrosseis} peças entregues
+              {entregues("video") + entregues("carrossel")} de {pecas(pacote)} peças entregues
             </p>
           </div>
         </div>
-        <Barra feito={entregues("video")} total={pacote.videos} rotulo="Reels" />
-        <Barra feito={entregues("carrossel")} total={pacote.carrosseis} rotulo="Carrosséis" />
+        <Barra feito={entregues("video")} total={videos(pacote)} rotulo="Vídeos (anúncios e reels)" />
+        <Barra feito={entregues("carrossel")} total={pecas(pacote) - videos(pacote)} rotulo="Carrosséis, posts e stories" />
         <p className="text-xs text-white/70">
           Comprado em {new Date(cliente.compradoEm + "T12:00").toLocaleDateString("pt-BR")} · entrega completa em até {pacote.prazoDiasUteis} dias úteis
         </p>
@@ -114,9 +114,9 @@ export default function Inicio() {
       <Cartao className="mt-8 p-5">
         <p className="font-extrabold">Quer mais conteúdo?</p>
         <p className="mt-1 text-sm text-cinza">
-          Renove ou troque de pacote. O Max sai a {reais(PACOTES[2].preco / (PACOTES[2].videos + PACOTES[2].carrosseis))} por peça.
+          Renove ou troque de pacote. O {PACOTES[2].nome} sai a {reais(precoPorPeca(PACOTES[2]))} por peça.
         </p>
-        <BotaoLink href="/pedido?pacote=max" tamanho="sm" className="mt-4">
+        <BotaoLink href={`/pedido?pacote=${PACOTES[2].id}`} tamanho="sm" className="mt-4">
           Comprar novo pacote
         </BotaoLink>
       </Cartao>
