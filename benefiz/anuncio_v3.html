@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Benefiz - reels de exemplo</title>
+<style>
+@font-face { font-family: "Fira Sans"; font-weight: 500; src: url(fonts/fira-sans-latin-500-normal.woff); }
+@font-face { font-family: "Fira Sans"; font-weight: 600; src: url(fonts/fira-sans-latin-600-normal.woff); }
+@font-face { font-family: "Fira Sans"; font-weight: 700; src: url(fonts/fira-sans-latin-700-normal.woff); }
+@font-face { font-family: "Fira Sans"; font-weight: 800; src: url(fonts/fira-sans-latin-800-normal.woff); }
+@font-face { font-family: "Fira Sans"; font-weight: 900; src: url(fonts/fira-sans-latin-900-normal.woff); }
+:root { --laranja:#F08A3E; --laranja2:#E07A35; --teal:#3E7C7E; --teal2:#2F6365; --creme:#F7F4EF; --tinta:#1F3A3B; }
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body { width:1080px; height:1920px; overflow:hidden; background:var(--teal2); }
+#stage { position:relative; width:1080px; height:1920px; overflow:hidden; font-family:"Fira Sans", sans-serif; }
+.scene { position:absolute; inset:0; opacity:0; }
+.el { position:absolute; left:0; right:0; text-align:center; opacity:0; will-change:transform, opacity; }
+.h { font-family:"Fira Sans"; font-weight:900; line-height:1; letter-spacing:-.01em; }
+.f-teal { position:absolute; inset:0; background:linear-gradient(165deg,#3E7C7E,#2F6365); }
+.f-lar { position:absolute; inset:0; background:linear-gradient(165deg,#F39A55,#E07A35); }
+.f-creme { position:absolute; inset:0; background:var(--creme); }
+.padrao { position:absolute; inset:-300px; }
+.card { display:inline-flex; align-items:center; gap:34px; width:900px; background:#fff; border-radius:40px; padding:34px 44px; box-shadow:0 24px 60px rgba(0,0,0,.22); text-align:left; }
+.card .ic { flex:none; width:150px; height:150px; border-radius:36px; display:flex; align-items:center; justify-content:center; }
+.card .t { font-family:"Fira Sans"; font-weight:900; font-size:66px; color:var(--teal); line-height:1; }
+.card .t small { display:block; font-weight:600; font-size:34px; color:var(--tinta); margin-top:10px; line-height:1.2; }
+.pill { display:inline-flex; align-items:center; gap:22px; font-weight:800; padding:30px 56px; border-radius:80px; }
+</style>
+</head>
+<body>
+<div id="stage">
+
+  <section class="scene" data-start="0" data-end="2.042" data-shake="0.88">
+    <div class="f-lar"></div><svg class="padrao" data-pad="rgba(255,255,255,.14)"></svg>
+    <div class="el h" data-in="0.136" data-a="slam" style="top:640px;font-size:150px;color:#fff">EMPRESÁRIO,</div>
+    <div class="el" data-in="0.88" data-a="slam" style="top:840px"><div class="h" style="display:inline-block;background:var(--teal);color:#fff;font-size:180px;padding:20px 60px 30px;border-radius:30px">ATENÇÃO!</div></div>
+  </section>
+
+  <section class="scene" data-start="2.042" data-end="12.83" data-shake="3.74">
+    <div class="f-creme"></div>
+    <div class="el" data-in="2.092" data-a="pop" style="top:220px"><svg viewBox="0 0 100 100" style="width:260px;height:260px;color:var(--laranja)"><use href="#i-porta"/></svg></div>
+    <div class="el h" data-in="2.142" data-a="rise" style="top:540px;font-size:92px;color:var(--teal)">Seu melhor funcionário</div>
+    <div class="el h" data-in="3.74" data-a="slam" style="top:660px;font-size:112px;color:var(--laranja);white-space:nowrap">PEDIU AS CONTAS.</div>
+    <div class="el" data-in="6.453" data-a="pop" style="top:860px"><div class="h" style="display:inline-block;background:var(--tinta);color:#fff;font-size:58px;line-height:1.15;padding:20px 44px 28px;border-radius:24px">foi pra concorrência<br>por <span style="color:var(--laranja)">R$ 200</span> a mais</div></div>
+    <div class="el" data-in="9.533" data-a="slideR" style="top:1120px;left:90px;right:auto;width:auto"><div class="h" style="display:inline-block;background:var(--teal);color:#fff;font-size:70px;padding:22px 44px 30px;border-radius:26px">contratar</div></div>
+    <div class="el" data-in="10.76" data-a="slideL" style="top:1120px;left:560px;right:auto;width:auto"><div class="h" style="display:inline-block;background:var(--teal);color:#fff;font-size:70px;padding:22px 44px 30px;border-radius:26px">treinar</div></div>
+    <div class="el" data-in="11.648" data-a="slam" style="top:1300px"><div class="h" style="display:inline-block;background:var(--laranja);color:#fff;font-size:96px;padding:22px 56px 32px;border-radius:28px;transform:rotate(-3deg)">TUDO DE NOVO.</div></div>
+  </section>
+
+  <section class="scene" data-start="12.83" data-end="19.77">
+    <div class="f-teal"></div><svg class="padrao" data-pad="rgba(255,255,255,.06)"></svg>
+    <div class="el h" data-in="12.93" data-a="drop" style="top:170px;font-size:100px;color:#fff">Mas calma.</div>
+    <div class="el" data-in="13.987" data-a="pop" style="top:350px" id="logo5"></div>
+    <div class="el" data-in="15.773" data-a="pop" style="top:700px;left:70px;right:auto;width:460px"><div style="width:440px;height:390px;background:#fff;border-radius:40px;box-shadow:0 24px 50px rgba(0,0,0,.25);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px"><div style="width:170px;height:170px;border-radius:44px;background:#FDE7D6;display:flex;align-items:center;justify-content:center"><svg viewBox="0 0 100 100" style="width:110px;color:var(--laranja)"><use href="#i-saude"/></svg></div><div class="h" style="font-size:52px;color:var(--teal);text-align:center;line-height:1.05">SAÚDE</div></div></div><div class="el" data-in="16.46" data-a="pop" style="top:700px;left:550px;right:auto;width:460px"><div style="width:440px;height:390px;background:#fff;border-radius:40px;box-shadow:0 24px 50px rgba(0,0,0,.25);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px"><div style="width:170px;height:170px;border-radius:44px;background:#DCEBEB;display:flex;align-items:center;justify-content:center"><svg viewBox="0 0 100 100" style="width:110px;color:var(--teal)"><use href="#i-edu"/></svg></div><div class="h" style="font-size:52px;color:var(--teal);text-align:center;line-height:1.05">EDUCAÇÃO</div></div></div><div class="el" data-in="17.253" data-a="pop" style="top:1120px;left:70px;right:auto;width:460px"><div style="width:440px;height:390px;background:#fff;border-radius:40px;box-shadow:0 24px 50px rgba(0,0,0,.25);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px"><div style="width:170px;height:170px;border-radius:44px;background:#DCEBEB;display:flex;align-items:center;justify-content:center"><svg viewBox="0 0 100 100" style="width:110px;color:var(--teal)"><use href="#i-lazer"/></svg></div><div class="h" style="font-size:52px;color:var(--teal);text-align:center;line-height:1.05">LAZER</div></div></div><div class="el" data-in="18.08" data-a="pop" style="top:1120px;left:550px;right:auto;width:460px"><div style="width:440px;height:390px;background:#fff;border-radius:40px;box-shadow:0 24px 50px rgba(0,0,0,.25);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px"><div style="width:170px;height:170px;border-radius:44px;background:#FDE7D6;display:flex;align-items:center;justify-content:center"><svg viewBox="0 0 100 100" style="width:110px;color:var(--laranja)"><use href="#i-seg"/></svg></div><div class="h" style="font-size:52px;color:var(--teal);text-align:center;line-height:1.05">SEGURANÇA<br>FINANCEIRA</div></div></div>
+  </section>
+
+  <section class="scene" data-start="19.77" data-end="26.206999999999997">
+    <div class="f-lar"></div><svg class="padrao" data-pad="rgba(255,255,255,.14)"></svg>
+    <div class="el h" data-in="19.87" data-a="drop" style="top:150px;font-size:96px;color:#fff">E o preço?</div>
+    <div class="el h" data-in="20.592" data-a="slam" style="top:290px;font-size:104px;color:var(--tinta);white-space:nowrap">PARECE MENTIRA...</div>
+    <div class="el" data-in="22.04" data-a="pop" style="top:440px"><div class="h" style="display:inline-block;background:#fff;color:var(--laranja);font-size:96px;padding:18px 54px 28px;border-radius:30px;transform:rotate(-3deg)">MAS NÃO É!</div></div>
+    <div class="el h" data-in="22.8" data-a="rise" style="top:690px;font-size:60px;color:#fff">a partir de</div>
+    <div class="el h" data-in="23.6" data-a="slam" style="top:780px;font-size:200px;color:#fff;white-space:nowrap"><span style="font-size:80px">R$</span>209,90<span style="font-size:60px">/mês</span></div>
+    <div class="el" data-in="23.30" data-a="rise" style="top:1130px;left:40px;right:auto;width:320px"><div style="width:320px;background:#fff;border-radius:30px;padding:14px;box-shadow:0 18px 40px rgba(0,0,0,.22);text-align:center"><div style="transform:scale(.97);transform-origin:top center"><svg viewBox="0 0 300 300" style="width:300px;height:300px;border-radius:26px;flex:none;background:linear-gradient(160deg,#F7C548,#F0A93E)"><path d="M88.0 242.0 q0 -88.0 62.0 -88.0 t62.0 88.0z" fill="#F08A3E"/><circle cx="150" cy="92" r="34.0" fill="#8D5A3B"/><path d="M116.0 88 q34.0 -51.0 68.0 0 q-6.800000000000001 -30.6 -34.0 -32.3 q-27.200000000000003 0 -34.0 32.3z" fill="#2B1B12"/><g transform="translate(48 200) scale(.85)"><rect width="240" height="104" rx="14" fill="#3E7C7E"/><rect x="208" width="32" height="104" rx="0" fill="#F08A3E"/><rect x="226" width="14" height="104" rx="7" fill="#F08A3E"/><circle cx="40" cy="58" r="24" fill="#fff"/><circle cx="40" cy="51" r="8" fill="#3E7C7E"/><path d="M26 72q14-18 28 0" fill="#3E7C7E"/><text x="74" y="30" font-family="Fira Sans" font-weight="700" font-size="11" fill="#fff">Benefiz</text><text x="74" y="56" font-family="Fira Sans" font-weight="800" font-size="16" fill="#fff">Plano Individual</text><text x="74" y="76" font-family="Fira Sans" font-weight="500" font-size="10" fill="#D6EAEA">000.000.000-00</text><text x="74" y="90" font-family="Fira Sans" font-weight="500" font-size="10" fill="#D6EAEA">123456789101112</text></g></svg></div><div class="h" style="font-size:40px;color:var(--teal);margin-top:10px">Individual</div><div class="h" style="font-size:54px;color:var(--laranja)"><span style="font-size:26px;color:#7A8A8B">R$</span>209,90</div></div></div><div class="el" data-in="23.55" data-a="rise" style="top:1130px;left:380px;right:auto;width:320px"><div style="width:320px;background:#fff;border-radius:30px;padding:14px;box-shadow:0 18px 40px rgba(0,0,0,.22);text-align:center"><div style="transform:scale(.97);transform-origin:top center"><svg viewBox="0 0 300 300" style="width:300px;height:300px;border-radius:26px;flex:none;background:linear-gradient(160deg,#E9E1D6,#D8CDBF)"><path d="M38.0 242.0 q0 -88.0 62.0 -88.0 t62.0 88.0z" fill="#F08A3E"/><circle cx="100" cy="92" r="34.0" fill="#8D5A3B"/><path d="M66.0 88 q34.0 -51.0 68.0 0 q-6.800000000000001 -30.6 -34.0 -32.3 q-27.200000000000003 0 -34.0 32.3z" fill="#2B1B12"/><path d="M138.0 242.0 q0 -88.0 62.0 -88.0 t62.0 88.0z" fill="#3E7C7E"/><circle cx="200" cy="92" r="34.0" fill="#E8B98F"/><path d="M166.0 88 q34.0 -51.0 68.0 0 q-6.800000000000001 -30.6 -34.0 -32.3 q-27.200000000000003 0 -34.0 32.3z" fill="#2B1B12"/><g transform="translate(48 200) scale(.85)"><rect width="240" height="104" rx="14" fill="#3E7C7E"/><rect x="208" width="32" height="104" rx="0" fill="#F08A3E"/><rect x="226" width="14" height="104" rx="7" fill="#F08A3E"/><circle cx="40" cy="58" r="24" fill="#fff"/><circle cx="40" cy="51" r="8" fill="#3E7C7E"/><path d="M26 72q14-18 28 0" fill="#3E7C7E"/><text x="74" y="30" font-family="Fira Sans" font-weight="700" font-size="11" fill="#fff">Benefiz</text><text x="74" y="56" font-family="Fira Sans" font-weight="800" font-size="16" fill="#fff">Plano Duplo</text><text x="74" y="76" font-family="Fira Sans" font-weight="500" font-size="10" fill="#D6EAEA">000.000.000-00</text><text x="74" y="90" font-family="Fira Sans" font-weight="500" font-size="10" fill="#D6EAEA">123456789101112</text></g></svg></div><div class="h" style="font-size:40px;color:var(--teal);margin-top:10px">Duplo</div><div class="h" style="font-size:54px;color:var(--laranja)"><span style="font-size:26px;color:#7A8A8B">R$</span>239,90</div></div></div><div class="el" data-in="23.80" data-a="rise" style="top:1130px;left:720px;right:auto;width:320px"><div style="width:320px;background:#fff;border-radius:30px;padding:14px;box-shadow:0 18px 40px rgba(0,0,0,.22);text-align:center"><div style="transform:scale(.97);transform-origin:top center"><svg viewBox="0 0 300 300" style="width:300px;height:300px;border-radius:26px;flex:none;background:linear-gradient(160deg,#F3D9C4,#E8BFA0)"><path d="M8.0 242.0 q0 -88.0 62.0 -88.0 t62.0 88.0z" fill="#F08A3E"/><circle cx="70" cy="92" r="34.0" fill="#8D5A3B"/><path d="M36.0 88 q34.0 -51.0 68.0 0 q-6.800000000000001 -30.6 -34.0 -32.3 q-27.200000000000003 0 -34.0 32.3z" fill="#2B1B12"/><path d="M168.0 242.0 q0 -88.0 62.0 -88.0 t62.0 88.0z" fill="#3E7C7E"/><circle cx="230" cy="92" r="34.0" fill="#E8B98F"/><path d="M196.0 88 q34.0 -51.0 68.0 0 q-6.800000000000001 -30.6 -34.0 -32.3 q-27.200000000000003 0 -34.0 32.3z" fill="#2B1B12"/><path d="M78.6 255.0 q0 -61.599999999999994 43.4 -61.599999999999994 t43.4 61.599999999999994z" fill="#F4C430"/><circle cx="122" cy="150" r="23.799999999999997" fill="#C68642"/><path d="M98.2 146 q23.799999999999997 -35.699999999999996 47.599999999999994 0 q-4.76 -21.419999999999998 -23.799999999999997 -22.609999999999996 q-19.04 0 -23.799999999999997 22.609999999999996z" fill="#2B1B12"/><path d="M134.6 255.0 q0 -61.599999999999994 43.4 -61.599999999999994 t43.4 61.599999999999994z" fill="#5E9C9D"/><circle cx="178" cy="150" r="23.799999999999997" fill="#F1C9A5"/><path d="M154.2 146 q23.799999999999997 -35.699999999999996 47.599999999999994 0 q-4.76 -21.419999999999998 -23.799999999999997 -22.609999999999996 q-19.04 0 -23.799999999999997 22.609999999999996z" fill="#2B1B12"/><g transform="translate(48 200) scale(.85)"><rect width="240" height="104" rx="14" fill="#3E7C7E"/><rect x="208" width="32" height="104" rx="0" fill="#F08A3E"/><rect x="226" width="14" height="104" rx="7" fill="#F08A3E"/><circle cx="40" cy="58" r="24" fill="#fff"/><circle cx="40" cy="51" r="8" fill="#3E7C7E"/><path d="M26 72q14-18 28 0" fill="#3E7C7E"/><text x="74" y="30" font-family="Fira Sans" font-weight="700" font-size="11" fill="#fff">Benefiz</text><text x="74" y="56" font-family="Fira Sans" font-weight="800" font-size="16" fill="#fff">Plano Quádruplo</text><text x="74" y="76" font-family="Fira Sans" font-weight="500" font-size="10" fill="#D6EAEA">000.000.000-00</text><text x="74" y="90" font-family="Fira Sans" font-weight="500" font-size="10" fill="#D6EAEA">123456789101112</text></g></svg></div><div class="h" style="font-size:40px;color:var(--teal);margin-top:10px">Quádruplo</div><div class="h" style="font-size:54px;color:var(--laranja)"><span style="font-size:26px;color:#7A8A8B">R$</span>279,90</div></div></div>
+  </section>
+
+  <section class="scene" data-start="26.206999999999997" data-end="31.02">
+    <div class="f-creme"></div>
+    <div class="el" data-in="26.256999999999998" data-a="pop" style="top:240px" id="logo7"></div>
+    <div class="el" data-in="26.456999999999997" data-a="pop" style="top:640px"><div class="pill" style="background:#25D366;color:#fff;font-size:70px;box-shadow:0 20px 50px rgba(37,211,102,.35)"><svg viewBox="0 0 32 32" style="width:88px;height:88px;color:#fff"><use href="#i-whats"/></svg>CHAMA NO WHATS</div></div>
+    <div class="el h" data-in="26.807" data-a="rise" style="top:860px;font-size:92px;color:var(--laranja)">(61) 98199-0171</div>
+    <div class="el h" data-in="27.427" data-a="rise" style="top:1010px;font-size:76px;color:var(--teal)">e conheça o Benefiz</div>
+    <div class="el" data-in="27.826999999999998" data-a="rise" style="top:1130px;font-weight:700;font-size:40px;color:var(--teal)">@benefiz.br · +20 mil vidas · 120 empresas</div>
+  </section>
+</div>
+
+<script src="marca/brand.js"></script>
+<script src="marca/icones.js"></script>
+<script>
+document.body.insertAdjacentHTML("afterbegin", ICONES);
+const L = 0.15;
+document.getElementById("logo5").innerHTML = BENEFIZ.logo(760, "branco");
+document.getElementById("logo7").innerHTML = BENEFIZ.logo(800, "claro");
+// padrão de mãozinhas (igual às peças da marca)
+document.querySelectorAll("[data-pad]").forEach(sv => {
+  sv.setAttribute("viewBox", "0 0 1680 2520"); let g = "";
+  for (let r = 0; r < 16; r++) for (let c = 0; c < 11; c++) {
+    const cheio = (r + c) % 3 === 0, cor = sv.dataset.pad;
+    g += `<g transform="translate(${c * 160} ${r * 160}) scale(.11)"><path d="${BENEFIZ.D}" ${cheio ? `fill="${cor}"` : `fill="none" stroke="${cor}" stroke-width="22"`}/></g>`;
+  }
+  sv.innerHTML = g;
+});
+const clamp = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
+const eo = x => 1 - Math.pow(1 - x, 3);
+const back = (x, c = 1.8) => 1 + (c + 1) * Math.pow(x - 1, 3) + c * Math.pow(x - 1, 2);
+const XF = 0.22;
+function anim(el, t) {
+  const t0 = parseFloat(el.dataset.in), a = el.dataset.a;
+  const d = a === "pop" ? 0.36 : a === "slam" ? 0.3 : 0.42;
+  const p = clamp((t - t0) / d), pe = eo(p);
+  let op = a === "pop" || a === "slam" ? clamp(p * 4) : pe, tf = "";
+  if (a === "rise") tf = `translateY(${((1 - pe) * 70).toFixed(1)}px)`;
+  if (a === "drop") tf = `translateY(${(-(1 - pe) * 90).toFixed(1)}px)`;
+  if (a === "pop") tf = `scale(${Math.max(0.02, back(p)).toFixed(4)})`;
+  if (a === "slam") tf = `scale(${(1 + (1 - pe) * 1.4).toFixed(4)})`;
+  if (a === "slideL") tf = `translateX(${(-(1 - pe) * 1100).toFixed(1)}px)`;
+  if (a === "slideR") tf = `translateX(${((1 - pe) * 1100).toFixed(1)}px)`;
+  op = op < 0.003 ? 0 : op;
+  el.style.opacity = op.toFixed(3);
+  el.style.visibility = op > 0 ? "visible" : "hidden";
+  el.style.transform = tf;
+}
+function render(tv) {
+  const t = tv - L;
+  document.querySelectorAll(".scene").forEach(s => {
+    const a = parseFloat(s.dataset.start), b = parseFloat(s.dataset.end);
+    let op = 0;
+    if (t >= a && t < b + XF) op = clamp((t - a) / XF) * (t > b ? 1 - clamp((t - b) / XF) : 1);
+    if (a === 0) op = t < b ? 1 : op;
+    s.style.opacity = op;
+    s.style.visibility = op > 0 ? "visible" : "hidden";
+    s.style.zIndex = Math.round(a * 10 + 10);
+    if (op <= 0) return;
+    let sh = "";
+    (s.dataset.shake || "").split(",").filter(Boolean).map(Number).forEach(k => {
+      const q = t - k; if (q > 0 && q < 0.35) { const amp = 14 * (1 - q / 0.35); sh = ` translate(${(Math.sin(q * 90) * amp).toFixed(1)}px,${(Math.cos(q * 70) * amp).toFixed(1)}px)`; }
+    });
+    s.style.transform = `scale(${(1 + 0.05 * (1 - eo(clamp((t - a) / 0.5)))).toFixed(4)})${sh}`;
+    s.querySelectorAll(".padrao").forEach(p => p.style.transform = `translate(${((t * 18) % 160).toFixed(1)}px,${((t * 26) % 160).toFixed(1)}px)`);
+    s.querySelectorAll(".el").forEach(el => anim(el, t));
+  });
+  const v = Math.round(20000 * eo(clamp((t - 22.68) / 1.8)) / 100) * 100;
+  (document.getElementById("vidas") || {}).textContent = "+" + (v >= 20000 ? "20 mil" : v.toLocaleString("pt-BR"));
+}
+window.render = render;
+render(0);
+</script>
+</body>
+</html>
