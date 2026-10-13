@@ -1,4 +1,4 @@
-# Minha Van — minhavan.com.br
+# VanGPS — vangps.com.br
 
 Micro SaaS de rastreamento de van escolar com avisos automáticos no WhatsApp.
 
@@ -9,7 +9,7 @@ Micro SaaS de rastreamento de van escolar com avisos automáticos no WhatsApp.
 ## Planos (proposta)
 | Plano | Mensal | Anual | O que tem |
 |---|---|---|---|
-| Rastreio | R$ 39,90/van | R$ 399 | Mapa ao vivo, ETA, push no app, chamada, chat |
-| Completo | R$ 79,90/van | R$ 799 | + avisos automáticos no WhatsApp, cobrança Pix, contrato, comunicados, emergência |
+| Rastreio | R$ 24,90/van | R$ 249 | Mapa ao vivo, ETA, push no app, chamada, chat |
+| Completo | R$ 49,90/van | R$ 499 | + avisos automáticos no WhatsApp, cobrança Pix, contrato, comunicados, emergência |
 
 O motorista assina; as famílias usam o app de graça. Plano Frota sob consulta.

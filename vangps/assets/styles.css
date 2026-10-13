@@ -1,4 +1,4 @@
-/* Minha Van — design tokens */
+/* VanGPS — design tokens */
 :root {
   --amarelo: #FFC21A;
   --amarelo-escuro: #E8A400;
@@ -80,6 +80,7 @@ h1, h2, h3, h4 { font-family: var(--fonte-titulo); line-height: 1.15; font-weigh
 .topo .container { display: flex; align-items: center; justify-content: space-between; height: 72px; }
 .marca { display: flex; align-items: center; gap: 10px; font-family: var(--fonte-titulo); font-weight: 600; font-size: 1.5rem; }
 .marca img { width: 40px; height: 40px; }
+.marca b { font-weight: inherit; }
 .marca span { color: var(--amarelo-escuro); }
 .menu { display: none; gap: 28px; font-weight: 700; color: var(--texto-suave); }
 .menu a:hover { color: var(--texto); }
