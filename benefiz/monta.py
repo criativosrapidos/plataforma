@@ -9,7 +9,7 @@ from pathlib import Path
 import numpy as np
 
 ROOT = Path(__file__).resolve().parent
-SR, DUR, LEAD, BPM = 44100, 30.0, 0.0, 112
+SR, DUR, LEAD, BPM = 44100, 33.5, 0.15, 112
 N = int(SR * DUR)
 rng = np.random.default_rng(7)
 
@@ -58,7 +58,7 @@ def acorde(freqs, dur):
 def trilha():
     m = np.zeros(N)
     beat = 60 / BPM
-    tensao, solucao = 7.4, 7.5                  # parte de dor (tensa) e virada para a solução
+    tensao, solucao = 10.6, 10.9                  # parte de dor (tensa) e virada para a solução
     # pad: acorde menor na dor, maior na solução
     put(m, acorde([110, 130.8, 164.8], tensao), 0)
     for k, ch in enumerate(([130.8, 164.8, 196], [146.8, 185, 220], [123.5, 155.6, 185], [130.8, 164.8, 196])):
@@ -102,15 +102,15 @@ def sfx():
             put(s, (np.sin(2 * np.pi * f * t) + 0.3 * np.sin(4 * np.pi * f * t)) * env(n, 0.003, 0.25) * 0.22, t0 + k * 0.07)
     def tique(t0):
         n = int(SR * 0.03); put(s, rng.standard_normal(n) * env(n, 0.001, 0.008) * 0.3, t0)
-    erro(3.3)
-    for t in (2.6, 7.5, 11.5, 15.0, 22.0, 25.5):
+    erro(3.6)
+    for t in (2.3, 10.7, 13.8, 17.4, 22.6, 26.9):
         whoosh(t)
-    for t in (0.1, 3.3, 8.4, 13.6, 22.05):
+    for t in (0.2, 3.6, 12.6, 16.65, 22.68):
         impacto(t)
-    for t in (16.0, 17.2, 18.4, 19.6):
+    for t in (19.55, 20.2, 21.0, 21.75):
         whoosh(t + 0.25, 0.3)
-    sucesso(23.6)
-    sucesso(27.2)
+    sucesso(24.75)
+    sucesso(27.1)
     return s
 
 
