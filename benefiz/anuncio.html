@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Benefiz - reels de exemplo</title>
+<style>
+@font-face { font-family: "Fira Sans"; font-weight: 500; src: url(fonts/fira-sans-latin-500-normal.woff); }
+@font-face { font-family: "Fira Sans"; font-weight: 600; src: url(fonts/fira-sans-latin-600-normal.woff); }
+@font-face { font-family: "Fira Sans"; font-weight: 700; src: url(fonts/fira-sans-latin-700-normal.woff); }
+@font-face { font-family: "Fira Sans"; font-weight: 800; src: url(fonts/fira-sans-latin-800-normal.woff); }
+@font-face { font-family: "Fira Sans"; font-weight: 900; src: url(fonts/fira-sans-latin-900-normal.woff); }
+:root { --laranja:#F08A3E; --laranja2:#E07A35; --teal:#3E7C7E; --teal2:#2F6365; --creme:#F7F4EF; --tinta:#1F3A3B; }
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body { width:1080px; height:1920px; overflow:hidden; background:var(--teal2); }
+#stage { position:relative; width:1080px; height:1920px; overflow:hidden; font-family:"Fira Sans", sans-serif; }
+.scene { position:absolute; inset:0; opacity:0; }
+.el { position:absolute; left:0; right:0; text-align:center; opacity:0; will-change:transform, opacity; }
+.h { font-family:"Fira Sans"; font-weight:900; line-height:1; letter-spacing:-.01em; }
+.f-teal { position:absolute; inset:0; background:linear-gradient(165deg,#3E7C7E,#2F6365); }
+.f-lar { position:absolute; inset:0; background:linear-gradient(165deg,#F39A55,#E07A35); }
+.f-creme { position:absolute; inset:0; background:var(--creme); }
+.padrao { position:absolute; inset:-300px; }
+.card { display:inline-flex; align-items:center; gap:34px; width:900px; background:#fff; border-radius:40px; padding:34px 44px; box-shadow:0 24px 60px rgba(0,0,0,.22); text-align:left; }
+.card .ic { flex:none; width:150px; height:150px; border-radius:36px; display:flex; align-items:center; justify-content:center; }
+.card .t { font-family:"Fira Sans"; font-weight:900; font-size:66px; color:var(--teal); line-height:1; }
+.card .t small { display:block; font-weight:600; font-size:34px; color:var(--tinta); margin-top:10px; line-height:1.2; }
+.pill { display:inline-flex; align-items:center; gap:22px; font-weight:800; padding:30px 56px; border-radius:80px; }
+</style>
+</head>
+<body>
+<div id="stage">
+
+  <section class="scene" data-start="0" data-end="2.6">
+    <div class="f-lar"></div><svg class="padrao" data-pad="rgba(255,255,255,.14)"></svg>
+    <div class="el h" data-in="0.1" data-a="slam" style="top:640px;font-size:150px;color:#fff">EMPRESÁRIO,</div>
+    <div class="el" data-in="0.9" data-a="pop" style="top:840px"><div class="h" style="display:inline-block;background:var(--teal);color:#fff;font-size:170px;padding:20px 60px 30px;border-radius:30px">ATENÇÃO!</div></div>
+  </section>
+
+  <section class="scene" data-start="2.6" data-end="7.5" data-shake="3.3">
+    <div class="f-creme"></div>
+    <div class="el" data-in="2.7" data-a="pop" style="top:220px"><svg viewBox="0 0 100 100" style="width:300px;height:300px;color:var(--laranja)"><use href="#i-porta"/></svg></div>
+    <div class="el h" data-in="3.0" data-a="rise" style="top:600px;font-size:96px;color:var(--teal)">Seu melhor funcionário</div>
+    <div class="el h" data-in="3.3" data-a="slam" style="top:720px;font-size:108px;color:var(--laranja);white-space:nowrap">PEDIU AS CONTAS?</div>
+    <div class="el" data-in="4.6" data-a="rise" style="top:930px;font-weight:700;font-size:56px;color:var(--tinta)">Foi pra concorrência por um pouco mais...</div>
+    <div class="el" data-in="5.8" data-a="rise" style="top:1080px"><div style="display:inline-flex;gap:20px">
+      <div class="h" style="background:var(--teal);color:#fff;font-size:62px;padding:24px 38px;border-radius:26px">contratar</div>
+      <div class="h" style="background:var(--teal);color:#fff;font-size:62px;padding:24px 38px;border-radius:26px">treinar</div>
+      <div class="h" style="background:var(--laranja);color:#fff;font-size:62px;padding:24px 38px;border-radius:26px">de novo</div></div></div>
+  </section>
+
+  <section class="scene" data-start="7.5" data-end="11.5">
+    <div class="f-teal"></div><svg class="padrao" data-pad="rgba(255,255,255,.07)"></svg>
+    <div class="el h" data-in="7.6" data-a="drop" style="top:330px;font-size:100px;color:#fff">Imagina uma equipe</div>
+    <div class="el h" data-in="8.4" data-a="slam" style="top:470px;font-size:118px;color:var(--laranja);white-space:nowrap">QUE QUER FICAR.</div>
+    <div class="el" data-in="9.2" data-a="pop" style="top:750px"><svg viewBox="0 0 100 100" style="width:420px;height:420px;color:#fff"><use href="#i-grupo"/></svg></div>
+  </section>
+
+  <section class="scene" data-start="11.5" data-end="15" data-shake="13.6">
+    <div class="f-creme"></div>
+    <div class="el h" data-in="11.6" data-a="rise" style="top:420px;font-size:92px;color:var(--teal);padding:0 60px">Acha que benefício é coisa de empresa grande?</div>
+    <div class="el" data-in="13.6" data-a="slam" style="top:850px"><div class="h" style="display:inline-block;background:var(--laranja);color:#fff;font-size:150px;padding:24px 70px 34px;border-radius:34px;transform:rotate(-3deg)">NÃO É MAIS.</div></div>
+  </section>
+
+  <section class="scene" data-start="15" data-end="22">
+    <div class="f-teal"></div><svg class="padrao" data-pad="rgba(255,255,255,.06)"></svg>
+    <div class="el" data-in="15.1" data-a="pop" style="top:150px" id="logo5"></div>
+    <div class="el" data-in="16.0" data-a="slideR" style="top:470px"><div class="card"><div class="ic" style="background:#FDE7D6"><svg viewBox="0 0 100 100" style="width:96px;color:var(--laranja)"><use href="#i-saude"/></svg></div><div class="t">SAÚDE<small>Convênio médico e odontológico</small></div></div></div>
+    <div class="el" data-in="17.2" data-a="slideL" style="top:730px"><div class="card"><div class="ic" style="background:#DCEBEB"><svg viewBox="0 0 100 100" style="width:100px;color:var(--teal)"><use href="#i-edu"/></svg></div><div class="t">EDUCAÇÃO<small>Até 60% de desconto em cursos</small></div></div></div>
+    <div class="el" data-in="18.4" data-a="slideR" style="top:990px"><div class="card"><div class="ic" style="background:#FDE7D6"><svg viewBox="0 0 100 100" style="width:100px;color:var(--laranja)"><use href="#i-lazer"/></svg></div><div class="t">LAZER<small>Clubes, parques, cinemas</small></div></div></div>
+    <div class="el" data-in="19.6" data-a="slideL" style="top:1250px"><div class="card"><div class="ic" style="background:#DCEBEB"><svg viewBox="0 0 100 100" style="width:96px;color:var(--teal)"><use href="#i-seg"/></svg></div><div class="t">SEGURANÇA<small>Seguro de vida e assistências</small></div></div></div>
+  </section>
+
+  <section class="scene" data-start="22" data-end="25.5">
+    <div class="f-lar"></div><svg class="padrao" data-pad="rgba(255,255,255,.14)"></svg>
+    <div class="el h" data-in="22.05" data-a="slam" id="vidas" style="top:420px;font-size:230px;color:#fff">+0</div>
+    <div class="el h" data-in="22.4" data-a="rise" style="top:680px;font-size:84px;color:#fff">vidas acolhidas</div>
+    <div class="el" data-in="23.6" data-a="pop" style="top:900px"><div class="h" style="display:inline-block;background:#fff;color:var(--teal);font-size:96px;padding:26px 60px 34px;border-radius:30px">120 empresas</div></div>
+    <div class="el" data-in="24.2" data-a="rise" style="top:1110px;font-weight:700;font-size:48px;color:#fff">já cuidam da equipe com o Benefiz</div>
+  </section>
+
+  <section class="scene" data-start="25.5" data-end="30.5">
+    <div class="f-creme"></div>
+    <div class="el" data-in="25.55" data-a="pop" style="top:230px" id="logo7"></div>
+    <div class="el h" data-in="26.2" data-a="rise" style="top:560px;font-size:96px;color:var(--teal);padding:0 70px">Monte o pacote de benefícios da sua empresa</div>
+    <div class="el" data-in="27.2" data-a="pop" style="top:920px"><div class="pill" style="background:#25D366;color:#fff;font-size:62px;box-shadow:0 20px 50px rgba(37,211,102,.35)"><svg viewBox="0 0 32 32" style="width:80px;height:80px;color:#fff"><use href="#i-whats"/></svg>CHAMA NO WHATS</div></div>
+    <div class="el h" data-in="27.6" data-a="rise" style="top:1120px;font-size:70px;color:var(--laranja)">(61) 8199-0171</div>
+    <div class="el" data-in="28.0" data-a="rise" style="top:1240px;font-weight:700;font-size:40px;color:var(--teal)">@benefiz.br · Cultivando bem-estar</div>
+  </section>
+</div>
+
+<script src="marca/brand.js"></script>
+<script src="marca/icones.js"></script>
+<script>
+document.body.insertAdjacentHTML("afterbegin", ICONES);
+const L = 0;
+document.getElementById("logo5").innerHTML = BENEFIZ.logo(700, "branco");
+document.getElementById("logo7").innerHTML = BENEFIZ.logo(800, "claro");
+// padrão de mãozinhas (igual às peças da marca)
+document.querySelectorAll("[data-pad]").forEach(sv => {
+  sv.setAttribute("viewBox", "0 0 1680 2520"); let g = "";
+  for (let r = 0; r < 16; r++) for (let c = 0; c < 11; c++) {
+    const cheio = (r + c) % 3 === 0, cor = sv.dataset.pad;
+    g += `<g transform="translate(${c * 160} ${r * 160}) scale(.11)"><path d="${BENEFIZ.D}" ${cheio ? `fill="${cor}"` : `fill="none" stroke="${cor}" stroke-width="22"`}/></g>`;
+  }
+  sv.innerHTML = g;
+});
+const clamp = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
+const eo = x => 1 - Math.pow(1 - x, 3);
+const back = (x, c = 1.8) => 1 + (c + 1) * Math.pow(x - 1, 3) + c * Math.pow(x - 1, 2);
+const XF = 0.22;
+function anim(el, t) {
+  const t0 = parseFloat(el.dataset.in), a = el.dataset.a;
+  const d = a === "pop" ? 0.36 : a === "slam" ? 0.3 : 0.42;
+  const p = clamp((t - t0) / d), pe = eo(p);
+  let op = a === "pop" || a === "slam" ? clamp(p * 4) : pe, tf = "";
+  if (a === "rise") tf = `translateY(${((1 - pe) * 70).toFixed(1)}px)`;
+  if (a === "drop") tf = `translateY(${(-(1 - pe) * 90).toFixed(1)}px)`;
+  if (a === "pop") tf = `scale(${Math.max(0.02, back(p)).toFixed(4)})`;
+  if (a === "slam") tf = `scale(${(1 + (1 - pe) * 1.4).toFixed(4)})`;
+  if (a === "slideL") tf = `translateX(${(-(1 - pe) * 1100).toFixed(1)}px)`;
+  if (a === "slideR") tf = `translateX(${((1 - pe) * 1100).toFixed(1)}px)`;
+  op = op < 0.003 ? 0 : op;
+  el.style.opacity = op.toFixed(3);
+  el.style.visibility = op > 0 ? "visible" : "hidden";
+  el.style.transform = tf;
+}
+function render(tv) {
+  const t = tv - L;
+  document.querySelectorAll(".scene").forEach(s => {
+    const a = parseFloat(s.dataset.start), b = parseFloat(s.dataset.end);
+    let op = 0;
+    if (t >= a && t < b + XF) op = clamp((t - a) / XF) * (t > b ? 1 - clamp((t - b) / XF) : 1);
+    if (a === 0) op = t < b ? 1 : op;
+    s.style.opacity = op;
+    s.style.visibility = op > 0 ? "visible" : "hidden";
+    s.style.zIndex = Math.round(a * 10 + 10);
+    if (op <= 0) return;
+    let sh = "";
+    (s.dataset.shake || "").split(",").filter(Boolean).map(Number).forEach(k => {
+      const q = t - k; if (q > 0 && q < 0.35) { const amp = 14 * (1 - q / 0.35); sh = ` translate(${(Math.sin(q * 90) * amp).toFixed(1)}px,${(Math.cos(q * 70) * amp).toFixed(1)}px)`; }
+    });
+    s.style.transform = `scale(${(1 + 0.05 * (1 - eo(clamp((t - a) / 0.5)))).toFixed(4)})${sh}`;
+    s.querySelectorAll(".padrao").forEach(p => p.style.transform = `translate(${((t * 18) % 160).toFixed(1)}px,${((t * 26) % 160).toFixed(1)}px)`);
+    s.querySelectorAll(".el").forEach(el => anim(el, t));
+  });
+  const v = Math.round(20000 * eo(clamp((t - 22.05) / 1.2)) / 100) * 100;
+  document.getElementById("vidas").textContent = "+" + (v >= 20000 ? "20 mil" : v.toLocaleString("pt-BR"));
+}
+window.render = render;
+render(0);
+</script>
+</body>
+</html>
