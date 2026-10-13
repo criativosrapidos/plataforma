@@ -8,6 +8,29 @@ ROOT = Path(__file__).resolve().parent
 src = (ROOT / "anuncio.html").read_text()
 head = src[:src.index('<div id="stage">')]
 script = src[src.index('<script src="marca/brand.js">'):]
+
+def arte_plano(nome, n, fundo):
+    """Arte vetorial do plano: pessoas ilustradas (1, 2 ou 4) + o cartãozinho Benefiz do site."""
+    tons = ["#8D5A3B", "#E8B98F", "#C68642", "#F1C9A5"]
+    roupas = ["#F08A3E", "#3E7C7E", "#F4C430", "#5E9C9D"]
+    pos = {1: [(150, 1.0)], 2: [(100, 1.0), (200, 1.0)], 4: [(70, 1.0), (230, 1.0), (122, 0.7), (178, 0.7)]}[n]
+    gente = ""
+    for k, (x, e) in enumerate(pos):
+        y = 92 if e == 1.0 else 150
+        r = 34 * e
+        gente += (f'<path d="M{x - 62 * e} {y + 150 * e} q0 -{88 * e} {62 * e} -{88 * e} t{62 * e} {88 * e}z" fill="{roupas[k]}"/>'
+                  f'<circle cx="{x}" cy="{y}" r="{r}" fill="{tons[k]}"/>'
+                  f'<path d="M{x - r} {y - 4} q{r} -{r * 1.5} {2 * r} 0 q-{r * .2} -{r * .9} -{r} -{r * .95} q-{r * .8} {0} -{r} {r * .95}z" fill="#2B1B12"/>')
+    cartao = (f'<g transform="translate(48 200) scale(.85)"><rect width="240" height="104" rx="14" fill="#3E7C7E"/>'
+              f'<rect x="208" width="32" height="104" rx="0" fill="#F08A3E"/><rect x="226" width="14" height="104" rx="7" fill="#F08A3E"/>'
+              f'<circle cx="40" cy="58" r="24" fill="#fff"/><circle cx="40" cy="51" r="8" fill="#3E7C7E"/><path d="M26 72q14-18 28 0" fill="#3E7C7E"/>'
+              f'<text x="74" y="30" font-family="Fira Sans" font-weight="700" font-size="11" fill="#fff">Benefiz</text>'
+              f'<text x="74" y="56" font-family="Fira Sans" font-weight="800" font-size="16" fill="#fff">Plano {nome}</text>'
+              f'<text x="74" y="76" font-family="Fira Sans" font-weight="500" font-size="10" fill="#D6EAEA">000.000.000-00</text>'
+              f'<text x="74" y="90" font-family="Fira Sans" font-weight="500" font-size="10" fill="#D6EAEA">123456789101112</text></g>')
+    return (f'<svg viewBox="0 0 300 300" style="width:300px;height:300px;border-radius:26px;flex:none;background:{fundo}">'
+            f'{gente}{cartao}</svg>')
+
 c = json.load(open(ROOT / "audio/cues_v2.json"))
 FIM = c["fim"] + 1.2
 
@@ -70,11 +93,10 @@ cenas = f'''<div id="stage">
     <div class="el h" data-in="{c['cabe']}" data-a="drop" style="top:150px;font-size:96px;color:var(--teal)">E cabe no bolso</div>
     <div class="el" data-in="{c['apartir']}" data-a="rise" style="top:290px;font-weight:700;font-size:48px;color:var(--tinta)">planos a partir de <b style="color:var(--laranja)">R$ 209,90/mês</b></div>
     {''.join(f"""<div class="el" data-in="{c['apartir'] + 0.35 + i * 0.35:.2f}" data-a="slideR" style="top:{430 + i * 380}px"><div style="display:inline-flex;align-items:center;gap:30px;width:940px;background:#fff;border-radius:36px;padding:22px;text-align:left;box-shadow:0 20px 50px rgba(31,58,59,.15);{'border:6px solid var(--laranja);' if dest else ''}">
-      <img src="assets/plano_{arq}.jpg" style="width:300px;height:300px;object-fit:cover;border-radius:26px;flex:none">
+      {arte_plano(nome, {"Individual": 1, "Duplo": 2, "Quádruplo": 4}[nome], fundo)}
       <div><div class="h" style="font-size:58px;color:var(--teal)">{nome}</div><div style="font-weight:600;font-size:30px;color:var(--tinta);margin-top:6px">{sub}</div>
-        <div style="margin-top:14px"><span style="font-weight:700;font-size:34px;color:#7A8A8B">R$ </span><span class="h" style="font-size:96px;color:var(--laranja)">{preco}</span><span style="font-weight:700;font-size:32px;color:#7A8A8B">/mês</span></div></div></div></div>"""
-      for i, (arq, nome, sub, preco, dest) in enumerate([("individual", "Individual", "1 pessoa", "209,90", False), ("duplo", "Duplo", "2 pessoas", "239,90", False), ("quadruplo", "Quádruplo", "a família toda: 4 pessoas", "279,90", True)]))}
-    <div class="el" data-in="{c['quadruplo']}" data-a="pop" style="top:1135px;left:560px;right:auto"><div class="h" style="display:inline-block;background:var(--laranja);color:#fff;font-size:38px;padding:12px 26px;border-radius:40px;transform:rotate(-4deg);white-space:nowrap;box-shadow:0 10px 24px rgba(0,0,0,.2)">menos de R$ 70 por pessoa</div></div>
+        <div style="margin-top:14px"><span style="font-weight:700;font-size:34px;color:#7A8A8B">R$ </span><span class="h" style="font-size:96px;color:var(--laranja)">{preco}</span><span style="font-weight:700;font-size:32px;color:#7A8A8B">/mês</span></div>{'<div style="display:inline-block;margin-top:8px;background:var(--laranja);color:#fff;font-weight:800;font-size:30px;padding:8px 20px;border-radius:30px">menos de R$ 70 por pessoa</div>' if dest else ''}</div></div></div>"""
+      for i, (fundo, nome, sub, preco, dest) in enumerate([("linear-gradient(160deg,#F7C548,#F0A93E)", "Individual", "1 pessoa", "209,90", False), ("linear-gradient(160deg,#E9E1D6,#D8CDBF)", "Duplo", "2 pessoas", "239,90", False), ("linear-gradient(160deg,#F3D9C4,#E8BFA0)", "Quádruplo", "a família toda: 4 pessoas", "279,90", True)]))}
   </section>
 
   <!-- 6. CTA -->
