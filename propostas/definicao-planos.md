@@ -1,0 +1,29 @@
+# Definição de pacotes e planos (rascunho em discussão)
+
+Frase principal: **"Tudo que uma agência entrega: copywriter, designer, social media, editor de vídeo e locutor. Post todo dia, sem fidelidade."**
+
+Sem página de vendas. Sem fidelidade em nada.
+
+## Pacotes (pagamento único)
+
+| | Largada R$ 97 | Acelera R$ 297 | Turbo R$ 497 |
+|---|---|---|---|
+| Arte de anúncio | 1 | 1 | 1 |
+| Vídeo de anúncio 30 s (roteiro + locução) | 1 | 1 | 1 |
+| Post | – | 1 | – |
+| Identidade visual (logo, paleta, fontes, foto de perfil, destaques) | – | ✓ | ✓ |
+| **Kit de estreia**: grade de 9 posts + 3 carrosséis + 1 reels + 1 stories | – | – | ✓ |
+| Bônus: PDF de boas práticas do Instagram + link com respostas prontas de vendas (copiar e colar) | – | – | ✓ |
+
+## Planos mensais (sem identidade visual; sem fidelidade)
+
+| | Presença R$ 597 | Crescimento R$ 797 | Autoridade R$ 997 |
+|---|---|---|---|
+| Perfil completo (nome, bio, foto, destaques) | ✓ | ✓ | ✓ |
+| Conteúdo | 30/mês, post todo dia, mais imagem, poucos reels | 30 feed + 12 stories | 30 feed + 30 stories |
+| Legendas (copy) | ✓ | ✓ | ✓ |
+| Calendário de postagem (cliente posta) | ✓ | – | – |
+| Programação e postagem | – | ✓ | ✓ |
+| Artes de anúncio | – | – | 3 (1 feita para tráfego, foco em venda) |
+| Relatório mensal de métricas | – | – | ✓ (a confirmar) |
+| Bônus | – | Calendário de conteúdo humanizado (o que gravar) | Calendário humanizado + sequência de stories que vende (templates/PDF) |
