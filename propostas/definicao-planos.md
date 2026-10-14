@@ -6,7 +6,7 @@ Sem página de vendas. Sem fidelidade em nada.
 
 ## Pacotes (pagamento único)
 
-Cada pacote contém o anterior e acrescenta mais peças. Todos têm peças dos 5 tipos que criamos (anúncio, post, carrossel, reels e stories), conforme o nível.
+Cada pacote contém tudo do anterior e acrescenta mais peças. O Turbo tem os 5 tipos que criamos: anúncio, post, carrossel, reels e stories.
 
 | | Largada R$ 97 | Acelera R$ 297 | Turbo R$ 497 |
 |---|---|---|---|
