@@ -33,23 +33,21 @@ Exemplos de escolha:
 - Acelera (20): 2 anúncios + 1 carrossel + 1 post + 2 stories
 - Turbo (40): 2 anúncios + grade de 9 (6 posts + 3 carrosséis) + 1 reels + 5 stories
 
-## Planos mensais (proposta; sem identidade visual; sem fidelidade)
+## Planos mensais (quantidades fixas; sem identidade visual; sem fidelidade)
 
-Também em créditos, com a regra de **post todo dia** (mínimo de 30 peças por mês). Os créditos não acumulam para o mês seguinte.
+Post todo dia em todos os planos.
 
 | | Presença R$ 597 | Crescimento R$ 797 | Autoridade R$ 997 |
 |---|---|---|---|
-| Créditos por mês | 60 | 90 | 120 |
-| Regra mínima | 30 peças (1 por dia, feed ou stories) | 30 no feed | 30 no feed + 30 stories |
-| Perfil completo (nome, bio, foto, destaques) | ✓ | ✓ | ✓ |
+| Stories | 10 | 12 | 30 (todo dia) |
+| Posts | 14 | 19 | 18 |
+| Carrosséis | 5 | 8 | 8 |
+| Reels com locução | 1 | 3 | 4 |
+| Anúncios | – | – | 3 (1 feito para tráfego, foco em venda) |
+| **Total de peças no mês** | **30** | **42** | **63** |
 | Legendas (copy) | ✓ | ✓ | ✓ |
+| Perfil completo (nome, bio, foto, destaques) | ✓ | ✓ | ✓ |
 | Postagem | Calendário pronto, o cliente posta | Programamos e postamos | Programamos e postamos |
-| Anúncio feito para tráfego (foco em venda) | – | – | 1 dos anúncios |
 | Relatório mensal de métricas | – | – | ✓ |
 | Ajustes por mês | 2 | 3 | 4 |
 | Bônus | – | Calendário de conteúdo humanizado | Calendário humanizado + sequência de stories que vende |
-
-Exemplos de escolha:
-- Presença (60): 1 reels + 5 carrosséis + 14 posts + 10 stories = 30 peças, 57 créditos
-- Crescimento (90): 3 reels + 8 carrosséis + 19 posts + 12 stories = 42 peças, 86 créditos
-- Autoridade (120): 3 anúncios + 3 reels + 8 carrosséis + 19 posts + 30 stories = 63 peças, 119 créditos
