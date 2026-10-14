@@ -40,11 +40,11 @@ Post todo dia em todos os planos.
 | | Presença R$ 597 | Crescimento R$ 797 | Autoridade R$ 997 |
 |---|---|---|---|
 | Stories | 10 | 12 | 30 (todo dia) |
-| Posts | 14 | 19 | 18 |
-| Carrosséis | 5 | 8 | 8 |
-| Reels com locução | 1 | 3 | 4 |
-| Anúncios | – | – | 3 (1 feito para tráfego, foco em venda) |
-| **Total de peças no mês** | **30** | **42** | **63** |
+| Posts | 9 | 12 | 15 |
+| Carrosséis | 6 | 9 | 12 |
+| Reels com locução | 3 | 6 | 9 |
+| Anúncios | 2 | 4 | 6 (1 feito para tráfego, foco em venda) |
+| **Total de peças no mês** | **30** | **43** | **72** |
 | Legendas (copy) | ✓ | ✓ | ✓ |
 | Perfil completo (nome, bio, foto, destaques) | ✓ | ✓ | ✓ |
 | Postagem | Calendário pronto, o cliente posta | Programamos e postamos | Programamos e postamos |
