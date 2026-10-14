@@ -1,4 +1,4 @@
-# Definição de pacotes e planos (rascunho em discussão)
+# Definição de pacotes e planos
 
 Frase principal: **"Tudo que uma agência entrega: copywriter, designer, social media, editor de vídeo e locutor. Post todo dia, sem fidelidade."**
 
@@ -6,7 +6,9 @@ Sem página de vendas. Sem fidelidade em nada.
 
 ## Sistema de créditos ("buffet")
 
-O cliente escolhe o que quer criar e paga cada peça com créditos.
+Só nos pacotes. O cliente escolhe o que quer criar e paga cada peça com créditos.
+
+Criamos 5 tipos de peça: stories, post, carrossel, reels e anúncio.
 
 | Peça | Créditos |
 |---|---|
@@ -14,7 +16,7 @@ O cliente escolhe o que quer criar e paga cada peça com créditos.
 | Post | 2 |
 | Carrossel | 3 |
 | Reels | 4 |
-| Anúncio (arte ou vídeo com locução) | 5 |
+| Anúncio | 5 |
 
 **Ajuste** = mudar texto, cor, foto ou ordem. Refazer uma peça do zero conta como peça nova.
 
@@ -30,7 +32,7 @@ O cliente escolhe o que quer criar e paga cada peça com créditos.
 
 Exemplos de escolha:
 - Largada (10): 1 anúncio + 1 carrossel + 2 stories
-- Acelera (20): 2 anúncios + 1 carrossel + 1 post + 2 stories
+- Acelera (20): 2 anúncios + 1 carrossel + 1 post + 5 stories
 - Turbo (40): 2 anúncios + grade de 9 (6 posts + 3 carrosséis) + 1 reels + 5 stories
 
 ## Planos mensais (quantidades fixas; sem identidade visual; sem fidelidade)
@@ -42,12 +44,12 @@ Post todo dia em todos os planos.
 | Stories | 10 | 20 | 30 (todo dia) |
 | Posts | 9 | 12 | 15 |
 | Carrosséis | 6 | 9 | 12 |
-| Reels com locução | 3 | 6 | 9 |
+| Reels | 3 | 6 | 9 |
 | Anúncios | 2 | 3 | 4 (1 feito para tráfego, foco em venda) |
 | **Total de peças no mês** | **30** | **50** | **70** |
 | Legendas (copy) | ✓ | ✓ | ✓ |
 | Perfil completo (nome, bio, foto, destaques) | ✓ | ✓ | ✓ |
 | Postagem | Calendário pronto, o cliente posta | Programamos e postamos | Programamos e postamos |
 | Relatório mensal de métricas | – | – | ✓ |
-| Ajustes por mês | 2 | 3 | 4 |
+| Ajustes (no mês inteiro) | 2 | 3 | 4 |
 | Bônus | – | Calendário de conteúdo humanizado | Calendário humanizado + sequência de stories que vende |
