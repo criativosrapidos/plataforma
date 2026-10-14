@@ -26,3 +26,6 @@ work5/render/check*.png
 work5/render/check_v2.png
 work5/render/prev6/
 work5/render/prev7/
+work6/audio/*.wav
+work6/render/video_raw.mp4
+work6/render/sheet*.png
