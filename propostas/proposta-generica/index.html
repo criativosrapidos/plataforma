@@ -32,10 +32,6 @@
   .dark { background: var(--black); color: #fff; }
   .light { background: var(--off); }
   .yel { background: var(--yellow); color: var(--black); }
-  .grid::before { content: ""; position: absolute; inset: 0; pointer-events: none; background-image: linear-gradient(var(--g) 1px, transparent 1px), linear-gradient(90deg, var(--g) 1px, transparent 1px); background-size: 96px 96px; }
-  .dark.grid { --g: rgba(255,255,255,.045); }
-  .light.grid { --g: rgba(0,0,0,.045); }
-  .yel.grid { --g: rgba(0,0,0,.06); }
   .slide > * { position: relative; }
 
   /* logo */
@@ -62,13 +58,17 @@
   /* capa */
   .cover { display: flex; flex-direction: column; justify-content: center; }
   .cover .eyebrow { color: var(--yellow); font-weight: 700; font-size: 22px; letter-spacing: .32em; text-transform: uppercase; margin: 72px 0 26px; }
-  .cover h1 { font-size: 128px; font-weight: 900; line-height: .98; letter-spacing: -.02em; max-width: 1500px; }
+  .cover-wrap { display: grid; grid-template-columns: 1.35fr .65fr; gap: 80px; align-items: center; }
+  .kpis { display: grid; gap: 22px; }
+  .kpi { background: var(--black-2); border: 1px solid rgba(255,255,255,.08); border-radius: 26px; padding: 30px 34px; }
+  .kpi b { display: block; font-family: "Montserrat"; font-weight: 900; font-size: 64px; line-height: 1; color: var(--yellow); letter-spacing: -.02em; }
+  .kpi span { display: block; margin-top: 8px; font-size: 22px; color: #D4D4DA; font-weight: 600; }
+  .cover h1 { font-size: 112px; font-weight: 900; line-height: .98; letter-spacing: -.02em; max-width: 1500px; }
   .cover h1 em { font-style: italic; color: var(--yellow); }
   .cover p { margin-top: 40px; font-size: 34px; color: #D4D4DA; max-width: 1250px; line-height: 1.4; }
   .cover .tags { display: flex; gap: 16px; margin-top: 54px; }
   .cover .tags span { padding: 14px 28px; border-radius: 999px; font-size: 24px; font-weight: 700; background: var(--yellow); color: var(--black); }
   .cover .tags span.o { background: transparent; color: #fff; border: 2px solid rgba(255,255,255,.25); }
-  .bolt-bg { position: absolute; right: -300px; bottom: -200px; width: 980px; opacity: .06; }
 
   /* equipe */
   .team { display: grid; grid-template-columns: repeat(5, 1fr); gap: 24px; }
@@ -134,6 +134,25 @@
   .plan.m ul { border-top: none; padding-top: 0; gap: 12px; }
   .plan.m li { font-size: 22px; }
 
+  .pay { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
+  .card-cc { width: 100%; max-width: 640px; aspect-ratio: 1.6; border-radius: 34px; background: linear-gradient(135deg, #FFE14D, #FFD400 55%, #F2C200); color: var(--black); padding: 44px 48px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 30px 60px rgba(0,0,0,.35); }
+  .card-cc i { width: 96px; height: 72px; border-radius: 14px; background: linear-gradient(135deg, #2C3038, #101216); }
+  .card-cc b { font-family: "Montserrat"; font-weight: 800; font-size: 40px; letter-spacing: .08em; }
+  .card-cc span { font-size: 26px; font-weight: 800; display: flex; justify-content: space-between; }
+  .parc { display: flex; flex-wrap: wrap; gap: 14px; margin: 26px 0 30px; }
+  .parc span { background: var(--black-2); border: 1px solid rgba(255,255,255,.1); border-radius: 18px; padding: 14px 24px; font-family: "Montserrat"; font-weight: 900; font-size: 34px; }
+  .parc span.on { background: var(--yellow); color: var(--black); }
+  .pay h3 { font-size: 46px; font-weight: 900; line-height: 1.1; }
+  .pay p { font-size: 26px; color: #D4D4DA; line-height: 1.5; }
+  .pay small { display: block; margin-top: 18px; font-size: 20px; color: var(--muted-dark); }
+  .bonus { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+  .bcard { padding: 36px 32px; display: flex; flex-direction: column; gap: 14px; }
+  .bcard .bt { display: inline-block; align-self: flex-start; background: var(--black); color: var(--yellow); font-weight: 800; font-size: 16px; letter-spacing: .14em; text-transform: uppercase; padding: 8px 14px; border-radius: 99px; }
+  .bcard h3 { font-size: 30px; font-weight: 900; line-height: 1.15; }
+  .bcard p { font-size: 20px; color: var(--muted); line-height: 1.45; }
+  .bcover { height: 190px; border-radius: 18px; background: var(--black); position: relative; overflow: hidden; display: flex; align-items: flex-end; padding: 18px 20px; }
+  .bcover b { font-family: "Montserrat"; font-weight: 900; font-size: 26px; color: #fff; line-height: 1.1; }
+  .bcover::after { content: ""; position: absolute; top: 18px; right: 18px; width: 54px; height: 54px; border-radius: 14px; background: var(--yellow); }
   /* passos */
   .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; }
   .step { padding: 44px 38px; min-height: 330px; }
@@ -164,17 +183,26 @@
 </svg>
 
 <!-- 1. CAPA -->
-<section class="slide dark grid cover">
-  <svg class="bolt-bg" viewBox="0 0 100 74" fill="#FFD400"><use href="#play"/></svg>
+<section class="slide dark cover">
   <div class="logo" style="--s:96px"><img src="assets/logo-icone.png" alt=""><div class="word"><b>criativos</b><b>rápidos</b></div></div>
+  <div class="cover-wrap">
+    <div>
   <div class="eyebrow">Proposta comercial</div>
   <h1>Tudo que uma agência entrega. <em>Post todo dia.</em></h1>
   <p>Conteúdo para o seu Instagram feito por uma equipe completa, com entrega rápida e sem prender você em contrato.</p>
   <div class="tags"><span>Sem fidelidade</span><span>Entrega em 24 h</span><span class="o">A partir de R$ 97</span></div>
+    </div>
+    <div class="kpis">
+      <div class="kpi"><b>30 a 70</b><span>conteúdos por mês nos planos</span></div>
+      <div class="kpi"><b>24 h</b><span>para entregar os pacotes</span></div>
+      <div class="kpi"><b>0</b><span>meses de fidelidade</span></div>
+      <div class="kpi"><b>12x</b><span>parcelado no cartão</span></div>
+    </div>
+  </div>
 </section>
 
 <!-- 2. O QUE A GENTE FAZ -->
-<section class="slide light grid">
+<section class="slide light">
   <div class="head">
     <div><h2>Uma Equipe Inteira Para Você</h2><div class="sub">Você não precisa contratar cinco pessoas. A gente já é essa equipe.</div></div>
     <div class="num">01</div>
@@ -191,7 +219,7 @@
 </section>
 
 <!-- 3. BUFFET DE CRÉDITOS -->
-<section class="slide dark grid">
+<section class="slide dark">
   <div class="head">
     <div><h2>Monte do Seu Jeito</h2><div class="sub">Nos pacotes você escolhe o que quer, como num buffet</div></div>
     <div class="num">02</div>
@@ -217,7 +245,7 @@
 </section>
 
 <!-- 4. PACOTES -->
-<section class="slide dark grid pricing">
+<section class="slide dark pricing">
   <h2>PACOTES</h2>
   <div class="tagline">Pagamento único, sem mensalidade</div>
   <div class="plans">
@@ -262,7 +290,7 @@
 </section>
 
 <!-- 5. PLANOS MENSAIS -->
-<section class="slide yel grid pricing">
+<section class="slide yel pricing">
   <h2>PLANOS MENSAIS</h2>
   <div class="tagline">Post todo dia. <b>Sem fidelidade:</b> cancela quando quiser.</div>
   <div class="plans">
@@ -303,11 +331,42 @@
   </div>
 </section>
 
+<!-- PAGAMENTO -->
+<section class="slide dark">
+  <div class="head">
+    <div><h2>Pagamento Facilitado</h2><div class="sub">Parcele no cartão e comece hoje</div></div>
+    <div class="num">03</div>
+  </div>
+  <div class="pay">
+    <div class="card-cc"><i></i><b>•••• •••• •••• 2026</b><span><span>SUA EMPRESA</span><span>crédito</span></span></div>
+    <div>
+      <h3>Divida em quantas vezes quiser no cartão de crédito.</h3>
+      <div class="parc"><span>1x</span><span>3x</span><span>6x</span><span>10x</span><span class="on">12x</span></div>
+      <p>Vale para pacotes e planos. Você escolhe o número de parcelas na hora de pagar.</p>
+      <small>Parcelamento com as taxas da maquininha.</small>
+    </div>
+  </div>
+</section>
+
+<!-- BÔNUS -->
+<section class="slide light">
+  <div class="head">
+    <div><h2>Materiais Bônus</h2><div class="sub">PDFs prontos para você vender mais pelo Instagram</div></div>
+    <div class="num">04</div>
+  </div>
+  <div class="bonus">
+    <div class="card bcard"><div class="bcover"><b>Boas práticas do Instagram</b></div><span class="bt">Pacote Turbo</span><h3>Guia do perfil que vende</h3><p>Bio, foto, destaques, frequência, formatos e legendas que fazem o cliente chamar.</p></div>
+    <div class="card bcard"><div class="bcover"><b>Respostas prontas de vendas</b></div><span class="bt">Pacote Turbo</span><h3>Mensagens para copiar e colar</h3><p>O que responder quando o cliente pergunta o preço, acha caro, diz "vou pensar" ou some.</p></div>
+    <div class="card bcard"><div class="bcover"><b>Calendário humanizado</b></div><span class="bt">Plano Autoridade</span><h3>30 dias de stories para gravar</h3><p>Uma ideia por dia para você aparecer, mostrar bastidores e criar confiança.</p></div>
+    <div class="card bcard"><div class="bcover"><b>Sequência de stories que vende</b></div><span class="bt">Plano Autoridade</span><h3>Roteiros de stories em sequência</h3><p>Ordem exata de stories para levar o seguidor até a compra no último.</p></div>
+  </div>
+</section>
+
 <!-- 6. COMO COMEÇAR -->
-<section class="slide light grid">
+<section class="slide light">
   <div class="head">
     <div><h2>Como Começar</h2><div class="sub">Simples: escolhe, responde, recebe</div></div>
-    <div class="num">03</div>
+    <div class="num">05</div>
   </div>
   <div class="steps">
     <div class="card step"><div class="k">1</div><h3>Escolhe o pacote ou plano</h3><p>Pacote para começar agora, plano para postar todo dia.</p></div>
@@ -323,7 +382,7 @@
 </section>
 
 <!-- 7. FECHAMENTO -->
-<section class="slide yel grid close on-yel">
+<section class="slide yel close on-yel">
   <div class="logo" style="--s:120px"><svg viewBox="0 0 100 74" style="width:150px;height:111px" fill="#101216"><use href="#play"/></svg><div class="word" style="font-size:54px"><b>criativos</b><b>rápidos</b></div></div>
   <h2>Bora começar?</h2>
   <p>Responda esta mensagem com o pacote ou plano que você escolheu e a gente já manda o seu briefing.</p>
