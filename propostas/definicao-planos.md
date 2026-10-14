@@ -4,22 +4,35 @@ Frase principal: **"Tudo que uma agência entrega: copywriter, designer, social 
 
 Sem página de vendas. Sem fidelidade em nada.
 
-## Pacotes (pagamento único)
+## Sistema de créditos ("buffet")
 
-Cada pacote contém tudo do anterior e acrescenta mais peças. O Turbo tem os 5 tipos que criamos: anúncio, post, carrossel, reels e stories.
+O cliente escolhe o que quer criar e paga cada peça com créditos.
+
+| Peça | Créditos |
+|---|---|
+| Stories | 1 |
+| Post | 2 |
+| Carrossel | 3 |
+| Arte de anúncio | 3 |
+| Reels com locução | 5 |
+| Vídeo de anúncio 30 s (roteiro + locução) | 6 |
+
+**Ajuste** = mudar texto, cor, foto ou ordem. Refazer uma peça do zero conta como peça nova.
+
+## Pacotes (pagamento único)
 
 | | Largada R$ 97 | Acelera R$ 297 | Turbo R$ 497 |
 |---|---|---|---|
-| Vídeo de anúncio 30 s (roteiro + locução) | 1 | 1 | 1 |
-| Arte de anúncio | 1 | 1 | 1 |
-| Posts | 1 | 2 | 6 |
-| Carrosséis | – | 1 | 3 |
-| Grade do Instagram | – | 1ª linha (3 peças) | Completa (9 peças) |
-| Reels com locução | – | – | 1 |
-| Stories | 1 | 3 | 5 |
+| Créditos | 12 | 20 | 40 |
 | Identidade visual (logo, paleta, fontes, foto de perfil, destaques) | – | ✓ | ✓ |
-| PDF de boas práticas do Instagram + link com respostas prontas de vendas | – | – | ✓ |
-| **Total de peças** | 4 | 8 | 17 |
+| PDFs bônus (boas práticas do Instagram, respostas prontas de vendas e outros) | – | – | ✓ |
+| Ajustes | 1 rodada por peça | 2 rodadas por peça | 3 rodadas por peça |
+| Prazo para usar os créditos | 60 dias | 60 dias | 60 dias |
+
+Exemplos de escolha:
+- Largada (12): 1 vídeo de anúncio + 1 arte de anúncio + 1 post + 1 stories
+- Acelera (20): 1 vídeo de anúncio + 1 arte de anúncio + 2 posts + 1 carrossel + 3 stories
+- Turbo (40): 1 vídeo de anúncio + 1 arte de anúncio + grade de 9 (6 posts + 3 carrosséis) + 1 reels + 5 stories
 
 ## Planos mensais (sem identidade visual; sem fidelidade)
 
