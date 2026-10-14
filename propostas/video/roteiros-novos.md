@@ -54,3 +54,17 @@ Os dois vídeos estão sem voz. Cada tempo abaixo é uma cena; a fala deve caber
 | 8,6–22,6 s | Agora ele monta as peças. Dois anúncios, menos dez. Um carrossel, menos três. Um post, menos dois. E cinco stories. Zerou! Pacote montado. |
 | 22,6–27 s | Prontinho! Agora é só responder o briefing e receber em vinte e quatro horas. |
 | 27–31,5 s | Monte o seu. Responde essa mensagem. |
+
+## video-pagamento.mp4 (36 s), a história do Zé e o pagamento
+
+| Tempo | Locução |
+|---|---|
+| 0–4,2 s | Esse é o Zé. Ele tem uma loja e queria vender mais pelo Instagram. |
+| 4,2–9,2 s | O sonho dele: perfil bonito, post todo dia e cliente chamando no WhatsApp. |
+| 9,2–14,4 s | Mas agência era cara demais, e pagar tudo de uma vez não dava. |
+| 14,4–19 s | Até que ele conheceu a Criativos Rápidos. |
+| 19–24,6 s | E descobriu que lá é até dez vezes mais barato que uma agência e até trinta vezes mais eficiente. |
+| 24,6–31,6 s | E o melhor: dá pra parcelar no cartão, em quantas vezes quiser, com as taxas da maquininha. |
+| 31,6–36 s | Ficou fácil, né? Responde essa mensagem e escolhe o seu. |
+
+Atenção: "até 10x mais barato" e "até 30x mais eficiente" são comparações numéricas. Em anúncio pago, tenham como comprovar esses números.
