@@ -22,3 +22,25 @@ Os dois vídeos estão sem voz. Cada tempo abaixo é uma cena; a fala deve caber
 | 15–23 s | Na Criativos Rápidos é diferente: sem fidelidade, post todo dia, entrega em vinte e quatro horas, copy, design, vídeo e locução, e você aprova tudo. |
 | 23–28 s | Planos a partir de quinhentos e noventa e sete por mês. Fica porque gosta, sai quando quiser. |
 | 28–33 s | Troca de agência hoje. Responde essa mensagem. |
+
+## video-compra.mp4 (36 s), o bonequinho fazendo a compra
+
+| Tempo | Locução |
+|---|---|
+| 0–5 s | Esse é o Zé. O Instagram da loja dele vivia parado. |
+| 5–10,5 s | Passo um: ele escolhe o pacote. O Zé foi de Acelera. |
+| 10,5–17 s | Passo dois: responde o briefing. Conta do negócio, do cliente e escolhe as peças. |
+| 17–23 s | Passo três: a gente cria tudo. Stories, posts, carrosséis, reels e anúncios, em até vinte e quatro horas. |
+| 23–30 s | Passo quatro: ele recebe, aprova e posta. E o cliente já chama no WhatsApp. |
+| 30–36 s | Agora é a sua vez. Responde essa mensagem e escolhe o seu. |
+
+## video-creditos.mp4 (34 s), como funcionam os créditos
+
+| Tempo | Locução |
+|---|---|
+| 0–4 s | Como funcionam os créditos? É mais fácil do que parece. |
+| 4–10 s | Cada pacote vem com créditos: Largada, dez. Acelera, vinte. Turbo, quarenta. |
+| 10–16 s | E cada peça custa créditos: stories, um. Post, dois. Carrossel, três. Reels, quatro. Anúncio, cinco. |
+| 16–25 s | Por exemplo, no Acelera: dois anúncios, um carrossel, um post e cinco stories. Pronto, vinte créditos, pacote montado. |
+| 25–29,5 s | Você monta do seu jeito, como num buffet, e recebe em vinte e quatro horas. |
+| 29,5–34 s | Monte o seu agora. Responde essa mensagem. |
