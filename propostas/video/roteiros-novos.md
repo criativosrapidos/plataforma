@@ -1,5 +1,7 @@
 # Roteiros de locução dos vídeos novos
 
+Todos os vídeos abaixo já têm locução (voz "Enzo", ElevenLabs Flash). Os áudios ficam em `locucao-<nome>.mp3`, e o tempo de cada cena foi ajustado à fala.
+
 Os dois vídeos estão sem voz. Cada tempo abaixo é uma cena; a fala deve caber dentro dela.
 
 ## video-rapido.mp4 (21 s)
