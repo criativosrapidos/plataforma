@@ -22,7 +22,7 @@ O cliente escolhe o que quer criar e paga cada peça com créditos.
 
 | | Largada R$ 97 | Acelera R$ 297 | Turbo R$ 497 |
 |---|---|---|---|
-| Créditos | 10 | 20 | 35 |
+| Créditos | 10 | 20 | 40 |
 | Identidade visual (logo, paleta, fontes, foto de perfil, destaques) | – | ✓ | ✓ |
 | PDFs bônus (boas práticas do Instagram, respostas prontas de vendas e outros) | – | – | ✓ |
 | Ajustes (no pacote inteiro) | 1 | 2 | 3 |
@@ -31,17 +31,25 @@ O cliente escolhe o que quer criar e paga cada peça com créditos.
 Exemplos de escolha:
 - Largada (10): 1 anúncio + 1 carrossel + 2 stories
 - Acelera (20): 2 anúncios + 1 carrossel + 1 post + 2 stories
-- Turbo (35): 1 anúncio + grade de 9 (6 posts + 3 carrosséis) + 1 reels + 5 stories
+- Turbo (40): 2 anúncios + grade de 9 (6 posts + 3 carrosséis) + 1 reels + 5 stories
 
-## Planos mensais (sem identidade visual; sem fidelidade)
+## Planos mensais (proposta; sem identidade visual; sem fidelidade)
+
+Também em créditos, com a regra de **post todo dia** (mínimo de 30 peças por mês). Os créditos não acumulam para o mês seguinte.
 
 | | Presença R$ 597 | Crescimento R$ 797 | Autoridade R$ 997 |
 |---|---|---|---|
+| Créditos por mês | 60 | 90 | 120 |
+| Regra mínima | 30 peças (1 por dia, feed ou stories) | 30 no feed | 30 no feed + 30 stories |
 | Perfil completo (nome, bio, foto, destaques) | ✓ | ✓ | ✓ |
-| Conteúdo | 30/mês, post todo dia, mais imagem, poucos reels | 30 feed + 12 stories | 30 feed + 30 stories |
 | Legendas (copy) | ✓ | ✓ | ✓ |
-| Calendário de postagem (cliente posta) | ✓ | – | – |
-| Programação e postagem | – | ✓ | ✓ |
-| Artes de anúncio | – | – | 3 (1 feita para tráfego, foco em venda) |
-| Relatório mensal de métricas | – | – | ✓ (a confirmar) |
-| Bônus | – | Calendário de conteúdo humanizado (o que gravar) | Calendário humanizado + sequência de stories que vende (templates/PDF) |
+| Postagem | Calendário pronto, o cliente posta | Programamos e postamos | Programamos e postamos |
+| Anúncio feito para tráfego (foco em venda) | – | – | 1 dos anúncios |
+| Relatório mensal de métricas | – | – | ✓ |
+| Ajustes por mês | 2 | 3 | 4 |
+| Bônus | – | Calendário de conteúdo humanizado | Calendário humanizado + sequência de stories que vende |
+
+Exemplos de escolha:
+- Presença (60): 1 reels + 5 carrosséis + 14 posts + 10 stories = 30 peças, 57 créditos
+- Crescimento (90): 3 reels + 8 carrosséis + 19 posts + 12 stories = 42 peças, 86 créditos
+- Autoridade (120): 3 anúncios + 3 reels + 8 carrosséis + 19 posts + 30 stories = 63 peças, 119 créditos
