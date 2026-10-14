@@ -44,3 +44,13 @@ Os dois vídeos estão sem voz. Cada tempo abaixo é uma cena; a fala deve caber
 | 16–25 s | Por exemplo, no Acelera: dois anúncios, um carrossel, um post e cinco stories. Pronto, vinte créditos, pacote montado. |
 | 25–29,5 s | Você monta do seu jeito, como num buffet, e recebe em vinte e quatro horas. |
 | 29,5–34 s | Monte o seu agora. Responde essa mensagem. |
+
+## video-ze-monta-pacote.mp4 (31,5 s), o Zé montando o pacote
+
+| Tempo | Locução |
+|---|---|
+| 0–3,6 s | Bora montar o pacote do Zé? |
+| 3,6–8,6 s | Primeiro ele escolhe o pacote. Foi de Acelera: vinte créditos. |
+| 8,6–22,6 s | Agora ele monta as peças. Dois anúncios, menos dez. Um carrossel, menos três. Um post, menos dois. E cinco stories. Zerou! Pacote montado. |
+| 22,6–27 s | Prontinho! Agora é só responder o briefing e receber em vinte e quatro horas. |
+| 27–31,5 s | Monte o seu. Responde essa mensagem. |
