@@ -28,7 +28,7 @@ Criamos 5 tipos de peça: stories, post, carrossel, reels e anúncio.
 | Identidade visual (logo, paleta, fontes, foto de perfil, destaques) | – | ✓ | ✓ |
 | PDFs bônus (boas práticas do Instagram, respostas prontas de vendas e outros) | – | – | ✓ |
 | Ajustes (no pacote inteiro) | 1 | 2 | 3 |
-| Prazo | Escolhe na compra, recebe em até 7 dias | Escolhe na compra, recebe em até 7 dias | Escolhe na compra, recebe em até 7 dias |
+| Prazo | 7 dias para responder o briefing; entregamos em 24 h | 7 dias para responder o briefing; entregamos em 24 h | 7 dias para responder o briefing; entregamos em 24 h |
 
 Exemplos de escolha:
 - Largada (10): 1 anúncio + 1 carrossel + 2 stories
@@ -45,11 +45,11 @@ Post todo dia em todos os planos.
 | Posts | 9 | 12 | 15 |
 | Carrosséis | 6 | 9 | 12 |
 | Reels | 3 | 6 | 9 |
-| Anúncios | 2 | 3 | 4 (1 feito para tráfego, foco em venda) |
+| Anúncios | 2 | 3 | 4 |
 | **Total de peças no mês** | **30** | **50** | **70** |
 | Legendas (copy) | ✓ | ✓ | ✓ |
 | Perfil completo (nome, bio, foto, destaques) | ✓ | ✓ | ✓ |
 | Postagem | Calendário pronto, o cliente posta | Programamos e postamos | Programamos e postamos |
 | Relatório mensal de métricas | – | – | ✓ |
-| Ajustes (no mês inteiro) | 2 | 3 | 4 |
-| Bônus | – | Calendário de conteúdo humanizado | Calendário humanizado + sequência de stories que vende |
+| Ajustes (no mês inteiro) | 1 | 2 | 3 |
+| Bônus | – | – | Calendário de conteúdo humanizado + sequência de stories que vende |

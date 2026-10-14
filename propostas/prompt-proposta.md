@@ -17,7 +17,7 @@ Você vai criar a proposta comercial da **Criativos Rápidos**, uma agência de 
 - Largada R$ 97: 10 créditos, 1 ajuste.
 - Acelera R$ 297: 20 créditos + identidade visual (logo, paleta, fontes, foto de perfil e destaques), 2 ajustes.
 - Turbo R$ 497: 40 créditos + identidade visual + PDFs bônus (boas práticas do Instagram e respostas prontas de vendas), 3 ajustes.
-- Os ajustes valem para o pacote inteiro. O cliente escolhe as peças na compra e recebe em até 7 dias.
+- Os ajustes valem para o pacote inteiro. O cliente tem até 7 dias para escolher as peças e responder o briefing; entregamos em 24 horas.
 - Mostre um exemplo de escolha em cada pacote:
   - Largada: 1 anúncio + 1 carrossel + 2 stories.
   - Acelera: 2 anúncios + 1 carrossel + 1 post + 5 stories.
@@ -31,13 +31,13 @@ Você vai criar a proposta comercial da **Criativos Rápidos**, uma agência de 
 | Posts | 9 | 12 | 15 |
 | Carrosséis | 6 | 9 | 12 |
 | Reels | 3 | 6 | 9 |
-| Anúncios | 2 | 3 | 4 (1 feito para tráfego, com foco em venda) |
+| Anúncios | 2 | 3 | 4 |
 | Total no mês | 30 | 50 | 70 |
 | Legendas (copy) e perfil completo | ✓ | ✓ | ✓ |
 | Postagem | Calendário pronto, o cliente posta | Nós programamos e postamos | Nós programamos e postamos |
 | Relatório mensal de métricas | – | – | ✓ |
-| Ajustes no mês | 2 | 3 | 4 |
-| Bônus | – | Calendário de conteúdo humanizado | Calendário humanizado + sequência de stories que vende |
+| Ajustes no mês | 1 | 2 | 3 |
+| Bônus | – | – | Calendário de conteúdo humanizado + sequência de stories que vende |
 
 Destaque o **Crescimento** como "mais escolhido".
 
