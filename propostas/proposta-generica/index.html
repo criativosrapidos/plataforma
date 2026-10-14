@@ -1,0 +1,459 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Proposta Criativos Rápidos</title>
+<meta name="viewport" content="width=1920">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,700;0,800;0,900;1,800;1,900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0F1013;
+    --ink-2: #191B21;
+    --ink-3: #24272F;
+    --orange: #FF6A13;
+    --amber: #FFA24A;
+    --cream: #F6F3EE;
+    --paper: #FFFFFF;
+    --text: #15171C;
+    --muted: #6B6F78;
+    --muted-dark: #A3A7B0;
+    --line: #E6E1D9;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  @page { size: 1920px 1080px; margin: 0; }
+  html, body { background: #2a2c31; }
+  body { font-family: "Inter", system-ui, sans-serif; color: var(--text); -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .slide {
+    width: 1920px; height: 1080px; position: relative; overflow: hidden;
+    margin: 0 auto 40px; page-break-after: always; break-after: page;
+    padding: 80px 96px;
+  }
+  @media print { html, body { background: none; } .slide { margin: 0; } }
+  h1, h2, h3, .mont { font-family: "Montserrat", sans-serif; }
+
+  /* fundos */
+  .dark { background: radial-gradient(1200px 700px at 78% 20%, #2a1a10 0%, transparent 60%), var(--ink); color: #fff; }
+  .light { background: var(--cream); }
+  .hot { background: linear-gradient(135deg, #FF7A22 0%, #FF6A13 45%, #F25A08 100%); color: #fff; }
+  .grid::before {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background-image: linear-gradient(var(--g) 1px, transparent 1px), linear-gradient(90deg, var(--g) 1px, transparent 1px);
+    background-size: 96px 96px;
+  }
+  .dark.grid { --g: rgba(255,255,255,.04); }
+  .light.grid { --g: rgba(20,20,30,.045); }
+  .hot.grid { --g: rgba(255,255,255,.09); }
+  .slide > * { position: relative; }
+
+  /* logo */
+  .logo { display: inline-flex; align-items: center; gap: 22px; }
+  .logo .mark {
+    width: var(--s, 72px); height: var(--s, 72px); border-radius: calc(var(--s, 72px) * .24);
+    background: linear-gradient(160deg, #FF7F2E, var(--orange));
+    display: grid; place-items: center; box-shadow: 0 10px 30px rgba(255,106,19,.35);
+  }
+  .logo .mark svg { width: 56%; height: 56%; }
+  .logo .word { font-family: "Montserrat"; font-weight: 900; font-style: italic; line-height: .95; font-size: calc(var(--s, 72px) * .42); letter-spacing: .01em; }
+  .logo .word b { display: block; font-weight: 900; }
+  .logo .word b:last-child { color: var(--amber); }
+  .on-light .logo .word b:first-child { color: var(--text); }
+  .on-light .logo .word b:last-child { color: var(--orange); }
+
+  /* cabeçalho padrão */
+  .head { display: flex; justify-content: space-between; align-items: flex-start; padding-bottom: 34px; border-bottom: 2px solid rgba(255,106,19,.35); margin-bottom: 56px; }
+  .head h2 { font-size: 76px; font-weight: 900; letter-spacing: -.01em; line-height: 1.02; }
+  .head .sub { margin-top: 14px; font-size: 30px; font-weight: 600; color: var(--orange); }
+  .dark .head .sub { color: var(--amber); }
+  .head .num { text-align: right; }
+  .head .num b { font-family: "Montserrat"; font-size: 54px; font-weight: 900; color: var(--orange); display: block; line-height: 1; }
+  .head .num span { display: block; margin-top: 14px; font-size: 17px; letter-spacing: .28em; font-weight: 600; color: var(--muted); }
+  .dark .head .num span { color: var(--muted-dark); }
+
+  .card { background: var(--paper); border-radius: 28px; box-shadow: 0 18px 50px rgba(20,16,10,.08); }
+  .dark .card { background: var(--ink-2); box-shadow: none; border: 1px solid rgba(255,255,255,.06); }
+
+  .tick { flex: none; width: 34px; height: 34px; border-radius: 50%; background: var(--orange); display: grid; place-items: center; }
+  .tick svg { width: 18px; height: 18px; }
+  .chip { display: inline-block; padding: 10px 22px; border-radius: 999px; font-size: 18px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; }
+
+  /* ====== CAPA ====== */
+  .cover { display: flex; flex-direction: column; justify-content: center; }
+  .cover .eyebrow { color: var(--amber); font-weight: 700; font-size: 22px; letter-spacing: .32em; text-transform: uppercase; margin: 70px 0 28px; }
+  .cover h1 { font-size: 132px; font-weight: 900; line-height: .98; letter-spacing: -.02em; max-width: 1400px; }
+  .cover h1 em { font-style: italic; color: var(--orange); }
+  .cover p.lead { margin-top: 40px; font-size: 34px; color: #D5D7DC; max-width: 1200px; line-height: 1.4; }
+  .cover .tags { display: flex; gap: 16px; margin-top: 56px; }
+  .cover .tags span { padding: 14px 26px; border: 1.5px solid rgba(255,255,255,.18); border-radius: 999px; font-size: 22px; font-weight: 600; color: #E9EAEE; }
+  .cover .bolt-bg { position: absolute; right: -120px; bottom: -160px; width: 900px; opacity: .07; }
+
+  /* ====== O QUE FAZEMOS ====== */
+  .services { display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; }
+  .service { padding: 44px 38px; display: flex; flex-direction: column; min-height: 600px; }
+  .service .ico { width: 92px; height: 92px; border-radius: 24px; background: #FFF0E6; display: grid; place-items: center; margin-bottom: 36px; }
+  .service .ico svg { width: 48px; height: 48px; }
+  .service h3 { font-size: 34px; font-weight: 800; line-height: 1.12; margin-bottom: 20px; }
+  .service p { font-size: 22px; line-height: 1.5; color: var(--muted); }
+  .service ul { list-style: none; margin-top: auto; padding-top: 28px; border-top: 1px solid var(--line); }
+  .service li { font-size: 20px; font-weight: 600; padding: 7px 0; display: flex; gap: 12px; align-items: center; }
+  .service li::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: var(--orange); flex: none; }
+
+  /* ====== DIAGNÓSTICO ====== */
+  .diag { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+  .diag .card { padding: 44px 48px; display: flex; gap: 32px; }
+  .diag .n { font-family: "Montserrat"; font-weight: 900; font-size: 64px; color: var(--orange); line-height: .9; width: 90px; flex: none; }
+  .diag h3 { font-size: 34px; font-weight: 800; margin-bottom: 14px; }
+  .diag p { font-size: 23px; color: var(--muted-dark); line-height: 1.5; }
+  .banner { margin-top: 36px; gap: 40px; border-radius: 28px; padding: 36px 48px; display: flex; align-items: center; justify-content: space-between; background: linear-gradient(135deg, #FF7A22, #F25A08); color: #fff; }
+  .banner b { font-family: "Montserrat"; font-weight: 900; font-size: 36px; white-space: nowrap; }
+  .banner span { text-align: right; max-width: 760px; font-size: 24px; font-weight: 500; opacity: .95; }
+
+  /* ====== IDENTIDADE ====== */
+  .idv { display: grid; grid-template-columns: 1.1fr 1fr; gap: 56px; }
+  .ba { display: grid; grid-template-columns: 1fr 70px 1fr; align-items: center; }
+  .ba .lbl { font-size: 19px; letter-spacing: .26em; font-weight: 700; color: var(--muted); text-align: center; margin-bottom: 18px; }
+  .ba .lbl.o { color: var(--orange); }
+  .before, .after { height: 300px; border-radius: 26px; display: grid; place-items: center; }
+  .before { background: repeating-linear-gradient(45deg, #ECE8E2 0 18px, #E4DFD7 18px 36px); border: 2px dashed #CFC8BD; }
+  .before .scr { font-family: "Inter"; font-size: 30px; color: #9B948A; font-weight: 700; text-align: center; line-height: 1.3; }
+  .before .scr i { display: block; font-family: Georgia, serif; font-style: italic; font-size: 26px; color: #b06aa0; font-weight: 400; }
+  .after { background: var(--ink); color: #fff; flex-direction: column; }
+  .after .brand { display: flex; align-items: center; gap: 22px; }
+  .after .brand .m { width: 96px; height: 96px; border-radius: 50%; border: 8px solid var(--orange); display: grid; place-items: center; }
+  .after .brand .m i { width: 32px; height: 32px; background: #fff; border-radius: 8px; transform: rotate(45deg); }
+  .after .brand b { font-family: "Montserrat"; font-weight: 900; font-size: 64px; letter-spacing: .02em; }
+  .after small { display: block; margin-top: 10px; color: var(--amber); letter-spacing: .3em; font-weight: 700; font-size: 18px; text-align: center; }
+  .arrow { font-size: 54px; color: var(--orange); text-align: center; font-weight: 300; }
+  .palette { display: flex; gap: 18px; margin-top: 44px; }
+  .sw { flex: 1; height: 150px; border-radius: 20px; padding: 18px 20px; display: flex; flex-direction: column; justify-content: flex-end; font-size: 18px; font-weight: 700; color: #fff; }
+  .sw span { font-weight: 500; opacity: .8; font-size: 15px; margin-top: 4px; }
+  .sw.l { color: var(--text); border: 1px solid var(--line); }
+  .hl { display: flex; gap: 28px; margin-top: 36px; align-items: flex-end; }
+  .hl .pf { width: 150px; height: 150px; border-radius: 50%; border: 6px solid var(--orange); background: var(--ink); display: grid; place-items: center; box-shadow: 0 12px 30px rgba(0,0,0,.12); }
+  .hl .pf i { width: 46px; height: 46px; background: #fff; border-radius: 10px; transform: rotate(45deg); }
+  .hl .d { text-align: center; font-size: 17px; font-weight: 700; color: var(--muted); }
+  .hl .d div { width: 100px; height: 100px; border-radius: 50%; background: var(--ink); border: 5px solid var(--amber); margin-bottom: 10px; display: grid; place-items: center; }
+  .hl .d svg { width: 42px; height: 42px; }
+  .deliver h3 { font-size: 40px; font-weight: 900; margin-bottom: 14px; }
+  .deliver > p { font-size: 25px; line-height: 1.5; color: var(--muted); margin-bottom: 36px; }
+  .list { list-style: none; display: grid; gap: 18px; }
+  .list li { display: flex; gap: 18px; align-items: center; font-size: 27px; font-weight: 600; }
+  .dark .list li { color: #EDEEF1; }
+
+  /* ====== VÍDEO ====== */
+  .phones { display: grid; grid-template-columns: repeat(6, 1fr); gap: 22px; }
+  .ph { height: 430px; border-radius: 26px; padding: 28px 20px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; gap: 16px; position: relative; }
+  .ph .t { position: absolute; top: 16px; left: 0; right: 0; font-size: 14px; letter-spacing: .26em; font-weight: 700; opacity: .7; }
+  .ph h4 { font-family: "Montserrat"; font-weight: 900; font-size: 36px; line-height: 1.05; }
+  .ph .pill { background: var(--orange); color: #fff; font-family: "Montserrat"; font-weight: 900; font-size: 30px; padding: 6px 14px; border-radius: 8px; }
+  .ph .row { background: #fff; color: var(--text); border-radius: 10px; padding: 10px 14px; font-size: 16px; font-weight: 700; width: 100%; text-align: left; display: flex; gap: 10px; align-items: center; }
+  .ph .row::before { content: ""; width: 18px; height: 18px; border-radius: 5px; background: var(--orange); flex: none; }
+  .ph.a { background: #1C1E25; color: #fff; }
+  .ph.b { background: var(--cream); color: var(--text); }
+  .ph.c { background: linear-gradient(180deg, #23252D, #15161B); color: #fff; }
+  .ph.d { background: var(--orange); color: #fff; }
+  .ph.e { background: #fff; color: var(--text); }
+  .ph.f { background: #1C1E25; color: #fff; }
+  .wa { background: #25D366; color: #fff; font-weight: 800; font-size: 18px; padding: 12px 20px; border-radius: 999px; }
+  .story { margin-top: 48px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+  .story div { border-top: 4px solid var(--orange); padding-top: 22px; }
+  .story b { font-family: "Montserrat"; font-weight: 900; font-size: 30px; color: var(--amber); display: block; margin-bottom: 8px; }
+  .story p { font-size: 22px; line-height: 1.45; color: #D5D7DC; }
+  .vfoot { margin-top: 36px; font-size: 22px; color: var(--muted-dark); }
+  .vfoot b { color: #fff; }
+
+  /* ====== PREÇOS ====== */
+  .pricing h2 { text-align: center; font-size: 96px; font-weight: 900; letter-spacing: -.01em; }
+  .pricing .tagline { text-align: center; font-size: 28px; margin-top: 12px; opacity: .85; }
+  .plans { display: grid; grid-template-columns: 1fr 1.05fr 1fr; gap: 36px; margin-top: 70px; align-items: stretch; }
+  .plan { background: #fff; color: var(--text); border-radius: 32px; padding: 52px 48px 48px; position: relative; }
+  .plan.star { transform: translateY(-26px); box-shadow: 0 0 0 5px var(--orange), 0 30px 70px rgba(0,0,0,.28); }
+  .hot .plan.star { box-shadow: 0 0 0 5px var(--ink), 0 30px 70px rgba(0,0,0,.25); }
+  .plan .badge { position: absolute; top: -22px; left: 50%; transform: translateX(-50%); background: var(--orange); color: #fff; white-space: nowrap; }
+  .hot .plan .badge { background: var(--ink); }
+  .plan h3 { text-align: center; font-size: 46px; font-weight: 900; letter-spacing: .01em; }
+  .price { display: flex; justify-content: center; align-items: flex-start; gap: 8px; margin-top: 10px; font-family: "Montserrat"; }
+  .price small { font-size: 30px; font-weight: 800; color: var(--muted); margin-top: 22px; }
+  .price b { font-size: 132px; font-weight: 900; line-height: 1; letter-spacing: -.03em; }
+  .price i { font-style: normal; align-self: flex-end; font-size: 28px; font-weight: 700; color: var(--muted); margin-bottom: 16px; }
+  .plan .for { text-align: center; color: var(--orange); font-weight: 700; font-size: 23px; margin: 6px 0 34px; }
+  .plan ul { list-style: none; display: grid; gap: 16px; border-top: 1px solid var(--line); padding-top: 32px; }
+  .plan li { display: flex; gap: 16px; align-items: flex-start; font-size: 25px; font-weight: 600; line-height: 1.3; }
+  .plan li .tick { width: 30px; height: 30px; margin-top: 1px; }
+  .note { text-align: center; margin-top: 54px; font-size: 20px; opacity: .85; }
+
+  /* ====== PASSOS ====== */
+  .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; }
+  .step { padding: 44px 38px; min-height: 330px; }
+  .step .k { width: 84px; height: 84px; border-radius: 20px; background: var(--orange); color: #fff; font-family: "Montserrat"; font-weight: 900; font-size: 44px; display: grid; place-items: center; margin-bottom: 36px; }
+  .step h3 { font-size: 32px; font-weight: 800; margin-bottom: 12px; line-height: 1.15; }
+  .step p { font-size: 22px; color: var(--muted); line-height: 1.45; }
+  .why { margin-top: 40px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; background: var(--ink); border-radius: 28px; padding: 52px 56px; }
+  .why > div { display: flex; gap: 22px; align-items: flex-start; }
+  .why .tick { width: 44px; height: 44px; }
+  .why .tick svg { width: 22px; height: 22px; }
+  .why b { display: block; font-family: "Montserrat"; font-size: 32px; font-weight: 900; color: #fff; margin-bottom: 10px; }
+  .why span.t { display: block; font-size: 22px; color: var(--muted-dark); line-height: 1.45; }
+
+  /* ====== FECHAMENTO ====== */
+  .close { display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+  .close h2 { font-size: 140px; font-weight: 900; line-height: 1; letter-spacing: -.02em; margin-top: 70px; }
+  .close h2 em { color: var(--orange); font-style: italic; }
+  .close p { font-size: 34px; color: #D5D7DC; margin-top: 34px; max-width: 1200px; line-height: 1.4; }
+  .close .cta { margin-top: 60px; display: inline-flex; align-items: center; gap: 18px; background: var(--orange); color: #fff; font-family: "Montserrat"; font-weight: 900; font-size: 34px; padding: 28px 48px; border-radius: 999px; box-shadow: 0 20px 50px rgba(255,106,19,.35); }
+</style>
+</head>
+<body>
+
+<!-- ícones reutilizados -->
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <symbol id="bolt" viewBox="0 0 24 24"><path fill="#fff" d="M13.6 1.5 4.2 13.4h6.2L9 22.5l10.8-13h-6.6l.4-8z"/></symbol>
+    <symbol id="check" viewBox="0 0 24 24"><path fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+  </defs>
+</svg>
+
+<!-- 1. CAPA -->
+<section class="slide dark grid cover">
+  <svg class="bolt-bg" viewBox="0 0 24 24"><use href="#bolt"/></svg>
+  <div class="logo" style="--s:96px"><div class="mark"><svg viewBox="0 0 24 24"><use href="#bolt"/></svg></div><div class="word"><b>CRIATIVOS</b><b>RÁPIDOS</b></div></div>
+  <div class="eyebrow">Proposta comercial</div>
+  <h1>Marca, vídeos e conteúdo que fazem sua empresa <em>vender.</em></h1>
+  <p class="lead">A gente cuida da imagem da sua empresa no digital, do logo ao anúncio, para o cliente confiar de primeira e chamar no WhatsApp.</p>
+  <div class="tags"><span>Identidade visual</span><span>Vídeos com locução</span><span>Página de vendas</span><span>Social media</span></div>
+</section>
+
+<!-- 2. O QUE FAZEMOS -->
+<section class="slide light grid on-light">
+  <div class="head">
+    <div><h2>O Que a Gente Faz</h2><div class="sub">Tudo que sua marca precisa para aparecer, convencer e vender</div></div>
+    <div class="num"><b>01</b><span>CRIATIVOS RÁPIDOS · PROPOSTA</span></div>
+  </div>
+  <div class="services">
+    <div class="card service">
+      <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#FF6A13" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="13.5" r="2.5"/><circle cx="8.5" cy="7.5" r="2.5"/><circle cx="6.5" cy="14.5" r="2.5"/><path d="M12 22a10 10 0 1 1 0-20"/></svg></div>
+      <h3>Identidade visual</h3>
+      <p>Logo novo ou renovado, com cara de empresa séria e fácil de reconhecer em qualquer lugar.</p>
+      <ul><li>Logo em 3 versões</li><li>Paleta e fontes</li><li>Foto de perfil e destaques</li></ul>
+    </div>
+    <div class="card service">
+      <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#FF6A13" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="14" height="14" rx="3"/><path d="m16 10 6-3v10l-6-3"/></svg></div>
+      <h3>Vídeos de anúncio</h3>
+      <p>Vídeos curtos com roteiro que prende e locução profissional, prontos para impulsionar.</p>
+      <ul><li>30 segundos</li><li>Roteiro + locução</li><li>Reels, Stories e Ads</li></ul>
+    </div>
+    <div class="card service">
+      <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#FF6A13" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18M9 21V9"/></svg></div>
+      <h3>Página de vendas</h3>
+      <p>Uma página que apresenta seus serviços e leva o visitante direto para o seu WhatsApp.</p>
+      <ul><li>Botão de WhatsApp</li><li>Rápida no celular</li><li>Pronta para anúncios</li></ul>
+    </div>
+    <div class="card service">
+      <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#FF6A13" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="3"/><path d="M16 2v4M8 2v4M3 10h18M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/></svg></div>
+      <h3>Social media</h3>
+      <p>Seu perfil ativo toda semana: a gente cria, programa e posta. Você só aprova.</p>
+      <ul><li>Reels e carrosséis</li><li>Posts e stories</li><li>Programação e postagem</li></ul>
+    </div>
+  </div>
+</section>
+
+<!-- 3. DIAGNÓSTICO -->
+<section class="slide dark grid">
+  <div class="head">
+    <div><h2>Onde a Maioria Perde Clientes</h2><div class="sub">O que a gente mais encontra nos perfis de empresas boas</div></div>
+    <div class="num"><b>02</b><span>CRIATIVOS RÁPIDOS · PROPOSTA</span></div>
+  </div>
+  <div class="diag">
+    <div class="card"><div class="n">01</div><div><h3>Foto de perfil que não diz nada</h3><p>Ícone genérico ou logo ilegível em tamanho pequeno. Quem chega no perfil não reconhece a empresa nem confia de primeira.</p></div></div>
+    <div class="card"><div class="n">02</div><div><h3>Visual sem padrão</h3><p>Cores, fontes e logo mudam de post para post. A marca não fica na cabeça de ninguém.</p></div></div>
+    <div class="card"><div class="n">03</div><div><h3>Diferenciais escondidos</h3><p>A empresa faz muito mais do que mostra. O cliente não sabe tudo que você oferece, e vai no concorrente.</p></div></div>
+    <div class="card"><div class="n">04</div><div><h3>Seguidores que não viram orçamento</h3><p>Sem vídeo de anúncio e conteúdo constante, o perfil não cresce e o WhatsApp não toca.</p></div></div>
+  </div>
+  <div class="banner"><b>Diagnóstico do seu perfil, sem custo.</b><span>Antes de fechar, a gente analisa seu Instagram e mostra o que mudar primeiro.</span></div>
+</section>
+
+<!-- 4. IDENTIDADE VISUAL -->
+<section class="slide light grid on-light">
+  <div class="head">
+    <div><h2>Identidade Visual</h2><div class="sub">A mesma empresa, com cara de profissional e fácil de lembrar</div></div>
+    <div class="num"><b>03</b><span>CRIATIVOS RÁPIDOS · PROPOSTA</span></div>
+  </div>
+  <div class="idv">
+    <div>
+      <div class="ba">
+        <div><div class="lbl">ANTES</div><div class="before"><div class="scr">Sua Empresa<i>logo sem padrão</i></div></div></div>
+        <div class="arrow">→</div>
+        <div><div class="lbl o">DEPOIS</div><div class="after"><div class="brand"><div class="m"><i></i></div><b>MARCA</b></div><small>SUA EMPRESA</small></div></div>
+      </div>
+      <div class="palette">
+        <div class="sw" style="background:#0F1013">Principal<span>escura</span></div>
+        <div class="sw" style="background:#FF6A13">Destaque<span>cor da marca</span></div>
+        <div class="sw" style="background:#FFA24A">Apoio<span>tom secundário</span></div>
+        <div class="sw l" style="background:#fff">Fundo<span>claro</span></div>
+      </div>
+      <div class="hl">
+        <div class="pf"><i></i></div>
+        <div class="d"><div><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M12 2 2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>Serviços</div>
+        <div class="d"><div><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 17.8 5.8 21 7 14.1 2 9.3l7-1L12 2l3 6.3 7 1-5 4.8 1.2 6.9z"/></svg></div>Clientes</div>
+        <div class="d"><div><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/></svg></div>Antes/depois</div>
+        <div class="d"><div><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>Orçamento</div>
+      </div>
+    </div>
+    <div class="deliver">
+      <h3>O que você recebe</h3>
+      <p>Mantemos o que já funciona na sua marca e redesenhamos com traço limpo: legível no perfil, na fachada, no uniforme e no cartão.</p>
+      <ul class="list">
+        <li><span class="tick"><svg><use href="#check"/></svg></span>Logo em versões cor, branca e símbolo</li>
+        <li><span class="tick"><svg><use href="#check"/></svg></span>Paleta de cores oficial</li>
+        <li><span class="tick"><svg><use href="#check"/></svg></span>Fontes da marca</li>
+        <li><span class="tick"><svg><use href="#check"/></svg></span>Foto de perfil profissional</li>
+        <li><span class="tick"><svg><use href="#check"/></svg></span>Capas de destaque do Instagram</li>
+        <li><span class="tick"><svg><use href="#check"/></svg></span>Prévia aprovada por você antes de finalizar</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 5. VÍDEO -->
+<section class="slide dark grid">
+  <div class="head">
+    <div><h2>Vídeo de Anúncio</h2><div class="sub">30 segundos · locução profissional com emoção · feito para vender</div></div>
+    <div class="num"><b>04</b><span>CRIATIVOS RÁPIDOS · PROPOSTA</span></div>
+  </div>
+  <div class="phones">
+    <div class="ph a"><div class="t">0–5s</div><h4>CANSOU<br>DE</h4><span class="pill">ESPERAR?</span><div class="row">problema do cliente</div></div>
+    <div class="ph b"><div class="t">5–10s</div><h4 style="font-size:28px">Quem já passou por isso sabe:</h4><h4 style="color:#FF6A13">DOR DE CABEÇA</h4></div>
+    <div class="ph c"><div class="t">10–15s</div><h4 style="font-size:26px">Agora imagina com</h4><h4 style="color:#FFA24A;font-size:30px">QUEM ENTENDE</h4><div class="row">Qualidade</div><div class="row">Prazo</div><div class="row">Atendimento</div></div>
+    <div class="ph e"><div class="t">15–22s</div><h4 style="font-size:30px">SUA MARCA</h4><div style="font-weight:700;color:#FF6A13;font-size:20px">é assim!</div><div class="row" style="background:#F6F3EE">Serviço 1</div><div class="row" style="background:#F6F3EE">Serviço 2</div><div class="row" style="background:#F6F3EE">Serviço 3</div></div>
+    <div class="ph d"><div class="t">22–26s</div><h4>TUDO NUM LUGAR SÓ</h4><div style="font-weight:700;font-size:22px">na sua cidade</div></div>
+    <div class="ph f"><div class="t">26–30s</div><h4 style="font-size:30px">SUA MARCA</h4><span class="wa">CHAMA NO WHATS</span><div style="font-size:16px;color:#A3A7B0">peça seu orçamento</div></div>
+  </div>
+  <div class="story">
+    <div><b>Dor</b><p>Começa pelo problema que o seu cliente vive e que faz ele parar de rolar o feed.</p></div>
+    <div><b>Sonho</b><p>Mostra como seria resolver isso com quem entende do assunto.</p></div>
+    <div><b>Solução</b><p>Apresenta sua empresa e seus serviços com a identidade nova.</p></div>
+    <div><b>Chamado</b><p>Leva direto para o WhatsApp pedir orçamento.</p></div>
+  </div>
+  <div class="vfoot"><b>Pronto para</b> Reels, Stories e anúncio patrocinado no Instagram e Facebook.</div>
+</section>
+
+<!-- 6. PACOTES -->
+<section class="slide dark grid pricing">
+  <h2>PACOTES</h2>
+  <div class="tagline">Entrega única, sem mensalidade: para testar, lançar ou dar a cara nova da sua empresa</div>
+  <div class="plans">
+    <div class="plan">
+      <h3>LARGADA</h3>
+      <div class="price"><small>R$</small><b>97</b></div>
+      <div class="for">para começar a anunciar</div>
+      <ul>
+        <li><span class="tick"><svg><use href="#check"/></svg></span>1 vídeo de anúncio de 30 s</li>
+        <li><span class="tick"><svg><use href="#check"/></svg></span>Roteiro + locução profissional</li>
+        <li><span class="tick"><svg><use href="#check"/></svg></span>Formato Reels/Stories</li>
+        <li><span class="tick"><svg><use href="#check"/></svg></span>1 rodada de ajustes</li>
+      </ul>
+    </div>
+    <div class="plan star">
+      <span class="chip badge">Mais escolhido</span>
+      <h3>ACELERA</h3>
+      <div class="price"><small>R$</small><b>297</b></div>
+      <div class="for">marca nova + vídeo</div>
+      <ul>
+        <li><span class="tick"><svg><use href="#check"/></svg></span>Identidade visual nova ou renovada</li>
+        <li><span class="tick"><svg><use href="#check"/></svg></span>Logo, paleta e fontes</li>
+        <li><span class="tick"><svg><use href="#check"/></svg></span>Foto de perfil e destaques</li>
+        <li><span class="tick"><svg><use href="#check"/></svg></span>1 vídeo de anúncio de 30 s</li>
+      </ul>
+    </div>
+    <div class="plan">
+      <h3>TURBO</h3>
+      <div class="price"><small>R$</small><b>497</b></div>
+      <div class="for">marca + vídeos + página</div>
+      <ul>
+        <li><span class="tick"><svg><use href="#check"/></svg></span>Identidade visual nova ou renovada</li>
+        <li><span class="tick"><svg><use href="#check"/></svg></span>2 vídeos de anúncio de 30 s</li>
+        <li><span class="tick"><svg><use href="#check"/></svg></span>Página de vendas com WhatsApp</li>
+        <li><span class="tick"><svg><use href="#check"/></svg></span>Pronta para receber anúncios</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 7. PLANOS MENSAIS -->
+<section class="slide hot grid pricing">
+  <h2>PLANOS MENSAIS</h2>
+  <div class="tagline">A gente cria, programa e posta. Você só aprova.</div>
+  <div class="plans">
+    <div class="plan">
+      <h3>PRESENÇA</h3>
+      <div class="price"><small>R$</small><b>597</b><i>/mês</i></div>
+      <div class="for">perfil ativo toda semana</div>
+      <ul>
+        <li><span class="tick"><svg><use href="#check"/></svg></span>2 reels com locução</li>
+        <li><span class="tick"><svg><use href="#check"/></svg></span>4 carrosséis</li>
+        <li><span class="tick"><svg><use href="#check"/></svg></span>4 posts</li>
+        <li><span class="tick"><svg><use href="#check"/></svg></span>12 stories</li>
+        <li><span class="tick"><svg><use href="#check"/></svg></span>Programação e postagem</li>
+      </ul>
+    </div>
+    <div class="plan star">
+      <span class="chip badge">Mais escolhido</span>
+      <h3>CRESCIMENTO</h3>
+      <div class="price"><small>R$</small><b>797</b><i>/mês</i></div>
+      <div class="for">mais vídeo, mais alcance</div>
+      <ul>
+        <li><span class="tick"><svg><use href="#check"/></svg></span>1 arte de anúncio</li>
+        <li><span class="tick"><svg><use href="#check"/></svg></span>3 reels com locução</li>
+        <li><span class="tick"><svg><use href="#check"/></svg></span>6 carrosséis</li>
+        <li><span class="tick"><svg><use href="#check"/></svg></span>4 posts</li>
+        <li><span class="tick"><svg><use href="#check"/></svg></span>20 stories</li>
+        <li><span class="tick"><svg><use href="#check"/></svg></span>Programação e postagem</li>
+      </ul>
+    </div>
+    <div class="plan">
+      <h3>AUTORIDADE</h3>
+      <div class="price"><small>R$</small><b>997</b><i>/mês</i></div>
+      <div class="for">sua marca em todo lugar</div>
+      <ul>
+        <li><span class="tick"><svg><use href="#check"/></svg></span>2 artes de anúncio</li>
+        <li><span class="tick"><svg><use href="#check"/></svg></span>4 reels com locução</li>
+        <li><span class="tick"><svg><use href="#check"/></svg></span>8 carrosséis</li>
+        <li><span class="tick"><svg><use href="#check"/></svg></span>4 posts</li>
+        <li><span class="tick"><svg><use href="#check"/></svg></span>30 stories</li>
+        <li><span class="tick"><svg><use href="#check"/></svg></span>Postagem + relatório mensal</li>
+      </ul>
+    </div>
+  </div>
+  <div class="note">Valores a partir de. Não inclui resposta de mensagens nem gestão de tráfego (a verba dos anúncios é investida direto pela empresa).</div>
+</section>
+
+<!-- 8. PRÓXIMOS PASSOS -->
+<section class="slide light grid on-light">
+  <div class="head">
+    <div><h2>Como Funciona</h2><div class="sub">Simples: escolher, aprovar e começar a anunciar</div></div>
+    <div class="num"><b>05</b><span>CRIATIVOS RÁPIDOS · PROPOSTA</span></div>
+  </div>
+  <div class="steps">
+    <div class="card step"><div class="k">1</div><h3>Escolhe o pacote ou plano</h3><p>Avulso para começar, mensal para crescer.</p></div>
+    <div class="card step"><div class="k">2</div><h3>Aprova a nova marca</h3><p>A gente mostra a prévia e ajusta junto com você.</p></div>
+    <div class="card step"><div class="k">3</div><h3>Aprova os roteiros</h3><p>Seus serviços, seus diferenciais, sua cidade.</p></div>
+    <div class="card step"><div class="k">4</div><h3>Recebe tudo pronto</h3><p>Para anunciar e postar no mesmo dia.</p></div>
+  </div>
+  <div class="why">
+    <div><span class="tick"><svg><use href="#check"/></svg></span><div><b>Entrega rápida</b><span class="t">Está no nome. Você não espera meses para ver resultado.</span></div></div>
+    <div><span class="tick"><svg><use href="#check"/></svg></span><div><b>Sem fidelidade no avulso</b><span class="t">Os pacotes são entrega única, sem mensalidade.</span></div></div>
+    <div><span class="tick"><svg><use href="#check"/></svg></span><div><b>Você aprova tudo</b><span class="t">Nada vai para o ar sem o seu ok.</span></div></div>
+  </div>
+</section>
+
+<!-- 9. FECHAMENTO -->
+<section class="slide dark grid close">
+  <div class="logo" style="--s:110px"><div class="mark"><svg viewBox="0 0 24 24"><use href="#bolt"/></svg></div><div class="word"><b>CRIATIVOS</b><b>RÁPIDOS</b></div></div>
+  <h2>Bora <em>acelerar?</em></h2>
+  <p>Responda esta mensagem com o pacote ou plano que mais combina com você. A gente começa pelo diagnóstico do seu perfil.</p>
+  <div class="cta"><svg width="38" height="38" viewBox="0 0 24 24"><use href="#bolt"/></svg>Quero começar</div>
+</section>
+
+</body>
+</html>
