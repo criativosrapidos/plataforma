@@ -6,14 +6,20 @@ Sem página de vendas. Sem fidelidade em nada.
 
 ## Pacotes (pagamento único)
 
+Cada pacote contém o anterior e acrescenta mais peças. Todos têm peças dos 5 tipos que criamos (anúncio, post, carrossel, reels e stories), conforme o nível.
+
 | | Largada R$ 97 | Acelera R$ 297 | Turbo R$ 497 |
 |---|---|---|---|
-| Arte de anúncio | 1 | 1 | 1 |
 | Vídeo de anúncio 30 s (roteiro + locução) | 1 | 1 | 1 |
-| Post | – | 1 | – |
+| Arte de anúncio | 1 | 1 | 1 |
+| Posts | 1 | 2 | 6 |
+| Carrosséis | – | 1 | 3 |
+| Grade do Instagram | – | 1ª linha (3 peças) | Completa (9 peças) |
+| Reels com locução | – | – | 1 |
+| Stories | 1 | 3 | 5 |
 | Identidade visual (logo, paleta, fontes, foto de perfil, destaques) | – | ✓ | ✓ |
-| **Kit de estreia**: grade de 9 posts + 3 carrosséis + 1 reels + 1 stories | – | – | ✓ |
-| Bônus: PDF de boas práticas do Instagram + link com respostas prontas de vendas (copiar e colar) | – | – | ✓ |
+| PDF de boas práticas do Instagram + link com respostas prontas de vendas | – | – | ✓ |
+| **Total de peças** | 4 | 8 | 17 |
 
 ## Planos mensais (sem identidade visual; sem fidelidade)
 
