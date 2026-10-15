@@ -6,6 +6,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent
 c = json.load(open(ROOT / "audio/cues_v4.json"))
 FIM = c["fim"] + 1.4
+CRED = c["fim"] + 1.25          # cartela curta de crédito no final
+FIM_TOTAL = CRED + 2.8
 
 
 def foto(n):
@@ -179,6 +181,16 @@ cenas = f'''
     {E('<div class="vidro" style="padding:28px 40px;text-align:center"><div class="H" style="font-size:62px">SEXTA · 16/10 · 16H</div><div style="font-size:34px;font-weight:500;margin-top:10px">Espaço RC – Asa Sul · Prédio do Hotel Bonaparte</div></div>', c['movimento'] + 0.4, "card", "top:1220px")}
     {E('<div class="T c" style="font-size:28px;font-weight:600;color:var(--ouro)">Entrada somente com nome na lista</div>', c['movimento'] + 0.8, "up", "top:1470px", "c")}
   </section>
+  <section class="scene" data-start="{CRED:.2f}" data-end="{FIM_TOTAL + 1}">
+    <div style="position:absolute;inset:0;background:radial-gradient(circle at 50% 42%,#14204F,#040818 70%)"></div>
+    <div class="el T c" data-in="{CRED + 0.1:.2f}" data-a="up" style="top:690px;font-size:28px;font-weight:600;color:#8FC2FF">Vídeo criado por</div>
+    <div class="el c" data-in="{CRED + 0.2:.2f}" data-a="fade" style="top:760px"><div style="display:inline-flex;align-items:center;gap:26px">
+      <div style="width:120px;height:120px;border-radius:30px;background:#FF6A13;box-shadow:0 14px 50px rgba(255,106,19,.45)"><svg viewBox="0 0 100 100" style="width:120px;height:120px"><path d="M58 12 26 56h22l-8 32 34-46H52z" fill="#fff"/></svg></div>
+      <div style="text-align:left;font-weight:900;font-style:italic;font-size:62px;line-height:.95;letter-spacing:-.01em"><span style="color:#fff">CRIATIVOS</span><br><span style="color:#FF8A3D">RÁPIDOS</span></div></div></div>
+    <div class="el c" data-in="{CRED + 0.5:.2f}" data-a="up" style="top:950px;font-size:46px;font-weight:700;line-height:1.3">Quer um vídeo assim?<br><span class="ouro">Entrega em até 2h.</span></div>
+    <div class="el c" data-in="{CRED + 0.75:.2f}" data-a="up" style="top:1110px"><div class="pill" style="font-size:34px;letter-spacing:.06em;text-transform:none;background:#25D366;border:none;color:#fff;font-weight:800">WhatsApp (61) 3356-3625</div></div>
+  </section>
+
 '''
 
 cortes = [c[k] - 0.15 for k in ("enquanto", "imagina", "encontro", "bora")]
@@ -263,4 +275,4 @@ render(0);
 </script>
 </body></html>'''
 (ROOT / "anuncio_v4.html").write_text(head + cenas + fim)
-print("anuncio_v4.html · duração", round(FIM, 2))
+print("anuncio_v4.html · duração", round(FIM_TOTAL, 2))
