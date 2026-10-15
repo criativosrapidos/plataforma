@@ -1,9 +1,10 @@
-"""Criativos de trafego pago — publico MULHER.
+"""Criativos de trafego pago — publicos MULHER e FAMILIA.
 
   amiga  : amiga falando pra mandar o video pra melhor amiga (voz jovem)
   casada : mulher madura falando com a casada — casamento esfriou, medo de perder ele
+  pais   : homem maduro, confissao — mora longe dos pais, nao diz "eu te amo" ha tempo
 
-Uso: python3 ad_mulher.py amiga|casada --demo ../exemplo/videomimo-demo.mp4 --voz voz.mp3 --musica trilha.wav --saida ad.mp4
+Uso: python3 ad_mulher.py amiga|casada|pais --demo ../exemplo/videomimo-demo.mp4 --voz voz.mp3 --musica trilha.wav --saida ad.mp4
 Tempos das legendas vem da transcricao por palavra (ElevenLabs Scribe).
 """
 import argparse
@@ -49,6 +50,19 @@ ROTEIROS = {
                (22.0, 30.4, "lembra"), (30.4, 34.6, "fim_casada")],
         com_legenda={"notificacao", "lembra"},
     ),
+    "pais": dict(
+        dur=32.2,
+        legendas=[(0.08, 3.72, "Quando foi a última vez que você disse \"eu te amo\" pro seu pai?"),
+                  (5.6, 6.16, "Pra sua mãe?"), (7.34, 9.54, "A gente sai de casa, a vida corre"),
+                  (10.08, 11.74, "e a ligação vira: \"tá tudo bem?\""), (12.26, 13.38, "\"tá... bença.\""),
+                  (14.48, 16.2, "Mas eles não vão estar aqui pra sempre."),
+                  (17.3, 20.24, "Junta as fotos de vocês, da infância até hoje,"),
+                  (20.9, 23.1, "com música e uma mensagem sua."), (23.86, 25.94, "Eles vão assistir mil vezes."),
+                  (26.82, 29.58, "Vídeos Mimo. A partir de R$ 39,90."), (29.96, 31.48, "Manda hoje, enquanto dá.")],
+        cenas=[(0.0, 7.4, "pergunta"), (7.4, 14.6, "ligacao"), (14.6, 17.5, "sempre"), (17.5, 20.9, "galeria_familia"),
+               (20.9, 26.9, "video_pais"), (26.9, 32.2, "fim_pais")],
+        com_legenda={"ligacao", "galeria_familia", "video_pais"},
+    ),
 }
 
 
@@ -86,11 +100,11 @@ def celular(img, demo, mascara, lt, t0, topo=300, esc_fim=None):
     img.paste(fr, (px + int(18 * esc), py + int(18 * esc)), mascara.resize(fr.size))
 
 
-def galeria(img, lt, fotos):
+def galeria(img, lt, fotos, titulo="Galeria", sub="Vocês duas · 1.284"):
     d = ImageDraw.Draw(img)
     d.rectangle((0, 0, W, 200), fill=(250, 250, 250))
-    d.text((60, 120), "Galeria", font=fonte(F_BOLD, 64), fill=(30, 30, 30), anchor="lm")
-    d.text((W - 60, 120), "Vocês duas · 1.284", font=fonte(F_MED, 38), fill=(120, 120, 120), anchor="rm")
+    d.text((60, 120), titulo, font=fonte(F_BOLD, 64), fill=(30, 30, 30), anchor="lm")
+    d.text((W - 60, 120), sub, font=fonte(F_MED, 38), fill=(120, 120, 120), anchor="rm")
     tam, gap = 354, 9
     desl = int(lt * 260)
     for i in range(24):
@@ -100,8 +114,8 @@ def galeria(img, lt, fotos):
         if -tam < y < H:
             img.paste(fotos[i % len(fotos)], (x, y))
     d.rectangle((0, 0, W, 200), fill=(250, 250, 250))
-    d.text((60, 120), "Galeria", font=fonte(F_BOLD, 64), fill=(30, 30, 30), anchor="lm")
-    d.text((W - 60, 120), "Vocês duas · 1.284", font=fonte(F_MED, 38), fill=(120, 120, 120), anchor="rm")
+    d.text((60, 120), titulo, font=fonte(F_BOLD, 64), fill=(30, 30, 30), anchor="lm")
+    d.text((W - 60, 120), sub, font=fonte(F_MED, 38), fill=(120, 120, 120), anchor="rm")
 
 
 def tela_bloqueio(img, lt):
@@ -186,6 +200,37 @@ def main():
             texto(img, "Lembra ele.", 120, ROSA, 200, lt, 0.0)
             celular(img, demo, mascara, lt, 1.3, esc_fim=4.0)
             cartoes_mimos(img, lt, 4.4)
+        elif nome == "pergunta":
+            img = fundo(True, t)
+            texto(img, "Quando foi a última vez", 86, LEITE, H * 0.30, lt, 0.2)
+            texto(img, "que você disse", 86, LEITE, H * 0.37, lt, 1.7)
+            texto(img, "\"eu te amo\"", 170, ROSA, H * 0.47, lt, 2.6, F_MAO)
+            texto(img, "pro seu pai?", 110, LEITE, H * 0.57, lt, 3.4)
+            texto(img, "pra sua mãe?", 110, MANTEIGA, H * 0.66, lt, 5.8)
+        elif nome == "ligacao":
+            img = Image.new("RGB", (W, H), NOITE)
+            chat(img, lt, [(0.4, "info", "última visita: há 8 meses"), (1.4, "info", "chamada de voz · 1 min"),
+                           (4.0, "ela", "tá tudo bem, filho?"), (5.1, "ele", "tá"), (5.9, "ela", "Deus te abençoe")],
+                 titulo="Mãe")
+        elif nome == "sempre":
+            img = Image.new("RGB", (W, H), (14, 6, 12))
+            texto(img, "Eles não vão", 120, LEITE, H * 0.42, lt, 0.1, dur=0.8)
+            texto(img, "estar aqui", 120, LEITE, H * 0.49, lt, 0.5, dur=0.8)
+            texto(img, "pra sempre.", 150, ROSA, H * 0.58, lt, 1.0, dur=0.8)
+        elif nome == "galeria_familia":
+            img = Image.new("RGB", (W, H), (250, 250, 250))
+            galeria(img, lt, fotos, "Família", "1998 – 2026")
+        elif nome == "video_pais":
+            img = fundo(False, t)
+            texto(img, "Eles vão assistir mil vezes.", 66, AMEIXA, 200, lt, 3.2)
+            celular(img, demo, mascara, lt, 0.0)
+        elif nome == "fim_pais":
+            img = fundo(True, t)
+            marca(img, W / 2, H * 0.17, 110, LEITE)
+            texto(img, "diga o que você sente, mesmo de longe", 60, MANTEIGA, H * 0.24, lt, 0.2, F_MAO)
+            texto(img, "a partir de R$ 39,90", 84, LEITE, H * 0.33, lt, 0.8)
+            cartoes_mimos(img, lt, 1.0)
+            pilula(img, "Manda hoje", H * 0.82, lt, 3.0, ROSA, LEITE, 72, 44)
         else:  # fim_casada
             img = fundo(True, t)
             marca(img, W / 2, H * 0.32, 120, LEITE)
