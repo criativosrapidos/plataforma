@@ -84,7 +84,7 @@ rede = ('<svg viewBox="0 0 1080 820" style="width:1080px;height:820px">' +
 
 cenas = f'''
   <section class="scene" data-start="0" data-end="{c['sexta'] - 0.12:.2f}">
-    {E('<div id="emb1" style="position:relative;display:inline-block"></div>', 0.0, "emb", "top:380px")}
+    {E('<div id="emb1" style="position:relative;display:inline-flex;align-items:center;gap:34px"></div>', 0.0, "emb", "top:420px")}
     {L('FALA,', c['fala'], "A grad", "top:900px;font-size:200px", 0.05)}
     {L('LIDERANÇA!', c['lideranca'], "A ouro", "top:1090px;font-size:200px", 0.04)}
   </section>
@@ -133,7 +133,7 @@ cenas = f'''
   </section>
 
   <section class="scene" data-start="{c['bora'] - 0.1:.2f}" data-end="{FIM + 1}">
-    {E('<div id="emb2" style="position:relative;display:inline-block"></div>', c['bora'], "emb", "top:230px")}
+    {E('<div id="emb2" style="position:relative;display:inline-flex;align-items:center;gap:28px"></div>', c['bora'], "emb", "top:300px")}
     {L('BORA FORTALECER', c['bora'], "A grad", "top:690px;font-size:132px", 0.022)}
     {L('O MOVIMENTO!', c['movimento'], "A ouro", "top:830px;font-size:170px", 0.035)}
     {E('<div class="vidro" style="padding:26px 50px;text-align:center"><div class="A grad" style="font-size:78px">SEXTA · 16/10 · 16H</div><div style="font-weight:800;font-size:34px;color:#7FC4FF;margin-top:8px;white-space:nowrap">Espaço RC – Asa Sul · Prédio Hotel Bonaparte</div></div>', c['tevejo'] - 0.25, "glass", "top:1080px")}
@@ -143,7 +143,8 @@ cenas = f'''
 '''
 
 cortes = [c[k] - 0.1 for k in ("sexta", "dia", "ali", "quatro", "entao", "bora")]
-fim_html = f'''<div id="fx">{GRAIN}<div class="vin"></div><div id="flash"></div></div>
+fim_html = f'''<div id="wm" style="position:absolute;left:60px;top:70px;display:flex;align-items:center;gap:16px;z-index:900;opacity:0"></div>
+<div id="fx">{GRAIN}<div class="vin"></div><div id="flash"></div></div>
 </div>
 <script src="emblema.js"></script>
 <script>
@@ -151,7 +152,9 @@ const L = 0.15, C = {json.dumps(c)}, CORTES = {json.dumps(cortes)};
 document.getElementById("bg").innerHTML = `{glows}{beams}{pts}`;
 const embHTML = s => `<div style="position:absolute;inset:-60px;border-radius:50%;background:radial-gradient(circle,rgba(63,91,255,.65),transparent 70%);filter:blur(20px)"></div>`
   + `<div style="position:relative;width:${{s}}px;height:${{s}}px;border-radius:50%;overflow:hidden;box-shadow:0 0 0 3px rgba(190,205,255,.35),0 30px 90px rgba(0,0,0,.6)">${{EMB(s, "#3F4FA0")}}<div class="sweep"></div></div>`;
-emb1.innerHTML = embHTML(400); emb2.innerHTML = embHTML(330);
+const marca = (s, fs) => `<div style="position:relative">${{embHTML(s)}}</div><div class="A" style="font-size:${{fs}}px;line-height:.86;letter-spacing:-.005em;color:#fff;text-shadow:0 6px 40px rgba(63,91,255,.6);padding-top:.08em">LÍDERES</div>`;
+emb1.innerHTML = marca(230, 236); emb2.innerHTML = marca(170, 176);
+wm.innerHTML = `<div style="width:64px;height:64px;border-radius:50%;overflow:hidden">${{EMB(64, "#3F4FA0")}}</div><div class="A" style="font-size:60px;line-height:.86;color:#fff;padding-top:.08em">LÍDERES</div>`;
 // quebra em letras
 document.querySelectorAll('[data-a="letras"]').forEach(el => {{
   const cls = ["grad", "ouro", "out"].filter(k => el.classList.contains(k)); cls.forEach(k => el.classList.remove(k));
@@ -203,6 +206,7 @@ function render(tv) {{
   }});
   let fo = 0; CORTES.forEach(k => {{ const q = t - k; if (q > -0.06 && q < 0.35) fo = Math.max(fo, q < 0 ? (q + .06) / .06 * .55 : .55 * (1 - q / .35)); }});
   flash.style.opacity = fo.toFixed(3);
+  wm.style.opacity = (clamp((t - C.sexta + .1) / .4) * (1 - clamp((t - C.bora + .2) / .3)) * .85).toFixed(3);
   const escuro = document.querySelector('[data-escuro]'), ea = parseFloat(escuro.dataset.start), eb = parseFloat(escuro.dataset.end);
   bg.style.opacity = (t > ea && t < eb + .2) ? (.25).toString() : "1";
   document.querySelectorAll(".scene").forEach(s => {{
