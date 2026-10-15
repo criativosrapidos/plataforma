@@ -115,7 +115,7 @@ cenas = f'''
   </section>
 
   <section class="scene" data-start="{c['fechando'] - 0.12:.2f}" data-end="{c['imagina'] - 0.15:.2f}">
-    {P(14, "in", "background-position:42% 25%")}
+    {P(14, "in", "background-position:18% 25%")}
     {W('Fechando', c['fechando'], "top:1260px;font-size:120px")}
     {W('<span class="ouro">negócio.</span>', c['fechando'] + 0.3, "top:1390px;font-size:120px")}
   </section>
