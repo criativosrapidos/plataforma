@@ -9,6 +9,7 @@ Local: Brasil. Idioma: português. Posicionamento: Advantage+ (deixe o Meta esco
 | 02 | Mulher · melhor amiga | Mulheres | 18–34 | **Amigos de pessoas com aniversário nos próximos 7/30 dias** (Dados demográficos › Eventos) · interesses: Amizade, Presentes, Aniversário, Fotografia |
 | 03 | Mulher · casada | Mulheres | 30–50 | Casada / em relacionamento (se disponível) · interesses: Casamento, Relacionamento amoroso, Bodas, Família |
 | 04 | Família · pais | Todos | 24–45 | **Longe da família** e **Longe da cidade natal** (Dados demográficos › Eventos) · interesses: Dia das Mães, Dia dos Pais, Família |
+| 05 | Trabalho · homenagem | Mulheres (teste também todos) | 25–45 | Cargos: analista, assistente, coordenador(a), RH · interesses: Recursos humanos, Gestão de pessoas, Carreira, LinkedIn · setores: escritório, comercial |
 
 > O Meta muda e remove opções de segmentação com frequência (algumas de status de relacionamento já saíram em contas novas).
 > Se não aparecer, use só idade + gênero + interesses ou deixe o público aberto (Advantage+): o próprio criativo filtra quem se identifica.
@@ -28,3 +29,4 @@ Local: Brasil. Idioma: português. Posicionamento: Advantage+ (deixe o Meta esco
 | Dia dos Pais (2º domingo de agosto) | 04 Família (versão "pai") |
 | Dia do Amigo (20/07) | 02 Amiga |
 | Ano todo | 02 Amiga com "aniversário em 7 dias" |
+| Fim de ano (confraternização, nov–dez) | 05 Trabalho |

@@ -3,8 +3,9 @@
   amiga  : amiga falando pra mandar o video pra melhor amiga (voz jovem)
   casada : mulher madura falando com a casada — casamento esfriou, medo de perder ele
   pais   : homem maduro, confissao — mora longe dos pais, nao diz "eu te amo" ha tempo
+  trabalho: mulher ~35, relacionamento profissional — quem organiza a homenagem da equipe e lembrada
 
-Uso: python3 ad_mulher.py amiga|casada|pais --demo ../exemplo/videomimo-demo.mp4 --voz voz.mp3 --musica trilha.wav --saida ad.mp4
+Uso: python3 ad_mulher.py amiga|casada|pais|trabalho --demo ../exemplo/videomimo-demo.mp4 --voz voz.mp3 --musica trilha.wav --saida ad.mp4
 Tempos das legendas vem da transcricao por palavra (ElevenLabs Scribe).
 """
 import argparse
@@ -62,6 +63,19 @@ ROTEIROS = {
         cenas=[(0.0, 7.4, "pergunta"), (7.4, 14.6, "ligacao"), (14.6, 17.5, "sempre"), (17.5, 20.9, "galeria_familia"),
                (20.9, 26.9, "video_pais"), (26.9, 32.2, "fim_pais")],
         com_legenda={"ligacao", "galeria_familia", "video_pais"},
+    ),
+    "trabalho": dict(
+        dur=31.0,
+        legendas=[(0.1, 4.96, "Você trabalha mais que todo mundo e quem é promovido é sempre o outro?"),
+                  (6.5, 8.7, "Não é sorte, é relacionamento."),
+                  (9.22, 14.52, "Chefe não lembra de quem trabalha calado. Lembra de quem faz ele se sentir lembrado."),
+                  (15.18, 18.66, "Aniversário do chefe, despedida de um colega, meta batida..."),
+                  (19.2, 23.46, "junta as fotos da equipe num vídeo com música e uma mensagem de todo mundo."),
+                  (24.04, 26.62, "Quem organiza a homenagem, ninguém esquece."),
+                  (27.12, 29.88, "Vídeos Mimo. A partir de R$ 39,90.")],
+        cenas=[(0.0, 6.6, "promovido"), (6.6, 9.4, "sorte"), (9.4, 15.3, "calado"), (15.3, 19.4, "ocasioes"),
+               (19.4, 24.3, "video_equipe"), (24.3, 27.4, "reacao_chefe"), (27.4, 31.0, "fim_trabalho")],
+        com_legenda={"promovido", "video_equipe"},
     ),
 }
 
@@ -129,6 +143,36 @@ def tela_bloqueio(img, lt):
         d.text((110, y + 60), "Mensagem  ·  agora", font=fonte(F_MED, 38), fill=(220, 200, 220, int(255 * k)), anchor="lm")
         d.text((110, y + 125), "Número desconhecido", font=fonte(F_BOLD, 50), fill=(255, 255, 255, int(255 * k)), anchor="lm")
         d.text((110, y + 185), "oi, sumido... tava pensando em você", font=fonte(F_MED, 46), fill=(240, 225, 240, int(255 * k)), anchor="lm")
+
+
+def canal(img, lt, msgs, titulo="# geral"):
+    """Canal de equipe generico (estilo chat corporativo). msgs: (tempo, nome, cor, texto)."""
+    d = ImageDraw.Draw(img, "RGBA")
+    d.rectangle((0, 0, W, 210), fill=(46, 38, 64))
+    d.text((60, 105), titulo, font=fonte(F_BOLD, 58), fill=(255, 255, 255), anchor="lm")
+    d.text((W - 60, 105), "Equipe Comercial", font=fonte(F_MED, 38), fill=(200, 195, 220), anchor="rm")
+    y = 290
+    for t0, nome, cor, txt in msgs:
+        k = ease((lt - t0) / 0.25)
+        if k <= 0:
+            continue
+        a = int(255 * k)
+        oy = 30 * (1 - k)
+        d.ellipse((60, y + oy, 160, y + 100 + oy), fill=cor + (a,))
+        d.text((110, y + 50 + oy), nome[0], font=fonte(F_BOLD, 50), fill=(255, 255, 255, a), anchor="mm")
+        d.text((190, y + 22 + oy), nome, font=fonte(F_BOLD, 44), fill=(40, 34, 56, a), anchor="lm")
+        linhas, atual, f = [], "", fonte(F_MED, 50)
+        for pal in txt.split():
+            teste = (atual + " " + pal).strip()
+            if d.textlength(teste, font=f) > W - 260 and atual:
+                linhas.append(atual)
+                atual = pal
+            else:
+                atual = teste
+        linhas.append(atual)
+        for i, l in enumerate(linhas):
+            d.text((190, y + 85 + i * 64 + oy), l, font=f, fill=(60, 54, 76, a), anchor="lm")
+        y += 150 + 64 * len(linhas)
 
 
 def main():
@@ -231,6 +275,45 @@ def main():
             texto(img, "a partir de R$ 39,90", 84, LEITE, H * 0.33, lt, 0.8)
             cartoes_mimos(img, lt, 1.0)
             pilula(img, "Manda hoje", H * 0.82, lt, 3.0, ROSA, LEITE, 72, 44)
+        elif nome == "promovido":
+            img = Image.new("RGB", (W, H), (246, 244, 250))
+            canal(img, lt, [(0.4, "Diretoria", (90, 80, 140), "Comunicado: parabéns ao Lucas pela promoção a Coordenador!"),
+                            (1.8, "Bruna", (230, 120, 90), "Parabéns, Lucas!!"),
+                            (2.6, "Rafael", (70, 150, 140), "Merecido demais"),
+                            (3.6, "Você", ROSA, "parabéns...")])
+        elif nome == "sorte":
+            img = fundo(True, t)
+            texto(img, "Não é sorte.", 130, LEITE, H * 0.43, lt, 0.2)
+            texto(img, "É relacionamento.", 120, ROSA, H * 0.53, lt, 1.2)
+        elif nome == "calado":
+            img = fundo(True, t)
+            texto(img, "Chefe não lembra", 96, LEITE, H * 0.33, lt, 0.1)
+            texto(img, "de quem trabalha calado.", 84, LEITE, H * 0.40, lt, 0.7)
+            texto(img, "Lembra de quem faz ele", 84, MANTEIGA, H * 0.53, lt, 2.8)
+            texto(img, "se sentir lembrado.", 116, ROSA, H * 0.61, lt, 3.9)
+        elif nome == "ocasioes":
+            img = fundo(False, t)
+            texto(img, "Quando for...", 90, AMEIXA, H * 0.28, lt, 0.0, F_MAO)
+            pilula(img, "Aniversário do chefe", H * 0.40, lt, 0.2, ROSA, LEITE, 74, 44)
+            pilula(img, "Despedida de um colega", H * 0.51, lt, 1.2, AMEIXA, LEITE, 74, 44)
+            pilula(img, "Meta batida", H * 0.62, lt, 2.6, MANTEIGA, AMEIXA, 74, 44)
+        elif nome == "video_equipe":
+            img = fundo(False, t)
+            texto(img, "fotos da equipe + música + recado de todos", 54, AMEIXA, 200, lt, 0.0)
+            celular(img, demo, mascara, lt, 0.1)
+        elif nome == "reacao_chefe":
+            img = Image.new("RGB", (W, H), (246, 244, 250))
+            canal(img, lt, [(0.0, "Ricardo (Diretor)", (90, 80, 140), "Gente... não tenho palavras. Obrigado, time."),
+                            (0.8, "Ricardo (Diretor)", (90, 80, 140), "Quem organizou isso?"),
+                            (1.5, "Bruna", (230, 120, 90), "Foi a Camila!"),
+                            (2.2, "Ricardo (Diretor)", (90, 80, 140), "Camila, vamos tomar um café amanhã?")])
+        elif nome == "fim_trabalho":
+            img = fundo(True, t)
+            marca(img, W / 2, H * 0.17, 110, LEITE)
+            texto(img, "quem organiza a homenagem, ninguém esquece", 56, MANTEIGA, H * 0.24, lt, 0.2, F_MAO)
+            texto(img, "a partir de R$ 39,90", 84, LEITE, H * 0.33, lt, 0.6)
+            cartoes_mimos(img, lt, 0.8)
+            pilula(img, "Organize a homenagem", H * 0.82, lt, 2.0, ROSA, LEITE, 66, 44)
         else:  # fim_casada
             img = fundo(True, t)
             marca(img, W / 2, H * 0.32, 120, LEITE)
