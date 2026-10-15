@@ -1,0 +1,64 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="estilo.css">
+<style>
+#board { width: 1600px; background: var(--leite); color: var(--ameixa); padding: 90px; display: flex; flex-direction: column; gap: 70px; font-family: var(--f-texto); }
+h1 { font-family: var(--f-display); font-weight: 800; font-size: 40px; letter-spacing: .12em; text-transform: uppercase; color: var(--rosa); }
+.topo { display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 3px solid var(--ameixa); padding-bottom: 40px; }
+.topo .logo { font-size: 120px; }
+.topo p { font-size: 26px; max-width: 520px; text-align: right; line-height: 1.4; }
+.linha { display: grid; gap: 30px; }
+.l3 { grid-template-columns: 2fr 1fr 1fr; } .l5 { grid-template-columns: repeat(5, 1fr); } .l3i { grid-template-columns: repeat(3, 1fr); }
+.caixa { border-radius: 28px; padding: 50px; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 18px; min-height: 300px; font-size: 22px; }
+.caixa .logo { font-size: 84px; }
+.caixa img { width: 180px; border-radius: 22px; }
+.cor { border-radius: 28px; height: 300px; padding: 30px; display: flex; flex-direction: column; justify-content: flex-end; font-size: 22px; gap: 6px; border: 2px solid rgba(58,13,46,.1); }
+.cor b { font-family: var(--f-display); font-size: 34px; }
+.tipo { border-radius: 28px; background: #fff; padding: 46px; display: flex; flex-direction: column; gap: 14px; }
+.tipo .amostra { font-size: 96px; line-height: 1; }
+.tipo small { font-size: 22px; opacity: .7; }
+.voz { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; font-size: 28px; line-height: 1.45; }
+.voz div { background: var(--blush); border-radius: 28px; padding: 46px; }
+.voz b { font-family: var(--f-display); font-size: 34px; display: block; margin-bottom: 14px; }
+.apl { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; } .apl img { width: 100%; border-radius: 18px; }
+</style></head><body>
+<div id="board">
+  <div class="topo"><span class="logo claro" id="lg"></span><p><b>Vídeos Mimo</b> · identidade visual<br>vídeos-presente com fotos, música original e uma mensagem que emociona.</p></div>
+
+  <h1>Logo</h1>
+  <div class="linha l3">
+    <div class="caixa" style="background:#fff"><span class="logo claro lgx"></span><span>versão principal · fundo claro</span></div>
+    <div class="caixa" style="background:var(--ameixa);color:var(--leite)"><img src="../avatar-instagram.png"><span>avatar · fundo ameixa</span></div>
+    <div class="caixa" style="background:var(--rosa);color:var(--leite)"><img src="../avatar-instagram-rosa.png"><span>avatar · fundo rosa</span></div>
+  </div>
+  <div class="linha" style="grid-template-columns:1fr">
+    <div class="caixa" style="background:var(--ameixa);color:var(--leite);min-height:220px"><span class="logo escuro lgx"></span><span>versão sobre fundo escuro · nome sempre junto e em minúsculas: videosmimo</span></div>
+  </div>
+
+  <h1>Cores</h1>
+  <div class="linha l5">
+    <div class="cor" style="background:var(--ameixa);color:var(--leite)"><b>Ameixa</b>#3A0D2E<br>textos, fundos escuros</div>
+    <div class="cor" style="background:var(--rosa);color:var(--leite)"><b>Rosa Mimo</b>#FF4F79<br>cor principal, botões</div>
+    <div class="cor" style="background:var(--manteiga)"><b>Manteiga</b>#FFC857<br>preços, destaques</div>
+    <div class="cor" style="background:var(--blush)"><b>Blush</b>#FFE9EE<br>fundos claros</div>
+    <div class="cor" style="background:var(--leite)"><b>Leite</b>#FFF8F5<br>fundo de página</div>
+  </div>
+
+  <h1>Tipografia</h1>
+  <div class="linha l3i">
+    <div class="tipo"><span class="amostra" style="font-family:var(--f-display);font-weight:800;letter-spacing:-.03em">Aa Mimo</span><b>Bricolage Grotesque ExtraBold</b><small>títulos, nomes e preços</small></div>
+    <div class="tipo"><span class="amostra" style="font-family:var(--f-mao);font-weight:700;color:var(--rosa)">com amor</span><b>Caveat Bold</b><small>toque manuscrito · usar pouco</small></div>
+    <div class="tipo"><span class="amostra" style="font-family:var(--f-texto);font-size:72px">Aa texto</span><b>Figtree</b><small>textos corridos, legendas, site</small></div>
+  </div>
+
+  <h1>Tom de voz</h1>
+  <div class="voz">
+    <div><b>É assim</b>Caloroso e direto, como uma amiga que ajuda a acertar no presente. Frases curtas. Fala da emoção de quem recebe.<br><br>"Você manda as fotos, a gente faz o resto."</div>
+    <div><b>Não é assim</b>Linguagem de agência, exagero e promessa que não dá pra cumprir. Nada de "o melhor presente do mundo" ou "garanta já sua promoção".</div>
+  </div>
+
+  <h1>Aplicações</h1>
+  <div class="apl"><img src="../../instagram/grade/post-01.png"><img src="../../instagram/grade/post-03.png"><img src="../../instagram/carrosseis/c2-qual-mimo/03.png"><img src="../../instagram/grade/post-05.png"></div>
+</div>
+<script>
+const s = '<svg viewBox="0 0 120 112" xmlns="http://www.w3.org/2000/svg"><path d="M60 104 C20 78 6 58 6 38 C6 20 20 8 36 8 C47 8 55 14 60 22 C65 14 73 8 84 8 C100 8 114 20 114 38 C114 58 100 78 60 104 Z" fill="#FF4F79"/><path d="M50 36 L50 72 L80 54 Z" fill="#FFF8F5"/></svg>';
+document.querySelectorAll('.logo').forEach(e => e.innerHTML = s + '<span>videosmimo</span>');
+</script></body></html>

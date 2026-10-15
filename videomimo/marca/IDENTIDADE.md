@@ -7,8 +7,18 @@ Um produto da Criativos Rápidos, feito para o público geral (não para empresa
 **Tom de voz:** caloroso, direto, sem exagero. Fala como um amigo que ajuda a acertar no presente.
 Frases curtas. "Você manda as fotos, a gente faz o resto."
 
-## Símbolo
-Coração rosa com um botão de play dentro: o vídeo é o presente. Arquivos: `logo.svg`, `simbolo.svg`.
+## Símbolo e arquivos oficiais
+Coração rosa com um botão de play dentro: o vídeo é o presente.
+
+| Arquivo | Uso |
+|---|---|
+| `logo-horizontal.png` | logo principal em fundo claro (PNG transparente) |
+| `logo-horizontal-branca.png` | logo em fundo escuro ou foto |
+| `simbolo.png` / `simbolo.svg` | só o coração, para ícones e marca d'água |
+| `avatar-instagram.png` / `avatar-instagram-rosa.png` | foto de perfil 1080×1080 |
+| `identidade-visual.png` | prancha com logo, cores, fontes e tom de voz |
+
+Use sempre os PNGs (renderizados com a fonte oficial). O `logo.svg` depende da fonte Bricolage Grotesque instalada.
 Nome da marca: **Vídeos Mimo** (no plural). No logo, escrito junto e em minúsculas: **videosmimo**.
 
 ## Cores

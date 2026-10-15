@@ -108,12 +108,11 @@ def camada_legenda(txt):
     return cam
 
 
-def marca(d, y, cor, tam=34):
-    f = fonte("Bricolage-ExtraBold.ttf", tam)
-    larg = d.textlength("videosmimo", font=f)
-    x0 = W / 2 - (larg + tam) / 2
-    coracao(d, x0 + tam * 0.4, y, tam * 0.42, ROSA)
-    d.text((x0 + tam, y), "videosmimo", font=f, fill=cor, anchor="lm")
+def marca(img, y, tam=34):
+    logo = Image.open(AQUI.parent / "marca" / "logo-horizontal.png").convert("RGBA")
+    esc = tam / 165
+    lg = logo.resize((int(logo.width * esc), int(logo.height * esc)), Image.LANCZOS)
+    img.paste(lg, (int(W / 2 - lg.width / 2), int(y - lg.height / 2)), lg)
 
 
 def quadro_abertura(p, ocasiao, para):
@@ -153,9 +152,8 @@ def quadro_final(p, mensagem, de):
     alfa = camada.getchannel("A").point(lambda v: int(v * ease((p - 0.15) / 0.3)))
     camada.putalpha(alfa)
     img.paste(camada, (0, 0), camada)
-    d = ImageDraw.Draw(img, "RGBA")
     if p > 0.55:
-        marca(d, H - 140, AMEIXA)
+        marca(img, H - 140)
     return img
 
 

@@ -5,6 +5,7 @@ Uso: python3 promo_namorados.py --demo ../exemplo/videomimo-demo.mp4 --musica tr
 import argparse
 import math
 import subprocess
+from pathlib import Path
 
 import numpy as np
 from PIL import Image, ImageDraw, ImageFilter
@@ -86,16 +87,19 @@ def fundo(escuro, t):
     return src.crop((0, src.height - H - off, W, src.height - off))
 
 
+_LOGOS = {}
+
+
 def marca(img, cx, cy, tam, cor):
-    d = ImageDraw.Draw(img, "RGBA")
-    f = fonte(F_BOLD, tam)
-    larg = d.textlength("videosmimo", font=f)
-    x0 = cx - (larg + tam * 1.15) / 2
-    coracao(d, x0 + tam * 0.45, cy, tam * 0.5, ROSA + (255,))
-    # play dentro do coracao
-    s = tam * 0.17
-    d.polygon([(x0 + tam * 0.36, cy - s * 1.2), (x0 + tam * 0.36, cy + s * 0.9), (x0 + tam * 0.62, cy - s * 0.15)], fill=LEITE)
-    d.text((x0 + tam * 1.15, cy), "videosmimo", font=f, fill=cor, anchor="lm")
+    """Cola a logo oficial (marca/logo-horizontal*.png). tam ~ altura das letras em px."""
+    clara = sum(cor[:3]) > 600
+    nome = "logo-horizontal-branca.png" if clara else "logo-horizontal.png"
+    if nome not in _LOGOS:
+        _LOGOS[nome] = Image.open(Path(__file__).parent.parent / "marca" / nome).convert("RGBA")
+    logo = _LOGOS[nome]
+    esc = tam / 195
+    lg = logo.resize((int(logo.width * esc), int(logo.height * esc)), Image.LANCZOS)
+    img.paste(lg, (int(cx - lg.width / 2), int(cy - lg.height / 2)), lg)
 
 
 def riscar(img, y, larg, t, t0, cor):

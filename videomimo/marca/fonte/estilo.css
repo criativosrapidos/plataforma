@@ -1,0 +1,16 @@
+@font-face { font-family: "Bricolage Grotesque"; font-weight: 800; src: url("../../gerador/fontes/Bricolage-ExtraBold.ttf"); }
+@font-face { font-family: "Bricolage Grotesque"; font-weight: 500; src: url("../../gerador/fontes/Bricolage-Medium.ttf"); }
+@font-face { font-family: "Caveat"; font-weight: 700; src: url("../../gerador/fontes/Caveat-Bold.ttf"); }
+@font-face { font-family: "Figtree"; font-weight: 400; src: url("../../gerador/fontes/Figtree-400.ttf"); }
+@font-face { font-family: "Figtree"; font-weight: 600; src: url("../../gerador/fontes/Figtree-600.ttf"); }
+@font-face { font-family: "Figtree"; font-weight: 700; src: url("../../gerador/fontes/Figtree-700.ttf"); }
+:root {
+  --ameixa: #3A0D2E; --rosa: #FF4F79; --manteiga: #FFC857; --blush: #FFE9EE; --leite: #FFF8F5; --ameixa-2: #52203F;
+  --f-display: "Bricolage Grotesque", sans-serif; --f-mao: "Caveat", cursive; --f-texto: "Figtree", sans-serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: transparent; font-family: var(--f-texto); }
+.logo { display: inline-flex; align-items: center; gap: 0.18em; font-family: var(--f-display); font-weight: 800; letter-spacing: -0.035em; line-height: 1; }
+.logo svg { height: 0.95em; width: auto; flex: none; transform: translateY(0.04em); }
+.logo.claro { color: var(--ameixa); }
+.logo.escuro { color: var(--leite); }

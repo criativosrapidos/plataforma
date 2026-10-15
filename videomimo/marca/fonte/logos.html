@@ -1,0 +1,23 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="estilo.css">
+<style>
+  .peca { display: flex; width: max-content; padding: 40px; }
+  #simbolo svg { width: 1000px; height: auto; }
+  #h-claro .logo, #h-escuro .logo { font-size: 220px; }
+  #avatar { width: 1080px; height: 1080px; background: var(--ameixa); align-items: center; justify-content: center; padding: 0; }
+  #avatar svg { width: 560px; height: auto; }
+  #avatar-rosa { width: 1080px; height: 1080px; background: var(--rosa); align-items: center; justify-content: center; padding: 0; }
+  #avatar-rosa svg { width: 560px; height: auto; }
+</style></head><body>
+<template id="sym"><svg viewBox="0 0 120 112" xmlns="http://www.w3.org/2000/svg"><path d="M60 104 C20 78 6 58 6 38 C6 20 20 8 36 8 C47 8 55 14 60 22 C65 14 73 8 84 8 C100 8 114 20 114 38 C114 58 100 78 60 104 Z" fill="#FF4F79"/><path d="M50 36 L50 72 L80 54 Z" fill="#FFF8F5"/></svg></template>
+<div class="peca" id="simbolo"></div>
+<div class="peca" id="h-claro"><span class="logo claro"></span></div>
+<div class="peca" id="h-escuro"><span class="logo escuro"></span></div>
+<div class="peca" id="avatar"></div>
+<div class="peca" id="avatar-rosa"></div>
+<script>
+  const s = document.getElementById('sym').innerHTML;
+  document.getElementById('simbolo').innerHTML = s;
+  document.querySelectorAll('.logo').forEach(e => e.innerHTML = s + '<span>videosmimo</span>');
+  document.getElementById('avatar').innerHTML = s;
+  document.getElementById('avatar-rosa').innerHTML = s.replace('#FF4F79', 'TMP').replace('#FFF8F5', '#FF4F79').replace('TMP', '#FFF8F5');
+</script></body></html>
