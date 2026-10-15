@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Reels Benefiz (30 s): quadros + trilha alegre gerada aqui + efeitos sincronizados (locução entra quando houver audio/locucao.mp3).
 Uso: python3 monta.py <pasta_quadros> <saida.mp4>"""
+import os
 import subprocess
 import sys
 import wave
@@ -58,10 +59,12 @@ def acorde(freqs, dur):
 def trilha():
     """Trilha cinematográfica: pulso grave + pad menor; pausa dramática no 'Quem é líder, aparece' e volta forte no 'Bora'."""
     import json
-    c = json.load(open(ROOT / "audio/cues.json"))
+    import os
+    c = json.load(open(ROOT / os.environ.get("CUES", "audio/cues.json")))
     m = np.zeros(N)
     beat = 60 / 100
-    pausa, volta = c["quemelider"] - 0.25 + LEAD, c["bora"] + LEAD
+    entra = c[os.environ.get("ENTRA", "fala")] + LEAD - 0.05
+    pausa, volta = c[os.environ.get("PAUSA", "quemelider")] - 0.25 + LEAD, c["bora"] + LEAD
     prog = ([110, 130.8, 164.8], [87.3, 110, 130.8], [130.8, 164.8, 196], [98, 123.5, 146.8])
     comp = beat * 8
     k = 0
@@ -71,7 +74,7 @@ def trilha():
     b = 0
     while b * beat < DUR:
         tb = b * beat
-        if not (pausa <= tb < volta):
+        if tb >= entra - 0.01 and not (pausa <= tb < volta):
             forte = tb >= volta
             put(m, kick() * (0.95 if forte else 0.75), tb)
             if tb > 1.4:
@@ -88,6 +91,11 @@ def trilha():
     n = int(SR * 1.2); t = np.arange(n) / SR
     put(m, np.sin(2 * np.pi * np.cumsum(38 + 70 * np.exp(-t / 0.08)) / SR) * np.exp(-t / 0.5) * 1.2, volta)
     put(m, np.sin(2 * np.pi * np.cumsum(38 + 70 * np.exp(-t / 0.08)) / SR) * np.exp(-t / 0.5) * 0.8, pausa)
+    put(m, np.sin(2 * np.pi * np.cumsum(38 + 70 * np.exp(-t / 0.08)) / SR) * np.exp(-t / 0.5) * 1.0, LEAD)
+    if entra > 1:
+        n2 = int(SR * 1.2); t2 = np.arange(n2) / SR
+        r2 = rng.standard_normal(n2); r2 = np.convolve(r2, np.ones(12) / 12, "same") * (t2 / 1.2) ** 2 * 0.35
+        put(m, r2, entra - 1.2)
     return m
 
 
@@ -142,7 +150,7 @@ if __name__ == "__main__":
     s = np.roll(s, int(LEAD * SR))                 # efeitos seguem o tempo da locução
     grava(aud / "trilha.wav", m)
     grava(aud / "sfx.wav", s)
-    voz = aud / "locucao.mp3"
+    voz = aud / os.environ.get("VOZ", "locucao.mp3")
     if voz.exists():
         ent = ["-i", str(voz)]
         fc = (f"[3:a]adelay={int(LEAD * 1000)}|{int(LEAD * 1000)},aresample=44100,highpass=f=80,acompressor=threshold=-20dB:ratio=3:attack=5:release=90,"
