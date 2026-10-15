@@ -56,26 +56,38 @@ def acorde(freqs, dur):
 
 
 def trilha():
+    """Trilha cinematográfica: pulso grave + pad menor; pausa dramática no 'Quem é líder, aparece' e volta forte no 'Bora'."""
+    import json
+    c = json.load(open(ROOT / "audio/cues.json"))
     m = np.zeros(N)
-    beat = 60 / BPM
-    tensao, solucao = 0.0, 0.0                 # parte de dor (tensa) e virada para a solução
-    # pad: acorde menor na dor, maior na solução
-    put(m, acorde([110, 130.8, 164.8], tensao), 0)
-    for k, ch in enumerate(([130.8, 164.8, 196], [146.8, 185, 220], [123.5, 155.6, 185], [130.8, 164.8, 196])):
-        put(m, acorde(ch, 4.9), solucao + k * 4.75)
+    beat = 60 / 100
+    pausa, volta = c["quemelider"] - 0.25 + LEAD, c["bora"] + LEAD
+    prog = ([110, 130.8, 164.8], [87.3, 110, 130.8], [130.8, 164.8, 196], [98, 123.5, 146.8])
+    comp = beat * 8
+    k = 0
+    while k * comp < DUR:
+        put(m, acorde(prog[k % 4], comp + 0.5) * 1.4, k * comp)
+        k += 1
     b = 0
     while b * beat < DUR:
         tb = b * beat
-        dor = tb < tensao
-        if tb >= solucao or (dor and b % 2 == 0):
-            put(m, kick() * (0.55 if dor else 0.8), tb)
-        if tb >= solucao:
-            put(m, hat(), tb + beat / 2)
-            nota = [65.4, 65.4, 73.4, 61.7][int((tb - solucao) // 4.75) % 4]
-            put(m, baixo(nota, beat * 0.45), tb + beat / 2)
-        elif b % 4 == 2:
-            put(m, hat() * 0.6, tb)
+        if not (pausa <= tb < volta):
+            forte = tb >= volta
+            put(m, kick() * (0.95 if forte else 0.75), tb)
+            if tb > 1.4:
+                put(m, hat() * (1.0 if forte else 0.7), tb + beat / 2)
+                if forte:
+                    put(m, hat() * 0.5, tb + beat / 4); put(m, hat() * 0.5, tb + 3 * beat / 4)
+            nota = [55, 43.65, 65.4, 49][int(tb // comp) % 4]
+            put(m, baixo(nota * 2, beat * 0.4), tb + beat / 2)
         b += 1
+    # riser antes da volta e impacto grave na volta
+    n = int(SR * 1.6); t = np.arange(n) / SR
+    rs = rng.standard_normal(n); rs = np.convolve(rs, np.ones(12) / 12, "same") * (t / 1.6) ** 2 * 0.5
+    put(m, rs, volta - 1.6)
+    n = int(SR * 1.2); t = np.arange(n) / SR
+    put(m, np.sin(2 * np.pi * np.cumsum(38 + 70 * np.exp(-t / 0.08)) / SR) * np.exp(-t / 0.5) * 1.2, volta)
+    put(m, np.sin(2 * np.pi * np.cumsum(38 + 70 * np.exp(-t / 0.08)) / SR) * np.exp(-t / 0.5) * 0.8, pausa)
     return m
 
 
@@ -134,7 +146,7 @@ if __name__ == "__main__":
     if voz.exists():
         ent = ["-i", str(voz)]
         fc = (f"[3:a]adelay={int(LEAD * 1000)}|{int(LEAD * 1000)},aresample=44100,highpass=f=80,acompressor=threshold=-20dB:ratio=3:attack=5:release=90,"
-              f"volume=2.0,apad,atrim=0:{DUR},asplit=2[v1][v2];[1:a]volume=0.16[m];[m][v1]sidechaincompress=threshold=0.03:ratio=5:release=250[md];"
+              f"volume=2.0,apad,atrim=0:{DUR},asplit=2[v1][v2];[1:a]volume=0.20[m];[m][v1]sidechaincompress=threshold=0.03:ratio=5:release=250[md];"
               f"[2:a]volume=0.0[fx];[md][v2][fx]amix=inputs=3:duration=longest:normalize=0,")
     else:
         ent = []
