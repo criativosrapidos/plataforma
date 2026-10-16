@@ -79,8 +79,8 @@ def preparar_foto(path):
     bw, bh = int(W * 1.15), int(H * 1.15)
     fundo = ImageOps.fit(img, (bw, bh)).filter(ImageFilter.GaussianBlur(40))
     fundo = Image.blend(fundo, Image.new("RGB", fundo.size, AMEIXA), 0.35)
-    frente = img.copy()
-    frente.thumbnail((bw, bh), Image.LANCZOS)
+    esc = min(bw / img.width, bh / img.height)
+    frente = img.resize((int(img.width * esc), int(img.height * esc)), Image.LANCZOS)
     if frente.width >= bw * 0.95 and frente.height >= bh * 0.95:
         return ImageOps.fit(img, (bw, bh))
     fundo.paste(frente, ((bw - frente.width) // 2, (bh - frente.height) // 2))
