@@ -29,3 +29,6 @@ work5/render/prev7/
 work6/audio/*.wav
 work6/render/video_raw.mp4
 work6/render/sheet*.png
+work7/audio/*.wav
+work7/render/*_raw.mp4
+work7/render/prev/
