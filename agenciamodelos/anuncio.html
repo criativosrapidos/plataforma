@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><title>Agência de modelos - Tocantins</title>
+<style>
+@font-face { font-family: PF; font-weight: 700; src: url(fonts/playfair-display-latin-700-normal.woff); }
+@font-face { font-family: PF; font-weight: 900; src: url(fonts/playfair-display-latin-900-normal.woff); }
+@font-face { font-family: PF; font-weight: 700; font-style: italic; src: url(fonts/playfair-display-latin-700-italic.woff); }
+@font-face { font-family: PF; font-weight: 500; font-style: italic; src: url(fonts/playfair-display-latin-500-italic.woff); }
+@font-face { font-family: M; font-weight: 300; src: url(fonts/montserrat-latin-300-normal.woff); }
+@font-face { font-family: M; font-weight: 400; src: url(fonts/montserrat-latin-400-normal.woff); }
+@font-face { font-family: M; font-weight: 600; src: url(fonts/montserrat-latin-600-normal.woff); }
+@font-face { font-family: M; font-weight: 700; src: url(fonts/montserrat-latin-700-normal.woff); }
+@font-face { font-family: M; font-weight: 800; src: url(fonts/montserrat-latin-800-normal.woff); }
+@font-face { font-family: M; font-weight: 900; src: url(fonts/montserrat-latin-900-normal.woff); }
+:root { --ouro:#D9B36C; --ouro2:#F3D79A; --preto:#07070A; --rosa:#E8467C; }
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body { width:1080px; height:1920px; overflow:hidden; background:var(--preto); }
+#stage { position:relative; width:1080px; height:1920px; overflow:hidden; font-family:M, sans-serif; color:#fff; background:var(--preto); }
+.scene { position:absolute; inset:0; opacity:0; overflow:hidden; }
+.el { position:absolute; left:50px; right:50px; text-align:center; opacity:0; will-change:transform, opacity, filter; }
+.S { font-family:PF; font-weight:900; line-height:.98; letter-spacing:-.01em; }
+.Si { font-family:PF; font-style:italic; font-weight:700; }
+.T { font-weight:300; letter-spacing:.42em; text-transform:uppercase; }
+.ouro { background:linear-gradient(180deg,#FFF1C9 0%,#E9C57C 45%,#B88A3E 100%); -webkit-background-clip:text; background-clip:text; color:transparent; padding:.1em .03em; margin:-.1em -.03em; }
+.spot { position:absolute; border-radius:50%; filter:blur(90px); }
+.w { display:inline-block; overflow:hidden; vertical-align:top; padding:.1em .03em .14em; margin:-.1em -.03em -.14em; }
+.w > span { display:inline-block; }
+#vf { position:absolute; inset:0; pointer-events:none; z-index:500; }
+#flash { position:absolute; inset:0; background:#fff; opacity:0; z-index:600; pointer-events:none; }
+.grain { position:absolute; inset:0; opacity:.07; mix-blend-mode:overlay; z-index:550; pointer-events:none; }
+.film { position:absolute; left:0; top:640px; height:620px; display:flex; gap:26px; padding:46px 30px; background:#111; }
+.film::before, .film::after { content:""; position:absolute; left:0; right:0; height:22px; background:repeating-linear-gradient(90deg,#000 0 26px,transparent 26px 58px); }
+.film::before { top:12px; } .film::after { bottom:12px; }
+.quadro { flex:none; width:390px; height:528px; border-radius:6px; overflow:hidden; position:relative; }
+.quadro .n { position:absolute; left:16px; bottom:12px; font-weight:700; font-size:22px; color:var(--ouro); letter-spacing:.2em; }
+.capa { width:760px; height:1010px; margin:0 auto; position:relative; background:linear-gradient(170deg,#2A1E12,#0B0B10 70%); border:2px solid rgba(217,179,108,.5); overflow:hidden; box-shadow:0 40px 120px rgba(0,0,0,.7); }
+.passo { display:flex; align-items:center; gap:30px; text-align:left; padding:26px 34px; border:1.5px solid rgba(217,179,108,.35); border-radius:24px; background:rgba(255,255,255,.04); }
+.passo .n { flex:none; width:86px; height:86px; border-radius:50%; border:2px solid var(--ouro); display:flex; align-items:center; justify-content:center; font-family:PF; font-weight:900; font-size:48px; color:var(--ouro); }
+.passo .t { font-weight:700; font-size:44px; line-height:1.15; }
+.placeholder { border:3px dashed rgba(217,179,108,.7); border-radius:30px; display:flex; align-items:center; justify-content:center; color:rgba(243,215,154,.85); font-weight:700; letter-spacing:.3em; }
+</style></head><body><div id="stage">
+
+  <section class="scene" data-start="0" data-end="1.96">
+    <div class="spot" data-sp="1" style="width:900px;height:900px;left:-300px;top:-200px;background:rgba(217,179,108,.35)"></div><div class="spot" data-sp="-1" style="width:800px;height:800px;right:-300px;bottom:-100px;background:rgba(232,70,124,.18)"></div>
+    <div class="el " data-in="0.16" data-a="slam" style="top:660px"><div style="display:inline-block;background:#E8263C;color:#fff;font-weight:900;font-size:56px;letter-spacing:.2em;padding:14px 40px;border-radius:12px">ATENÇÃO,</div></div>
+    <div class="el " data-in="0.80" data-a="slam" style="top:800px"><div class="S ouro" style="font-size:158px;white-space:nowrap">TOCANTINS!</div></div>
+    <div class="el " data-in="1.20" data-a="up" style="top:1080px"><div class="T" style="font-size:30px;color:rgba(255,255,255,.75)">Casting aberto · Agência de modelos</div></div>
+  </section>
+
+  <section class="scene" data-start="1.96" data-end="5.24">
+    <div class="spot" data-sp="1" style="width:900px;height:900px;left:-300px;top:-200px;background:rgba(232,70,124,.22)"></div><div class="spot" data-sp="-1" style="width:800px;height:800px;right:-300px;bottom:-100px;background:rgba(217,179,108,.3)"></div>
+    <div class="el " data-in="1.98" data-a="foto" style="top:220px"><svg viewBox="0 0 424 574" style="width:760px;height:1030px;display:block" preserveAspectRatio="xMidYMid slice">
+      <defs><linearGradient id="bglongo760" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4A2E1C"/><stop offset="1" stop-color="#120C0A"/></linearGradient>
+      <linearGradient id="pelelongo760" x1="0" x2="1"><stop offset="0" stop-color="#2B1D14"/><stop offset=".75" stop-color="#4A3424"/><stop offset="1" stop-color="#D9B36C"/></linearGradient></defs>
+      <rect width="424" height="574" fill="url(#bglongo760)"/>
+      <circle cx="300" cy="140" r="160" fill="rgba(255,240,210,.10)"/>
+      <path d="M120 170c-6-90 52-128 92-128s98 38 92 128c-2 60 10 120 22 170H98c12-50 24-110 22-170z" fill="#120C08"/>
+      <path d="M212 70c40 0 66 32 66 82 0 52-30 92-66 92s-66-40-66-92c0-50 26-82 66-82z" fill="url(#pelelongo760)"/>
+      <path d="M186 236h52l6 46c40 10 92 26 120 60 22 28 30 120 34 232H26c4-112 12-204 34-232 28-34 80-50 120-60z" fill="url(#pelelongo760)"/>
+      <path d="M60 574c6-120 30-196 92-222l60 70 60-70c62 26 86 102 92 222z" fill="#0A0A0E"/>
+      <path d="M278 152c0 52-30 92-66 92" fill="none" stroke="#D9B36C" stroke-width="3" opacity=".8"/>
+    </svg></div>
+    <div class="el S" data-in="2.08" data-a="palavras" data-passo="0.06" style="top:1300px;font-size:76px;color:#fff">Você mora no Tocantins</div>
+    <div class="el Si" data-in="3.54" data-a="palavras" data-passo="0.08" style="top:1420px;font-size:92px;font-style:italic">e sonha em ser <span class="ouro">modelo?</span></div>
+  </section>
+
+  <section class="scene" data-start="5.24" data-end="9.16">
+    <div class="spot" data-sp="1" style="width:900px;height:900px;left:-300px;top:-200px;background:rgba(217,179,108,.35)"></div><div class="spot" data-sp="-1" style="width:800px;height:800px;right:-300px;bottom:-100px;background:rgba(232,70,124,.18)"></div>
+    <div class="el " data-in="5.36" data-a="up" style="top:260px"><div class="T" style="font-size:34px;color:var(--ouro)">Estamos em busca de</div></div>
+    <div class="el " data-in="6.40" data-a="slam" style="top:330px"><div class="S ouro" style="font-size:150px">NOVOS<br>TALENTOS</div></div>
+    <div class="film" id="filme"><div class="quadro"><svg viewBox="0 0 424 574" style="width:390px;height:528px;display:block" preserveAspectRatio="xMidYMid slice">
+      <defs><linearGradient id="bglongo390" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4A2E1C"/><stop offset="1" stop-color="#120C0A"/></linearGradient>
+      <linearGradient id="pelelongo390" x1="0" x2="1"><stop offset="0" stop-color="#2B1D14"/><stop offset=".75" stop-color="#4A3424"/><stop offset="1" stop-color="#D9B36C"/></linearGradient></defs>
+      <rect width="424" height="574" fill="url(#bglongo390)"/>
+      <circle cx="300" cy="140" r="160" fill="rgba(255,240,210,.10)"/>
+      <path d="M120 170c-6-90 52-128 92-128s98 38 92 128c-2 60 10 120 22 170H98c12-50 24-110 22-170z" fill="#120C08"/>
+      <path d="M212 70c40 0 66 32 66 82 0 52-30 92-66 92s-66-40-66-92c0-50 26-82 66-82z" fill="url(#pelelongo390)"/>
+      <path d="M186 236h52l6 46c40 10 92 26 120 60 22 28 30 120 34 232H26c4-112 12-204 34-232 28-34 80-50 120-60z" fill="url(#pelelongo390)"/>
+      <path d="M60 574c6-120 30-196 92-222l60 70 60-70c62 26 86 102 92 222z" fill="#0A0A0E"/>
+      <path d="M278 152c0 52-30 92-66 92" fill="none" stroke="#D9B36C" stroke-width="3" opacity=".8"/>
+    </svg><div class="n">#01 · NOVO TALENTO</div></div><div class="quadro"><svg viewBox="0 0 424 574" style="width:390px;height:528px;display:block" preserveAspectRatio="xMidYMid slice">
+      <defs><linearGradient id="bgcurto390" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1C2A3A"/><stop offset="1" stop-color="#0A0C12"/></linearGradient>
+      <linearGradient id="pelecurto390" x1="0" x2="1"><stop offset="0" stop-color="#2B1D14"/><stop offset=".75" stop-color="#4A3424"/><stop offset="1" stop-color="#D9B36C"/></linearGradient></defs>
+      <rect width="424" height="574" fill="url(#bgcurto390)"/>
+      <circle cx="300" cy="140" r="160" fill="rgba(255,240,210,.10)"/>
+      <path d="M140 120c0-50 34-74 72-74s72 24 72 74c-14-20-40-30-72-30s-58 10-72 30z" fill="#120C08"/>
+      <path d="M212 70c40 0 66 32 66 82 0 52-30 92-66 92s-66-40-66-92c0-50 26-82 66-82z" fill="url(#pelecurto390)"/>
+      <path d="M186 236h52l6 46c40 10 92 26 120 60 22 28 30 120 34 232H26c4-112 12-204 34-232 28-34 80-50 120-60z" fill="url(#pelecurto390)"/>
+      <path d="M60 574c6-120 30-196 92-222l60 70 60-70c62 26 86 102 92 222z" fill="#0A0A0E"/>
+      <path d="M278 152c0 52-30 92-66 92" fill="none" stroke="#D9B36C" stroke-width="3" opacity=".8"/>
+    </svg><div class="n">#02 · NOVO TALENTO</div></div><div class="quadro"><svg viewBox="0 0 424 574" style="width:390px;height:528px;display:block" preserveAspectRatio="xMidYMid slice">
+      <defs><linearGradient id="bgcacheado390" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3A1C2A"/><stop offset="1" stop-color="#100A0E"/></linearGradient>
+      <linearGradient id="pelecacheado390" x1="0" x2="1"><stop offset="0" stop-color="#2B1D14"/><stop offset=".75" stop-color="#4A3424"/><stop offset="1" stop-color="#D9B36C"/></linearGradient></defs>
+      <rect width="424" height="574" fill="url(#bgcacheado390)"/>
+      <circle cx="300" cy="140" r="160" fill="rgba(255,240,210,.10)"/>
+      <circle cx="152" cy="118" r="40" fill="#120C08"/><circle cx="182" cy="78" r="44" fill="#120C08"/><circle cx="232" cy="70" r="44" fill="#120C08"/><circle cx="274" cy="108" r="40" fill="#120C08"/><circle cx="282" cy="158" r="34" fill="#120C08"/><circle cx="142" cy="164" r="34" fill="#120C08"/><circle cx="212" cy="98" r="50" fill="#120C08"/>
+      <path d="M212 70c40 0 66 32 66 82 0 52-30 92-66 92s-66-40-66-92c0-50 26-82 66-82z" fill="url(#pelecacheado390)"/>
+      <path d="M186 236h52l6 46c40 10 92 26 120 60 22 28 30 120 34 232H26c4-112 12-204 34-232 28-34 80-50 120-60z" fill="url(#pelecacheado390)"/>
+      <path d="M60 574c6-120 30-196 92-222l60 70 60-70c62 26 86 102 92 222z" fill="#0A0A0E"/>
+      <path d="M278 152c0 52-30 92-66 92" fill="none" stroke="#D9B36C" stroke-width="3" opacity=".8"/>
+    </svg><div class="n">#03 · NOVO TALENTO</div></div><div class="quadro"><svg viewBox="0 0 424 574" style="width:390px;height:528px;display:block" preserveAspectRatio="xMidYMid slice">
+      <defs><linearGradient id="bgcoque390" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2A2A1C"/><stop offset="1" stop-color="#0E0E0A"/></linearGradient>
+      <linearGradient id="pelecoque390" x1="0" x2="1"><stop offset="0" stop-color="#2B1D14"/><stop offset=".75" stop-color="#4A3424"/><stop offset="1" stop-color="#D9B36C"/></linearGradient></defs>
+      <rect width="424" height="574" fill="url(#bgcoque390)"/>
+      <circle cx="300" cy="140" r="160" fill="rgba(255,240,210,.10)"/>
+      <circle cx="212" cy="40" r="34" fill="#120C08"/><path d="M140 120c0-50 34-74 72-74s72 24 72 74c-14-18-40-26-72-26s-58 8-72 26z" fill="#120C08"/>
+      <path d="M212 70c40 0 66 32 66 82 0 52-30 92-66 92s-66-40-66-92c0-50 26-82 66-82z" fill="url(#pelecoque390)"/>
+      <path d="M186 236h52l6 46c40 10 92 26 120 60 22 28 30 120 34 232H26c4-112 12-204 34-232 28-34 80-50 120-60z" fill="url(#pelecoque390)"/>
+      <path d="M60 574c6-120 30-196 92-222l60 70 60-70c62 26 86 102 92 222z" fill="#0A0A0E"/>
+      <path d="M278 152c0 52-30 92-66 92" fill="none" stroke="#D9B36C" stroke-width="3" opacity=".8"/>
+    </svg><div class="n">#04 · NOVO TALENTO</div></div><div class="quadro"><svg viewBox="0 0 424 574" style="width:390px;height:528px;display:block" preserveAspectRatio="xMidYMid slice">
+      <defs><linearGradient id="bgcurto390" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3A2414"/><stop offset="1" stop-color="#0E0A08"/></linearGradient>
+      <linearGradient id="pelecurto390" x1="0" x2="1"><stop offset="0" stop-color="#2B1D14"/><stop offset=".75" stop-color="#4A3424"/><stop offset="1" stop-color="#D9B36C"/></linearGradient></defs>
+      <rect width="424" height="574" fill="url(#bgcurto390)"/>
+      <circle cx="300" cy="140" r="160" fill="rgba(255,240,210,.10)"/>
+      <path d="M140 120c0-50 34-74 72-74s72 24 72 74c-14-20-40-30-72-30s-58 10-72 30z" fill="#120C08"/>
+      <path d="M212 70c40 0 66 32 66 82 0 52-30 92-66 92s-66-40-66-92c0-50 26-82 66-82z" fill="url(#pelecurto390)"/>
+      <path d="M186 236h52l6 46c40 10 92 26 120 60 22 28 30 120 34 232H26c4-112 12-204 34-232 28-34 80-50 120-60z" fill="url(#pelecurto390)"/>
+      <path d="M60 574c6-120 30-196 92-222l60 70 60-70c62 26 86 102 92 222z" fill="#0A0A0E"/>
+      <path d="M278 152c0 52-30 92-66 92" fill="none" stroke="#D9B36C" stroke-width="3" opacity=".8"/>
+    </svg><div class="n">#05 · NOVO TALENTO</div></div><div class="quadro"><svg viewBox="0 0 424 574" style="width:390px;height:528px;display:block" preserveAspectRatio="xMidYMid slice">
+      <defs><linearGradient id="bglongo390" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1E2E2A"/><stop offset="1" stop-color="#0A0E0C"/></linearGradient>
+      <linearGradient id="pelelongo390" x1="0" x2="1"><stop offset="0" stop-color="#2B1D14"/><stop offset=".75" stop-color="#4A3424"/><stop offset="1" stop-color="#D9B36C"/></linearGradient></defs>
+      <rect width="424" height="574" fill="url(#bglongo390)"/>
+      <circle cx="300" cy="140" r="160" fill="rgba(255,240,210,.10)"/>
+      <path d="M120 170c-6-90 52-128 92-128s98 38 92 128c-2 60 10 120 22 170H98c12-50 24-110 22-170z" fill="#120C08"/>
+      <path d="M212 70c40 0 66 32 66 82 0 52-30 92-66 92s-66-40-66-92c0-50 26-82 66-82z" fill="url(#pelelongo390)"/>
+      <path d="M186 236h52l6 46c40 10 92 26 120 60 22 28 30 120 34 232H26c4-112 12-204 34-232 28-34 80-50 120-60z" fill="url(#pelelongo390)"/>
+      <path d="M60 574c6-120 30-196 92-222l60 70 60-70c62 26 86 102 92 222z" fill="#0A0A0E"/>
+      <path d="M278 152c0 52-30 92-66 92" fill="none" stroke="#D9B36C" stroke-width="3" opacity=".8"/>
+    </svg><div class="n">#06 · NOVO TALENTO</div></div></div>
+    <div class="el S" data-in="7.64" data-a="palavras" data-passo="0.06" style="top:1340px;font-size:56px;font-weight:700">para fazer parte da nossa agência</div>
+  </section>
+
+  <section class="scene" data-start="9.16" data-end="13.96">
+    <div class="spot" data-sp="1" style="width:900px;height:900px;left:-300px;top:-200px;background:rgba(217,179,108,.25)"></div><div class="spot" data-sp="-1" style="width:800px;height:800px;right:-300px;bottom:-100px;background:rgba(232,70,124,.25)"></div>
+    <div class="el S" data-in="9.28" data-a="palavras" data-passo="0.06" style="top:170px;font-size:56px;white-space:nowrap">Nunca trabalhou como modelo?</div>
+    <div class="el " data-in="11.00" data-a="slam" style="top:290px"><div style="display:inline-block;background:var(--ouro);color:#111;font-weight:900;font-size:46px;letter-spacing:.12em;padding:14px 34px;border-radius:10px">SEM PROBLEMA</div></div>
+    <div class="el " data-in="11.56" data-a="capa" style="top:420px"><div class="capa"><svg viewBox="0 0 424 574" style="width:760px;height:1010px;display:block" preserveAspectRatio="xMidYMid slice">
+      <defs><linearGradient id="bgcacheado760" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3A1C2A"/><stop offset="1" stop-color="#100A0E"/></linearGradient>
+      <linearGradient id="pelecacheado760" x1="0" x2="1"><stop offset="0" stop-color="#2B1D14"/><stop offset=".75" stop-color="#4A3424"/><stop offset="1" stop-color="#D9B36C"/></linearGradient></defs>
+      <rect width="424" height="574" fill="url(#bgcacheado760)"/>
+      <circle cx="300" cy="140" r="160" fill="rgba(255,240,210,.10)"/>
+      <circle cx="152" cy="118" r="40" fill="#120C08"/><circle cx="182" cy="78" r="44" fill="#120C08"/><circle cx="232" cy="70" r="44" fill="#120C08"/><circle cx="274" cy="108" r="40" fill="#120C08"/><circle cx="282" cy="158" r="34" fill="#120C08"/><circle cx="142" cy="164" r="34" fill="#120C08"/><circle cx="212" cy="98" r="50" fill="#120C08"/>
+      <path d="M212 70c40 0 66 32 66 82 0 52-30 92-66 92s-66-40-66-92c0-50 26-82 66-82z" fill="url(#pelecacheado760)"/>
+      <path d="M186 236h52l6 46c40 10 92 26 120 60 22 28 30 120 34 232H26c4-112 12-204 34-232 28-34 80-50 120-60z" fill="url(#pelecacheado760)"/>
+      <path d="M60 574c6-120 30-196 92-222l60 70 60-70c62 26 86 102 92 222z" fill="#0A0A0E"/>
+      <path d="M278 152c0 52-30 92-66 92" fill="none" stroke="#D9B36C" stroke-width="3" opacity=".8"/>
+    </svg><div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.35),transparent 30%,transparent 60%,rgba(0,0,0,.75))"></div><div class="S" style="position:absolute;top:22px;left:0;right:0;font-size:124px;color:#fff;letter-spacing:.06em">TALENTO</div><div class="T" style="position:absolute;top:196px;left:0;right:0;font-size:22px;color:var(--ouro2)">Edição Tocantins · Novos rostos</div><div class="Si ouro" style="position:absolute;bottom:60px;left:0;right:0;font-size:150px" id="vocecapa">você</div></div></div>
+    <div class="el S" data-in="12.16" data-a="palavras" data-passo="0.1" style="top:1500px;font-size:84px">Queremos conhecer <span class="ouro">VOCÊ!</span></div>
+  </section>
+
+  <section class="scene" data-start="13.96" data-end="21.08">
+    <div class="spot" data-sp="1" style="width:900px;height:900px;left:-300px;top:-200px;background:rgba(37,211,102,.22)"></div><div class="spot" data-sp="-1" style="width:800px;height:800px;right:-300px;bottom:-100px;background:rgba(217,179,108,.25)"></div>
+    <div class="el S" data-in="14.08" data-a="palavras" data-passo="0.1" style="top:220px;font-size:110px">Tem interesse?</div>
+    <div class="el " data-in="15.20" data-a="pop" style="top:420px"><div style="display:inline-flex;align-items:center;gap:24px;background:#25D366;color:#fff;font-weight:900;font-size:50px;padding:26px 54px;border-radius:90px;white-space:nowrap;box-shadow:0 20px 60px rgba(37,211,102,.4)"><svg viewBox="0 0 32 32" style="width:80px;height:80px"><path fill="#fff" d="M16 3a13 13 0 0 0-11.2 19.6L3 29l6.6-1.7A13 13 0 1 0 16 3zm0 23.6c-2 0-4-.6-5.7-1.6l-.4-.2-3.9 1 1-3.8-.3-.4A10.6 10.6 0 1 1 16 26.6zm5.8-7.9c-.3-.2-1.9-.9-2.2-1-.3-.1-.5-.2-.7.2l-1 1.2c-.2.2-.4.2-.7.1a8.7 8.7 0 0 1-4.3-3.8c-.3-.5.3-.5.9-1.6.1-.2 0-.4 0-.5l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.1-1.2 2.8s1.2 3.2 1.4 3.5c.2.2 2.4 3.6 5.8 5 2.1.9 3 1 4 .8.7-.1 1.9-.8 2.2-1.5.3-.8.3-1.4.2-1.5l-.4-.2z"/></svg>CHAMA NO WHATSAPP</div></div>
+    <div class="el " data-in="15.70" data-a="slideL" style="top:720px"><div class="passo"><div class="n">1</div><div class="t">Você chama a gente no WhatsApp</div></div></div>
+    <div class="el " data-in="16.80" data-a="slideR" style="top:930px"><div class="passo"><div class="n">2</div><div class="t">Nossa equipe entra em contato para te conhecer</div></div></div>
+    <div class="el " data-in="19.58" data-a="slideL" style="top:1170px"><div class="passo"><div class="n">3</div><div class="t">Apresentamos as oportunidades</div></div></div>
+  </section>
+
+  <section class="scene" data-start="21.08" data-end="24.00">
+    <div class="spot" data-sp="1" style="width:900px;height:900px;left:-300px;top:-200px;background:rgba(217,179,108,.45)"></div><div class="spot" data-sp="-1" style="width:800px;height:800px;right:-300px;bottom:-100px;background:rgba(232,70,124,.2)"></div>
+    <svg class="brilhos" viewBox="0 0 1080 1920" style="position:absolute;inset:0"></svg>
+    <div class="el S" data-in="21.20" data-a="palavras" data-passo="0.07" style="top:640px;font-size:92px">Seu talento pode ser</div>
+    <div class="el Si" data-in="22.10" data-a="palavras" data-passo="0.08" style="top:770px;font-size:120px;font-style:italic">o próximo</div>
+    <div class="el " data-in="22.85" data-a="slam" style="top:920px"><div class="S ouro" style="font-size:210px">A BRILHAR</div></div>
+  </section>
+
+  <section class="scene" data-start="24.00" data-end="29.20">
+    <div class="spot" data-sp="1" style="width:900px;height:900px;left:-300px;top:-200px;background:rgba(217,179,108,.3)"></div><div class="spot" data-sp="-1" style="width:800px;height:800px;right:-300px;bottom:-100px;background:rgba(37,211,102,.15)"></div>
+    <div class="el " data-in="24.10" data-a="up" style="top:300px"><div class="placeholder" style="width:640px;height:400px;margin:0 auto;font-size:30px">LOGO DA AGÊNCIA</div></div>
+    <div class="el " data-in="24.30" data-a="up" style="top:780px"><div class="T" style="font-size:30px;color:var(--ouro)">Casting aberto no Tocantins</div></div>
+    <div class="el " data-in="24.40" data-a="pop" style="top:880px"><div style="display:inline-flex;align-items:center;gap:24px;background:#25D366;color:#fff;font-weight:900;font-size:50px;padding:26px 54px;border-radius:90px;white-space:nowrap;box-shadow:0 20px 60px rgba(37,211,102,.4)"><svg viewBox="0 0 32 32" style="width:80px;height:80px"><path fill="#fff" d="M16 3a13 13 0 0 0-11.2 19.6L3 29l6.6-1.7A13 13 0 1 0 16 3zm0 23.6c-2 0-4-.6-5.7-1.6l-.4-.2-3.9 1 1-3.8-.3-.4A10.6 10.6 0 1 1 16 26.6zm5.8-7.9c-.3-.2-1.9-.9-2.2-1-.3-.1-.5-.2-.7.2l-1 1.2c-.2.2-.4.2-.7.1a8.7 8.7 0 0 1-4.3-3.8c-.3-.5.3-.5.9-1.6.1-.2 0-.4 0-.5l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.1-1.2 2.8s1.2 3.2 1.4 3.5c.2.2 2.4 3.6 5.8 5 2.1.9 3 1 4 .8.7-.1 1.9-.8 2.2-1.5.3-.8.3-1.4.2-1.5l-.4-.2z"/></svg>CHAMA NO WHATSAPP</div></div>
+    <div class="el " data-in="24.60" data-a="up" style="top:1110px"><div class="placeholder" style="width:860px;height:150px;margin:0 auto;font-size:30px;letter-spacing:.2em">(63) NÚMERO DO WHATSAPP</div></div>
+    <div class="el " data-in="24.90" data-a="up" style="top:1340px"><div class="Si ouro" style="font-size:64px">Seu talento pode ser o próximo a brilhar.</div></div>
+  </section>
+
+<svg id="vf" viewBox="0 0 1080 1920"><g fill="none" stroke="rgba(255,255,255,.85)" stroke-width="5">
+  <path d="M60 180V90h90M1020 180V90h-90M60 1740v90h90M1020 1740v90h-90"/></g>
+  <circle id="rec" cx="104" cy="140" r="14" fill="#FF2E3A"/><text x="130" y="152" font-family="M" font-weight="700" font-size="34" fill="#fff">REC</text>
+  <text id="tc" x="1000" y="152" text-anchor="end" font-family="M" font-weight="600" font-size="32" fill="#fff">00:00:00:00</text>
+  <text x="100" y="1800" font-family="M" font-weight="600" font-size="28" fill="rgba(255,255,255,.8)">ISO 400   f/2.8   1/250   4K</text>
+  <g id="foco" fill="none" stroke="#F3D79A" stroke-width="4"><path d="M440 820h-40v40M640 820h40v40M440 1100h-40v-40M640 1100h40v-40"/></g></svg><svg class="grain" viewBox="0 0 1080 1920"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" stitchTiles="stitch"/></filter><rect width="1080" height="1920" filter="url(#n)"/></svg><div id="flash"></div></div>
+<script>
+const L = 0.15, C = {"atencao": 0.16, "tocantins": 0.8, "voce": 2.08, "sonho": 3.84, "modelo": 4.4, "estamos": 5.36, "talentos": 6.4, "agencia": 8.24, "naoimporta": 9.28, "nunca": 10.4, "queremos": 12.16, "voce2": 13.12, "tem": 14.08, "chama": 15.2, "whats": 16.08, "equipe": 16.8, "conhecer": 18.56, "oportunidades": 19.88, "seu": 21.2, "brilhar": 23.0, "fim": 23.6}, CORTES = [1.96, 5.24, 9.16, 13.96, 21.08, 24.0], FIM = 28.20;
+const FLASHES = [C.tocantins, C.talentos, C.talentos + 0.6, C.voce2, C.brilhar];
+document.querySelectorAll('[data-a="palavras"]').forEach(el => {
+  const tmp = document.createElement("div"); tmp.innerHTML = el.innerHTML; let out = "";
+  const walk = (node, cls) => node.childNodes.forEach(n => {
+    if (n.nodeType === 3) n.textContent.split(/(\s+)/).forEach(p => { if (!p) return; out += /^\s+$/.test(p) ? " " : `<span class="w"><span${cls ? ` class="${cls}"` : ""}>${p}</span></span>`; });
+    else walk(n, n.className || cls);
+  });
+  walk(tmp, ""); el.innerHTML = out;
+});
+(() => { let h = "", s = 3; const r = () => (s = (s * 9301 + 49297) % 233280) / 233280;
+  for (let i = 0; i < 40; i++) { const x = r() * 1080, y = 300 + r() * 1300, k = 6 + r() * 16;
+    h += `<path data-ph="${(r() * 6.28).toFixed(2)}" transform="translate(${x.toFixed(0)} ${y.toFixed(0)})" d="M0 -${k} L${k * .25} -${k * .25} L${k} 0 L${k * .25} ${k * .25} L0 ${k} L-${k * .25} ${k * .25} L-${k} 0 L-${k * .25} -${k * .25}Z" fill="#F3D79A"/>`; }
+  document.querySelectorAll(".brilhos").forEach(b => b.innerHTML = h); })();
+const clamp = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
+const eo = x => 1 - Math.pow(1 - x, 3), eo5 = x => 1 - Math.pow(1 - x, 5);
+const back = (x, k = 1.7) => 1 + (k + 1) * Math.pow(x - 1, 3) + k * Math.pow(x - 1, 2);
+const XF = 0.12;
+function anim(el, t) {
+  const t0 = parseFloat(el.dataset.in), a = el.dataset.a;
+  if (a === "palavras") {
+    const passo = parseFloat(el.dataset.passo); let vis = false;
+    el.querySelectorAll(".w > span").forEach((s, i) => {
+      const p = clamp((t - t0 - i * passo) / 0.45), pe = eo5(p);
+      s.style.transform = `translateY(${((1 - pe) * 110).toFixed(1)}%)`;
+      if (p > 0) vis = true;
+    });
+    el.style.opacity = vis ? 1 : 0; el.style.visibility = vis ? "visible" : "hidden"; return;
+  }
+  const d = {pop: .38, slam: .3, up: .5, slideL: .45, slideR: .45, foto: .9, capa: .8}[a] || .5;
+  const p = clamp((t - t0) / d), pe = eo(p);
+  let op = (a === "pop" || a === "slam") ? clamp(p * 4) : pe, tf = "", fl = "";
+  if (a === "pop") tf = `scale(${Math.max(.02, back(p)).toFixed(4)})`;
+  if (a === "slam") { tf = `scale(${(1 + (1 - pe) * 1.3).toFixed(4)})`; fl = p < 1 ? `blur(${((1 - pe) * 10).toFixed(1)}px)` : ""; }
+  if (a === "up") tf = `translateY(${((1 - pe) * 60).toFixed(1)}px)`;
+  if (a === "slideL") tf = `translateX(${(-(1 - pe) * 1100).toFixed(1)}px)`;
+  if (a === "slideR") tf = `translateX(${((1 - pe) * 1100).toFixed(1)}px)`;
+  if (a === "foto") { tf = `scale(${(1.12 - .12 * pe + .04 * clamp((t - t0) / 3)).toFixed(4)})`; fl = `blur(${((1 - pe) * 18).toFixed(1)}px) brightness(${(.6 + .4 * pe).toFixed(2)})`; }
+  if (a === "capa") tf = `perspective(1400px) rotateY(${((1 - pe) * -40).toFixed(1)}deg) scale(${(.9 + .1 * pe).toFixed(4)})`;
+  op = op < 0.003 ? 0 : op;
+  el.style.opacity = op.toFixed(3); el.style.visibility = op > 0 ? "visible" : "hidden"; el.style.transform = tf; el.style.filter = fl || "none";
+}
+function render(tv) {
+  const t = tv - L;
+  let fo = 0;
+  FLASHES.forEach(k => { const q = t - k; if (q > 0 && q < .22) fo = Math.max(fo, .55 * (1 - q / .22)); });
+  CORTES.forEach(k => { const q = t - k; if (q > 0 && q < .18) fo = Math.max(fo, .35 * (1 - q / .18)); });
+  flash.style.opacity = fo.toFixed(3);
+  const vfOn = t < C.seu - .12;
+  vf.style.opacity = vfOn ? 1 : 0;
+  rec.style.opacity = (Math.floor(tv * 2) % 2) ? .25 : 1;
+  const fr = Math.floor(tv * 30), ss = Math.floor(tv);
+  tc.textContent = `00:00:${String(ss).padStart(2, "0")}:${String(fr % 30).padStart(2, "0")}`;
+  const fq = Math.max(0, 1 - ((t % 3) / .5)); foco.style.transform = `translate(${540 * (1 - (1 + .15 * fq))}px, ${960 * (1 - (1 + .15 * fq))}px) scale(${(1 + .15 * fq).toFixed(3)})`;
+  document.querySelectorAll(".scene").forEach(s => {
+    const a = parseFloat(s.dataset.start), b = parseFloat(s.dataset.end);
+    let op = 0;
+    if (t >= a && t < b + XF) op = clamp((t - a) / XF) * (t > b ? 1 - clamp((t - b) / XF) : 1);
+    if (a === 0) op = t < b ? 1 : op;
+    s.style.opacity = op; s.style.visibility = op > 0 ? "visible" : "hidden"; s.style.zIndex = Math.round(a * 10 + 10);
+    if (op <= 0) return;
+    s.style.transform = `scale(${(1.05 - .05 * eo(clamp((t - a) / .4))).toFixed(4)})`;
+    s.querySelectorAll(".spot").forEach(o => { const sp = +o.dataset.sp; o.style.transform = `translate(${(Math.sin(t * .5 * sp) * 160).toFixed(0)}px,${(Math.cos(t * .4) * 140).toFixed(0)}px)`; });
+    s.querySelectorAll(".brilhos path").forEach(p => { const v = .5 + .5 * Math.sin(t * 4 + +p.dataset.ph); p.style.opacity = (v * clamp((t - C.seu) / .6)).toFixed(2); });
+    s.querySelectorAll(".el").forEach(el => anim(el, t));
+  });
+  const f = document.getElementById("filme"); if (f) f.style.transform = `translateX(${(60 - (t - C.estamos) * 330).toFixed(0)}px)`;
+}
+window.render = render;
+render(0);
+</script>
+</body></html>
