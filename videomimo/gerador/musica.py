@@ -100,6 +100,92 @@ def gerar(duracao, estilo):
     return np.tanh(out * 1.2) * 0.85
 
 
+# ---------------------------------------------------------------- SERTANEJO ROMANTICO
+def violao(freq, dur, vel=1.0):
+    """Corda dedilhada: harmonicos que decaem mais rapido quanto mais agudos + ataque."""
+    t = np.arange(int(SR * dur)) / SR
+    sig = np.zeros_like(t)
+    for h in range(1, 9):
+        f = freq * h * (1 + 0.0004 * h * h)
+        sig += (1 / h ** 1.2) * np.exp(-t * (1.6 + 1.1 * h)) * np.sin(2 * np.pi * f * t + h)
+    sig *= 1 - np.exp(-t * 900)
+    return vel * sig * 0.6
+
+
+def sanfona(freq, dur, vel=1.0):
+    """Acordeon: dois registros levemente desafinados, vibrato e fole (envelope suave)."""
+    t = np.arange(int(SR * dur)) / SR
+    vib = 1 + 0.004 * np.sin(2 * np.pi * 5.2 * t)
+    sig = np.zeros_like(t)
+    for det in (1.0, 1.0035):
+        fase = 2 * np.pi * freq * det * np.cumsum(vib) / SR
+        for h in range(1, 10):
+            sig += (0.9 ** h / h) * np.sin(h * fase)
+    env = np.minimum(1, t / 0.06) * np.minimum(1, (dur - t) / 0.12).clip(0)
+    return vel * env * sig * 0.35
+
+
+def cajon(grave=True):
+    n = int(SR * 0.25)
+    t = np.arange(n) / SR
+    if grave:
+        return np.sin(2 * np.pi * (70 + 60 * np.exp(-t * 40)) * t) * np.exp(-t * 14)
+    ruido = np.random.default_rng(3).standard_normal(n)
+    return (ruido - np.roll(ruido, 1)) * np.exp(-t * 28) * 0.5
+
+
+def gerar_sertanejo(duracao, bpm=76, seed=8):
+    rng = np.random.default_rng(seed)
+    beat = 60 / bpm
+    comp = 4 * beat
+    tonica = 55  # Sol
+    prog = [0, 4, 5, 3, 0, 4, 3, 4]  # G D Em C | G D C D
+    buf = np.zeros(int(SR * (duracao + 4)))
+    n_comp = int(np.ceil(duracao / comp))
+    melodia_ant = 74
+    for c in range(n_comp):
+        t0 = c * comp
+        grau = prog[c % len(prog)]
+        notas = acorde(tonica, grau)
+        parte = "intro" if c < 2 else ("verso" if c < 7 else ("refrao" if c < n_comp - 2 else "final"))
+        # violao dedilhado: baixo - acorde - agudo - acorde (colcheias)
+        cordas = [notas[0] - 12, notas[1], notas[2], notas[0] + 12, notas[1] + 12, notas[2], notas[0] + 12, notas[1]]
+        for k, nota in enumerate(cordas):
+            add(buf, violao(hz(nota), beat * 2, 0.9 if k % 2 == 0 else 0.65), t0 + k * beat / 2 + rng.uniform(0, 0.012))
+        if parte != "intro":
+            add(buf, 0.5 * piano(hz(notas[0] - 24), beat * 1.8), t0)
+            add(buf, 0.4 * piano(hz(notas[2] - 24), beat * 1.6), t0 + 2 * beat)
+        if parte in ("verso", "refrao"):
+            for k in range(4):
+                add(buf, (0.55 if k % 2 == 0 else 0.4) * cajon(k % 2 == 0), t0 + k * beat)
+            for k in range(8):
+                add(buf, shaker() * (0.8 if k % 2 else 0.4), t0 + k * beat / 2)
+        if parte == "refrao":
+            add(buf, 0.10 * pad([hz(n) for n in notas], comp + 0.5), t0)
+            # melodia da sanfona: notas do acorde e da escala, sem saltos grandes
+            ritmo = [(0, 1.5), (1.5, 0.5), (2, 1), (3, 1)] if c % 2 == 0 else [(0, 1), (1, 1), (2, 2)]
+            for ini, d in ritmo:
+                alvo = [n + 12 for n in notas] + [n + 24 for n in notas]
+                cand = [n for n in alvo if abs(n - melodia_ant) <= 5] or alvo
+                melodia_ant = cand[rng.integers(0, len(cand))]
+                add(buf, sanfona(hz(melodia_ant), beat * d * 0.98, 0.8), t0 + ini * beat)
+        if parte == "verso" and c % 2 == 1:
+            add(buf, sanfona(hz(notas[2] + 12), beat * 2, 0.45), t0 + 2 * beat)
+    if n_comp >= 1:
+        final = acorde(tonica, 0)
+        add(buf, 0.6 * violao(hz(final[0] - 12), 4), n_comp * comp)
+        add(buf, sanfona(hz(final[0] + 12), 3, 0.6), n_comp * comp)
+    out = buf.copy()
+    for d, g in [(0.071, 0.22), (0.113, 0.16), (0.187, 0.11)]:
+        s = int(d * SR)
+        out[s:] += g * buf[:-s]
+    out = out[: int(SR * duracao)]
+    fade = int(SR * 3)
+    out[-fade:] *= np.linspace(1, 0, fade)
+    out /= np.max(np.abs(out)) + 1e-9
+    return np.tanh(out * 1.3) * 0.88
+
+
 def salvar(path, sig):
     est = np.stack([sig, np.roll(sig, 220)], axis=1)  # leve abertura estereo
     with wave.open(path, "wb") as w:
@@ -113,7 +199,8 @@ if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("saida")
     ap.add_argument("--duracao", type=float, default=60)
-    ap.add_argument("--estilo", choices=ESTILOS, default="romantico")
+    ap.add_argument("--estilo", choices=list(ESTILOS) + ["sertanejo"], default="romantico")
     a = ap.parse_args()
-    salvar(a.saida, gerar(a.duracao, a.estilo))
+    sig = gerar_sertanejo(a.duracao) if a.estilo == "sertanejo" else gerar(a.duracao, a.estilo)
+    salvar(a.saida, sig)
     print("ok", a.saida)
