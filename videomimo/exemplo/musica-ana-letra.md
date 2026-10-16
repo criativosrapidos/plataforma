@@ -1,37 +1,44 @@
-# "Te Escolho Todo Dia" — música para a Ana
+# "O Plano" — música para a Ana
 
-Letra original, feita a partir das fotos de vocês (o brinde de rosé, os shows, o chapéu de cowboy, as caretas nas selfies).
+Letra original com a história de vocês: o Mané Mercado, 24 de julho, o "tô voltando pro Plano",
+o "plano que Deus tem para as nossas vidas" e o pedido de namoro na igreja, dois meses depois.
 
-## Estilo (cole no campo "Style" / "Estilo")
+## Estilo (cole no campo "Style of Music" do Suno ou no prompt do Eleven Music)
 ```
 sertanejo romântico, voz masculina grave e potente, violão dedilhado, sanfona, baixo, bateria leve, 76 BPM, emocionante, refrão forte e marcante, português brasileiro
 ```
-Não coloque o nome de nenhum cantor. Os geradores bloqueiam nome de artista, e imitar a voz de alguém dá problema de direito autoral.
+Não coloque o nome de nenhum cantor: os geradores bloqueiam nome de artista.
 
-## Letra (cole no campo "Lyrics" / "Letra")
+## Letra (cole no campo "Lyrics")
 ```
-[Verso]
-Foi num brinde de rosé, numa noite qualquer
-Teu sorriso me pegou e eu nem sabia o que era querer
-Entre um show e outro, chapéu de cowboy na mão
-Ana, cê chegou e bagunçou meu coração
+[Verse]
+Vinte e quatro de julho, Mané Mercado
+Eu nem sabia, mas Deus já tinha tudo traçado
+Cê falou: "tô voltando pro Plano"
+Eu disse: "quer entrar num outro plano?"
 
-[Pré-refrão]
-E até nas caretas, nas fotos tortas do celular
-É você que eu quero ver toda vez que eu acordar
+[Pre-Chorus]
+Cê sorriu e perguntou: "que plano é esse?"
+E eu falei do jeito que o coração conhece
 
-[Refrão]
-Ana, eu te escolho todo dia
-Cê é minha paz, minha bagunça, minha alegria
-Ana, o que é nosso ninguém desfaz
-Te amo hoje... e amanhã ainda mais
+[Chorus]
+O plano que Deus tem pra nossa vida
+Começou num olhar, numa noite de Brasília
+Dois meses depois, na igreja, eu te pedi
+Ana, o meu melhor plano é você aqui
 
-[Final]
-Te amo hoje... e amanhã ainda mais
+[Outro]
+E cê disse: "vamos ver o que Ele tem hoje pra gente"
+Hoje, amanhã... e pra sempre
 ```
 
 ## Duração
-Peça cerca de 1 minuto (verso + pré-refrão + refrão). Se vier mais longa, eu corto no ponto certo e encaixo no vídeo.
+Cerca de 1 minuto (verso + pré-refrão + refrão + final). Se vier mais longa, eu corto e encaixo no vídeo.
 
-## Depois de gerar
-Mande o MP3 aqui no chat. Eu coloco a música no vídeo e sincronizo o refrão ("Ana, eu te escolho todo dia") com as fotos dos beijos no final.
+## Como gerar no Suno (suno.com ou app)
+1. Create › ligue **Custom**.
+2. Cole a letra em **Lyrics** e o estilo em **Style of Music**. Título: **O Plano**.
+3. Create. Ele gera 2 versões; escolha a melhor e baixe o MP3 (⋯ › Download › Audio).
+4. Mande o MP3 no chat: eu coloco no vídeo com o refrão caindo nas fotos dos beijos.
+
+Plano grátis do Suno: uso pessoal. Para usar a música em anúncio ou no site (uso comercial), precisa do plano pago.
