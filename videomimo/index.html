@@ -244,6 +244,8 @@ footer { padding-block: 40px; text-align: center; color: var(--fg-suave); font-s
           <label for="f-msg">Mensagem final
             <textarea id="f-msg">Obrigado por transformar cada dia comum em uma lembrança bonita. Feliz aniversário!</textarea>
           </label>
+          <label class="check" for="f-ia"><input id="f-ia" type="checkbox"> Não sei o que escrever: criem a mensagem pra mim</label>
+          <label class="check" for="f-voz"><input id="f-voz" type="checkbox"> Mensagem narrada por voz no vídeo (+R$ 14,90)</label>
           <label class="check" for="f-urgente"><input id="f-urgente" type="checkbox"> Entrega em 2h (+R$ 19,90)</label>
           <label class="check" for="f-qr"><input id="f-qr" type="checkbox"> Cartão com QR code para imprimir (+R$ 9,90)</label>
         </form>
@@ -273,7 +275,9 @@ footer { padding-block: 40px; text-align: center; color: var(--fg-suave); font-s
 
   function atualizar() {
     var p = PLANOS[$("f-plano").value];
-    var total = p.preco + ($("f-urgente").checked ? 19.9 : 0) + ($("f-qr").checked ? 9.9 : 0);
+    var total = p.preco + ($("f-urgente").checked ? 19.9 : 0) + ($("f-qr").checked ? 9.9 : 0) + ($("f-voz").checked ? 14.9 : 0);
+    var ia = $("f-ia").checked;
+    $("f-msg").disabled = ia;
     $("total").textContent = brl(total);
     var linhas = [
       "Oi! Quero um Vídeos Mimo 💝",
@@ -281,14 +285,15 @@ footer { padding-block: 40px; text-align: center; color: var(--fg-suave); font-s
       "Ocasião: " + $("f-ocasiao").value,
       "Para: " + ($("f-para").value || "—"),
       "Assinado por: " + ($("f-de").value || "—"),
-      "Mensagem: " + ($("f-msg").value || "—")
+      "Mensagem: " + (ia ? "criem pra mim (eu conto um pouco da nossa história no WhatsApp)" : ($("f-msg").value || "—"))
     ];
+    if ($("f-voz").checked) linhas.push("Extra: mensagem narrada por voz");
     if ($("f-urgente").checked) linhas.push("Extra: entrega em 2h");
     if ($("f-qr").checked) linhas.push("Extra: cartão com QR code");
     linhas.push("Total: " + brl(total));
     $("texto").textContent = linhas.join("\n");
   }
-  ["f-plano", "f-ocasiao", "f-para", "f-de", "f-msg", "f-urgente", "f-qr"].forEach(function (id) {
+  ["f-plano", "f-ocasiao", "f-para", "f-de", "f-msg", "f-ia", "f-voz", "f-urgente", "f-qr"].forEach(function (id) {
     $(id).addEventListener("input", atualizar);
     $(id).addEventListener("change", atualizar);
   });
