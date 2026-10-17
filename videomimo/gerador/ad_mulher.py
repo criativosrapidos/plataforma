@@ -5,7 +5,7 @@
   pais   : homem maduro, confissao — mora longe dos pais, nao diz "eu te amo" ha tempo
   trabalho: mulher ~35, relacionamento profissional — quem organiza a homenagem da equipe e lembrada
 
-Uso: python3 ad_mulher.py amiga|casada|pais|trabalho --demo ../exemplo/videomimo-demo.mp4 --voz voz.mp3 --musica trilha.wav --saida ad.mp4
+Uso: python3 ad_mulher.py amiga|casada|pais|trabalho|geral --demo ../exemplo/videomimo-demo.mp4 --voz voz.mp3 --musica trilha.wav --saida ad.mp4
 Tempos das legendas vem da transcricao por palavra (ElevenLabs Scribe).
 """
 import argparse
@@ -76,6 +76,16 @@ ROTEIROS = {
         cenas=[(0.0, 6.6, "promovido"), (6.6, 9.4, "sorte"), (9.4, 15.3, "calado"), (15.3, 19.4, "ocasioes"),
                (19.4, 24.3, "video_equipe"), (24.3, 27.4, "reacao_chefe"), (27.4, 31.0, "fim_trabalho")],
         com_legenda={"promovido", "video_equipe"},
+    ),
+    "geral": dict(
+        dur=20.5,
+        legendas=[(0.0, 1.48, "Sabe aquela pessoa..."), (1.7, 4.23, "que você ama, mas quase nunca diz?"),
+                  (5.49, 7.0, "O tempo passa rápido."), (7.26, 9.56, "E as fotos ficam esquecidas no celular."),
+                  (10.23, 13.93, "Transforma elas num vídeo, com música e uma mensagem sua."),
+                  (14.56, 15.55, "Vídeos Mimo."), (15.97, 17.62, "Diz hoje o que você sente.")],
+        cenas=[(0.0, 5.7, "pessoa"), (5.7, 7.5, "tempo"), (7.5, 10.4, "galeria_geral"), (10.4, 14.8, "video_geral"),
+               (14.8, 20.5, "fim_geral")],
+        com_legenda={"galeria_geral", "video_geral"},
     ),
 }
 
@@ -314,6 +324,29 @@ def main():
             texto(img, "a partir de R$ 39,90", 84, LEITE, H * 0.33, lt, 0.6)
             cartoes_mimos(img, lt, 0.8)
             pilula(img, "Organize a homenagem", H * 0.82, lt, 2.0, ROSA, LEITE, 66, 44)
+        elif nome == "pessoa":
+            img = fundo(True, t)
+            texto(img, "Sabe aquela pessoa", 104, LEITE, H * 0.38, lt, 0.3)
+            texto(img, "que você ama,", 104, LEITE, H * 0.46, lt, 2.0)
+            texto(img, "mas quase nunca diz?", 90, ROSA, H * 0.55, lt, 3.1)
+        elif nome == "tempo":
+            img = Image.new("RGB", (W, H), (14, 6, 12))
+            texto(img, "O tempo", 170, LEITE, H * 0.44, lt, 0.05, dur=0.5)
+            texto(img, "passa rápido.", 150, MANTEIGA, H * 0.53, lt, 0.5, dur=0.5)
+        elif nome == "galeria_geral":
+            img = Image.new("RGB", (W, H), (250, 250, 250))
+            galeria(img, lt, fotos, "Recentes", "8.432 fotos")
+        elif nome == "video_geral":
+            img = fundo(False, t)
+            texto(img, "fotos + música + a sua mensagem", 62, AMEIXA, 200, lt, 0.2)
+            celular(img, demo, mascara, lt, 0.0)
+        elif nome == "fim_geral":
+            img = fundo(True, t)
+            marca(img, W / 2, H * 0.30, 120, LEITE)
+            texto(img, "Diz hoje", 120, LEITE, H * 0.42, lt, 1.4)
+            texto(img, "o que você sente.", 110, ROSA, H * 0.49, lt, 1.8)
+            texto(img, "a partir de R$ 39,90 · pronto em até 24h", 52, MANTEIGA, H * 0.58, lt, 2.6, F_MED)
+            pilula(img, "Peça pelo WhatsApp", H * 0.67, lt, 3.2, ROSA, LEITE, 70, 44)
         else:  # fim_casada
             img = fundo(True, t)
             marca(img, W / 2, H * 0.32, 120, LEITE)
