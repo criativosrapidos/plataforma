@@ -75,12 +75,12 @@ dots = "".join(f'<div class="el" data-in="{c[k]:.2f}" data-a="pop" style="left:{
 
 cenas = f'''
   <section class="scene" data-start="0" data-end="{c['quer'] - 0.15:.2f}">
-    <div class="fundo"></div>
+    <div class="ph kb" style="background-image:url(assets/fachada.jpg);filter:blur(6px) brightness(.35)"></div>
     {E('<div class="T" style="font-size:46px;color:var(--lar2)">Brasília,</div>', c['brasilia'], "up", "top:170px")}
     {Wd('o iPhone 18', c['iphone'], "top:250px;font-size:170px;color:#fff", "A", 0.09)}
     {Wd('<span class="lar">chegou!</span>', c['iphone'] + 0.55, "top:430px;font-size:150px", "A", 0.09)}
-    {E(foto("linha_promax.jpg", 960, 680, "center 40%"), c['iphone'] + 0.2, "rise", "top:700px")}
-    {E(logo(560), c['pureza'], "pop", "top:1480px")}
+    {E(foto("dono_iphones.jpg", 760, 760, "center 70%"), c['iphone'] + 0.2, "rise", "top:660px")}
+    {E(logo(560), c['pureza'], "pop", "top:1500px")}
   </section>
 
   <section class="scene" data-start="{c['quer'] - 0.15:.2f}" data-end="{c['ninguem'] - 0.12:.2f}">
@@ -132,7 +132,7 @@ cenas = f'''
   </section>
 
   <section class="scene" data-start="{c['desde'] - 0.12:.2f}" data-end="{c['chama'] - 0.12:.2f}">
-    <div class="fundo"></div>
+    <div class="ph kb" style="background-image:url(assets/fachada.jpg);filter:brightness(.32)"></div>
     {E('<div class="T" style="font-size:46px;color:var(--lar2)">Desde</div>', c['desde'] - 0.05, "up", "top:280px")}
     {E('<div class="A lar" style="font-size:380px">2013</div>', c['desde'] + 0.1, "slam", "top:340px")}
     {E('<div class="T" style="font-size:34px;color:#ddd;letter-spacing:.2em">no mercado</div>', c['desde'] + 0.5, "up", "top:740px")}
@@ -153,7 +153,7 @@ cenas = f'''
        '<div style="font-weight:900;font-size:80px;line-height:1;white-space:nowrap">(61) 99986-2628</div></div></div>', c['whats'], "pop", "top:960px")}
     {E('<div style="font-weight:700;font-size:38px;color:#ddd">📍 Feira dos Importados · Bloco B · Loja B180</div>', c['garante'] + 0.4, "up", "top:1260px")}
     {E('<div style="font-weight:700;font-size:38px;color:var(--lar2)">@purezamultimarcas</div>', c['garante'] + 0.7, "up", "top:1330px")}
-    {E(foto("linha_promax.jpg", 820, 380, "center 45%"), c['garante'] + 0.2, "rise", "top:1440px")}
+    {E(foto("fachada.jpg", 820, 420, "center 38%"), c['garante'] + 0.2, "rise", "top:1430px")}
   </section>
 '''
 
