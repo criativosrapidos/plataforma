@@ -87,6 +87,13 @@ ROTEIROS = {
                (14.8, 20.5, "fim_geral")],
         com_legenda={"galeria_geral", "video_geral"},
     ),
+    "geral2": dict(
+        dur=46.0,
+        legendas=[],
+        cenas=[(0.0, 7.0, "depois"), (7.0, 15.0, "dores"), (15.0, 18.2, "merece"), (18.2, 23.2, "objecoes"),
+               (23.2, 26.4, "nasceu"), (26.4, 36.2, "processo"), (36.2, 41.0, "abrir"), (41.0, 46.0, "fim_geral2")],
+        com_legenda=set(),
+    ),
 }
 
 
@@ -189,7 +196,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("roteiro", choices=ROTEIROS)
     ap.add_argument("--demo", required=True)
-    ap.add_argument("--voz", required=True)
+    ap.add_argument("--voz", default=None, help="sem voz: so musica, mais alta")
     ap.add_argument("--musica", required=True)
     ap.add_argument("--saida", required=True)
     a = ap.parse_args()
@@ -347,6 +354,63 @@ def main():
             texto(img, "o que você sente.", 110, ROSA, H * 0.49, lt, 1.8)
             texto(img, "a partir de R$ 39,90 · pronto em até 24h", 52, MANTEIGA, H * 0.58, lt, 2.6, F_MED)
             pilula(img, "Peça pelo WhatsApp", H * 0.67, lt, 3.2, ROSA, LEITE, 70, 44)
+        elif nome == "depois":
+            img = fundo(True, t)
+            texto(img, "\"Depois eu falo.\"", 96, LEITE, H * 0.30, lt, 0.2)
+            texto(img, "\"Depois eu ligo.\"", 96, LEITE, H * 0.38, lt, 1.2)
+            texto(img, "\"Depois eu visito.\"", 96, LEITE, H * 0.46, lt, 2.2)
+            texto(img, "E o depois...", 110, MANTEIGA, H * 0.58, lt, 3.6, F_MAO)
+            texto(img, "vai ficando pra depois.", 92, ROSA, H * 0.65, lt, 4.6)
+        elif nome == "dores":
+            img = fundo(False, t)
+            for i, (txt, t0) in enumerate([("A mãe que mora longe.", 0.2), ("O amor que anda distante.", 2.6),
+                                           ("A amiga que te salvou tantas vezes.", 5.0)]):
+                pilula(img, txt, H * (0.34 + 0.13 * i), lt, t0, [ROSA, AMEIXA, MANTEIGA][i], [LEITE, LEITE, AMEIXA][i], 60, 44)
+        elif nome == "merece":
+            img = Image.new("RGB", (W, H), (14, 6, 12))
+            texto(img, "Todo mundo merece", 104, LEITE, H * 0.44, lt, 0.1, dur=0.6)
+            texto(img, "ouvir o que você sente.", 92, ROSA, H * 0.52, lt, 0.9, dur=0.6)
+        elif nome == "objecoes":
+            img = fundo(True, t)
+            texto(img, "Presente comum acaba.", 96, LEITE, H * 0.40, lt, 0.1)
+            if lt > 1.4:
+                d = ImageDraw.Draw(img)
+                k = ease((lt - 1.4) / 0.3)
+                d.line((120, H * 0.405, 120 + 840 * k, H * 0.405), fill=ROSA, width=12)
+            texto(img, "E escrever...", 104, MANTEIGA, H * 0.52, lt, 2.4, F_MAO)
+            texto(img, "nem sempre sai.", 104, LEITE, H * 0.60, lt, 3.2)
+        elif nome == "nasceu":
+            img = fundo(True, t)
+            texto(img, "Foi pra isso que nasceu o", 70, LEITE, H * 0.40, lt, 0.1, F_MED)
+            k = ease((lt - 0.6) / 0.5)
+            if k > 0:
+                camada = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+                marca(camada, W / 2, H * 0.49, 130, LEITE)
+                camada.putalpha(camada.getchannel("A").point(lambda v: int(v * k)))
+                img.paste(camada, (0, 0), camada)
+        elif nome == "processo":
+            img = fundo(False, t)
+            texto(img, "Como funciona", 100, AMEIXA, H * 0.20, lt, 0.0)
+            passos = [("1", "Manda as fotos", "pelo WhatsApp, direto do celular", 0.6),
+                      ("2", "Conta a história de vocês", "não sabe escrever? a gente escreve", 3.4),
+                      ("3", "Recebe o vídeo pronto", "com música e mensagem, em até 24h", 6.2)]
+            for i, (n, tit, sub, t0) in enumerate(passos):
+                y = H * (0.34 + 0.17 * i)
+                texto(img, n, 190, ROSA, y, lt, t0, x=90)
+                texto(img, tit, 70, AMEIXA, y - 30, lt, t0 + 0.15, x=250)
+                texto(img, sub, 42, AMEIXA, y + 45, lt, t0 + 0.3, F_MED, x=250)
+        elif nome == "abrir":
+            img = fundo(False, t)
+            texto(img, "Quando ela abrir...", 86, AMEIXA, 190, lt, 0.1, F_MAO)
+            celular(img, demo, mascara, lt, 0.2, topo=290)
+            texto(img, "vai entender.", 100, ROSA, H * 0.93, lt, 2.4)
+        elif nome == "fim_geral2":
+            img = fundo(True, t)
+            marca(img, W / 2, H * 0.24, 120, LEITE)
+            texto(img, "Não deixa", 130, LEITE, H * 0.36, lt, 0.3)
+            texto(img, "pra depois.", 130, ROSA, H * 0.44, lt, 0.7)
+            cartoes_mimos(img, lt, 1.4)
+            pilula(img, "Peça pelo WhatsApp", H * 0.84, lt, 2.6, ROSA, LEITE, 70, 44)
         else:  # fim_casada
             img = fundo(True, t)
             marca(img, W / 2, H * 0.32, 120, LEITE)
@@ -360,9 +424,10 @@ def main():
 
     ff = subprocess.Popen([
         "ffmpeg", "-y", "-loglevel", "error", "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{W}x{H}", "-r", str(FPS),
-        "-i", "-", "-i", a.voz, "-i", a.musica, "-filter_complex",
+        "-i", "-"] + (["-i", a.voz, "-i", a.musica, "-filter_complex",
         f"[1:a]adelay={int(VOZ_ATRASO * 1000)}|{int(VOZ_ATRASO * 1000)},volume=1.5[v];[2:a]volume=0.2[m];"
-        "[v][m]amix=inputs=2:duration=longest:normalize=0,alimiter=limit=0.95[a]",
+        "[v][m]amix=inputs=2:duration=longest:normalize=0,alimiter=limit=0.95[a]"] if a.voz else
+        ["-i", a.musica, "-filter_complex", "[1:a]volume=0.9,alimiter=limit=0.95[a]"]) + [
         "-map", "0:v", "-map", "[a]", "-t", str(DUR), "-c:v", "libx264", "-preset", "medium", "-crf", "20",
         "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", a.saida,
     ], stdin=subprocess.PIPE)
