@@ -1,6 +1,11 @@
 # Anúncio: case Alessandra Mendes Estética
 
-`anuncio-case-alessandra.mp4` (31 s, 9:16, ainda sem locução). Tem a bonequinha da Alessandra (cabelo ruivo e vestido triângulo verde) no começo e no final.
+3 versões (31 s, 9:16, com legenda na tela, ainda sem locução), iguais a partir dos 3,6 s. Só muda o gancho, para testar no tráfego qual vende mais:
+- `anuncio-gancho-a-mais-de-1200.mp4`: "Ela vendeu + de R$ 1.200 em menos de 24 horas"
+- `anuncio-gancho-b-5-vendas-24h.mp4`: "Ela fez 5 vendas em 24 horas com 1 vídeo"
+- `anuncio-gancho-c-anuncio-nao-vende.mp4`: "Seu anúncio não vende? Olha o que aconteceu com a Alessandra"
+
+Todas têm a bonequinha da Alessandra (cabelo ruivo e vestido triângulo verde) e terminam com "Peça seu vídeo agora".
 
 Dados usados (todos tirados da conversa e dos prints enviados pela cliente):
 - "Em menos de 24 horas já fechei 5 vendas. E recebi 40 contatos diferentes. Com o vídeo motion melasma."
