@@ -20,3 +20,20 @@ Antes de anunciar: ter a autorização da Alessandra por escrito para usar nome,
 | 17–20,6 s | Agora me fala: você tem um negócio e quer explodir nas vendas? |
 | 20,6–25,4 s | O vídeo que fez a Alessandra vender começa em vinte e nove e noventa! |
 | 25,4–31 s | E a gente cuida de tudo pra você vender. Chama a Criativos Rápidos no WhatsApp agora! |
+
+## Locução em duas vozes (em andamento)
+
+- Narrador: voz masculina "Nassif" (ElevenLabs), animada.
+- Alessandra: voz feminina "Larissa" (ElevenLabs). As falas usam só o que ela escreveu nas mensagens.
+- `locucao-alessandra-falas.mp3`: já gerado ("Essa sou eu!", "Em menos de vinte e quatro horas já fechei cinco vendas!", "Graças ao cuidado da Criativos Rápidos!", "Começa por aqui!", "Chama, vai!").
+- Falta gerar a narração masculina (cerca de 220 créditos): os créditos do ElevenLabs acabaram.
+
+| Cena | Narrador | Alessandra |
+|---|---|---|
+| 1 | Ela vendeu mais de mil e duzentos reais em menos de vinte e quatro horas! | Essa sou eu! |
+| 2 | Com um vídeo só, feito pela Criativos Rápidos! | |
+| 3 | Cinco vendas e quarenta contatos no primeiro dia! | Em menos de vinte e quatro horas já fechei cinco vendas! |
+| 4 | E no mês: cento e vinte e nove mil visualizações e seiscentos e vinte e dois seguidores novos! | Graças ao cuidado da Criativos Rápidos! |
+| 5 | Você tem um negócio e quer explodir nas vendas? | |
+| 6 | O vídeo que fez a Alessandra vender começa em vinte e nove e noventa! | Começa por aqui! |
+| 7 | E a gente cuida de tudo. Chama no WhatsApp agora! | Chama, vai! |
