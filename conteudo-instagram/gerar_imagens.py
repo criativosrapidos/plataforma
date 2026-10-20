@@ -15,8 +15,8 @@ e = html.escape
 # Preços dos vídeos com motion (ajuste aqui)
 PRECOS = [
     ('Essencial', '29,90', ['1 vídeo de 15 s', 'Texto animado + logo', 'Pronto pra Reels, Stories e status']),
-    ('Completo', '39,90', ['2 vídeos de 30 s', 'Texto animado + logo', 'Pronto pra Reels, Stories e status']),
-    ('Premium', '49,90', ['3 vídeos de 30 s', 'Texto animado + logo', 'Pronto pra Reels, Stories e status'])]
+    ('Completo', '39,90', ['2 vídeos de 30 s + 1 arte', 'Vídeos prontos pra anúncio (tráfego pago)', '1 arte de design pra anúncio', 'Texto animado + logo']),
+    ('Premium', '49,90', ['3 vídeos de 30 s + 2 artes', 'Vídeos prontos pra anúncio (tráfego pago)', '2 artes de design pra anúncio', 'Texto animado + logo'])]
 
 CSS = """
 * { box-sizing: border-box; margin: 0; padding: 0; }
