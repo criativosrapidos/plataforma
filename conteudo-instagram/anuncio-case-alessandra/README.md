@@ -1,6 +1,6 @@
 # Anúncio: case Alessandra Mendes Estética
 
-`anuncio-case-alessandra.mp4` (26 s, 9:16, ainda sem locução)
+`anuncio-case-alessandra.mp4` (31 s, 9:16, ainda sem locução). Tem a bonequinha da Alessandra (cabelo ruivo e vestido triângulo verde) no começo e no final.
 
 Dados usados (todos tirados da conversa e dos prints enviados pela cliente):
 - "Em menos de 24 horas já fechei 5 vendas. E recebi 40 contatos diferentes. Com o vídeo motion melasma."
@@ -18,4 +18,5 @@ Antes de anunciar: ter a autorização da Alessandra por escrito para usar nome,
 | 7,8–12 s | Cinco vendas e quarenta contatos no primeiro dia de anúncio! |
 | 12–17 s | E no mês: cento e vinte e nove mil visualizações e seiscentos e vinte e dois novos seguidores! |
 | 17–20,6 s | Agora me fala: você tem um negócio e quer explodir nas vendas? |
-| 20,6–26 s | Chama a Criativos Rápidos no WhatsApp agora! |
+| 20,6–25,4 s | O vídeo que fez a Alessandra vender começa em vinte e nove e noventa! |
+| 25,4–31 s | E a gente cuida de tudo pra você vender. Chama a Criativos Rápidos no WhatsApp agora! |
