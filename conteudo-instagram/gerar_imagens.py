@@ -14,10 +14,9 @@ e = html.escape
 
 # Preços dos vídeos com motion (ajuste aqui)
 PRECOS = [
-    ('Essencial', '29,90', ['Vídeo de até 15 s', '1 produto', 'Texto animado + logo']),
-    ('Completo', '39,90', ['Vídeo de até 30 s', 'Até 3 produtos', 'Texto animado + logo', 'Música']),
-    ('Premium', '49,90', ['Vídeo de até 30 s', 'Até 5 produtos', 'Texto animado + logo', 'Música', 'Locução profissional']),
-]
+    ('Essencial', '29,90', ['1 vídeo de 15 s', 'Texto animado + logo', 'Pronto pra Reels, Stories e status']),
+    ('Completo', '39,90', ['2 vídeos de 30 s', 'Texto animado + logo', 'Pronto pra Reels, Stories e status']),
+    ('Premium', '49,90', ['3 vídeos de 30 s', 'Texto animado + logo', 'Pronto pra Reels, Stories e status'])]
 
 CSS = """
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -134,7 +133,7 @@ def pecas():
     for i, (nome, preco, itens) in enumerate(PRECOS, 2):
         destaque = '<span class="chip">Mais escolhido</span>' if nome == 'Completo' else ''
         out[f'destaques/valores/0{i}'] = story('dark center', f'{destaque}<h2>{nome}</h2><div class="price" style="margin-top:20px;color:#FFD400"><small style="color:#fff">R$</small>{preco}</div><div class="list" style="margin-top:60px">' + ''.join(li(x) for x in itens) + '</div>', f'{i}/5')
-    resumo = ''.join(f'<div class="cardw" style="display:flex;justify-content:space-between;align-items:center"><span class="mont" style="font-size:58px">{n}</span><span class="mont" style="font-size:76px">R$ {p}</span></div>' for n, p, _ in PRECOS)
+    resumo = ''.join(f'<div class="cardw" style="display:flex;justify-content:space-between;align-items:center"><span><span class="mont" style="font-size:58px;display:block">{n}</span><span style="font-size:32px;font-weight:700;color:#5A5D66">{it[0]}</span></span><span class="mont" style="font-size:76px">R$ {p}</span></div>' for n, p, it in PRECOS)
     out['destaques/valores/05'] = story('dark center', f'<h2>Escolhe o seu:</h2><div style="display:grid;gap:26px;margin-top:50px">{resumo}</div><div class="cta">Pedir pelo WhatsApp</div>', '5/5')
     # ---------- destaque: clientes (modelos para colar depoimentos reais)
     out['destaques/clientes/01'] = story('yel center', '<span class="chip">Clientes</span><h1>Quem já tem vídeo com a gente.</h1><p class="lead">Arrasta e vê o que eles acharam →</p>')
@@ -156,7 +155,7 @@ def pecas():
     out[f'{c}/01'] = slide('yel center', '<span class="chip">Passo a passo</span><h1>Como ter um vídeo com <em>motion</em> na sua loja.</h1>', 1, T)
     for i, (k, t, d) in enumerate(passos, 2):
         out[f'{c}/0{i}'] = slide('dark center', f'<div class="step"><span class="k">{k}</span><div><h2>{t}</h2><p class="lead" style="margin-top:24px">{d}</p></div></div>', i, T)
-    resumo2 = ''.join(f'<div class="cardk" style="display:flex;justify-content:space-between;align-items:center;padding:34px 44px"><span class="mont" style="font-size:52px">{n}</span><span class="mont" style="font-size:66px;color:#FFD400">R$ {p}</span></div>' for n, p, _ in PRECOS)
+    resumo2 = ''.join(f'<div class="cardk" style="display:flex;justify-content:space-between;align-items:center;padding:34px 44px"><span><span class="mont" style="font-size:52px;display:block">{n}</span><span style="font-size:30px;font-weight:700;color:#A7AAB2">{it[0]}</span></span><span class="mont" style="font-size:66px;color:#FFD400">R$ {p}</span></div>' for n, p, it in PRECOS)
     out[f'{c}/05'] = slide('dark center', f'<h2>Escolhe o seu</h2><div style="display:grid;gap:22px;margin-top:44px">{resumo2}</div><div class="cta">Chama no direct</div>', 5, T)
 
     # ---------- carrossel 3: erros que deixam a loja invisível

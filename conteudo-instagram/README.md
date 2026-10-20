@@ -3,7 +3,7 @@
 ## Destaques (`destaques/`)
 - `capas/`: capas dos destaques (como-funciona, valores, clientes, videos, contato). Suba como story e use como capa; o Instagram recorta o círculo do centro.
 - `como-funciona/`: 5 stories explicando o passo a passo.
-- `valores/`: 5 stories com os vídeos com motion (Essencial R$ 29,90, Completo R$ 39,90, Premium R$ 49,90).
+- `valores/`: 5 stories com os vídeos com motion (Essencial R$ 29,90 = 1 vídeo de 15 s; Completo R$ 39,90 = 2 vídeos de 30 s; Premium R$ 49,90 = 3 vídeos de 30 s).
 - `clientes/`: abertura, 2 modelos para colar depoimentos e antes/depois reais, e uma chamada final.
 
 ## Carrosséis (`carrosseis/`, 1080x1350)
