@@ -11,9 +11,14 @@
 - `como-funciona/` (5 slides)
 - `erros-loja-invisivel/` (7 slides)
 
-## Reels (`reels/`, 1080x1920, sem áudio)
+## Reels (`reels/`, 1080x1920)
 - `reels-motion-loja.mp4` (17 s): oferta dos vídeos com motion
 - `reels-3-dicas.mp4` (21 s): dicas educativas
+- `reels-ze-conhece.mp4` (15 s, com locução): o Zé conhece a Criativos Rápidos e recebe o vídeo animado
+- `reels-valores.mp4` (19 s, com locução): os 3 valores dos vídeos com motion
+- `reels-ze-anuncia.mp4` (15 s, com locução): o Zé escolhe o Completo para anunciar
+
+Locução: voz "Nassif" (ElevenLabs Flash), arquivos `locucao-*.mp3`.
 
 Para mudar preços ou textos das imagens, edite `gerar_imagens.py` (lista `PRECOS` no topo) e rode `python3 gerar_imagens.py`.
 
@@ -36,3 +41,12 @@ Seu produto merece se mexer. 🚀 Vídeos com motion a partir de R$ 29,90. Chama
 
 **Reels "3 dicas"**
 3 dicas rápidas pro seu produto vender mais no Reels. Salva pra usar no próximo post! 💛
+
+**Reels "Zé conhece a Criativos Rápidos"**
+O Zé cansou de postar foto parada. 😅 Agora a loja dele tem vídeo animado com a marca dele! Quer também? Chama no direct.
+
+**Reels "Valores"**
+Vídeo com motion pra sua loja a partir de R$ 29,90! 🎬 Essencial, Completo ou Premium: qual combina com você?
+
+**Reels "Zé anuncia"**
+Quer anunciar a sua loja? O Completo vem com 2 vídeos e 1 arte prontos pra tráfego pago. 🚀 Chama no direct!
