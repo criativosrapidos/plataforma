@@ -1,0 +1,62 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face { font-family: Anton; src: url(fonts/anton-latin-400-normal.woff); }
+@font-face { font-family: M; font-weight: 600; src: url(fonts/montserrat-latin-600-normal.woff); }
+@font-face { font-family: M; font-weight: 800; src: url(fonts/montserrat-latin-800-normal.woff); }
+@font-face { font-family: M; font-weight: 900; src: url(fonts/montserrat-latin-900-normal.woff); }
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body { width:1080px; height:1920px; background:transparent; overflow:hidden; font-family:M; color:#fff; }
+.abs { position:absolute; }
+#vin { inset:0; background:radial-gradient(ellipse at 50% 45%, transparent 58%, rgba(0,0,0,.45) 100%); }
+#leg { left:60px; right:60px; top:1330px; text-align:center; font-weight:900; font-size:68px; line-height:1.18; text-transform:uppercase;
+       text-shadow:0 4px 0 rgba(0,0,0,.55), 0 0 22px rgba(0,0,0,.65); -webkit-text-stroke:2px rgba(0,0,0,.35); }
+#leg span { display:inline-block; margin:0 8px; }
+#leg span.on { color:#0B0B0B; background:#FFFFFF; padding:0 14px; border-radius:12px; -webkit-text-stroke:0; text-shadow:none; transform:scale(1.06) rotate(-2deg); }
+#lt { left:60px; top:1540px; opacity:0; }
+#lt .n { font-family:Anton; font-size:96px; text-transform:uppercase; line-height:1; text-shadow:0 6px 26px rgba(0,0,0,.6); }
+#lt .c { display:inline-flex; align-items:center; gap:14px; margin-top:12px; background:#2E46C8; padding:10px 22px; border-radius:10px; font-weight:800; font-size:32px; letter-spacing:.06em; }
+#lt .c img { height:40px; }
+#lt .fio { height:6px; width:0; margin-top:14px; background:#fff; border-radius:3px; }
+#fim { inset:0; opacity:0; background:radial-gradient(ellipse at 50% 40%, #1d2a5c 0%, #0b1030 55%, #05060f 100%);
+       display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; }
+#fim img { width:640px; }
+#fim .linha { width:0; height:4px; background:linear-gradient(90deg,transparent,#8FA6FF,transparent); margin:44px auto 36px; }
+.k { font-weight:600; letter-spacing:.34em; font-size:30px; text-transform:uppercase; color:#C9D3FF; }
+.big { font-family:Anton; font-size:120px; text-transform:uppercase; line-height:.98; }
+.mask { overflow:hidden; padding:.34em 0 .1em; margin:-.34em 0 -.1em; }
+#flash { inset:0; background:#fff; opacity:0; }
+
+#t { left:60px; right:60px; top:1330px; }
+</style></head><body>
+<div id="vin" class="abs"></div>
+<div id="t" class="abs">
+  <div class="mask"><div class="k" id="a0" style="color:#fff">Conheça a nossa CS</div></div>
+  <div class="mask" style="margin-top:10px"><div class="big" id="a1" style="font-size:150px">Jéssica</div></div>
+  <div class="mask"><div class="big" id="a2" style="font-size:150px;color:#9DB2FF">Balcasse</div></div>
+</div>
+<div id="lt" class="abs" style="top:1450px"><div class="c" id="lc" style="display:inline-flex;align-items:center;gap:14px;background:#2E46C8;padding:12px 26px;border-radius:10px;font-weight:800;font-size:40px">
+  <img src="assets/lideres_logo.png" style="height:48px"> CS · Líderes do Brasil</div>
+  <div class="mask" style="margin-top:26px"><div class="big" id="b1" style="font-size:96px">Suporte e conexões</div></div>
+  <div class="mask"><div class="big" id="b2" style="font-size:96px">para cada membro</div></div></div>
+<div id="fim" class="abs"><img id="flogo" src="assets/lideres_logo.png"><div class="linha" id="flin"></div>
+  <div class="mask"><div class="k" id="f2">Fortalecendo o movimento</div></div></div>
+<div id="flash" class="abs"></div>
+<script>
+const C = [0.0, 2.1818181818181817, 4.36363636363636, 6.54545454545454, 8.181818181818175], FIM = 8.182;
+const cl = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x)), e5 = x => 1 - Math.pow(1 - x, 5), eo = x => 1 - Math.pow(1 - x, 3);
+const $ = id => document.getElementById(id);
+function sobe(el, t, t0, t1) { const p = e5(cl((t - t0) / .5)), q = eo(cl((t - t1) / .35)); el.style.transform = `translateY(${((1 - p) * 110 + q * 110).toFixed(1)}%)`; }
+function render(t) {
+  sobe($("a0"), t, .3, C[2] - .35); sobe($("a1"), t, .45, C[2] - .3); sobe($("a2"), t, .6, C[2] - .25);
+  const o = cl((t - C[2]) / .25) * (1 - cl((t - FIM + .3) / .3)); $("lt").style.opacity = o;
+  $("lc").style.transform = `translateX(${((1 - e5(cl((t - C[2]) / .5))) * -80).toFixed(1)}px)`;
+  sobe($("b1"), t, C[2] + .25, FIM - .3); sobe($("b2"), t, C[2] + .4, FIM - .3);
+  let f = 0; C.slice(1).forEach(c => { const q = t - c; if (q >= 0 && q < .16) f = Math.max(f, .3 * (1 - q / .16)); });
+  $("flash").style.opacity = f;
+  $("fim").style.opacity = cl((t - FIM + .3) / .3);
+  const ql = e5(cl((t - FIM) / .5));
+  $("flogo").style.transform = `scale(${(0.75 + 0.25 * ql).toFixed(4)})`; $("flogo").style.opacity = ql;
+  $("flin").style.width = (e5(cl((t - FIM - .25) / .6)) * 600).toFixed(0) + "px";
+  sobe($("f2"), t, FIM + .5, 999);
+}
+window.render = render; render(0);
+</script></body></html>
