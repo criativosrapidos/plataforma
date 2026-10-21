@@ -1,4 +1,4 @@
-/* VanGPS — design tokens */
+/* Rastreia Van — design tokens */
 :root {
   --amarelo: #FFC21A;
   --amarelo-escuro: #E8A400;
@@ -285,3 +285,36 @@ footer a:hover { color: var(--texto); }
 .whats-flutuante { position: fixed; right: 18px; bottom: 18px; width: 58px; height: 58px; border-radius: 50%; background: var(--verde); color: #fff; display: grid; place-items: center; box-shadow: 0 10px 24px rgba(31, 180, 106, .45); z-index: 60; }
 .whats-flutuante svg { width: 30px; height: 30px; }
 section[id] { scroll-margin-top: 72px; }
+
+/* Notificação push (pop-up no celular) */
+.notif {
+  position: absolute; width: 270px; padding: 12px 14px; border-radius: 20px;
+  background: rgba(255, 255, 255, .92); backdrop-filter: blur(14px); color: #0E1B3D;
+  box-shadow: 0 14px 34px rgba(14, 27, 61, .18); border: 1px solid rgba(14, 27, 61, .06);
+  font-size: .86rem; line-height: 1.35; animation: flutua 5s ease-in-out infinite;
+}
+.notif .cab { display: flex; align-items: center; gap: 7px; font-size: .68rem; font-weight: 800; letter-spacing: .6px; color: #55607A; text-transform: uppercase; margin-bottom: 4px; }
+.notif .cab img { width: 20px; height: 20px; border-radius: 6px; }
+.notif .cab em { margin-left: auto; font-style: normal; font-weight: 600; text-transform: none; letter-spacing: 0; }
+.notif b { display: block; font-size: .92rem; }
+.n1 { top: 60px; left: -30px; }
+.n2 { top: 250px; right: -40px; animation-delay: -1.6s; }
+.n3 { bottom: 60px; left: -40px; animation-delay: -3.2s; }
+@media (max-width: 700px) { .notif.n1, .notif.n2, .notif.n3 { display: none; } }
+@media (min-width: 700px) and (max-width: 960px) { .n1 { left: 30px; } .n2 { right: 30px; } .n3 { left: 20px; } }
+
+/* Tela de bloqueio */
+.bloqueio {
+  width: 320px; max-width: 100%; margin: 0 auto; border-radius: 46px; padding: 12px; background: #0E1B3D;
+  box-shadow: 0 30px 60px rgba(14, 27, 61, .25);
+}
+.bloqueio .tela-b {
+  border-radius: 36px; padding: 40px 14px 24px; min-height: 560px; color: #fff;
+  background: linear-gradient(160deg, #26407F 0%, #0E1B3D 55%, #3A2F12 100%);
+}
+.bloqueio .relogio { text-align: center; font-family: var(--fonte-titulo); font-size: 4rem; font-weight: 500; line-height: 1; }
+.bloqueio .data { text-align: center; opacity: .8; margin-bottom: 28px; font-weight: 600; }
+.bloqueio .notif { position: static; width: auto; margin-bottom: 10px; animation: none; }
+
+/* Pílula de status */
+.pilula { display: inline-flex; align-items: center; gap: 6px; font-size: .8rem; font-weight: 800; padding: 4px 12px; border-radius: 999px; background: var(--verde-claro); color: var(--verde); }

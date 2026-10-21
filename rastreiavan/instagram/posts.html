@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Rastreia Van — Instagram</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root { --am: #FFC21A; --am2: #E8A400; --az: #0E1B3D; --az2: #1C2D5A; --vd: #1FB46A; --cr: #FFFBF2; --tx2: #55607A; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #ddd; font-family: Nunito, sans-serif; color: var(--az); display: flex; flex-direction: column; align-items: center; gap: 40px; padding: 40px 0; }
+  h1, h2, h3, .f { font-family: Fredoka, sans-serif; font-weight: 600; line-height: 1.08; }
+  .post { width: 1080px; height: 1350px; position: relative; overflow: hidden; padding: 90px; display: flex; flex-direction: column; }
+  .story { width: 1080px; height: 1920px; position: relative; overflow: hidden; padding: 160px 90px; display: flex; flex-direction: column; }
+  .quad { width: 1080px; height: 1080px; position: relative; overflow: hidden; display: grid; place-items: center; }
+  .amarelo { background: var(--am); }
+  .azul { background: var(--az); color: #fff; }
+  .creme { background: var(--cr); }
+  .marca { display: flex; align-items: center; gap: 18px; font-family: Fredoka; font-weight: 600; font-size: 52px; }
+  .marca img { width: 76px; height: 76px; border-radius: 20px; }
+  .marca span { color: var(--am2); }
+  .azul .marca span { color: var(--am); }
+  .amarelo .marca span { color: var(--az); text-decoration: underline; text-decoration-thickness: 6px; text-underline-offset: 8px; text-decoration-color: #fff; }
+  .marca b { font-weight: inherit; }
+  .amarelo .marca img { box-shadow: 0 0 0 4px var(--az); }
+  .rodape { position: absolute; left: 90px; right: 90px; bottom: 70px; display: flex; justify-content: space-between; align-items: center; font-weight: 800; font-size: 30px; }
+  .grande { font-size: 118px; letter-spacing: -1px; }
+  .medio { font-size: 88px; letter-spacing: -.5px; }
+  .sub { font-size: 40px; line-height: 1.35; font-weight: 700; opacity: .85; }
+  mark { background: linear-gradient(transparent 60%, var(--am) 60%); color: inherit; padding: 0 8px; }
+  .azul mark { background: none; color: var(--am); padding: 0; }
+  .amarelo mark { background: linear-gradient(transparent 60%, #fff 60%); }
+
+  /* notificação */
+  .nt { background: rgba(255,255,255,.96); color: var(--az); border-radius: 44px; padding: 30px 36px; box-shadow: 0 30px 60px rgba(14,27,61,.22); width: 820px; }
+  .nt .cab { display: flex; align-items: center; gap: 16px; font-size: 26px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; color: var(--tx2); margin-bottom: 10px; }
+  .nt .cab img { width: 48px; height: 48px; border-radius: 13px; }
+  .nt .cab em { margin-left: auto; font-style: normal; letter-spacing: 0; text-transform: none; font-weight: 700; }
+  .nt b { display: block; font-family: Fredoka; font-weight: 600; font-size: 44px; margin-bottom: 4px; }
+  .nt p { font-size: 34px; color: #33405E; font-weight: 600; }
+  .nt.pq { width: 700px; padding: 24px 30px; border-radius: 36px; }
+  .nt.pq b { font-size: 36px; } .nt.pq p { font-size: 28px; } .nt.pq .cab { font-size: 22px; } .nt.pq .cab img { width: 40px; height: 40px; }
+
+  /* celular */
+  .cel { width: 560px; height: 1060px; background: var(--az); border-radius: 80px; padding: 22px; box-shadow: 0 40px 80px rgba(14,27,61,.35); }
+  .cel .tl { width: 100%; height: 100%; border-radius: 60px; overflow: hidden; background: linear-gradient(165deg, #2B4688 0%, #0E1B3D 60%, #3A2F12 100%); color: #fff; padding: 80px 26px; display: flex; flex-direction: column; align-items: center; gap: 18px; }
+  .cel .hora { font-family: Fredoka; font-weight: 500; font-size: 140px; line-height: 1; }
+  .cel .dt { font-size: 30px; font-weight: 700; opacity: .8; margin-bottom: 30px; }
+  .cel .nt { width: 100%; padding: 22px 24px; border-radius: 30px; }
+  .cel .nt b { font-size: 32px; } .cel .nt p { font-size: 25px; } .cel .nt .cab { font-size: 19px; } .cel .nt .cab img { width: 34px; height: 34px; border-radius: 9px; }
+
+  .bola { position: absolute; border-radius: 50%; }
+  .num { width: 130px; height: 130px; border-radius: 38px; background: var(--am); color: var(--az); display: grid; place-items: center; font-family: Fredoka; font-weight: 700; font-size: 80px; margin-bottom: 50px; }
+  .azul .num { background: var(--am); }
+  .amarelo .num { background: var(--az); color: var(--am); }
+  .seta { font-family: Fredoka; font-weight: 600; font-size: 36px; display: inline-flex; align-items: center; gap: 14px; }
+  .botao { display: inline-block; background: var(--az); color: #fff; font-family: Fredoka; font-weight: 600; font-size: 44px; padding: 30px 56px; border-radius: 999px; }
+  .azul .botao { background: var(--am); color: var(--az); box-shadow: 0 10px 0 var(--am2); }
+  .cartao { background: #fff; border-radius: 48px; padding: 50px; color: var(--az); }
+  .chk { list-style: none; display: grid; gap: 18px; font-size: 34px; font-weight: 700; }
+  .chk li { display: flex; gap: 18px; align-items: flex-start; }
+  .chk li::before { content: "✓"; flex: 0 0 52px; height: 52px; border-radius: 16px; background: var(--vd); color: #fff; display: grid; place-items: center; font-size: 32px; font-weight: 800; }
+  .codigo { display: flex; gap: 16px; }
+  .codigo span { width: 120px; height: 150px; background: #fff; border-radius: 28px; display: grid; place-items: center; font-family: Fredoka; font-weight: 600; font-size: 90px; color: var(--az); box-shadow: 0 10px 0 var(--am2); }
+  .botao-rota { background: var(--vd); color: #fff; font-family: Fredoka; font-weight: 600; font-size: 60px; padding: 46px 80px; border-radius: 999px; box-shadow: 0 14px 0 #138A50, 0 30px 60px rgba(31,180,106,.35); display: inline-flex; align-items: center; gap: 24px; }
+  .label { font-size: 26px; font-weight: 800; color: #888; font-family: Nunito; width: 1080px; }
+  .chip { display: inline-block; font-weight: 800; font-size: 30px; padding: 12px 28px; border-radius: 999px; background: rgba(14,27,61,.08); }
+  .azul .chip { background: rgba(255,255,255,.12); }
+  .enquete { background: #fff; border-radius: 40px; padding: 40px; color: var(--az); box-shadow: 0 20px 50px rgba(0,0,0,.2); }
+  .enquete .op { border: 4px solid #E5E9F0; border-radius: 26px; padding: 28px; font-size: 44px; font-family: Fredoka; font-weight: 600; text-align: center; margin-top: 20px; }
+</style>
+</head>
+<body>
+
+<!-- ============ PERFIL ============ -->
+<p class="label">perfil.png — foto de perfil (1080×1080)</p>
+<div class="quad amarelo" id="perfil">
+  <img src="../assets/logo-mark.svg" alt="" style="width: 760px; height: 760px;">
+</div>
+
+<!-- ============ POST 1: LANÇAMENTO ============ -->
+<p class="label">post-01-lancamento.png</p>
+<div class="post amarelo" id="post-01-lancamento">
+  <div class="marca"><img src="../assets/logo-mark.svg" alt=""><b><b>rastreia<span>van</span></b></b></div>
+  <h1 class="grande" style="margin-top: 70px;">Saiba exatamente quando a van chega.</h1>
+  <p class="sub" style="margin-top: 30px; max-width: 760px;">Van escolar no mapa ao vivo + aviso no celular da família.</p>
+  <div style="position:absolute; right: 90px; bottom: 170px;">
+    <div class="nt"><div class="cab"><img src="../assets/logo-mark.svg" alt="">Rastreia Van<em>agora</em></div><b>⏱️ Chega em 5 minutos</b><p>Já pode descer com a Júlia 🎒</p></div>
+  </div>
+  <div class="rodape"><span>rastreiavan.com.br</span><span class="chip">🚐 Chegou!</span></div>
+</div>
+
+<!-- ============ CARROSSEL ============ -->
+<p class="label">carrossel-01.png — capa</p>
+<div class="post azul" id="carrossel-01">
+  <div class="bola" style="width:480px;height:480px;background:var(--am);right:-170px;top:-170px"></div>
+  <span class="chip" style="align-self:flex-start">Para mães, pais e motoristas</span>
+  <h1 class="grande" style="margin-top: 80px; font-size: 150px;">“Já saiu?”</h1>
+  <h2 class="medio" style="margin-top: 30px;">Nunca mais pergunte isso no grupo da van.</h2>
+  <p class="sub" style="margin-top: 40px;">Veja como o <mark>Rastreia Van</mark> funciona 👉</p>
+  <div class="rodape"><span class="marca" style="font-size:38px"><img src="../assets/logo-mark.svg" alt="" style="width:56px;height:56px"><b>rastreia<span>van</span></b></span><span class="seta">arrasta →</span></div>
+</div>
+
+<p class="label">carrossel-02.png — passo 1</p>
+<div class="post creme" id="carrossel-02">
+  <div class="num">1</div>
+  <h2 class="medio">O motorista toca em <mark>“Iniciar rota”</mark></h2>
+  <p class="sub" style="margin-top: 30px; color: var(--tx2);">O celular dele vira o rastreador da van. Um toque no começo, outro no fim.</p>
+  <div style="margin-top: auto; margin-bottom: 120px; text-align: center;"><span class="botao-rota">▶ Iniciar rota</span></div>
+  <div class="rodape"><span class="marca" style="font-size:38px"><img src="../assets/logo-mark.svg" alt="" style="width:56px;height:56px"><b>rastreia<span>van</span></b></span><span class="seta">→</span></div>
+</div>
+
+<p class="label">carrossel-03.png — passo 2</p>
+<div class="post amarelo" id="carrossel-03">
+  <div class="num">2</div>
+  <h2 class="medio">A família digita o código da van</h2>
+  <p class="sub" style="margin-top: 30px;">Baixa o app grátis, coloca o código (ou lê o QR Code) e cadastra o filho.</p>
+  <div style="margin-top: auto; margin-bottom: 140px;" class="codigo"><span>V</span><span>A</span><span>N</span><span>4</span><span>K</span><span>7</span></div>
+  <div class="rodape"><span class="marca" style="font-size:38px"><img src="../assets/logo-mark.svg" alt="" style="width:56px;height:56px"><b><b>rastreia<span>van</span></b></b></span><span class="seta">→</span></div>
+</div>
+
+<p class="label">carrossel-04.png — passo 3</p>
+<div class="post azul" id="carrossel-04">
+  <div class="num">3</div>
+  <h2 class="medio">O aviso aparece no celular. <mark>Sozinho.</mark></h2>
+  <div style="margin-top: 60px; display: grid; gap: 22px;">
+    <div class="nt pq"><div class="cab"><img src="../assets/logo-mark.svg" alt="">Rastreia Van<em>06:42</em></div><b>🚐 A van saiu!</b><p>O Tio Carlos começou a rota.</p></div>
+    <div class="nt pq" style="margin-left: 80px"><div class="cab"><img src="../assets/logo-mark.svg" alt="">Rastreia Van<em>06:58</em></div><b>⏱️ Chega em 5 minutos</b><p>Já pode descer com a Júlia 🎒</p></div>
+    <div class="nt pq" style="margin-left: 160px"><div class="cab"><img src="../assets/logo-mark.svg" alt="">Rastreia Van<em>07:21</em></div><b>🏫 Chegou na escola</b><p>A Júlia chegou no Colégio Aurora.</p></div>
+  </div>
+  <div class="rodape"><span class="marca" style="font-size:38px"><img src="../assets/logo-mark.svg" alt="" style="width:56px;height:56px"><b>rastreia<span>van</span></b></span><span class="seta">→</span></div>
+</div>
+
+<p class="label">carrossel-05.png — CTA</p>
+<div class="post amarelo" id="carrossel-05">
+  <h2 class="medio" style="margin-top: 40px;">Grátis para as famílias.</h2>
+  <h2 class="medio" style="margin-top: 20px;">Para o motorista, a partir de</h2>
+  <div class="f" style="font-size: 260px; margin-top: 20px; letter-spacing: -4px;">R$ 14,90</div>
+  <p class="sub">por mês, por van. Menos de R$ 0,60 por aluno.</p>
+  <div style="margin-top: 60px;"><span class="botao">Teste 14 dias grátis · link na bio</span></div>
+  <div class="rodape"><span class="marca" style="font-size:38px"><img src="../assets/logo-mark.svg" alt="" style="width:56px;height:56px"><b><b>rastreia<span>van</span></b></b></span><span>@rastreiavan</span></div>
+</div>
+
+<!-- ============ POST 2: MÃE ============ -->
+<p class="label">post-02-portao.png</p>
+<div class="post azul" id="post-02-portao">
+  <span class="chip" style="align-self:flex-start">Para mães e pais 💛</span>
+  <h1 class="medio" style="margin-top: 60px; font-size: 100px;">Descer 15 minutos antes e esperar no portão?</h1>
+  <h2 class="medio" style="margin-top: 30px; color: var(--am); font-size: 100px;">Nunca mais.</h2>
+  <div style="margin-top: auto; margin-bottom: 130px;">
+    <div class="nt"><div class="cab"><img src="../assets/logo-mark.svg" alt="">Rastreia Van<em>agora</em></div><b>⏱️ Chega em 5 minutos</b><p>Agora sim, pode descer com o Pedro 🎒</p></div>
+  </div>
+  <div class="rodape"><span class="marca" style="font-size:38px"><img src="../assets/logo-mark.svg" alt="" style="width:56px;height:56px"><b>rastreia<span>van</span></b></span><span>rastreiavan.com.br</span></div>
+</div>
+
+<!-- ============ POST 3: MOTORISTA ============ -->
+<p class="label">post-03-motorista.png</p>
+<div class="post amarelo" id="post-03-motorista">
+  <span class="chip" style="align-self:flex-start">Motorista de van escolar 🚐</span>
+  <h1 class="medio" style="margin-top: 60px; font-size: 104px;">Pare de responder “já saiu?” dirigindo.</h1>
+  <div class="cartao" style="margin-top: 60px;">
+    <ul class="chk">
+      <li>Um toque em “Iniciar rota” e pronto</li>
+      <li>As famílias são avisadas sozinhas</li>
+      <li>Lista de chamada e cobrança no mesmo app</li>
+      <li>Diferencial para conquistar mais alunos</li>
+    </ul>
+  </div>
+  <div class="rodape"><span class="marca" style="font-size:38px"><img src="../assets/logo-mark.svg" alt="" style="width:56px;height:56px"><b><b>rastreia<span>van</span></b></b></span><span>14 dias grátis</span></div>
+</div>
+
+<!-- ============ POST 4: CHEGOU NA ESCOLA ============ -->
+<p class="label">post-04-chegou.png</p>
+<div class="post creme" id="post-04-chegou">
+  <div class="bola" style="width:900px;height:900px;background:var(--am);opacity:.25;left:90px;top:300px"></div>
+  <h1 class="medio" style="text-align:center; position: relative;">A notificação que toda mãe quer receber:</h1>
+  <div style="margin: auto; position: relative;">
+    <div class="nt" style="transform: scale(1.05);"><div class="cab"><img src="../assets/logo-mark.svg" alt="">Rastreia Van<em>07:21</em></div><b>🏫 Chegou na escola</b><p>A Lívia chegou no Colégio Aurora. Bom dia de trabalho! 💛</p></div>
+  </div>
+  <div class="rodape" style="position: absolute;"><span class="marca" style="font-size:38px"><img src="../assets/logo-mark.svg" alt="" style="width:56px;height:56px"><b>rastreia<span>van</span></b></span><span>rastreiavan.com.br</span></div>
+</div>
+
+<!-- ============ POST 5: PLANOS ============ -->
+<p class="label">post-05-planos.png</p>
+<div class="post azul" id="post-05-planos">
+  <h1 class="medio" style="text-align:center;">Preço justo, do tamanho da sua van</h1>
+  <p class="sub" style="text-align:center; margin-top: 20px;">Famílias usam grátis · preço por van (até 25 alunos)</p>
+  <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 60px;">
+    <div class="cartao" style="padding: 44px;">
+      <div class="f" style="font-size: 50px;">📍 Essencial</div>
+      <div class="f" style="font-size: 110px; margin: 20px 0 6px;">14,90</div>
+      <div style="font-size: 28px; font-weight: 700; color: var(--tx2); margin-bottom: 30px;">R$ por mês</div>
+      <ul class="chk" style="font-size: 27px; gap: 14px;"><li>Mapa ao vivo</li><li>Previsão de chegada</li><li>Aviso: saiu, 5 min, chegou na escola</li></ul>
+    </div>
+    <div class="cartao" style="padding: 44px; box-shadow: 0 0 0 8px var(--am);">
+      <div class="f" style="font-size: 50px;">🚐 Completo</div>
+      <div class="f" style="font-size: 110px; margin: 20px 0 6px;">29,90</div>
+      <div style="font-size: 28px; font-weight: 700; color: var(--tx2); margin-bottom: 30px;">R$ por mês</div>
+      <ul class="chk" style="font-size: 27px; gap: 14px;"><li>Todos os avisos</li><li>Chamada e “não vai hoje”</li><li>Chat, recados e Pix</li><li>Botão de emergência</li></ul>
+    </div>
+  </div>
+  <div class="rodape"><span class="marca" style="font-size:38px"><img src="../assets/logo-mark.svg" alt="" style="width:56px;height:56px"><b>rastreia<span>van</span></b></span><span style="color:var(--am)">14 dias grátis</span></div>
+</div>
+
+<!-- ============ POST 6: CELULAR ============ -->
+<p class="label">post-06-celular.png</p>
+<div class="post amarelo" id="post-06-celular" style="flex-direction: row; gap: 50px; align-items: center;">
+  <div style="flex: 1;">
+    <h1 class="medio" style="font-size: 84px;">Seu celular avisa. Você só desce.</h1>
+    <p class="sub" style="margin-top: 30px; font-size: 36px;">Funciona com a tela bloqueada, igual mensagem chegando.</p>
+  </div>
+  <div class="cel"><div class="tl">
+    <div class="hora">06:58</div><div class="dt">terça-feira, 21 de outubro</div>
+    <div class="nt"><div class="cab"><img src="../assets/logo-mark.svg" alt="">Rastreia Van<em>agora</em></div><b>⏱️ Chega em 5 min</b><p>Já pode descer 🎒</p></div>
+    <div class="nt"><div class="cab"><img src="../assets/logo-mark.svg" alt="">Rastreia Van<em>5 min</em></div><b>⏱️ Chega em 10 min</b><p>A van está a caminho.</p></div>
+    <div class="nt"><div class="cab"><img src="../assets/logo-mark.svg" alt="">Rastreia Van<em>16 min</em></div><b>🚐 A van saiu!</b><p>Rota da manhã começou.</p></div>
+  </div></div>
+  <div class="rodape"><span class="marca" style="font-size:38px"><img src="../assets/logo-mark.svg" alt="" style="width:56px;height:56px"><b><b>rastreia<span>van</span></b></b></span><span>@rastreiavan</span></div>
+</div>
+
+<!-- ============ STORIES ============ -->
+<p class="label">story-01-lancamento.png</p>
+<div class="story amarelo" id="story-01-lancamento">
+  <div class="marca"><img src="../assets/logo-mark.svg" alt=""><b><b>rastreia<span>van</span></b></b></div>
+  <h1 class="grande" style="margin-top: 90px; font-size: 140px;">Chegou o jeito fácil de saber onde a van está.</h1>
+  <div style="margin-top: 90px; display:grid; gap: 24px;">
+    <div class="nt"><div class="cab"><img src="../assets/logo-mark.svg" alt="">Rastreia Van<em>agora</em></div><b>⏱️ Chega em 5 minutos</b><p>Já pode descer com a Júlia 🎒</p></div>
+  </div>
+  <div style="margin-top: auto; text-align: center;"><span class="botao">👆 Toque no link e conheça</span></div>
+</div>
+
+<p class="label">story-02-enquete.png — colocar a figurinha de enquete do Instagram em cima da área branca</p>
+<div class="story azul" id="story-02-enquete">
+  <span class="chip" style="align-self:flex-start">Pergunta rápida 👀</span>
+  <h1 class="grande" style="margin-top: 80px; font-size: 130px;">Você já ficou esperando a van no portão?</h1>
+  <div class="enquete" style="margin-top: 100px;">
+    <div class="op">😩 Todo santo dia</div>
+    <div class="op">🙃 Às vezes</div>
+  </div>
+  <p class="sub" style="margin-top: auto; text-align:center;">Responde aí que a gente tem a solução 💛</p>
+</div>
+
+<p class="label">story-03-planos.png</p>
+<div class="story creme" id="story-03-planos">
+  <div class="marca"><img src="../assets/logo-mark.svg" alt=""><b>rastreia<span>van</span></b></div>
+  <h1 class="grande" style="margin-top: 90px;">Motorista, teste <mark>14 dias grátis</mark>.</h1>
+  <div class="cartao" style="margin-top: 80px; box-shadow: 0 20px 50px rgba(14,27,61,.12);">
+    <div class="f" style="font-size: 56px;">📍 Essencial · R$ 14,90/mês</div>
+    <div class="f" style="font-size: 56px; margin-top: 30px;">🚐 Completo · R$ 29,90/mês</div>
+    <p class="sub" style="margin-top: 30px; color: var(--tx2);">Preço por van. Famílias usam grátis.</p>
+  </div>
+  <div style="margin-top: auto; text-align: center;"><span class="botao">👆 Link para começar</span></div>
+</div>
+
+<!-- ============ CAPAS DE DESTAQUE ============ -->
+<p class="label">destaque-*.png — capas dos destaques (1080×1080)</p>
+<div style="display:flex; gap: 20px; flex-wrap: wrap; width: 1080px;">
+  <div class="quad azul" id="destaque-como-funciona" style="width:1080px;height:1080px"><div style="text-align:center"><div style="font-size: 380px; line-height: 1;">📍</div></div></div>
+  <div class="quad azul" id="destaque-planos" style="width:1080px;height:1080px"><div style="font-size: 380px; line-height: 1;">💰</div></div>
+  <div class="quad azul" id="destaque-motorista" style="width:1080px;height:1080px"><div style="font-size: 380px; line-height: 1;">🚐</div></div>
+  <div class="quad azul" id="destaque-duvidas" style="width:1080px;height:1080px"><div style="font-size: 380px; line-height: 1;">💬</div></div>
+</div>
+
+</body>
+</html>

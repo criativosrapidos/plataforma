@@ -3,9 +3,11 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>VanGPS</title>
-  <meta name="description" content="Rastreie a van escolar em tempo real e receba avisos automáticos no WhatsApp: chega em 10 minutos, embarcou, chegou na escola. Tranquilidade para as famílias e organização para o motorista.">
+  <title>Rastreia Van</title>
+  <meta name="description" content="Rastreie a van escolar em tempo real e receba notificações no celular: a van saiu, chega em 5 minutos, chegou na escola. App grátis para as famílias, a partir de R$ 14,90 por van para o motorista.">
   <meta name="theme-color" content="#FFC21A">
+  <meta property="og:title" content="Rastreia Van — saiba exatamente quando a van chega">
+  <meta property="og:description" content="Mapa ao vivo da van escolar e notificações automáticas no celular da família.">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,7 +16,6 @@
 </head>
 <body>
 
-<!-- Ícones -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></symbol>
   <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></symbol>
@@ -39,7 +40,7 @@
 
 <header class="topo">
   <div class="container">
-    <a href="#" class="marca"><img src="assets/logo-mark.svg" alt=""><b>van<span>GPS</span></b></a>
+    <a href="#" class="marca"><img src="assets/logo-mark.svg" alt=""><b>rastreia<span>van</span></b></a>
     <nav class="menu">
       <a href="#como-funciona">Como funciona</a>
       <a href="#funcionalidades">Funcionalidades</a>
@@ -55,16 +56,16 @@
   <section class="hero">
     <div class="container">
       <div>
-        <span class="selo"><span class="ponto"></span> Rastreamento ao vivo + avisos no WhatsApp</span>
+        <span class="selo"><span class="ponto"></span> Van no mapa ao vivo + notificação no celular</span>
         <h1>Saiba <mark>exatamente</mark> quando a van chega.</h1>
-        <p class="lead">O VanGPS mostra a van escolar no mapa em tempo real e avisa a família no WhatsApp: <b>“chega em 5 minutos”</b>, <b>“embarcou”</b>, <b>“chegou na escola”</b>. Tudo automático, sem o motorista precisar digitar nada.</p>
+        <p class="lead">O Rastreia Van mostra a van escolar no mapa em tempo real e manda uma notificação no celular da família: <b>“a van saiu”</b>, <b>“chega em 5 minutos”</b>, <b>“chegou na escola”</b>. Tudo automático, sem o motorista digitar nada.</p>
         <div class="acoes">
           <a href="#planos" class="btn btn-primario">Sou motorista — testar 14 dias grátis</a>
           <a href="#como-funciona" class="btn btn-contorno">Sou mãe/pai — como funciona?</a>
         </div>
         <div class="provas">
           <div><svg><use href="#i-check"/></svg> App grátis para as famílias</div>
-          <div><svg><use href="#i-check"/></svg> Sem cartão para testar</div>
+          <div><svg><use href="#i-check"/></svg> A partir de R$ 14,90 por van</div>
           <div><svg><use href="#i-check"/></svg> Pronto em 5 minutos</div>
         </div>
       </div>
@@ -78,7 +79,7 @@
                 <g fill="#DCE4EE"><rect x="20" y="90" width="70" height="60" rx="8"/><rect x="110" y="70" width="60" height="80" rx="8"/><rect x="190" y="100" width="70" height="50" rx="8"/><rect x="20" y="180" width="90" height="70" rx="8"/><rect x="140" y="180" width="50" height="60" rx="8"/><rect x="210" y="175" width="50" height="80" rx="8"/><rect x="40" y="280" width="80" height="60" rx="8"/><rect x="150" y="270" width="100" height="70" rx="8"/></g>
                 <rect x="190" y="20" width="70" height="60" rx="10" fill="#CFEBD9"/>
                 <g stroke="#fff" stroke-width="14" fill="none" stroke-linecap="round"><path d="M0 165h276M100 0v360M200 0v360M0 262h276"/></g>
-                <path d="M100 340 V262 H200 V165 H230 V60" stroke="#FFC21A" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="0"/>
+                <path d="M100 340 V262 H200 V165 H230 V60" stroke="#FFC21A" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
                 <path d="M100 340 V262 H160" stroke="#1FB46A" stroke-width="6" fill="none" stroke-linecap="round"/>
                 <circle cx="100" cy="340" r="9" fill="#fff" stroke="#1FB46A" stroke-width="4"/>
                 <g transform="translate(230 60)"><circle r="14" fill="#0E1B3D"/><path d="M-6 -4l6-4 6 4v7h-12z" fill="#FFC21A"/></g>
@@ -104,9 +105,9 @@
           </div>
         </div>
 
-        <div class="bolha b1"><div class="cab"><svg><use href="#i-whats"/></svg> VanGPS</div>🚐 A van saiu para a rota da manhã!<span class="hora">06:42 ✓✓</span></div>
-        <div class="bolha b2"><div class="cab"><svg><use href="#i-whats"/></svg> VanGPS</div>⏱️ A van chega em <b>5 minutos</b>. Já pode descer com a Júlia!<span class="hora">06:58 ✓✓</span></div>
-        <div class="bolha b3"><div class="cab"><svg><use href="#i-whats"/></svg> VanGPS</div>🏫 A Júlia chegou na escola às 07:21.<span class="hora">07:21 ✓✓</span></div>
+        <div class="notif n1"><div class="cab"><img src="assets/logo-mark.svg" alt="">Rastreia Van<em>06:42</em></div><b>🚐 A van saiu!</b>O Tio Carlos começou a rota da manhã.</div>
+        <div class="notif n2"><div class="cab"><img src="assets/logo-mark.svg" alt="">Rastreia Van<em>agora</em></div><b>⏱️ Chega em 5 minutos</b>Já pode descer com a Júlia 🎒</div>
+        <div class="notif n3"><div class="cab"><img src="assets/logo-mark.svg" alt="">Rastreia Van<em>07:21</em></div><b>🏫 Chegou na escola</b>A Júlia chegou no Colégio Aurora.</div>
       </div>
     </div>
   </section>
@@ -114,10 +115,10 @@
   <!-- FAIXA -->
   <div class="faixa">
     <div class="container">
-      <div><b>Tempo real</b><span>posição atualizada a cada poucos segundos</span></div>
+      <div><b>Ao vivo</b><span>a van se mexendo no mapa</span></div>
       <div><b>0 mensagens</b><span>digitadas pelo motorista</span></div>
-      <div><b>5 avisos</b><span>automáticos por trajeto</span></div>
-      <div><b>R$ 0</b><span>para as famílias baixarem o app</span></div>
+      <div><b>R$ 0</b><span>para as famílias</span></div>
+      <div><b>~R$ 0,60</b><span>por aluno ao mês para o motorista</span></div>
     </div>
   </div>
 
@@ -127,51 +128,48 @@
       <div class="titulo-secao">
         <span class="sobre">Como funciona</span>
         <h2>Simples para o motorista, tranquilo para a família</h2>
-        <p>Nada de mandar áudio no grupo dirigindo. O VanGPS faz a comunicação sozinho.</p>
+        <p>Chega de “já saiu?” no grupo e de áudio mandado dirigindo.</p>
       </div>
       <div class="passos">
         <div class="passo">
-          <h3>O motorista liga o rastreio</h3>
-          <p>Pelo app do motorista (basta um toque em <b>“Iniciar rota”</b>) ou por um rastreador GPS instalado na van. A partir daí, a localização é enviada sozinha.</p>
+          <h3>O motorista toca em “Iniciar rota”</h3>
+          <p>O celular do motorista vira o rastreador da van. Um toque no começo, outro no fim. Só isso.</p>
         </div>
         <div class="passo">
           <h3>A família conecta na van</h3>
-          <p>A mãe ou o pai baixa o app grátis e digita o <b>código da van</b> (ou lê o QR Code). Cadastra o filho, o endereço e o número de WhatsApp.</p>
+          <p>A mãe ou o pai baixa o app grátis, digita o <b>código da van</b> (ou lê o QR Code) e cadastra o filho e o endereço.</p>
         </div>
         <div class="passo">
-          <h3>Os avisos chegam sozinhos</h3>
-          <p>Mapa ao vivo no app e mensagens automáticas: saiu, chega em 10 min, chega em 5 min, embarcou, chegou na escola, saiu da escola e chegou em casa.</p>
+          <h3>A notificação aparece no celular</h3>
+          <p>Mapa ao vivo e avisos automáticos na tela: a van saiu, chega em 10 min, chega em 5 min, chegou na escola, chegou em casa.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- AVISOS WHATSAPP -->
+  <!-- NOTIFICAÇÕES -->
   <section class="avisos">
     <div class="container">
       <div class="titulo-secao">
-        <span class="sobre">Avisos no WhatsApp</span>
-        <h2>A notícia chega onde a mãe já está: no WhatsApp</h2>
-        <p>Sem precisar abrir app nenhum. Cada família recebe só os avisos do próprio filho, no momento certo.</p>
+        <span class="sobre">Notificações no celular</span>
+        <h2>O aviso aparece na tela, na hora certa</h2>
+        <p>Igual mensagem chegando: o celular vibra e mostra o aviso, mesmo bloqueado. A família nem precisa abrir o app.</p>
         <ul class="lista-check">
           <li>“A van saiu” — quando o motorista inicia a rota</li>
-          <li>“Chega em 10 / 5 minutos” — calculado pelo trânsito real</li>
+          <li>“Chega em 10 / 5 minutos” — pela posição real da van</li>
           <li>“Embarcou” e “Desembarcou” — com horário</li>
-          <li>“Chegou na escola” e “Saiu da escola” — por cerca virtual (geofence)</li>
-          <li>Avisos de atraso, trânsito ou mudança de rota</li>
+          <li>“Chegou na escola” e “Saiu da escola” — automático, pela localização</li>
+          <li>Avisos de atraso e recados do motorista</li>
         </ul>
       </div>
-      <div class="whats" aria-hidden="true">
-        <div class="whats-topo">
-          <img src="assets/logo-mark.svg" alt="">
-          <div><b>VanGPS ✔</b><small>conta comercial</small></div>
+      <div class="bloqueio" aria-hidden="true">
+        <div class="tela-b">
+          <div class="relogio">06:58</div>
+          <div class="data">terça-feira, 21 de outubro</div>
+          <div class="notif"><div class="cab"><img src="assets/logo-mark.svg" alt="">Rastreia Van<em>agora</em></div><b>⏱️ Chega em 5 minutos</b>Já pode descer com a Júlia 🎒</div>
+          <div class="notif"><div class="cab"><img src="assets/logo-mark.svg" alt="">Rastreia Van<em>5 min</em></div><b>⏱️ Chega em 10 minutos</b>A van está a caminho da sua casa.</div>
+          <div class="notif"><div class="cab"><img src="assets/logo-mark.svg" alt="">Rastreia Van<em>16 min</em></div><b>🚐 A van saiu!</b>O Tio Carlos começou a rota da manhã.</div>
         </div>
-        <div class="msg">🚐 Bom dia! A van do <b>Tio Carlos</b> saiu para a rota da manhã.<span class="hora">06:42</span></div>
-        <div class="msg">⏱️ Chega em <b>10 minutos</b> na sua casa.<span class="hora">06:53</span></div>
-        <div class="msg">⏱️ Chega em <b>5 minutos</b>! Já pode descer com a Júlia 🎒<span class="hora">06:58</span></div>
-        <div class="msg">✅ A Júlia <b>embarcou</b> às 07:03.<span class="hora">07:03</span></div>
-        <div class="msg">🏫 A Júlia <b>chegou no Colégio Aurora</b> às 07:21.<span class="hora">07:21</span></div>
-        <div class="msg">🏠 Saiu da escola. Previsão em casa: <b>12:40</b>.<span class="hora">12:15</span></div>
       </div>
     </div>
   </section>
@@ -193,39 +191,39 @@
 
       <div class="painel" id="p-familia" role="tabpanel" aria-labelledby="t-familia">
         <div class="grade">
-          <div class="recurso"><div class="icone"><svg><use href="#i-pin"/></svg></div><h3>Mapa em tempo real</h3><p>Veja a van se movendo no mapa, com previsão de chegada na sua casa e na escola.</p></div>
-          <div class="recurso"><div class="icone v"><svg><use href="#i-whats"/></svg></div><h3>Avisos no WhatsApp</h3><p>Saiu, chega em 10 e 5 minutos, embarcou, chegou na escola e chegou em casa.</p><span class="plano-tag">Plano Completo</span></div>
-          <div class="recurso"><div class="icone"><svg><use href="#i-bell"/></svg></div><h3>Notificações no app</h3><p>Os mesmos avisos como notificação no celular, em todos os planos.</p></div>
-          <div class="recurso"><div class="icone"><svg><use href="#i-cal"/></svg></div><h3>“Meu filho não vai hoje”</h3><p>Avise a ausência com um toque. O motorista recebe na hora e ajusta a rota.</p></div>
-          <div class="recurso"><div class="icone"><svg><use href="#i-users"/></svg></div><h3>Vários filhos e responsáveis</h3><p>Cadastre todos os filhos e compartilhe o acesso com pai, avó ou babá.</p></div>
-          <div class="recurso"><div class="icone"><svg><use href="#i-chat"/></svg></div><h3>Chat com o motorista</h3><p>Fale com o motorista sem misturar com o grupo da van. Mensagens rápidas prontas.</p></div>
-          <div class="recurso"><div class="icone"><svg><use href="#i-money"/></svg></div><h3>Mensalidade pelo app</h3><p>Pague por Pix ou boleto, veja vencimentos e baixe comprovantes.</p></div>
-          <div class="recurso"><div class="icone"><svg><use href="#i-history"/></svg></div><h3>Histórico de trajetos</h3><p>Consulte horários de embarque e chegada dos últimos dias.</p></div>
-          <div class="recurso"><div class="icone"><svg><use href="#i-shield"/></svg></div><h3>Dados do motorista e da van</h3><p>Foto, placa, modelo, cor e documentos do transporte, para saber quem está levando seu filho.</p></div>
+          <div class="recurso"><div class="icone"><svg><use href="#i-pin"/></svg></div><h3>Mapa em tempo real</h3><p>Veja a van se movendo no mapa, com a previsão de chegada na sua casa e na escola.</p></div>
+          <div class="recurso"><div class="icone v"><svg><use href="#i-bell"/></svg></div><h3>Notificações automáticas</h3><p>A van saiu, chega em 5 min e chegou na escola, direto na tela do celular.</p></div>
+          <div class="recurso"><div class="icone v"><svg><use href="#i-check"/></svg></div><h3>Embarcou e desembarcou</h3><p>Aviso com horário quando seu filho entra e sai da van.</p><span class="plano-tag">Plano Completo</span></div>
+          <div class="recurso"><div class="icone"><svg><use href="#i-cal"/></svg></div><h3>“Meu filho não vai hoje”</h3><p>Avise a falta com um toque. O motorista recebe na hora e pula sua casa.</p><span class="plano-tag">Plano Completo</span></div>
+          <div class="recurso"><div class="icone"><svg><use href="#i-users"/></svg></div><h3>Vários filhos e responsáveis</h3><p>Cadastre todos os filhos e coloque o pai, a avó ou a babá para receber também.</p><span class="plano-tag">Plano Completo</span></div>
+          <div class="recurso"><div class="icone"><svg><use href="#i-chat"/></svg></div><h3>Chat com o motorista</h3><p>Fale com o motorista sem se perder no grupo da van.</p><span class="plano-tag">Plano Completo</span></div>
+          <div class="recurso"><div class="icone"><svg><use href="#i-money"/></svg></div><h3>Mensalidade pelo app</h3><p>Pague por Pix, veja o vencimento e guarde o comprovante.</p><span class="plano-tag">Plano Completo</span></div>
+          <div class="recurso"><div class="icone"><svg><use href="#i-history"/></svg></div><h3>Histórico de trajetos</h3><p>Consulte os horários de embarque e de chegada dos últimos dias.</p></div>
+          <div class="recurso"><div class="icone"><svg><use href="#i-shield"/></svg></div><h3>Quem está levando seu filho</h3><p>Foto, nome do motorista, placa, modelo e cor da van.</p></div>
         </div>
       </div>
 
       <div class="painel" id="p-motorista" role="tabpanel" aria-labelledby="t-motorista" hidden>
         <div class="grade">
-          <div class="recurso"><div class="icone"><svg><use href="#i-gps"/></svg></div><h3>Iniciar rota com um toque</h3><p>O celular vira rastreador. Ou conecte um rastreador GPS fixo na van, que liga junto com a ignição.</p></div>
-          <div class="recurso"><div class="icone v"><svg><use href="#i-whats"/></svg></div><h3>Comunicação automática</h3><p>Pare de mandar áudio dirigindo. O VanGPS avisa cada família no WhatsApp sozinho.</p><span class="plano-tag">Plano Completo</span></div>
-          <div class="recurso"><div class="icone"><svg><use href="#i-list"/></svg></div><h3>Lista de chamada</h3><p>Marque embarque e desembarque de cada aluno. A família é avisada na hora.</p></div>
-          <div class="recurso"><div class="icone"><svg><use href="#i-route"/></svg></div><h3>Rota otimizada</h3><p>Monte a ordem das paradas, com ajuste automático quando alguém falta.</p></div>
-          <div class="recurso"><div class="icone"><svg><use href="#i-money"/></svg></div><h3>Cobrança de mensalidades</h3><p>Cobrança recorrente por Pix, lembrete automático de vencimento e controle de quem pagou.</p></div>
-          <div class="recurso"><div class="icone"><svg><use href="#i-doc"/></svg></div><h3>Contrato digital</h3><p>Envie o contrato do transporte e receba a assinatura dos pais pelo celular.</p></div>
-          <div class="recurso"><div class="icone"><svg><use href="#i-bell"/></svg></div><h3>Comunicados em massa</h3><p>“Amanhã não tem aula”, “Rota atrasada 15 min”: avise todas as famílias de uma vez.</p></div>
-          <div class="recurso"><div class="icone"><svg><use href="#i-users"/></svg></div><h3>Cadastro de alunos</h3><p>Endereço, escola, turno, responsáveis, contatos de emergência e observações.</p></div>
-          <div class="recurso"><div class="icone"><svg><use href="#i-sos"/></svg></div><h3>Botão de emergência</h3><p>Em caso de pane ou acidente, avisa todas as famílias e contatos com a localização.</p></div>
+          <div class="recurso"><div class="icone"><svg><use href="#i-gps"/></svg></div><h3>Iniciar rota com um toque</h3><p>O celular vira o rastreador da van. Funciona com a tela apagada e no carregador.</p></div>
+          <div class="recurso"><div class="icone v"><svg><use href="#i-bell"/></svg></div><h3>Avisos automáticos</h3><p>Pare de responder “já saiu?”. As famílias são avisadas sozinhas.</p></div>
+          <div class="recurso"><div class="icone"><svg><use href="#i-list"/></svg></div><h3>Lista de chamada</h3><p>Marque quem embarcou e quem faltou. A família é avisada na hora.</p><span class="plano-tag">Plano Completo</span></div>
+          <div class="recurso"><div class="icone"><svg><use href="#i-route"/></svg></div><h3>Ordem das paradas</h3><p>Monte a rota da ida e da volta. Quem avisou que não vai sai da lista do dia.</p><span class="plano-tag">Plano Completo</span></div>
+          <div class="recurso"><div class="icone"><svg><use href="#i-bell"/></svg></div><h3>Recado para todos</h3><p>“Amanhã não tem aula”, “Rota atrasada 15 min”: uma notificação para todas as famílias.</p><span class="plano-tag">Plano Completo</span></div>
+          <div class="recurso"><div class="icone"><svg><use href="#i-money"/></svg></div><h3>Cobrança de mensalidades</h3><p>Cobrança por Pix, lembrete de vencimento e quem pagou ou não, tudo num lugar.</p><span class="plano-tag">Plano Completo</span></div>
+          <div class="recurso"><div class="icone"><svg><use href="#i-users"/></svg></div><h3>Cadastro de alunos</h3><p>Endereço, escola, turno, responsáveis e contatos de emergência.</p></div>
+          <div class="recurso"><div class="icone"><svg><use href="#i-sos"/></svg></div><h3>Botão de emergência</h3><p>Em caso de pane ou acidente, avisa todas as famílias com a localização.</p><span class="plano-tag">Plano Completo</span></div>
+          <div class="recurso"><div class="icone"><svg><use href="#i-shield"/></svg></div><h3>Mais alunos</h3><p>Rastreamento ao vivo é um diferencial na hora de a família escolher a sua van.</p></div>
         </div>
       </div>
 
       <div class="painel" id="p-frota" role="tabpanel" aria-labelledby="t-frota" hidden>
         <div class="grade">
-          <div class="recurso"><div class="icone"><svg><use href="#i-pin"/></svg></div><h3>Painel com todas as vans</h3><p>Acompanhe todos os veículos da frota em um só mapa, pelo computador.</p></div>
+          <div class="recurso"><div class="icone"><svg><use href="#i-pin"/></svg></div><h3>Painel com todas as vans</h3><p>Acompanhe todos os veículos em um só mapa, pelo computador.</p></div>
           <div class="recurso"><div class="icone"><svg><use href="#i-users"/></svg></div><h3>Vários motoristas e monitores</h3><p>Cada um com seu acesso, sua rota e seus alunos.</p></div>
-          <div class="recurso"><div class="icone"><svg><use href="#i-chart"/></svg></div><h3>Relatórios</h3><p>Pontualidade, quilometragem, atrasos e presença dos alunos por período.</p></div>
+          <div class="recurso"><div class="icone"><svg><use href="#i-chart"/></svg></div><h3>Relatórios</h3><p>Pontualidade, atrasos e presença dos alunos por período.</p></div>
           <div class="recurso"><div class="icone"><svg><use href="#i-school"/></svg></div><h3>Portal da escola</h3><p>A escola vê quais vans estão chegando e quais alunos estão a bordo.</p></div>
-          <div class="recurso"><div class="icone"><svg><use href="#i-money"/></svg></div><h3>Financeiro centralizado</h3><p>Mensalidades de todas as rotas, inadimplência e repasses.</p></div>
+          <div class="recurso"><div class="icone"><svg><use href="#i-money"/></svg></div><h3>Financeiro centralizado</h3><p>Mensalidades de todas as rotas e inadimplência.</p></div>
           <div class="recurso"><div class="icone"><svg><use href="#i-shield"/></svg></div><h3>Velocidade e alertas</h3><p>Alertas de excesso de velocidade e de desvio de rota.</p></div>
         </div>
       </div>
@@ -237,7 +235,7 @@
     <div class="container">
       <div class="titulo-secao">
         <span class="sobre">Planos</span>
-        <h2>Escolha o plano da sua van</h2>
+        <h2>Preço justo, do tamanho da sua van</h2>
         <p>O motorista assina, as famílias usam de graça. Preço por van, com até 25 alunos.</p>
       </div>
 
@@ -249,38 +247,38 @@
 
       <div class="planos">
         <div class="plano">
-          <h3>📍 Rastreio</h3>
-          <p class="desc">Para a família acompanhar a van no mapa e receber notificações no app.</p>
-          <div class="preco" data-mensal="24,90" data-anual="20,75">R$ <span class="valor">24,90</span><small>/mês</small></div>
-          <p class="preco-nota" data-mensal="Cobrado mensalmente" data-anual="R$ 249 por ano">Cobrado mensalmente</p>
+          <h3>📍 Essencial</h3>
+          <p class="desc">A família vê a van no mapa e recebe os avisos principais.</p>
+          <div class="preco" data-mensal="14,90" data-anual="12,42">R$ <span class="valor">14,90</span><small>/mês</small></div>
+          <p class="preco-nota" data-mensal="Menos de R$ 0,60 por aluno" data-anual="R$ 149 por ano">Menos de R$ 0,60 por aluno</p>
           <ul>
             <li><svg><use href="#i-check"/></svg> Mapa em tempo real para as famílias</li>
             <li><svg><use href="#i-check"/></svg> Previsão de chegada (casa e escola)</li>
-            <li><svg><use href="#i-check"/></svg> Notificações no app (push)</li>
-            <li><svg><use href="#i-check"/></svg> Lista de chamada e “não vai hoje”</li>
-            <li><svg><use href="#i-check"/></svg> Chat com as famílias</li>
-            <li><svg><use href="#i-check"/></svg> Histórico de 30 dias</li>
-            <li class="nao"><svg><use href="#i-x"/></svg> Avisos automáticos no WhatsApp</li>
-            <li class="nao"><svg><use href="#i-x"/></svg> Cobrança de mensalidades por Pix</li>
+            <li><svg><use href="#i-check"/></svg> Notificações: a van saiu, chega em 5 min, chegou na escola</li>
+            <li><svg><use href="#i-check"/></svg> Código e QR Code da van</li>
+            <li><svg><use href="#i-check"/></svg> Histórico de 7 dias</li>
+            <li class="nao"><svg><use href="#i-x"/></svg> Lista de chamada (embarcou / desembarcou)</li>
+            <li class="nao"><svg><use href="#i-x"/></svg> “Não vai hoje”, chat e recados</li>
+            <li class="nao"><svg><use href="#i-x"/></svg> Cobrança de mensalidades</li>
           </ul>
           <a href="#" class="btn btn-contorno">Testar 14 dias grátis</a>
         </div>
 
         <div class="plano destaque">
           <span class="fita">⭐ Mais escolhido</span>
-          <h3>💬 Completo</h3>
-          <p class="desc">Rastreio + avisos automáticos no WhatsApp de cada família.</p>
-          <div class="preco" data-mensal="49,90" data-anual="41,58">R$ <span class="valor">49,90</span><small>/mês</small></div>
-          <p class="preco-nota" data-mensal="Cobrado mensalmente" data-anual="R$ 499 por ano">Cobrado mensalmente</p>
+          <h3>🚐 Completo</h3>
+          <p class="desc">Todos os avisos e tudo para organizar a sua van.</p>
+          <div class="preco" data-mensal="29,90" data-anual="24,92">R$ <span class="valor">29,90</span><small>/mês</small></div>
+          <p class="preco-nota" data-mensal="Cerca de R$ 1,20 por aluno" data-anual="R$ 299 por ano">Cerca de R$ 1,20 por aluno</p>
           <ul>
-            <li><svg><use href="#i-check"/></svg> <b>Tudo do plano Rastreio</b></li>
-            <li><svg><use href="#i-check"/></svg> Avisos automáticos no WhatsApp: saiu, chega em 10 e 5 min, embarcou, chegou na escola, chegou em casa</li>
-            <li><svg><use href="#i-check"/></svg> Comunicados em massa no WhatsApp</li>
-            <li><svg><use href="#i-check"/></svg> Cobrança de mensalidades por Pix com lembrete</li>
-            <li><svg><use href="#i-check"/></svg> Contrato digital</li>
+            <li><svg><use href="#i-check"/></svg> <b>Tudo do plano Essencial</b></li>
+            <li><svg><use href="#i-check"/></svg> Todos os avisos: chega em 10 e 5 min, embarcou, desembarcou, saiu da escola, chegou em casa, atraso</li>
+            <li><svg><use href="#i-check"/></svg> Lista de chamada e “meu filho não vai hoje”</li>
+            <li><svg><use href="#i-check"/></svg> Chat com as famílias e recado para todos</li>
+            <li><svg><use href="#i-check"/></svg> Vários responsáveis por aluno</li>
+            <li><svg><use href="#i-check"/></svg> Cobrança de mensalidades por Pix</li>
             <li><svg><use href="#i-check"/></svg> Botão de emergência</li>
             <li><svg><use href="#i-check"/></svg> Histórico de 12 meses</li>
-            <li><svg><use href="#i-check"/></svg> Suporte prioritário no WhatsApp</li>
           </ul>
           <a href="#" class="btn btn-primario">Testar 14 dias grátis</a>
         </div>
@@ -299,17 +297,17 @@
       <div class="publicos">
         <div class="publico p1">
           <h3>Mães e pais</h3>
-          <p>Chega de ficar no portão esperando ou mandando “já saiu?” no grupo.</p>
-          <ul><li>Sabe a hora certa de descer</li><li>Confirmação de que chegou na escola</li><li>App grátis</li></ul>
+          <p>Chega de ficar no portão esperando ou perguntando “já saiu?” no grupo.</p>
+          <ul><li>Sabe a hora certa de descer</li><li>Aviso de que chegou na escola</li><li>App grátis</li></ul>
         </div>
         <div class="publico p2">
           <h3>Motoristas</h3>
-          <p>Mais profissional, menos celular na mão e as famílias mais tranquilas.</p>
-          <ul><li>Para de responder mensagem dirigindo</li><li>Cobrança organizada</li><li>Diferencial para conseguir mais alunos</li></ul>
+          <p>Mais profissional, menos celular na mão e famílias mais tranquilas.</p>
+          <ul><li>Para de responder mensagem dirigindo</li><li>Cobrança organizada</li><li>Diferencial para ganhar alunos</li></ul>
         </div>
         <div class="publico p3">
           <h3>Escolas e frotas</h3>
-          <p>Visão de todas as vans e alunos, com relatórios e controle.</p>
+          <p>Todas as vans e todos os alunos num só lugar.</p>
           <ul><li>Painel web com todas as rotas</li><li>Portaria sabe quem está chegando</li><li>Mais segurança para os alunos</li></ul>
         </div>
       </div>
@@ -322,10 +320,10 @@
       <div class="titulo-secao">
         <span class="sobre">Quem usa</span>
         <h2>Menos ansiedade no portão</h2>
-        <p style="font-size:.85rem">Depoimentos ilustrativos — substituir pelos reais após o piloto.</p>
+        <p style="font-size:.85rem">Depoimentos ilustrativos — trocar pelos reais depois do piloto.</p>
       </div>
       <div class="depoimentos">
-        <div class="depo"><div class="estrelas">★★★★★</div><p>“Eu descia 15 minutos antes e ficava no frio com meu filho. Agora só desço quando chega o ‘5 minutos’ no WhatsApp.”</p><div class="quem"><div class="avatar">M</div><div><b>Mariana</b><small>mãe do Pedro, 7 anos</small></div></div></div>
+        <div class="depo"><div class="estrelas">★★★★★</div><p>“Eu descia 15 minutos antes e ficava no frio com meu filho. Agora só desço quando aparece o ‘5 minutos’ no celular.”</p><div class="quem"><div class="avatar">M</div><div><b>Mariana</b><small>mãe do Pedro, 7 anos</small></div></div></div>
         <div class="depo"><div class="estrelas">★★★★★</div><p>“Eu recebia 40 mensagens por dia perguntando onde eu estava. Hoje o celular fica no suporte e eu só dirijo.”</p><div class="quem"><div class="avatar">R</div><div><b>Roberto</b><small>motorista há 11 anos</small></div></div></div>
         <div class="depo"><div class="estrelas">★★★★★</div><p>“O aviso de ‘chegou na escola’ me deixa trabalhar tranquila. Coloquei a avó para receber também.”</p><div class="quem"><div class="avatar">A</div><div><b>Ana Paula</b><small>mãe da Lívia e do Theo</small></div></div></div>
       </div>
@@ -340,12 +338,13 @@
         <h2>Perguntas frequentes</h2>
       </div>
       <div class="faq">
-        <details open><summary>Quem paga o VanGPS?</summary><p>O motorista (ou a empresa de transporte) assina o plano por van. As famílias baixam o app e usam de graça. Muitos motoristas incluem o valor na mensalidade, que fica em cerca de R$ 2 por aluno.</p></details>
-        <details><summary>Preciso comprar um rastreador?</summary><p>Não. O próprio celular do motorista funciona como rastreador ao iniciar a rota. Se preferir, dá para conectar um rastreador GPS fixo na van, que liga junto com a ignição e não depende do celular.</p></details>
-        <details><summary>Qual a diferença entre os dois planos?</summary><p>No <b>Rastreio</b>, a família acompanha a van no mapa e recebe notificações dentro do app. No <b>Completo</b>, além disso, cada família recebe os avisos automaticamente no WhatsApp, e o motorista ganha cobrança por Pix, contrato digital e comunicados em massa.</p></details>
-        <details><summary>Como a mãe conecta na van certa?</summary><p>Cada van tem um código único (e um QR Code). A família digita o código no app, cadastra o filho e o endereço, e o motorista aprova o pedido.</p></details>
-        <details><summary>A localização fica aberta para qualquer pessoa?</summary><p>Não. Só as famílias aprovadas pelo motorista veem a van, e apenas durante a rota. Fora do horário de trajeto, a localização não é compartilhada. Seguimos a LGPD.</p></details>
-        <details><summary>Gasta muita bateria ou internet?</summary><p>O app do motorista foi pensado para rodar a manhã inteira com o celular no carregador do carro, usando poucos megas por rota.</p></details>
+        <details open><summary>Quem paga o Rastreia Van?</summary><p>O motorista (ou a empresa de transporte) assina por van: R$ 14,90 no Essencial ou R$ 29,90 no Completo. As famílias baixam o app e usam de graça. Com 25 alunos, dá menos de R$ 1,20 por aluno ao mês.</p></details>
+        <details><summary>Como a família recebe os avisos?</summary><p>Por notificação no celular, igual a uma mensagem chegando: o celular vibra e o aviso aparece na tela, mesmo bloqueado. É só ter o app instalado e permitir as notificações.</p></details>
+        <details><summary>Preciso comprar um rastreador?</summary><p>Não. O celular do motorista funciona como rastreador quando ele toca em “Iniciar rota”. Mais para frente, também vai dar para conectar um rastreador GPS fixo na van.</p></details>
+        <details><summary>Qual a diferença entre os dois planos?</summary><p>No <b>Essencial</b>, a família vê a van no mapa e recebe os avisos principais: a van saiu, chega em 5 minutos e chegou na escola. No <b>Completo</b>, entram todos os avisos (inclusive embarcou e chegou em casa), lista de chamada, “não vai hoje”, chat, recados, cobrança por Pix e botão de emergência.</p></details>
+        <details><summary>Como a mãe conecta na van certa?</summary><p>Cada van tem um código (e um QR Code). A família digita o código no app, cadastra o filho e o endereço, e o motorista aprova.</p></details>
+        <details><summary>A localização fica aberta para qualquer pessoa?</summary><p>Não. Só as famílias aprovadas pelo motorista veem a van, e só durante a rota. Fora do horário, a localização não aparece. Seguimos a LGPD.</p></details>
+        <details><summary>Gasta muita bateria ou internet?</summary><p>O app do motorista foi feito para rodar a rota inteira com o celular no carregador do carro, usando poucos megas.</p></details>
       </div>
     </div>
   </section>
@@ -358,7 +357,7 @@
         <p>Teste o plano Completo por 14 dias. Sem cartão de crédito.</p>
         <div class="acoes">
           <a href="#planos" class="btn btn-primario">Começar teste grátis</a>
-          <a href="#" class="btn btn-whats"><svg width="20" height="20"><use href="#i-whats"/></svg> Falar no WhatsApp</a>
+          <a href="#" class="btn btn-whats"><svg width="20" height="20"><use href="#i-whats"/></svg> Tirar dúvidas</a>
         </div>
       </div>
     </div>
@@ -368,20 +367,19 @@
 <footer>
   <div class="container">
     <div>
-      <a href="#" class="marca"><img src="assets/logo-mark.svg" alt=""><b>van<span>GPS</span></b></a>
-      <p style="margin-top:10px; max-width: 320px;">Rastreamento e avisos automáticos para o transporte escolar. vangps.com.br</p>
+      <a href="#" class="marca"><img src="assets/logo-mark.svg" alt=""><b>rastreia<span>van</span></b></a>
+      <p style="margin-top:10px; max-width: 320px;">Rastreamento ao vivo e notificações para o transporte escolar. rastreiavan.com.br · @rastreiavan</p>
     </div>
     <div><h4>Produto</h4><ul><li><a href="#como-funciona">Como funciona</a></li><li><a href="#funcionalidades">Funcionalidades</a></li><li><a href="#planos">Planos</a></li></ul></div>
     <div><h4>Apps</h4><ul><li><a href="#">App das famílias</a></li><li><a href="#">App do motorista</a></li><li><a href="#">Painel da frota</a></li></ul></div>
-    <div><h4>Contato</h4><ul><li><a href="#">WhatsApp</a></li><li><a href="#">contato@vangps.com.br</a></li><li><a href="#">Privacidade (LGPD)</a></li></ul></div>
+    <div><h4>Contato</h4><ul><li><a href="#">Instagram @rastreiavan</a></li><li><a href="#">contato@rastreiavan.com.br</a></li><li><a href="#">Privacidade (LGPD)</a></li></ul></div>
   </div>
-  <div class="container"><p class="copy">© 2026 VanGPS. Todos os direitos reservados.</p></div>
+  <div class="container"><p class="copy">© 2026 Rastreia Van. Todos os direitos reservados.</p></div>
 </footer>
 
-<a href="#" class="whats-flutuante" aria-label="Falar no WhatsApp"><svg><use href="#i-whats"/></svg></a>
+<a href="#" class="whats-flutuante" aria-label="Tirar dúvidas pelo WhatsApp"><svg><use href="#i-whats"/></svg></a>
 
 <script>
-  // Abas de funcionalidades
   document.querySelectorAll('.aba').forEach(function (aba) {
     aba.addEventListener('click', function () {
       document.querySelectorAll('.aba').forEach(function (a) {
@@ -393,7 +391,6 @@
     });
   });
 
-  // Mensal / anual
   var chave = document.getElementById('chave-anual');
   chave.addEventListener('click', function () {
     var anual = chave.getAttribute('aria-checked') !== 'true';
