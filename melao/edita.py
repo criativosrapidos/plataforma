@@ -99,7 +99,7 @@ def item_html(it):
     return h + "</div>"
 
 
-FIM_TXT = ("Vem novidade", "por aí", "Fica atento")
+FIM_TXT = ("Sociedade", "Guilherme Melão", "Isso é Líderes do Brasil")
 
 
 def overlay(itens, cuts, fim, bug=(None, None), flash=True):
@@ -206,12 +206,12 @@ def pilula(preview=False):
     for s in P:
         c.append(c[-1] + s[2])
     itens = [
-        dict(t0=0.45, t1=c[1] - 0.2, top=1180, kicker="Líderes do Brasil", linhas=[("Sociedade", ""), ("Melão", "azul")], sub=DATA, fs=150),
+        dict(t0=0.45, t1=c[1] - 0.2, top=1180, kicker="Líderes do Brasil", linhas=[("Sociedade", ""), ("Guilherme Melão", "azul")], sub=DATA, fs=118),
         dict(t0=c[1] + 0.25, t1=c[2] - 0.15, top=1420, chip="Sociedade voltada à saúde", linhas=[("Saúde", ""), ("em pauta", "azul")], fs=130),
-        dict(t0=c[2] + 0.2, t1=c[3] - 0.15, top=1420, linhas=[("Quem cuida", ""), ("de pessoas", "azul")], fs=130),
-        dict(t0=c[3] + 0.2, t1=c[4] - 0.15, top=1420, kicker="Na mesa", linhas=[("Gestão", ""), ("experiência", "azul")], fs=130),
-        dict(t0=c[4] + 0.2, t1=c[5] - 0.15, top=1420, linhas=[("Conexões", ""), ("de verdade", "azul")], fs=130),
-        dict(t0=c[5] + 0.2, t1=c[6] - 0.15, top=1420, kicker="Sociedade Melão", linhas=[("Saúde que", ""), ("gera negócio", "azul")], fs=124),
+        dict(t0=c[2] + 0.2, t1=c[3] - 0.15, top=1420, kicker="O que rola aqui", linhas=[("Conselhos", "")], fs=160),
+        dict(t0=c[3] + 0.3, t1=c[4] - 0.15, top=1440, kicker="Nosso presidente", linhas=[("Daher", "")], sub="Presidente · Líderes do Brasil", fs=150),
+        dict(t0=c[4] + 0.2, t1=c[5] - 0.15, top=1420, kicker="O que rola aqui", linhas=[("Acessos", "")], fs=160),
+        dict(t0=c[5] + 0.2, t1=c[6] - 0.15, top=1420, kicker="O que rola aqui", linhas=[("Conexões", "")], fs=160),
         dict(t0=c[6] + 0.2, t1=c[7] - 0.15, top=1420, linhas=[("Juntos", ""), ("crescemos mais", "azul")], fs=124),
         dict(t0=c[7] + 0.2, t1=c[8] - 0.25, top=1420, kicker="Isso é", linhas=[("Líderes", ""), ("do Brasil", "azul")], fs=140),
     ]
@@ -223,10 +223,9 @@ def locucao(preview=False):
     q = json.load(open(ROOT / "audio" / "cues.json"))
     L = 0.15
     T = lambda k: q[k] + L
-    marcas = [0.0, T("uma") - .1, T("profissionais") - .1, T("sentados") - .1, T("troca") - .1, T("conexoes") - .1, T("isso") - .1,
-              T("vem") - .1, T("fim") + .25]
-    fontes = [("m04", 0.0, {}), ("m02", 0.5, {"z": (1.05, 1.14)}), ("m01", 0.0, {}), ("m04", 3.0, {}), ("m03", 0.5, {"z": (1.05, 1.15)}),
-              ("m02", 4.0, {"z": (1.14, 1.05)}), ("m03", 4.5, {"z": (1.15, 1.05)}), ("m01", 4.0, {})]
+    marcas = [0.0, T("uma") - .1, T("com") - .1, T("conselhos") - .1, T("acessos") - .1, T("conexoes") - .1, T("isso") - .1, T("fim") + .25]
+    fontes = [("m04", 0.0, {}), ("m02", 0.5, {"z": (1.05, 1.14)}), ("m03", 0.5, {"z": (1.05, 1.15)}), ("m01", 0.0, {}),
+              ("m04", 3.0, {}), ("m02", 4.0, {"z": (1.14, 1.05)}), ("m03", 4.5, {"z": (1.15, 1.05)})]
     durs = {"m01": 7.33, "m02": 8.2, "m03": 8.27, "m04": 6.93}
     segs = []
     for (cc, ini, kw), a, b in zip(fontes, marcas[:-1], marcas[1:]):
@@ -236,14 +235,16 @@ def locucao(preview=False):
         segs.append((cc, ini, d, k))
     c = marcas
     itens = [
-        dict(t0=0.3, t1=c[1] - 0.15, top=1180, kicker="Hoje foi dia de", linhas=[("Sociedade", ""), ("Melão", "azul")], sub=DATA, fs=150),
+        dict(t0=0.3, t1=c[1] - 0.15, top=1180, kicker="Hoje foi dia de", linhas=[("Sociedade", ""), ("Guilherme Melão", "azul")], sub=DATA, fs=118),
         dict(t0=c[1] + 0.15, t1=c[2] - 0.1, top=1420, chip="Líderes do Brasil", linhas=[("Voltada", ""), ("à saúde", "azul")], fs=136),
-        dict(t0=c[2] + 0.15, t1=c[4] - 0.1, top=1420, kicker="Profissionais que", linhas=[("Cuidam", ""), ("de pessoas", "azul")], fs=136),
-        dict(t0=c[4] + 0.1, t1=c[6] - 0.1, top=1400, kicker="Troca de", linhas=[("Experiência", ""), ("gestão e conexões", "azul")], fs=118),
+        dict(t0=c[2] + 0.3, t1=c[3] - 0.1, top=1440, kicker="Nosso presidente", linhas=[("Daher", "")], sub="Presidente · Líderes do Brasil", fs=150),
+        dict(t0=c[3] + 0.05, t1=c[4] - 0.1, top=1420, kicker="O que rola aqui", linhas=[("Conselhos", "")], fs=160),
+        dict(t0=c[4] + 0.05, t1=c[5] - 0.1, top=1420, kicker="O que rola aqui", linhas=[("Acessos", "")], fs=160),
+        dict(t0=c[5] + 0.05, t1=c[6] - 0.1, top=1420, kicker="O que rola aqui", linhas=[("Conexões", ""), ("de verdade", "azul")], fs=150),
         dict(t0=c[6] + 0.1, t1=c[7] - 0.1, top=1420, kicker="Isso é", linhas=[("Líderes", ""), ("do Brasil", "azul")], fs=140),
     ]
     monta("sociedade_melao_locucao", segs, itens, 2.6, (c[1] + 0.2, c[-2] - 0.3),
-          voz=ROOT / "audio" / "locucao.mp3", music_cuts=[0.0, c[1], c[2], c[4], c[6], c[-1]],
+          voz=ROOT / "audio" / "locucao.mp3", music_cuts=[0.0, c[1], c[2], c[3], c[5], c[6], c[-1]],
           preview=[1.2, c[2] + 1, c[4] + 1, c[-1] + 1.5] if preview else None)
 
 
