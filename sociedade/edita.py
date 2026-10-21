@@ -148,7 +148,7 @@ def overlay_html():
     c = CUTS
     # (sobretítulo, texto grande, linha de baixo, entra, sai)
     seg3 = (c[3] - c[2] - 0.6) / 3
-    itens = [("", "Jabes Matheus", "Jabs Engenharia", c[1] + 0.5, c[1] + 5.4)]
+    itens = [("", "Jabs Matheus", "Jabs Engenharia", c[1] + 0.5, c[1] + 5.4)]
     itens += [("O que rola aqui", p, "", c[2] + 0.35 + k * seg3, c[2] + 0.35 + (k + 1) * seg3 - 0.15)
               for k, p in enumerate(("Conselhos", "Acessos", "Conexões"))]
     itens += [("", "Daher", "Presidente do Líderes do Brasil", c[3] + 0.5, c[3] + 5.4)]
