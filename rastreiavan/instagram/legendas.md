@@ -48,7 +48,7 @@ Agora a família vê a van escolar no mapa, ao vivo, e recebe um aviso no celula
 Sem ligação, sem “já saiu?” no grupo, sem descer 15 minutos antes.
 
 ✅ App grátis para as famílias
-✅ Motorista a partir de R$ 14,90 por mês
+✅ Motorista a partir de R$ 99 por ano
 ✅ 14 dias grátis para testar
 
 Marca aqui o motorista da van do seu filho 👇
@@ -63,7 +63,7 @@ Arrasta pro lado e vê como o Rastreia Van resolve em 3 passos 👉
 2️⃣ A família digita o código da van
 3️⃣ O aviso aparece no celular, sozinho
 
-Grátis para as famílias. Para o motorista, a partir de R$ 14,90/mês.
+Grátis para as famílias. Para o motorista, a partir de R$ 99 por ano.
 Link na bio para testar 14 dias grátis 💛
 
 ### post-02-portao — Mães
@@ -95,15 +95,16 @@ Rastreia Van: o aviso chega sozinho no seu celular.
 
 ### post-05-planos — Planos
 Preço justo, do tamanho da sua van 🚐
+Todos os avisos chegam por notificação no celular 🔔
 
-📍 Essencial · R$ 14,90/mês
+📍 Essencial · R$ 99/ano (ou R$ 9,90/mês)
 Mapa ao vivo, previsão de chegada e os avisos principais (saiu, chega em 5 min, chegou na escola).
 
-🚐 Completo · R$ 29,90/mês
+🚐 Completo · R$ 199/ano (ou R$ 19,90/mês)
 Todos os avisos, lista de chamada, “meu filho não vai hoje”, chat, recados, cobrança por Pix e botão de emergência.
 
 💛 Famílias usam grátis
-📅 No plano anual, 2 meses grátis
+📅 No anual sai mais barato: menos de R$ 0,35 por aluno ao mês
 🎁 14 dias grátis para testar
 
 Link na bio 👆

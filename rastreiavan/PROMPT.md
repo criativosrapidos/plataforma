@@ -19,9 +19,11 @@ O motorista da van escolar toca em "Iniciar rota" no app. As famílias conectam 
 ## 3. Planos (cobrança por van, até 25 alunos)
 | Plano | Mensal | Anual | O que inclui |
 |---|---|---|---|
-| **Essencial** | R$ 14,90 | R$ 149 | Mapa ao vivo para as famílias, previsão de chegada (casa e escola), notificações principais (**a van saiu**, **chega em 5 min**, **chegou na escola**), código e QR Code da van, histórico de 7 dias |
-| **Completo** | R$ 29,90 | R$ 299 | Tudo do Essencial + **todas** as notificações (chega em 10 e 5 min, embarcou, desembarcou, saiu da escola, chegou em casa, atraso), lista de chamada, "meu filho não vai hoje", chat motorista ↔ família, recado em massa (push para todas as famílias), vários responsáveis por aluno, cobrança de mensalidades por Pix, botão de emergência, histórico de 12 meses |
+| **Essencial** | R$ 9,90 | **R$ 99** | Mapa ao vivo para as famílias, previsão de chegada (casa e escola), notificações principais (**a van saiu**, **chega em 5 min**, **chegou na escola**), código e QR Code da van, histórico de 7 dias |
+| **Completo** | R$ 19,90 | **R$ 199** | Tudo do Essencial + **todas** as notificações (chega em 10 e 5 min, embarcou, desembarcou, saiu da escola, chegou em casa, atraso), lista de chamada, "meu filho não vai hoje", chat motorista ↔ família, recado em massa (push para todas as famílias), vários responsáveis por aluno, cobrança de mensalidades por Pix, botão de emergência, histórico de 12 meses |
 
+- **O foco é vender o plano anual.** No checkout e no app, mostrar o anual como opção padrão e destacada (equivale a R$ 8,25 e R$ 16,58 por mês), com o mensal como alternativa.
+- **Todos os avisos são por notificação push (pop-up no celular).** WhatsApp ficou caro e está fora.
 - 14 dias grátis do plano Completo, sem cartão.
 - Bloquear os recursos por plano **no backend** (feature flags), não só esconder na interface.
 - Plano Frota (mais de 3 vans ou escolas): no MVP, só um formulário de contato.
@@ -105,7 +107,7 @@ Para cada aluno ativo na rota em andamento, gerar eventos:
 1. **Semanas 1–2:** login, cadastro de van/escola/alunos, código e QR, aprovação de famílias.
 2. **Semanas 3–4:** "Iniciar rota" com localização em segundo plano + mapa ao vivo na família.
 3. **Semana 5:** motor de notificações push (eventos do Essencial).
-4. **Semana 6:** assinatura (Essencial R$ 14,90 / Completo R$ 29,90) com teste de 14 dias e bloqueio por plano.
+4. **Semana 6:** assinatura (Essencial R$ 99/ano ou R$ 9,90/mês; Completo R$ 199/ano ou R$ 19,90/mês, anual como padrão) com teste de 14 dias e bloqueio por plano.
 5. **Semana 7:** recursos do Completo: chamada, "não vai hoje", demais avisos, chat, recados.
 6. **Depois:** mensalidades por Pix, emergência, painel Frota, rastreador GPS fixo.
 
