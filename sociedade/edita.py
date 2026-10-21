@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Pílula 'Sociedade do Líder' (encontro 20/10, 17h): 4 takes verticais cortados no tempo da trilha (110 BPM),
+"""Pílula 'Sociedade JABS' (encontro 20/10, 17h): 4 takes verticais cortados no tempo da trilha (110 BPM),
 cor tratada, push-in suave, camada de textos (HTML transparente) e trilha gerada aqui. Sem narração.
 Uso: python3 edita.py [preview]"""
 import json
@@ -146,9 +146,15 @@ def grava(nome, x):
 # ---------------------------------------------------------------- camada de textos
 def overlay_html():
     c = CUTS
-    palavras = [("Estratégia", c[1]), ("Conexões", c[2]), ("Crescimento", c[3])]
-    chips = "".join(f'<div class="lt" data-in="{t + 0.5:.3f}" data-out="{t + 4.6:.3f}"><div class="kick">Sociedade do Líder</div>'
-                    f'<div class="pal">{p}</div><div class="fio"></div></div>' for p, t in palavras)
+    # (sobretítulo, texto grande, linha de baixo, entra, sai)
+    seg3 = (c[3] - c[2] - 0.6) / 3
+    itens = [("", "Jabes Matheus", "Jabs Engenharia", c[1] + 0.5, c[1] + 5.4)]
+    itens += [("O que rola aqui", p, "", c[2] + 0.35 + k * seg3, c[2] + 0.35 + (k + 1) * seg3 - 0.15)
+              for k, p in enumerate(("Conselhos", "Acessos", "Conexões"))]
+    itens += [("", "Daher", "Presidente do Líderes do Brasil", c[3] + 0.5, c[3] + 5.4)]
+    chips = "".join(f'<div class="lt" data-in="{a:.3f}" data-out="{b:.3f}">' + (f'<div class="kick">{k}</div>' if k else "")
+                    + f'<div class="pal">{p}</div><div class="fio"></div>' + (f'<div class="sub">{sub}</div>' if sub else "") + '</div>'
+                    for k, p, sub, a, b in itens)
     return f'''<!doctype html><html><head><meta charset="utf-8"><style>
 @font-face {{ font-family: Anton; src: url(fonts/anton-latin-400-normal.woff); }}
 @font-face {{ font-family: M; font-weight: 600; src: url(fonts/montserrat-latin-600-normal.woff); }}
@@ -170,6 +176,7 @@ html, body {{ width:1080px; height:1920px; background:transparent; overflow:hidd
 .lt {{ position:absolute; left:70px; top:1500px; opacity:0; }}
 .lt .kick {{ font-weight:600; letter-spacing:.38em; font-size:26px; color:#D9C38A; text-transform:uppercase; }}
 .lt .pal {{ font-family:Anton; font-size:118px; text-transform:uppercase; line-height:1; margin-top:8px; text-shadow:0 6px 26px rgba(0,0,0,.6); }}
+.lt .sub {{ font-weight:800; font-size:38px; letter-spacing:.06em; margin-top:16px; color:#F2E6C4; text-transform:uppercase; text-shadow:0 4px 18px rgba(0,0,0,.6); }}
 .lt .fio {{ height:6px; width:0; margin-top:14px; background:linear-gradient(90deg,#E2B65C,#F7DC98); border-radius:3px; }}
 #bug {{ right:46px; top:60px; font-weight:800; font-size:24px; letter-spacing:.3em; color:rgba(255,255,255,.85); text-transform:uppercase;
         padding:10px 20px; border:1.5px solid rgba(255,255,255,.45); border-radius:40px; background:rgba(0,0,0,.25); opacity:0; }}
@@ -183,15 +190,15 @@ html, body {{ width:1080px; height:1920px; background:transparent; overflow:hidd
 <div id="tit" class="abs">
   <div class="mask"><div class="k" id="t0">Líderes do Brasil apresenta</div></div>
   <div class="mask" style="margin-top:14px"><div class="big" id="t1">Sociedade</div></div>
-  <div class="mask"><div class="big ouro" id="t2">do Líder</div></div>
+  <div class="mask"><div class="big ouro" id="t2" style="font-size:170px">JABS</div></div>
   <div class="data" id="t3">ENCONTRO <i></i> 20/10 <i></i> 17H</div>
 </div>
 {chips}
-<div id="bug" class="abs">Sociedade do Líder</div>
+<div id="bug" class="abs">Sociedade JABS</div>
 <div id="fim" class="abs">
   <img id="flogo" src="assets/lideres_logo.png">
   <div class="linha" id="flin"></div>
-  <div class="mask"><div class="big" id="f1" style="font-size:124px">Sociedade do Líder</div></div>
+  <div class="mask"><div class="big" id="f1" style="font-size:130px">Sociedade <span class="ouro">JABS</span></div></div>
   <div class="mask" style="margin-top:22px"><div class="k" id="f2" style="font-size:32px;letter-spacing:.32em;color:#F2E6C4">Fortalecendo o movimento</div></div>
 </div>
 <div id="flash" class="abs"></div>
@@ -268,7 +275,7 @@ if __name__ == "__main__":
     run("node", str(ROOT / "captura_alpha.js"), "30", f"{DUR:.3f}", str(od))
     (ROOT / "audio").mkdir(exist_ok=True)
     grava(ROOT / "audio" / "trilha.wav", trilha())
-    saida = ROOT / "saida" / "sociedade_do_lider_pilula.mp4"
+    saida = ROOT / "saida" / "sociedade_jabs_pilula.mp4"
     run("ffmpeg", "-y", "-loglevel", "error", "-i", str(base), "-framerate", "30", "-i", str(od / "o_%05d.png"),
         "-i", str(ROOT / "audio" / "trilha.wav"),
         "-filter_complex", f"[0:v][1:v]overlay=0:0:format=auto,format=yuv420p[v];"
