@@ -99,15 +99,18 @@ def item_html(it):
     return h + "</div>"
 
 
+FIM_TXT = ("Vem novidade", "por aí", "Fica atento")
+
+
 def overlay(itens, cuts, fim, bug=(None, None), flash=True):
     return f'''<!doctype html><html><head><meta charset="utf-8"><style>{CSS}</style></head><body>
 <div id="vin" class="abs"></div><div id="grad" class="abs"></div>
 {"".join(item_html(i) for i in itens)}
 <div id="bug" class="abs"><img src="assets/lideres_logo.png"></div>
 <div id="fim" class="abs"><img id="flogo" src="assets/lideres_logo.png"><div class="linha" id="flin"></div>
-  <div class="mask"><div class="big" id="f1" style="font-size:96px">Conexão com quem</div></div>
-  <div class="mask"><div class="big azul" id="f2" style="font-size:96px">faz acontecer</div></div>
-  <div class="mask" style="margin-top:24px"><div class="k" id="f3">Vem fazer parte</div></div></div>
+  <div class="mask"><div class="big" id="f1" style="font-size:110px">{FIM_TXT[0]}</div></div>
+  <div class="mask"><div class="big azul" id="f2" style="font-size:110px">{FIM_TXT[1]}</div></div>
+  <div class="mask" style="margin-top:24px"><div class="k" id="f3">{FIM_TXT[2]}</div></div></div>
 <div id="flash" class="abs"></div>
 <script>
 const C = {json.dumps(cuts)}, FIM = {fim:.3f}, BUG = {json.dumps(bug)}, FL = {json.dumps(flash)};
@@ -193,8 +196,8 @@ def monta(nome, segs, itens, fim_extra, bug, voz=None, music_cuts=None, preview=
 
 
 # ---------------------------------------------------------------- pílula (só trilha, cortes no tempo da música)
-P = [("c12", 0.3, 6 * B), ("c01", 0.7, 4 * B, {"z": (1.42, 1.5), "cy": .1, "vel": .7}), ("c05", 0.2, 5 * B), ("c02", 1.0, 6 * B), ("c09", 0.0, 3 * B, {"vel": 0.62, "z": (1.0, 1.06)}),
-     ("c03", 2.0, 5 * B), ("c06", 1.0, 4 * B), ("c07", 0.5, 4 * B), ("c08", 6.0, 6 * B), ("c10", 0.2, 5 * B), ("c11", 2.0, 5 * B)]
+P = [("c12", 0.3, 6 * B), ("c11", 0.5, 4 * B), ("c05", 0.2, 5 * B), ("c04", 4.0, 6 * B, {"z": (1.03, 1.12)}), ("c09", 0.0, 3 * B, {"vel": 0.62, "z": (1.0, 1.06)}),
+     ("c03", 2.0, 5 * B), ("c06", 1.0, 4 * B), ("c07", 0.5, 4 * B), ("c08", 6.0, 6 * B), ("c10", 0.2, 5 * B), ("c03", 6.0, 5 * B)]
 
 
 def pilula(preview=False):
@@ -202,52 +205,49 @@ def pilula(preview=False):
     for s in P:
         c.append(c[-1] + s[2])
     itens = [
-        dict(t0=0.45, t1=c[1] - 0.2, top=1240, kicker="Líderes do Brasil apresenta", linhas=[("Encontro", ""), ("de líderes", "azul")]),
-        dict(t0=c[1] + 0.1, t1=c[2] - 0.1, top=1420, linhas=[("Felipe Alvim", "")], sub="Presidente do Grupo Alvim", fs=130),
+        dict(t0=0.45, t1=c[1] - 0.2, top=1240, kicker="Líderes do Brasil", linhas=[("Reunião da", ""), ("presidência", "azul")]),
+        dict(t0=c[1] + 0.1, t1=c[2] - 0.1, top=1420, linhas=[("Felipe Alvim", "")], sub="Presidente do Grupo Alvim · Especialista em alimentação e varejo", fs=130),
         dict(t0=c[2] + 0.3, t1=c[3] - 0.15, top=1420, chip="Presidentes · Líderes do Brasil", linhas=[("Alimentação", ""), ("& varejo", "azul")], fs=118),
-        dict(t0=c[3] + 0.3, t1=c[4] - 0.15, top=1440, linhas=[("Daher", "")], sub="Presidente · Líderes do Brasil", fs=130),
+        dict(t0=c[3] + 0.3, t1=c[4] - 0.15, top=1440, kicker="Nosso presidente", linhas=[("Daher", "")], sub="Presidente · Líderes do Brasil", fs=140),
         dict(t0=c[4] + 0.1, t1=c[5] - 0.1, top=1460, linhas=[("Cláudia", "")], sub="Vice-presidente · Líderes do Brasil", fs=130),
         dict(t0=c[5] + 0.2, t1=c[6] - 0.15, top=1420, kicker="Na mesa", linhas=[("Gestão · visão", ""), ("crescimento", "azul")], fs=110),
         dict(t0=c[6] + 0.2, t1=c[8] - 0.15, top=1420, kicker="Direto da operação", linhas=[("Da cozinha", ""), ("ao balcão", "azul")], fs=130),
         dict(t0=c[8] + 0.2, t1=c[9] - 0.1, top=1120, kicker="Grupo Alvim: dono de todos os", linhas=[("Burger King", ""), ("de Brasília", "azul")], fs=120),
         dict(t0=c[9] + 0.15, t1=c[10] - 0.1, top=1180, kicker="Felipe Alvim · Grupo Alvim", num=100, sub="de faturamento por ano"),
-        dict(t0=c[10] + 0.15, t1=c[11] - 0.25, top=1400, kicker="Autoridade em alimentação e varejo", linhas=[("Conexão", ""), ("que gera negócio", "azul")], fs=118),
+        dict(t0=c[10] + 0.15, t1=c[11] - 0.25, top=1400, kicker="Presidência Líderes × Grupo Alvim", linhas=[("Conexão", ""), ("que gera negócio", "azul")], fs=118),
     ]
     monta("lideres_grupo_alvim_pilula", P, itens, 6 * B, (c[1] + 0.2, c[-1] - 0.4), preview=[1.5, c[2] + 1.3, c[3] + 1.5, c[4] + 1.2, c[7] + 0.5, c[8] + 1.8, c[10], c[-1] + 2] if preview else None)
 
 
 # ---------------------------------------------------------------- versão com locução (cortes nas frases)
 def locucao(preview=False):
-    q = json.load(open(ROOT / "audio" / "cues.json"))
     L = 0.15
-    T = lambda k: q[k] + L
-    marcas = [0.0, T("presidentes") - .1, T("grupo") - .1, T("grupo") + 1.5, T("frente") - .1, T("faturamento") - .1, T("tarde") - .1,
-              T("experiencia") + .3, T("direto") - .1, T("cozinha") - .1, T("isso") - .1, T("conexao") - .1, T("vem") - .1, T("fim") + .25]
-    fontes = [("c12", 0.3), ("c04", 2.0), ("c01", 0.7), ("c10", 0.2), ("c08", 5.0), ("c05", 0.0), ("c09", 0.0), ("c03", 1.5), ("c06", 0.8),
-              ("c07", 0.4), ("c02", 0.8), ("c11", 1.5), ("c03", 6.0)]
-    durs = {"c01": 6.0, "c02": 13.7, "c03": 10.7, "c04": 10.45, "c05": 3.2, "c06": 12.2, "c07": 9.1, "c08": 13.0, "c09": 1.03, "c10": 3.5, "c11": 13.6, "c12": 5.06}
+    # (bruto, início, entra, sai) — tempos da locução v2 (+L)
+    plano = [("c12", 0.3, 0.0, 3.0), ("c05", 0.0, 3.0, 5.35), ("c04", 4.0, 5.35, 7.2, {"z": (1.03, 1.12)}),
+             ("c09", 0.0, 7.2, 8.9, {"vel": .58, "z": (1.0, 1.06)}), ("c03", 2.0, 8.9, 9.95), ("c10", 0.2, 9.95, 12.2),
+             ("c11", 1.5, 12.2, 14.3), ("c08", 4.5, 14.3, 18.05), ("c07", 0.4, 18.05, 21.45, {"z": (1.0, 1.14)}),
+             ("c04", 6.5, 21.45, 23.6, {"z": (1.12, 1.03)}), ("c02", 6.0, 23.6, 26.0, {"z": (1.25, 1.32), "cx": .62, "cy": .45}),
+             ("c06", 0.8, 26.0, 27.4), ("c08", 1.0, 27.4, 29.15), ("c03", 6.0, 29.15, 30.85)]
     segs = []
-    for (cc, ini), a, b in zip(fontes, marcas[:-1], marcas[1:]):
-        d = b - a
-        vel = min(1.0, (durs[cc] - ini - 0.05) / d)
-        kw = {"vel": max(vel, 0.4)}
-        if cc == "c01":                                   # Felipe Alvim: corta das pernas, fica da cintura pra cima
-            kw.update(vel=min(1.0, 1.55 / d), z=(1.42, 1.5), cy=.1)
-        segs.append((cc, ini, d, kw))
-    c = marcas
+    for p in plano:
+        cc, ini, a, b = p[:4]
+        segs.append((cc, ini, b - a, p[4] if len(p) > 4 else {}))
+    c = [0.0]
+    for sg in segs:
+        c.append(c[-1] + sg[2])
     itens = [
-        dict(t0=0.35, t1=c[1] - 0.15, top=1240, kicker="Líderes do Brasil", linhas=[("Liderança", ""), ("encontra", ""), ("negócio", "azul")], fs=130),
-        dict(t0=c[1] + 0.15, t1=c[2] - 0.1, top=1440, linhas=[("Daher", "")], sub="Presidente · Líderes do Brasil", fs=130),
-        dict(t0=c[2] + 0.15, t1=c[4] - 0.1, top=1440, linhas=[("Felipe Alvim", "")], sub="Presidente do Grupo Alvim", fs=130),
-        dict(t0=c[4] + 0.1, t1=c[6] - 0.15, top=1180, kicker="Dono de todos os Burger King de Brasília", num=100, sub="de faturamento por ano"),
-        dict(t0=c[6] + 0.05, t1=c[7] - 0.05, top=1440, linhas=[("Cláudia", "")], sub="Vice-presidente · Líderes do Brasil", fs=130),
-        dict(t0=c[7] + 0.1, t1=c[8] - 0.1, top=1420, kicker="Uma tarde de", linhas=[("Experiência", ""), ("gestão e visão", "azul")], fs=118),
-        dict(t0=c[8] + 0.15, t1=c[10] - 0.1, top=1420, kicker="Direto da operação", linhas=[("Da cozinha", ""), ("ao balcão", "azul")], fs=130),
-        dict(t0=c[10] + 0.15, t1=c[11] - 0.1, top=1420, kicker="Isso é", linhas=[("Líderes", ""), ("do Brasil", "azul")], fs=140),
+        dict(t0=0.3, t1=c[2] - 0.15, top=1180, kicker="Líderes do Brasil", linhas=[("Reunião da", ""), ("presidência", "azul")], sub="com o presidente do Grupo Alvim", fs=136),
+        dict(t0=c[2] + 0.1, t1=c[3] - 0.1, top=1420, kicker="Nosso presidente", linhas=[("Daher", "")], sub="Presidente · Líderes do Brasil", fs=150),
+        dict(t0=c[3] + 0.05, t1=c[4] - 0.05, top=1440, linhas=[("Cláudia", "")], sub="Vice-presidente · Líderes do Brasil", fs=140),
+        dict(t0=c[5] + 0.05, t1=c[7] - 0.1, top=1400, kicker="Especialista em alimentação e varejo", linhas=[("Felipe Alvim", "")], sub="Presidente do Grupo Alvim", fs=136),
+        dict(t0=c[7] + 0.1, t1=c[8] - 0.1, top=1180, kicker="O Grupo Alvim é dono de", linhas=[("Todos os", ""), ("Burger King", "lar"), ("de Brasília", "azul")], fs=124),
+        dict(t0=c[8] + 0.05, t1=c[9] - 0.1, top=1180, kicker="E fatura mais de", num=100, sub="por ano"),
+        dict(t0=c[9] + 0.1, t1=c[11] - 0.1, top=1400, kicker="Uma tarde de troca de", linhas=[("Experiência", ""), ("gestão e visão", "azul")], fs=124),
+        dict(t0=c[11] + 0.1, t1=c[13] - 0.1, top=1420, kicker="Direto da operação", linhas=[("Da cozinha", ""), ("ao balcão", "azul")], fs=136),
     ]
-    monta("lideres_grupo_alvim_locucao", segs, itens, c[-1] - c[-2] if False else 2.6, (c[1] + 0.2, c[-2] - 0.3),
-          voz=ROOT / "audio" / "locucao.mp3", music_cuts=[0.0, c[1], c[4], c[6], c[8], c[10], c[-1]],
-          preview=[1.2, c[3] + 1.5, c[6] + .6, c[8], c[-1] + 1.5] if preview else None)
+    monta("lideres_grupo_alvim_locucao", segs, itens, 2.6, (c[2] + 0.2, c[-1] - 0.3),
+          voz=ROOT / "audio" / "locucao.mp3", music_cuts=[0.0, c[2], c[7], c[8], c[9], c[11], c[-1]],
+          preview=[1.5, c[2] + 1, c[5] + 1, c[7] + 1.5, c[8] + 1.5, c[-1] + 1.5] if preview else None)
 
 
 if __name__ == "__main__":
