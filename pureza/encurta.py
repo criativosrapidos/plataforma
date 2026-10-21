@@ -1,16 +1,16 @@
-"""Encurta pausas da locução (take Gustavo Sancho) e acelera 5% (atempo). Gera audio/locucao.mp3 + audio/cues.json."""
+"""Encurta pausas da locução (take Rômulo Franklin) e acelera 14% (atempo). Gera audio/locucao.mp3 + audio/cues.json."""
 import json
 import subprocess
 import wave
 
 import numpy as np
 
-SIL = [(2.884, 3.264), (5.513, 5.879), (7.912, 8.668), (9.298, 9.836), (14.078, 14.525), (18.172, 18.548), (20.898, 21.296), (23.722, 24.118), (27.790, 28.251)]
-KEEP, TEMPO = 0.26, 1.05
-W = {"brasilia": 0.137, "iphone": 0.8, "pureza": 2.08, "quer": 3.253, "caro": 5.28, "cair": 6.08, "some": 6.88, "ninguem": 8.693,
-     "imagina": 10.12, "mao": 11.92, "seguranca": 12.64, "preco": 13.6, "pro": 14.56, "256": 15.72, "p8700": 16.96, "promax": 18.64,
-     "p9700": 19.84, "cores": 21.28, "preto": 21.76, "silver": 22.24, "azul": 22.84, "bordo": 23.36, "desde": 24.28, "feira": 25.44,
-     "bloco": 26.48, "chama": 28.307, "whats": 29.08, "garante": 29.64, "fim": 30.48}
+SIL = [(3.291, 3.690), (6.724, 6.988), (9.391, 9.796), (11.362, 11.733), (15.017, 15.270), (17.257, 17.616), (29.518, 29.795)]
+KEEP, TEMPO = 0.24, 1.14
+W = {"brasilia": 0.137, "iphone": 1.12, "pureza": 2.72, "quer": 3.733, "caro": 6.48, "cair": 7.36, "some": 8.32, "ninguem": 10.28,
+     "imagina": 12.08, "mao": 14.64, "seguranca": 15.52, "preco": 16.48, "pro": 17.68, "256": 19.0, "p8700": 20.88, "promax": 23.2,
+     "p9700": 25.04, "cores": 26.69, "preto": 27.28, "silver": 28.12, "azul": 28.64, "bordo": 29.12, "desde": 30.11, "feira": 31.36,
+     "bloco": 32.72, "chama": 34.96, "whats": 35.92, "garante": 36.96, "fim": 38.0}
 subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", "audio/take.mp3", "-ac", "1", "-ar", "44100", "audio/raw.wav"], check=True)
 with wave.open("audio/raw.wav") as w:
     sr = w.getframerate()
