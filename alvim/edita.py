@@ -243,7 +243,7 @@ def locucao(preview=False):
         dict(t0=c[6] + 0.05, t1=c[7] - 0.05, top=1440, linhas=[("Cláudia", "")], sub="Vice-presidente · Líderes do Brasil", fs=130),
         dict(t0=c[7] + 0.1, t1=c[8] - 0.1, top=1420, kicker="Uma tarde de", linhas=[("Experiência", ""), ("gestão e visão", "azul")], fs=118),
         dict(t0=c[8] + 0.15, t1=c[10] - 0.1, top=1420, kicker="Direto da operação", linhas=[("Da cozinha", ""), ("ao balcão", "azul")], fs=130),
-        dict(t0=c[10] + 0.15, t1=c[12] - 0.1, top=1420, kicker="Isso é", linhas=[("Líderes", ""), ("do Brasil", "azul")], fs=140),
+        dict(t0=c[10] + 0.15, t1=c[11] - 0.1, top=1420, kicker="Isso é", linhas=[("Líderes", ""), ("do Brasil", "azul")], fs=140),
     ]
     monta("lideres_grupo_alvim_locucao", segs, itens, c[-1] - c[-2] if False else 2.6, (c[1] + 0.2, c[-2] - 0.3),
           voz=ROOT / "audio" / "locucao.mp3", music_cuts=[0.0, c[1], c[4], c[6], c[8], c[10], c[-1]],
