@@ -3,99 +3,309 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Meus conteúdos · Criativos Rápidos</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>Criativos Rápidos · App do cliente</title>
 <meta name="robots" content="noindex">
-<link rel="icon" href="assets/logo-icone.png">
+<meta name="theme-color" content="#101216">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Criativos">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="assets/icons/favicon-32.png">
+<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,800;0,900;1,900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,800;0,900;1,900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/style.css">
 </head>
-<body>
-<header class="top">
-  <div class="top-in">
+<body class="app">
+<div class="shell">
+  <aside class="side" aria-label="Menu">
     <a class="logo" href="./"><img src="assets/logo-icone.png" alt=""><span><b>criativos</b><i>rápidos</i></span></a>
-    <div class="sp"></div>
-    <div class="who" id="who"></div>
-    <button class="btn ghost-w" id="sair" type="button">Sair</button>
+    <nav id="nav-side"></nav>
+    <div class="foot">
+      <div class="card-mini" id="side-plano"></div>
+      <button class="btn ghost-w" type="button" data-sair>Sair</button>
+    </div>
+  </aside>
+
+  <div class="main">
+    <header class="appbar">
+      <div class="appbar-in">
+        <a class="logo" href="./"><img src="assets/logo-icone.png" alt=""><span><b>criativos</b><i>rápidos</i></span></a>
+        <div class="sp"></div>
+        <div class="who" id="who"></div>
+        <button class="avatar" id="avatar" type="button" aria-label="Abrir minha conta"></button>
+      </div>
+    </header>
+
+    <!-- INÍCIO -->
+    <main class="view" id="v-inicio">
+      <div>
+        <span class="eyebrow" id="hoje"></span>
+        <h1 id="ola" style="margin-top:6px">Olá!</h1>
+      </div>
+      <section class="plan" id="plano-card" aria-label="Seu plano"></section>
+      <div id="aviso-briefing"></div>
+      <section class="sec">
+        <div class="sec-head"><h2>Para aprovar</h2><button class="link" type="button" data-ir="conteudos" data-filtro="aguardando">Ver todos</button></div>
+        <div class="rail" id="rail"></div>
+      </section>
+      <section class="sec">
+        <div class="sec-head"><h2>Próximas postagens</h2><button class="link" type="button" data-ir="calendario">Calendário</button></div>
+        <p class="small muted" id="quem-posta" style="margin:-4px 0 0"></p>
+        <div class="list" id="proximas"></div>
+      </section>
+      <div class="stats" id="stats"></div>
+      <div id="instalar-inicio"></div>
+    </main>
+
+    <!-- CONTEÚDOS -->
+    <main class="view" id="v-conteudos" hidden>
+      <div class="view-head"><div><h1>Conteúdos</h1><p class="lead">Toque no conteúdo pra ver grande, aprovar ou pedir ajuste.</p></div></div>
+      <div class="seg" role="group" aria-label="Filtrar conteúdos">
+        <button type="button" data-f="aguardando" aria-pressed="true">Para aprovar <span class="c" id="c-aguardando">0</span></button>
+        <button type="button" data-f="ajuste" aria-pressed="false">Em ajuste</button>
+        <button type="button" data-f="aprovado" aria-pressed="false">Aprovados</button>
+        <button type="button" data-f="todos" aria-pressed="false">Todos</button>
+      </div>
+      <div class="grid" id="lista"></div>
+      <div class="empty" id="vazio" hidden></div>
+    </main>
+
+    <!-- CALENDÁRIO -->
+    <main class="view" id="v-calendario" hidden>
+      <div class="view-head"><div><h1>Calendário</h1><p class="lead" id="cal-dica"></p></div></div>
+      <div class="cal">
+        <div class="cal-head">
+          <button class="icon-btn" type="button" id="mes-ant" aria-label="Mês anterior"></button>
+          <b id="mes-nome"></b>
+          <button class="icon-btn" type="button" id="mes-prox" aria-label="Próximo mês"></button>
+        </div>
+        <div class="cal-grid" id="cal-grid"></div>
+      </div>
+      <section class="sec">
+        <h2 id="dia-titulo"></h2>
+        <div class="list" id="dia-lista"></div>
+      </section>
+    </main>
+
+    <!-- CONTA -->
+    <main class="view" id="v-conta" hidden>
+      <div class="view-head"><h1>Minha conta</h1></div>
+      <div class="row" style="gap:16px;align-items:start">
+        <form class="card pad-l" id="f-perfil" novalidate>
+          <h2 style="margin-bottom:14px">Seus dados</h2>
+          <div class="f"><label for="p-nome">Nome</label><input type="text" id="p-nome" autocomplete="name"></div>
+          <div class="f"><label for="p-empresa">Empresa</label><input type="text" id="p-empresa" autocomplete="organization"></div>
+          <div class="f"><label for="p-whats">WhatsApp</label><input type="tel" id="p-whats" autocomplete="tel"></div>
+          <div class="f"><label for="p-email">E-mail</label><input type="email" id="p-email" disabled></div>
+          <button class="btn" type="submit">Salvar</button>
+        </form>
+        <div style="display:grid;gap:16px">
+          <section class="card pad-l" id="conta-plano"></section>
+          <section class="card pad-l" id="conta-instalar"></section>
+          <section class="card pad-l">
+            <h2>Ajuda</h2>
+            <p class="small muted" style="margin:6px 0 12px">Qualquer dúvida, fala com a gente.</p>
+            <div id="ajuda" style="display:flex;gap:8px;flex-wrap:wrap"></div>
+          </section>
+          <button class="btn ghost" type="button" data-sair>Sair da conta</button>
+        </div>
+      </div>
+    </main>
   </div>
-</header>
 
-<main class="wrap">
-  <h1 id="ola">Seus conteúdos</h1>
-  <p class="lead" id="sub">Aprove o que estiver bom ou peça um ajuste. Depois é só baixar em alta qualidade.</p>
+  <nav class="tabbar" id="nav-tab" aria-label="Menu"></nav>
+</div>
 
-  <div class="stats" id="stats"></div>
-
-  <div class="tabs" role="group" aria-label="Filtrar conteúdos">
-    <button class="tab" type="button" data-f="aguardando" aria-pressed="true">Para aprovar <span class="c" id="c-aguardando">0</span></button>
-    <button class="tab" type="button" data-f="ajuste" aria-pressed="false">Em ajuste</button>
-    <button class="tab" type="button" data-f="aprovado" aria-pressed="false">Aprovados</button>
-    <button class="tab" type="button" data-f="todos" aria-pressed="false">Todos</button>
-  </div>
-
-  <div class="grid" id="lista"></div>
-  <div class="empty" id="vazio" hidden></div>
-
-  <p class="small muted" style="margin-top:32px">Precisa de ajuda? <span id="contato"></span> · <a href="brief.html">Preencher ou refazer o briefing</a></p>
-</main>
+<dialog class="viewer" id="viewer" aria-label="Conteúdo">
+  <button class="icon-btn x" type="button" id="v-fechar" aria-label="Fechar"></button>
+  <div class="viewer-in"><div class="media" id="v-media"></div><div class="info" id="v-info"></div></div>
+</dialog>
 
 <dialog id="dlg-ajuste">
-  <form class="in" method="dialog" id="f-ajuste">
+  <form class="in" id="f-ajuste" novalidate>
     <h2>Pedir ajuste</h2>
     <p class="muted small" id="aj-info"></p>
-    <div class="f"><label for="aj-txt">O que você quer mudar?</label><textarea id="aj-txt" placeholder="Ex.: trocar a foto do fundo e mudar o preço para R$ 89" required></textarea></div>
+    <div class="f"><label for="aj-txt">O que você quer mudar?</label><textarea id="aj-txt" placeholder="Ex.: trocar a foto do fundo e mudar o preço para R$ 89"></textarea></div>
     <div class="err" id="aj-err" hidden></div>
-    <div class="acts"><button class="btn ghost" value="cancel" type="button" id="aj-cancel">Cancelar</button><button class="btn" type="submit">Enviar pedido</button></div>
+    <div class="acts"><button class="btn ghost" type="button" id="aj-cancel">Cancelar</button><button class="btn" type="submit">Enviar pedido</button></div>
   </form>
 </dialog>
 
 <script src="assets/config.js"></script>
 <script src="assets/vendor/supabase.js"></script>
 <script src="assets/core.js"></script>
+<script src="assets/icons.js"></script>
 <script>
 (async function () {
-  var api = CR.api, el = CR.el;
+  var api = CR.api, el = CR.el, ic = CR.ic;
   CR.avisoDemo();
+  CR.registrarApp();
   var eu = await CR.exigirLogin();
   if (!eu) return;
   if (eu.papel === "admin") { location.replace("admin.html"); return; }
 
-  var filtro = "aguardando", itens = [], usados = 0, atual = null;
-  document.getElementById("who").appendChild(el("b", { text: eu.empresa || eu.nome || eu.email }));
-  document.getElementById("who").appendChild(document.createTextNode(eu.plano && eu.plano !== "Sem plano" ? "Plano " + eu.plano : eu.email));
-  document.getElementById("ola").textContent = "Olá, " + (eu.nome || "").split(" ")[0] + "!";
-  document.getElementById("sair").addEventListener("click", async function () { await api.sair(); location.replace("entrar.html"); });
-  var w = CR.whats("Olá! Sou " + (eu.nome || "") + " (" + (eu.empresa || "") + ") e preciso de ajuda na área do cliente.");
-  document.getElementById("contato").appendChild(w ? el("a", { href: w, target: "_blank", rel: "noopener", text: "Fale com a gente no WhatsApp" }) : el("span", { text: "Fale com a gente pelo e-mail " + CR.config.EMAIL }));
+  var P = CR.plano(eu.plano);
+  var VIEWS = [["inicio", "Início", "home"], ["conteudos", "Conteúdos", "grid"], ["calendario", "Calendário", "cal"], ["conta", "Conta", "user"]];
+  var itens = [], usados = 0, meusBriefings = [], filtro = "aguardando", atual = null;
+  var hoje = new Date(); hoje.setHours(0, 0, 0, 0);
+  var calMes = new Date(hoje.getFullYear(), hoje.getMonth(), 1), calDia = CR.iso(hoje);
+
+  // ---------------------------------------------------------------- navegação
+  ["nav-side", "nav-tab"].forEach(function (id) {
+    var n = document.getElementById(id);
+    VIEWS.forEach(function (v) {
+      var a = el("a", { href: "#" + v[0], "data-v": v[0] }, [ic(v[2]), el("span", { text: v[1] })]);
+      if (v[0] === "conteudos") a.appendChild(el("span", { class: "badge", hidden: true, "data-badge": "" }));
+      n.appendChild(a);
+    });
+  });
+  function ir(v) {
+    if (!VIEWS.some(function (x) { return x[0] === v; })) v = "inicio";
+    VIEWS.forEach(function (x) { document.getElementById("v-" + x[0]).hidden = x[0] !== v; });
+    document.querySelectorAll("[data-v]").forEach(function (a) { if (a.dataset.v === v) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current"); });
+    window.scrollTo(0, 0);
+  }
+  window.addEventListener("hashchange", function () { ir(location.hash.slice(1)); });
+  document.querySelectorAll("[data-ir]").forEach(function (b) {
+    b.addEventListener("click", function () { if (b.dataset.filtro) setFiltro(b.dataset.filtro); location.hash = b.dataset.ir; });
+  });
+  document.getElementById("avatar").addEventListener("click", function () { location.hash = "conta"; });
+  document.querySelectorAll("[data-sair]").forEach(function (b) {
+    b.addEventListener("click", async function () { await api.sair(); location.replace(CR.demoForcado ? "./" : "entrar.html"); });
+  });
+
+  // ---------------------------------------------------------------- cabeçalho e dados fixos
+  var primeiro = (eu.nome || "").split(" ")[0];
+  document.getElementById("ola").textContent = primeiro ? "Olá, " + primeiro + "!" : "Olá!";
+  document.getElementById("hoje").textContent = CR.SEMANA[hoje.getDay()] + ", " + hoje.getDate() + " de " + CR.MESES[hoje.getMonth()];
+  var who = document.getElementById("who");
+  who.appendChild(el("b", { text: eu.empresa || eu.nome || eu.email }));
+  who.appendChild(document.createTextNode(P.grupo ? (P.grupo === "plano" ? "Plano " : "") + P.nome : "Conta ativa"));
+  document.getElementById("avatar").textContent = (eu.empresa || eu.nome || "?").trim().charAt(0).toUpperCase();
+  if (CR.demo && eu.empresa === "Brasa Burger") document.getElementById("avatar").innerHTML = '<img src="assets/demo/brasa-avatar.png" alt="">';
+  document.getElementById("side-plano").appendChild(el("div", {}, [el("b", { text: P.grupo ? P.nome : "Sem plano ativo" }), el("span", { text: P.papel || "A gente ativa seu plano assim que fechar." })]));
+  ["mes-ant", "mes-prox"].forEach(function (id, i) { document.getElementById(id).appendChild(ic(i ? "right" : "left")); });
+  document.getElementById("v-fechar").appendChild(ic("x"));
+  var posta = !!P.posta;
+  document.getElementById("quem-posta").textContent = posta ? "A gente programa e posta pra você nesses dias." : "Você posta: baixe o conteúdo e copie a legenda no dia marcado.";
+  document.getElementById("cal-dica").textContent = posta ? "Os dias em que a gente vai postar no seu perfil." : "Seu calendário de postagem. No dia marcado, baixe o conteúdo e copie a legenda.";
 
   async function carregar() {
     try {
       itens = await api.entregas(eu.id);
       usados = await api.ajustesNoMes(eu.id);
-    } catch (e) { CR.toast(e.message, true); itens = []; }
-    render();
+      meusBriefings = (await api.briefings()).filter(function (b) { return b.cliente_id === eu.id; });
+    } catch (e) { CR.toast(e.message, true); }
+    renderTudo();
+  }
+  function renderTudo() { badge(); planoCard(); avisoBriefing(); rail(); proximas(); stats(); renderLista(); renderCal(); ajuda(); }
+
+  function contar(st) { return itens.filter(function (i) { return i.status === st; }).length; }
+  function badge() {
+    var n = contar("aguardando");
+    document.querySelectorAll("[data-badge]").forEach(function (b) { b.textContent = n; b.hidden = !n; });
+    document.getElementById("c-aguardando").textContent = n;
   }
 
-  function stats() {
-    var s = document.getElementById("stats"); s.textContent = "";
-    var n = function (st) { return itens.filter(function (i) { return i.status === st; }).length; };
-    [[n("aguardando"), "para aprovar"], [n("aprovado"), "aprovados"], [usados + " de " + (eu.ajustes_mes || 0), "ajustes usados neste mês"]].forEach(function (x) {
-      s.appendChild(el("div", { class: "stat" }, [el("b", { text: String(x[0]) }), el("span", { text: x[1] })]));
-    });
-    document.getElementById("c-aguardando").textContent = n("aguardando");
+  // ---------------------------------------------------------------- cartão do plano com o progresso do mês
+  function planoCard() {
+    var c = document.getElementById("plano-card"); c.textContent = "";
+    if (!P.grupo) {
+      c.appendChild(el("div", {}, [el("div", { class: "nm" }, [el("small", { text: "Sua conta" }), "Tudo pronto por aqui"]), el("p", { class: "papel", text: "Assim que a gente ativar seu plano, você acompanha tudo nesta tela." })]));
+      return;
+    }
+    var grupo = { plano: "Plano mensal", pacote: "Pacote", video: "Vídeo motion" }[P.grupo];
+    c.appendChild(el("div", { class: "top" }, [
+      el("div", {}, [el("div", { class: "nm" }, [el("small", { text: grupo }), P.nome]), el("p", { class: "papel", text: P.papel })]),
+      el("span", { class: "tag", text: P.trafego ? "Social + tráfego" : P.posta ? "A gente posta" : P.grupo === "plano" ? "Você posta" : P.preco })
+    ]));
+    var bars = el("div", { class: "bars" });
+    function barra(rotulo, feito, total) {
+      bars.appendChild(el("div", { class: "bar" }, [el("span", {}, [rotulo + " ", el("b", { text: feito + "/" + total })]), el("div", { class: "track" }, el("i", { style: "width:" + Math.min(100, total ? feito / total * 100 : 0) + "%" }))]));
+    }
+    if (P.grupo === "pacote") {
+      var gastos = itens.reduce(function (s, i) { return s + (CR.CREDITOS[i.tipo] || 0); }, 0);
+      barra("Créditos usados", gastos, P.creditos);
+    } else {
+      var ini = CR.iso(new Date(hoje.getFullYear(), hoje.getMonth(), 1));
+      var doMes = P.grupo === "plano" ? itens.filter(function (i) { return String(i.criado_em).slice(0, 10) >= ini; }) : itens;
+      Object.keys(P.qtd).forEach(function (t) {
+        var feito = doMes.filter(function (i) { return i.tipo === t || (t === "video" && i.tipo === "reels"); }).length;
+        barra(t === "anuncio" && P.grupo === "video" ? "Artes" : (CR.TIPOS[t] || t), Math.min(feito, P.qtd[t]), P.qtd[t]);
+      });
+    }
+    c.appendChild(el("div", {}, [el("div", { class: "small", style: "color:#A2A4AC;margin-bottom:8px", text: P.grupo === "plano" ? "Entregues neste mês" : "Entregues" }), bars]));
   }
 
-  async function midia(box, e) {
+  function slugPlano() { return (P.nome || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").split(" ").pop(); }
+  function avisoBriefing() {
+    var w = document.getElementById("aviso-briefing"); w.textContent = "";
+    if (meusBriefings.length) return;
+    w.appendChild(el("div", { class: "note" }, [ic("info"), el("div", {}, [
+      el("b", { text: "Falta seu briefing. " }), "Conta pra gente sobre o seu negócio pra criarmos com a sua cara. Leva uns 10 minutos. ",
+      el("a", { href: "brief.html" + (P.grupo ? "?plano=" + slugPlano() : ""), style: "font-weight:700", text: "Preencher agora" })
+    ])]));
+  }
+
+  // ---------------------------------------------------------------- miniaturas e visualizador
+  function thumb(e, aoAbrir) {
+    var b = el("button", { class: "thumb", type: "button", "aria-label": "Ver " + e.titulo });
+    var tipo = CR.tipoArquivo(e.arquivo_nome || e.demo_url || "");
+    if (e.link_externo && !e.arquivo_path && !e.demo_url) b.appendChild(el("span", { class: "file" }, [ic("ext"), el("br"), "Arquivo no Google Drive"]));
+    else if (e.demo_capa) { b.appendChild(el("img", { src: e.demo_capa, alt: "", loading: "lazy" })); b.appendChild(CR.playIcon()); }
+    else api.urlArquivo(e, false).then(function (url) {
+      if (!url) { b.appendChild(el("span", { class: "file", text: "Arquivo indisponível" })); return; }
+      if (tipo === "imagem") b.insertBefore(el("img", { src: url, alt: "", loading: "lazy" }), b.firstChild);
+      else if (tipo === "video") { b.insertBefore(el("video", { src: url.indexOf("blob:") === 0 ? url : url + "#t=0.1", muted: true, playsinline: true, preload: "metadata" }), b.firstChild); b.appendChild(CR.playIcon()); }
+      else b.appendChild(el("span", { class: "file" }, [ic("file"), el("br"), e.arquivo_nome || "Arquivo"]));
+    }).catch(function () { b.appendChild(el("span", { class: "file", text: "Arquivo indisponível" })); });
+    b.appendChild(el("span", { class: "ov" }, [el("span", { class: "chip", text: CR.TIPOS[e.tipo] || e.tipo }), el("span", { class: "pill " + e.status, text: CR.STATUS[e.status] })]));
+    b.addEventListener("click", function () { (aoAbrir || abrir)(e); });
+    return b;
+  }
+
+  var viewer = document.getElementById("viewer");
+  document.getElementById("v-fechar").addEventListener("click", function () { viewer.close(); });
+  viewer.addEventListener("close", function () { document.getElementById("v-media").textContent = ""; });
+  viewer.addEventListener("click", function (ev) { if (ev.target === viewer) viewer.close(); });
+
+  async function abrir(e) {
+    atual = e;
+    var m = document.getElementById("v-media"), info = document.getElementById("v-info");
+    m.textContent = ""; info.textContent = "";
     var url = await api.urlArquivo(e, false).catch(function () { return ""; });
     var tipo = CR.tipoArquivo(e.arquivo_nome || e.demo_url || "");
-    if (!url) { box.appendChild(el("div", { class: "file", text: "Arquivo indisponível" })); return; }
-    if (e.link_externo && !e.arquivo_path && !e.demo_url) box.appendChild(el("iframe", { src: url, allow: "autoplay", loading: "lazy", title: e.titulo }));
-    else if (tipo === "video") box.appendChild(el("video", { src: url.indexOf("blob:") === 0 ? url : url + "#t=0.1", controls: true, playsinline: true, preload: "metadata" }));
-    else if (tipo === "imagem") box.appendChild(el("img", { src: url, alt: e.titulo, loading: "lazy" }));
-    else box.appendChild(el("div", { class: "file" }, [el("b", { text: e.arquivo_nome || "Arquivo" }), el("br"), "Baixe para ver"]));
+    if (!url) m.appendChild(el("div", { class: "muted", style: "padding:40px", text: "Arquivo indisponível" }));
+    else if (e.link_externo && !e.arquivo_path && !e.demo_url) m.appendChild(el("iframe", { src: url, allow: "autoplay", title: e.titulo }));
+    else if (tipo === "video") m.appendChild(el("video", { src: url, controls: true, playsinline: true, autoplay: true, poster: e.demo_capa || false }));
+    else if (tipo === "imagem") m.appendChild(el("img", { src: url, alt: e.titulo }));
+    else m.appendChild(el("div", { style: "color:#fff;padding:40px;text-align:center" }, [ic("file"), el("p", { text: e.arquivo_nome || "Arquivo" })]));
+
+    info.appendChild(el("div", { style: "display:flex;gap:8px;align-items:center;flex-wrap:wrap" }, [el("span", { class: "chip", text: CR.TIPOS[e.tipo] || e.tipo }), el("span", { class: "pill " + e.status, text: CR.STATUS[e.status] })]));
+    info.appendChild(el("h2", { text: e.titulo, style: "font-size:22px" }));
+    if (e.data_postagem) info.appendChild(el("p", { class: "small muted", style: "margin:0", text: (posta ? "A gente posta " : "Postar ") + CR.dataLonga(e.data_postagem) + " (" + CR.data(e.data_postagem) + ")" }));
+    if (e.status === "ajuste" && e.comentario) info.appendChild(el("div", { class: "coment" }, [el("b", { text: "Seu pedido: " }), e.comentario, el("div", { class: "small muted", text: "A gente entrega o ajuste em até 24 h." })]));
+    if (e.legenda) {
+      info.appendChild(el("div", { class: "eyebrow", text: "Legenda" }));
+      info.appendChild(el("div", { class: "leg", text: e.legenda }));
+    }
+    var acts = el("div", { style: "display:grid;gap:8px;grid-template-columns:1fr 1fr" });
+    if (e.status !== "aprovado") acts.appendChild(el("button", { class: "btn ok", type: "button", onclick: function () { aprovar(e, this, true); } }, [ic("check"), "Aprovar"]));
+    if (e.status === "aguardando") acts.appendChild(el("button", { class: "btn ghost", type: "button", onclick: function () { viewer.close(); abrirAjuste(e); } }, [ic("edit"), "Pedir ajuste"]));
+    acts.appendChild(el("button", { class: "btn dark", type: "button", onclick: function () { baixar(e, this); } }, [ic("down"), "Baixar em alta"]));
+    if (e.legenda) acts.appendChild(el("button", { class: "btn ghost", type: "button", onclick: function () { CR.copiar(e.legenda, "Legenda copiada"); } }, [ic("copy"), "Copiar legenda"]));
+    info.appendChild(acts);
+    viewer.showModal();
   }
 
+  async function aprovar(e, btn, fechar) {
+    btn.disabled = true;
+    try { await api.aprovar(e.id); CR.toast("Aprovado! Obrigado."); if (fechar) viewer.close(); await carregar(); }
+    catch (x) { CR.toast(x.message, true); btn.disabled = false; }
+  }
   async function baixar(e, btn) {
     btn.disabled = true;
     try {
@@ -106,71 +316,190 @@
     btn.disabled = false;
   }
 
-  function card(e) {
-    var media = el("div", { class: "media" });
-    midia(media, e);
-    var acts = el("div", { class: "acts" });
-    if (e.status !== "aprovado") {
-      acts.appendChild(el("button", { class: "btn ok sm", type: "button", text: "Aprovar", onclick: async function () {
-        this.disabled = true;
-        try { await api.aprovar(e.id); CR.toast("Aprovado! Obrigado."); await carregar(); } catch (x) { CR.toast(x.message, true); this.disabled = false; }
-      } }));
-      if (e.status !== "ajuste") acts.appendChild(el("button", { class: "btn ghost sm", type: "button", text: "Pedir ajuste", onclick: function () { abrirAjuste(e); } }));
+  // ---------------------------------------------------------------- início
+  function rail() {
+    var r = document.getElementById("rail"); r.textContent = "";
+    var pend = itens.filter(function (i) { return i.status === "aguardando"; });
+    if (!pend.length) {
+      r.style.display = "block";
+      r.appendChild(el("div", { class: "empty" }, [ic("check"), el("b", { text: itens.length ? "Tudo aprovado" : "Seus conteúdos aparecem aqui" }), el("span", { text: itens.length ? "Quando tiver conteúdo novo, ele aparece aqui pra você aprovar." : "Em até 24 h depois do briefing e do pagamento." })]));
+      return;
     }
-    acts.appendChild(el("button", { class: "btn dark sm", type: "button", text: "Baixar em alta", onclick: function () { baixar(e, this); } }));
-    var body = el("div", { class: "body" }, [
-      el("div", { class: "meta" }, [el("span", { class: "chip", text: CR.TIPOS[e.tipo] || e.tipo }), el("span", { class: "pill " + e.status, text: CR.STATUS[e.status] })]),
-      el("h3", { text: e.titulo }),
-      e.data_postagem ? el("div", { class: "small muted", text: "Postagem prevista: " + CR.data(e.data_postagem) }) : null,
-      e.legenda ? el("div", { class: "leg", text: e.legenda }) : null,
-      e.legenda ? el("button", { class: "btn ghost sm", type: "button", text: "Copiar legenda", onclick: function () {
-        var t = e.legenda;
-        try { navigator.clipboard.writeText(t).then(function () { CR.toast("Legenda copiada"); }, function () { CR.toast("Não deu pra copiar. Selecione o texto e copie.", true); }); }
-        catch (x) { CR.toast("Não deu pra copiar. Selecione o texto e copie.", true); }
-      } }) : null,
-      e.status === "ajuste" && e.comentario ? el("div", { class: "coment" }, [el("b", { text: "Seu pedido: " }), e.comentario]) : null,
-      acts
-    ]);
-    return el("article", { class: "ent" }, [media, body]);
+    r.style.display = "";
+    pend.forEach(function (e) {
+      r.appendChild(el("article", { class: "ent" }, [thumb(e), el("div", { class: "body" }, [
+        el("h3", { text: e.titulo }),
+        e.data_postagem ? el("div", { class: "meta", text: (posta ? "Vai ao ar " : "Postar ") + CR.dataLonga(e.data_postagem) }) : null,
+        el("div", { class: "acts" }, [
+          el("button", { class: "btn ok sm", type: "button", onclick: function () { aprovar(e, this); } }, [ic("check"), "Aprovar"]),
+          el("button", { class: "btn ghost sm", type: "button", text: "Ver", onclick: function () { abrir(e); } })
+        ])
+      ])]));
+    });
   }
 
-  function render() {
-    stats();
+  function linha(e) {
+    var p = String(e.data_postagem || "").split("-");
+    var d = e.data_postagem ? new Date(+p[0], +p[1] - 1, +p[2]) : null;
+    var mini = el("button", { class: "mini", type: "button", "aria-label": "Ver " + e.titulo, onclick: function () { abrir(e); } });
+    if (e.demo_capa) mini.style.backgroundImage = "url(" + e.demo_capa + ")";
+    else if (CR.tipoArquivo(e.arquivo_nome || e.demo_url || "") === "imagem") api.urlArquivo(e, false).then(function (u) { mini.style.backgroundImage = "url(" + u + ")"; }).catch(function () {});
+    return el("div", { class: "li" }, [
+      d ? el("div", { class: "date" }, [el("b", { text: String(d.getDate()) }), el("span", { text: CR.SEMANA[d.getDay()] })]) : mini,
+      el("div", { style: "display:flex;gap:12px;align-items:center;min-width:0" }, [d ? mini : null, el("div", { style: "min-width:0" }, [
+        el("div", { class: "tt", text: e.titulo }),
+        el("div", { class: "st" }, [CR.TIPOS[e.tipo] || e.tipo, " · ", el("span", { class: "pill " + e.status, style: "padding:1px 8px", text: CR.STATUS[e.status] })])
+      ])]),
+      el("div", { style: "display:flex;gap:4px" }, [
+        e.legenda ? el("button", { class: "icon-btn", type: "button", "aria-label": "Copiar legenda", title: "Copiar legenda", onclick: function () { CR.copiar(e.legenda, "Legenda copiada"); } }, ic("copy")) : null,
+        el("button", { class: "icon-btn", type: "button", "aria-label": "Baixar em alta", title: "Baixar em alta", onclick: function () { baixar(e, this); } }, ic("down"))
+      ])
+    ]);
+  }
+
+  function proximas() {
+    var l = document.getElementById("proximas"); l.textContent = "";
+    var hj = CR.iso(hoje);
+    var prox = itens.filter(function (i) { return i.data_postagem && i.data_postagem >= hj; }).sort(function (a, b) { return a.data_postagem < b.data_postagem ? -1 : 1; }).slice(0, 4);
+    if (!prox.length) { l.appendChild(el("div", { class: "empty", style: "padding:20px" }, [el("span", { text: "Nenhuma postagem marcada pros próximos dias." })])); return; }
+    prox.forEach(function (e) { l.appendChild(linha(e)); });
+  }
+
+  function stats() {
+    var s = document.getElementById("stats"); s.textContent = "";
+    var aj = eu.ajustes_mes || 0;
+    [[contar("aguardando"), "para aprovar", "conteudos", "aguardando"], [contar("ajuste"), "em ajuste", "conteudos", "ajuste"], [contar("aprovado"), "aprovados", "conteudos", "aprovado"], [usados + " de " + aj, P.grupo === "plano" ? "ajustes usados no mês" : "ajustes usados", null]].forEach(function (x) {
+      var b = el(x[2] ? "button" : "div", { class: "stat", type: x[2] ? "button" : false }, [el("b", { text: String(x[0]) }), el("span", { text: x[1] })]);
+      if (x[2]) b.addEventListener("click", function () { setFiltro(x[3]); location.hash = x[2]; });
+      s.appendChild(b);
+    });
+  }
+
+  // ---------------------------------------------------------------- conteúdos
+  function setFiltro(f) {
+    filtro = f;
+    document.querySelectorAll("#v-conteudos .seg button").forEach(function (x) { x.setAttribute("aria-pressed", String(x.dataset.f === f)); });
+    renderLista();
+  }
+  document.querySelectorAll("#v-conteudos .seg button").forEach(function (b) { b.addEventListener("click", function () { setFiltro(b.dataset.f); }); });
+
+  function card(e) {
+    var acts = el("div", { class: "acts" });
+    if (e.status !== "aprovado") acts.appendChild(el("button", { class: "btn ok sm", type: "button", onclick: function () { aprovar(e, this); } }, [ic("check"), "Aprovar"]));
+    if (e.status === "aguardando") acts.appendChild(el("button", { class: "btn ghost sm", type: "button", text: "Ajuste", onclick: function () { abrirAjuste(e); } }));
+    acts.appendChild(el("button", { class: "btn dark sm", type: "button", "aria-label": "Baixar em alta", onclick: function () { baixar(e, this); } }, [ic("down"), e.status === "aprovado" ? "Baixar em alta" : ""]));
+    return el("article", { class: "ent" }, [thumb(e), el("div", { class: "body" }, [
+      el("h3", { text: e.titulo }),
+      el("div", { class: "meta", text: e.data_postagem ? (posta ? "Vai ao ar " : "Postar ") + CR.dataLonga(e.data_postagem) : "Entregue em " + CR.data(e.criado_em) }),
+      e.status === "ajuste" && e.comentario ? el("div", { class: "coment" }, [el("b", { text: "Seu pedido: " }), e.comentario]) : null,
+      acts
+    ])]);
+  }
+
+  function renderLista() {
     var lista = document.getElementById("lista"); lista.textContent = "";
     var vis = itens.filter(function (i) { return filtro === "todos" || i.status === filtro; });
     vis.forEach(function (e) { lista.appendChild(card(e)); });
-    var v = document.getElementById("vazio");
+    var v = document.getElementById("vazio"); v.textContent = "";
     v.hidden = vis.length > 0;
-    v.textContent = !itens.length
-      ? "Ainda não tem conteúdo aqui. Assim que recebermos seu briefing e o pagamento, seus conteúdos aparecem nesta tela em até 24 h."
-      : { aguardando: "Nada para aprovar agora. Tudo em dia!", ajuste: "Nenhum ajuste em andamento.", aprovado: "Você ainda não aprovou nenhum conteúdo.", todos: "" }[filtro];
+    v.appendChild(el("b", { text: !itens.length ? "Ainda não tem conteúdo aqui" : { aguardando: "Nada pra aprovar agora", ajuste: "Nenhum ajuste em andamento", aprovado: "Nenhum conteúdo aprovado ainda", todos: "" }[filtro] }));
+    v.appendChild(el("span", { text: !itens.length ? "Assim que recebermos seu briefing e o pagamento, seus conteúdos aparecem aqui em até 24 h." : "Tudo em dia por aqui." }));
   }
 
-  document.querySelectorAll(".tab").forEach(function (t) {
-    t.addEventListener("click", function () {
-      filtro = t.dataset.f;
-      document.querySelectorAll(".tab").forEach(function (x) { x.setAttribute("aria-pressed", String(x === t)); });
-      render();
-    });
-  });
+  // ---------------------------------------------------------------- calendário
+  document.getElementById("mes-ant").addEventListener("click", function () { calMes = new Date(calMes.getFullYear(), calMes.getMonth() - 1, 1); renderCal(); });
+  document.getElementById("mes-prox").addEventListener("click", function () { calMes = new Date(calMes.getFullYear(), calMes.getMonth() + 1, 1); renderCal(); });
+  function renderCal() {
+    document.getElementById("mes-nome").textContent = CR.MESES[calMes.getMonth()] + " " + calMes.getFullYear();
+    var g = document.getElementById("cal-grid"); g.textContent = "";
+    CR.SEMANA.forEach(function (d) { g.appendChild(el("div", { class: "wd", text: d })); });
+    var ini = new Date(calMes); ini.setDate(1 - ini.getDay());
+    var porDia = {};
+    itens.forEach(function (i) { if (i.data_postagem) (porDia[i.data_postagem] = porDia[i.data_postagem] || []).push(i); });
+    for (var k = 0; k < 42; k++) {
+      var d = new Date(ini); d.setDate(ini.getDate() + k);
+      if (k >= 35 && d.getMonth() !== calMes.getMonth()) break;
+      var s = CR.iso(d), lista = porDia[s] || [];
+      var b = el("button", { class: "day" + (d.getMonth() !== calMes.getMonth() ? " out" : "") + (s === CR.iso(hoje) ? " today" : ""), type: "button", "aria-pressed": String(s === calDia), "aria-label": d.getDate() + " de " + CR.MESES[d.getMonth()] + (lista.length ? ", " + lista.length + " conteúdo(s)" : ""), "data-d": s }, [
+        el("span", { text: String(d.getDate()) }), el("span", { class: "dots" }, lista.slice(0, 4).map(function (i) { return el("i", { class: i.status }); }))
+      ]);
+      b.addEventListener("click", function () { calDia = this.dataset.d; renderCal(); });
+      g.appendChild(b);
+    }
+    var p = calDia.split("-"), dd = new Date(+p[0], +p[1] - 1, +p[2]);
+    document.getElementById("dia-titulo").textContent = CR.dataLonga(calDia).replace(/^./, function (c) { return c.toUpperCase(); }) + (["hoje", "amanhã", "ontem"].indexOf(CR.dataLonga(calDia)) >= 0 ? " · " + dd.getDate() + " de " + CR.MESES[dd.getMonth()] : "");
+    var dl = document.getElementById("dia-lista"); dl.textContent = "";
+    var doDia = porDia[calDia] || [];
+    if (!doDia.length) dl.appendChild(el("div", { class: "empty", style: "padding:20px" }, [el("span", { text: "Nada marcado pra esse dia." })]));
+    doDia.forEach(function (e) { dl.appendChild(linha(e)); });
+  }
 
+  // ---------------------------------------------------------------- ajuste
   var dlg = document.getElementById("dlg-ajuste");
   function abrirAjuste(e) {
     atual = e;
     var resta = (eu.ajustes_mes || 0) - usados;
-    document.getElementById("aj-info").textContent = "“" + e.titulo + "”. " + (resta > 0 ? "Você ainda tem " + resta + (resta === 1 ? " ajuste" : " ajustes") + " neste mês." : "Seus ajustes do mês acabaram. Pode mandar mesmo assim: a gente te passa o valor antes de fazer.");
+    document.getElementById("aj-info").textContent = "“" + e.titulo + "”. " + (resta > 0 ? "Você ainda tem " + resta + (resta === 1 ? " ajuste" : " ajustes") + (P.grupo === "plano" ? " neste mês." : ".") : "Seus ajustes acabaram. Pode mandar mesmo assim: a gente te passa o valor antes de fazer.");
     document.getElementById("aj-txt").value = ""; document.getElementById("aj-err").hidden = true;
     dlg.showModal();
   }
   document.getElementById("aj-cancel").addEventListener("click", function () { dlg.close(); });
   document.getElementById("f-ajuste").addEventListener("submit", async function (ev) {
     ev.preventDefault();
-    var t = document.getElementById("aj-txt").value.trim();
-    if (!t) { var er = document.getElementById("aj-err"); er.textContent = "Conta pra gente o que você quer mudar."; er.hidden = false; return; }
+    var t = document.getElementById("aj-txt").value.trim(), er = document.getElementById("aj-err");
+    if (!t) { er.textContent = "Conta pra gente o que você quer mudar."; er.hidden = false; return; }
     try { await api.pedirAjuste(atual, t); dlg.close(); CR.toast("Pedido enviado. Entregamos o ajuste em até 24 h."); await carregar(); }
-    catch (x) { var er2 = document.getElementById("aj-err"); er2.textContent = x.message; er2.hidden = false; }
+    catch (x) { er.textContent = x.message; er.hidden = false; }
   });
 
+  // ---------------------------------------------------------------- conta
+  document.getElementById("p-nome").value = eu.nome || "";
+  document.getElementById("p-empresa").value = eu.empresa || "";
+  document.getElementById("p-whats").value = eu.whatsapp || "";
+  document.getElementById("p-email").value = eu.email || "";
+  document.getElementById("f-perfil").addEventListener("submit", async function (ev) {
+    ev.preventDefault();
+    var campos = { nome: document.getElementById("p-nome").value.trim(), empresa: document.getElementById("p-empresa").value.trim(), whatsapp: document.getElementById("p-whats").value.trim() };
+    try { await api.salvarPerfil(eu.id, campos); Object.assign(eu, campos); CR.toast("Dados salvos."); } catch (x) { CR.toast(x.message, true); }
+  });
+
+  (function contaPlano() {
+    var c = document.getElementById("conta-plano");
+    c.appendChild(el("h2", { text: "Seu plano" }));
+    if (!P.grupo) { c.appendChild(el("p", { class: "small muted", text: "Nenhum plano ativo ainda." })); return; }
+    c.appendChild(el("p", { style: "margin:8px 0 2px;font:900 20px var(--display)", text: P.nome + " · " + P.preco }));
+    c.appendChild(el("p", { class: "small muted", style: "margin:0 0 10px", text: P.papel }));
+    var ul = el("ul", { style: "margin:0;padding-left:18px;display:grid;gap:4px;font-size:14px" });
+    var PLURAL = { stories: "stories", post: "posts", carrossel: "carrosséis", reels: "reels", anuncio: "anúncios", video: "vídeos" };
+    if (P.qtd && P.grupo === "plano") ul.appendChild(el("li", { text: Object.keys(P.qtd).map(function (t) { return P.qtd[t] + " " + PLURAL[t]; }).join(", ") + " por mês" }));
+    (P.inclui || []).forEach(function (t) { ul.appendChild(el("li", { text: t })); });
+    ul.appendChild(el("li", { text: (eu.ajustes_mes || 0) + (eu.ajustes_mes === 1 ? " ajuste" : " ajustes") + (P.grupo === "plano" ? " por mês" : "") }));
+    c.appendChild(ul);
+  })();
+
+  function cartaoInstalar(alvo, curto) {
+    var c = document.getElementById(alvo); c.textContent = "";
+    if (CR.instalado()) { if (!curto) { c.appendChild(el("h2", { text: "App instalado" })); c.appendChild(el("p", { class: "small muted", text: "Você está usando o app da Criativos." })); } else c.hidden = true; return; }
+    var box = curto ? el("div", { class: "note" }) : c;
+    var corpo = el("div", {}, [el(curto ? "b" : "h2", { text: "Instale o app no seu celular" })]);
+    if (CR.podeInstalar()) corpo.appendChild(el("button", { class: "btn sm", type: "button", style: "margin-top:10px", onclick: async function () { if (await CR.instalar()) cartaoInstalar(alvo, curto); } }, [ic("phone"), "Instalar app"]));
+    else if (CR.ios()) corpo.appendChild(el("p", { class: "small muted", style: "margin:6px 0 0", text: "No iPhone: toque em Compartilhar, depois em “Adicionar à Tela de Início”." }));
+    else corpo.appendChild(el("p", { class: "small muted", style: "margin:6px 0 0", text: "No Android: abra o menu do navegador (⋮) e toque em “Instalar app” ou “Adicionar à tela inicial”." }));
+    if (curto) { box.appendChild(ic("phone")); box.appendChild(corpo); c.appendChild(box); } else c.appendChild(corpo);
+  }
+  cartaoInstalar("conta-instalar");
+  if (matchMedia("(max-width: 959px)").matches) cartaoInstalar("instalar-inicio", true);
+  document.addEventListener("cr-instalavel", function () { cartaoInstalar("conta-instalar"); if (matchMedia("(max-width: 959px)").matches) cartaoInstalar("instalar-inicio", true); });
+
+  function ajuda() {
+    var aj = document.getElementById("ajuda"); aj.textContent = "";
+    var w = CR.whats("Olá! Sou " + (eu.nome || "") + " (" + (eu.empresa || "") + ") e preciso de ajuda no app.");
+    if (w) aj.appendChild(el("a", { class: "btn", href: w, target: "_blank", rel: "noopener" }, [ic("chat"), "Falar no WhatsApp"]));
+    aj.appendChild(el("button", { class: "btn ghost", type: "button", onclick: function () { CR.copiar(CR.config.EMAIL, "E-mail copiado"); } }, [ic("copy"), CR.config.EMAIL]));
+    aj.appendChild(el("a", { class: "btn ghost", href: "brief.html" + (P.grupo ? "?plano=" + slugPlano() : "") }, [ic("edit"), meusBriefings.length ? "Refazer briefing" : "Preencher briefing"]));
+  }
+
+  ir(location.hash.slice(1) || "inicio");
   carregar();
 })();
 </script>

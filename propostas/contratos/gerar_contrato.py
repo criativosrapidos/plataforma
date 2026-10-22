@@ -22,12 +22,12 @@ CONTRATOS = [
          itens=['30 (trinta) stories;', '15 (quinze) posts;', '12 (doze) carrosséis;', '9 (nove) reels;', '4 (quatro) anúncios;',
                 'total de 70 (setenta) conteúdos no mês, com post todos os dias;'],
          extras=['relatório mensal de métricas;', 'bônus: calendário de conteúdo humanizado e sequência de stories que vende;'],
-         ajustes='3 (três)', promo=None),
+         ajustes='3 (três)', promo=None, trafego=True),
     dict(arquivo='contrato-plano-crescimento', plano='Crescimento', valor='797,00', valor_ext='setecentos e noventa e sete reais',
          itens=['20 (vinte) stories;', '12 (doze) posts;', '9 (nove) carrosséis;', '6 (seis) reels;', '3 (três) anúncios;',
                 'total de 50 (cinquenta) conteúdos no mês;'],
          extras=[], ajustes='2 (dois)',
-         promo=dict(valor='597,00', valor_ext='quinhentos e noventa e sete reais', pago='21/10/2026')),
+         promo=dict(valor='597,00', valor_ext='quinhentos e noventa e sete reais', pago='21/10/2026'), trafego=False),
 ]
 
 def novo_doc():
@@ -91,13 +91,17 @@ def gerar(c):
     p('**CONTRATANTE:** ________________________________________ (nome completo ou razão social), inscrito(a) no CPF/CNPJ sob o nº ____________________, com endereço em ________________________________________, telefone/WhatsApp ____________________, e-mail ____________________, perfil no Instagram @____________________, doravante denominado(a) **CONTRATANTE**.')
 
     clausula('CLÁUSULA 1 · DO OBJETO')
-    p('1.1. O presente contrato tem por objeto a prestação, pela CONTRATADA, de serviços de **social media** e **gestão de tráfego pago** para o perfil do CONTRATANTE, conforme o **Plano %s**, que inclui, a cada período de 30 (trinta) dias:' % c['plano'])
+    servico = '**social media** e **gestão de tráfego pago**' if c['trafego'] else '**social media** (criação, programação e publicação de conteúdo)'
+    p('1.1. O presente contrato tem por objeto a prestação, pela CONTRATADA, de serviços de %s para o perfil do CONTRATANTE, conforme o **Plano %s**, que inclui, a cada período de 30 (trinta) dias:' % (servico, c['plano']))
     for t in c['itens'] + ['legendas (copy) e organização completa do perfil;',
-                           'programação e postagem dos conteúdos pela CONTRATADA;',
-                           'gestão das campanhas de tráfego pago do CONTRATANTE;'] + c['extras'] + \
+                           'programação e postagem dos conteúdos pela CONTRATADA;'] + \
+             (['gestão das campanhas de tráfego pago do CONTRATANTE;'] if c['trafego'] else []) + c['extras'] + \
              ['até %s ajustes no mês, conforme a Cláusula 3.' % c['ajustes']]:
         item('• ' + t)
-    p('1.2. Não estão incluídos no objeto deste contrato: o valor investido nos anúncios (verba de mídia), que será pago pelo CONTRATANTE diretamente à plataforma de anúncios; o atendimento e a resposta de mensagens de clientes do CONTRATANTE; e quaisquer serviços não descritos no item 1.1.')
+    if c['trafego']:
+        p('1.2. Não estão incluídos no objeto deste contrato: o valor investido nos anúncios (verba de mídia), que será pago pelo CONTRATANTE diretamente à plataforma de anúncios; o atendimento e a resposta de mensagens de clientes do CONTRATANTE; e quaisquer serviços não descritos no item 1.1.')
+    else:
+        p('1.2. Os anúncios do item 1.1 são entregues como peças prontas. Não estão incluídos no objeto deste contrato: a gestão de tráfego pago; o valor investido em anúncios, se houver, que será pago pelo CONTRATANTE diretamente à plataforma; o atendimento e a resposta de mensagens de clientes do CONTRATANTE; e quaisquer serviços não descritos no item 1.1.')
 
     clausula('CLÁUSULA 2 · DO FUNCIONAMENTO E DOS PRAZOS')
     p('2.1. O prazo de entrega começa a contar a partir do momento em que **o pagamento for recebido pela CONTRATADA e o briefing for enviado completo pelo CONTRATANTE**, o que ocorrer por último.')
@@ -132,10 +136,11 @@ def gerar(c):
     clausula('CLÁUSULA 6 · DAS OBRIGAÇÕES DA CONTRATADA')
     obrig = ['a) executar os serviços com qualidade, dentro dos prazos da Cláusula 2;',
              'b) produzir os conteúdos de acordo com o briefing e a identidade da marca do CONTRATANTE;',
-             'c) programar e publicar os conteúdos aprovados;',
-             'd) gerir as campanhas de tráfego pago com a verba definida pelo CONTRATANTE;']
+             'c) programar e publicar os conteúdos aprovados;']
+    if c['trafego']:
+        obrig.append('d) gerir as campanhas de tráfego pago com a verba definida pelo CONTRATANTE;')
     if any('relatório' in e for e in c['extras']):
-        obrig.append('e) enviar o relatório mensal de métricas;')
+        obrig.append('%s) enviar o relatório mensal de métricas;' % 'abcdef'[len(obrig)])
     obrig.append('%s) manter sigilo sobre as informações do CONTRATANTE e usar os acessos recebidos apenas para a execução deste contrato.' % 'abcdef'[len(obrig)])
     for t in obrig:
         item(t)
@@ -144,14 +149,14 @@ def gerar(c):
     for t in ['a) efetuar o pagamento na forma da Cláusula 4;',
               'b) preencher o briefing de forma completa e verdadeira;',
               'c) enviar fotos, vídeos, logo e demais materiais necessários;',
-              'd) liberar os acessos necessários ao perfil e à conta de anúncios, sem necessidade de informar senhas pessoais;',
+              'd) liberar os acessos necessários ao perfil' + (' e à conta de anúncios' if c['trafego'] else '') + ', sem necessidade de informar senhas pessoais;',
               'e) aprovar ou pedir ajustes nos conteúdos em tempo hábil;',
-              'f) pagar a verba dos anúncios diretamente à plataforma;',
+              'f) pagar a verba dos anúncios, se houver, diretamente à plataforma;',
               'g) responder pela veracidade das informações, produtos, serviços, preços e promoções divulgados.']:
         item(t)
 
     clausula('CLÁUSULA 8 · DOS RESULTADOS')
-    p('8.1. A CONTRATADA se compromete a aplicar as melhores práticas de conteúdo e tráfego pago. Como os resultados dependem de fatores fora do controle da CONTRATADA, como o mercado, a oferta, o preço e o atendimento do CONTRATANTE, **não há garantia de número de vendas, seguidores ou faturamento**.')
+    p('8.1. A CONTRATADA se compromete a aplicar as melhores práticas de conteúdo' + (' e tráfego pago' if c['trafego'] else '') + '. Como os resultados dependem de fatores fora do controle da CONTRATADA, como o mercado, a oferta, o preço e o atendimento do CONTRATANTE, **não há garantia de número de vendas, seguidores ou faturamento**.')
 
     clausula('CLÁUSULA 9 · DOS DIREITOS SOBRE OS CONTEÚDOS')
     p('9.1. Após o pagamento, os conteúdos produzidos para o CONTRATANTE podem ser usados livremente por ele.')

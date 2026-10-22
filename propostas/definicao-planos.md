@@ -37,6 +37,12 @@ Exemplos de escolha:
 
 ## Planos mensais (quantidades fixas; sem identidade visual; sem fidelidade)
 
+Papel de cada plano, como aparece no site e nos contratos:
+
+- **Presença**: conteúdo pronto. A gente cria e entrega com o calendário; o cliente posta.
+- **Crescimento**: social media. A gente cria, programa e posta. Não tem gestão de tráfego.
+- **Autoridade**: social media + gestão de tráfego pago. Tudo do Crescimento, mais as campanhas de anúncio criadas, acompanhadas e ajustadas por nós. A verba dos anúncios é do cliente, paga direto à plataforma.
+
 Post todo dia em todos os planos.
 
 | | Presença R$ 597 | Crescimento R$ 797 | Autoridade R$ 997 |
@@ -50,6 +56,16 @@ Post todo dia em todos os planos.
 | Legendas (copy) | ✓ | ✓ | ✓ |
 | Perfil completo (nome, bio, foto, destaques) | ✓ | ✓ | ✓ |
 | Postagem | Calendário pronto, o cliente posta | Programamos e postamos | Programamos e postamos |
+| Gestão de tráfego pago | – | – | ✓ (verba paga pelo cliente) |
 | Relatório mensal de métricas | – | – | ✓ |
 | Ajustes (no mês inteiro) | 1 | 2 | 3 |
 | Bônus | – | – | Calendário de conteúdo humanizado + sequência de stories que vende |
+
+## Vídeos motion (pagamento único, landing própria em /videos)
+
+| | Essencial R$ 29,90 | Completo R$ 39,90 | Premium R$ 49,90 |
+|---|---|---|---|
+| Vídeos | 1 de 15 s | 2 de 30 s | 3 de 30 s |
+| Artes pra anúncio | – | 1 | 2 |
+
+Ficam fora da home para não ter opções demais; rodam na página de campanha `criativosrapidos.com.br/videos`.

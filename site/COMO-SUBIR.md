@@ -6,15 +6,20 @@ São 4 etapas, todas com plano gratuito: **Supabase** (login, banco e arquivos),
 
 | Endereço | Arquivo | Para quem |
 |---|---|---|
-| criativosrapidos.com.br | `index.html` | Landing com vídeos motion, pacotes, planos e dúvidas |
-| criativosrapidos.com.br/brief | `brief.html` | Briefing. Aceita `?plano=crescimento`, `?plano=turbo` etc. para já marcar o plano |
+| criativosrapidos.com.br | `index.html` | Home: o time, como funciona, planos (Presença, Crescimento, Autoridade), pacotes, o app e dúvidas. Os botões "Quero o…" abrem um formulário que cai no painel como interessado |
+| criativosrapidos.com.br/videos | `videos.html` | Landing da campanha dos vídeos motion (R$ 29,90 · 39,90 · 49,90), com 3 vídeos de exemplo e formulário próprio |
+| criativosrapidos.com.br/brief | `brief.html` | Briefing que o cliente preenche **depois de pagar**. Aceita `?plano=crescimento`, `?plano=turbo`, `?plano=essencial` etc. para já marcar o que ele comprou |
 | criativosrapidos.com.br/entrar | `entrar.html` | Login, criar conta e esqueci a senha |
-| criativosrapidos.com.br/app | `app.html` | Área do cliente: aprovar, pedir ajuste, baixar em alta, copiar legenda |
-| criativosrapidos.com.br/admin | `admin.html` | Painel da agência: enviar entregas, definir plano do cliente, ler briefings |
-| | `assets/config.js` | **O único arquivo que vocês editam** (chaves do Supabase e WhatsApp) |
+| criativosrapidos.com.br/app | `app.html` | App do cliente: Início, Conteúdos (aprovar, pedir ajuste, baixar em alta), Calendário de postagem e Conta. **Instala no celular** como aplicativo |
+| criativosrapidos.com.br/app?demo=1 | — | Demonstração do app com a marca fictícia Brasa Burger, pra mostrar a quem ainda não é cliente |
+| criativosrapidos.com.br/admin | `admin.html` | Painel da agência: visão geral, entregas, clientes, briefings e interessados (leads) |
+| | `assets/config.js` | **O único arquivo que vocês editam** (chaves do Supabase, WhatsApp e Instagram) |
 | | `supabase/schema.sql` | Banco de dados, para colar no Supabase |
+| | `manifest.webmanifest`, `sw.js`, `offline.html` | O que faz o app instalar no celular |
 
-Enquanto o `config.js` estiver sem as chaves, o site funciona em **modo demonstração**: entre como `cliente@demo` ou `agencia@demo`, com qualquer senha, para testar tudo. Para ver no computador, abra a pasta `site` num terminal e rode `npx serve .`. Depois acesse http://localhost:3000.
+Enquanto o `config.js` estiver sem as chaves, o site inteiro funciona em **modo demonstração**: entre como `cliente@demo` ou `agencia@demo`, com qualquer senha. Para ver no computador, abra a pasta `site` num terminal e rode `npx serve .`. Depois acesse http://localhost:3000.
+
+Os vídeos e as artes de exemplo são gerados a partir de `site-fontes/` (veja o README de lá).
 
 ---
 
@@ -88,7 +93,9 @@ O arquivo `vercel.json` já faz `/brief`, `/entrar`, `/app` e `/admin` funcionar
 
 ## Rotina com cada cliente
 
-1. Fechou a venda: mande o link `criativosrapidos.com.br/brief?plano=crescimento`, com o plano dele no final.
+0. **Interessados:** quem preenche o formulário da home ou de `/videos` aparece em **Interessados** no painel, com botão pra chamar no WhatsApp. Atualize o status (novo, conversando, fechou, não fechou).
+
+1. Fechou a venda e recebeu o pagamento: mande o link `criativosrapidos.com.br/brief?plano=crescimento`, com o plano dele no final.
 2. O briefing chega na aba **Briefings** do painel (e, se ele quiser, também no WhatsApp).
 3. Peça para o cliente criar a conta em `criativosrapidos.com.br/entrar` com o e-mail do contrato.
 4. Na aba **Clientes**, escolha o plano dele. Os ajustes do mês se preenchem sozinhos. Clique em **Salvar**.
@@ -106,3 +113,14 @@ O arquivo `vercel.json` já faz `/brief`, `/entrar`, `/app` e `/admin` funcionar
 ## Atualizar o site depois
 
 Toda mudança enviada para o GitHub na pasta `site/` publica sozinha na Vercel. Para trocar preços ou textos, edite `site/index.html` ou me peça.
+
+## Instalar o app no celular (pra vocês e pros clientes)
+
+- **Android (Chrome):** abra `criativosrapidos.com.br/app`, toque no menu ⋮ e em **Instalar app**. Em muitos celulares aparece um botão **Instalar app** na própria tela de Conta.
+- **iPhone (Safari):** abra `criativosrapidos.com.br/app`, toque em **Compartilhar** e em **Adicionar à Tela de Início**.
+
+O ícone amarelo da Criativos fica na tela do celular e abre direto no app, sem a barra do navegador.
+
+## Mostrar o app pra quem ainda não é cliente
+
+Mande o link `criativosrapidos.com.br/app?demo=1`. Abre o app com a marca fictícia Brasa Burger, dados de exemplo e nada salvo no banco de vocês. O botão "Ver o app funcionando" da home leva pra lá.

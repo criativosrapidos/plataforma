@@ -1,0 +1,431 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>Vídeo motion a partir de R$ 29,90 · Criativos Rápidos</title>
+<meta name="description" content="Vídeo com motion pra anúncio, reels e stories com a sua marca. A partir de R$ 29,90, pronto em 24 horas.">
+<meta property="og:title" content="Seu produto num vídeo que para o dedo · a partir de R$ 29,90">
+<meta property="og:description" content="Vídeo com motion pra anúncio, reels e stories. Pronto em 24 horas.">
+<meta property="og:image" content="assets/videos/exemplo-hamburgueria.jpg">
+<meta name="theme-color" content="#101216">
+<link rel="icon" href="assets/icons/favicon-32.png">
+<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,800;0,900;1,800;1,900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  /* Página de campanha: um objetivo só (pedir o vídeo). Preto e amarelo da marca; os exemplos em vídeo carregam a cor.
+     Sem menu de navegação para não tirar a pessoa do caminho. Visual único, sem modo escuro. */
+  :root {
+    --y: #FFD400;
+    --ink: #101216;
+    --ink-2: #17191E;
+    --ink-3: #22252C;
+    --paper: #F4F3EE;
+    --white: #FFFFFF;
+    --mut: #62656D;
+    --mut-d: #A7A9B0;
+    --line: #E2E0D7;
+    --line-d: #2C2F36;
+    --ok: #1F7A3A;
+    --display: "Montserrat", "Arial Black", system-ui, sans-serif;
+    --body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+    color-scheme: light;
+  }
+  * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--ink); color: #fff; font: 16px/1.6 var(--body); }
+  body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 50; background: var(--ink); }
+  img, video { max-width: 100%; display: block; }
+  a { color: inherit; }
+  button { font-family: inherit; }
+  :focus-visible { outline: 3px solid var(--y); outline-offset: 3px; }
+  .in { max-width: 1120px; margin: 0 auto; padding-left: max(18px, env(safe-area-inset-left, 0px)); padding-right: max(18px, env(safe-area-inset-right, 0px)); }
+  .band { padding-block: 88px; }
+  .light { background: var(--paper); color: var(--ink); }
+  .mut { color: var(--mut-d); }
+  .light .mut { color: var(--mut); }
+  h1, h2, h3 { font-family: var(--display); margin: 0; text-wrap: balance; }
+  h2 { font-weight: 900; font-size: clamp(30px, 4.4vw, 48px); line-height: 1.05; letter-spacing: -.02em; }
+  h1 em, h2 em { font-style: italic; color: var(--y); }
+  .light h2 em { color: var(--ink); background: linear-gradient(transparent 60%, var(--y) 60%); padding: 0 .06em; }
+  .eyebrow { display: inline-block; font: 800 12px/1 var(--body); letter-spacing: .16em; text-transform: uppercase; color: var(--ink); background: var(--y); padding: 8px 11px; border-radius: 7px; margin-bottom: 18px; }
+  .head { max-width: 720px; margin-bottom: 40px; }
+  .head p { margin: 14px 0 0; font-size: 18px; }
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 9px; border-radius: 14px; padding: 17px 24px; font: 800 16px/1 var(--body); text-decoration: none; border: 2px solid transparent; cursor: pointer; transition: transform .15s; white-space: nowrap; }
+  .btn:hover { transform: translateY(-2px); }
+  .btn.y { background: var(--y); color: var(--ink); box-shadow: 0 6px 0 #C9A700; }
+  .btn.k { background: var(--ink); color: #fff; }
+  .btn.o { border-color: #3A3D44; color: #fff; background: transparent; }
+  .btn svg { width: 20px; height: 20px; }
+  svg.s { fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+
+  .top { padding-top: calc(18px + env(safe-area-inset-top, 0px)); }
+  .top .in { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .logo img { width: 38px; height: 38px; }
+  .logo span { line-height: 1; font-size: 16px; }
+  .logo b { display: block; font-weight: 500; }
+  .logo i { display: block; font-family: var(--display); font-weight: 900; }
+  .top .pz { font-size: 13px; font-weight: 700; color: var(--mut-d); display: flex; align-items: center; gap: 8px; }
+  .top .pz svg { width: 18px; height: 18px; color: var(--y); }
+
+  /* abertura */
+  .hero { padding-block: 48px 90px; position: relative; overflow: hidden; }
+  .hero::before { content: ""; position: absolute; left: 50%; top: 40%; width: 900px; height: 900px; margin-left: 60px; border-radius: 50%; background: radial-gradient(circle, rgba(255, 212, 0, .2), rgba(255, 212, 0, 0) 62%); }
+  .hero .in { position: relative; display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); gap: 48px; align-items: center; }
+  .hero h1 { font-weight: 900; font-size: clamp(40px, 6vw, 74px); line-height: .99; letter-spacing: -.025em; }
+  .hero .sub { font-size: clamp(17px, 1.6vw, 20px); color: #D6D7DC; margin: 22px 0 30px; max-width: 32em; }
+  .price-big { display: flex; align-items: flex-end; gap: 14px; margin-bottom: 30px; }
+  .price-big small { display: block; font-size: 14px; color: var(--mut-d); font-weight: 600; }
+  .price-big b { font: 900 64px/0.9 var(--display); color: var(--y); letter-spacing: -.03em; }
+  .price-big b sup { font-size: 24px; vertical-align: top; margin-right: 4px; letter-spacing: 0; }
+  .price-big span { font-size: 15px; color: #D6D7DC; padding-bottom: 6px; }
+  .hero .ctas { display: flex; flex-wrap: wrap; gap: 12px; }
+  .checks { display: flex; flex-wrap: wrap; gap: 8px 22px; margin-top: 28px; font-size: 14.5px; color: #D6D7DC; }
+  .checks span { display: inline-flex; gap: 8px; align-items: center; }
+  .checks svg { width: 18px; height: 18px; color: var(--y); }
+  .reel { position: relative; justify-self: center; width: min(330px, 78vw); }
+  .reel .frame { border-radius: 40px; background: #050608; padding: 10px; box-shadow: 0 0 0 2px #2A2D34, 0 40px 90px rgba(0, 0, 0, .55); }
+  .reel video { width: 100%; aspect-ratio: 9 / 16; object-fit: cover; border-radius: 31px; background: #1A0E0A; }
+  .reel .tag { position: absolute; left: 22px; top: 24px; background: rgba(16, 18, 22, .78); color: #fff; font: 800 11px var(--body); letter-spacing: .12em; text-transform: uppercase; padding: 6px 9px; border-radius: 7px; }
+  .reel .sticker { position: absolute; right: -26px; bottom: 80px; background: var(--y); color: var(--ink); font: 900 16px/1.1 var(--display); padding: 14px 16px; border-radius: 16px; transform: rotate(6deg); box-shadow: 0 14px 30px rgba(0, 0, 0, .35); }
+  .reel .sticker small { display: block; font: 700 11px var(--body); letter-spacing: .08em; text-transform: uppercase; }
+  .mute { position: absolute; right: 22px; top: 22px; width: 42px; height: 42px; border-radius: 50%; border: 0; background: rgba(16, 18, 22, .78); color: #fff; display: grid; place-items: center; cursor: pointer; }
+  .mute svg { width: 20px; height: 20px; }
+  @media (max-width: 900px) { .hero .in { grid-template-columns: 1fr; } .reel { order: -1; } .reel .sticker { right: -8px; } }
+
+  /* parado x motion */
+  .vs { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 18px; max-width: 760px; }
+  .vs figure { margin: 0; display: grid; gap: 12px; }
+  .vs .m { position: relative; border-radius: 24px; overflow: hidden; aspect-ratio: 4 / 5; background: #000; }
+  .vs .m img, .vs .m video { width: 100%; height: 100%; object-fit: cover; }
+  .vs figcaption { display: flex; align-items: center; gap: 10px; font-weight: 800; }
+  .vs figcaption i { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; font-style: normal; flex: none; }
+  .vs .no i { background: #FBE7E5; color: #B4231B; }
+  .vs .ok i { background: var(--y); color: var(--ink); }
+  .vs figcaption span { font-weight: 500; color: var(--mut); font-size: 14px; display: block; }
+  .vs .m .lbl { position: absolute; left: 12px; top: 12px; background: rgba(16, 18, 22, .78); color: #fff; font: 800 11px var(--body); letter-spacing: .12em; text-transform: uppercase; padding: 6px 9px; border-radius: 7px; }
+  .why { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 56px; align-items: center; }
+  .why ul { list-style: none; padding: 0; margin: 24px 0 0; display: grid; gap: 14px; }
+  .why li { display: grid; grid-template-columns: 34px 1fr; gap: 12px; font-size: 16.5px; }
+  .why li b { display: block; }
+  .why li span { color: var(--mut); font-size: 15px; }
+  .why li i { width: 34px; height: 34px; border-radius: 10px; background: var(--ink); color: var(--y); display: grid; place-items: center; font: 900 15px var(--display); font-style: normal; }
+  @media (max-width: 900px) { .why { grid-template-columns: 1fr; gap: 32px; } }
+
+  /* ofertas */
+  .offers { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+  .of { background: var(--ink-2); border: 1px solid var(--line-d); border-radius: 26px; padding: 28px 24px 24px; display: flex; flex-direction: column; gap: 16px; position: relative; }
+  .of.hot { background: var(--y); color: var(--ink); border-color: var(--y); }
+  .of .badge { position: absolute; top: -14px; left: 22px; background: var(--y); color: var(--ink); font: 800 12px var(--body); letter-spacing: .1em; text-transform: uppercase; padding: 6px 10px; border-radius: 8px; }
+  .of.hot .badge { background: var(--ink); color: var(--y); }
+  .of h3 { font-size: 24px; font-weight: 900; text-transform: uppercase; letter-spacing: .02em; }
+  .of .for { margin: -8px 0 0; color: var(--mut-d); font-size: 15px; }
+  .of.hot .for { color: #3D3A2A; }
+  .of .val { font: 900 54px/1 var(--display); letter-spacing: -.03em; }
+  .of .val sup { font-size: 20px; vertical-align: top; margin-right: 3px; letter-spacing: 0; }
+  .of .val small { font-size: 26px; }
+  .of ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; font-size: 15.5px; }
+  .of li { display: flex; gap: 10px; }
+  .of li svg { width: 18px; height: 18px; flex: none; margin-top: 3px; color: var(--y); }
+  .of.hot li svg { color: var(--ink); }
+  .of .btn { margin-top: auto; width: 100%; }
+  .of.hot .btn.y { background: var(--ink); color: var(--y); box-shadow: 0 6px 0 #000; }
+  .unit { font-size: 13.5px; color: var(--mut-d); }
+  .of.hot .unit { color: #3D3A2A; }
+  @media (max-width: 960px) { .offers { grid-template-columns: 1fr; max-width: 460px; margin: 0 auto; gap: 28px; } }
+
+  /* exemplos */
+  .ex { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+  .ex figure { margin: 0; display: grid; gap: 12px; }
+  .ex .v { position: relative; border-radius: 26px; overflow: hidden; background: #000; aspect-ratio: 9 / 16; }
+  .ex video { width: 100%; height: 100%; object-fit: cover; }
+  .ex .lbl { position: absolute; left: 12px; top: 12px; background: rgba(16, 18, 22, .78); color: #fff; font: 800 11px var(--body); letter-spacing: .12em; text-transform: uppercase; padding: 6px 9px; border-radius: 7px; }
+  .ex figcaption b { display: block; font-size: 16px; }
+  .ex figcaption span { color: var(--mut); font-size: 14px; }
+  @media (max-width: 760px) { .ex { grid-auto-flow: column; grid-template-columns: none; grid-auto-columns: 72%; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 8px; } .ex figure { scroll-snap-align: start; } }
+
+  /* passos */
+  .steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+  .st { background: var(--ink-2); border: 1px solid var(--line-d); border-radius: 22px; padding: 24px; display: grid; gap: 10px; align-content: start; }
+  .st .n { width: 46px; height: 46px; border-radius: 13px; background: var(--y); color: var(--ink); display: grid; place-items: center; font: 900 20px var(--display); }
+  .st h3 { font-size: 19px; font-weight: 800; }
+  .st p { margin: 0; color: var(--mut-d); font-size: 15px; }
+  @media (max-width: 860px) { .steps { grid-template-columns: 1fr; } }
+
+  /* dúvidas */
+  .faq { max-width: 820px; display: grid; gap: 10px; }
+  .faq details { background: var(--white); border: 1px solid var(--line); border-radius: 18px; }
+  .faq summary { cursor: pointer; list-style: none; padding: 18px 22px; font-weight: 700; display: flex; justify-content: space-between; gap: 14px; }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after { content: "+"; font: 900 22px/1 var(--display); }
+  .faq details[open] summary::after { content: "–"; }
+  .faq p { margin: 0; padding: 0 22px 18px; color: var(--mut); }
+
+  /* final */
+  .final { background: var(--y); color: var(--ink); padding-block: 88px; text-align: center; }
+  .final h2 { font-size: clamp(34px, 5.6vw, 62px); }
+  .final h2 em { color: var(--ink); text-decoration: underline; text-decoration-thickness: 6px; text-underline-offset: 6px; }
+  .final p { font-size: 19px; margin: 16px auto 30px; max-width: 32em; }
+  .final .btn.k { box-shadow: 0 6px 0 #000; }
+  footer { background: var(--ink); color: var(--mut-d); font-size: 13.5px; padding-block: 30px calc(100px + env(safe-area-inset-bottom, 0px)); }
+  footer .in { display: flex; flex-wrap: wrap; gap: 12px 26px; justify-content: space-between; }
+  footer a { color: #fff; text-decoration: none; }
+
+  /* barra fixa no celular */
+  .sticky { position: fixed; left: 0; right: 0; bottom: 0; z-index: 30; background: rgba(16, 18, 22, .96); backdrop-filter: blur(8px); border-top: 1px solid var(--line-d); padding: 12px max(16px, env(safe-area-inset-right, 0px)) calc(12px + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); display: flex; align-items: center; gap: 14px; transform: translateY(110%); transition: transform .25s; }
+  .sticky.on { transform: none; }
+  .sticky .t { flex: 1; min-width: 0; font-size: 13px; line-height: 1.25; color: var(--mut-d); }
+  .sticky .t b { display: block; color: #fff; font: 900 17px var(--display); }
+  .sticky .btn { padding: 14px 18px; font-size: 15px; }
+  @media (min-width: 900px) { .sticky { display: none; } footer { padding-bottom: calc(30px + env(safe-area-inset-bottom, 0px)); } }
+
+  /* formulário */
+  dialog.lead { border: 0; padding: 0; background: transparent; max-width: min(460px, calc(100vw - 24px)); width: 100%; }
+  dialog.lead::backdrop { background: rgba(10, 11, 14, .72); }
+  .lead-card { position: relative; background: var(--white); color: var(--ink); border-radius: 26px; padding: 26px; border: 2px solid var(--ink); }
+  .lead-card h3 { font-size: 21px; font-weight: 900; margin-bottom: 4px; padding-right: 40px; }
+  .x { position: absolute; top: 12px; right: 12px; width: 40px; height: 40px; border-radius: 12px; border: 0; background: #F0EFE9; cursor: pointer; display: grid; place-items: center; color: var(--ink); }
+  .x svg { width: 20px; height: 20px; }
+  .fl { display: grid; gap: 6px; margin-bottom: 12px; }
+  .fl label { font-weight: 700; font-size: 14px; }
+  .fl input { width: 100%; border: 1.5px solid var(--line); background: #FBFAF6; border-radius: 12px; padding: 13px 14px; font: 15px var(--body); color: var(--ink); }
+  .fl input:focus { outline: none; border-color: var(--ink); }
+  .opts { display: grid; gap: 8px; margin-bottom: 14px; }
+  .opt { display: flex; align-items: center; gap: 12px; border: 1.5px solid var(--line); border-radius: 14px; padding: 12px 14px; cursor: pointer; }
+  .opt input { accent-color: var(--ink); width: 18px; height: 18px; }
+  .opt b { flex: 1; font-size: 15px; }
+  .opt span { font: 900 15px var(--display); }
+  .opt:has(input:checked) { border-color: var(--ink); background: #FFF8D6; }
+  .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  .lead-err { color: #B4231B; background: #FBE7E5; border-radius: 10px; padding: 10px 12px; font-size: 14px; margin-bottom: 12px; }
+  .lead-ok { text-align: center; display: grid; gap: 12px; justify-items: center; padding: 10px 0; }
+  .lead-ok .ic { width: 60px; height: 60px; border-radius: 50%; background: #E3F4E8; color: var(--ok); display: grid; place-items: center; }
+  .lead-ok .ic svg { width: 30px; height: 30px; }
+  .lead-ok b { font: 900 22px var(--display); }
+  .small { font-size: 13px; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .btn, .sticky { transition: none; } }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM12 7v5l3 2"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></symbol>
+  <symbol id="i-vol" viewBox="0 0 24 24"><path d="M4 9h4l5-4v14l-5-4H4zM17 9a4 4 0 0 1 0 6"/></symbol>
+  <symbol id="i-mute" viewBox="0 0 24 24"><path d="M4 9h4l5-4v14l-5-4H4zM17 9l4 6M21 9l-4 6"/></symbol>
+</svg>
+
+<header class="top">
+  <div class="in">
+    <a class="logo" href="./" aria-label="Criativos Rápidos"><img src="assets/logo-icone.png" alt=""><span><b>criativos</b><i>rápidos</i></span></a>
+    <span class="pz"><svg class="s"><use href="#i-clock"/></svg>Pronto em 24 h</span>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="in">
+    <div>
+      <span class="eyebrow">Vídeo com motion</span>
+      <h1>Seu produto num vídeo que <em>para o dedo.</em></h1>
+      <p class="sub">Foto parada passa batido no feed. Um vídeo animado com a sua marca, o seu preço e a sua oferta faz a pessoa parar, entender e chamar você.</p>
+      <div class="price-big"><div><small>a partir de</small><b><sup>R$</sup>29,90</b></div><span>pagamento único,<br>sem mensalidade</span></div>
+      <div class="ctas">
+        <button class="btn y" type="button" data-lead="">Quero meu vídeo</button>
+        <a class="btn o" href="#ofertas">Ver as opções</a>
+      </div>
+      <div class="checks"><span><svg class="s"><use href="#i-check"/></svg>Pronto em 24 h</span><span><svg class="s"><use href="#i-check"/></svg>Formato pra anúncio, reels e stories</span><span><svg class="s"><use href="#i-check"/></svg>Pix ou cartão</span></div>
+    </div>
+    <div class="reel">
+      <div class="frame"><video id="hero-video" src="assets/videos/exemplo-hamburgueria.mp4" poster="assets/videos/exemplo-hamburgueria.jpg" autoplay muted loop playsinline aria-label="Exemplo de vídeo motion para uma hamburgueria fictícia"></video></div>
+      <span class="tag">Exemplo · 15 s</span>
+      <div class="sticker"><small>Essencial</small>R$ 29,90</div>
+    </div>
+  </div>
+</section>
+
+<section class="band light">
+  <div class="in why">
+    <div>
+      <span class="eyebrow">Por que vídeo</span>
+      <h2>Foto parada vira <em>paisagem.</em> Vídeo vira venda.</h2>
+      <ul>
+        <li><i>1</i><div><b>Prende o olho logo de cara</b><span>Movimento chama atenção no meio de um feed cheio.</span></div></li>
+        <li><i>2</i><div><b>Mostra a oferta sem precisar ler</b><span>Produto, preço e chamada aparecem um de cada vez.</span></div></li>
+        <li><i>3</i><div><b>Um vídeo, vários lugares</b><span>O mesmo arquivo serve pra anúncio, reels e stories.</span></div></li>
+      </ul>
+    </div>
+    <div class="vs">
+      <figure class="no"><div class="m"><img src="assets/demo/brasa-post-combo.jpg" alt="Arte parada de exemplo" loading="lazy"><span class="lbl">Foto parada</span></div><figcaption><i><svg class="s" width="16" height="16"><use href="#i-x"/></svg></i><div>Arte parada<span>A pessoa rola e nem vê.</span></div></figcaption></figure>
+      <figure class="ok"><div class="m"><video src="assets/videos/exemplo-hamburgueria.mp4" poster="assets/videos/exemplo-hamburgueria.jpg" muted loop playsinline preload="none" data-auto aria-label="O mesmo anúncio em vídeo motion"></video><span class="lbl">Com motion</span></div><figcaption><i><svg class="s" width="16" height="16"><use href="#i-check"/></svg></i><div>Vídeo com motion<span>Para o dedo e mostra a oferta.</span></div></figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="ofertas">
+  <div class="in">
+    <div class="head"><span class="eyebrow">Escolha o seu</span><h2>Três opções, <em>pagamento único</em></h2><p class="mut">Sem mensalidade e sem contrato. Você paga uma vez e recebe os arquivos em alta qualidade.</p></div>
+    <div class="offers">
+      <article class="of">
+        <h3>Essencial</h3>
+        <p class="for">Pra um anúncio rápido.</p>
+        <div class="val"><sup>R$</sup>29<small>,90</small></div>
+        <ul><li><svg class="s"><use href="#i-check"/></svg>1 vídeo de 15 segundos</li><li><svg class="s"><use href="#i-check"/></svg>Com a sua marca, cores e oferta</li><li><svg class="s"><use href="#i-check"/></svg>Vertical, pronto pra anúncio, reels e stories</li></ul>
+        <button class="btn y" type="button" data-lead="Vídeo Essencial">Quero o Essencial</button>
+      </article>
+      <article class="of hot">
+        <h3>Completo</h3>
+        <p class="for">Pra rodar campanha com mais de uma versão.</p>
+        <div class="val"><sup>R$</sup>39<small>,90</small></div>
+        <ul><li><svg class="s"><use href="#i-check"/></svg>2 vídeos de 30 segundos</li><li><svg class="s"><use href="#i-check"/></svg>1 arte pra anúncio</li><li><svg class="s"><use href="#i-check"/></svg>Com a sua marca, cores e oferta</li></ul>
+        <p class="unit">Menos de R$ 20 por vídeo</p>
+        <button class="btn y" type="button" data-lead="Vídeo Completo">Quero o Completo</button>
+      </article>
+      <article class="of">
+        <h3>Premium</h3>
+        <p class="for">Pra testar vários anúncios e ver qual vende mais.</p>
+        <div class="val"><sup>R$</sup>49<small>,90</small></div>
+        <ul><li><svg class="s"><use href="#i-check"/></svg>3 vídeos de 30 segundos</li><li><svg class="s"><use href="#i-check"/></svg>2 artes pra anúncio</li><li><svg class="s"><use href="#i-check"/></svg>Com a sua marca, cores e oferta</li></ul>
+        <p class="unit">Menor preço por vídeo: menos de R$ 17</p>
+        <button class="btn y" type="button" data-lead="Vídeo Premium">Quero o Premium</button>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="band light">
+  <div class="in">
+    <div class="head"><span class="eyebrow">Exemplos</span><h2>Funciona pra <em>qualquer negócio</em></h2><p class="mut">Três exemplos de 15 segundos com marcas fictícias. O seu sai com a sua marca, as suas cores e a sua oferta.</p></div>
+    <div class="ex">
+      <figure><div class="v"><video src="assets/videos/exemplo-hamburgueria.mp4" poster="assets/videos/exemplo-hamburgueria.jpg" muted loop playsinline controls preload="none" data-auto aria-label="Exemplo para hamburgueria"></video><span class="lbl">Exemplo</span></div><figcaption><b>Hamburgueria</b><span>Combo com preço e chamada pro WhatsApp</span></figcaption></figure>
+      <figure><div class="v"><video src="assets/videos/exemplo-moda.mp4" poster="assets/videos/exemplo-moda.jpg" muted loop playsinline controls preload="none" data-auto aria-label="Exemplo para loja de roupas"></video><span class="lbl">Exemplo</span></div><figcaption><b>Loja de roupas</b><span>Nova coleção, cores e preço a partir de</span></figcaption></figure>
+      <figure><div class="v"><video src="assets/videos/exemplo-estetica.mp4" poster="assets/videos/exemplo-estetica.jpg" muted loop playsinline controls preload="none" data-auto aria-label="Exemplo para clínica de estética"></video><span class="lbl">Exemplo</span></div><figcaption><b>Estética</b><span>Procedimento, valor e agendamento</span></figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section class="band">
+  <div class="in">
+    <div class="head"><span class="eyebrow">Como funciona</span><h2>Pediu hoje, <em>posta amanhã</em></h2></div>
+    <div class="steps">
+      <div class="st"><span class="n">1</span><h3>Escolha e pague</h3><p>Fale com a gente pelo WhatsApp e pague no Pix ou no cartão.</p></div>
+      <div class="st"><span class="n">2</span><h3>Mande o que tem</h3><p>Responda o briefing rapidinho: produto, preço, logo e fotos, se tiver.</p></div>
+      <div class="st"><span class="n">3</span><h3>Receba em 24 h</h3><p>Aprove ou peça ajuste no nosso app e baixe em alta qualidade.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="band light">
+  <div class="in">
+    <div class="head"><span class="eyebrow">Dúvidas</span><h2>Antes de pedir</h2></div>
+    <div class="faq">
+      <details><summary>Em quanto tempo fica pronto?</summary><p>Em até 24 horas depois que o pagamento é confirmado e você responde o briefing.</p></details>
+      <details><summary>Em que formato eu recebo?</summary><p>Vídeo vertical em alta qualidade (1080 × 1920), pronto pra anúncio, reels e stories. Você baixa pelo nosso app, sem a compressão do WhatsApp.</p></details>
+      <details><summary>O que eu preciso mandar?</summary><p>O que você quer divulgar, o preço ou a oferta, sua logo e fotos do produto, se tiver. A gente te manda um briefing curtinho depois do pagamento.</p></details>
+      <details><summary>Posso usar no anúncio pago?</summary><p>Pode. O vídeo é seu e foi feito no formato que os anúncios usam.</p></details>
+      <details><summary>Como eu pago?</summary><p>No Pix ou no cartão, pelo link de pagamento. Pagamento único, sem mensalidade.</p></details>
+      <details><summary>E se eu quiser conteúdo todo mês?</summary><p>Aí vale um dos nossos planos mensais, com stories, posts, carrosséis, reels e anúncios todo mês. <a href="./#planos" style="font-weight:700">Ver os planos</a>.</p></details>
+    </div>
+  </div>
+</section>
+
+<section class="final">
+  <div class="in">
+    <h2>Seu vídeo pode estar <em>pronto amanhã.</em></h2>
+    <p>A partir de R$ 29,90. Deixa seu WhatsApp que a gente te chama.</p>
+    <button class="btn k" type="button" data-lead="">Quero meu vídeo</button>
+  </div>
+</section>
+
+<footer>
+  <div class="in">
+    <span><b style="color:#fff">criativos rápidos</b> · CNPJ 67.844.754/0001-07</span>
+    <span><a href="./">Conheça os planos mensais</a></span>
+  </div>
+</footer>
+
+<div class="sticky" id="sticky"><div class="t"><b>A partir de R$ 29,90</b>Vídeo pronto em 24 h</div><button class="btn y" type="button" data-lead="">Quero meu vídeo</button></div>
+
+<dialog class="lead" id="dlg-lead" aria-label="Pedir vídeo">
+  <div class="lead-card">
+    <button class="x" type="button" id="lead-x" aria-label="Fechar"><svg class="s"><use href="#i-x"/></svg></button>
+    <form id="f-lead" novalidate>
+      <h3>Quero meu vídeo</h3>
+      <p class="small" style="color:var(--mut);margin:0 0 16px">Escolha a opção e deixe seu WhatsApp. A gente te chama pra combinar.</p>
+      <div class="opts" role="radiogroup" aria-label="Opção">
+        <label class="opt"><input type="radio" name="op" value="Vídeo Essencial"><b>Essencial · 1 vídeo de 15 s</b><span>R$ 29,90</span></label>
+        <label class="opt"><input type="radio" name="op" value="Vídeo Completo" checked><b>Completo · 2 vídeos + 1 arte</b><span>R$ 39,90</span></label>
+        <label class="opt"><input type="radio" name="op" value="Vídeo Premium"><b>Premium · 3 vídeos + 2 artes</b><span>R$ 49,90</span></label>
+      </div>
+      <div class="fl"><label for="l-nome">Seu nome</label><input type="text" id="l-nome" autocomplete="name"></div>
+      <div class="fl"><label for="l-whats">WhatsApp</label><input type="tel" id="l-whats" autocomplete="tel" placeholder="(61) 90000-0000"></div>
+      <div class="fl"><label for="l-emp">Seu Instagram ou loja</label><input type="text" id="l-emp" placeholder="@sualoja"></div>
+      <div class="hp" aria-hidden="true"><label>Site <input type="text" id="l-site" tabindex="-1" autocomplete="off"></label></div>
+      <div class="lead-err" id="l-err" hidden></div>
+      <button class="btn y" type="submit" style="width:100%">Quero que me chamem</button>
+    </form>
+    <div class="lead-ok" id="l-ok" hidden>
+      <span class="ic"><svg class="s"><use href="#i-check"/></svg></span>
+      <b>Recebemos!</b>
+      <span style="color:var(--mut)">A gente te chama no WhatsApp em breve.</span>
+      <a class="btn k" id="l-wa" hidden target="_blank" rel="noopener"><svg class="s"><use href="#i-chat"/></svg>Prefiro chamar agora</a>
+    </div>
+  </div>
+</dialog>
+
+<script src="assets/config.js"></script>
+<script src="assets/vendor/supabase.js"></script>
+<script src="assets/core.js"></script>
+<script>
+(function () {
+  var C = window.CR_CONFIG || {};
+  var dlg = document.getElementById("dlg-lead"), form = document.getElementById("f-lead");
+
+  document.querySelectorAll("[data-lead]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      form.hidden = false; document.getElementById("l-ok").hidden = true;
+      form.querySelector("button[type=submit]").disabled = false;
+      if (b.dataset.lead) form.querySelector('input[value="' + b.dataset.lead + '"]').checked = true;
+      dlg.showModal();
+      document.getElementById("l-nome").focus();
+    });
+  });
+  document.getElementById("lead-x").addEventListener("click", function () { dlg.close(); });
+  dlg.addEventListener("click", function (ev) { if (ev.target === dlg) dlg.close(); });
+
+  form.addEventListener("submit", async function (ev) {
+    ev.preventDefault();
+    var v = function (id) { return (document.getElementById(id).value || "").trim(); };
+    var err = document.getElementById("l-err");
+    var m = !v("l-nome") ? "Conta seu nome pra gente." : v("l-whats").replace(/\D/g, "").length < 10 ? "Confere o WhatsApp com DDD." : "";
+    err.textContent = m; err.hidden = !m; if (m) return;
+    var btn = form.querySelector("button[type=submit]"); btn.disabled = true;
+    var lead = { nome: v("l-nome").slice(0, 120), whatsapp: v("l-whats").slice(0, 30), empresa: v("l-emp").slice(0, 160) || null, interesse: form.querySelector('input[name="op"]:checked').value, origem: "videos" };
+    try { if (!v("l-site")) await CR.api.enviarLead(lead); }
+    catch (x) { if (!C.WHATSAPP) { err.textContent = "Não conseguimos enviar agora. Tente de novo em instantes."; err.hidden = false; btn.disabled = false; return; } }
+    var wa = document.getElementById("l-wa");
+    if (C.WHATSAPP) { wa.href = "https://wa.me/" + C.WHATSAPP + "?text=" + encodeURIComponent("Olá! Sou " + lead.nome + (lead.empresa ? " (" + lead.empresa + ")" : "") + " e quero o " + lead.interesse + "."); wa.hidden = false; }
+    form.hidden = true; document.getElementById("l-ok").hidden = false;
+  });
+
+  // vídeos de exemplo tocam quando aparecem na tela
+  var reduz = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if ("IntersectionObserver" in window && !reduz) {
+    var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) e.target.play().catch(function () {}); else e.target.pause(); }); }, { threshold: .5 });
+    document.querySelectorAll("video[data-auto]").forEach(function (vd) { vd.preload = "metadata"; io.observe(vd); });
+  }
+  if (reduz) document.getElementById("hero-video").removeAttribute("autoplay");
+
+  // barra fixa no celular aparece depois da abertura
+  var st = document.getElementById("sticky"), hero = document.querySelector(".hero");
+  if ("IntersectionObserver" in window) new IntersectionObserver(function (es) { st.classList.toggle("on", !es[0].isIntersecting); }).observe(hero);
+})();
+</script>
+</body>
+</html>

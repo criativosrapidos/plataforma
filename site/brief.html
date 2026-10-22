@@ -5,7 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Briefing · Criativos Rápidos</title>
 <meta name="description" content="Conte sobre o seu negócio para a Criativos Rápidos criar seus conteúdos.">
-<link rel="icon" href="assets/logo-icone.png">
+<link rel="icon" href="assets/icons/favicon-32.png">
+<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+<meta name="theme-color" content="#101216">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,800&display=swap" rel="stylesheet">
@@ -137,7 +139,7 @@
     <span class="eyebrow">Briefing</span>
     <h1>Conta pra gente sobre o seu negócio</h1>
     <p class="lead">Com essas respostas a gente cria seus conteúdos com a sua cara. Leva uns 10 minutos. Pode responder com calma: o que você digita fica salvo neste aparelho até você enviar.</p>
-    <div class="facts"><span>Entrega em <b>24 h</b></span><span>Campos com <b style="color:var(--warn)">*</b> são obrigatórios</span></div>
+    <div class="facts"><span>Responda em até <b>7 dias</b></span><span>Entrega em <b>24 h</b></span><span>Campos com <b style="color:var(--warn)">*</b> são obrigatórios</span></div>
   </header>
 
   <form id="bf" novalidate>
@@ -159,6 +161,12 @@
 
     <fieldset>
       <legend><span class="n">2</span>O que você contratou</legend>
+      <div class="group-t">Pacotes (pagamento único)</div>
+      <div class="opts">
+        <label class="opt"><input type="radio" name="plano" id="p-largada" value="Largada" data-credits="10"><span><b>Largada · R$ 97</b><small>10 créditos</small></span></label>
+        <label class="opt"><input type="radio" name="plano" id="p-acelera" value="Acelera" data-credits="20"><span><b>Acelera · R$ 297</b><small>20 créditos + identidade visual</small></span></label>
+        <label class="opt"><input type="radio" name="plano" id="p-turbo" value="Turbo" data-credits="40"><span><b>Turbo · R$ 497</b><small>40 créditos + identidade visual + PDFs</small></span></label>
+      </div>
       <div class="group-t">Vídeos motion (pagamento único)</div>
       <div class="opts">
         <label class="opt"><input type="radio" name="plano" id="p-essencial" value="Vídeo Essencial"><span><b>Essencial · R$ 29,90</b><small>1 vídeo de 15 s</small></span></label>
@@ -167,17 +175,17 @@
       </div>
       <div class="group-t">Planos mensais</div>
       <div class="opts">
-        <label class="opt"><input type="radio" name="plano" id="p-presenca" value="Presença"><span><b>Presença · R$ 597/mês</b><small>30 conteúdos</small></span></label>
+        <label class="opt"><input type="radio" name="plano" id="p-presenca" value="Presença"><span><b>Presença · R$ 597/mês</b><small>30 conteúdos, você posta</small></span></label>
         <label class="opt"><input type="radio" name="plano" id="p-crescimento" value="Crescimento"><span><b>Crescimento · R$ 797/mês</b><small>50 conteúdos, a gente posta</small></span></label>
-        <label class="opt"><input type="radio" name="plano" id="p-autoridade" value="Autoridade"><span><b>Autoridade · R$ 997/mês</b><small>70 conteúdos + relatório</small></span></label>
+        <label class="opt"><input type="radio" name="plano" id="p-autoridade" value="Autoridade"><span><b>Autoridade · R$ 997/mês</b><small>70 conteúdos, a gente posta + tráfego pago</small></span></label>
       </div>
       <label class="opt"><input type="radio" name="plano" id="p-nsei" value="Ainda não decidi"><span><b>Ainda não decidi</b><small>A gente te ajuda a escolher</small></span></label>
     </fieldset>
 
-    <fieldset id="fs-credits" hidden>
+    <fieldset id="fs-credits">
       <legend><span class="n">3</span>Monte seu pacote</legend>
       <p class="hint">Escolha as peças que você quer usando seus créditos.</p>
-      <div id="credits-off" class="muted-box">Escolha um pacote (Largada, Acelera ou Turbo) na etapa 2 para montar suas peças. Nos planos mensais as quantidades já vêm definidas.</div>
+      <div id="credits-off" class="muted-box">Escolha um pacote (Largada, Acelera ou Turbo) na etapa 2 para montar suas peças. Nos planos mensais e nos vídeos as quantidades já vêm definidas.</div>
       <div id="credits-on" hidden>
         <div class="credits" id="clist"></div>
         <div class="meter" id="meter" style="margin-top:12px"><span class="left">Créditos usados: <b id="used">0</b> de <span id="total">0</span></span><span id="mleft"></span></div>
@@ -185,7 +193,7 @@
     </fieldset>
 
     <fieldset>
-      <legend><span class="n">3</span>Seu negócio</legend>
+      <legend><span class="n">4</span>Seu negócio</legend>
       <div class="f"><label for="vende">O que você vende?<span class="req">*</span> <span class="sub">Produtos ou serviços principais</span></label><textarea id="vende" name="vende" required></textarea></div>
       <div class="f"><label for="carro">Qual produto ou serviço você mais quer vender agora?</label><input type="text" id="carro" name="carro"></div>
       <div class="f"><label for="diferencial">Por que o cliente deveria comprar de você e não do concorrente?<span class="req">*</span></label><textarea id="diferencial" name="diferencial" required></textarea></div>
@@ -197,7 +205,7 @@
     </fieldset>
 
     <fieldset>
-      <legend><span class="n">4</span>Seu cliente</legend>
+      <legend><span class="n">5</span>Seu cliente</legend>
       <div class="f"><label for="publico">Quem é o seu cliente?<span class="req">*</span> <span class="sub">Idade, homem ou mulher, região, o que faz</span></label><textarea id="publico" name="publico" required></textarea></div>
       <div class="f"><label for="dor">Que problema ele tem que você resolve?</label><textarea id="dor" name="dor"></textarea></div>
       <div class="f"><label for="objecao">O que ele mais fala antes de desistir de comprar? <span class="sub">Ex.: "tá caro", "vou pensar"</span></label><textarea id="objecao" name="objecao"></textarea></div>
@@ -205,7 +213,7 @@
     </fieldset>
 
     <fieldset>
-      <legend><span class="n">5</span>Sua marca</legend>
+      <legend><span class="n">6</span>Sua marca</legend>
       <div class="f"><span class="q">Você já tem logo?</span>
         <div class="chips">
           <label class="chip"><input type="radio" name="logo" id="logo-sim" value="Tenho e quero manter"><span>Tenho e quero manter</span></label>
@@ -234,7 +242,7 @@
     </fieldset>
 
     <fieldset>
-      <legend><span class="n">6</span>Jeito de falar</legend>
+      <legend><span class="n">7</span>Jeito de falar</legend>
       <div class="f"><span class="q">Como você fala com seus clientes?</span>
         <div class="chips">
           <label class="chip"><input type="radio" name="tom" id="t1" value="Bem informal, como amigo"><span>Bem informal, como amigo</span></label>
@@ -247,7 +255,7 @@
     </fieldset>
 
     <fieldset>
-      <legend><span class="n">7</span>Conteúdo</legend>
+      <legend><span class="n">8</span>Conteúdo</legend>
       <div class="f"><label for="primeiro">O que você quer divulgar primeiro?<span class="req">*</span></label><textarea id="primeiro" name="primeiro" required></textarea></div>
       <div class="f"><label for="promo">Tem promoção, lançamento ou data especial chegando?</label><textarea id="promo" name="promo"></textarea></div>
       <div class="f"><label for="assuntos">Assuntos que você entende e gostaria de ensinar</label><textarea id="assuntos" name="assuntos"></textarea></div>
@@ -261,7 +269,7 @@
     </fieldset>
 
     <fieldset>
-      <legend><span class="n">8</span>Materiais</legend>
+      <legend><span class="n">9</span>Materiais</legend>
       <p class="hint">Fotos e vídeos reais do seu negócio deixam os conteúdos muito melhores.</p>
       <div class="f"><label for="drive">Link de uma pasta com fotos, vídeos e logo <span class="sub">Google Drive, Dropbox ou parecido</span></label><input type="url" id="drive" name="drive" placeholder="https://"></div>
       <div class="muted-box">Não tem link? Sem problema: mande os arquivos direto no nosso WhatsApp depois de enviar este briefing. <b>Nunca pedimos senha</b> do seu Instagram; quando for a hora, a gente te explica como liberar o acesso com segurança.</div>
@@ -433,7 +441,7 @@
     if (!selectedPlan()) {
       err.textContent = "Escolha o que você contratou na etapa 2.";
       err.hidden = false;
-      document.getElementById("p-essencial").focus();
+      document.getElementById("p-largada").focus();
       return;
     }
     if (missing.length) {

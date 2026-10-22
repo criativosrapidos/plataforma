@@ -4,8 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Entrar · Criativos Rápidos</title>
+<meta name="theme-color" content="#101216">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
 <meta name="robots" content="noindex">
-<link rel="icon" href="assets/logo-icone.png">
+<link rel="icon" href="assets/icons/favicon-32.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,800;0,900;1,900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -22,6 +27,8 @@
   .auth .box { width: 100%; max-width: 400px; }
   .auth .switch { margin-top: 16px; font-size: 14px; color: var(--muted); text-align: center; }
   .auth .switch button { background: none; border: 0; color: var(--fg); font: 700 14px var(--body); text-decoration: underline; cursor: pointer; padding: 0; }
+  .demo-box { margin-top: 22px; border: 1.5px dashed var(--line); border-radius: 14px; padding: 14px; display: grid; gap: 10px; text-align: center; font-size: 14px; }
+  .demo-box div { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
   @media (max-width: 820px) { .auth { grid-template-columns: 1fr; } .auth .side { padding-block: 24px; } .auth .side .hide-m { display: none; } }
 </style>
 </head>
@@ -52,6 +59,10 @@
         <button class="btn full" type="submit">Entrar</button>
         <div class="switch"><button type="button" data-ir="f-esqueci">Esqueci minha senha</button></div>
         <div class="switch">Primeira vez aqui? <button type="button" data-ir="f-criar">Criar minha conta</button></div>
+        <div class="demo-box" id="demo-box" hidden>
+          <b>Quer só ver como funciona?</b>
+          <div><button class="btn sm" type="button" data-demo="cliente@demo">Ver como cliente</button><button class="btn ghost sm" type="button" data-demo="agencia@demo">Ver como agência</button></div>
+        </div>
       </form>
 
       <!-- criar conta -->
@@ -98,6 +109,13 @@
 (function () {
   var api = CR.api;
   CR.avisoDemo();
+  CR.registrarApp();
+  if (CR.demo) {
+    document.getElementById("demo-box").hidden = false;
+    document.querySelectorAll("[data-demo]").forEach(function (b) {
+      b.addEventListener("click", async function () { await api.entrar(b.dataset.demo, "demo"); location.replace(await destino()); });
+    });
+  }
   var forms = ["f-entrar", "f-criar", "f-esqueci", "f-nova"];
   function mostrar(id) { forms.forEach(function (f) { document.getElementById(f).hidden = f !== id; }); var i = document.querySelector("#" + id + " input"); if (i) i.focus(); }
   document.querySelectorAll("[data-ir]").forEach(function (b) { b.addEventListener("click", function () { mostrar(b.dataset.ir); }); });

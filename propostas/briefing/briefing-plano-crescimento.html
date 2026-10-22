@@ -167,7 +167,7 @@
         <ul class="plan-q">
           <li><b>20</b>stories</li><li><b>12</b>posts</li><li><b>9</b>carrosséis</li><li><b>6</b>reels</li><li><b>3</b>anúncios</li>
         </ul>
-        <p class="plan-f">50 conteúdos por mês com legendas, perfil organizado, postagem feita pela gente, gestão de tráfego e 2 ajustes no mês.</p>
+        <p class="plan-f">50 conteúdos por mês com legendas, perfil organizado, postagem feita pela gente e 2 ajustes no mês. Os 3 anúncios vêm como peças prontas.</p>
       </div>
     </fieldset>
 
@@ -253,8 +253,8 @@
     </fieldset>
 
     <fieldset>
-      <legend><span class="n">8</span>Postagem e anúncios</legend>
-      <p class="hint">Como a gente posta e cuida dos anúncios por você, precisamos de algumas informações a mais.</p>
+      <legend><span class="n">8</span>Postagem</legend>
+      <p class="hint">No Crescimento a gente programa e posta por você. Pra isso, precisamos de algumas informações.</p>
       <div class="f"><span class="q">Acesso ao Instagram<span class="req">*</span> <span class="sub">A gente nunca pede sua senha</span></span>
         <div class="chips">
           <label class="chip"><input type="radio" name="acesso" id="ac1" value="Vou adicionar vocês como parceiros no Meta Business"><span>Vou adicionar vocês no Meta Business</span></label>
@@ -263,21 +263,8 @@
       </div>
       <div class="row">
         <div class="f"><label for="horarios">Melhores dias e horários pra postar <span class="sub">Se não souber, a gente define</span></label><input type="text" id="horarios" name="horarios" placeholder="Ex.: dias úteis, fim da tarde"></div>
-        <div class="f"><label for="verba">Quanto pretende investir em anúncios por mês?<span class="req">*</span> <span class="sub">Pago direto ao Instagram</span></label><select id="verba" name="verba" required><option value="">Escolha</option><option>Até R$ 300</option><option>De R$ 300 a R$ 600</option><option>De R$ 600 a R$ 1.000</option><option>Mais de R$ 1.000</option><option>Ainda não sei, quero orientação</option></select></div>
+        <div class="f"><label for="destino">Para onde os posts e anúncios devem levar? <span class="sub">WhatsApp de atendimento ou link</span></label><input type="text" id="destino" name="destino"></div>
       </div>
-      <div class="f"><span class="q">O que você mais quer com os anúncios?</span>
-        <div class="chips">
-          <label class="chip"><input type="checkbox" name="objetivo" id="ob1" value="Mensagens no WhatsApp"><span>Mensagens no WhatsApp</span></label>
-          <label class="chip"><input type="checkbox" name="objetivo" id="ob2" value="Mais seguidores"><span>Mais seguidores</span></label>
-          <label class="chip"><input type="checkbox" name="objetivo" id="ob3" value="Gente na loja"><span>Gente na loja</span></label>
-          <label class="chip"><input type="checkbox" name="objetivo" id="ob4" value="Vendas no site"><span>Vendas no site</span></label>
-        </div>
-      </div>
-      <div class="row">
-        <div class="f"><label for="regiao">Onde estão os clientes que você quer alcançar? <span class="sub">Cidade, bairros ou raio em km</span></label><input type="text" id="regiao" name="regiao"></div>
-        <div class="f"><label for="destino">Para onde o anúncio deve levar? <span class="sub">WhatsApp de atendimento ou link</span></label><input type="text" id="destino" name="destino"></div>
-      </div>
-      <div class="f"><label for="anunciou">Já fez anúncios antes? Como foi?</label><textarea id="anunciou" name="anunciou"></textarea></div>
     </fieldset>
 
     <fieldset>
@@ -424,7 +411,7 @@
     t += block("Marca", line("Logo", pick("logo")) + line("Cores que gosta", val("cores")) + line("Cores proibidas", val("naocores")) + line("Estilo", pick("estilo")) + line("Referências", val("refs")) + line("Concorrentes", val("concorrentes")));
     t += block("Jeito de falar", line("Tom", pick("tom")) + line("Expressões", val("palavras")) + line("Não pode aparecer", val("proibido")));
     t += block("Conteúdo", line("Divulgar primeiro", val("primeiro")) + line("Promoções/datas", val("promo")) + line("Assuntos", val("assuntos")) + line("Aparecer nos vídeos", pick("aparecer")));
-    t += block("Postagem e anúncios", line("Acesso", pick("acesso")) + line("Dias/horários", val("horarios")) + line("Verba mensal", val("verba")) + line("Objetivo", pick("objetivo")) + line("Região", val("regiao")) + line("Destino", val("destino")) + line("Anúncios antes", val("anunciou")));
+    t += block("Postagem", line("Acesso", pick("acesso")) + line("Dias/horários", val("horarios")) + line("Destino", val("destino")));
     t += block("Materiais", line("Pasta", val("drive")) + line("Observações", val("extra")));
     return t.trim();
   }

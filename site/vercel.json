@@ -3,6 +3,7 @@
   "trailingSlash": false,
   "headers": [
     { "source": "/assets/(.*)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=3600" }] },
-    { "source": "/(app|admin|entrar)", "headers": [{ "key": "X-Robots-Tag", "value": "noindex" }] }
+    { "source": "/(app|admin|entrar)", "headers": [{ "key": "X-Robots-Tag", "value": "noindex" }] },
+    { "source": "/sw.js", "headers": [{ "key": "Cache-Control", "value": "no-cache" }] }
   ]
 }

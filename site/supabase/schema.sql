@@ -149,6 +149,28 @@ create policy "briefing: editar" on public.briefings for update using (public.is
 drop policy if exists "briefing: apagar" on public.briefings;
 create policy "briefing: apagar" on public.briefings for delete using (public.is_admin());
 
+-- ============================================================ leads (formulário "quero esse plano" da home e da landing de vídeos)
+create table if not exists public.leads (
+  id uuid primary key default gen_random_uuid(),
+  nome text not null check (char_length(nome) between 1 and 120),
+  whatsapp text not null check (char_length(whatsapp) between 8 and 30),
+  empresa text check (char_length(empresa) <= 160),
+  interesse text check (char_length(interesse) <= 80),
+  origem text check (char_length(origem) <= 40),
+  status text not null default 'novo' check (status in ('novo', 'conversando', 'fechou', 'perdido')),
+  criado_em timestamptz not null default now()
+);
+
+alter table public.leads enable row level security;
+drop policy if exists "lead: enviar" on public.leads;
+create policy "lead: enviar" on public.leads for insert to anon, authenticated with check (status = 'novo');
+drop policy if exists "lead: ver" on public.leads;
+create policy "lead: ver" on public.leads for select using (public.is_admin());
+drop policy if exists "lead: editar" on public.leads;
+create policy "lead: editar" on public.leads for update using (public.is_admin());
+drop policy if exists "lead: apagar" on public.leads;
+create policy "lead: apagar" on public.leads for delete using (public.is_admin());
+
 -- ============================================================ arquivos (Storage)
 -- bucket privado: cada cliente só baixa o que está na pasta com o id dele
 insert into storage.buckets (id, name, public) values ('entregas', 'entregas', false)
