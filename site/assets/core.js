@@ -8,9 +8,8 @@
   var STATUS = { aguardando: "Para aprovar", aprovado: "Aprovado", ajuste: "Em ajuste" };
   var PLANOS = [
     { nome: "Sem plano", ajustes: 0 },
-    { nome: "Largada", ajustes: 1 }, { nome: "Acelera", ajustes: 2 }, { nome: "Turbo", ajustes: 3 },
-    { nome: "Presença", ajustes: 1 }, { nome: "Crescimento", ajustes: 2 }, { nome: "Autoridade", ajustes: 3 },
-    { nome: "Vídeo motion", ajustes: 1 }
+    { nome: "Vídeo Essencial", ajustes: 0 }, { nome: "Vídeo Completo", ajustes: 0 }, { nome: "Vídeo Premium", ajustes: 0 },
+    { nome: "Presença", ajustes: 1 }, { nome: "Crescimento", ajustes: 2 }, { nome: "Autoridade", ajustes: 3 }
   ];
 
   // ---------------------------------------------------------------- utilidades
