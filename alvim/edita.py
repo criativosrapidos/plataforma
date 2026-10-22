@@ -225,9 +225,9 @@ def locucao(preview=False):
     # (bruto, início, entra, sai) — tempos da locução v2 (+L)
     plano = [("c12", 0.3, 0.0, 3.0), ("c05", 0.0, 3.0, 5.35), ("c04", 4.0, 5.35, 7.2, {"z": (1.03, 1.12)}),
              ("c09", 0.0, 7.2, 8.9, {"vel": .58, "z": (1.0, 1.06)}), ("c03", 2.0, 8.9, 9.95), ("c10", 0.2, 9.95, 12.2),
-             ("c11", 1.5, 12.2, 14.3), ("c08", 4.5, 14.3, 18.05), ("c07", 0.4, 18.05, 21.45, {"z": (1.0, 1.14)}),
-             ("c04", 6.5, 21.45, 23.6, {"z": (1.12, 1.03)}), ("c02", 6.0, 23.6, 26.0, {"z": (1.25, 1.32), "cx": .62, "cy": .45}),
-             ("c06", 0.8, 26.0, 27.4), ("c08", 1.0, 27.4, 29.15), ("c03", 6.0, 29.15, 30.85)]
+             ("c11", 1.5, 12.2, 14.3), ("c08", 4.5, 14.3, 17.6), ("c06", 4.0, 17.6, 21.35), ("c07", 0.4, 21.35, 25.98, {"z": (1.0, 1.14)}),
+             ("c04", 6.5, 25.98, 28.13, {"z": (1.12, 1.03)}), ("c02", 6.0, 28.13, 30.53, {"z": (1.25, 1.32), "cx": .62, "cy": .45}),
+             ("c06", 0.8, 30.53, 31.93), ("c08", 1.0, 31.93, 33.68), ("c03", 6.0, 33.68, 35.38)]
     segs = []
     for p in plano:
         cc, ini, a, b = p[:4]
@@ -240,13 +240,13 @@ def locucao(preview=False):
         dict(t0=c[2] + 0.1, t1=c[3] - 0.1, top=1420, kicker="Nosso presidente", linhas=[("Daher", "")], sub="Presidente · Líderes do Brasil", fs=150),
         dict(t0=c[3] + 0.05, t1=c[4] - 0.05, top=1440, linhas=[("Cláudia", "")], sub="Vice-presidente · Líderes do Brasil", fs=140),
         dict(t0=c[5] + 0.05, t1=c[7] - 0.1, top=1400, kicker="Especialista em alimentação e varejo", linhas=[("Felipe Alvim", "")], sub="Presidente do Grupo Alvim", fs=136),
-        dict(t0=c[7] + 0.1, t1=c[8] - 0.1, top=1180, kicker="O Grupo Alvim é dono de", linhas=[("Todos os", ""), ("Burger King", "lar"), ("de Brasília", "azul")], fs=124),
-        dict(t0=c[8] + 0.05, t1=c[9] - 0.1, top=1180, kicker="E fatura mais de", num=100, sub="por ano"),
-        dict(t0=c[9] + 0.1, t1=c[11] - 0.1, top=1400, kicker="Uma tarde de troca de", linhas=[("Experiência", ""), ("gestão e visão", "azul")], fs=124),
-        dict(t0=c[11] + 0.1, t1=c[13] - 0.1, top=1420, kicker="Direto da operação", linhas=[("Da cozinha", ""), ("ao balcão", "azul")], fs=136),
+        dict(t0=c[7] + 0.1, t1=c[9] - 0.1, top=1180, kicker="Grupo Alvim · desde 2008", linhas=[("+20 restaurantes", ""), ("+400 colaboradores", "azul")], fs=112),
+        dict(t0=c[9] + 0.05, t1=c[10] - 0.1, top=1180, kicker="Somando tudo, fatura", num=100, sub="por ano"),
+        dict(t0=c[10] + 0.1, t1=c[12] - 0.1, top=1400, kicker="Uma tarde de troca de", linhas=[("Experiência", ""), ("gestão e visão", "azul")], fs=124),
+        dict(t0=c[12] + 0.1, t1=c[14] - 0.1, top=1420, kicker="Direto da operação", linhas=[("Da cozinha", ""), ("ao balcão", "azul")], fs=136),
     ]
     monta("lideres_grupo_alvim_locucao", segs, itens, 2.6, (c[2] + 0.2, c[-1] - 0.3),
-          voz=ROOT / "audio" / "locucao.mp3", music_cuts=[0.0, c[2], c[7], c[8], c[9], c[11], c[-1]],
+          voz=ROOT / "audio" / "locucao.mp3", music_cuts=[0.0, c[2], c[7], c[9], c[10], c[12], c[-1]],
           preview=[1.5, c[2] + 1, c[5] + 1, c[7] + 1.5, c[8] + 1.5, c[-1] + 1.5] if preview else None)
 
 
