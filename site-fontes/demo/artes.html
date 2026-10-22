@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Artes de exemplo · Brasa Burger (marca fictícia)</title>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root { --red: #E0301E; --dark: #1A0E0A; --cream: #FFF1DC; --mus: #FFB81C; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #444; padding: 40px; display: flex; flex-wrap: wrap; gap: 40px; font-family: Inter, sans-serif; }
+  .art { position: relative; overflow: hidden; flex: none; }
+  .anton { font-family: Anton, "Arial Narrow", sans-serif; font-weight: 400; text-transform: uppercase; letter-spacing: .005em; }
+  .brand { position: absolute; display: flex; align-items: center; gap: 16px; }
+  .brand svg { width: 58px; height: 64px; }
+  .brand .n { font-family: Anton, sans-serif; font-size: 64px; line-height: .9; }
+  .brand .n small { display: block; font-family: Inter, sans-serif; font-weight: 800; font-size: 19px; letter-spacing: .42em; margin-top: 6px; }
+  .burger { position: absolute; display: block; }
+
+  /* A · post do combo */
+  #post { width: 1080px; height: 1350px; background: var(--red); color: var(--cream); }
+  #post::before { content: ""; position: absolute; inset: auto -200px -380px -200px; height: 760px; border-radius: 50%; background: #C4220F; }
+  #post .brand { top: 64px; left: 70px; color: var(--cream); }
+  #post .pill { position: absolute; top: 76px; right: 70px; background: var(--cream); color: var(--red); font-weight: 900; font-size: 30px; letter-spacing: .06em; padding: 14px 28px; border-radius: 99px; }
+  #post h1 { position: absolute; top: 200px; left: 64px; font-size: 270px; line-height: .84; }
+  #post h1 span { display: block; color: var(--mus); }
+  #post .burger { width: 660px; left: 50px; bottom: 120px; filter: drop-shadow(0 30px 40px rgba(0,0,0,.25)); }
+  #post .price { position: absolute; right: 60px; top: 690px; width: 320px; height: 320px; border-radius: 50%; background: var(--cream); color: var(--dark); display: grid; place-content: center; text-align: center; transform: rotate(-9deg); box-shadow: 0 20px 40px rgba(0,0,0,.2); }
+  #post .price small { font-weight: 900; font-size: 30px; letter-spacing: .12em; color: var(--red); }
+  #post .price b { font-family: Anton, sans-serif; font-weight: 400; font-size: 100px; line-height: .95; }
+  #post .price b i { font-style: normal; font-size: 56px; }
+  #post .price em { font-style: normal; font-weight: 800; font-size: 24px; }
+  #post .foot { position: absolute; left: 70px; right: 70px; bottom: 60px; display: flex; justify-content: space-between; align-items: center; font-weight: 800; font-size: 34px; }
+  #post .foot b { background: var(--dark); color: var(--cream); padding: 16px 30px; border-radius: 99px; font-size: 30px; }
+
+  /* B · capa de carrossel */
+  #carrossel { width: 1080px; height: 1350px; background: var(--cream); color: var(--dark); }
+  #carrossel .brand { top: 64px; left: 70px; }
+  #carrossel .idx { position: absolute; top: 80px; right: 70px; font-weight: 800; font-size: 30px; }
+  #carrossel h1 { position: absolute; top: 230px; left: 66px; font-size: 230px; line-height: .86; }
+  #carrossel h1 .m { display: block; font-size: 128px; line-height: 1; margin: 14px 0 6px; }
+  #carrossel h1 .r { display: block; color: var(--red); }
+  #carrossel .burger { width: 600px; right: -40px; bottom: 70px; transform: rotate(-8deg); }
+  #carrossel .swipe { position: absolute; left: 70px; bottom: 70px; font-weight: 900; font-size: 34px; display: flex; align-items: center; gap: 14px; }
+  #carrossel .swipe i { display: inline-block; width: 64px; height: 6px; background: var(--red); border-radius: 9px; position: relative; }
+  #carrossel .swipe i::after { content: ""; position: absolute; right: -2px; top: -9px; border: 12px solid transparent; border-left: 18px solid var(--red); border-right: 0; }
+
+  /* C · stories */
+  #stories { width: 1080px; height: 1920px; background: var(--dark); color: var(--cream); text-align: center; }
+  #stories::before { content: ""; position: absolute; left: 50%; top: 1080px; width: 1200px; height: 1200px; transform: translate(-50%, -50%); border-radius: 50%; background: radial-gradient(circle, rgba(224,48,30,.55), rgba(224,48,30,0) 62%); }
+  #stories .brand { top: 120px; left: 50%; transform: translateX(-50%); color: var(--cream); }
+  #stories h1 { position: absolute; top: 300px; left: 0; right: 0; font-size: 250px; line-height: .86; }
+  #stories h1 span { display: block; font-size: 330px; color: var(--mus); margin-top: .1em; }
+  #stories .burger { width: 740px; left: 170px; top: 900px; filter: drop-shadow(0 40px 50px rgba(0,0,0,.45)); }
+  #stories .cta { position: absolute; left: 50%; transform: translateX(-50%); bottom: 250px; background: var(--red); color: #fff; font-weight: 900; font-size: 50px; padding: 34px 64px; border-radius: 99px; white-space: nowrap; box-shadow: 0 14px 0 #8E1408; }
+  #stories .sub { position: absolute; left: 0; right: 0; bottom: 160px; font-weight: 800; font-size: 38px; opacity: .8; }
+
+  /* D · anúncio */
+  #anuncio { width: 1080px; height: 1350px; background: var(--mus); color: var(--dark); }
+  #anuncio .brand { top: 64px; right: 70px; color: var(--dark); }
+  #anuncio h1 { position: absolute; top: 170px; left: 64px; font-size: 280px; line-height: .84; }
+  #anuncio h1 span { display: block; color: var(--red); margin-top: .1em; }
+  #anuncio .sub { position: absolute; top: 700px; left: 70px; font-weight: 800; font-size: 46px; line-height: 1.2; }
+  #anuncio .sub b { background: var(--dark); color: var(--mus); padding: 0 14px; border-radius: 10px; }
+  #anuncio .burger { width: 600px; left: -30px; bottom: 40px; transform: rotate(6deg); }
+  #anuncio .cta { position: absolute; right: 64px; bottom: 90px; background: var(--red); color: #fff; font-weight: 900; font-size: 46px; padding: 30px 48px; border-radius: 26px; box-shadow: 0 12px 0 #8E1408; }
+
+  /* avatar */
+  #avatar { width: 256px; height: 256px; border-radius: 50%; background: var(--red); display: grid; place-items: center; }
+  #avatar svg { width: 120px; height: 132px; }
+</style>
+</head>
+<body>
+<!-- marca fictícia criada só para demonstração -->
+<template id="flame"><svg viewBox="0 0 100 110"><defs><linearGradient id="g-fl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFD15A"/><stop offset="1" stop-color="#FF7A1A"/></linearGradient></defs><path d="M52 2c6 22 34 34 34 66a36 36 0 0 1-72 0c0-18 10-28 18-38 2 10 6 16 12 18-2-18 2-34 8-46z" fill="url(#g-fl)"/><path d="M50 58c4 10 16 14 16 28a16 16 0 0 1-32 0c0-8 6-12 9-18 1 5 3 7 6 8 0-7 0-12 1-18z" fill="#FFF1DC" opacity=".9"/></svg></template>
+
+<section class="art" id="post">
+  <div class="brand"><i data-flame></i><div class="n">Brasa<small>BURGER</small></div></div>
+  <div class="pill">TERÇA E QUARTA</div>
+  <h1 class="anton">Combo<span>duplo</span></h1>
+  <!--BURGER-->
+  <div class="price"><small>SÓ</small><b>R$ 34<i>,90</i></b><em>burger + batata + refri</em></div>
+  <div class="foot"><span>Peça no WhatsApp</span><b>link na bio</b></div>
+</section>
+
+<section class="art" id="carrossel">
+  <div class="brand"><i data-flame></i><div class="n">Brasa<small>BURGER</small></div></div>
+  <div class="idx">1/4</div>
+  <h1 class="anton">3 motivos<span class="m">pra pedir o</span><span class="r">Brasa hoje</span></h1>
+  <!--BURGER-->
+  <div class="swipe">arrasta <i></i></div>
+</section>
+
+<section class="art" id="stories">
+  <div class="brand"><i data-flame></i><div class="n">Brasa<small>BURGER</small></div></div>
+  <h1 class="anton">Delivery<span>até 23h</span></h1>
+  <!--BURGER-->
+  <div class="cta">PEÇA PELO WHATSAPP</div>
+  <div class="sub">link na bio</div>
+</section>
+
+<section class="art" id="anuncio">
+  <div class="brand"><i data-flame></i><div class="n">Brasa<small>BURGER</small></div></div>
+  <h1 class="anton">Frete<span>grátis</span></h1>
+  <p class="sub">nos pedidos acima<br>de <b>R$ 50</b></p>
+  <!--BURGER-->
+  <div class="cta">PEÇA AGORA</div>
+</section>
+
+<section class="art" id="avatar"><i data-flame></i></section>
+
+<script>
+  document.querySelectorAll('[data-flame]').forEach(function (i) { i.outerHTML = document.getElementById('flame').innerHTML; });
+</script>
+</body>
+</html>

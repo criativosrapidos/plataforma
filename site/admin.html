@@ -1,0 +1,457 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>Criativos Rápidos · Painel da agência</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#101216">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="assets/icons/favicon-32.png">
+<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,800;0,900;1,900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<style>
+  .split { display: grid; grid-template-columns: minmax(0, 360px) minmax(0, 1fr); gap: 20px; align-items: start; }
+  @media (max-width: 1100px) { .split { grid-template-columns: 1fr; } }
+  .orig { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
+  .orig label { border: 1.5px solid var(--line); border-radius: 10px; padding: 7px 12px; font-size: 13px; font-weight: 600; cursor: pointer; }
+  .orig input { position: absolute; opacity: 0; pointer-events: none; }
+  .orig label:has(input:checked) { border-color: var(--fg); background: var(--surface-2); }
+  .orig label:has(input:focus-visible) { outline: 3px solid var(--yellow); }
+  .brf { border: 1px solid var(--line); border-radius: 16px; background: var(--surface); }
+  .brf summary { cursor: pointer; padding: 14px 16px; display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: center; list-style: none; }
+  .brf summary::-webkit-details-marker { display: none; }
+  .brf pre { margin: 0; padding: 0 16px 16px; white-space: pre-wrap; font: 13px/1.6 var(--body); color: var(--fg); }
+  .brf .acts { display: flex; gap: 8px; flex-wrap: wrap; padding: 0 16px 16px; }
+  .todo { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 12px; align-items: center; background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 12px 14px; }
+  .todo .k { width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center; background: var(--surface-2); }
+  .todo.ajuste .k { background: var(--warn-bg); color: var(--warn); }
+  .todo.brief .k { background: var(--wait-bg); color: var(--yellow-ink); }
+  .todo.lead .k { background: var(--ok-bg); color: var(--ok); }
+  .todo .tt { font-weight: 700; font-size: 14px; }
+  .todo .st { font-size: 13px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; }
+  .chk { display: flex; gap: 10px; align-items: flex-start; font-size: 14px; font-weight: 600; margin: -4px 0 16px; cursor: pointer; }
+  .chk input { width: 18px; height: 18px; margin-top: 1px; accent-color: var(--ink); flex: none; }
+  .ig { font-size: 12.5px; display: flex; gap: 6px; align-items: flex-start; }
+  .ig svg.i { width: 16px; height: 16px; margin-top: 2px; }
+  .ig a { margin-left: 4px; }
+  .ig.erro { color: var(--warn); }
+  .ig.ok { color: var(--ok); }
+  .two { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; align-items: start; }
+</style>
+</head>
+<body class="app">
+<div class="shell">
+  <aside class="side" aria-label="Menu">
+    <a class="logo" href="./"><img src="assets/logo-icone.png" alt=""><span><b>criativos</b><i>rápidos</i></span></a>
+    <nav id="nav-side"></nav>
+    <div class="foot">
+      <div class="card-mini"><b>Painel da agência</b><span id="side-email"></span></div>
+      <button class="btn ghost-w" type="button" data-sair>Sair</button>
+    </div>
+  </aside>
+
+  <div class="main">
+    <header class="appbar">
+      <div class="appbar-in">
+        <a class="logo" href="./"><img src="assets/logo-icone.png" alt=""><span><b>criativos</b><i>rápidos</i></span></a>
+        <div class="sp"></div>
+        <div class="who"><b>Painel da agência</b><span id="who"></span></div>
+        <button class="avatar" type="button" data-sair aria-label="Sair">A</button>
+      </div>
+    </header>
+
+    <!-- VISÃO GERAL -->
+    <main class="view" id="v-visao">
+      <div><span class="eyebrow" id="hoje"></span><h1 id="ola" style="margin-top:6px">Olá!</h1></div>
+      <div class="stats" id="kpis"></div>
+      <div class="two">
+        <section class="sec"><h2>Precisa de você</h2><div class="list" id="todo"></div></section>
+        <section class="sec"><h2>Próximas postagens <span class="muted small" style="font-family:var(--body);font-weight:600">· clientes em que a gente posta</span></h2><div class="list" id="postar"></div></section>
+      </div>
+    </main>
+
+    <!-- ENTREGAS -->
+    <main class="view" id="v-entregas" hidden>
+      <div class="view-head"><div><h1>Entregas</h1><p class="lead">Envie os conteúdos. O cliente aprova, pede ajuste e baixa pelo app.</p></div></div>
+      <div class="split">
+        <form class="card pad-l" id="f-ent" novalidate>
+          <h2 style="margin-bottom:14px">Nova entrega</h2>
+          <div class="f"><label for="n-cli">Cliente</label><select id="n-cli"></select></div>
+          <div class="f"><label for="n-tit">Título</label><input type="text" id="n-tit" placeholder="Ex.: Reels promoção de novembro"></div>
+          <div class="row">
+            <div class="f"><label for="n-tipo">Tipo</label><select id="n-tipo"></select></div>
+            <div class="f"><label for="n-data">Data de postagem</label><input type="date" id="n-data"></div>
+            <div class="f"><label for="n-hora">Horário</label><input type="time" id="n-hora" value="10:00"></div>
+          </div>
+          <label class="chk"><input type="checkbox" id="n-pub" checked> Postar sozinho no Instagram quando o cliente aprovar <span class="muted small">(se ele conectou o Instagram e o plano é Crescimento ou Autoridade)</span></label>
+          <div class="f"><label for="n-leg">Legenda</label><textarea id="n-leg"></textarea></div>
+          <span class="q" style="font-weight:600;font-size:14px;display:block;margin-bottom:6px">Arquivo</span>
+          <div class="orig" role="radiogroup" aria-label="Origem do arquivo">
+            <label><input type="radio" name="orig" value="up" id="o-up" checked><span>Enviar arquivo</span></label>
+            <label><input type="radio" name="orig" value="drive" id="o-drive"><span>Link do Google Drive</span></label>
+          </div>
+          <div class="f" id="w-up"><label for="n-arq">Arquivo em alta qualidade <span class="muted small">vídeo, imagem ou PDF</span></label><input type="file" id="n-arq" multiple accept="video/*,image/*,application/pdf"><span class="small muted">Pode escolher vários: cada arquivo vira uma entrega com o mesmo título numerado. Pra postar sozinho, use imagens JPG e vídeos MP4.</span></div>
+          <label class="chk" id="w-car" hidden><input type="checkbox" id="n-car" checked> Juntar os arquivos num carrossel só</label>
+          <div class="f" id="w-drive" hidden><label for="n-link">Link de compartilhar do Drive</label><input type="url" id="n-link" placeholder="https://drive.google.com/file/d/…"><span class="small muted">No Drive: Compartilhar → Qualquer pessoa com o link → Leitor.</span></div>
+          <div class="err" id="n-err" hidden></div>
+          <div class="small muted" id="n-prog" hidden style="margin-bottom:10px"></div>
+          <button class="btn full" type="submit">Enviar para o cliente aprovar</button>
+        </form>
+
+        <div style="display:grid;gap:14px">
+          <div class="row">
+            <div class="f" style="margin:0"><label for="v-cli">Cliente</label><select id="v-cli"></select></div>
+            <div class="f" style="margin:0"><label for="v-st">Status</label><select id="v-st"><option value="">Todos</option><option value="aguardando">Para aprovar</option><option value="ajuste">Em ajuste</option><option value="aprovado">Aprovado</option></select></div>
+          </div>
+          <div class="grid" id="l-ent"></div>
+          <div class="empty" id="v-ent" hidden><b>Nenhuma entrega com esse filtro</b></div>
+        </div>
+      </div>
+    </main>
+
+    <!-- CLIENTES -->
+    <main class="view" id="v-clientes" hidden>
+      <div class="view-head"><div><h1>Clientes</h1><p class="lead">O cliente cria a conta em <b>/entrar</b> com o e-mail do contrato. Aqui você escolhe o plano: os ajustes se preenchem sozinhos.</p></div></div>
+      <div class="card scroll"><table class="t" id="t-cli"><thead><tr><th>Cliente</th><th>Contato</th><th>Instagram</th><th>Plano</th><th>Ajustes</th><th>Entregas</th><th></th></tr></thead><tbody></tbody></table></div>
+    </main>
+
+    <!-- BRIEFINGS -->
+    <main class="view" id="v-briefings" hidden>
+      <div class="view-head"><div><h1>Briefings</h1><p class="lead">Tudo que chega pelo formulário <b>/brief</b>. Toque pra abrir.</p></div></div>
+      <div class="list" id="l-brf"></div>
+      <div class="empty" id="v-brf" hidden><b>Nenhum briefing ainda</b><span>Depois do pagamento, mande o link criativosrapidos.com.br/brief pro cliente.</span></div>
+    </main>
+
+    <!-- LEADS -->
+    <main class="view" id="v-leads" hidden>
+      <div class="view-head"><div><h1>Interessados</h1><p class="lead">Quem pediu contato pela home ou pela página dos vídeos. Chame no WhatsApp e atualize o status.</p></div></div>
+      <div class="seg" role="group" aria-label="Filtrar interessados" id="seg-leads"></div>
+      <div class="list" id="l-leads"></div>
+      <div class="empty" id="v-leads-vazio" hidden><b>Ninguém por aqui ainda</b><span>Os pedidos de contato do site aparecem aqui.</span></div>
+    </main>
+  </div>
+
+  <nav class="tabbar" id="nav-tab" aria-label="Menu"></nav>
+</div>
+
+<script src="assets/config.js"></script>
+<script src="assets/vendor/supabase.js"></script>
+<script src="assets/core.js"></script>
+<script src="assets/icons.js"></script>
+<script>
+(async function () {
+  var api = CR.api, el = CR.el, ic = CR.ic;
+  CR.avisoDemo();
+  CR.registrarApp();
+  var eu = await CR.exigirLogin("admin");
+  if (!eu) return;
+  document.getElementById("who").textContent = eu.email;
+  document.getElementById("side-email").textContent = eu.email;
+  document.querySelectorAll("[data-sair]").forEach(function (b) { b.addEventListener("click", async function () { await api.sair(); location.replace(CR.demoForcado ? "./" : "entrar.html"); }); });
+
+  var VIEWS = [["visao", "Visão geral", "chart"], ["entregas", "Entregas", "grid"], ["clientes", "Clientes", "users"], ["briefings", "Briefings", "inbox"], ["leads", "Interessados", "target"]];
+  var clientes = [], entregas = [], briefings = [], leads = [], filtroLead = "novo";
+  var hoje = new Date(); hoje.setHours(0, 0, 0, 0);
+  var hj = CR.iso(hoje);
+
+  ["nav-side", "nav-tab"].forEach(function (id) {
+    var n = document.getElementById(id);
+    VIEWS.forEach(function (v) {
+      var a = el("a", { href: "#" + v[0], "data-v": v[0] }, [ic(v[2]), el("span", { text: id === "nav-tab" && v[0] === "visao" ? "Geral" : v[1] })]);
+      if (v[0] !== "visao" && v[0] !== "clientes") a.appendChild(el("span", { class: "badge", hidden: true, "data-badge": v[0] }));
+      n.appendChild(a);
+    });
+  });
+  function ir(v) {
+    if (!VIEWS.some(function (x) { return x[0] === v; })) v = "visao";
+    VIEWS.forEach(function (x) { document.getElementById("v-" + x[0]).hidden = x[0] !== v; });
+    document.querySelectorAll("[data-v]").forEach(function (a) { if (a.dataset.v === v) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current"); });
+    window.scrollTo(0, 0);
+  }
+  window.addEventListener("hashchange", function () { ir(location.hash.slice(1)); });
+
+  document.getElementById("hoje").textContent = CR.SEMANA[hoje.getDay()] + ", " + hoje.getDate() + " de " + CR.MESES[hoje.getMonth()];
+  var h = new Date().getHours();
+  document.getElementById("ola").textContent = (h < 12 ? "Bom dia" : h < 18 ? "Boa tarde" : "Boa noite") + ", " + ((eu.nome || "").split(" ")[0] || "equipe") + "!";
+
+  function cli(id) { return clientes.find(function (x) { return x.id === id; }); }
+  function nomeCli(id) { var c = cli(id); return c ? (c.empresa || c.nome || c.email) : "?"; }
+  function waLead(n) { var d = CR.soDigitos(n); if (d.length === 10 || d.length === 11) d = "55" + d; return d.length >= 12 ? "https://wa.me/" + d : ""; }
+
+  async function carregar() {
+    try {
+      var todos = await api.clientes();
+      clientes = todos.filter(function (p) { return p.papel !== "admin"; });
+      entregas = await api.entregas();
+      briefings = await api.briefings();
+      leads = await api.leads();
+    } catch (e) { CR.toast(e.message, true); }
+    selects(); badges(); visao(); renderEntregas(); renderClientes(); renderBriefings(); renderLeads();
+  }
+
+  function badges() {
+    var n = { entregas: entregas.filter(function (e) { return e.status === "ajuste"; }).length, briefings: briefings.filter(function (b) { return (b.status || "novo") === "novo"; }).length, leads: leads.filter(function (l) { return l.status === "novo"; }).length };
+    document.querySelectorAll("[data-badge]").forEach(function (b) { var k = n[b.dataset.badge] || 0; b.textContent = k; b.hidden = !k; });
+  }
+
+  // ---------------------------------------------------------------- visão geral
+  function visao() {
+    var k = document.getElementById("kpis"); k.textContent = "";
+    var aj = entregas.filter(function (e) { return e.status === "ajuste"; });
+    [[entregas.filter(function (e) { return e.status === "aguardando"; }).length, "esperando o cliente aprovar", "entregas", "aguardando"],
+     [aj.length, "ajustes pra fazer", "entregas", "ajuste", aj.length > 0],
+     [briefings.filter(function (b) { return (b.status || "novo") === "novo"; }).length, "briefings novos", "briefings"],
+     [leads.filter(function (l) { return l.status === "novo"; }).length, "interessados novos", "leads"],
+     [clientes.filter(function (c) { return c.plano && c.plano !== "Sem plano"; }).length, "clientes ativos", "clientes"]].forEach(function (x) {
+      var b = el("button", { class: "stat" + (x[4] ? " alert" : ""), type: "button" }, [el("b", { text: String(x[0]) }), el("span", { text: x[1] })]);
+      b.addEventListener("click", function () { if (x[3]) { document.getElementById("v-st").value = x[3]; renderEntregas(); } location.hash = x[2]; });
+      k.appendChild(b);
+    });
+
+    var t = document.getElementById("todo"); t.textContent = "";
+    var itens = [];
+    aj.forEach(function (e) { itens.push(el("div", { class: "todo ajuste" }, [el("span", { class: "k" }, ic("edit")), el("div", { style: "min-width:0" }, [el("div", { class: "tt", text: "Ajuste: " + e.titulo }), el("div", { class: "st", text: nomeCli(e.cliente_id) + " · “" + (e.comentario || "") + "”" })]), el("button", { class: "btn sm", type: "button", text: "Abrir", onclick: function () { document.getElementById("v-cli").value = e.cliente_id; document.getElementById("v-st").value = "ajuste"; renderEntregas(); location.hash = "entregas"; } })])); });
+    briefings.filter(function (b) { return (b.status || "novo") === "novo"; }).forEach(function (b) { itens.push(el("div", { class: "todo brief" }, [el("span", { class: "k" }, ic("inbox")), el("div", { style: "min-width:0" }, [el("div", { class: "tt", text: "Briefing novo: " + (b.empresa || b.nome || "sem nome") }), el("div", { class: "st", text: (b.plano || "") + " · " + CR.data(b.criado_em) })]), el("button", { class: "btn sm", type: "button", text: "Ler", onclick: function () { location.hash = "briefings"; } })])); });
+    leads.filter(function (l) { return l.status === "novo"; }).forEach(function (l) {
+      var w = waLead(l.whatsapp);
+      itens.push(el("div", { class: "todo lead" }, [el("span", { class: "k" }, ic("target")), el("div", { style: "min-width:0" }, [el("div", { class: "tt", text: "Interessado: " + l.nome }), el("div", { class: "st", text: (l.interesse || "") + " · " + (l.empresa || l.whatsapp) })]), w ? el("a", { class: "btn sm", href: w + "?text=" + encodeURIComponent("Oi, " + l.nome.split(" ")[0] + "! Aqui é da Criativos Rápidos. Vi que você se interessou pelo " + (l.interesse || "nosso trabalho") + "."), target: "_blank", rel: "noopener" }, [ic("chat"), "Chamar"]) : el("button", { class: "btn sm", type: "button", text: "Ver", onclick: function () { location.hash = "leads"; } })]));
+    });
+    if (!itens.length) t.appendChild(el("div", { class: "empty", style: "padding:22px" }, [ic("check"), el("b", { text: "Nada pendente" }), el("span", { text: "Ajustes, briefings e interessados novos aparecem aqui." })]));
+    itens.forEach(function (i) { t.appendChild(i); });
+
+    var p = document.getElementById("postar"); p.textContent = "";
+    var lista = entregas.filter(function (e) { var c = cli(e.cliente_id); return c && CR.plano(c.plano).posta && e.data_postagem && e.data_postagem >= hj; })
+      .sort(function (a, b) { return a.data_postagem < b.data_postagem ? -1 : 1; }).slice(0, 8);
+    if (!lista.length) p.appendChild(el("div", { class: "empty", style: "padding:22px" }, [el("span", { text: "Nenhuma postagem marcada. Coloque a data de postagem nas entregas dos planos Crescimento e Autoridade." })]));
+    lista.forEach(function (e) {
+      var pp = e.data_postagem.split("-"), d = new Date(+pp[0], +pp[1] - 1, +pp[2]);
+      p.appendChild(el("div", { class: "li" }, [
+        el("div", { class: "date" }, [el("b", { text: String(d.getDate()) }), el("span", { text: CR.SEMANA[d.getDay()] })]),
+        el("div", { style: "min-width:0" }, [el("div", { class: "tt", text: e.titulo }), el("div", { class: "st" }, [nomeCli(e.cliente_id) + " · ", el("span", { class: "pill " + (e.publicado_em ? "aprovado" : e.status), style: "padding:1px 8px", text: e.publicado_em ? "Publicado" : e.status === "aprovado" ? (igDe(e.cliente_id) && e.publicar !== false ? "Posta sozinho às " + String(e.hora_postagem || "10:00").slice(0, 5) : "Pronto pra postar") : CR.STATUS[e.status] })])]),
+        el("button", { class: "icon-btn", type: "button", "aria-label": "Baixar", title: "Baixar", onclick: async function () { var u = await api.urlArquivo(e, true); var a = el("a", { href: u, download: e.arquivo_nome || "", target: "_blank", rel: "noopener" }); document.body.appendChild(a); a.click(); a.remove(); } }, ic("down"))
+      ]));
+    });
+  }
+
+  // ---------------------------------------------------------------- entregas
+  Object.keys(CR.TIPOS).forEach(function (k) { document.getElementById("n-tipo").appendChild(el("option", { value: k, text: CR.TIPOS[k] })); });
+  document.querySelectorAll('input[name="orig"]').forEach(function (r) {
+    r.addEventListener("change", function () { var d = document.getElementById("o-drive").checked; document.getElementById("w-up").hidden = d; document.getElementById("w-drive").hidden = !d; });
+  });
+  function selects() {
+    var a = document.getElementById("n-cli"), b = document.getElementById("v-cli");
+    var va = a.value, vb = b.value;
+    a.textContent = ""; b.textContent = "";
+    a.appendChild(el("option", { value: "", text: clientes.length ? "Escolha o cliente" : "Nenhum cliente ainda" }));
+    b.appendChild(el("option", { value: "", text: "Todos os clientes" }));
+    clientes.forEach(function (c) {
+      var t = (c.empresa || c.nome || c.email) + (c.plano && c.plano !== "Sem plano" ? " · " + c.plano : "");
+      a.appendChild(el("option", { value: c.id, text: t })); b.appendChild(el("option", { value: c.id, text: t }));
+    });
+    a.value = va; b.value = vb;
+  }
+  function opcaoCarrossel() { document.getElementById("w-car").hidden = document.getElementById("n-arq").files.length < 2 || document.getElementById("o-drive").checked; }
+  document.getElementById("n-arq").addEventListener("change", opcaoCarrossel);
+  document.querySelectorAll('input[name="orig"]').forEach(function (r) { r.addEventListener("change", opcaoCarrossel); });
+  document.getElementById("v-cli").addEventListener("change", renderEntregas);
+  document.getElementById("v-st").addEventListener("change", renderEntregas);
+
+  function renderEntregas() {
+    var c = document.getElementById("v-cli").value, st = document.getElementById("v-st").value;
+    var vis = entregas.filter(function (e) { return (!c || e.cliente_id === c) && (!st || e.status === st); });
+    var l = document.getElementById("l-ent"); l.textContent = "";
+    vis.forEach(function (e) { l.appendChild(cardEntrega(e)); });
+    document.getElementById("v-ent").hidden = vis.length > 0;
+  }
+
+  function miniatura(e) {
+    var b = el("div", { class: "thumb", style: "cursor:default" });
+    var tipo = CR.tipoArquivo(e.arquivo_nome || e.demo_url || "");
+    if (e.link_externo && !e.arquivo_path && !e.demo_url) b.appendChild(el("a", { class: "file", href: e.link_externo, target: "_blank", rel: "noopener", style: "color:#fff" }, [ic("ext"), el("br"), "Abrir no Google Drive"]));
+    else if (e.demo_capa) b.appendChild(el("img", { src: e.demo_capa, alt: "" }));
+    else api.urlArquivo(e, false).then(function (url) {
+      if (!url) b.appendChild(el("span", { class: "file", text: "Sem arquivo" }));
+      else if (tipo === "imagem") b.insertBefore(el("img", { src: url, alt: "" }), b.firstChild);
+      else if (tipo === "video") { var v = el("video", { src: url.indexOf("blob:") === 0 ? url : url + "#t=0.1", controls: true, playsinline: true, preload: "metadata" }); v.style.pointerEvents = "auto"; v.style.objectFit = "contain"; b.insertBefore(v, b.firstChild); }
+      else b.appendChild(el("span", { class: "file" }, [ic("file"), el("br"), e.arquivo_nome || "Arquivo"]));
+    }).catch(function () { b.appendChild(el("span", { class: "file", text: "Arquivo indisponível" })); });
+    b.appendChild(el("span", { class: "ov", style: "pointer-events:none" }, [el("span", { class: "chip", text: CR.TIPOS[e.tipo] || e.tipo }), el("span", { class: "pill " + e.status, text: CR.STATUS[e.status] })]));
+    return b;
+  }
+
+  function cardEntrega(e) {
+    var troca = el("input", { type: "file", hidden: true, accept: "video/*,image/*,application/pdf", onchange: async function () {
+      if (!this.files[0]) return;
+      CR.toast("Enviando a nova versão…");
+      try { await api.trocarArquivo(e, this.files[0]); CR.toast("Nova versão enviada. O cliente já pode aprovar."); await carregar(); } catch (x) { CR.toast(x.message, true); }
+    } });
+    var drive = e.link_externo && !e.arquivo_path;
+    return el("article", { class: "ent" }, [miniatura(e), el("div", { class: "body" }, [
+      el("h3", { text: e.titulo }),
+      el("div", { class: "meta", text: nomeCli(e.cliente_id) + (e.data_postagem ? " · postar " + CR.dataLonga(e.data_postagem) : "") }),
+      e.status === "ajuste" && e.comentario ? el("div", { class: "coment" }, [el("b", { text: "Pedido do cliente: " }), e.comentario]) : null,
+      linhaIG(e),
+      el("div", { class: "acts" }, [
+        troca,
+        podePostar(e) ? el("button", { class: "btn dark sm", type: "button", onclick: async function () {
+          this.disabled = true; CR.toast("Publicando no Instagram…");
+          try { var r = await api.publicarAgora(e.id); CR.toast(r === "publicado" ? "Publicado no Instagram!" : "O Instagram ainda está processando o vídeo. Ele sai sozinho em alguns minutos."); await carregar(); }
+          catch (x) { CR.toast(x.message, true); await carregar(); }
+        } }, [ic("send"), e.publicacao_erro ? "Tentar de novo" : "Postar agora"]) : null,
+        drive ? null : el("button", { class: "btn sm", type: "button", onclick: function () { troca.click(); } }, [ic("up"), e.status === "ajuste" ? "Enviar ajustada" : "Trocar arquivo"]),
+        drive && e.status === "ajuste" ? el("button", { class: "btn sm", type: "button", text: "Ajuste feito no Drive", onclick: async function () {
+          try { await api.editarEntrega(e.id, { status: "aguardando" }); CR.toast("Voltou para o cliente aprovar."); await carregar(); } catch (x) { CR.toast(x.message, true); }
+        } }) : null,
+        el("button", { class: "btn danger sm", type: "button", "aria-label": "Apagar entrega", onclick: function () { confirmar(this, async function () {
+          try { await api.apagarEntrega(e); CR.toast("Entrega apagada."); await carregar(); } catch (x) { CR.toast(x.message, true); }
+        }); } }, [ic("trash")])
+      ])
+    ])]);
+  }
+
+  function igDe(id) { var c = cli(id); return c && c.instagram; }
+  function podePostar(e) { return e.status === "aprovado" && !e.publicado_em && igDe(e.cliente_id) && (e.arquivo_path || e.demo_url); }
+  function linhaIG(e) {
+    if (e.publicado_em) return el("div", { class: "ig ok" }, [ic("check"), "Publicado " + CR.dataLonga(e.publicado_em.slice(0, 10)), e.publicado_link ? el("a", { href: e.publicado_link, target: "_blank", rel: "noopener", text: "ver post" }) : null]);
+    if (e.publicacao_erro) return el("div", { class: "ig erro" }, [ic("info"), "Não publicou: " + e.publicacao_erro]);
+    var c = cli(e.cliente_id);
+    if (!c || !CR.plano(c.plano).posta) return null;
+    if (!c.instagram) return el("div", { class: "ig muted" }, [ic("info"), "Cliente ainda não conectou o Instagram"]);
+    if (e.publicar === false) return el("div", { class: "ig muted" }, [ic("info"), "Postagem manual"]);
+    if (!e.data_postagem) return el("div", { class: "ig muted" }, [ic("cal"), "Sem data: não posta sozinho"]);
+    return el("div", { class: "ig" }, [ic("cal"), (e.status === "aprovado" ? "Agendado: " : "Posta sozinho depois de aprovado: ") + CR.dataLonga(e.data_postagem) + " às " + String(e.hora_postagem || "10:00").slice(0, 5) + " no @" + c.instagram]);
+  }
+
+  // confirmação em dois toques
+  function confirmar(btn, fn) {
+    if (btn.dataset.conf) { fn(); return; }
+    btn.dataset.conf = "1"; var antes = btn.innerHTML; btn.textContent = "Confirmar?"; btn.style.width = "auto"; btn.style.padding = "0 10px";
+    setTimeout(function () { delete btn.dataset.conf; btn.innerHTML = antes; btn.style.width = ""; btn.style.padding = ""; }, 3000);
+  }
+
+  document.getElementById("f-ent").addEventListener("submit", async function (ev) {
+    ev.preventDefault();
+    var err = document.getElementById("n-err"), prog = document.getElementById("n-prog");
+    var c = document.getElementById("n-cli").value, tit = document.getElementById("n-tit").value.trim();
+    var drive = document.getElementById("o-drive").checked;
+    var arqs = Array.prototype.slice.call(document.getElementById("n-arq").files), link = document.getElementById("n-link").value.trim();
+    var m = !c ? "Escolha o cliente." : !tit ? "Dê um título para a entrega." : drive && !/drive\.google\.com/.test(link) ? "Cole o link de compartilhar do Google Drive." : !drive && !arqs.length ? "Escolha pelo menos um arquivo." : "";
+    err.textContent = m; err.hidden = !m; if (m) return;
+    var btn = this.querySelector("button[type=submit]"); btn.disabled = true; prog.hidden = false;
+    var base = { cliente_id: c, tipo: document.getElementById("n-tipo").value, legenda: document.getElementById("n-leg").value.trim() || null, data_postagem: document.getElementById("n-data").value || null, hora_postagem: document.getElementById("n-hora").value || "10:00", publicar: document.getElementById("n-pub").checked };
+    var juntar = !drive && arqs.length > 1 && document.getElementById("n-car").checked;
+    try {
+      if (drive) await api.criarEntrega(Object.assign({ titulo: tit, link_externo: link }, base));
+      else if (juntar) { prog.textContent = "Enviando o carrossel (" + arqs.length + " arquivos)…"; await api.criarEntrega(Object.assign({ titulo: tit }, base, { tipo: "carrossel" }), arqs[0], function (t) { prog.textContent = t; }, arqs.slice(1)); }
+      else for (var i = 0; i < arqs.length; i++) {
+        prog.textContent = "Enviando " + (i + 1) + " de " + arqs.length + ": " + arqs[i].name + "…";
+        await api.criarEntrega(Object.assign({ titulo: arqs.length > 1 ? tit + " " + (i + 1) : tit }, base), arqs[i]);
+      }
+      CR.toast("Enviado! Já aparece no app do cliente.");
+      ["n-tit", "n-leg", "n-data", "n-link"].forEach(function (id) { document.getElementById(id).value = ""; });
+      document.getElementById("n-arq").value = ""; opcaoCarrossel();
+      document.getElementById("v-cli").value = c; document.getElementById("v-st").value = "";
+      await carregar();
+    } catch (x) { err.textContent = x.message; err.hidden = false; }
+    btn.disabled = false; prog.hidden = true;
+  });
+
+  // ---------------------------------------------------------------- clientes
+  function renderClientes() {
+    var tb = document.querySelector("#t-cli tbody"); tb.textContent = "";
+    if (!clientes.length) { tb.appendChild(el("tr", {}, el("td", { colspan: "7", class: "muted", text: "Nenhum cliente criou conta ainda. Mande o link criativosrapidos.com.br/entrar." }))); return; }
+    clientes.forEach(function (c) {
+      var plano = el("select", { "aria-label": "Plano de " + (c.nome || c.email) });
+      [["", "Sem plano"], ["plano", "Planos mensais"], ["pacote", "Pacotes"]].forEach(function (g) {
+        var grp = g[0] ? el("optgroup", { label: g[1] }) : plano;
+        CR.PLANOS.filter(function (p) { return p.grupo === g[0]; }).forEach(function (p) { grp.appendChild(el("option", { value: p.nome, text: p.nome + (p.preco ? " · " + p.preco : "") })); });
+        if (g[0]) plano.appendChild(grp);
+      });
+      plano.value = c.plano || "Sem plano";
+      var aj = el("input", { type: "number", min: "0", max: "20", value: String(c.ajustes_mes || 0), "aria-label": "Ajustes", style: "width:76px" });
+      plano.addEventListener("change", function () { aj.value = CR.plano(plano.value).ajustes; });
+      var n = entregas.filter(function (e) { return e.cliente_id === c.id; });
+      var pend = n.filter(function (e) { return e.status !== "aprovado"; }).length;
+      var w = waLead(c.whatsapp);
+      tb.appendChild(el("tr", {}, [
+        el("td", {}, [el("b", { text: c.empresa || "—" }), el("div", { class: "small muted", text: c.nome || "" })]),
+        el("td", { class: "small" }, [c.email || "", el("br"), w ? el("a", { href: w, target: "_blank", rel: "noopener", text: c.whatsapp }) : (c.whatsapp || "")]),
+        el("td", { class: "small" }, c.instagram ? el("a", { href: "https://www.instagram.com/" + c.instagram + "/", target: "_blank", rel: "noopener", text: "@" + c.instagram }) : el("span", { class: "muted", text: "não conectado" })),
+        el("td", {}, plano), el("td", {}, aj),
+        el("td", { class: "small", text: n.length + (pend ? " (" + pend + " pendentes)" : "") }),
+        el("td", {}, el("button", { class: "btn sm", type: "button", text: "Salvar", onclick: async function () {
+          try { await api.salvarPerfil(c.id, { plano: plano.value, ajustes_mes: parseInt(aj.value, 10) || 0 }); CR.toast("Cliente atualizado."); await carregar(); } catch (x) { CR.toast(x.message, true); }
+        } }))
+      ]));
+    });
+  }
+
+  // ---------------------------------------------------------------- briefings
+  var ST_BRF = { novo: "Novo", em_producao: "Em produção", pronto: "Pronto" };
+  function renderBriefings() {
+    var l = document.getElementById("l-brf"); l.textContent = "";
+    document.getElementById("v-brf").hidden = briefings.length > 0;
+    briefings.forEach(function (b) {
+      var st = b.status || "novo";
+      var sel = el("select", { "aria-label": "Status do briefing", style: "width:auto" });
+      Object.keys(ST_BRF).forEach(function (k) { sel.appendChild(el("option", { value: k, text: ST_BRF[k] })); });
+      sel.value = st;
+      sel.addEventListener("change", async function () { try { await api.statusBriefing(b.id, sel.value); b.status = sel.value; badges(); visao(); renderBriefings(); } catch (x) { CR.toast(x.message, true); } });
+      l.appendChild(el("details", { class: "brf" }, [
+        el("summary", {}, [el("b", { text: b.empresa || b.nome || "Sem nome" }), el("span", { class: "pill " + st, text: ST_BRF[st] }), el("span", { class: "small muted", text: (b.plano || "") + " · " + CR.data(b.criado_em) + (b.whatsapp ? " · " + b.whatsapp : "") })]),
+        el("pre", { text: b.texto || JSON.stringify(b.respostas, null, 2) }),
+        el("div", { class: "acts" }, [
+          sel,
+          el("button", { class: "btn ghost sm", type: "button", onclick: function () { CR.copiar(b.texto || "", "Briefing copiado"); } }, [ic("copy"), "Copiar"]),
+          el("button", { class: "btn danger sm", type: "button", "aria-label": "Apagar briefing", onclick: function () { confirmar(this, async function () { await api.apagarBriefing(b.id); await carregar(); }); } }, [ic("trash")])
+        ])
+      ]));
+    });
+  }
+
+  // ---------------------------------------------------------------- interessados
+  var ST_LEAD = { novo: "Novo", conversando: "Conversando", fechou: "Fechou", perdido: "Não fechou" };
+  var FILTRO_LEAD = { novo: "Novos", conversando: "Conversando", fechou: "Fecharam", perdido: "Não fecharam", todos: "Todos" };
+  var seg = document.getElementById("seg-leads");
+  Object.keys(ST_LEAD).concat(["todos"]).forEach(function (k) {
+    seg.appendChild(el("button", { type: "button", "data-f": k, "aria-pressed": String(k === filtroLead), text: FILTRO_LEAD[k], onclick: function () {
+      filtroLead = k; seg.querySelectorAll("button").forEach(function (x) { x.setAttribute("aria-pressed", String(x.dataset.f === k)); }); renderLeads();
+    } }));
+  });
+  function renderLeads() {
+    var l = document.getElementById("l-leads"); l.textContent = "";
+    var vis = leads.filter(function (x) { return filtroLead === "todos" || x.status === filtroLead; });
+    document.getElementById("v-leads-vazio").hidden = vis.length > 0;
+    vis.forEach(function (x) {
+      var sel = el("select", { "aria-label": "Status", style: "width:auto" });
+      Object.keys(ST_LEAD).forEach(function (k) { sel.appendChild(el("option", { value: k, text: ST_LEAD[k] })); });
+      sel.value = x.status;
+      sel.addEventListener("change", async function () { try { await api.statusLead(x.id, sel.value); x.status = sel.value; badges(); visao(); renderLeads(); } catch (e) { CR.toast(e.message, true); } });
+      var w = waLead(x.whatsapp);
+      l.appendChild(el("div", { class: "li", style: "grid-template-columns:minmax(0,1fr) auto" }, [
+        el("div", { style: "min-width:0" }, [
+          el("div", { class: "tt" }, [x.nome, " ", el("span", { class: "pill " + x.status, style: "margin-left:6px", text: ST_LEAD[x.status] })]),
+          el("div", { class: "st", text: [x.empresa, x.whatsapp, x.interesse ? "quer " + x.interesse : "", x.origem === "videos" ? "veio da página de vídeos" : "veio da home", CR.data(x.criado_em)].filter(Boolean).join(" · ") })
+        ]),
+        el("div", { style: "display:flex;gap:6px;align-items:center;flex-wrap:wrap;justify-content:flex-end" }, [
+          w ? el("a", { class: "btn sm", href: w + "?text=" + encodeURIComponent("Oi, " + x.nome.split(" ")[0] + "! Aqui é da Criativos Rápidos. Vi que você se interessou pelo " + (x.interesse || "nosso trabalho") + "."), target: "_blank", rel: "noopener" }, [ic("chat"), "WhatsApp"]) : null,
+          sel,
+          el("button", { class: "icon-btn", type: "button", "aria-label": "Apagar", onclick: function () { confirmar(this, async function () { await api.apagarLead(x.id); await carregar(); }); } }, ic("trash"))
+        ])
+      ]));
+    });
+  }
+
+  ir(location.hash.slice(1) || "visao");
+  carregar();
+})();
+</script>
+</body>
+</html>

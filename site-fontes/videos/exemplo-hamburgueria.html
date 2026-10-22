@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Exemplo · hamburgueria (marca fictícia Brasa Burger)</title>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root { --red: #E0301E; --dark: #1A0E0A; --cream: #FFF1DC; --mus: #FFB81C; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--dark); font-family: Inter, sans-serif; }
+  .stage { position: relative; width: 1080px; height: 1920px; overflow: hidden; }
+  .sc { position: absolute; inset: 0; overflow: hidden; visibility: hidden; }
+  .anton { font-family: Anton, sans-serif; font-weight: 400; text-transform: uppercase; line-height: .86; }
+  .abs { position: absolute; }
+  .brand { display: flex; align-items: center; gap: 18px; color: var(--cream); }
+  .brand svg { width: 66px; height: 72px; }
+  .brand .n { font-family: Anton, sans-serif; font-size: 72px; line-height: .9; }
+  .brand .n small { display: block; font-family: Inter; font-weight: 800; font-size: 21px; letter-spacing: .42em; margin-top: 6px; }
+  .burger { display: block; width: 100%; overflow: visible; }
+
+  #s1 { background: var(--dark); }
+  #s1 .brand { left: 50%; top: 150px; transform: translateX(-50%); }
+  #s1 .l1 { left: 0; right: 0; top: 560px; text-align: center; font-size: 220px; color: var(--cream); }
+  #s1 .l2 { left: 0; right: 0; top: 760px; text-align: center; font-size: 370px; color: var(--mus); }
+  #s1 .spark { width: 18px; height: 18px; border-radius: 50%; background: var(--mus); }
+
+  #s2 { background: var(--red); }
+  #s2 .rays { left: 50%; top: 1150px; width: 2200px; height: 2200px; margin: -1100px 0 0 -1100px; border-radius: 50%; background: repeating-conic-gradient(rgba(255,241,220,.10) 0 9deg, transparent 9deg 22.5deg); }
+  #s2 .t1 { left: 70px; top: 230px; font-size: 250px; color: var(--cream); }
+  #s2 .t2 { left: 70px; top: 455px; font-size: 250px; color: var(--mus); }
+  #s2 .bwrap { left: 110px; top: 780px; width: 860px; transform-origin: 50% 95%; }
+
+  #s3 { background: var(--cream); }
+  #s3 .so { left: 74px; top: 270px; font-weight: 900; font-size: 54px; color: var(--red); letter-spacing: .08em; }
+  #s3 .preco { left: 64px; top: 340px; font-size: 330px; color: var(--dark); white-space: nowrap; }
+  #s3 .preco i { font-style: normal; font-size: 160px; }
+  #s3 .preco small { font-size: 130px; margin-right: 18px; }
+  #s3 .stamp { right: 70px; top: 150px; border: 8px solid var(--red); color: var(--red); font-family: Anton; font-size: 64px; padding: 10px 26px; border-radius: 18px; text-transform: uppercase; }
+  #s3 .bwrap { left: 20px; top: 1000px; width: 520px; }
+  #s3 .chip { left: 600px; background: var(--dark); color: var(--cream); font-weight: 800; font-size: 50px; padding: 24px 40px; border-radius: 99px; white-space: nowrap; }
+
+  #s4 { background: var(--mus); }
+  #s4 .brand { left: 50%; top: 260px; transform: translateX(-50%) scale(1.5); transform-origin: 50% 0; color: var(--dark); }
+  #s4 .pa { left: 0; right: 0; top: 620px; text-align: center; font-size: 260px; color: var(--dark); }
+  #s4 .btn { left: 50%; top: 1180px; background: var(--red); color: #fff; font-weight: 900; font-size: 58px; padding: 38px 70px; border-radius: 99px; white-space: nowrap; display: flex; align-items: center; gap: 22px; box-shadow: 0 16px 0 #8E1408; }
+  #s4 .btn svg { width: 64px; height: 64px; }
+  #s4 .bio { left: 0; right: 0; top: 1400px; text-align: center; font-weight: 800; font-size: 46px; color: var(--dark); }
+  #s4 .bwrap { left: 340px; top: 1520px; width: 400px; }
+</style>
+</head>
+<body>
+<div class="stage">
+  <section class="sc" id="s1">
+    <div class="abs brand" id="lg1"></div>
+    <div class="abs anton l1" id="a1">Tá com</div>
+    <div class="abs anton l2" id="a2">fome?</div>
+  </section>
+
+  <section class="sc" id="s2">
+    <div class="abs rays" id="rays"></div>
+    <div class="abs anton t1" id="b1">Combo</div>
+    <div class="abs anton t2" id="b2">duplo</div>
+    <div class="abs bwrap" id="bw2"><!--BURGER--></div>
+  </section>
+
+  <section class="sc" id="s3">
+    <div class="abs stamp" id="c0">terça e quarta</div>
+    <div class="abs so" id="c1">SÓ</div>
+    <div class="abs anton preco" id="c2"><small>R$</small><span id="num">34</span><i id="cent">,90</i></div>
+    <div class="abs bwrap" id="bw3"><!--BURGER--></div>
+    <div class="abs chip" id="c3" style="top:1010px">burger duplo</div>
+    <div class="abs chip" id="c4" style="top:1150px">+ batata</div>
+    <div class="abs chip" id="c5" style="top:1290px">+ refri</div>
+  </section>
+
+  <section class="sc" id="s4">
+    <div class="abs brand" id="lg4"></div>
+    <div class="abs anton pa" id="d1">Peça<br>agora</div>
+    <div class="abs btn" id="d2"><svg viewBox="0 0 24 24" fill="#fff"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.4 0 .5l-.3.5-.4.5c-.2.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1.1c.2-.3.4-.2.6-.1l2 1c.3.1.5.2.5.3.1.2.1.7-.1 1.2z"/></svg>Chama no WhatsApp</div>
+    <div class="abs bio" id="d3">link na bio</div>
+    <div class="abs bwrap" id="bw4"><!--BURGER--></div>
+  </section>
+</div>
+
+<template id="flame"><svg viewBox="0 0 100 110"><defs><linearGradient id="g-fl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFD15A"/><stop offset="1" stop-color="#FF7A1A"/></linearGradient></defs><path d="M52 2c6 22 34 34 34 66a36 36 0 0 1-72 0c0-18 10-28 18-38 2 10 6 16 12 18-2-18 2-34 8-46z" fill="url(#g-fl)"/><path d="M50 58c4 10 16 14 16 28a16 16 0 0 1-32 0c0-8 6-12 9-18 1 5 3 7 6 8 0-7 0-12 1-18z" fill="#FFF1DC" opacity=".9"/></svg></template>
+<script>
+  const DURATION = 15;
+  window.DURATION = DURATION;
+  window.POSTER = 6.6;
+  const $ = id => document.getElementById(id);
+  const logo = $('flame').innerHTML + '<div class="n">Brasa<small>BURGER</small></div>';
+  $('lg1').innerHTML = logo; $('lg4').innerHTML = logo;
+
+  // faíscas subindo na abertura
+  for (let i = 0; i < 16; i++) { const d = document.createElement('div'); d.className = 'abs spark'; d.dataset.i = i; $('s1').appendChild(d); }
+
+  const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+  const p = (t, a, d) => clamp((t - a) / d);
+  const out3 = x => 1 - Math.pow(1 - x, 3);
+  const back = x => { const c = 1.7, c3 = c + 1; return 1 + c3 * Math.pow(x - 1, 3) + c * Math.pow(x - 1, 2); };
+  const bounce = x => { const n = 7.5625, d = 2.75; if (x < 1 / d) return n * x * x; if (x < 2 / d) return n * (x -= 1.5 / d) * x + .75; if (x < 2.5 / d) return n * (x -= 2.25 / d) * x + .9375; return n * (x -= 2.625 / d) * x + .984375; };
+  const set = (el, o, tr) => { el.style.opacity = o; if (tr != null) el.style.transform = tr; };
+
+  // cenas: [id, início, fim, tipo de entrada]
+  const CENAS = [['s1', 0, 2.6, null], ['s2', 2.6, 7.8, 'circ'], ['s3', 7.8, 11.6, 'wipe'], ['s4', 11.6, 15, 'circ2']];
+  function cenas(t) {
+    CENAS.forEach(([id, a, b, tipo], i) => {
+      const el = $(id), last = i === CENAS.length - 1;
+      el.style.visibility = (t >= a && (last || t < b + 0.6)) ? 'visible' : 'hidden';
+      el.style.zIndex = i + 1;
+      const r = out3(p(t, a, 0.55));
+      if (tipo === 'circ') el.style.clipPath = `circle(${r * 120}% at 50% 62%)`;
+      else if (tipo === 'wipe') el.style.clipPath = `inset(${(1 - r) * 100}% 0 0 0)`;
+      else if (tipo === 'circ2') el.style.clipPath = `circle(${r * 125}% at 50% 66%)`;
+    });
+  }
+
+  function camadas(wrap, t0, t) {
+    const g = id => wrap.querySelector('#' + id);
+    const ordem = [['b-bottom', 0.25], ['b-patty1', 0.6], ['b-cheese1', 0.92], ['b-patty2', 1.22], ['b-cheese2', 1.52], ['b-lettuce', 1.8], ['b-top', 2.1]];
+    ordem.forEach(([id, d]) => {
+      const k = p(t, t0 + d, id === 'b-top' ? 0.6 : 0.45);
+      const y = (1 - bounce(k)) * -1100;
+      const el = g(id); el.style.transform = `translateY(${y}px)`; el.style.opacity = k > 0 ? 1 : 0;
+    });
+    const sh = g('b-shadow'); const ks = out3(p(t, t0 + 0.25, 0.4));
+    sh.style.transformOrigin = '200px 326px'; sh.style.transform = `scale(${0.3 + 0.7 * ks}, 1)`; sh.style.opacity = ks;
+    // amassadinho quando o pão de cima encaixa
+    const sq = p(t, t0 + 2.55, 0.35);
+    const s = sq > 0 && sq < 1 ? 1 - Math.sin(sq * Math.PI) * 0.06 : 1;
+    wrap.style.transform = `scale(${2 - s}, ${s})`;
+  }
+
+  function burgerPronto(wrap) { wrap.querySelectorAll('g[id^="b-"]').forEach(g => { g.style.transform = 'none'; g.style.opacity = 1; }); const sh = wrap.querySelector('#b-shadow'); sh.style.transform = 'none'; sh.style.opacity = 1; }
+
+  window.render = function (t) {
+    cenas(t);
+    // 1 · Tá com fome?
+    set($('lg1'), out3(p(t, 0, 0.4)));
+    const k1 = out3(p(t, 0.12, 0.45));
+    set($('a1'), k1, `translateX(${(1 - k1) * -110}%)`);
+    const k2 = p(t, 0.5, 0.32);
+    const shake = t > 0.82 && t < 1.35 ? Math.sin(t * 46) * 3 * (1 - p(t, 0.82, 0.53)) : 0;
+    set($('a2'), k2 > 0 ? 1 : 0, `scale(${2.6 - 1.6 * back(k2)}) rotate(${shake - 4 * (1 - k2)}deg)`);
+    document.querySelectorAll('.spark').forEach(s => {
+      const i = +s.dataset.i, sp = 0.35 + (i % 5) * 0.08, ph = (i * 0.37) % 1;
+      const y = 1920 - (((t * sp + ph) % 1) * 1500);
+      s.style.left = (80 + (i * 61) % 920 + Math.sin(t * 3 + i) * 30) + 'px'; s.style.top = y + 'px';
+      s.style.opacity = 0.25 + (i % 3) * 0.2; s.style.background = i % 2 ? '#FFB81C' : '#E0301E';
+    });
+
+    // 2 · montando o hambúrguer
+    const a = 2.6;
+    $('rays').style.transform = `rotate(${(t - a) * 14}deg)`;
+    camadas($('bw2'), a, t);
+    const kb1 = p(t, a + 2.9, 0.4), kb2 = p(t, a + 3.15, 0.4);
+    set($('b1'), kb1 > 0 ? 1 : 0, `scale(${back(kb1)})`); $('b1').style.transformOrigin = '0 100%';
+    set($('b2'), kb2 > 0 ? 1 : 0, `scale(${back(kb2)})`); $('b2').style.transformOrigin = '0 100%';
+
+    // 3 · preço
+    const c = 7.8;
+    burgerPronto($('bw3'));
+    $('bw3').style.transform = `rotate(${-6 + Math.sin(t * 2.4) * 2}deg) translateY(${Math.sin(t * 2.4) * 10}px)`;
+    set($('c1'), out3(p(t, c + 0.3, 0.3)));
+    const kp = p(t, c + 0.35, 0.7);
+    set($('c2'), kp > 0 ? 1 : 0, `translateY(${(1 - out3(kp)) * 60}px)`);
+    $('num').textContent = String(Math.round(34 * out3(kp)));
+    $('cent').textContent = kp >= 1 ? ',90' : ',' + String(Math.round(90 * out3(kp))).padStart(2, '0');
+    [['c3', 1.0], ['c4', 1.25], ['c5', 1.5]].forEach(([id, d]) => { const k = p(t, c + d, 0.4); set($(id), k > 0 ? 1 : 0, `translateX(${(1 - back(k)) * 140}px)`); });
+    const ks = p(t, c + 1.9, 0.3);
+    set($('c0'), ks > 0 ? 1 : 0, `rotate(-9deg) scale(${1.8 - 0.8 * out3(ks)})`);
+
+    // 4 · chamada
+    const d = 11.6;
+    const kl = out3(p(t, d + 0.25, 0.5));
+    set($('lg4'), kl, `translateX(-50%) scale(1.5) translateY(${(1 - kl) * -40}px)`);
+    const kd = p(t, d + 0.35, 0.45);
+    set($('d1'), kd > 0 ? 1 : 0, `scale(${back(kd)})`);
+    const kbt = p(t, d + 0.8, 0.4);
+    const pulse = t > d + 1.3 ? 1 + Math.sin((t - d - 1.3) * 6) * 0.04 : 1;
+    set($('d2'), kbt > 0 ? 1 : 0, `translateX(-50%) scale(${back(kbt) * pulse})`);
+    set($('d3'), out3(p(t, d + 1.2, 0.4)));
+    burgerPronto($('bw4'));
+    $('bw4').style.transform = `translateY(${Math.sin(t * 3) * 12}px) rotate(${Math.sin(t * 1.5) * 3}deg)`;
+    set($('bw4'), out3(p(t, d + 1.4, 0.5)), $('bw4').style.transform);
+  };
+  render(0);
+</script>
+</body>
+</html>

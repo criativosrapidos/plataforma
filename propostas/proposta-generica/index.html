@@ -1,0 +1,371 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Proposta Criativos Rápidos</title>
+<meta name="viewport" content="width=1920">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,700;0,800;0,900;1,900&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,800&display=swap" rel="stylesheet">
+<style>
+  /* Cores da marca: trocar aqui quando chegarem os códigos oficiais */
+  :root {
+    --black: #101216;
+    --black-2: #17171A;
+    --black-3: #232328;
+    --yellow: #FFD400;
+    --yellow-2: #FFE566;
+    --paper: #FFFFFF;
+    --off: #F7F5EF;
+    --text: #111113;
+    --muted: #6B6B72;
+    --muted-dark: #A6A6AE;
+    --line: #E7E3D8;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  @page { size: 1920px 1080px; margin: 0; }
+  html, body { background: #2a2a2e; }
+  body { font-family: "Inter", system-ui, sans-serif; color: var(--text); -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .slide { width: 1920px; height: 1080px; position: relative; overflow: hidden; margin: 0 auto 40px; break-after: page; page-break-after: always; padding: 80px 96px; }
+  @media print { html, body { background: none; } .slide { margin: 0; } }
+  h1, h2, h3, .mont { font-family: "Montserrat", sans-serif; }
+  .dark { background: var(--black); color: #fff; }
+  .light { background: var(--off); }
+  .yel { background: var(--yellow); color: var(--black); }
+  .slide > * { position: relative; }
+
+  /* logo */
+  .logo { display: inline-flex; align-items: center; gap: calc(var(--s, 72px) * .3); }
+  .logo img { width: var(--s, 72px); height: var(--s, 72px); display: block; }
+  .logo .word { font-family: "Inter"; line-height: 1.02; font-size: calc(var(--s, 72px) * .42); letter-spacing: -.02em; }
+  .logo .word b { display: block; font-weight: 500; }
+  .logo .word b:last-child { font-weight: 800; font-style: italic; }
+  .head { display: flex; justify-content: space-between; align-items: flex-start; padding-bottom: 32px; border-bottom: 3px solid var(--yellow); margin-bottom: 52px; }
+  .light .head { border-color: var(--black); }
+  .head h2 { font-size: 76px; font-weight: 900; line-height: 1.02; letter-spacing: -.01em; }
+  .head .sub { margin-top: 14px; font-size: 30px; font-weight: 600; color: var(--yellow); }
+  .light .head .sub { color: var(--muted); }
+  .head .num { font-family: "Montserrat"; font-size: 54px; font-weight: 900; color: var(--yellow); line-height: 1; }
+  .light .head .num { color: var(--black); }
+  .hl { background: var(--yellow); color: var(--black); padding: 0 .18em; border-radius: .12em; }
+
+  .card { background: var(--paper); border-radius: 28px; box-shadow: 0 18px 50px rgba(0,0,0,.07); }
+  .dark .card { background: var(--black-2); border: 1px solid rgba(255,255,255,.07); box-shadow: none; }
+  .tick { flex: none; width: 34px; height: 34px; border-radius: 50%; background: var(--yellow); color: var(--black); display: grid; place-items: center; }
+  .tick svg { width: 18px; height: 18px; }
+  .chip { display: inline-block; padding: 10px 22px; border-radius: 999px; font-size: 18px; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; }
+
+  /* capa */
+  .cover { display: flex; flex-direction: column; justify-content: center; }
+  .cover .eyebrow { color: var(--yellow); font-weight: 700; font-size: 22px; letter-spacing: .32em; text-transform: uppercase; margin: 72px 0 26px; }
+  .cover-wrap { display: grid; grid-template-columns: 1.35fr .65fr; gap: 80px; align-items: center; }
+  .kpis { display: grid; gap: 22px; }
+  .kpi { background: var(--black-2); border: 1px solid rgba(255,255,255,.08); border-radius: 26px; padding: 30px 34px; }
+  .kpi b { display: block; font-family: "Montserrat"; font-weight: 900; font-size: 64px; line-height: 1; color: var(--yellow); letter-spacing: -.02em; }
+  .kpi span { display: block; margin-top: 8px; font-size: 22px; color: #D4D4DA; font-weight: 600; }
+  .cover h1 { font-size: 112px; font-weight: 900; line-height: .98; letter-spacing: -.02em; max-width: 1500px; }
+  .cover h1 em { font-style: italic; color: var(--yellow); }
+  .cover p { margin-top: 40px; font-size: 34px; color: #D4D4DA; max-width: 1250px; line-height: 1.4; }
+  .cover .tags { display: flex; gap: 16px; margin-top: 54px; }
+  .cover .tags span { padding: 14px 28px; border-radius: 999px; font-size: 24px; font-weight: 700; background: var(--yellow); color: var(--black); }
+  .cover .tags span.o { background: transparent; color: #fff; border: 2px solid rgba(255,255,255,.25); }
+
+  /* equipe */
+  .team { display: grid; grid-template-columns: repeat(6, 1fr); gap: 20px; }
+  .role { padding: 36px 22px; text-align: center; }
+  .role .ic { width: 96px; height: 96px; border-radius: 50%; background: var(--yellow); display: grid; place-items: center; margin: 0 auto 26px; }
+  .role .ic svg { width: 46px; height: 46px; }
+  .role h3 { font-size: 27px; font-weight: 800; margin-bottom: 10px; }
+  .role p { font-size: 20px; color: var(--muted); line-height: 1.45; }
+  .pieces { margin-top: 44px; background: var(--black); color: #fff; border-radius: 28px; padding: 40px 56px; display: flex; align-items: center; justify-content: space-between; gap: 40px; }
+  .pieces b { font-family: "Montserrat"; font-weight: 900; font-size: 34px; }
+  .pieces .list { display: flex; gap: 14px; }
+  .pieces .list span { background: var(--yellow); color: var(--black); font-weight: 800; font-size: 24px; padding: 12px 24px; border-radius: 999px; }
+  .note-line { margin-top: 28px; font-size: 22px; color: var(--muted); text-align: center; }
+
+  /* créditos */
+  .credits { display: grid; grid-template-columns: 1.05fr 1fr; gap: 56px; align-items: start; }
+  .ctable { display: grid; gap: 16px; }
+  .crow { display: flex; align-items: center; justify-content: space-between; background: var(--black-2); border: 1px solid rgba(255,255,255,.07); border-radius: 22px; padding: 26px 36px; }
+  .crow span { font-size: 32px; font-weight: 700; }
+  .crow b { font-family: "Montserrat"; font-weight: 900; font-size: 40px; color: var(--black); background: var(--yellow); min-width: 150px; text-align: center; padding: 6px 18px; border-radius: 14px; }
+  .crow b small { font-size: 20px; font-weight: 800; }
+  .how h3 { font-size: 42px; font-weight: 900; margin-bottom: 30px; }
+  .how ol { list-style: none; display: grid; gap: 26px; counter-reset: s; }
+  .how li { display: flex; gap: 24px; align-items: flex-start; font-size: 27px; line-height: 1.4; color: #E4E4E8; counter-increment: s; }
+  .how li::before { content: counter(s); flex: none; width: 56px; height: 56px; border-radius: 16px; background: var(--yellow); color: var(--black); font-family: "Montserrat"; font-weight: 900; font-size: 28px; display: grid; place-items: center; }
+  .how li b { color: #fff; }
+  .badge24 { margin-top: 40px; border: 3px solid var(--yellow); border-radius: 24px; padding: 28px 34px; display: flex; align-items: center; gap: 28px; }
+  .badge24 b { font-family: "Montserrat"; font-weight: 900; font-size: 84px; color: var(--yellow); line-height: 1; white-space: nowrap; }
+  .badge24 span { font-size: 26px; line-height: 1.35; color: #E4E4E8; }
+
+  /* preços */
+  .pricing { padding-top: 56px; }
+  .pricing h2 { text-align: center; font-size: 92px; font-weight: 900; letter-spacing: -.01em; }
+  .pricing .tagline { text-align: center; font-size: 28px; margin-top: 12px; opacity: .85; }
+  .plans { display: grid; grid-template-columns: 1fr 1.05fr 1fr; gap: 36px; margin-top: 56px; align-items: stretch; }
+  .plan { background: #fff; color: var(--text); border-radius: 32px; padding: 50px 46px 44px; position: relative; display: flex; flex-direction: column; }
+  .plan.star { transform: translateY(-24px); box-shadow: 0 0 0 6px var(--yellow), 0 30px 70px rgba(0,0,0,.35); }
+  .yel .plan.star { box-shadow: 0 0 0 6px var(--black), 0 30px 70px rgba(0,0,0,.2); }
+  .plan .badge { position: absolute; top: -22px; left: 50%; transform: translateX(-50%); background: var(--yellow); color: var(--black); white-space: nowrap; }
+  .yel .plan .badge { background: var(--black); color: var(--yellow); }
+  .plan h3 { text-align: center; font-size: 44px; font-weight: 900; }
+  .price { display: flex; justify-content: center; align-items: flex-start; gap: 8px; margin-top: 8px; font-family: "Montserrat"; }
+  .price small { font-size: 30px; font-weight: 800; color: var(--muted); margin-top: 22px; }
+  .price b { font-size: 124px; font-weight: 900; line-height: 1; letter-spacing: -.03em; }
+  .price i { font-style: normal; align-self: flex-end; font-size: 28px; font-weight: 700; color: var(--muted); margin-bottom: 14px; }
+  .plan .cred { margin: 10px auto 26px; background: var(--black); color: var(--yellow); font-family: "Montserrat"; font-weight: 900; font-size: 30px; padding: 10px 28px; border-radius: 999px; }
+  .plan ul { list-style: none; display: grid; gap: 15px; border-top: 1px solid var(--line); padding-top: 28px; }
+  .plan li { display: flex; gap: 16px; align-items: flex-start; font-size: 24px; font-weight: 600; line-height: 1.3; }
+  .plan li .tick { width: 30px; height: 30px; margin-top: 1px; }
+  .yel .plan li .tick { background: var(--black); }
+  .plan li.off { color: #B3B3BA; }
+  .plan li.off .tick { background: #E3E3E6; }
+  .plan .ex { margin-top: auto; padding-top: 24px; font-size: 19px; color: var(--muted); line-height: 1.45; }
+  .plan .ex b { color: var(--text); }
+  .foot { text-align: center; margin-top: 30px; font-size: 22px; opacity: .85; }
+  .foot b { font-weight: 800; }
+
+  /* tabela planos */
+  .qty { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px 18px; border-top: 1px solid var(--line); padding-top: 24px; }
+  .qty div { display: flex; justify-content: space-between; align-items: baseline; font-size: 23px; font-weight: 600; padding: 6px 0; border-bottom: 1px dashed var(--line); }
+  .qty div b { font-family: "Montserrat"; font-weight: 900; font-size: 30px; }
+  .total { margin: 18px 0 22px; text-align: center; font-family: "Montserrat"; font-weight: 900; font-size: 30px; background: var(--black); color: var(--yellow); border-radius: 16px; padding: 12px; }
+  .plan.m ul { border-top: none; padding-top: 0; gap: 12px; }
+  .plan.m li { font-size: 22px; }
+
+  .pay { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
+  .card-cc { width: 100%; max-width: 640px; aspect-ratio: 1.6; border-radius: 34px; background: linear-gradient(135deg, #FFE14D, #FFD400 55%, #F2C200); color: var(--black); padding: 44px 48px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 30px 60px rgba(0,0,0,.35); }
+  .card-cc i { width: 96px; height: 72px; border-radius: 14px; background: linear-gradient(135deg, #2C3038, #101216); }
+  .card-cc b { font-family: "Montserrat"; font-weight: 800; font-size: 40px; letter-spacing: .08em; }
+  .card-cc span { font-size: 26px; font-weight: 800; display: flex; justify-content: space-between; }
+  .parc { display: flex; flex-wrap: wrap; gap: 14px; margin: 26px 0 30px; }
+  .parc span { background: var(--black-2); border: 1px solid rgba(255,255,255,.1); border-radius: 18px; padding: 14px 24px; font-family: "Montserrat"; font-weight: 900; font-size: 34px; }
+  .parc span.on { background: var(--yellow); color: var(--black); }
+  .pay h3 { font-size: 46px; font-weight: 900; line-height: 1.1; }
+  .pay p { font-size: 26px; color: #D4D4DA; line-height: 1.5; }
+  .pay small { display: block; margin-top: 18px; font-size: 20px; color: var(--muted-dark); }
+  .bonus { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+  .bcard { padding: 36px 32px; display: flex; flex-direction: column; gap: 14px; }
+  .bcard .bt { display: inline-block; align-self: flex-start; background: var(--black); color: var(--yellow); font-weight: 800; font-size: 16px; letter-spacing: .14em; text-transform: uppercase; padding: 8px 14px; border-radius: 99px; }
+  .bcard h3 { font-size: 30px; font-weight: 900; line-height: 1.15; }
+  .bcard p { font-size: 20px; color: var(--muted); line-height: 1.45; }
+  .bcover { height: 190px; border-radius: 18px; background: var(--black); position: relative; overflow: hidden; display: flex; align-items: flex-end; padding: 18px 20px; }
+  .bcover b { font-family: "Montserrat"; font-weight: 900; font-size: 26px; color: #fff; line-height: 1.1; }
+  .bcover::after { content: ""; position: absolute; top: 18px; right: 18px; width: 54px; height: 54px; border-radius: 14px; background: var(--yellow); }
+  /* passos */
+  .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; }
+  .step { padding: 44px 38px; min-height: 330px; }
+  .step .k { width: 84px; height: 84px; border-radius: 20px; background: var(--yellow); color: var(--black); font-family: "Montserrat"; font-weight: 900; font-size: 44px; display: grid; place-items: center; margin-bottom: 34px; }
+  .step h3 { font-size: 32px; font-weight: 800; margin-bottom: 12px; line-height: 1.15; }
+  .step p { font-size: 22px; color: var(--muted); line-height: 1.45; }
+  .why { margin-top: 40px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; background: var(--black); border-radius: 28px; padding: 50px 56px; }
+  .why > div { display: flex; gap: 22px; align-items: flex-start; }
+  .why .tick { width: 44px; height: 44px; }
+  .why .tick svg { width: 22px; height: 22px; }
+  .why b { display: block; font-family: "Montserrat"; font-size: 32px; font-weight: 900; color: #fff; margin-bottom: 8px; }
+  .why span.t { display: block; font-size: 22px; color: var(--muted-dark); line-height: 1.45; }
+
+  /* fechamento */
+  .close { display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+  .close h2 { font-size: 150px; font-weight: 900; line-height: 1; letter-spacing: -.02em; margin-top: 70px; }
+  .close p { font-size: 34px; margin-top: 34px; max-width: 1200px; line-height: 1.4; font-weight: 500; }
+  .close .cta { margin-top: 60px; display: inline-flex; align-items: center; gap: 18px; background: var(--black); color: var(--yellow); font-family: "Montserrat"; font-weight: 900; font-size: 36px; padding: 28px 52px; border-radius: 999px; }
+  .plan .papel { font: 800 20px/1.2 Inter, sans-serif; letter-spacing: .02em; margin: 6px 0 8px; opacity: .8; text-align: center; }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <symbol id="play" viewBox="0 0 100 74"><rect x="14" y="15.6" width="19" height="7" rx="3.5"/><rect x="6.5" y="33.5" width="26.5" height="7" rx="3.5"/><rect x="19" y="51.3" width="14" height="7" rx="3.5"/><path d="M40.5 9.5c0-2.6 2.8-4.2 5-2.9l44.6 26.5c2.2 1.3 2.2 4.5 0 5.8L45.5 65.4c-2.2 1.3-5-.3-5-2.9z"/></symbol>
+    <symbol id="check" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+  </defs>
+</svg>
+
+<!-- 1. CAPA -->
+<section class="slide dark cover">
+  <div class="logo" style="--s:96px"><img src="assets/logo-icone.png" alt=""><div class="word"><b>criativos</b><b>rápidos</b></div></div>
+  <div class="cover-wrap">
+    <div>
+  <div class="eyebrow">Proposta comercial</div>
+  <h1>Tudo que uma agência entrega. <em>Post todo dia.</em></h1>
+  <p>Conteúdo para o seu Instagram feito por uma equipe completa, com entrega rápida e sem prender você em contrato.</p>
+  <div class="tags"><span>Sem fidelidade</span><span>Entrega em 24 h</span><span class="o">A partir de R$ 97</span></div>
+    </div>
+    <div class="kpis">
+      <div class="kpi"><b>30 a 70</b><span>conteúdos por mês nos planos</span></div>
+      <div class="kpi"><b>24 h</b><span>para entregar os pacotes</span></div>
+      <div class="kpi"><b>0</b><span>meses de fidelidade</span></div>
+      <div class="kpi"><b>12x</b><span>parcelado no cartão</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 2. O QUE A GENTE FAZ -->
+<section class="slide light">
+  <div class="head">
+    <div><h2>Uma Equipe Inteira Para Você</h2><div class="sub">Você não precisa contratar seis pessoas. A gente já é essa equipe.</div></div>
+    <div class="num">01</div>
+  </div>
+  <div class="team">
+    <div class="card role"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#101216" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></div><h3>Copywriter</h3><p>Textos e legendas que fazem o cliente parar e chamar.</p></div>
+    <div class="card role"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#101216" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="13.5" r="2.5"/><circle cx="8.5" cy="7.5" r="2.5"/><circle cx="6.5" cy="14.5" r="2.5"/><path d="M12 22a10 10 0 1 1 0-20"/></svg></div><h3>Designer</h3><p>Artes com padrão visual e cara de marca profissional.</p></div>
+    <div class="card role"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#101216" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="3"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div><h3>Social media</h3><p>Planejamento, calendário e postagem todo dia.</p></div>
+    <div class="card role"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#101216" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="14" height="14" rx="3"/><path d="m16 10 6-3v10l-6-3"/></svg></div><h3>Editor de vídeo</h3><p>Reels e anúncios com ritmo, legenda e corte certo.</p></div>
+    <div class="card role"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#101216" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0M12 17v5"/></svg></div><h3>Locutor</h3><p>Voz profissional para seus vídeos venderem mais.</p></div>
+    <div class="card role"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#101216" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 15c-1.5 1.3-2 5-2 5s3.7-.5 5-2M14 4c3 0 6 3 6 6-2 4-6 7-8 8l-6-6c1-2 4-6 8-8zM9 15l-3-3"/></svg></div><h3>Gestor de tráfego</h3><p>Anúncios pagos rodando e ajustados para trazer cliente.</p></div>
+  </div>
+  <div class="pieces"><b>O que a gente cria</b><div class="list"><span>Stories</span><span>Posts</span><span>Carrosséis</span><span>Reels</span><span>Anúncios</span></div></div>
+  <div class="note-line">Já tem agência? Compare: aqui é post todo dia, entrega rápida e você pode sair quando quiser.</div>
+</section>
+
+<!-- 4. PACOTES -->
+<section class="slide dark pricing">
+  <h2>PACOTES</h2>
+  <div class="tagline">Pagamento único, sem mensalidade</div>
+  <div class="plans">
+    <div class="plan">
+      <h3>LARGADA</h3>
+      <div class="price"><small>R$</small><b>97</b></div>
+      <div class="cred">3 anúncios</div>
+      <ul>
+        <li><span class="tick"><svg><use href="#check"/></svg></span>2 vídeos pra anúncio</li>
+        <li><span class="tick"><svg><use href="#check"/></svg></span>1 arte (design) pra anúncio</li>
+        <li><span class="tick"><svg><use href="#check"/></svg></span>1 ajuste</li>
+        <li><span class="tick"><svg><use href="#check"/></svg></span>Entrega em 24 h</li>
+      </ul>
+    </div>
+    <div class="plan star">
+      <span class="chip badge">Marca profissional</span>
+      <h3>ACELERA</h3>
+      <div class="price"><small>R$</small><b>297</b></div>
+      <div class="cred">Identidade visual</div>
+      <ul>
+        <li><span class="tick"><svg><use href="#check"/></svg></span>Identidade visual: logo, paleta, fontes, foto de perfil e destaques</li>
+        <li><span class="tick"><svg><use href="#check"/></svg></span>Brinde: 1 anúncio pronto</li>
+        <li><span class="tick"><svg><use href="#check"/></svg></span>2 ajustes</li>
+        <li><span class="tick"><svg><use href="#check"/></svg></span>Entrega em 24 h</li>
+      </ul>
+    </div>
+    <div class="plan">
+      <h3>TURBO</h3>
+      <div class="price"><small>R$</small><b>497</b></div>
+      <div class="cred">Identidade + landing</div>
+      <ul>
+        <li><span class="tick"><svg><use href="#check"/></svg></span>Identidade visual completa</li>
+        <li><span class="tick"><svg><use href="#check"/></svg></span>Landing page completa</li>
+        <li><span class="tick"><svg><use href="#check"/></svg></span>PDFs bônus: boas práticas do Instagram e respostas prontas de vendas</li>
+        <li><span class="tick"><svg><use href="#check"/></svg></span>3 ajustes</li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot">Os ajustes valem para o pacote inteiro.</div>
+</section>
+
+<!-- 5. PLANOS MENSAIS -->
+<section class="slide yel pricing">
+  <h2>PLANOS MENSAIS</h2>
+  <div class="tagline">Post todo dia. <b>Sem fidelidade:</b> cancela quando quiser.</div>
+  <div class="plans">
+    <div class="plan m">
+      <h3>PRESENÇA</h3>
+      <div class="papel">Conteúdo pronto · você posta</div>
+      <div class="price"><small>R$</small><b>597</b><i>/mês</i></div>
+      <div class="qty"><div>Stories<b>10</b></div><div>Posts<b>9</b></div><div>Carrosséis<b>6</b></div><div>Reels<b>3</b></div><div>Anúncios<b>2</b></div></div>
+      <div class="total">30 conteúdos no mês</div>
+      <ul>
+        <li><span class="tick"><svg style="color:#FFD400"><use href="#check"/></svg></span>Legendas e perfil completo</li>
+        <li><span class="tick"><svg style="color:#FFD400"><use href="#check"/></svg></span>Calendário pronto, você posta</li>
+        <li><span class="tick"><svg style="color:#FFD400"><use href="#check"/></svg></span>1 ajuste no mês</li>
+      </ul>
+    </div>
+    <div class="plan m star">
+      <span class="chip badge">Mais escolhido</span>
+      <h3>CRESCIMENTO</h3>
+      <div class="papel">Social media · a gente posta</div>
+      <div class="price"><small>R$</small><b>797</b><i>/mês</i></div>
+      <div class="qty"><div>Stories<b>20</b></div><div>Posts<b>12</b></div><div>Carrosséis<b>9</b></div><div>Reels<b>6</b></div><div>Anúncios<b>3</b></div></div>
+      <div class="total">50 conteúdos no mês</div>
+      <ul>
+        <li><span class="tick"><svg style="color:#FFD400"><use href="#check"/></svg></span>Legendas e perfil completo</li>
+        <li><span class="tick"><svg style="color:#FFD400"><use href="#check"/></svg></span>A gente programa e posta</li>
+        <li><span class="tick"><svg style="color:#FFD400"><use href="#check"/></svg></span>2 ajustes no mês</li>
+      </ul>
+    </div>
+    <div class="plan m">
+      <h3>AUTORIDADE</h3>
+      <div class="papel">Social media + tráfego pago</div>
+      <div class="price"><small>R$</small><b>997</b><i>/mês</i></div>
+      <div class="qty"><div>Stories<b>30</b></div><div>Posts<b>15</b></div><div>Carrosséis<b>12</b></div><div>Reels<b>9</b></div><div>Anúncios<b>4</b></div></div>
+      <div class="total">70 conteúdos no mês</div>
+      <ul>
+        <li><span class="tick"><svg style="color:#FFD400"><use href="#check"/></svg></span>A gente programa, posta e faz a gestão de tráfego</li>
+        <li><span class="tick"><svg style="color:#FFD400"><use href="#check"/></svg></span>Relatório mensal de resultados</li>
+        <li><span class="tick"><svg style="color:#FFD400"><use href="#check"/></svg></span>Bônus: calendário humanizado + sequência de stories que vende</li>
+        <li><span class="tick"><svg style="color:#FFD400"><use href="#check"/></svg></span>3 ajustes no mês</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- PAGAMENTO -->
+<section class="slide dark">
+  <div class="head">
+    <div><h2>Pagamento Facilitado</h2><div class="sub">Parcele no cartão e comece hoje</div></div>
+    <div class="num">02</div>
+  </div>
+  <div class="pay">
+    <div class="card-cc"><i></i><b>•••• •••• •••• 2026</b><span><span>SUA EMPRESA</span><span>crédito</span></span></div>
+    <div>
+      <h3>Divida em quantas vezes quiser no cartão de crédito.</h3>
+      <div class="parc"><span>1x</span><span>3x</span><span>6x</span><span>10x</span><span class="on">12x</span></div>
+      <p>Vale para pacotes e planos. Você escolhe o número de parcelas na hora de pagar.</p>
+      <small>Parcelamento com as taxas da maquininha.</small>
+    </div>
+  </div>
+</section>
+
+<!-- BÔNUS -->
+<section class="slide light">
+  <div class="head">
+    <div><h2>Materiais Bônus</h2><div class="sub">PDFs prontos para você vender mais pelo Instagram</div></div>
+    <div class="num">03</div>
+  </div>
+  <div class="bonus">
+    <div class="card bcard"><div class="bcover"><b>Boas práticas do Instagram</b></div><span class="bt">Pacote Turbo</span><h3>Guia do perfil que vende</h3><p>Bio, foto, destaques, frequência, formatos e legendas que fazem o cliente chamar.</p></div>
+    <div class="card bcard"><div class="bcover"><b>Respostas prontas de vendas</b></div><span class="bt">Pacote Turbo</span><h3>Mensagens para copiar e colar</h3><p>O que responder quando o cliente pergunta o preço, acha caro, diz "vou pensar" ou some.</p></div>
+    <div class="card bcard"><div class="bcover"><b>Calendário humanizado</b></div><span class="bt">Plano Autoridade</span><h3>30 dias de stories para gravar</h3><p>Uma ideia por dia para você aparecer, mostrar bastidores e criar confiança.</p></div>
+    <div class="card bcard"><div class="bcover"><b>Sequência de stories que vende</b></div><span class="bt">Plano Autoridade</span><h3>Roteiros de stories em sequência</h3><p>Ordem exata de stories para levar o seguidor até a compra no último.</p></div>
+  </div>
+</section>
+
+<!-- 6. COMO COMEÇAR -->
+<section class="slide light">
+  <div class="head">
+    <div><h2>Como Começar</h2><div class="sub">Simples: escolhe, responde, recebe</div></div>
+    <div class="num">04</div>
+  </div>
+  <div class="steps">
+    <div class="card step"><div class="k">1</div><h3>Escolhe o pacote ou plano</h3><p>Pacote para começar agora, plano para postar todo dia.</p></div>
+    <div class="card step"><div class="k">2</div><h3>Responde o briefing</h3><p>Conta sobre o seu negócio e manda suas fotos e vídeos.</p></div>
+    <div class="card step"><div class="k">3</div><h3>Aprova as peças</h3><p>Você vê tudo antes e pede seus ajustes.</p></div>
+    <div class="card step"><div class="k">4</div><h3>Recebe e posta</h3><p>Ou a gente posta por você nos planos Crescimento e Autoridade.</p></div>
+  </div>
+  <div class="why">
+    <div><span class="tick" style="color:#101216"><svg><use href="#check"/></svg></span><div><b>Sem fidelidade</b><span class="t">Você fica porque gosta, não por contrato.</span></div></div>
+    <div><span class="tick" style="color:#101216"><svg><use href="#check"/></svg></span><div><b>Entrega rápida</b><span class="t">Pacotes entregues em até 24 horas após o briefing.</span></div></div>
+    <div><span class="tick" style="color:#101216"><svg><use href="#check"/></svg></span><div><b>Você aprova tudo</b><span class="t">Nada vai para o ar sem o seu ok.</span></div></div>
+  </div>
+</section>
+
+<!-- 7. FECHAMENTO -->
+<section class="slide yel close on-yel">
+  <div class="logo" style="--s:120px"><svg viewBox="0 0 100 74" style="width:150px;height:111px" fill="#101216"><use href="#play"/></svg><div class="word" style="font-size:54px"><b>criativos</b><b>rápidos</b></div></div>
+  <h2>Bora começar?</h2>
+  <p>Responda esta mensagem com o pacote ou plano que você escolheu e a gente já manda o seu briefing.</p>
+  <div class="cta"><svg width="46" height="34" viewBox="0 0 100 74" fill="#FFD400"><use href="#play"/></svg>Chama no WhatsApp</div>
+</section>
+
+</body>
+</html>
