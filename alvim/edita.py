@@ -212,8 +212,8 @@ def pilula(preview=False):
         dict(t0=c[4] + 0.1, t1=c[5] - 0.1, top=1460, linhas=[("Cláudia", "")], sub="Vice-presidente · Líderes do Brasil", fs=130),
         dict(t0=c[5] + 0.2, t1=c[6] - 0.15, top=1420, kicker="Na mesa", linhas=[("Gestão · visão", ""), ("crescimento", "azul")], fs=110),
         dict(t0=c[6] + 0.2, t1=c[8] - 0.15, top=1420, kicker="Direto da operação", linhas=[("Da cozinha", ""), ("ao balcão", "azul")], fs=130),
-        dict(t0=c[8] + 0.2, t1=c[9] - 0.1, top=1120, kicker="Grupo Alvim: dono de todos os", linhas=[("Burger King", ""), ("de Brasília", "azul")], fs=120),
-        dict(t0=c[9] + 0.15, t1=c[10] - 0.1, top=1180, kicker="Felipe Alvim · Grupo Alvim", num=100, sub="de faturamento por ano"),
+        dict(t0=c[8] + 0.2, t1=c[9] - 0.1, top=1120, kicker="Grupo Alvim · desde 2008", linhas=[("+20 restaurantes", ""), ("+400 colaboradores", "azul")], fs=112),
+        dict(t0=c[9] + 0.15, t1=c[10] - 0.1, top=1180, kicker="Somando tudo, fatura", num=100, sub="de faturamento por ano"),
         dict(t0=c[10] + 0.15, t1=c[11] - 0.25, top=1400, kicker="Presidência Líderes × Grupo Alvim", linhas=[("Conexão", ""), ("que gera negócio", "azul")], fs=118),
     ]
     monta("lideres_grupo_alvim_pilula", P, itens, 6 * B, (c[1] + 0.2, c[-1] - 0.4), preview=[1.5, c[2] + 1.3, c[3] + 1.5, c[4] + 1.2, c[7] + 0.5, c[8] + 1.8, c[10], c[-1] + 2] if preview else None)
