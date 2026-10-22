@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Meus conteúdos · Criativos Rápidos</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="assets/logo-icone.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,800;0,900;1,900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="top">
+  <div class="top-in">
+    <a class="logo" href="./"><img src="assets/logo-icone.png" alt=""><span><b>criativos</b><i>rápidos</i></span></a>
+    <div class="sp"></div>
+    <div class="who" id="who"></div>
+    <button class="btn ghost-w" id="sair" type="button">Sair</button>
+  </div>
+</header>
+
+<main class="wrap">
+  <h1 id="ola">Seus conteúdos</h1>
+  <p class="lead" id="sub">Aprove o que estiver bom ou peça um ajuste. Depois é só baixar em alta qualidade.</p>
+
+  <div class="stats" id="stats"></div>
+
+  <div class="tabs" role="group" aria-label="Filtrar conteúdos">
+    <button class="tab" type="button" data-f="aguardando" aria-pressed="true">Para aprovar <span class="c" id="c-aguardando">0</span></button>
+    <button class="tab" type="button" data-f="ajuste" aria-pressed="false">Em ajuste</button>
+    <button class="tab" type="button" data-f="aprovado" aria-pressed="false">Aprovados</button>
+    <button class="tab" type="button" data-f="todos" aria-pressed="false">Todos</button>
+  </div>
+
+  <div class="grid" id="lista"></div>
+  <div class="empty" id="vazio" hidden></div>
+
+  <p class="small muted" style="margin-top:32px">Precisa de ajuda? <span id="contato"></span> · <a href="brief.html">Preencher ou refazer o briefing</a></p>
+</main>
+
+<dialog id="dlg-ajuste">
+  <form class="in" method="dialog" id="f-ajuste">
+    <h2>Pedir ajuste</h2>
+    <p class="muted small" id="aj-info"></p>
+    <div class="f"><label for="aj-txt">O que você quer mudar?</label><textarea id="aj-txt" placeholder="Ex.: trocar a foto do fundo e mudar o preço para R$ 89" required></textarea></div>
+    <div class="err" id="aj-err" hidden></div>
+    <div class="acts"><button class="btn ghost" value="cancel" type="button" id="aj-cancel">Cancelar</button><button class="btn" type="submit">Enviar pedido</button></div>
+  </form>
+</dialog>
+
+<script src="assets/config.js"></script>
+<script src="assets/vendor/supabase.js"></script>
+<script src="assets/core.js"></script>
+<script>
+(async function () {
+  var api = CR.api, el = CR.el;
+  CR.avisoDemo();
+  var eu = await CR.exigirLogin();
+  if (!eu) return;
+  if (eu.papel === "admin") { location.replace("admin.html"); return; }
+
+  var filtro = "aguardando", itens = [], usados = 0, atual = null;
+  document.getElementById("who").appendChild(el("b", { text: eu.empresa || eu.nome || eu.email }));
+  document.getElementById("who").appendChild(document.createTextNode(eu.plano && eu.plano !== "Sem plano" ? "Plano " + eu.plano : eu.email));
+  document.getElementById("ola").textContent = "Olá, " + (eu.nome || "").split(" ")[0] + "!";
+  document.getElementById("sair").addEventListener("click", async function () { await api.sair(); location.replace("entrar.html"); });
+  var w = CR.whats("Olá! Sou " + (eu.nome || "") + " (" + (eu.empresa || "") + ") e preciso de ajuda na área do cliente.");
+  document.getElementById("contato").appendChild(w ? el("a", { href: w, target: "_blank", rel: "noopener", text: "Fale com a gente no WhatsApp" }) : el("span", { text: "Fale com a gente pelo e-mail " + CR.config.EMAIL }));
+
+  async function carregar() {
+    try {
+      itens = await api.entregas(eu.id);
+      usados = await api.ajustesNoMes(eu.id);
+    } catch (e) { CR.toast(e.message, true); itens = []; }
+    render();
+  }
+
+  function stats() {
+    var s = document.getElementById("stats"); s.textContent = "";
+    var n = function (st) { return itens.filter(function (i) { return i.status === st; }).length; };
+    [[n("aguardando"), "para aprovar"], [n("aprovado"), "aprovados"], [usados + " de " + (eu.ajustes_mes || 0), "ajustes usados neste mês"]].forEach(function (x) {
+      s.appendChild(el("div", { class: "stat" }, [el("b", { text: String(x[0]) }), el("span", { text: x[1] })]));
+    });
+    document.getElementById("c-aguardando").textContent = n("aguardando");
+  }
+
+  async function midia(box, e) {
+    var url = await api.urlArquivo(e, false).catch(function () { return ""; });
+    var tipo = CR.tipoArquivo(e.arquivo_nome || e.demo_url || "");
+    if (!url) { box.appendChild(el("div", { class: "file", text: "Arquivo indisponível" })); return; }
+    if (e.link_externo && !e.arquivo_path && !e.demo_url) box.appendChild(el("iframe", { src: url, allow: "autoplay", loading: "lazy", title: e.titulo }));
+    else if (tipo === "video") box.appendChild(el("video", { src: url.indexOf("blob:") === 0 ? url : url + "#t=0.1", controls: true, playsinline: true, preload: "metadata" }));
+    else if (tipo === "imagem") box.appendChild(el("img", { src: url, alt: e.titulo, loading: "lazy" }));
+    else box.appendChild(el("div", { class: "file" }, [el("b", { text: e.arquivo_nome || "Arquivo" }), el("br"), "Baixe para ver"]));
+  }
+
+  async function baixar(e, btn) {
+    btn.disabled = true;
+    try {
+      var url = await api.urlArquivo(e, true);
+      var a = el("a", { href: url, download: e.arquivo_nome || "", target: "_blank", rel: "noopener" });
+      document.body.appendChild(a); a.click(); a.remove();
+    } catch (x) { CR.toast(x.message, true); }
+    btn.disabled = false;
+  }
+
+  function card(e) {
+    var media = el("div", { class: "media" });
+    midia(media, e);
+    var acts = el("div", { class: "acts" });
+    if (e.status !== "aprovado") {
+      acts.appendChild(el("button", { class: "btn ok sm", type: "button", text: "Aprovar", onclick: async function () {
+        this.disabled = true;
+        try { await api.aprovar(e.id); CR.toast("Aprovado! Obrigado."); await carregar(); } catch (x) { CR.toast(x.message, true); this.disabled = false; }
+      } }));
+      if (e.status !== "ajuste") acts.appendChild(el("button", { class: "btn ghost sm", type: "button", text: "Pedir ajuste", onclick: function () { abrirAjuste(e); } }));
+    }
+    acts.appendChild(el("button", { class: "btn dark sm", type: "button", text: "Baixar em alta", onclick: function () { baixar(e, this); } }));
+    var body = el("div", { class: "body" }, [
+      el("div", { class: "meta" }, [el("span", { class: "chip", text: CR.TIPOS[e.tipo] || e.tipo }), el("span", { class: "pill " + e.status, text: CR.STATUS[e.status] })]),
+      el("h3", { text: e.titulo }),
+      e.data_postagem ? el("div", { class: "small muted", text: "Postagem prevista: " + CR.data(e.data_postagem) }) : null,
+      e.legenda ? el("div", { class: "leg", text: e.legenda }) : null,
+      e.legenda ? el("button", { class: "btn ghost sm", type: "button", text: "Copiar legenda", onclick: function () {
+        var t = e.legenda;
+        try { navigator.clipboard.writeText(t).then(function () { CR.toast("Legenda copiada"); }, function () { CR.toast("Não deu pra copiar. Selecione o texto e copie.", true); }); }
+        catch (x) { CR.toast("Não deu pra copiar. Selecione o texto e copie.", true); }
+      } }) : null,
+      e.status === "ajuste" && e.comentario ? el("div", { class: "coment" }, [el("b", { text: "Seu pedido: " }), e.comentario]) : null,
+      acts
+    ]);
+    return el("article", { class: "ent" }, [media, body]);
+  }
+
+  function render() {
+    stats();
+    var lista = document.getElementById("lista"); lista.textContent = "";
+    var vis = itens.filter(function (i) { return filtro === "todos" || i.status === filtro; });
+    vis.forEach(function (e) { lista.appendChild(card(e)); });
+    var v = document.getElementById("vazio");
+    v.hidden = vis.length > 0;
+    v.textContent = !itens.length
+      ? "Ainda não tem conteúdo aqui. Assim que recebermos seu briefing e o pagamento, seus conteúdos aparecem nesta tela em até 24 h."
+      : { aguardando: "Nada para aprovar agora. Tudo em dia!", ajuste: "Nenhum ajuste em andamento.", aprovado: "Você ainda não aprovou nenhum conteúdo.", todos: "" }[filtro];
+  }
+
+  document.querySelectorAll(".tab").forEach(function (t) {
+    t.addEventListener("click", function () {
+      filtro = t.dataset.f;
+      document.querySelectorAll(".tab").forEach(function (x) { x.setAttribute("aria-pressed", String(x === t)); });
+      render();
+    });
+  });
+
+  var dlg = document.getElementById("dlg-ajuste");
+  function abrirAjuste(e) {
+    atual = e;
+    var resta = (eu.ajustes_mes || 0) - usados;
+    document.getElementById("aj-info").textContent = "“" + e.titulo + "”. " + (resta > 0 ? "Você ainda tem " + resta + (resta === 1 ? " ajuste" : " ajustes") + " neste mês." : "Seus ajustes do mês acabaram. Pode mandar mesmo assim: a gente te passa o valor antes de fazer.");
+    document.getElementById("aj-txt").value = ""; document.getElementById("aj-err").hidden = true;
+    dlg.showModal();
+  }
+  document.getElementById("aj-cancel").addEventListener("click", function () { dlg.close(); });
+  document.getElementById("f-ajuste").addEventListener("submit", async function (ev) {
+    ev.preventDefault();
+    var t = document.getElementById("aj-txt").value.trim();
+    if (!t) { var er = document.getElementById("aj-err"); er.textContent = "Conta pra gente o que você quer mudar."; er.hidden = false; return; }
+    try { await api.pedirAjuste(atual, t); dlg.close(); CR.toast("Pedido enviado. Entregamos o ajuste em até 24 h."); await carregar(); }
+    catch (x) { var er2 = document.getElementById("aj-err"); er2.textContent = x.message; er2.hidden = false; }
+  });
+
+  carregar();
+})();
+</script>
+</body>
+</html>

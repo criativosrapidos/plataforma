@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Painel da agência · Criativos Rápidos</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="assets/logo-icone.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,800;0,900;1,900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<style>
+  .split { display: grid; grid-template-columns: minmax(0, 360px) minmax(0, 1fr); gap: 20px; align-items: start; }
+  @media (max-width: 900px) { .split { grid-template-columns: 1fr; } }
+  .seg { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
+  .seg label { border: 1.5px solid var(--line); border-radius: 10px; padding: 7px 12px; font-size: 13px; font-weight: 600; cursor: pointer; }
+  .seg input { position: absolute; opacity: 0; pointer-events: none; }
+  .seg input:checked + span { color: var(--yellow-ink); }
+  .seg label:has(input:checked) { border-color: var(--fg); background: var(--field); }
+  .brf { border: 1px solid var(--line); border-radius: 14px; background: var(--surface); margin-bottom: 10px; }
+  .brf summary { cursor: pointer; padding: 14px 16px; display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: center; list-style: none; }
+  .brf summary::-webkit-details-marker { display: none; }
+  .brf pre { margin: 0; padding: 0 16px 16px; white-space: pre-wrap; font: 13px/1.55 var(--body); color: var(--fg); }
+  .brf .acts { display: flex; gap: 8px; flex-wrap: wrap; padding: 0 16px 16px; }
+  .pill.novo { background: var(--wait-bg); color: var(--yellow-ink); }
+  .pill.em_producao { background: var(--field); color: var(--fg); border: 1px solid var(--line); }
+  .pill.pronto { background: var(--ok-bg); color: var(--ok); }
+  .mini { width: 46px; height: 46px; border-radius: 8px; background: #000; object-fit: cover; display: block; }
+  .ent.adm .media { aspect-ratio: 4 / 5; }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="top-in">
+    <a class="logo" href="./"><img src="assets/logo-icone.png" alt=""><span><b>criativos</b><i>rápidos</i></span></a>
+    <div class="sp"></div>
+    <div class="who"><b>Painel da agência</b><span id="who"></span></div>
+    <button class="btn ghost-w" id="sair" type="button">Sair</button>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="tabs" role="group" aria-label="Seções do painel">
+    <button class="tab" type="button" data-s="entregas" aria-pressed="true">Entregas</button>
+    <button class="tab" type="button" data-s="clientes" aria-pressed="false">Clientes</button>
+    <button class="tab" type="button" data-s="briefings" aria-pressed="false">Briefings <span class="c" id="c-brf">0</span></button>
+  </div>
+
+  <!-- ENTREGAS -->
+  <section id="s-entregas">
+    <div class="split">
+      <form class="card" id="f-ent" novalidate>
+        <h2>Nova entrega</h2>
+        <div class="f"><label for="n-cli">Cliente</label><select id="n-cli" required></select></div>
+        <div class="f"><label for="n-tit">Título</label><input type="text" id="n-tit" placeholder="Ex.: Reels promoção de novembro" required></div>
+        <div class="row">
+          <div class="f"><label for="n-tipo">Tipo</label><select id="n-tipo"></select></div>
+          <div class="f"><label for="n-data">Data de postagem</label><input type="date" id="n-data"></div>
+        </div>
+        <div class="f"><label for="n-leg">Legenda</label><textarea id="n-leg"></textarea></div>
+        <span class="q" style="font-weight:600;font-size:14px">Arquivo</span>
+        <div class="seg" role="radiogroup" aria-label="Origem do arquivo">
+          <label><input type="radio" name="orig" value="up" id="o-up" checked><span>Enviar arquivo</span></label>
+          <label><input type="radio" name="orig" value="drive" id="o-drive"><span>Link do Google Drive</span></label>
+        </div>
+        <div class="f" id="w-up"><label for="n-arq">Arquivo em alta qualidade <span class="muted small">vídeo, imagem ou PDF</span></label><input type="file" id="n-arq" multiple accept="video/*,image/*,application/pdf"><span class="small muted">Pode escolher vários: cada arquivo vira uma entrega com o mesmo título numerado.</span></div>
+        <div class="f" id="w-drive" hidden><label for="n-link">Link de compartilhar do Drive</label><input type="url" id="n-link" placeholder="https://drive.google.com/file/d/…"><span class="small muted">No Drive: Compartilhar → Qualquer pessoa com o link → Leitor.</span></div>
+        <div class="err" id="n-err" hidden></div>
+        <div class="small muted" id="n-prog" hidden></div>
+        <button class="btn full" type="submit">Enviar para o cliente aprovar</button>
+      </form>
+
+      <div>
+        <div class="row" style="margin-bottom:6px">
+          <div class="f"><label for="v-cli">Ver entregas de</label><select id="v-cli"></select></div>
+          <div class="f"><label for="v-st">Status</label><select id="v-st"><option value="">Todos</option><option value="aguardando">Para aprovar</option><option value="ajuste">Em ajuste</option><option value="aprovado">Aprovado</option></select></div>
+        </div>
+        <div class="grid" id="l-ent"></div>
+        <div class="empty" id="v-ent" hidden>Nenhuma entrega com esse filtro.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLIENTES -->
+  <section id="s-clientes" hidden>
+    <h2>Clientes</h2>
+    <p class="lead">O cliente cria a conta em <b>/entrar</b> com o e-mail do contrato. Aqui você define o plano e quantos ajustes ele tem por mês.</p>
+    <div class="card scroll"><table class="t" id="t-cli"><thead><tr><th>Cliente</th><th>Contato</th><th>Plano</th><th>Ajustes/mês</th><th>Entregas</th><th></th></tr></thead><tbody></tbody></table></div>
+  </section>
+
+  <!-- BRIEFINGS -->
+  <section id="s-briefings" hidden>
+    <h2>Briefings recebidos</h2>
+    <p class="lead">Tudo que chega pelo formulário <b>/brief</b>. Toque para abrir.</p>
+    <div id="l-brf"></div>
+    <div class="empty" id="v-brf" hidden>Nenhum briefing ainda. Mande o link <b>criativosrapidos.com.br/brief</b> para o cliente.</div>
+  </section>
+</main>
+
+<script src="assets/config.js"></script>
+<script src="assets/vendor/supabase.js"></script>
+<script src="assets/core.js"></script>
+<script>
+(async function () {
+  var api = CR.api, el = CR.el;
+  CR.avisoDemo();
+  var eu = await CR.exigirLogin("admin");
+  if (!eu) return;
+  document.getElementById("who").textContent = eu.email;
+  document.getElementById("sair").addEventListener("click", async function () { await api.sair(); location.replace("entrar.html"); });
+
+  var clientes = [], entregas = [];
+  function nomeCli(id) { var c = clientes.find(function (x) { return x.id === id; }); return c ? (c.empresa || c.nome || c.email) : "?"; }
+
+  // ---------------------------------------------------------------- seções
+  document.querySelectorAll(".tab").forEach(function (t) {
+    t.addEventListener("click", function () {
+      document.querySelectorAll(".tab").forEach(function (x) { x.setAttribute("aria-pressed", String(x === t)); });
+      ["entregas", "clientes", "briefings"].forEach(function (s) { document.getElementById("s-" + s).hidden = s !== t.dataset.s; });
+    });
+  });
+
+  Object.keys(CR.TIPOS).forEach(function (k) { document.getElementById("n-tipo").appendChild(el("option", { value: k, text: CR.TIPOS[k] })); });
+  document.querySelectorAll('input[name="orig"]').forEach(function (r) {
+    r.addEventListener("change", function () { var d = document.getElementById("o-drive").checked; document.getElementById("w-up").hidden = d; document.getElementById("w-drive").hidden = !d; });
+  });
+
+  async function carregar() {
+    try {
+      var todos = await api.clientes();
+      clientes = todos.filter(function (p) { return p.papel !== "admin"; });
+      entregas = await api.entregas();
+    } catch (e) { CR.toast(e.message, true); }
+    selects(); renderEntregas(); renderClientes(); renderBriefings();
+  }
+
+  function selects() {
+    var a = document.getElementById("n-cli"), b = document.getElementById("v-cli");
+    var va = a.value, vb = b.value;
+    a.textContent = ""; b.textContent = "";
+    a.appendChild(el("option", { value: "", text: clientes.length ? "Escolha o cliente" : "Nenhum cliente ainda" }));
+    b.appendChild(el("option", { value: "", text: "Todos os clientes" }));
+    clientes.forEach(function (c) {
+      var t = (c.empresa || c.nome || c.email) + (c.plano && c.plano !== "Sem plano" ? " · " + c.plano : "");
+      a.appendChild(el("option", { value: c.id, text: t })); b.appendChild(el("option", { value: c.id, text: t }));
+    });
+    a.value = va; b.value = vb;
+  }
+
+  // ---------------------------------------------------------------- entregas
+  function renderEntregas() {
+    var cli = document.getElementById("v-cli").value, st = document.getElementById("v-st").value;
+    var vis = entregas.filter(function (e) { return (!cli || e.cliente_id === cli) && (!st || e.status === st); });
+    var l = document.getElementById("l-ent"); l.textContent = "";
+    vis.forEach(function (e) { l.appendChild(cardEntrega(e)); });
+    document.getElementById("v-ent").hidden = vis.length > 0;
+  }
+  document.getElementById("v-cli").addEventListener("change", renderEntregas);
+  document.getElementById("v-st").addEventListener("change", renderEntregas);
+
+  function cardEntrega(e) {
+    var media = el("div", { class: "media" });
+    api.urlArquivo(e, false).then(function (url) {
+      var tipo = CR.tipoArquivo(e.arquivo_nome || e.demo_url || "");
+      if (!url) media.appendChild(el("div", { class: "file", text: "Sem arquivo" }));
+      else if (e.link_externo && !e.arquivo_path && !e.demo_url) media.appendChild(el("iframe", { src: url, loading: "lazy", title: e.titulo }));
+      else if (tipo === "video") media.appendChild(el("video", { src: url.indexOf("blob:") === 0 ? url : url + "#t=0.1", controls: true, playsinline: true, preload: "metadata" }));
+      else if (tipo === "imagem") media.appendChild(el("img", { src: url, alt: e.titulo, loading: "lazy" }));
+      else media.appendChild(el("div", { class: "file", text: e.arquivo_nome || "Arquivo" }));
+    }).catch(function () { media.appendChild(el("div", { class: "file", text: "Arquivo indisponível" })); });
+
+    var troca = el("input", { type: "file", hidden: true, accept: "video/*,image/*,application/pdf", onchange: async function () {
+      if (!this.files[0]) return;
+      CR.toast("Enviando a nova versão…");
+      try { await api.trocarArquivo(e, this.files[0]); CR.toast("Nova versão enviada. O cliente já pode aprovar."); await carregar(); } catch (x) { CR.toast(x.message, true); }
+    } });
+
+    return el("article", { class: "ent adm" }, [media, el("div", { class: "body" }, [
+      el("div", { class: "meta" }, [el("span", { class: "chip", text: CR.TIPOS[e.tipo] || e.tipo }), el("span", { class: "pill " + e.status, text: CR.STATUS[e.status] })]),
+      el("h3", { text: e.titulo }),
+      el("div", { class: "small muted", text: nomeCli(e.cliente_id) + (e.data_postagem ? " · postar em " + CR.data(e.data_postagem) : "") }),
+      e.status === "ajuste" && e.comentario ? el("div", { class: "coment" }, [el("b", { text: "Pedido do cliente: " }), e.comentario]) : null,
+      el("div", { class: "acts" }, [
+        troca,
+        e.link_externo && !e.arquivo_path ? null : el("button", { class: "btn sm", type: "button", text: e.status === "ajuste" ? "Enviar versão ajustada" : "Trocar arquivo", onclick: function () { troca.click(); } }),
+        e.status === "ajuste" && e.link_externo && !e.arquivo_path ? el("button", { class: "btn sm", type: "button", text: "Ajuste feito no Drive", onclick: async function () {
+          try { await api.editarEntrega(e.id, { status: "aguardando" }); CR.toast("Voltou para o cliente aprovar."); await carregar(); } catch (x) { CR.toast(x.message, true); }
+        } }) : null,
+        el("button", { class: "btn danger sm", type: "button", text: "Apagar", onclick: function () { confirmar(this, async function () {
+          try { await api.apagarEntrega(e); CR.toast("Entrega apagada."); await carregar(); } catch (x) { CR.toast(x.message, true); }
+        }); } })
+      ])
+    ])]);
+  }
+
+  // confirmação em dois toques (o navegador do painel pode bloquear confirm())
+  function confirmar(btn, fn) {
+    if (btn.dataset.conf) { fn(); return; }
+    btn.dataset.conf = "1"; var t = btn.textContent; btn.textContent = "Toque de novo para confirmar";
+    setTimeout(function () { delete btn.dataset.conf; btn.textContent = t; }, 3000);
+  }
+
+  document.getElementById("f-ent").addEventListener("submit", async function (ev) {
+    ev.preventDefault();
+    var err = document.getElementById("n-err"), prog = document.getElementById("n-prog");
+    var cli = document.getElementById("n-cli").value, tit = document.getElementById("n-tit").value.trim();
+    var drive = document.getElementById("o-drive").checked;
+    var arqs = Array.prototype.slice.call(document.getElementById("n-arq").files), link = document.getElementById("n-link").value.trim();
+    var m = !cli ? "Escolha o cliente." : !tit ? "Dê um título para a entrega." : drive && !/drive\.google\.com/.test(link) ? "Cole o link de compartilhar do Google Drive." : !drive && !arqs.length ? "Escolha pelo menos um arquivo." : "";
+    err.textContent = m; err.hidden = !m; if (m) return;
+    var btn = this.querySelector("button[type=submit]"); btn.disabled = true; prog.hidden = false;
+    var base = { cliente_id: cli, tipo: document.getElementById("n-tipo").value, legenda: document.getElementById("n-leg").value.trim() || null, data_postagem: document.getElementById("n-data").value || null };
+    try {
+      if (drive) await api.criarEntrega(Object.assign({ titulo: tit, link_externo: link }, base));
+      else for (var i = 0; i < arqs.length; i++) {
+        prog.textContent = "Enviando " + (i + 1) + " de " + arqs.length + ": " + arqs[i].name + "…";
+        await api.criarEntrega(Object.assign({ titulo: arqs.length > 1 ? tit + " " + (i + 1) : tit }, base), arqs[i]);
+      }
+      CR.toast("Enviado! Já aparece na área do cliente.");
+      ["n-tit", "n-leg", "n-data", "n-link"].forEach(function (id) { document.getElementById(id).value = ""; });
+      document.getElementById("n-arq").value = "";
+      document.getElementById("v-cli").value = cli;
+      await carregar();
+    } catch (x) { err.textContent = x.message; err.hidden = false; }
+    btn.disabled = false; prog.hidden = true;
+  });
+
+  // ---------------------------------------------------------------- clientes
+  function renderClientes() {
+    var tb = document.querySelector("#t-cli tbody"); tb.textContent = "";
+    if (!clientes.length) { tb.appendChild(el("tr", {}, el("td", { colspan: "6", class: "muted", text: "Nenhum cliente criou conta ainda. Mande o link criativosrapidos.com.br/entrar." }))); return; }
+    clientes.forEach(function (c) {
+      var plano = el("select", { "aria-label": "Plano de " + (c.nome || c.email) });
+      CR.PLANOS.forEach(function (p) { plano.appendChild(el("option", { value: p.nome, text: p.nome })); });
+      plano.value = c.plano || "Sem plano";
+      var aj = el("input", { type: "text", inputmode: "numeric", value: String(c.ajustes_mes || 0), "aria-label": "Ajustes por mês", style: "width:70px" });
+      plano.addEventListener("change", function () { var p = CR.PLANOS.find(function (x) { return x.nome === plano.value; }); if (p) aj.value = p.ajustes; });
+      var n = entregas.filter(function (e) { return e.cliente_id === c.id; });
+      var pend = n.filter(function (e) { return e.status !== "aprovado"; }).length;
+      tb.appendChild(el("tr", {}, [
+        el("td", {}, [el("b", { text: c.empresa || "—" }), el("div", { class: "small muted", text: c.nome || "" })]),
+        el("td", { class: "small" }, [c.email || "", el("br"), c.whatsapp || ""]),
+        el("td", {}, plano), el("td", {}, aj),
+        el("td", { class: "small", text: n.length + (pend ? " (" + pend + " pendentes)" : "") }),
+        el("td", {}, el("button", { class: "btn sm", type: "button", text: "Salvar", onclick: async function () {
+          try { await api.salvarPerfil(c.id, { plano: plano.value, ajustes_mes: parseInt(aj.value, 10) || 0 }); CR.toast("Cliente atualizado."); await carregar(); } catch (x) { CR.toast(x.message, true); }
+        } }))
+      ]));
+    });
+  }
+
+  // ---------------------------------------------------------------- briefings
+  var ST_BRF = { novo: "Novo", em_producao: "Em produção", pronto: "Pronto" };
+  async function renderBriefings() {
+    var l = document.getElementById("l-brf"); l.textContent = "";
+    var lista = [];
+    try { lista = await api.briefings(); } catch (x) { CR.toast(x.message, true); }
+    document.getElementById("c-brf").textContent = lista.filter(function (b) { return (b.status || "novo") === "novo"; }).length;
+    document.getElementById("v-brf").hidden = lista.length > 0;
+    lista.forEach(function (b) {
+      var st = b.status || "novo";
+      var sel = el("select", { "aria-label": "Status do briefing", style: "width:auto" });
+      Object.keys(ST_BRF).forEach(function (k) { sel.appendChild(el("option", { value: k, text: ST_BRF[k] })); });
+      sel.value = st;
+      sel.addEventListener("change", async function () { try { await api.statusBriefing(b.id, sel.value); renderBriefings(); } catch (x) { CR.toast(x.message, true); } });
+      l.appendChild(el("details", { class: "brf" }, [
+        el("summary", {}, [el("b", { text: b.empresa || b.nome || "Sem nome" }), el("span", { class: "pill " + st, text: ST_BRF[st] }), el("span", { class: "small muted", text: (b.plano || "") + " · " + CR.data(b.criado_em) + (b.whatsapp ? " · " + b.whatsapp : "") })]),
+        el("pre", { text: b.texto || JSON.stringify(b.respostas, null, 2) }),
+        el("div", { class: "acts" }, [
+          sel,
+          el("button", { class: "btn ghost sm", type: "button", text: "Copiar texto", onclick: function () {
+            try { navigator.clipboard.writeText(b.texto || "").then(function () { CR.toast("Copiado"); }, function () { CR.toast("Selecione o texto e copie.", true); }); } catch (x) { CR.toast("Selecione o texto e copie.", true); }
+          } }),
+          el("button", { class: "btn danger sm", type: "button", text: "Apagar", onclick: function () { confirmar(this, async function () { await api.apagarBriefing(b.id); renderBriefings(); }); } })
+        ])
+      ]));
+    });
+  }
+
+  carregar();
+})();
+</script>
+</body>
+</html>
