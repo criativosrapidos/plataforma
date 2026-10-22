@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="claude:viewport-fit-sides" content="cover">
 <title>Criativos Rápidos · tudo que uma agência entrega, em 24 h</title>
-<meta name="description" content="Copywriter, designer, social media, editor de vídeo e locutor num time só. Planos mensais sem fidelidade, pacotes a partir de R$ 97 e um app pra aprovar e baixar seus conteúdos.">
+<meta name="description" content="Copywriter, designer, social media, editor de vídeo, locutor e gestor de tráfego num time só. Planos mensais sem fidelidade, pacotes a partir de R$ 97 e um app pra aprovar e baixar seus conteúdos.">
 <meta property="og:title" content="Criativos Rápidos · tudo que uma agência entrega, em 24 h">
 <meta property="og:description" content="Planos sem fidelidade, pacotes a partir de R$ 97 e app pra aprovar e baixar seus conteúdos.">
 <meta property="og:image" content="assets/logo-completo.png">
@@ -131,7 +131,7 @@
   @keyframes rola { to { transform: translateX(-50%); } }
 
   /* ---------------------------------------------------------------- time */
-  .team { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 14px; }
+  .team { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
   .role { background: var(--white); border: 1px solid var(--line); border-radius: 22px; padding: 22px 20px; display: grid; gap: 10px; align-content: start; }
   .role .ic { width: 48px; height: 48px; border-radius: 14px; background: var(--ink); color: var(--y); display: grid; place-items: center; }
   .role .ic svg { width: 24px; height: 24px; }
@@ -140,7 +140,7 @@
   .vs { margin-top: 26px; display: flex; flex-wrap: wrap; gap: 10px 26px; font-size: 15px; font-weight: 600; }
   .vs span { display: inline-flex; gap: 8px; align-items: center; }
   .vs svg { width: 20px; height: 20px; color: var(--ok); }
-  @media (max-width: 980px) { .team { grid-template-columns: repeat(2, minmax(0, 1fr)); } .role:last-child { grid-column: 1 / -1; } }
+  @media (max-width: 860px) { .team { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 
   /* ---------------------------------------------------------------- passos */
   .steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; position: relative; }
@@ -213,12 +213,6 @@
   .cmp td b { color: #fff; }
 
   /* ---------------------------------------------------------------- pacotes */
-  .credits { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; max-width: 720px; margin-bottom: 36px; }
-  .credits div { background: var(--white); border: 2px solid var(--ink); border-radius: 16px; padding: 14px 6px; text-align: center; }
-  .credits b { display: block; font: 900 30px/1 var(--display); }
-  .credits span { display: block; font-size: 13px; font-weight: 700; margin-top: 4px; }
-  .credits small { display: block; color: var(--mut); font-size: 11.5px; }
-  @media (max-width: 560px) { .credits { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
   .packs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
   .pk { background: var(--white); border: 1px solid var(--line); border-radius: 24px; padding: 26px; display: flex; flex-direction: column; gap: 14px; position: relative; }
   .pk.hot { border: 3px solid var(--ink); }
@@ -226,6 +220,8 @@
   .pk h3 { font-size: 22px; font-weight: 900; text-transform: uppercase; letter-spacing: .02em; }
   .pk .val { font: 900 44px/1 var(--display); letter-spacing: -.02em; }
   .pk .val sup { font-size: 17px; vertical-align: top; margin-right: 3px; }
+  .pk .role-p { font: 800 12px var(--body); letter-spacing: .12em; text-transform: uppercase; color: var(--mut); }
+  .pk li.gift { font-weight: 800; }
   .pk .cr { display: inline-flex; align-items: baseline; gap: 6px; background: var(--y-soft); border-radius: 10px; padding: 6px 10px; font-weight: 800; align-self: start; }
   .pk .cr b { font: 900 22px var(--display); }
   .pk ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 9px; font-size: 15px; }
@@ -333,7 +329,7 @@
     <div class="txt">
       <span class="eyebrow">Agência de conteúdo · sem fidelidade</span>
       <h1>Tudo que uma agência entrega. <em>Em 24 horas.</em></h1>
-      <p class="sub">Copywriter, designer, social media, editor de vídeo e locutor num time só. Você aprova pelo nosso app e recebe tudo pronto pra postar, ou deixa que a gente posta.</p>
+      <p class="sub">Copywriter, designer, social media, editor de vídeo, locutor e gestor de tráfego num time só. Você aprova pelo nosso app e recebe tudo pronto pra postar, ou deixa que a gente posta.</p>
       <div class="ctas">
         <a class="btn y" href="#planos">Ver planos</a>
         <button class="btn o" type="button" data-lead="">Falar com a gente</button>
@@ -365,6 +361,7 @@
       <div class="role"><span class="ic"><svg class="s"><use href="#i-cal"/></svg></span><h3>Social media</h3><p>Calendário de postagem e, nos planos maiores, a postagem feita por nós.</p></div>
       <div class="role"><span class="ic"><svg class="s"><use href="#i-film"/></svg></span><h3>Editor de vídeo</h3><p>Reels e vídeos com motion que param o dedo no feed.</p></div>
       <div class="role"><span class="ic"><svg class="s"><use href="#i-mic"/></svg></span><h3>Locutor</h3><p>Voz profissional nos vídeos, quando o conteúdo pede.</p></div>
+      <div class="role"><span class="ic"><svg class="s"><use href="#i-rocket"/></svg></span><h3>Gestor de tráfego</h3><p>Anúncios pagos rodando, acompanhados e ajustados pra trazer cliente.</p></div>
     </div>
     <div class="vs"><span><svg class="s"><use href="#i-check"/></svg>Sem fidelidade</span><span><svg class="s"><use href="#i-check"/></svg>Sem multa pra cancelar</span><span><svg class="s"><use href="#i-check"/></svg>Entrega em 24 h</span><span><svg class="s"><use href="#i-check"/></svg>Nunca pedimos sua senha</span></div>
   </div>
@@ -475,42 +472,35 @@
 
 <section class="band light" id="pacotes">
   <div class="in">
-    <div class="head"><span class="eyebrow">Pacotes · pagamento único</span><h2>Sem mensalidade? <em>Monte um pacote.</em></h2><p class="mut">Você ganha créditos e escolhe o que quer criar. Cada peça custa alguns créditos.</p></div>
-    <div class="credits" aria-label="Quantos créditos custa cada peça">
-      <div><b>1</b><span>Stories</span><small>crédito</small></div>
-      <div><b>2</b><span>Post</span><small>créditos</small></div>
-      <div><b>3</b><span>Carrossel</span><small>créditos</small></div>
-      <div><b>4</b><span>Reels</span><small>créditos</small></div>
-      <div><b>5</b><span>Anúncio</span><small>créditos</small></div>
-    </div>
+    <div class="head"><span class="eyebrow">Pacotes · pagamento único</span><h2>Sem mensalidade? <em>Comece com um pacote.</em></h2><p class="mut">Você paga uma vez e recebe tudo pronto. Sem contrato e sem mensalidade.</p></div>
     <div class="packs">
       <article class="pk">
+        <span class="role-p">Pra começar a anunciar</span>
         <h3>Largada</h3>
         <div class="val"><sup>R$</sup>97</div>
-        <span class="cr"><b>10</b> créditos</span>
-        <ul><li><svg class="s"><use href="#i-check"/></svg>Monte as peças que quiser</li><li><svg class="s"><use href="#i-check"/></svg>1 ajuste no pacote</li></ul>
-        <p class="ex">Ex.: 1 anúncio + 1 carrossel + 2 stories</p>
+        <span class="cr"><b>3</b> anúncios</span>
+        <ul><li><svg class="s"><use href="#i-check"/></svg>2 vídeos pra anúncio</li><li><svg class="s"><use href="#i-check"/></svg>1 arte (design) pra anúncio</li><li><svg class="s"><use href="#i-check"/></svg>Com a sua marca, cores e oferta</li><li><svg class="s"><use href="#i-check"/></svg>1 ajuste no pacote</li></ul>
         <button class="btn ok" type="button" data-lead="Largada">Quero o Largada</button>
       </article>
       <article class="pk hot">
-        <span class="badge">Com identidade visual</span>
+        <span class="badge">Marca profissional</span>
+        <span class="role-p">Pra marca ter cara de empresa</span>
         <h3>Acelera</h3>
         <div class="val"><sup>R$</sup>297</div>
-        <span class="cr"><b>20</b> créditos</span>
-        <ul><li><svg class="s"><use href="#i-check"/></svg>Identidade visual: logo, paleta, fontes, foto de perfil e destaques</li><li><svg class="s"><use href="#i-check"/></svg>2 ajustes no pacote</li></ul>
-        <p class="ex">Ex.: 2 anúncios + 1 carrossel + 1 post + 5 stories</p>
+        <span class="cr">Identidade visual</span>
+        <ul><li><svg class="s"><use href="#i-check"/></svg>Identidade visual: logo, paleta de cores, fontes, foto de perfil e destaques</li><li class="gift"><svg class="s"><use href="#i-check"/></svg>Brinde: 1 anúncio pronto</li><li><svg class="s"><use href="#i-check"/></svg>2 ajustes no pacote</li></ul>
         <button class="btn k" type="button" data-lead="Acelera">Quero o Acelera</button>
       </article>
       <article class="pk">
+        <span class="role-p">Pra vender também fora do Instagram</span>
         <h3>Turbo</h3>
         <div class="val"><sup>R$</sup>497</div>
-        <span class="cr"><b>40</b> créditos</span>
-        <ul><li><svg class="s"><use href="#i-check"/></svg>Identidade visual completa</li><li><svg class="s"><use href="#i-check"/></svg>PDFs bônus: boas práticas do Instagram, respostas prontas de vendas e mais</li><li><svg class="s"><use href="#i-check"/></svg>3 ajustes no pacote</li></ul>
-        <p class="ex">Ex.: 2 anúncios + grade de 9 (6 posts e 3 carrosséis) + 1 reels + 5 stories</p>
+        <span class="cr">Identidade + landing page</span>
+        <ul><li><svg class="s"><use href="#i-check"/></svg>Identidade visual completa, criada do zero</li><li><svg class="s"><use href="#i-check"/></svg>Landing page completa pro seu negócio</li><li><svg class="s"><use href="#i-check"/></svg>PDFs bônus: boas práticas do Instagram e respostas prontas de vendas</li><li><svg class="s"><use href="#i-check"/></svg>3 ajustes no pacote</li></ul>
         <button class="btn ok" type="button" data-lead="Turbo">Quero o Turbo</button>
       </article>
     </div>
-    <div class="rules"><span>7 dias pra responder o briefing</span><span>Entrega em 24 h</span><span>Ajustes valem pro pacote inteiro</span><span>Refazer do zero conta como peça nova</span></div>
+    <div class="rules"><span>7 dias pra responder o briefing</span><span>Entrega em 24 h</span><span>Ajustes valem pro pacote inteiro</span></div>
   </div>
 </section>
 
@@ -543,7 +533,7 @@
       <details><summary>Tem fidelidade ou multa pra cancelar?</summary><p>Não. Os planos são mensais: você renova se quiser. Pra encerrar, é só avisar por WhatsApp ou e-mail. O mês que já foi pago é entregue até o fim.</p></details>
       <details><summary>Em quanto tempo recebo?</summary><p>Em até 24 horas depois que o pagamento é confirmado e o briefing chega completo. Ajustes também saem em até 24 h.</p></details>
       <details><summary>Como funciona o tráfego pago do Autoridade?</summary><p>A gente cria, acompanha e ajusta suas campanhas de anúncio, e você recebe um relatório todo mês. A verba dos anúncios é sua, definida por você e paga direto à plataforma de anúncios, separada do plano.</p></details>
-      <details><summary>Qual a diferença entre pacote e plano?</summary><p>O pacote é pagamento único: você recebe créditos e escolhe as peças (stories 1, post 2, carrossel 3, reels 4, anúncio 5). O plano é mensal, com quantidades fixas todo mês.</p></details>
+      <details><summary>Qual a diferença entre pacote e plano?</summary><p>O pacote é pagamento único: Largada (3 anúncios), Acelera (identidade visual) ou Turbo (identidade, landing page e PDFs bônus). O plano é mensal, com stories, posts, carrosséis, reels e anúncios todo mês.</p></details>
       <details><summary>O que conta como ajuste?</summary><p>Mudar texto, cor, foto ou a ordem de uma peça. Refazer uma peça do zero conta como peça nova.</p></details>
       <details><summary>Vocês precisam da senha do meu Instagram?</summary><p>Nunca. Nos planos em que a gente posta, você libera o acesso como parceiro no Meta Business, sem passar senha.</p></details>
       <details><summary>Como eu pago?</summary><p>No Pix ou no cartão em até 12x pelo link de pagamento, com as taxas do parcelamento por sua conta.</p></details>
@@ -565,7 +555,7 @@
 <footer>
   <div class="in">
     <span><b style="color:#fff">criativos rápidos</b> · tudo que uma agência entrega, em 24 h · CNPJ 67.844.754/0001-07</span>
-    <nav class="fnav" aria-label="Rodapé"><a href="videos.html">Vídeos motion</a><a href="entrar.html">Área do cliente</a><a href="#duvidas">Dúvidas</a><a id="f-insta" href="#" target="_blank" rel="noopener" hidden>Instagram</a><span id="f-email"></span></nav>
+    <nav class="fnav" aria-label="Rodapé"><a href="videos.html">Largada · R$ 97</a><a href="privacidade.html">Privacidade</a><a href="entrar.html">Área do cliente</a><a href="#duvidas">Dúvidas</a><a id="f-insta" href="#" target="_blank" rel="noopener" hidden>Instagram</a><span id="f-email"></span></nav>
   </div>
 </footer>
 

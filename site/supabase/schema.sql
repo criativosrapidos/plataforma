@@ -42,7 +42,7 @@ create or replace function public.protege_perfil() returns trigger
 language plpgsql security definer set search_path = public as $$
 begin
   if auth.uid() is not null and not public.is_admin() then
-    new.papel := old.papel; new.plano := old.plano; new.ajustes_mes := old.ajustes_mes; new.email := old.email;
+    new.papel := old.papel; new.plano := old.plano; new.ajustes_mes := old.ajustes_mes; new.email := old.email; new.instagram := old.instagram;
   end if;
   return new;
 end $$;
@@ -75,6 +75,16 @@ create table if not exists public.entregas (
 );
 create index if not exists entregas_cliente on public.entregas (cliente_id, criado_em desc);
 
+-- publicação automática no Instagram (veja a função supabase/functions/instagram)
+alter table public.perfis add column if not exists instagram text;                         -- @ conectado, só leitura pro cliente
+alter table public.entregas add column if not exists hora_postagem time default '10:00';   -- horário de Brasília
+alter table public.entregas add column if not exists extras text[];                         -- demais imagens de um carrossel
+alter table public.entregas add column if not exists publicar boolean not null default true; -- postar sozinho quando o cliente aprovar
+alter table public.entregas add column if not exists publicado_em timestamptz;
+alter table public.entregas add column if not exists publicado_link text;
+alter table public.entregas add column if not exists publicacao_erro text;
+alter table public.entregas add column if not exists ig_container text;                     -- vídeo ainda processando no Instagram
+
 -- cliente só pode aprovar ou pedir ajuste (status + comentário); o resto só a agência
 create or replace function public.protege_entrega() returns trigger
 language plpgsql security definer set search_path = public as $$
@@ -85,7 +95,9 @@ begin
     end if;
     new.cliente_id := old.cliente_id; new.titulo := old.titulo; new.tipo := old.tipo; new.legenda := old.legenda;
     new.data_postagem := old.data_postagem; new.arquivo_path := old.arquivo_path; new.arquivo_nome := old.arquivo_nome;
-    new.link_externo := old.link_externo;
+    new.link_externo := old.link_externo; new.hora_postagem := old.hora_postagem; new.extras := old.extras;
+    new.publicar := old.publicar; new.publicado_em := old.publicado_em; new.publicado_link := old.publicado_link;
+    new.publicacao_erro := old.publicacao_erro; new.ig_container := old.ig_container;
   end if;
   new.atualizado_em := now();
   return new;
@@ -170,6 +182,24 @@ drop policy if exists "lead: editar" on public.leads;
 create policy "lead: editar" on public.leads for update using (public.is_admin());
 drop policy if exists "lead: apagar" on public.leads;
 create policy "lead: apagar" on public.leads for delete using (public.is_admin());
+
+-- ============================================================ Instagram conectado (o token fica só no servidor)
+create table if not exists public.instagram_contas (
+  cliente_id uuid primary key references public.perfis (id) on delete cascade,
+  ig_user_id text not null,
+  username text,
+  token text not null,
+  expira_em timestamptz,
+  conectado_em timestamptz not null default now()
+);
+alter table public.instagram_contas enable row level security;  -- sem políticas: só a função do servidor lê e grava
+
+create table if not exists public.instagram_estados (
+  nonce text primary key,
+  cliente_id uuid not null references public.perfis (id) on delete cascade,
+  criado_em timestamptz not null default now()
+);
+alter table public.instagram_estados enable row level security;
 
 -- ============================================================ arquivos (Storage)
 -- bucket privado: cada cliente só baixa o que está na pasta com o id dele

@@ -1,14 +1,14 @@
 # Como colocar a plataforma no ar em criativosrapidos.com.br
 
-São 4 etapas, todas com plano gratuito: **Supabase** (login, banco e arquivos), **Vercel** (hospeda o site), **domínio** (aponta criativosrapidos.com.br para a Vercel) e **primeiro acesso**. Leva por volta de 40 minutos.
+São 4 etapas: **Supabase** (login, banco e arquivos, plano gratuito), **HostGator** (onde o site fica), **primeiro acesso** e, quando quiserem postar sozinho, **Instagram**. As três primeiras levam por volta de 40 minutos.
 
 ## O que tem na pasta `site/`
 
 | Endereço | Arquivo | Para quem |
 |---|---|---|
 | criativosrapidos.com.br | `index.html` | Home: o time, como funciona, planos (Presença, Crescimento, Autoridade), pacotes, o app e dúvidas. Os botões "Quero o…" abrem um formulário que cai no painel como interessado |
-| criativosrapidos.com.br/videos | `videos.html` | Landing da campanha dos vídeos motion (R$ 29,90 · 39,90 · 49,90), com 3 vídeos de exemplo e formulário próprio |
-| criativosrapidos.com.br/brief | `brief.html` | Briefing que o cliente preenche **depois de pagar**. Aceita `?plano=crescimento`, `?plano=turbo`, `?plano=essencial` etc. para já marcar o que ele comprou |
+| criativosrapidos.com.br/videos | `videos.html` | Landing de campanha do pacote Largada (R$ 97: 2 vídeos + 1 arte), com vídeos de exemplo e formulário próprio |
+| criativosrapidos.com.br/brief | `brief.html` | Briefing que o cliente preenche **depois de pagar**. Aceita `?plano=crescimento`, `?plano=turbo`, `?plano=largada` etc. para já marcar o que ele comprou |
 | criativosrapidos.com.br/entrar | `entrar.html` | Login, criar conta e esqueci a senha |
 | criativosrapidos.com.br/app | `app.html` | App do cliente: Início, Conteúdos (aprovar, pedir ajuste, baixar em alta), Calendário de postagem e Conta. **Instala no celular** como aplicativo |
 | criativosrapidos.com.br/app?demo=1 | — | Demonstração do app com a marca fictícia Brasa Burger, pra mostrar a quem ainda não é cliente |
@@ -53,36 +53,24 @@ Os vídeos e as artes de exemplo são gerados a partir de `site-fontes/` (veja o
 
 **Tamanho dos arquivos:** no plano grátis do Supabase cabem 1 GB no total, com até 50 MB por arquivo. Para vídeos maiores, use a opção **Link do Google Drive** no painel: o cliente assiste e baixa direto do Drive. O plano Pro do Supabase custa US$ 25/mês e libera 100 GB.
 
-## 2. Vercel: hospedar o site
+## 2. HostGator: colocar o site no ar
 
-O código já está no GitHub em `criativosrapidos/plataforma`. Com a Vercel ligada ao GitHub, o site se atualiza sozinho a cada mudança.
+1. Edite `assets/config.js` com as chaves do Supabase (etapa 1), o WhatsApp e o @ do Instagram **antes** de subir.
+2. Entre no **Portal do Cliente HostGator** e abra o **cPanel** da hospedagem do criativosrapidos.com.br.
+3. Abra o **Gerenciador de Arquivos** e entre na pasta **public_html**. Se tiver arquivos antigos de outro site, mova pra uma pasta `antigo`.
+4. Clique em **Carregar** e envie o arquivo `site-criativos-rapidos.zip` (o banco e a função do Instagram vão separados, no `supabase-criativos-rapidos.zip`, e não sobem pra HostGator).
+5. Volte pra `public_html`, clique com o botão direito no zip e em **Extract** (Extrair). Os arquivos `index.html`, `app.html` etc. precisam ficar **direto** dentro de `public_html`, não numa subpasta.
+6. Confira se o arquivo **.htaccess** foi junto: em **Configurações** (canto de cima), marque **Mostrar arquivos ocultos**. Ele faz `/brief`, `/app`, `/entrar` e `/admin` funcionarem sem o `.html` e força o https.
+7. No cPanel, abra **SSL/TLS Status** e confirme que o domínio tem o cadeado (o **AutoSSL** da HostGator é gratuito). Sem https o app não instala no celular e o login pode falhar.
+8. Apague o zip de dentro de `public_html` e abra https://criativosrapidos.com.br.
 
-1. Crie uma conta em https://vercel.com usando **Continue with GitHub**.
-2. Clique em **Add New…**, depois **Project**, e importe `criativosrapidos/plataforma`.
-3. Em **Root Directory**, clique em **Edit** e escolha `site`. Framework Preset: **Other**. Não precisa de comando de build.
-4. Clique em **Deploy**. Em 1 minuto sai um endereço tipo `plataforma-xxx.vercel.app`. Abra e confira.
+Se o domínio estiver registrado fora da HostGator (no Registro.br, por exemplo), aponte os **servidores DNS** do domínio para os que a HostGator mandou no e-mail de boas-vindas (algo como `ns1234.hostgator.com.br`). Pode levar algumas horas.
 
-O arquivo `vercel.json` já faz `/brief`, `/entrar`, `/app` e `/admin` funcionarem sem o `.html`.
+**Atualizar depois:** suba só os arquivos que mudaram, por cima, no mesmo lugar. O `assets/config.js` não precisa ser enviado de novo se as chaves não mudaram.
 
-> Se preferirem a Netlify: em https://app.netlify.com escolha **Add new site**, depois **Import from Git**, com o mesmo repositório e base directory `site`. Também dá para arrastar a pasta `site` para https://app.netlify.com/drop.
+> Outra opção é a Vercel (grátis, atualiza sozinha pelo GitHub): importe o repositório `criativosrapidos/plataforma` com a pasta `site` como raiz. O `vercel.json` já está pronto.
 
-## 3. Domínio: apontar criativosrapidos.com.br
-
-1. Na Vercel, abra o projeto e vá em **Settings**, depois **Domains**.
-2. Adicione `criativosrapidos.com.br` e também `www.criativosrapidos.com.br`. A Vercel mostra os registros de DNS. Normalmente são:
-
-   | Tipo | Nome | Valor |
-   |---|---|---|
-   | A | @ (ou vazio) | `76.76.21.21` |
-   | CNAME | www | `cname.vercel-dns.com` |
-
-   Use **os valores que a Vercel mostrar** na tela, que podem ser diferentes destes.
-3. No site onde o domínio foi registrado, crie esses registros:
-   - No **Registro.br**: acesse https://registro.br, abra o domínio, vá em **DNS** e depois em **Editar zona**.
-   - Se o DNS estiver em outro lugar (Hostinger, GoDaddy, Cloudflare), crie os registros lá.
-4. A propagação leva de minutos a algumas horas. A Vercel coloca o cadeado (HTTPS) sozinha.
-
-## 4. Primeiro acesso da agência
+## 3. Primeiro acesso da agência
 
 1. Entre em https://criativosrapidos.com.br/entrar e clique em **Criar minha conta** com o e-mail da agência.
 2. No Supabase, abra o **SQL Editor** e rode este comando (troque o e-mail se for outro):
@@ -110,10 +98,6 @@ O arquivo `vercel.json` já faz `/brief`, `/entrar`, `/app` e `/admin` funcionar
 
 **Link do Google Drive:** no Drive, clique em **Compartilhar** e escolha **Qualquer pessoa com o link** como **Leitor**. Copie o link e cole no painel.
 
-## Atualizar o site depois
-
-Toda mudança enviada para o GitHub na pasta `site/` publica sozinha na Vercel. Para trocar preços ou textos, edite `site/index.html` ou me peça.
-
 ## Instalar o app no celular (pra vocês e pros clientes)
 
 - **Android (Chrome):** abra `criativosrapidos.com.br/app`, toque no menu ⋮ e em **Instalar app**. Em muitos celulares aparece um botão **Instalar app** na própria tela de Conta.
@@ -124,3 +108,37 @@ O ícone amarelo da Criativos fica na tela do celular e abre direto no app, sem 
 ## Mostrar o app pra quem ainda não é cliente
 
 Mande o link `criativosrapidos.com.br/app?demo=1`. Abre o app com a marca fictícia Brasa Burger, dados de exemplo e nada salvo no banco de vocês. O botão "Ver o app funcionando" da home leva pra lá.
+
+## 4. Instagram: postar sozinho depois que o cliente aprova
+
+Funciona assim: o cliente toca em **Conectar meu Instagram** na aba Conta do app e autoriza. A partir daí, todo conteúdo que ele aprovar vai ao ar sozinho no dia e horário da entrega, com a legenda. Vale para os planos em que a gente posta (Crescimento e Autoridade). No painel aparece "Agendado", "Publicado · ver post" ou o motivo de não ter publicado, e o botão **Postar agora**.
+
+**O que precisa ter:**
+- A conta do cliente precisa ser **profissional** (Comercial ou Criador de conteúdo). Conta pessoal o Instagram não deixa.
+- Imagens em **JPG** e vídeos em **MP4**. Arquivos enviados pelo painel (link do Drive não posta sozinho).
+- Carrossel: no painel, escolha vários arquivos e deixe marcado **Juntar os arquivos num carrossel só** (até 10).
+- Stories também vão sozinhos (sem legenda, porque o Instagram não aceita legenda em stories).
+
+**Configuração (uma vez só):**
+1. **App da Meta:** em https://developers.facebook.com crie um app do tipo **Empresa** e adicione o produto **Instagram → API do Instagram com login do Instagram**. Anote o **ID do app do Instagram** e a **Chave secreta**.
+2. Em **Configurar login empresarial**, coloque como URL de redirecionamento: `https://SEU-PROJETO.supabase.co/functions/v1/instagram/callback`.
+3. **Publicar a função** (no computador, com Node instalado): extraia o `supabase-criativos-rapidos.zip` numa pasta e rode os comandos nessa pasta (a que tem a pasta `supabase` dentro):
+   ```bash
+   npx supabase login
+   npx supabase link --project-ref SEU-PROJETO
+   npx supabase secrets set IG_APP_ID=... IG_APP_SECRET=... SITE_URL=https://criativosrapidos.com.br CRON_SECRET=uma-senha-longa-qualquer
+   npx supabase functions deploy instagram --no-verify-jwt
+   ```
+4. **Agendador:** no Supabase, abra **Database → Extensions** e ligue `pg_cron` e `pg_net`. Depois rode no **SQL Editor** (troque o projeto e a senha):
+   ```sql
+   select cron.schedule('postar-instagram', '*/10 * * * *', $$
+     select net.http_post(
+       url := 'https://SEU-PROJETO.supabase.co/functions/v1/instagram/agendados',
+       headers := '{"Content-Type": "application/json", "x-cron-secret": "uma-senha-longa-qualquer"}'::jsonb
+     );
+   $$);
+   ```
+   A cada 10 minutos ele publica o que estiver aprovado e com horário vencido, e renova as conexões que estão perto de vencer (o Instagram dá 60 dias).
+5. **Liberação da Meta:** enquanto o app está em teste, só funciona com contas que vocês adicionarem como **testadoras** no painel do app. Pra qualquer cliente conectar, peça a **análise do app** com as permissões `instagram_business_basic` e `instagram_business_content_publish`. A Meta pede um vídeo mostrando o uso e a política de privacidade: use `https://criativosrapidos.com.br/privacidade` (revisem o texto antes). Costuma levar de alguns dias a algumas semanas.
+
+Enquanto a Meta não libera, o resto da plataforma funciona normal e vocês postam pelo Meta Business, como hoje.

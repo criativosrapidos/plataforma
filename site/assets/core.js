@@ -29,12 +29,9 @@
     { nome: "Autoridade", grupo: "plano", preco: "R$ 997/mês", ajustes: 3, papel: "Social media + gestão de tráfego.",
       qtd: { stories: 30, post: 15, carrossel: 12, reels: 9, anuncio: 4 }, posta: true, trafego: true,
       inclui: ["Legendas prontas", "Perfil completo", "A gente programa e posta", "Gestão de tráfego pago", "Relatório mensal", "Bônus: calendário humanizado e sequência de stories que vende"] },
-    { nome: "Largada", grupo: "pacote", preco: "R$ 97", ajustes: 1, creditos: 10, papel: "Pacote de 10 créditos.", inclui: ["10 créditos"] },
-    { nome: "Acelera", grupo: "pacote", preco: "R$ 297", ajustes: 2, creditos: 20, papel: "Pacote de 20 créditos com identidade visual.", inclui: ["20 créditos", "Identidade visual"] },
-    { nome: "Turbo", grupo: "pacote", preco: "R$ 497", ajustes: 3, creditos: 40, papel: "Pacote de 40 créditos com identidade visual e PDFs bônus.", inclui: ["40 créditos", "Identidade visual", "PDFs bônus"] },
-    { nome: "Vídeo Essencial", grupo: "video", preco: "R$ 29,90", ajustes: 0, qtd: { video: 1 }, papel: "1 vídeo de 15 segundos.", inclui: ["1 vídeo de 15 s"] },
-    { nome: "Vídeo Completo", grupo: "video", preco: "R$ 39,90", ajustes: 0, qtd: { video: 2, anuncio: 1 }, papel: "2 vídeos de 30 segundos e 1 arte pra anúncio.", inclui: ["2 vídeos de 30 s", "1 arte pra anúncio"] },
-    { nome: "Vídeo Premium", grupo: "video", preco: "R$ 49,90", ajustes: 0, qtd: { video: 3, anuncio: 2 }, papel: "3 vídeos de 30 segundos e 2 artes pra anúncio.", inclui: ["3 vídeos de 30 s", "2 artes pra anúncio"] }
+    { nome: "Largada", grupo: "pacote", preco: "R$ 97", ajustes: 1, qtd: { video: 2, anuncio: 1 }, papel: "3 anúncios: 2 vídeos e 1 arte.", inclui: ["2 vídeos pra anúncio", "1 arte pra anúncio"] },
+    { nome: "Acelera", grupo: "pacote", preco: "R$ 297", ajustes: 2, qtd: { anuncio: 1 }, papel: "Identidade visual com 1 anúncio de brinde.", inclui: ["Identidade visual: logo, paleta, fontes, foto de perfil e destaques", "Brinde: 1 anúncio pronto"] },
+    { nome: "Turbo", grupo: "pacote", preco: "R$ 497", ajustes: 3, papel: "Identidade visual completa, landing page e PDFs bônus.", inclui: ["Identidade visual completa", "Landing page completa", "PDFs bônus: boas práticas do Instagram e respostas prontas de vendas"] }
   ];
   function plano(nome) { return PLANOS.find(function (p) { return p.nome === nome; }) || PLANOS[0]; }
 
@@ -102,6 +99,12 @@
   }
   function nomeArquivo(nome) { return nome.normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^\w.-]+/g, "_"); }
 
+  // a função do Instagram devolve { error: "mensagem" } no corpo
+  async function erroFuncao(e) {
+    try { var d = await e.context.json(); if (d && d.error) return d.error; } catch (x) {}
+    return /Failed to send|fetch/i.test(e.message) ? "Não consegui falar com o servidor. A função do Instagram foi publicada no Supabase?" : e.message;
+  }
+
   // ---------------------------------------------------------------- Supabase
   function apiSupabase() {
     var sb = window.supabase.createClient(C.SUPABASE_URL, C.SUPABASE_ANON_KEY);
@@ -148,15 +151,25 @@
         if (r.error) throw new Error(r.error.message);
         return r.count || 0;
       },
-      async criarEntrega(campos, arquivo, aoProgredir) {
-        if (arquivo) {
-          var path = campos.cliente_id + "/" + Date.now() + "-" + nomeArquivo(arquivo.name);
-          if (aoProgredir) aoProgredir("Enviando " + arquivo.name + "…");
-          ok(await sb.storage.from(BUCKET).upload(path, arquivo, { contentType: arquivo.type, upsert: false }));
-          campos.arquivo_path = path; campos.arquivo_nome = arquivo.name;
+      async criarEntrega(campos, arquivo, aoProgredir, extras) {
+        async function sobe(f) {
+          var path = campos.cliente_id + "/" + Date.now() + "-" + nomeArquivo(f.name);
+          if (aoProgredir) aoProgredir("Enviando " + f.name + "…");
+          ok(await sb.storage.from(BUCKET).upload(path, f, { contentType: f.type, upsert: false }));
+          return path;
         }
+        if (arquivo) { campos.arquivo_path = await sobe(arquivo); campos.arquivo_nome = arquivo.name; }
+        if (extras && extras.length) { campos.extras = []; for (var i = 0; i < extras.length; i++) campos.extras.push(await sobe(extras[i])); }
         return ok(await sb.from("entregas").insert(campos).select().single());
       },
+      async urlExtras(entrega) {
+        var out = [];
+        for (var i = 0; i < (entrega.extras || []).length; i++) out.push(ok(await sb.storage.from(BUCKET).createSignedUrl(entrega.extras[i], 3600)).signedUrl);
+        return out;
+      },
+      async instagramLink() { var r = await sb.functions.invoke("instagram/link", { method: "POST" }); if (r.error) throw new Error(await erroFuncao(r.error)); return r.data.url; },
+      async instagramDesconectar() { var r = await sb.functions.invoke("instagram/desconectar", { method: "POST" }); if (r.error) throw new Error(await erroFuncao(r.error)); },
+      async publicarAgora(id) { var r = await sb.functions.invoke("instagram/publicar", { method: "POST", body: { entrega_id: id } }); if (r.error) throw new Error(await erroFuncao(r.error)); return r.data.resultado; },
       async trocarArquivo(entrega, arquivo) {
         var path = entrega.cliente_id + "/" + Date.now() + "-" + nomeArquivo(arquivo.name);
         ok(await sb.storage.from(BUCKET).upload(path, arquivo, { contentType: arquivo.type }));
@@ -192,7 +205,7 @@
 
   // ---------------------------------------------------------------- modo demonstração
   function apiDemo() {
-    var KEY = "cr-demo-v2";
+    var KEY = "cr-demo-v5";
     function dia(n) { var d = new Date(); d.setDate(d.getDate() + n); return iso(d); }
     function semente() {
       var cli = "demo-cliente", adm = "demo-admin", cli2 = "demo-cliente-2";
@@ -201,14 +214,14 @@
         sessao: null,
         perfis: [
           { id: adm, email: "agencia@demo", nome: "Ana Cláudia", empresa: "Criativos Rápidos", whatsapp: "", plano: "Sem plano", ajustes_mes: 0, papel: "admin", criado_em: dia(-40) },
-          { id: cli, email: "cliente@demo", nome: "Marina Souza", empresa: "Brasa Burger", whatsapp: "(61) 90000-0000", plano: "Crescimento", ajustes_mes: 2, papel: "cliente", criado_em: dia(-12) },
-          { id: cli2, email: "lis@demo", nome: "Letícia Ramos", empresa: "Lis Moda", whatsapp: "(61) 90000-0001", plano: "Vídeo Premium", ajustes_mes: 0, papel: "cliente", criado_em: dia(-3) }
+          { id: cli, email: "cliente@demo", nome: "Marina Souza", empresa: "Brasa Burger", whatsapp: "(61) 90000-0000", plano: "Crescimento", ajustes_mes: 2, papel: "cliente", instagram: "brasaburger", criado_em: dia(-12) },
+          { id: cli2, email: "lis@demo", nome: "Letícia Ramos", empresa: "Lis Moda", whatsapp: "(61) 90000-0001", plano: "Largada", ajustes_mes: 1, papel: "cliente", criado_em: dia(-3) }
         ],
         entregas: [
-          { id: "e1", cliente_id: cli, titulo: "Reels do combo duplo", tipo: "reels", legenda: "Tá com fome? 🍔 Combo duplo por R$ 29,90 toda terça e quarta. Burger duplo + batata + refri. Peça pelo link da bio!", data_postagem: dia(1), demo_url: V + "exemplo-hamburgueria.mp4", demo_capa: V + "exemplo-hamburgueria.jpg", arquivo_nome: "reels-combo-duplo.mp4", status: "aguardando", criado_em: dia(0) + "T10:00" },
-          { id: "e2", cliente_id: cli, titulo: "Post do combo duplo", tipo: "post", legenda: "Duas carnes, queijo derretendo e preço de amigo. Combo duplo R$ 29,90, só terça e quarta.", data_postagem: dia(2), demo_url: D + "brasa-post-combo.jpg", arquivo_nome: "post-combo-duplo.jpg", status: "aguardando", criado_em: dia(0) + "T09:00" },
-          { id: "e3", cliente_id: cli, titulo: "Stories delivery até 23h", tipo: "stories", legenda: "", data_postagem: dia(0), demo_url: D + "brasa-stories.jpg", arquivo_nome: "stories-delivery.jpg", status: "aprovado", criado_em: dia(-1) + "T15:00" },
-          { id: "e4", cliente_id: cli, titulo: "Carrossel 3 motivos", tipo: "carrossel", legenda: "Salva pra lembrar na hora da fome 😋 Arrasta pro lado e vê os 3 motivos.", data_postagem: dia(-2), demo_url: D + "brasa-carrossel.jpg", arquivo_nome: "carrossel-3-motivos.jpg", status: "aprovado", criado_em: dia(-3) + "T11:00" },
+          { id: "e1", cliente_id: cli, titulo: "Reels do combo duplo", tipo: "reels", legenda: "Tá com fome? 🍔 Combo duplo por R$ 34,90 toda terça e quarta. Burger duplo + batata + refri. Peça pelo link da bio!", data_postagem: dia(1), demo_url: V + "exemplo-hamburgueria.mp4", demo_capa: V + "exemplo-hamburgueria.jpg", arquivo_nome: "reels-combo-duplo.mp4", status: "aguardando", criado_em: dia(0) + "T10:00" },
+          { id: "e2", cliente_id: cli, titulo: "Post do combo duplo", tipo: "post", legenda: "Duas carnes, queijo derretendo e preço de amigo. Combo duplo R$ 34,90, só terça e quarta.", data_postagem: dia(2), demo_url: D + "brasa-post-combo.jpg", arquivo_nome: "post-combo-duplo.jpg", status: "aguardando", criado_em: dia(0) + "T09:00" },
+          { id: "e3", cliente_id: cli, titulo: "Stories delivery até 23h", tipo: "stories", legenda: "", data_postagem: dia(0), demo_url: D + "brasa-stories.jpg", arquivo_nome: "stories-delivery.jpg", status: "aprovado", hora_postagem: "18:00", publicar: true, criado_em: dia(-1) + "T15:00" },
+          { id: "e4", cliente_id: cli, titulo: "Carrossel 3 motivos", tipo: "carrossel", legenda: "Salva pra lembrar na hora da fome 😋 Arrasta pro lado e vê os 3 motivos.", data_postagem: dia(-2), demo_url: D + "brasa-carrossel.jpg", arquivo_nome: "carrossel-3-motivos.jpg", status: "aprovado", hora_postagem: "12:00", publicado_em: dia(-2) + "T12:00", publicado_link: "https://www.instagram.com/", criado_em: dia(-3) + "T11:00" },
           { id: "e5", cliente_id: cli, titulo: "Anúncio frete grátis", tipo: "anuncio", legenda: "Frete grátis nos pedidos acima de R$ 50. Peça agora!", data_postagem: dia(4), demo_url: D + "brasa-anuncio.jpg", arquivo_nome: "anuncio-frete-gratis.jpg", status: "ajuste", comentario: "Trocar para frete grátis acima de R$ 60.", criado_em: dia(-1) + "T18:00" },
           { id: "e6", cliente_id: cli2, titulo: "Vídeo nova coleção", tipo: "video", legenda: "Nova coleção primavera-verão. Vestidos a partir de R$ 89.", data_postagem: dia(3), demo_url: V + "exemplo-moda.mp4", demo_capa: V + "exemplo-moda.jpg", arquivo_nome: "video-nova-colecao.mp4", status: "aguardando", criado_em: dia(0) + "T08:00" }
         ],
@@ -218,7 +231,7 @@
         ],
         leads: [
           { id: "l1", nome: "Rafael Lima", whatsapp: "(61) 98888-0000", empresa: "Barbearia do Rafa", interesse: "Crescimento", origem: "home", status: "novo", criado_em: dia(0) + "T11:30" },
-          { id: "l2", nome: "Patrícia Alves", whatsapp: "(61) 97777-0000", empresa: "@doces.paty", interesse: "Vídeo Completo", origem: "videos", status: "conversando", criado_em: dia(-1) + "T19:10" }
+          { id: "l2", nome: "Patrícia Alves", whatsapp: "(61) 97777-0000", empresa: "@doces.paty", interesse: "Largada", origem: "videos", status: "conversando", criado_em: dia(-1) + "T19:10" }
         ]
       };
     }
@@ -266,11 +279,26 @@
         var e = achar("entregas", entrega.id); e.status = "ajuste"; e.comentario = comentario; salvar();
       },
       async ajustesNoMes(clienteId) { var i = inicioDoMes(); return db.ajustes.filter(function (a) { return a.cliente_id === clienteId && a.criado_em >= i; }).length; },
-      async criarEntrega(campos, arquivo) {
+      async criarEntrega(campos, arquivo, prog, extras) {
         await espera();
-        var e = Object.assign({ id: uid(), status: "aguardando", criado_em: new Date().toISOString() }, campos);
+        var e = Object.assign({ id: uid(), status: "aguardando", publicar: true, criado_em: new Date().toISOString() }, campos);
         if (arquivo) { mem[e.id] = URL.createObjectURL(arquivo); e.arquivo_nome = arquivo.name; }
+        if (extras && extras.length) { e.extras = extras.map(function (f, i) { mem[e.id + ":" + i] = URL.createObjectURL(f); return f.name; }); }
         db.entregas.push(e); salvar(); return e;
+      },
+      async urlExtras(entrega) { return (entrega.extras || []).map(function (x, i) { return mem[entrega.id + ":" + i] || (entrega.demo_extras || [])[i] || ""; }); },
+      async instagramLink() {
+        await espera();
+        var p = achar("perfis", db.sessao); p.instagram = (p.empresa || "minhaempresa").toLowerCase().normalize("NFD").replace(/[^a-z0-9]/g, ""); salvar();
+        return "app.html?ig=ok#conta";
+      },
+      async instagramDesconectar() { achar("perfis", db.sessao).instagram = null; salvar(); },
+      async publicarAgora(id) {
+        await espera();
+        var e = achar("entregas", id), p = achar("perfis", e.cliente_id);
+        if (!p.instagram) throw new Error("Esse cliente ainda não conectou o Instagram.");
+        e.publicado_em = new Date().toISOString(); e.publicado_link = "https://www.instagram.com/" + p.instagram + "/"; e.publicacao_erro = null; salvar();
+        return "publicado";
       },
       async trocarArquivo(entrega, arquivo) {
         var e = achar("entregas", entrega.id);

@@ -104,6 +104,7 @@
         </form>
         <div style="display:grid;gap:16px">
           <section class="card pad-l" id="conta-plano"></section>
+          <section class="card pad-l" id="conta-ig" hidden></section>
           <section class="card pad-l" id="conta-instalar"></section>
           <section class="card pad-l">
             <h2>Ajuda</h2>
@@ -226,15 +227,15 @@
     function barra(rotulo, feito, total) {
       bars.appendChild(el("div", { class: "bar" }, [el("span", {}, [rotulo + " ", el("b", { text: feito + "/" + total })]), el("div", { class: "track" }, el("i", { style: "width:" + Math.min(100, total ? feito / total * 100 : 0) + "%" }))]));
     }
-    if (P.grupo === "pacote") {
-      var gastos = itens.reduce(function (s, i) { return s + (CR.CREDITOS[i.tipo] || 0); }, 0);
-      barra("Créditos usados", gastos, P.creditos);
+    if (!P.qtd) {
+      c.appendChild(el("div", { class: "small", style: "color:#C9CAD0", text: (P.inclui || []).join(" · ") }));
+      return;
     } else {
       var ini = CR.iso(new Date(hoje.getFullYear(), hoje.getMonth(), 1));
       var doMes = P.grupo === "plano" ? itens.filter(function (i) { return String(i.criado_em).slice(0, 10) >= ini; }) : itens;
       Object.keys(P.qtd).forEach(function (t) {
         var feito = doMes.filter(function (i) { return i.tipo === t || (t === "video" && i.tipo === "reels"); }).length;
-        barra(t === "anuncio" && P.grupo === "video" ? "Artes" : (CR.TIPOS[t] || t), Math.min(feito, P.qtd[t]), P.qtd[t]);
+        barra(t === "anuncio" && P.grupo !== "plano" ? "Artes pra anúncio" : t === "video" ? "Vídeos" : (CR.TIPOS[t] || t), Math.min(feito, P.qtd[t]), P.qtd[t]);
       });
     }
     c.appendChild(el("div", {}, [el("div", { class: "small", style: "color:#A2A4AC;margin-bottom:8px", text: P.grupo === "plano" ? "Entregues neste mês" : "Entregues" }), bars]));
@@ -243,6 +244,7 @@
   function slugPlano() { return (P.nome || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").split(" ").pop(); }
   function avisoBriefing() {
     var w = document.getElementById("aviso-briefing"); w.textContent = "";
+    if (posta && !eu.instagram) w.appendChild(el("div", { class: "note", style: "margin-bottom:10px" }, [ic("info"), el("div", {}, [el("b", { text: "Conecte seu Instagram. " }), "Assim seus conteúdos aprovados vão ao ar sozinhos, com a legenda. ", el("a", { href: "#conta", style: "font-weight:700", text: "Conectar" })])]));
     if (meusBriefings.length) return;
     w.appendChild(el("div", { class: "note" }, [ic("info"), el("div", {}, [
       el("b", { text: "Falta seu briefing. " }), "Conta pra gente sobre o seu negócio pra criarmos com a sua cara. Leva uns 10 minutos. ",
@@ -281,13 +283,22 @@
     if (!url) m.appendChild(el("div", { class: "muted", style: "padding:40px", text: "Arquivo indisponível" }));
     else if (e.link_externo && !e.arquivo_path && !e.demo_url) m.appendChild(el("iframe", { src: url, allow: "autoplay", title: e.titulo }));
     else if (tipo === "video") m.appendChild(el("video", { src: url, controls: true, playsinline: true, autoplay: true, poster: e.demo_capa || false }));
-    else if (tipo === "imagem") m.appendChild(el("img", { src: url, alt: e.titulo }));
+    else if (tipo === "imagem") {
+      m.appendChild(el("img", { src: url, alt: e.titulo + (e.extras && e.extras.length ? " · 1 de " + (e.extras.length + 1) : "") }));
+      if (e.extras && e.extras.length) {
+        m.classList.add("multi");
+        api.urlExtras(e).then(function (us) { us.forEach(function (u, i) { if (u) m.appendChild(el("img", { src: u, alt: e.titulo + " · " + (i + 2) + " de " + (us.length + 1) })); }); });
+      }
+    }
     else m.appendChild(el("div", { style: "color:#fff;padding:40px;text-align:center" }, [ic("file"), el("p", { text: e.arquivo_nome || "Arquivo" })]));
 
     info.appendChild(el("div", { style: "display:flex;gap:8px;align-items:center;flex-wrap:wrap" }, [el("span", { class: "chip", text: CR.TIPOS[e.tipo] || e.tipo }), el("span", { class: "pill " + e.status, text: CR.STATUS[e.status] })]));
     info.appendChild(el("h2", { text: e.titulo, style: "font-size:22px" }));
     if (e.data_postagem) info.appendChild(el("p", { class: "small muted", style: "margin:0", text: (posta ? "A gente posta " : "Postar ") + CR.dataLonga(e.data_postagem) + " (" + CR.data(e.data_postagem) + ")" }));
     if (e.status === "ajuste" && e.comentario) info.appendChild(el("div", { class: "coment" }, [el("b", { text: "Seu pedido: " }), e.comentario, el("div", { class: "small muted", text: "A gente entrega o ajuste em até 24 h." })]));
+    var ps = statusPost(e);
+    if (ps) info.appendChild(ps);
+    if (e.extras && e.extras.length) info.appendChild(el("p", { class: "small muted", style: "margin:0", text: "Carrossel com " + (e.extras.length + 1) + " imagens. Role a imagem pra ver todas." }));
     if (e.legenda) {
       info.appendChild(el("div", { class: "eyebrow", text: "Legenda" }));
       info.appendChild(el("div", { class: "leg", text: e.legenda }));
@@ -299,6 +310,16 @@
     if (e.legenda) acts.appendChild(el("button", { class: "btn ghost", type: "button", onclick: function () { CR.copiar(e.legenda, "Legenda copiada"); } }, [ic("copy"), "Copiar legenda"]));
     info.appendChild(acts);
     viewer.showModal();
+  }
+
+  // situação da postagem no Instagram (só nos planos em que a gente posta)
+  function statusPost(e) {
+    if (e.publicado_em) return el("div", { class: "note", style: "border-left-color:var(--ok)" }, [ic("check"), el("div", {}, [el("b", { text: "Publicado no Instagram " }), CR.dataLonga(e.publicado_em.slice(0, 10)) + ". ", e.publicado_link ? el("a", { href: e.publicado_link, target: "_blank", rel: "noopener", style: "font-weight:700", text: "Ver post" }) : null])]);
+    if (!posta || !eu.instagram || e.publicar === false || !e.data_postagem) return null;
+    var h = String(e.hora_postagem || "10:00").slice(0, 5);
+    return el("div", { class: "note" }, [ic("cal"), el("div", {}, e.status === "aprovado"
+      ? [el("b", { text: "Agendado. " }), "Vai ao ar sozinho no @" + eu.instagram + " " + CR.dataLonga(e.data_postagem) + " às " + h + "."]
+      : [el("b", { text: "Aprove pra agendar. " }), "Depois de aprovado, vai ao ar sozinho no @" + eu.instagram + " " + CR.dataLonga(e.data_postagem) + " às " + h + "."])]);
   }
 
   async function aprovar(e, btn, fechar) {
@@ -488,6 +509,34 @@
     if (curto) { box.appendChild(ic("phone")); box.appendChild(corpo); c.appendChild(box); } else c.appendChild(corpo);
   }
   cartaoInstalar("conta-instalar");
+
+  function cartaoIG() {
+    var c = document.getElementById("conta-ig"); c.textContent = "";
+    if (!posta) { c.hidden = true; return; }
+    c.hidden = false;
+    c.appendChild(el("h2", { text: "Seu Instagram" }));
+    if (eu.instagram) {
+      c.appendChild(el("p", { style: "margin:8px 0 4px;font-weight:700", text: "Conectado: @" + eu.instagram }));
+      c.appendChild(el("p", { class: "small muted", style: "margin:0 0 12px", text: "Quando você aprova um conteúdo, ele vai ao ar sozinho no dia e horário do calendário, com a legenda." }));
+      c.appendChild(el("button", { class: "btn ghost sm", type: "button", text: "Desconectar", onclick: async function () {
+        try { await api.instagramDesconectar(); eu.instagram = null; cartaoIG(); renderTudo(); CR.toast("Instagram desconectado."); } catch (x) { CR.toast(x.message, true); }
+      } }));
+    } else {
+      c.appendChild(el("p", { class: "small muted", style: "margin:6px 0 12px", text: "Conecte uma vez e a gente posta por você: aprovou no app, vai ao ar sozinho no dia marcado. A conta precisa ser profissional (comercial ou criador de conteúdo). A gente nunca vê sua senha." }));
+      c.appendChild(el("button", { class: "btn", type: "button", onclick: async function () {
+        this.disabled = true;
+        try { location.href = await api.instagramLink(); } catch (x) { CR.toast(x.message, true); this.disabled = false; }
+      } }, [ic("ext"), "Conectar meu Instagram"]));
+    }
+  }
+  cartaoIG();
+  (function retornoIG() {
+    var q = new URLSearchParams(location.search).get("ig");
+    if (!q) return;
+    var msg = { ok: "Instagram conectado!", erro: "Não deu pra conectar. Confira se a conta é profissional e tente de novo.", cancelado: "Conexão cancelada.", expirado: "O link expirou. Tente conectar de novo." }[q];
+    if (msg) CR.toast(msg, q !== "ok");
+    try { history.replaceState(null, "", location.pathname + location.hash); } catch (x) {}
+  })();
   if (matchMedia("(max-width: 959px)").matches) cartaoInstalar("instalar-inicio", true);
   document.addEventListener("cr-instalavel", function () { cartaoInstalar("conta-instalar"); if (matchMedia("(max-width: 959px)").matches) cartaoInstalar("instalar-inicio", true); });
 

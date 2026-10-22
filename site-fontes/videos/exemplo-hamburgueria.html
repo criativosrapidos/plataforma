@@ -66,7 +66,7 @@
   <section class="sc" id="s3">
     <div class="abs stamp" id="c0">terça e quarta</div>
     <div class="abs so" id="c1">SÓ</div>
-    <div class="abs anton preco" id="c2"><small>R$</small><span id="num">29</span><i id="cent">,90</i></div>
+    <div class="abs anton preco" id="c2"><small>R$</small><span id="num">34</span><i id="cent">,90</i></div>
     <div class="abs bwrap" id="bw3"><!--BURGER--></div>
     <div class="abs chip" id="c3" style="top:1010px">burger duplo</div>
     <div class="abs chip" id="c4" style="top:1150px">+ batata</div>
@@ -164,7 +164,7 @@
     set($('c1'), out3(p(t, c + 0.3, 0.3)));
     const kp = p(t, c + 0.35, 0.7);
     set($('c2'), kp > 0 ? 1 : 0, `translateY(${(1 - out3(kp)) * 60}px)`);
-    $('num').textContent = String(Math.round(29 * out3(kp)));
+    $('num').textContent = String(Math.round(34 * out3(kp)));
     $('cent').textContent = kp >= 1 ? ',90' : ',' + String(Math.round(90 * out3(kp))).padStart(2, '0');
     [['c3', 1.0], ['c4', 1.25], ['c5', 1.5]].forEach(([id, d]) => { const k = p(t, c + d, 0.4); set($(id), k > 0 ? 1 : 0, `translateX(${(1 - back(k)) * 140}px)`); });
     const ks = p(t, c + 1.9, 0.3);

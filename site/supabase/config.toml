@@ -1,0 +1,4 @@
+# Usado pela linha de comando do Supabase ao publicar a função.
+# A função "instagram" confere o login por conta própria, porque o Instagram chama /callback sem login.
+[functions.instagram]
+verify_jwt = false
