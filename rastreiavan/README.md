@@ -12,7 +12,7 @@ Micro SaaS de rastreamento de van escolar com notificações automáticas no cel
 ## Planos
 | Plano | Mensal | Anual |
 |---|---|---|
-| Essencial | R$ 9,90/van | **R$ 99** |
-| Completo | R$ 19,90/van | **R$ 199** |
+| Essencial | R$ 14,90/van | **R$ 149** |
+| Completo | R$ 24,90/van | **R$ 249** |
 
 Foco: vender o plano anual. Todos os avisos por notificação push. Famílias usam grátis. 14 dias de teste.
