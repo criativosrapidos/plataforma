@@ -5,11 +5,12 @@ DirectoryIndex index.html
 <IfModule mod_rewrite.c>
   RewriteEngine On
 
-  # sempre com https e sem www
-  RewriteCond %{HTTPS} off [OR]
-  RewriteCond %{HTTP_HOST} ^www\. [NC]
-  RewriteCond %{HTTP_HOST} ^(?:www\.)?(.+)$ [NC]
-  RewriteRule ^ https://%1%{REQUEST_URI} [L,R=301]
+  # Forçar https: deixe desligado até o cadeado (SSL) estar ativo, senão o site entra em "redirecionamento demais".
+  # Depois de ativo, prefira ligar no cPanel em Domínios → "Forçar redirecionamento HTTPS", ou tire os # das 4 linhas abaixo.
+  # RewriteCond %{HTTPS} off [OR]
+  # RewriteCond %{HTTP_HOST} ^www\. [NC]
+  # RewriteCond %{HTTP_HOST} ^(?:www\.)?(.+)$ [NC]
+  # RewriteRule ^ https://%1%{REQUEST_URI} [L,R=301]
 
   # /brief, /entrar, /app, /admin, /videos abrem o .html correspondente
   RewriteCond %{REQUEST_FILENAME} !-d
