@@ -1,0 +1,1 @@
+Pedidos do site guardados pelo enviar.php. Acesso bloqueado pelo .htaccess.

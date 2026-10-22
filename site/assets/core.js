@@ -10,6 +10,9 @@
     if (q === "0") sessionStorage.removeItem("cr-demo");
     DEMO_FORCADO = sessionStorage.getItem("cr-demo") === "1";
   } catch (e) {}
+  // Sem as chaves do Supabase o site roda em "modo lançamento": a home, /videos e /brief funcionam
+  // e mandam os pedidos por e-mail (enviar.php, na HostGator); a área do cliente fica "em breve".
+  var LANCAMENTO = SEM_CHAVES && !DEMO_FORCADO;
   var DEMO = SEM_CHAVES || DEMO_FORCADO;
   var BUCKET = "entregas";
 
@@ -326,10 +329,22 @@
 
   var api = DEMO ? apiDemo() : apiSupabase();
 
+  // modo lançamento: pedidos de contato e briefings vão por e-mail pelo enviar.php da hospedagem
+  async function porEmail(tipo, dados) {
+    var r = await fetch("enviar.php", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ tipo: tipo, dados: dados }) });
+    var j = await r.json().catch(function () { return {}; });
+    if (!r.ok || !j.ok) throw new Error(j.erro || "Não conseguimos enviar agora.");
+  }
+  if (LANCAMENTO) {
+    api.enviarLead = function (l) { return porEmail("lead", l); };
+    api.enviarBriefing = function (b) { return porEmail("briefing", { nome: b.nome, empresa: b.empresa, whatsapp: b.whatsapp, plano: b.plano, texto: b.texto }); };
+  }
+
   // faixa de aviso no modo demonstração
   function avisoDemo() {
     if (!DEMO || document.getElementById("demo-bar")) return;
-    var kids = DEMO_FORCADO && !SEM_CHAVES
+    if (LANCAMENTO) return;
+    var kids = DEMO_FORCADO
       ? [el("span", {}, [el("b", { text: "Demonstração. " }), "Tudo aqui é exemplo, com marcas fictícias."]),
          el("button", { type: "button", text: "Sair da demonstração", onclick: function () { try { sessionStorage.removeItem("cr-demo"); } catch (e) {} location.href = "./"; } })]
       : [el("span", {}, [el("b", { text: "Demonstração. " }), "Entre como cliente@demo ou agencia@demo, com qualquer senha."]),
@@ -350,7 +365,7 @@
   function ios() { return /iphone|ipad|ipod/i.test(navigator.userAgent); }
 
   window.CR = {
-    api: api, demo: DEMO, demoForcado: DEMO_FORCADO && !SEM_CHAVES, config: C,
+    api: api, demo: DEMO, demoForcado: DEMO_FORCADO, lancamento: LANCAMENTO, config: C,
     el: el, data: data, dataLonga: dataLonga, iso: iso, MESES: MESES, SEMANA: SEMANA,
     toast: toast, whats: whats, copiar: copiar, soDigitos: soDigitos,
     TIPOS: TIPOS, STATUS: STATUS, CREDITOS: CREDITOS, PLANOS: PLANOS, plano: plano,
@@ -360,6 +375,7 @@
     instalar: async function () { if (!convite) return false; convite.prompt(); var r = await convite.userChoice; convite = null; return r.outcome === "accepted"; },
     // manda para /entrar se não estiver logado; devolve o perfil. Na demonstração aberta pelo site, entra direto como cliente.
     async exigirLogin(papel) {
+      if (LANCAMENTO) { location.replace("entrar.html"); return null; }
       var p = null;
       try { p = await api.perfil(); } catch (e) { p = null; }
       if (!p && DEMO_FORCADO) { await api.entrar(papel === "admin" ? "agencia@demo" : "cliente@demo"); p = await api.perfil(); }

@@ -1,83 +1,98 @@
-# Como colocar a plataforma no ar em criativosrapidos.com.br
+# Como lançar o site da Criativos Rápidos
 
-São 4 etapas: **Supabase** (login, banco e arquivos, plano gratuito), **HostGator** (onde o site fica), **primeiro acesso** e, quando quiserem postar sozinho, **Instagram**. As três primeiras levam por volta de 40 minutos.
+O lançamento tem três partes. **Só a primeira é necessária pra colocar o site no ar hoje.**
 
-## O que tem na pasta `site/`
+| Parte | O que liga | Precisa de | Tempo |
+|---|---|---|---|
+| 1 · Site no ar | Home, página do Largada (`/videos`), briefing (`/brief`) e política de privacidade. Os pedidos de contato e os briefings chegam no seu e-mail | Só a HostGator | 15 min |
+| 2 · Área do cliente | App do cliente, painel da agência, login, entregas, aprovação e download em alta | Supabase (gratuito) | 30 min |
+| 3 · Instagram | Postagem automática depois que o cliente aprova | App na Meta + análise da Meta | alguns dias |
 
-| Endereço | Arquivo | Para quem |
-|---|---|---|
-| criativosrapidos.com.br | `index.html` | Home: o time, como funciona, planos (Presença, Crescimento, Autoridade), pacotes, o app e dúvidas. Os botões "Quero o…" abrem um formulário que cai no painel como interessado |
-| criativosrapidos.com.br/videos | `videos.html` | Landing de campanha do pacote Largada (R$ 97: 2 vídeos + 1 arte), com vídeos de exemplo e formulário próprio |
-| criativosrapidos.com.br/brief | `brief.html` | Briefing que o cliente preenche **depois de pagar**. Aceita `?plano=crescimento`, `?plano=turbo`, `?plano=largada` etc. para já marcar o que ele comprou |
-| criativosrapidos.com.br/entrar | `entrar.html` | Login, criar conta e esqueci a senha |
-| criativosrapidos.com.br/app | `app.html` | App do cliente: Início, Conteúdos (aprovar, pedir ajuste, baixar em alta), Calendário de postagem e Conta. **Instala no celular** como aplicativo |
-| criativosrapidos.com.br/app?demo=1 | — | Demonstração do app com a marca fictícia Brasa Burger, pra mostrar a quem ainda não é cliente |
-| criativosrapidos.com.br/admin | `admin.html` | Painel da agência: visão geral, entregas, clientes, briefings e interessados (leads) |
-| | `assets/config.js` | **O único arquivo que vocês editam** (chaves do Supabase, WhatsApp e Instagram) |
-| | `supabase/schema.sql` | Banco de dados, para colar no Supabase |
-| | `manifest.webmanifest`, `sw.js`, `offline.html` | O que faz o app instalar no celular |
-
-Enquanto o `config.js` estiver sem as chaves, o site inteiro funciona em **modo demonstração**: entre como `cliente@demo` ou `agencia@demo`, com qualquer senha. Para ver no computador, abra a pasta `site` num terminal e rode `npx serve .`. Depois acesse http://localhost:3000.
-
-Os vídeos e as artes de exemplo são gerados a partir de `site-fontes/` (veja o README de lá).
+Enquanto a parte 2 não estiver ligada, quem clica em "Área do cliente" vê o aviso "abre em breve" e um botão pra ver a demonstração.
 
 ---
 
-## 1. Supabase: login, banco e arquivos
+## Parte 1 · Site no ar (só HostGator)
 
-1. Crie uma conta em https://supabase.com e clique em **New project**.
-   - Nome: `criativos-rapidos`
-   - Região: **South America (São Paulo)**
-   - Crie e **guarde a senha do banco**.
-2. No menu da esquerda, abra **SQL Editor**, depois **New query**.
-3. Cole todo o conteúdo de `supabase/schema.sql` e clique em **Run**. Deve aparecer "Success". Pode rodar de novo sem problema.
-4. Abra **Authentication**, depois **URL Configuration**:
-   - Site URL: `https://criativosrapidos.com.br`
-   - Redirect URLs: adicione `https://criativosrapidos.com.br/**`
-5. Abra **Authentication**, depois **Sign In / Providers**, depois **Email**. Desligue **Confirm email** por enquanto.
-   - Motivo: o envio de e-mail grátis do Supabase só manda mensagem para os membros da equipe do projeto.
-   - Quando quiserem confirmação de e-mail e o "esqueci minha senha" funcionando para clientes, configurem um SMTP próprio em **Authentication**, depois **Emails**, depois **SMTP Settings**.
-   - O Resend (https://resend.com) tem plano grátis e funciona bem para isso.
-6. Abra **Project Settings**, depois **API**, e copie dois valores:
-   - **Project URL**, que parece com `https://abcd1234.supabase.co`
-   - A chave **anon public**, que é um texto longo começando com `eyJ`
-7. Abra `site/assets/config.js` e preencha os campos:
+### 1. Preparar o arquivo de configuração
+Antes de subir, abra o `site-criativos-rapidos.zip` no computador, abra o arquivo `assets/config.js` num editor de texto (Bloco de Notas serve) e preencha:
+
+```js
+WHATSAPP: "5561999999999",   // 55 + DDD + número, só números
+INSTAGRAM: "criativosrapidos", // o @ sem o arroba
+```
+
+Deixe `SUPABASE_URL` e `SUPABASE_ANON_KEY` vazios por enquanto. Salve e feche o zip de novo (ou extraia, edite e compacte outra vez).
+
+### 2. Criar o e-mail que envia os pedidos
+1. Entre no **Portal do Cliente da HostGator** e abra o **cPanel**.
+2. Em **E-mail → Contas de e-mail**, crie a conta `site@criativosrapidos.com.br` (qualquer senha forte).
+3. Esse é o remetente dos avisos. Eles chegam em `criativosrapidos@gmail.com`. Pra trocar quem recebe, edite a primeira linha do `enviar.php`.
+
+### 3. Subir os arquivos
+1. No cPanel, abra o **Gerenciador de arquivos** e entre na pasta **public_html**.
+2. Se tiver arquivos de um site antigo, crie uma pasta `antigo` e mova tudo pra lá.
+3. Clique em **Carregar** e envie o `site-criativos-rapidos.zip`.
+4. Volte pra `public_html`, clique com o botão direito no zip e escolha **Extrair**. Os arquivos `index.html`, `videos.html`, `enviar.php` e as pastas `assets` e `dados` precisam ficar **direto** dentro de `public_html`.
+5. Em **Configurações** (canto de cima, à direita), marque **Mostrar arquivos ocultos** e confira se o arquivo `.htaccess` está lá. Ele deixa os endereços sem o ".html" e obriga o cadeado (https).
+6. Apague o zip de dentro de `public_html`.
+
+### 4. Ligar o cadeado (https)
+No cPanel, abra **Segurança → Status de SSL/TLS** e confira se `criativosrapidos.com.br` está com o cadeado verde. A HostGator faz isso de graça (AutoSSL). Se não estiver, clique em **Executar AutoSSL** e espere alguns minutos.
+
+### 5. Conferir
+- Abra https://criativosrapidos.com.br, https://criativosrapidos.com.br/videos e https://criativosrapidos.com.br/brief.
+- Preencha o formulário "Quero começar" com seus dados e veja se o e-mail chegou (olhe também o spam e marque como "não é spam").
+- Se o e-mail não chegar, o pedido fica guardado no servidor: no Gerenciador de arquivos, pasta `public_html/dados`, arquivos `lead-ANO-MÊS.txt` e `briefing-ANO-MÊS.txt`. Essa pasta é bloqueada pra quem está de fora.
+
+**Se o domínio estiver registrado fora da HostGator** (no Registro.br, por exemplo), troque os **servidores DNS** do domínio pelos que a HostGator mandou no e-mail de boas-vindas (algo como `ns1234.hostgator.com.br`). A troca leva algumas horas.
+
+**Pra atualizar depois:** suba só os arquivos que mudaram, por cima, no mesmo lugar.
+
+---
+
+## Parte 2 · Área do cliente (Supabase)
+
+O Supabase é onde ficam os logins dos clientes, o banco de dados e os arquivos em alta qualidade. O plano gratuito aguenta bem o começo: até 1 GB de arquivos, com no máximo 50 MB cada. Vídeo maior, use o link do Google Drive no painel.
+
+> O painel do Supabase é em inglês. Os nomes dos botões estão entre aspas, do jeito que aparecem lá.
+
+### 1. Criar o projeto
+1. Crie uma conta em https://supabase.com e clique em "New project".
+2. Nome: `criativos-rapidos`. Região: "South America (São Paulo)". Anote a senha do banco.
+
+### 2. Criar o banco
+1. Extraia o `supabase-criativos-rapidos.zip` no computador.
+2. No Supabase, abra "SQL Editor" e depois "New query".
+3. Cole todo o conteúdo do arquivo `supabase/schema.sql` e clique em "Run". Deve aparecer "Success".
+
+### 3. Configurar o login
+1. Em "Authentication" → "URL Configuration":
+   - "Site URL": `https://criativosrapidos.com.br`
+   - "Redirect URLs": adicione `https://criativosrapidos.com.br/**`
+2. Em "Authentication" → "Sign In / Providers" → "Email", desligue "Confirm email" por enquanto. O envio grátis de e-mail do Supabase só manda mensagem pra equipe do projeto.
+3. Pra ligar confirmação de e-mail e "esqueci minha senha" pros clientes, configure um envio de e-mail próprio em "Authentication" → "Emails" → "SMTP Settings". Dá pra usar o próprio e-mail da HostGator (servidor `mail.criativosrapidos.com.br`, porta 465) ou o Resend, que tem plano grátis.
+
+### 4. Ligar o site ao Supabase
+1. Em "Project Settings" → "API", copie a "Project URL" e a chave "anon public".
+2. Na HostGator, abra `public_html/assets/config.js` (botão direito → **Editar**) e preencha:
    ```js
    SUPABASE_URL: "https://abcd1234.supabase.co",
    SUPABASE_ANON_KEY: "eyJ...",
-   WHATSAPP: "5561999999999",   // DDI + DDD + número, só números
-   INSTAGRAM: "seuinstagram",   // sem o @
    ```
-   A chave **anon** pode ficar no site: as regras do banco garantem que cada cliente só vê o que é dele.
-   **Nunca** coloque a chave **service_role** no site.
+   A chave "anon" pode ficar no site: as regras do banco garantem que cada cliente só vê o que é dele. **Nunca** coloque a chave "service_role" no site.
+3. A partir daí os pedidos de contato e os briefings passam a ficar no painel (abas **Interessados** e **Briefings**), e não mais só no e-mail.
 
-**Tamanho dos arquivos:** no plano grátis do Supabase cabem 1 GB no total, com até 50 MB por arquivo. Para vídeos maiores, use a opção **Link do Google Drive** no painel: o cliente assiste e baixa direto do Drive. O plano Pro do Supabase custa US$ 25/mês e libera 100 GB.
-
-## 2. HostGator: colocar o site no ar
-
-1. Edite `assets/config.js` com as chaves do Supabase (etapa 1), o WhatsApp e o @ do Instagram **antes** de subir.
-2. Entre no **Portal do Cliente HostGator** e abra o **cPanel** da hospedagem do criativosrapidos.com.br.
-3. Abra o **Gerenciador de Arquivos** e entre na pasta **public_html**. Se tiver arquivos antigos de outro site, mova pra uma pasta `antigo`.
-4. Clique em **Carregar** e envie o arquivo `site-criativos-rapidos.zip` (o banco e a função do Instagram vão separados, no `supabase-criativos-rapidos.zip`, e não sobem pra HostGator).
-5. Volte pra `public_html`, clique com o botão direito no zip e em **Extract** (Extrair). Os arquivos `index.html`, `app.html` etc. precisam ficar **direto** dentro de `public_html`, não numa subpasta.
-6. Confira se o arquivo **.htaccess** foi junto: em **Configurações** (canto de cima), marque **Mostrar arquivos ocultos**. Ele faz `/brief`, `/app`, `/entrar` e `/admin` funcionarem sem o `.html` e força o https.
-7. No cPanel, abra **SSL/TLS Status** e confirme que o domínio tem o cadeado (o **AutoSSL** da HostGator é gratuito). Sem https o app não instala no celular e o login pode falhar.
-8. Apague o zip de dentro de `public_html` e abra https://criativosrapidos.com.br.
-
-Se o domínio estiver registrado fora da HostGator (no Registro.br, por exemplo), aponte os **servidores DNS** do domínio para os que a HostGator mandou no e-mail de boas-vindas (algo como `ns1234.hostgator.com.br`). Pode levar algumas horas.
-
-**Atualizar depois:** suba só os arquivos que mudaram, por cima, no mesmo lugar. O `assets/config.js` não precisa ser enviado de novo se as chaves não mudaram.
-
-> Outra opção é a Vercel (grátis, atualiza sozinha pelo GitHub): importe o repositório `criativosrapidos/plataforma` com a pasta `site` como raiz. O `vercel.json` já está pronto.
-
-## 3. Primeiro acesso da agência
-
+### 5. Primeiro acesso da agência
 1. Entre em https://criativosrapidos.com.br/entrar e clique em **Criar minha conta** com o e-mail da agência.
-2. No Supabase, abra o **SQL Editor** e rode este comando (troque o e-mail se for outro):
+2. No Supabase, no "SQL Editor", rode (troque o e-mail se for outro):
    ```sql
    update public.perfis set papel = 'admin' where email = 'criativosrapidos@gmail.com';
    ```
-3. Saia e entre de novo: você vai cair no **Painel da agência** (`/admin`).
+3. Saia e entre de novo: você cai no **Painel da agência**.
+
+### 6. Testar como cliente
+Crie uma segunda conta com outro e-mail, escolha um plano pra ela no painel (aba **Clientes**), envie uma entrega (aba **Entregas**) e aprove pelo celular.
 
 ## Rotina com cada cliente
 
@@ -109,7 +124,7 @@ O ícone amarelo da Criativos fica na tela do celular e abre direto no app, sem 
 
 Mande o link `criativosrapidos.com.br/app?demo=1`. Abre o app com a marca fictícia Brasa Burger, dados de exemplo e nada salvo no banco de vocês. O botão "Ver o app funcionando" da home leva pra lá.
 
-## 4. Instagram: postar sozinho depois que o cliente aprova
+## Parte 3 · Instagram: postar sozinho depois que o cliente aprova
 
 Funciona assim: o cliente toca em **Conectar meu Instagram** na aba Conta do app e autoriza. A partir daí, todo conteúdo que ele aprovar vai ao ar sozinho no dia e horário da entrega, com a legenda. Vale para os planos em que a gente posta (Crescimento e Autoridade). No painel aparece "Agendado", "Publicado · ver post" ou o motivo de não ter publicado, e o botão **Postar agora**.
 

@@ -49,6 +49,14 @@
 
   <main class="main">
     <div class="box">
+      <!-- área do cliente ainda não aberta (site sem as chaves do Supabase) -->
+      <div id="em-breve" hidden>
+        <h1>A área do cliente abre em breve</h1>
+        <p class="lead">Aqui você vai aprovar, acompanhar e baixar seus conteúdos. Enquanto isso, a gente entrega tudo pelo WhatsApp.</p>
+        <a class="btn full" href="app.html?demo=1">Ver como vai funcionar</a>
+        <div class="switch"><a href="./" style="font-weight:700">Voltar para o site</a></div>
+      </div>
+
       <!-- entrar -->
       <form id="f-entrar" novalidate>
         <h1>Entrar</h1>
@@ -110,6 +118,11 @@
   var api = CR.api;
   CR.avisoDemo();
   CR.registrarApp();
+  if (CR.lancamento) {
+    ["f-entrar", "f-criar", "f-esqueci", "f-nova"].forEach(function (f) { document.getElementById(f).hidden = true; });
+    document.getElementById("em-breve").hidden = false;
+    return;
+  }
   if (CR.demo) {
     document.getElementById("demo-box").hidden = false;
     document.querySelectorAll("[data-demo]").forEach(function (b) {
