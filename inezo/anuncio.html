@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><title>Inezo - reels de exemplo</title>
+<style>
+@font-face { font-family: Mont; font-weight: 700; src: url(fonts/montserrat-latin-700-normal.woff); }
+@font-face { font-family: Mont; font-weight: 800; src: url(fonts/montserrat-latin-800-normal.woff); }
+@font-face { font-family: Mont; font-weight: 900; src: url(fonts/montserrat-latin-900-normal.woff); }
+@font-face { font-family: Inter; font-weight: 700; src: url(fonts/Inter-Bold.otf); }
+@font-face { font-family: Inter; font-weight: 600; src: url(fonts/Inter-SemiBold.otf); }
+:root { --marinho:#0E2A47; --marinho2:#081B30; --azul:#1F5C99; --laranja:#F28C28; --laranja2:#D9701A; --gelo:#EEF3F8; --tinta:#0B1F33; --cinza:#5B6B7C; --verm:#E5484D; }
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body { width:1080px; height:1920px; overflow:hidden; background:var(--marinho2); }
+#stage { position:relative; width:1080px; height:1920px; overflow:hidden; font-family:Inter, sans-serif; }
+.scene { position:absolute; inset:0; opacity:0; }
+.el { position:absolute; left:0; right:0; text-align:center; opacity:0; will-change:transform, opacity; }
+.h { font-family:Mont; font-weight:900; line-height:1; letter-spacing:-.01em; }
+.f-mar { position:absolute; inset:0; background:radial-gradient(circle at 50% 30%,#163A60,#081B30 75%); }
+.f-azul { position:absolute; inset:0; background:linear-gradient(165deg,#1F5C99,#0E2A47); }
+.f-lar { position:absolute; inset:0; background:linear-gradient(165deg,#F6A04A,#D9701A); }
+.f-gelo { position:absolute; inset:0; background:var(--gelo); }
+.grade { position:absolute; inset:-200px; background-image:linear-gradient(var(--gc) 2px,transparent 2px),linear-gradient(90deg,var(--gc) 2px,transparent 2px); background-size:90px 90px; }
+.tag { display:inline-block; font-family:Mont; font-weight:900; color:#fff; padding:20px 46px 24px; border-radius:22px; }
+.chip { display:inline-flex; align-items:center; gap:26px; background:#fff; border-radius:30px; padding:22px 40px 22px 26px; box-shadow:0 20px 50px rgba(0,0,0,.25); }
+.chip .ic { width:110px; height:110px; border-radius:26px; background:var(--laranja); color:#fff; display:flex; align-items:center; justify-content:center; }
+.chip .tx { font-family:Mont; font-weight:900; font-size:62px; color:var(--marinho); }
+.tile { width:450px; height:300px; background:#fff; border-radius:36px; box-shadow:0 18px 44px rgba(14,42,71,.18); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:20px; border-bottom:10px solid var(--laranja); }
+.tile .tx { font-family:Mont; font-weight:900; font-size:44px; color:var(--marinho); line-height:1.05; text-align:center; }
+.pill { display:inline-flex; align-items:center; gap:22px; font-family:Mont; font-weight:900; padding:30px 56px; border-radius:80px; }
+</style></head><body>
+<div id="stage">
+
+  <section class="scene" data-start="0" data-end="4.845" data-shake="0.291,3.677">
+    <div class="f-mar"></div><div class="grade" style="--gc:rgba(255,255,255,.05)"></div>
+    <div class="el h" data-in="0.129" data-a="slam" style="top:300px;font-size:190px;color:#fff">OBRA</div>
+    <div class="el" data-in="0.291" data-a="slam" style="top:500px"><div class="tag" style="background:var(--laranja);font-size:150px;transform:rotate(-3deg)">PARADA</div></div>
+    <div class="el" data-in="1.146" data-a="slideL" style="top:830px"><div class="chip"><div class="ic" style="background:var(--marinho)"><svg viewBox="0 0 100 100" style="width:80px;height:80px;color:currentColor"><use href="#i-sumiu"/></svg></div><div class="tx">pedreiro que sumiu...</div></div></div>
+    <div class="el" data-in="2.6" data-a="slideR" style="top:1060px"><div class="chip"><div class="ic" style="background:var(--verm)"><svg viewBox="0 0 100 100" style="width:80px;height:80px;color:currentColor"><use href="#i-sobe"/></svg></div><div class="tx">orçamento <span style="color:var(--verm)">só sobe</span></div></div></div>
+    <div class="el h" data-in="3.677" data-a="pop" style="top:1330px;font-size:84px;color:var(--verm)">R$ <span style="font-size:120px">+ + +</span></div>
+  </section>
+
+  <section class="scene" data-start="4.845" data-end="8.433" data-shake="6.534">
+    <div class="f-gelo"></div><div class="grade" style="--gc:rgba(14,42,71,.06)"></div>
+    <div class="el h" data-in="4.995" data-a="rise" style="top:420px;font-size:84px;color:var(--marinho)">Quem já reformou<br>sabe:</div>
+    <div class="el h" data-in="6.534" data-a="slam" style="top:720px;font-size:170px;color:var(--laranja2);line-height:.95">DOR DE<br>CABEÇA</div>
+    <div class="el" data-in="7.408" data-a="pop" style="top:1110px"><div class="tag" style="background:var(--marinho);font-size:70px">do começo ao fim.</div></div>
+  </section>
+
+  <section class="scene" data-start="8.433" data-end="14.892999999999999">
+    <div class="f-azul"></div><div class="grade" style="--gc:rgba(255,255,255,.07)"></div>
+    <div class="el h" data-in="8.583" data-a="drop" style="top:220px;font-size:80px;color:#fff">Agora imagina<br>a sua obra com</div>
+    <div class="el" data-in="9.87" data-a="pop" style="top:470px"><svg viewBox="0 0 100 100" style="width:180px;height:180px;color:var(--laranja)"><use href="#i-capacete"/></svg></div>
+    <div class="el h" data-in="9.968" data-a="slam" style="top:680px;font-size:104px;color:#fff;line-height:1">ENGENHEIRO<br><span style="color:var(--laranja)">DE VERDADE</span></div>
+    <div class="el" data-in="11.473" data-a="slideR" style="top:1010px"><div class="chip" style="width:860px"><div class="ic"><svg viewBox="0 0 100 100" style="width:76px;height:76px;color:currentColor"><use href="#i-projeto"/></svg></div><div class="tx">Projeto</div><svg viewBox="0 0 100 100" style="width:70px;height:70px;margin-left:auto;color:#2EAD5B"><path d="M20 52l20 20 40-42" fill="none" stroke="currentColor" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div><div class="el" data-in="12.208" data-a="slideR" style="top:1200px"><div class="chip" style="width:860px"><div class="ic"><svg viewBox="0 0 100 100" style="width:76px;height:76px;color:currentColor"><use href="#i-prazo"/></svg></div><div class="tx">Prazo</div><svg viewBox="0 0 100 100" style="width:70px;height:70px;margin-left:auto;color:#2EAD5B"><path d="M20 52l20 20 40-42" fill="none" stroke="currentColor" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div><div class="el" data-in="12.846" data-a="slideR" style="top:1390px"><div class="chip" style="width:860px"><div class="ic"><svg viewBox="0 0 100 100" style="width:76px;height:76px;color:currentColor"><use href="#i-acomp"/></svg></div><div class="tx">Acompanhamento</div><svg viewBox="0 0 100 100" style="width:70px;height:70px;margin-left:auto;color:#2EAD5B"><path d="M20 52l20 20 40-42" fill="none" stroke="currentColor" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+  </section>
+
+  <section class="scene" data-start="14.892999999999999" data-end="21.378">
+    <div class="f-gelo"></div><div class="grade" style="--gc:rgba(14,42,71,.06)"></div>
+    <div class="el" data-in="15.043" data-a="pop" style="top:170px" id="logo4"></div>
+    <div class="el h" data-in="15.58" data-a="slam" style="top:520px;font-size:96px;color:var(--laranja2)">é assim!</div>
+    <div class="el" data-in="16.11" data-a="pop" style="top:720px;left:70px;right:auto;width:450px"><div class="tile"><svg viewBox="0 0 100 100" style="width:120px;height:120px;color:var(--azul)"><use href="#i-tijolo"/></svg><div class="tx">Construção</div></div></div><div class="el" data-in="17.02" data-a="pop" style="top:720px;left:560px;right:auto;width:450px"><div class="tile"><svg viewBox="0 0 100 100" style="width:120px;height:120px;color:var(--azul)"><use href="#i-rolo"/></svg><div class="tx">Reforma</div></div></div><div class="el" data-in="17.68" data-a="pop" style="top:1055px;left:70px;right:auto;width:450px"><div class="tile"><svg viewBox="0 0 100 100" style="width:120px;height:120px;color:var(--azul)"><use href="#i-doc"/></svg><div class="tx">Regularização</div></div></div><div class="el" data-in="18.66" data-a="pop" style="top:1055px;left:560px;right:auto;width:450px"><div class="tile"><svg viewBox="0 0 100 100" style="width:120px;height:120px;color:var(--azul)"><use href="#i-chave"/></svg><div class="tx">Habite-se</div></div></div><div class="el" data-in="19.52" data-a="pop" style="top:1390px;left:70px;right:auto;width:450px"><div class="tile"><svg viewBox="0 0 100 100" style="width:120px;height:120px;color:var(--azul)"><use href="#i-lupa"/></svg><div class="tx">Laudos e<br>perícias</div></div></div><div class="el" data-in="20.08" data-a="pop" style="top:1390px;left:560px;right:auto;width:450px"><div class="tile"><svg viewBox="0 0 100 100" style="width:120px;height:120px;color:var(--azul)"><use href="#i-ferramenta"/></svg><div class="tx">Manutenção<br>predial</div></div></div>
+  </section>
+
+  <section class="scene" data-start="21.378" data-end="24.165000000000003">
+    <div class="f-lar"></div><div class="grade" style="--gc:rgba(255,255,255,.1)"></div>
+    <div class="el h" data-in="21.528" data-a="slam" style="top:440px;font-size:150px;color:#fff;line-height:.95">TUDO NUM<br>LUGAR SÓ</div>
+    <div class="el" data-in="22.73" data-a="pop" style="top:860px"><svg viewBox="0 0 100 100" style="width:170px;height:170px;color:var(--marinho)"><use href="#i-pin"/></svg></div>
+    <div class="el h" data-in="22.934" data-a="rise" style="top:1060px;font-size:110px;color:var(--marinho)">em Brasília</div>
+    <div class="el" data-in="23.33" data-a="rise" style="top:1210px;font-family:Inter;font-weight:700;font-size:42px;color:#fff">SCLN 208 · Bloco B · Loja 25 · Asa Norte</div>
+  </section>
+
+  <section class="scene" data-start="24.165000000000003" data-end="31.247">
+    <div class="f-mar"></div><div class="grade" style="--gc:rgba(255,255,255,.05)"></div>
+    <div class="el" data-in="24.27" data-a="pop" style="top:260px" id="logo6"></div>
+    <div class="el" data-in="24.612" data-a="pop" style="top:700px"><div class="pill" style="background:#25D366;color:#fff;font-size:66px;box-shadow:0 20px 50px rgba(37,211,102,.35)"><svg viewBox="0 0 32 32" style="width:86px;height:86px;color:#fff"><use href="#i-whats"/></svg>CHAMA NO WHATS</div></div>
+    <div class="el h" data-in="24.96" data-a="rise" style="top:920px;font-size:96px;color:#fff">(61) 98458-3818</div>
+    <div class="el" data-in="25.162" data-a="pop" style="top:1070px"><div class="tag" style="background:var(--laranja);font-size:62px">peça seu orçamento</div></div>
+    <div class="el h" data-in="27.083" data-a="rise" style="top:1330px;font-family:Mont;font-weight:800;font-size:54px;color:#fff;line-height:1.2">Construindo seu sonho<br>com <span style="color:var(--laranja)">segurança</span> e qualidade.</div>
+    <div class="el" data-in="28.55" data-a="rise" style="top:1540px;font-family:Inter;font-weight:700;font-size:40px;color:rgba(255,255,255,.75)">@inezo_reformas</div>
+  </section>
+</div>
+<script src="marca/brand.js"></script>
+<script src="marca/icones.js"></script>
+<script>
+document.body.insertAdjacentHTML("afterbegin", ICONES);
+const L = 0.15;
+document.getElementById("logo4").innerHTML = INEZO.logo(820, "cor");
+document.getElementById("logo6").innerHTML = INEZO.logo(860, "branco");
+const clamp = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
+const eo = x => 1 - Math.pow(1 - x, 3);
+const back = (x, c = 1.8) => 1 + (c + 1) * Math.pow(x - 1, 3) + c * Math.pow(x - 1, 2);
+const XF = 0.22;
+function anim(el, t) {
+  const t0 = parseFloat(el.dataset.in), a = el.dataset.a;
+  const d = a === "pop" ? 0.36 : a === "slam" ? 0.3 : 0.42;
+  const p = clamp((t - t0) / d), pe = eo(p);
+  let op = a === "pop" || a === "slam" ? clamp(p * 4) : pe, tf = "";
+  if (a === "rise") tf = `translateY(${((1 - pe) * 70).toFixed(1)}px)`;
+  if (a === "drop") tf = `translateY(${(-(1 - pe) * 90).toFixed(1)}px)`;
+  if (a === "pop") tf = `scale(${Math.max(0.02, back(p)).toFixed(4)})`;
+  if (a === "slam") tf = `scale(${(1 + (1 - pe) * 1.4).toFixed(4)})`;
+  if (a === "slideL") tf = `translateX(${(-(1 - pe) * 1100).toFixed(1)}px)`;
+  if (a === "slideR") tf = `translateX(${((1 - pe) * 1100).toFixed(1)}px)`;
+  op = op < 0.003 ? 0 : op;
+  el.style.opacity = op.toFixed(3);
+  el.style.visibility = op > 0 ? "visible" : "hidden";
+  el.style.transform = tf;
+}
+function render(tv) {
+  const t = tv - L;
+  document.querySelectorAll(".scene").forEach(s => {
+    const a = parseFloat(s.dataset.start), b = parseFloat(s.dataset.end);
+    let op = 0;
+    if (t >= a && t < b + XF) op = clamp((t - a) / XF) * (t > b ? 1 - clamp((t - b) / XF) : 1);
+    if (a === 0) op = t < b ? 1 : op;
+    s.style.opacity = op;
+    s.style.visibility = op > 0 ? "visible" : "hidden";
+    s.style.zIndex = Math.round(a * 10 + 10);
+    if (op <= 0) return;
+    let sh = "";
+    (s.dataset.shake || "").split(",").filter(Boolean).map(Number).forEach(k => {
+      const q = t - k; if (q > 0 && q < 0.35) { const amp = 14 * (1 - q / 0.35); sh = ` translate(${(Math.sin(q * 90) * amp).toFixed(1)}px,${(Math.cos(q * 70) * amp).toFixed(1)}px)`; }
+    });
+    s.style.transform = `scale(${(1 + 0.05 * (1 - eo(clamp((t - a) / 0.5)))).toFixed(4)})${sh}`;
+    s.querySelectorAll(".grade").forEach(g => g.style.transform = `translate(${((t * 14) % 90).toFixed(1)}px,${((t * 20) % 90).toFixed(1)}px)`);
+    s.querySelectorAll(".el").forEach(el => anim(el, t));
+  });
+}
+window.render = render;
+render(0);
+</script>
+</body></html>

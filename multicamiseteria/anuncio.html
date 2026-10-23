@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><title>Multi Camiseteria - divulgação</title>
+<style>
+@font-face { font-family: Anton; src: url(fonts/anton-latin-400-normal.woff); }
+@font-face { font-family: M; font-weight: 600; src: url(fonts/montserrat-latin-600-normal.woff); }
+@font-face { font-family: M; font-weight: 700; src: url(fonts/montserrat-latin-700-normal.woff); }
+@font-face { font-family: M; font-weight: 800; src: url(fonts/montserrat-latin-800-normal.woff); }
+@font-face { font-family: M; font-weight: 900; src: url(fonts/montserrat-latin-900-normal.woff); }
+:root { --verm:#C8161D; --verm2:#8E0E12; --preto:#140A0A; --creme:#F4E9D8; --ouro:#E0A93F; }
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body { width:1080px; height:1920px; overflow:hidden; background:var(--preto); }
+#stage { position:relative; width:1080px; height:1920px; overflow:hidden; font-family:M, sans-serif; }
+.scene { position:absolute; inset:0; opacity:0; overflow:hidden; }
+.el { position:absolute; left:40px; right:40px; text-align:center; opacity:0; will-change:transform, opacity; }
+.A { font-family:Anton; line-height:.95; text-transform:uppercase; }
+.it { display:inline-block; transform:skewX(-9deg); }
+.f-vm { position:absolute; inset:0; background:radial-gradient(circle at 50% 35%,#E3262D,#C8161D 45%,#7A0B0F 100%); }
+.f-pt { position:absolute; inset:0; background:radial-gradient(circle at 50% 40%,#2A1414,#140A0A 70%); }
+.f-cr { position:absolute; inset:0; background:var(--creme); }
+.pincel { position:absolute; left:-80px; right:-80px; height:300px; background:var(--preto); clip-path:polygon(2% 18%,30% 6%,62% 14%,98% 2%,100% 80%,70% 94%,35% 84%,0 98%); }
+.tag { display:inline-block; font-family:Anton; text-transform:uppercase; padding:12px 44px 20px; line-height:1; transform:skewX(-9deg); }
+.rasgo { position:absolute; inset:0; opacity:.12; background:repeating-linear-gradient(115deg,#000 0 8px,transparent 8px 40px); }
+.card { display:flex; align-items:center; gap:30px; background:#fff; border-radius:26px; padding:26px 36px; box-shadow:0 22px 50px rgba(0,0,0,.35); text-align:left; border-left:16px solid var(--verm); }
+.card .ic { flex:none; width:120px; height:120px; border-radius:24px; background:var(--verm); display:flex; align-items:center; justify-content:center; }
+.card .t { font-family:Anton; font-size:70px; line-height:1; color:var(--preto); text-transform:uppercase; }
+.lbl { display:inline-block; background:var(--verm); color:#fff; font-weight:900; font-size:30px; letter-spacing:.06em; padding:10px 24px; border-radius:40px; margin-top:12px; }
+.w { display:inline-block; overflow:hidden; vertical-align:top; padding:.08em .04em .12em; margin:-.08em -.04em -.12em; }
+.w > span { display:inline-block; }
+</style></head><body><div id="stage">
+
+  <section class="scene" data-start="0" data-end="2.58">
+    <div class="f-vm"></div><div class="rasgo"></div>
+    <div class="el " data-in="0.14" data-a="slam" style="top:520px"><span class="tag" style="background:#fff;color:var(--verm);font-size:120px">Ô EMPRESÁRIO,</span></div>
+    <div class="el " data-in="0.80" data-a="slam" style="top:740px"><span class="tag" style="background:var(--preto);color:#fff;font-size:120px">PROFESSOR,</span></div>
+    <div class="el " data-in="1.52" data-a="slam" style="top:960px"><span class="tag" style="background:var(--ouro);color:var(--preto);font-size:110px">TÉCNICO DO TIME...</span></div>
+  </section>
+
+  <section class="scene" data-start="2.58" data-end="5.00" data-shake="4.16">
+    <div class="f-pt"></div>
+    <div class="el A" data-in="2.70" data-a="palavras" data-passo="0.08" style="top:380px;font-size:84px;color:#fff;white-space:nowrap">Já encomendou camiseta</div>
+    <div class="el A" data-in="3.50" data-a="palavras" data-passo="0.08" style="top:510px;font-size:80px;color:var(--ouro)">e ela chegou...</div>
+    <div class="el " data-in="3.20" data-a="pop" style="top:700px"><svg viewBox="0 0 100 100" style="width:320px;height:320px" fill="none" stroke="#fff" stroke-width="5"><circle cx="50" cy="50" r="40"/><path id="pont" d="M50 50V22" stroke-width="7" stroke-linecap="round"/><path d="M50 50l16 10" stroke-width="7" stroke-linecap="round"/></svg></div>
+    <div class="el " data-in="4.16" data-a="slam" style="top:1120px"><span class="tag" style="background:var(--verm);color:#fff;font-size:190px">ATRASADA?</span></div>
+  </section>
+
+  <section class="scene" data-start="5.00" data-end="8.36">
+    <div class="f-pt"></div>
+    <div class="el A" data-in="5.12" data-a="palavras" data-passo="0.06" style="top:220px;font-size:100px;color:var(--ouro)">Ou pior:</div>
+    <div class="el A" data-in="5.92" data-a="palavras" data-passo="0.07" style="top:340px;font-size:90px;color:#fff">na primeira lavada...</div>
+    <div class="el " data-in="5.82" data-a="pop" style="top:560px"><svg viewBox="0 0 200 200" style="width:620px;height:620px;filter:drop-shadow(0 30px 50px rgba(0,0,0,.5))"><defs><clipPath id="cpd"><path d="M60 20 80 12q20 16 40 0l20 8 45 30-20 35-17-10v110H52V75L35 85 15 50z"/></clipPath><mask id="mk"><rect width="200" height="200" fill="#fff"/><g id="rach" stroke="#000" stroke-width="3.2" fill="none" stroke-linecap="round"></g></mask></defs><g clip-path="url(#cpd)"><rect width="200" height="200" fill="#F4F4F4"/><g mask="url(#mk)" id="estampa"><circle cx="100" cy="100" r="40" fill="#C8161D"/><text x="100" y="112" text-anchor="middle" font-family="Anton" font-size="34" fill="#fff">TIME</text></g></g><path d="M60 20 80 12q20 16 40 0l20 8 45 30-20 35-17-10v110H52V75L35 85 15 50z" fill="none" stroke="#bbb" stroke-width="2"/></svg></div>
+    <div class="el " data-in="7.12" data-a="slam" style="top:1300px"><span class="tag" style="background:var(--verm);color:#fff;font-size:120px">A ESTAMPA DESCASCOU!</span></div>
+  </section>
+
+  <section class="scene" data-start="8.36" data-end="9.42" data-shake="8.58">
+    <div class="f-vm"></div><div class="rasgo"></div>
+    <div class="el " data-in="8.48" data-a="slam" style="top:640px"><div class="A it" style="font-size:250px;color:#fff;text-shadow:0 14px 0 rgba(0,0,0,.25)">AÍ NÃO DÁ,<br>NÉ?</div></div>
+  </section>
+
+  <section class="scene" data-start="9.42" data-end="11.08">
+    <div class="f-pt"></div>
+    <div class="el " data-in="9.47" data-a="pop" style="top:380px"><svg viewBox="0 0 200 200" style="width:420px;height:420px"><circle cx="100" cy="100" r="88" fill="none" stroke="#E0A93F" stroke-width="9"/>
+  <path d="M62 52 80 44q20 14 40 0l18 8 24 22-14 18-12-8v62H62V84l-12 8-14-18z" fill="none" stroke="#E0A93F" stroke-width="8" stroke-linejoin="round"/>
+  <path d="M82 92v44h34" fill="none" stroke="#E0A93F" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    <div class="el " data-in="9.67" data-a="rise" style="top:860px"><div style="font-weight:800;font-size:92px;color:#fff;letter-spacing:-.01em;white-space:nowrap">Multi Camiseteria</div></div>
+    <div class="el " data-in="10.34" data-a="slam" style="top:1060px"><span class="tag" style="background:var(--verm);color:#fff;font-size:120px">É DIFERENTE!</span></div>
+  </section>
+
+  <section class="scene" data-start="11.08" data-end="14.44">
+    <div class="f-vm"></div><div class="rasgo"></div>
+    <div class="el A" data-in="10.90" data-a="palavras" data-passo="0.06" style="top:280px;font-size:110px;color:#fff">A gente faz:</div>
+    <div class="el" data-in="11.15" data-a="pop" style="top:560px;left:60px;right:auto;width:460px"><svg viewBox="0 0 200 200" style="width:340px;height:340px;filter:drop-shadow(0 18px 30px rgba(0,0,0,.45))"><defs><clipPath id="cps0"><path d="M60 20 80 12q20 16 40 0l20 8 45 30-20 35-17-10v110H52V75L35 85 15 50z"/></clipPath></defs><g clip-path="url(#cps0)"><rect width="200" height="200" fill="#5B1FA8"/><path d="M-10 60 210 20v18L-10 90zM-10 130 210 80v22L-10 160z" fill="#8A4BE0"/><text x="100" y="125" text-anchor="middle" font-family="Anton" font-size="34" fill="#fff">INTER</text><g class="print"></g></g><path d="M60 20 80 12q20 16 40 0l20 8 45 30-20 35-17-10v110H52V75L35 85 15 50z" fill="none" stroke="rgba(0,0,0,.25)" stroke-width="2"/><path d="M80 12q20 16 40 0" fill="none" stroke="rgba(0,0,0,.35)" stroke-width="5"/></svg><div><span class="tag" style="background:var(--verm);color:#fff;font-size:48px;white-space:nowrap">SUBLIMAÇÃO TOTAL</span></div></div><div class="el" data-in="12.11" data-a="pop" style="top:560px;left:560px;right:auto;width:460px"><svg viewBox="0 0 200 200" style="width:340px;height:340px;filter:drop-shadow(0 18px 30px rgba(0,0,0,.45))"><defs><clipPath id="cps1"><path d="M60 20 80 12q20 16 40 0l20 8 45 30-20 35-17-10v110H52V75L35 85 15 50z"/></clipPath></defs><g clip-path="url(#cps1)"><rect width="200" height="200" fill="#2A2A2A"/><path d="M0 0 200 0 200 50Q100 90 0 50z" fill="#C8161D"/><rect x="74" y="92" width="52" height="34" rx="6" fill="#fff"/><text x="100" y="116" text-anchor="middle" font-family="M" font-weight="900" font-size="17" fill="#2A2A2A">LOGO</text><g class="print"></g></g><path d="M60 20 80 12q20 16 40 0l20 8 45 30-20 35-17-10v110H52V75L35 85 15 50z" fill="none" stroke="rgba(0,0,0,.25)" stroke-width="2"/><path d="M80 12q20 16 40 0" fill="none" stroke="rgba(0,0,0,.35)" stroke-width="5"/></svg><div><span class="tag" style="background:var(--verm);color:#fff;font-size:66px;white-space:nowrap">BORDADO</span></div></div><div class="el" data-in="12.67" data-a="pop" style="top:1120px;left:60px;right:auto;width:460px"><svg viewBox="0 0 200 200" style="width:340px;height:340px;filter:drop-shadow(0 18px 30px rgba(0,0,0,.45))"><defs><clipPath id="cps2"><path d="M60 20 80 12q20 16 40 0l20 8 45 30-20 35-17-10v110H52V75L35 85 15 50z"/></clipPath></defs><g clip-path="url(#cps2)"><rect width="200" height="200" fill="#140A0A"/><path d="M0 120 200 20v40L0 160z" fill="#C8161D"/><path d="M0 150 200 70v14L0 164z" fill="#E0A93F"/><text x="100" y="140" text-anchor="middle" font-family="Anton" font-size="56" fill="#fff">10</text><g class="print"></g></g><path d="M60 20 80 12q20 16 40 0l20 8 45 30-20 35-17-10v110H52V75L35 85 15 50z" fill="none" stroke="rgba(0,0,0,.25)" stroke-width="2"/><path d="M80 12q20 16 40 0" fill="none" stroke="rgba(0,0,0,.35)" stroke-width="5"/></svg><div><span class="tag" style="background:var(--verm);color:#fff;font-size:66px;white-space:nowrap">SERIGRAFIA</span></div></div><div class="el" data-in="13.47" data-a="pop" style="top:1120px;left:560px;right:auto;width:460px"><svg viewBox="0 0 200 200" style="width:340px;height:340px;filter:drop-shadow(0 18px 30px rgba(0,0,0,.45))"><defs><clipPath id="cps3"><path d="M60 20 80 12q20 16 40 0l20 8 45 30-20 35-17-10v110H52V75L35 85 15 50z"/></clipPath></defs><g clip-path="url(#cps3)"><rect width="200" height="200" fill="#DDEFF7"/><path d="M0 140q50-30 100 0t100 0v60H0z" fill="#3A8FB7"/><path d="M60 110q40-30 80 0-40 30-80 0z" fill="#2F6E3E"/><circle cx="125" cy="108" r="4" fill="#fff"/><g class="print"></g></g><path d="M60 20 80 12q20 16 40 0l20 8 45 30-20 35-17-10v110H52V75L35 85 15 50z" fill="none" stroke="rgba(0,0,0,.25)" stroke-width="2"/><path d="M80 12q20 16 40 0" fill="none" stroke="rgba(0,0,0,.35)" stroke-width="5"/></svg><div><span class="tag" style="background:var(--verm);color:#fff;font-size:66px;white-space:nowrap">DTF</span></div></div>
+  </section>
+
+  <section class="scene" data-start="14.44" data-end="17.80">
+    <div class="f-cr"></div>
+    <div class="el A" data-in="14.56" data-a="palavras" data-passo="0.06" style="top:200px;font-size:120px;color:var(--verm)">Uniforme pra</div>
+    <div class="el" data-in="15.23" data-a="drop" style="top:520px;left:60px;right:auto;width:460px"><svg viewBox="0 0 200 200" style="width:330px;height:330px;filter:drop-shadow(0 18px 30px rgba(0,0,0,.45))"><defs><clipPath id="cpg0"><path d="M60 20 80 12q20 16 40 0l20 8 45 30-20 35-17-10v110H52V75L35 85 15 50z"/></clipPath></defs><g clip-path="url(#cpg0)"><rect width="200" height="200" fill="#2A2A2A"/><path d="M0 0 200 0 200 50Q100 90 0 50z" fill="#C8161D"/><rect x="74" y="92" width="52" height="34" rx="6" fill="#fff"/><text x="100" y="116" text-anchor="middle" font-family="M" font-weight="900" font-size="17" fill="#2A2A2A">LOGO</text><g class="print"></g></g><path d="M60 20 80 12q20 16 40 0l20 8 45 30-20 35-17-10v110H52V75L35 85 15 50z" fill="none" stroke="rgba(0,0,0,.25)" stroke-width="2"/><path d="M80 12q20 16 40 0" fill="none" stroke="rgba(0,0,0,.35)" stroke-width="5"/></svg><div><span class="lbl">EMPRESA</span></div></div><div class="el" data-in="15.63" data-a="drop" style="top:520px;left:560px;right:auto;width:460px"><svg viewBox="0 0 200 200" style="width:330px;height:330px;filter:drop-shadow(0 18px 30px rgba(0,0,0,.45))"><defs><clipPath id="cpg1"><path d="M60 20 80 12q20 16 40 0l20 8 45 30-20 35-17-10v110H52V75L35 85 15 50z"/></clipPath></defs><g clip-path="url(#cpg1)"><rect width="200" height="200" fill="#1E4FB8"/><rect y="0" width="200" height="60" fill="#fff"/><path d="M40 90h120v10H40z" fill="#fff"/><text x="100" y="150" text-anchor="middle" font-family="Anton" font-size="34" fill="#fff">3ºA</text><g class="print"></g></g><path d="M60 20 80 12q20 16 40 0l20 8 45 30-20 35-17-10v110H52V75L35 85 15 50z" fill="none" stroke="rgba(0,0,0,.25)" stroke-width="2"/><path d="M80 12q20 16 40 0" fill="none" stroke="rgba(0,0,0,.35)" stroke-width="5"/></svg><div><span class="lbl">ESCOLA</span></div></div><div class="el" data-in="16.19" data-a="drop" style="top:1000px;left:60px;right:auto;width:460px"><svg viewBox="0 0 200 200" style="width:330px;height:330px;filter:drop-shadow(0 18px 30px rgba(0,0,0,.45))"><defs><clipPath id="cpg2"><path d="M60 20 80 12q20 16 40 0l20 8 45 30-20 35-17-10v110H52V75L35 85 15 50z"/></clipPath></defs><g clip-path="url(#cpg2)"><rect width="200" height="200" fill="#140A0A"/><path d="M0 120 200 20v40L0 160z" fill="#C8161D"/><path d="M0 150 200 70v14L0 164z" fill="#E0A93F"/><text x="100" y="140" text-anchor="middle" font-family="Anton" font-size="56" fill="#fff">10</text><g class="print"></g></g><path d="M60 20 80 12q20 16 40 0l20 8 45 30-20 35-17-10v110H52V75L35 85 15 50z" fill="none" stroke="rgba(0,0,0,.25)" stroke-width="2"/><path d="M80 12q20 16 40 0" fill="none" stroke="rgba(0,0,0,.35)" stroke-width="5"/></svg><div><span class="lbl">TIME</span></div></div><div class="el" data-in="16.59" data-a="drop" style="top:1000px;left:560px;right:auto;width:460px"><svg viewBox="0 0 200 200" style="width:330px;height:330px;filter:drop-shadow(0 18px 30px rgba(0,0,0,.45))"><defs><clipPath id="cpg3"><path d="M60 20 80 12q20 16 40 0l20 8 45 30-20 35-17-10v110H52V75L35 85 15 50z"/></clipPath></defs><g clip-path="url(#cpg3)"><rect width="200" height="200" fill="#1F7A3A"/><path d="M95 70h10v80H95zM75 92h50v10H75z" fill="#fff"/><g class="print"></g></g><path d="M60 20 80 12q20 16 40 0l20 8 45 30-20 35-17-10v110H52V75L35 85 15 50z" fill="none" stroke="rgba(0,0,0,.25)" stroke-width="2"/><path d="M80 12q20 16 40 0" fill="none" stroke="rgba(0,0,0,.35)" stroke-width="5"/></svg><div><span class="lbl">IGREJA</span></div></div><div class="el" data-in="17.07" data-a="drop" style="top:1440px;left:310px;right:auto;width:460px"><svg viewBox="0 0 200 200" style="width:330px;height:330px;filter:drop-shadow(0 18px 30px rgba(0,0,0,.45))"><defs><clipPath id="cpg4"><path d="M60 20 80 12q20 16 40 0l20 8 45 30-20 35-17-10v110H52V75L35 85 15 50z"/></clipPath></defs><g clip-path="url(#cpg4)"><rect width="200" height="200" fill="#F7A8C4"/><path d="M100 70c-18-22-40 2-20 24l20 22 20-22c20-22-2-46-20-24z" fill="#E23C7B"/><g class="print"></g></g><path d="M60 20 80 12q20 16 40 0l20 8 45 30-20 35-17-10v110H52V75L35 85 15 50z" fill="none" stroke="rgba(0,0,0,.25)" stroke-width="2"/><path d="M80 12q20 16 40 0" fill="none" stroke="rgba(0,0,0,.35)" stroke-width="5"/></svg><div><span class="lbl">EVENTO</span></div></div>
+  </section>
+
+  <section class="scene" data-start="17.80" data-end="21.56">
+    <div class="f-pt"></div>
+    <div class="el " data-in="17.72" data-a="rise" style="top:340px"><div style="display:inline-flex;align-items:center;gap:18px"><svg viewBox="0 0 200 200" style="width:150px;height:150px"><circle cx="100" cy="100" r="88" fill="none" stroke="#E0A93F" stroke-width="9"/>
+  <path d="M62 52 80 44q20 14 40 0l18 8 24 22-14 18-12-8v62H62V84l-12 8-14-18z" fill="none" stroke="#E0A93F" stroke-width="8" stroke-linejoin="round"/>
+  <path d="M82 92v44h34" fill="none" stroke="#E0A93F" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/></svg><div style="text-align:left"><div style="font-weight:800;font-size:63px;color:#fff;line-height:1;letter-spacing:-.01em">Multi Camiseteria</div><div style="font-weight:600;font-size:18px;color:#E0A93F;letter-spacing:.32em;margin-top:9px">SUA IDEIA, NOSSA ESTAMPA</div></div></div></div>
+    <div class="el" data-in="17.92" data-a="slideL" style="top:640px"><div class="card"><div class="ic"><svg viewBox="0 0 100 100" style="width:76px;height:76px" fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"><rect x="14" y="18" width="72" height="56" rx="6"/><path d="M14 30h72M30 86h40M50 74v12M30 46l14 12 24-20"/></svg></div><div class="t" style="font-size:74px">Layout gratuito</div></div></div><div class="el" data-in="18.80" data-a="slideR" style="top:930px"><div class="card"><div class="ic"><svg viewBox="0 0 100 100" style="width:76px;height:76px" fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"><circle cx="30" cy="34" r="12"/><circle cx="70" cy="34" r="12"/><path d="M8 82c0-14 10-24 22-24s22 10 22 24M48 82c0-14 10-24 22-24s22 10 22 24"/></svg></div><div class="t" style="font-size:56px">Pequenas ou grandes quantidades</div></div></div><div class="el" data-in="20.37" data-a="slideL" style="top:1220px"><div class="card"><div class="ic"><svg viewBox="0 0 100 100" style="width:76px;height:76px" fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 30h54v40H8zM62 44h18l12 14v12H62z"/><circle cx="26" cy="74" r="8"/><circle cx="76" cy="74" r="8"/></svg></div><div class="t" style="font-size:74px">Entrega rápida</div></div></div>
+  </section>
+
+  <section class="scene" data-start="21.56" data-end="23.31">
+    <div class="f-vm"></div><div class="rasgo"></div>
+    <div class="el " data-in="21.68" data-a="slam" style="top:600px"><div class="A it" style="font-size:210px;color:#fff">SUA IDEIA,</div></div>
+    <div class="el " data-in="22.48" data-a="slam" style="top:820px"><div class="A it" style="font-size:210px;color:var(--preto)">NOSSA ESTAMPA!</div></div>
+  </section>
+
+  <section class="scene" data-start="23.31" data-end="33.8">
+    <div class="f-pt"></div><div class="rasgo" style="opacity:.06"></div>
+    <div class="el " data-in="23.33" data-a="rise" style="top:260px"><div style="display:inline-flex;align-items:center;gap:20px"><svg viewBox="0 0 200 200" style="width:170px;height:170px"><circle cx="100" cy="100" r="88" fill="none" stroke="#E0A93F" stroke-width="9"/>
+  <path d="M62 52 80 44q20 14 40 0l18 8 24 22-14 18-12-8v62H62V84l-12 8-14-18z" fill="none" stroke="#E0A93F" stroke-width="8" stroke-linejoin="round"/>
+  <path d="M82 92v44h34" fill="none" stroke="#E0A93F" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/></svg><div style="text-align:left"><div style="font-weight:800;font-size:71px;color:#fff;line-height:1;letter-spacing:-.01em">Multi Camiseteria</div><div style="font-weight:600;font-size:20px;color:#E0A93F;letter-spacing:.32em;margin-top:10px">SUA IDEIA, NOSSA ESTAMPA</div></div></div></div>
+    <div class="el " data-in="23.43" data-a="pop" style="top:640px"><div style="display:inline-flex;align-items:center;gap:22px;background:#25D366;color:#fff;font-weight:900;font-size:58px;padding:26px 56px;border-radius:80px;box-shadow:0 20px 50px rgba(37,211,102,.35)"><svg viewBox="0 0 32 32" style="width:76px;height:76px"><path fill="#fff" d="M16 3a13 13 0 0 0-11.2 19.6L3 29l6.6-1.7A13 13 0 1 0 16 3zm0 23.6c-2 0-4-.6-5.7-1.6l-.4-.2-3.9 1 1-3.8-.3-.4A10.6 10.6 0 1 1 16 26.6zm5.8-7.9c-.3-.2-1.9-.9-2.2-1-.3-.1-.5-.2-.7.2l-1 1.2c-.2.2-.4.2-.7.1a8.7 8.7 0 0 1-4.3-3.8c-.3-.5.3-.5.9-1.6.1-.2 0-.4 0-.5l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.1-1.2 2.8s1.2 3.2 1.4 3.5c.2.2 2.4 3.6 5.8 5 2.1.9 3 1 4 .8.7-.1 1.9-.8 2.2-1.5.3-.8.3-1.4.2-1.5l-.4-.2z"/></svg>CHAMA NO WHATS</div></div>
+    <div class="el " data-in="24.24" data-a="rise" style="top:860px"><div class="A" style="font-size:130px;color:#fff">(61) 98463-6750</div></div>
+    <div class="el " data-in="27.12" data-a="pop" style="top:1080px"><div style="display:inline-block;background:var(--verm);color:#fff;border-radius:26px;padding:26px 40px;font-weight:800;font-size:44px;line-height:1.3">📍 QSE 14 · Lote 1 · Loja 3<br><span style="color:#FFD9A0">Taguatinga Sul</span></div></div>
+    <div class="el " data-in="30.08" data-a="rise" style="top:1340px"><div style="font-weight:700;font-size:34px;color:rgba(255,255,255,.75)">@multi_camiseteria</div></div>
+    <div class="el " data-in="30.48" data-a="rise" style="top:1700px"><div style="display:inline-flex;align-items:center;gap:14px;background:rgba(0,0,0,.55);border-radius:40px;padding:10px 24px 10px 12px">
+  <div style="width:60px;height:60px;border-radius:15px;background:#FF6A13"><svg viewBox="0 0 100 100" style="width:60px;height:60px"><path d="M58 12 26 56h22l-8 32 34-46H52z" fill="#fff"/></svg></div>
+  <div style="font-weight:700;font-size:32px;color:#fff;letter-spacing:.02em">Vídeo criado por <b style="font-weight:900;font-style:italic;color:#FFB15C">CRIATIVOS RÁPIDOS</b></div></div></div>
+  </section>
+
+</div>
+<script>
+const L = 0.15, C = {"o": 0.08, "empresario": 0.24, "professor": 0.8, "tecnico": 1.52, "ja": 2.704, "camiseta": 3.2, "atrasada": 4.16, "pior": 5.12, "lavada": 5.92, "estampa": 6.72, "descascou": 7.12, "ai": 8.48, "multi": 9.52, "diferente": 10.34, "sublimacao": 11.2, "bordado": 12.16, "serigrafia": 12.72, "dtf": 13.52, "uniforme": 14.56, "empresa": 15.28, "escola": 15.68, "time": 16.24, "igreja": 16.64, "evento": 17.12, "layout": 17.92, "pequenas": 18.8, "entrega": 20.373, "sua": 21.68, "nossa": 22.48, "chama": 23.427, "numero": 24.24, "loja": 27.12, "qse": 28.0, "multi2": 30.08, "fim": 31.2};
+document.querySelectorAll('[data-a="palavras"]').forEach(el => {
+  el.innerHTML = el.textContent.split(/(\s+)/).map(p => /^\s+$/.test(p) ? " " : `<span class="w"><span>${p}</span></span>`).join("");
+});
+// rachaduras da estampa
+(() => { const g = document.getElementById("rach"); let h = ""; let s = 7;
+  const r = () => (s = (s * 9301 + 49297) % 233280) / 233280;
+  for (let i = 0; i < 16; i++) { let x = 60 + r() * 80, y = 60 + r() * 80, d = `M${x.toFixed(1)} ${y.toFixed(1)}`;
+    for (let j = 0; j < 4; j++) { x += (r() - .5) * 30; y += (r() - .5) * 30; d += ` L${x.toFixed(1)} ${y.toFixed(1)}`; }
+    h += `<path d="${d}" pathLength="1" style="stroke-dasharray:1;stroke-dashoffset:1" data-i="${i}"/>`; }
+  g.innerHTML = h; })();
+const clamp = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
+const eo = x => 1 - Math.pow(1 - x, 3), eo5 = x => 1 - Math.pow(1 - x, 5);
+const back = (x, k = 1.8) => 1 + (k + 1) * Math.pow(x - 1, 3) + k * Math.pow(x - 1, 2);
+const XF = 0.12;
+function anim(el, t) {
+  const t0 = parseFloat(el.dataset.in), a = el.dataset.a;
+  if (a === "palavras") {
+    const passo = parseFloat(el.dataset.passo); let vis = false;
+    el.querySelectorAll(".w > span").forEach((s, i) => {
+      const p = clamp((t - t0 - i * passo) / 0.35), pe = eo5(p);
+      s.style.transform = `translateY(${((1 - pe) * 110).toFixed(1)}%)`;
+      if (p > 0) vis = true;
+    });
+    el.style.opacity = vis ? 1 : 0; el.style.visibility = vis ? "visible" : "hidden"; return;
+  }
+  const d = {pop: .36, slam: .26, rise: .45, slideL: .4, slideR: .4, drop: .45}[a] || .45;
+  const p = clamp((t - t0) / d), pe = eo(p);
+  let op = (a === "pop" || a === "slam" || a === "drop") ? clamp(p * 4) : pe, tf = "";
+  if (a === "pop") tf = `scale(${Math.max(.02, back(p)).toFixed(4)})`;
+  if (a === "slam") tf = `scale(${(1 + (1 - pe) * 1.5).toFixed(4)}) rotate(${((1 - pe) * -6).toFixed(2)}deg)`;
+  if (a === "rise") tf = `translateY(${((1 - pe) * 90).toFixed(1)}px)`;
+  if (a === "drop") tf = `translateY(${(-(1 - Math.min(1, back(p, 1.2))) * 500).toFixed(1)}px)`;
+  if (a === "slideL") tf = `translateX(${(-(1 - pe) * 1100).toFixed(1)}px)`;
+  if (a === "slideR") tf = `translateX(${((1 - pe) * 1100).toFixed(1)}px)`;
+  op = op < 0.003 ? 0 : op;
+  el.style.opacity = op.toFixed(3); el.style.visibility = op > 0 ? "visible" : "hidden"; el.style.transform = tf;
+}
+function render(tv) {
+  const t = tv - L;
+  document.querySelectorAll(".scene").forEach(s => {
+    const a = parseFloat(s.dataset.start), b = parseFloat(s.dataset.end);
+    let op = 0;
+    if (t >= a && t < b + XF) op = clamp((t - a) / XF) * (t > b ? 1 - clamp((t - b) / XF) : 1);
+    if (a === 0) op = t < b ? 1 : op;
+    s.style.opacity = op; s.style.visibility = op > 0 ? "visible" : "hidden"; s.style.zIndex = Math.round(a * 10 + 10);
+    if (op <= 0) return;
+    let sh = "";
+    (s.dataset.shake || "").split(",").filter(Boolean).map(Number).forEach(k => {
+      const q = t - k; if (q > 0 && q < .35) { const amp = 16 * (1 - q / .35); sh = ` translate(${(Math.sin(q * 90) * amp).toFixed(1)}px,${(Math.cos(q * 70) * amp).toFixed(1)}px)`; }
+    });
+    s.style.transform = `scale(${(1.06 - .06 * eo(clamp((t - a) / .4))).toFixed(4)})${sh}`;
+    s.querySelectorAll(".rasgo").forEach(r => r.style.transform = `translateX(${((t * 30) % 40).toFixed(1)}px)`);
+    s.querySelectorAll(".el").forEach(el => anim(el, t));
+  });
+  const pont = document.getElementById("pont"); if (pont) pont.setAttribute("transform", `rotate(${(t * 400).toFixed(1)} 50 50)`);
+  document.querySelectorAll("#rach path").forEach(p => p.style.strokeDashoffset = (1 - eo(clamp((t - C.estampa - p.dataset.i * .04) / .5))).toFixed(3));
+  const est = document.getElementById("estampa"); if (est) est.style.opacity = (1 - .45 * clamp((t - C.descascou) / .8)).toFixed(3);
+}
+window.render = render;
+render(0);
+</script>
+</body></html>

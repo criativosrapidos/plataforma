@@ -1,0 +1,5 @@
+Reels Benefiz v2 - voz masculina (Enzo - Professional and Warm, b95tap8KE0pQivmClQRQ), eleven_v3, alvo ~30 s, sem efeitos sonoros por item.
+
+[sighs] Segunda-feira, oito da manhã... e chega aquela mensagem: "Chefe, preciso conversar." [serious] Seu melhor funcionário tá indo embora. Por duzentos reais a mais... na concorrência. [frustrated] E lá vai você: contratar, treinar... tudo de novo. [warmly] Agora, e se ele tivesse motivo pra ficar? Convênio médico e odontológico, desconto na faculdade, lazer e seguro de vida pra família. [excited] Isso é Benefiz! Mais de vinte mil vidas e cento e vinte empresas já confiam. [warmly] Chama no WhatsApp e monta o pacote da sua empresa.
+
+Cues esperados em audio/cues_v2.json: mensagem, chefe, seu, embora, duzentos, concorrencia, lavai, contratar, treinar, denovo, agora, motivo, convenio, faculdade, lazer, seguro, isso, benefiz, vinte, vidas, cento, chama, monta, fim.

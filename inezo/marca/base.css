@@ -1,0 +1,12 @@
+@font-face { font-family: Mont; font-weight: 700; src: url(../fonts/montserrat-latin-700-normal.woff); }
+@font-face { font-family: Mont; font-weight: 800; src: url(../fonts/montserrat-latin-800-normal.woff); }
+@font-face { font-family: Mont; font-weight: 900; src: url(../fonts/montserrat-latin-900-normal.woff); }
+@font-face { font-family: Inter; font-weight: 700; src: url(../fonts/Inter-Bold.otf); }
+@font-face { font-family: Inter; font-weight: 600; src: url(../fonts/Inter-SemiBold.otf); }
+@font-face { font-family: Inter; font-weight: 500; src: url(../fonts/Inter-Medium.otf); }
+:root { --marinho:#0E2A47; --marinho2:#081B30; --azul:#1F5C99; --laranja:#F28C28; --laranja2:#D9701A; --gelo:#EEF3F8; --concreto:#9AA7B4; --tinta:#0B1F33; --cinza:#5B6B7C; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#555; font-family:Inter, sans-serif; display:flex; flex-direction:column; gap:40px; padding:40px; align-items:flex-start; }
+.abs { position:absolute; } .w100 { left:0; right:0; } .c { text-align:center; }
+.h { font-family:Mont; font-weight:900; line-height:1; letter-spacing:-.005em; }
+.grade { position:absolute; inset:0; background-image:linear-gradient(rgba(255,255,255,.05) 2px,transparent 2px),linear-gradient(90deg,rgba(255,255,255,.05) 2px,transparent 2px); background-size:80px 80px; }

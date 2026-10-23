@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JABS Engenharia</title>
+<style>
+@font-face{font-family:Cinzel;src:url(fonts/cinzel-latin-500-normal.woff) format("woff");font-weight:500}
+@font-face{font-family:Cormorant;src:url(fonts/cormorant-garamond-latin-300-normal.woff) format("woff");font-weight:300}
+@font-face{font-family:Cormorant;src:url(fonts/cormorant-garamond-latin-400-normal.woff) format("woff");font-weight:400}
+@font-face{font-family:Cormorant;src:url(fonts/cormorant-garamond-latin-300-italic.woff) format("woff");font-weight:300;font-style:italic}
+@font-face{font-family:Cormorant;src:url(fonts/cormorant-garamond-latin-400-italic.woff) format("woff");font-weight:400;font-style:italic}
+@font-face{font-family:Montserrat;src:url(fonts/montserrat-latin-300-normal.woff) format("woff");font-weight:300}
+@font-face{font-family:Montserrat;src:url(fonts/montserrat-latin-400-normal.woff) format("woff");font-weight:400}
+@font-face{font-family:Montserrat;src:url(fonts/montserrat-latin-500-normal.woff) format("woff");font-weight:500}
+:root{--onyx:#0B0B0C;--graf:#262629;--pedra:#8C8982;--marfim:#F3F0EA;--branco:#fff;--linha:rgba(255,255,255,.18)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--onyx);color:var(--branco);font-family:Montserrat,sans-serif;font-weight:300;-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}
+.eyebrow{font:500 12px/1 Montserrat;letter-spacing:.42em;text-transform:uppercase;color:#B9B6AF}
+.serif{font-family:Cormorant,serif;font-weight:300}
+.wrap{max-width:1240px;margin:0 auto;padding:0 48px}
+.rule{width:72px;height:1px;background:currentColor;opacity:.6;margin:28px 0}
+/* nav */
+nav{position:absolute;inset:0 0 auto 0;z-index:5}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:104px}
+nav .brand{display:flex;align-items:center;gap:16px}
+nav .brand img{height:46px}
+nav .brand span{font:500 20px Cinzel;letter-spacing:.38em}
+nav ul{display:flex;gap:40px;list-style:none}
+nav a{color:#E7E5E0;text-decoration:none;font:400 12px Montserrat;letter-spacing:.28em;text-transform:uppercase}
+/* hero */
+.hero{position:relative;min-height:100vh;height:900px;display:flex;align-items:flex-end;overflow:hidden}
+.hero .bg{position:absolute;inset:0;background:url(img/obra_pb.jpg) center 35%/cover}
+.hero .shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,11,12,.55) 0%,rgba(11,11,12,.15) 35%,rgba(11,11,12,.92) 82%)}
+.hero .wrap{position:relative;padding-bottom:110px;width:100%}
+.hero h1{font:300 92px/1.02 Cormorant,serif;margin:22px 0 26px;max-width:880px}
+.hero h1 em{font-style:italic}
+.hero p{font:300 19px/1.7 Montserrat;color:#D9D7D2;max-width:600px}
+.cta{display:flex;gap:18px;margin-top:40px}
+.btn{display:inline-block;padding:18px 34px;font:500 12px Montserrat;letter-spacing:.3em;text-transform:uppercase;text-decoration:none;border:1px solid #fff;color:#fff}
+.btn.solid{background:#fff;color:var(--onyx)}
+/* manifesto */
+.ivory{background:var(--marfim);color:var(--onyx)}
+.manifesto{padding:150px 0}
+.manifesto .grid{display:grid;grid-template-columns:5fr 6fr;gap:90px;align-items:center}
+.manifesto h2{font:300 64px/1.08 Cormorant,serif}
+.manifesto h2 em{font-style:italic}
+.manifesto p{font:300 18px/1.9 Montserrat;color:#3a3a3d}
+.manifesto .eyebrow{color:var(--pedra)}
+.sig{display:flex;align-items:center;gap:18px;margin-top:36px}
+.sig img{height:58px}
+.sig span{font:500 12px Montserrat;letter-spacing:.3em;color:var(--pedra)}
+/* diferenciais */
+.dif{padding:140px 0;border-bottom:1px solid var(--linha)}
+.dif h2{font:300 58px/1.1 Cormorant,serif;max-width:760px;margin-top:18px}
+.cols{display:grid;grid-template-columns:repeat(4,1fr);margin-top:80px;border-top:1px solid var(--linha)}
+.col{padding:44px 34px 10px 0}
+.col+.col{padding-left:34px;border-left:1px solid var(--linha)}
+.col .n{font:500 14px Cinzel;letter-spacing:.2em;color:#9B988F}
+.col h3{font:400 30px/1.15 Cormorant,serif;margin:22px 0 16px}
+.col p{font:300 15px/1.8 Montserrat;color:#BDBBB5}
+/* obras */
+.obras{padding:140px 0}
+.obras .head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:56px}
+.obras h2{font:300 58px/1.1 Cormorant,serif;margin-top:18px}
+.obras .head p{max-width:380px;font:300 15px/1.8 Montserrat;color:#BDBBB5}
+.gal{display:grid;grid-template-columns:7fr 4fr;gap:24px}
+.gal figure{position:relative;overflow:hidden}
+.gal img{width:100%;height:100%;object-fit:cover}
+.gal .big{height:640px}
+.gal .side{display:grid;grid-template-rows:1fr 1fr;gap:24px;height:640px}
+.gal figcaption{position:absolute;left:28px;bottom:24px;font:500 12px Montserrat;letter-spacing:.32em;text-shadow:0 1px 12px rgba(0,0,0,.6)}
+/* processo */
+.proc{padding:140px 0}
+.proc h2{font:300 58px/1.1 Cormorant,serif;margin-top:18px}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);margin-top:90px;position:relative}
+.steps:before{content:"";position:absolute;left:0;right:0;top:9px;height:1px;background:var(--onyx);opacity:.35}
+.step .dot{width:19px;height:19px;border-radius:50%;background:var(--onyx);position:relative}
+.step h3{font:400 32px Cormorant,serif;margin:30px 0 12px}
+.step p{font:300 15px/1.8 Montserrat;color:#4a4a4e;padding-right:30px}
+/* frase */
+.quote{position:relative;height:620px;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden}
+.quote .bg{position:absolute;inset:0;background:url(img/obra_cor.jpg) center 40%/cover}
+.quote .shade{position:absolute;inset:0;background:rgba(11,11,12,.62)}
+.quote blockquote{position:relative;font:300 italic 66px/1.15 Cormorant,serif;max-width:900px}
+.quote .eyebrow{position:relative;display:block;margin-top:34px}
+/* rodapé */
+footer{padding:120px 0 60px}
+footer .grid{display:grid;grid-template-columns:5fr 3fr 3fr;gap:60px;align-items:start}
+footer .logo img{width:260px}
+footer h4{font:500 12px Montserrat;letter-spacing:.32em;color:#9B988F;margin-bottom:22px;text-transform:uppercase}
+footer p{font:300 16px/2 Montserrat;color:#E2E0DB}
+footer .bottom{margin-top:90px;padding-top:28px;border-top:1px solid var(--linha);display:flex;justify-content:space-between;font:300 12px Montserrat;letter-spacing:.2em;color:#8E8C86}
+/* celular */
+@media (max-width:760px){
+ .wrap{padding:0 24px}
+ nav ul{display:none}
+ nav .wrap{height:84px}
+ nav .brand img{height:38px}
+ nav .brand span{font-size:16px}
+ .hero{height:820px;min-height:0}
+ .hero .wrap{padding-bottom:70px}
+ .hero h1{font-size:54px}
+ .hero p{font-size:16px}
+ .cta{flex-direction:column}
+ .btn{text-align:center}
+ .manifesto,.dif,.obras,.proc{padding:90px 0}
+ .manifesto .grid{grid-template-columns:1fr;gap:30px}
+ .manifesto h2,.dif h2,.obras h2,.proc h2{font-size:42px}
+ .cols{grid-template-columns:1fr;margin-top:40px}
+ .col,.col+.col{padding:34px 0;border-left:0;border-bottom:1px solid var(--linha)}
+ .obras .head{display:block}
+ .obras .head p{margin-top:18px}
+ .gal{grid-template-columns:1fr}
+ .gal .big{height:420px}
+ .gal .side{height:auto;grid-template-rows:none;grid-template-columns:1fr 1fr}
+ .gal .side figure{height:240px}
+ .steps{grid-template-columns:1fr;gap:36px;margin-top:50px}
+ .steps:before{display:none}
+ .quote{height:480px}
+ .quote blockquote{font-size:42px;padding:0 24px}
+ footer .grid{grid-template-columns:1fr;gap:40px}
+ footer .bottom{flex-direction:column;gap:10px}
+}
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="bg"></div><div class="shade"></div>
+  <nav><div class="wrap">
+    <div class="brand"><img src="img/simbolo_branco.png" alt=""><span>JABS</span></div>
+    <ul><li><a href="#sobre">Sobre</a></li><li><a href="#diferenciais">Diferenciais</a></li><li><a href="#obras">Obras</a></li><li><a href="#processo">Processo</a></li><li><a href="#contato">Contato</a></li></ul>
+  </div></nav>
+  <div class="wrap">
+    <span class="eyebrow">Construtora &amp; Incorporadora · Brasília</span>
+    <h1>Alto padrão,<br><em>do projeto à chave.</em></h1>
+    <p>Residências de alto padrão construídas com precisão em cada etapa, acabamento impecável e cronograma cumprido à risca.</p>
+    <div class="cta"><a class="btn solid" href="#obras">Conheça nossas obras</a><a class="btn" href="#contato">Fale com a JABS</a></div>
+  </div>
+</section>
+
+<section class="ivory manifesto" id="sobre"><div class="wrap grid">
+  <div>
+    <span class="eyebrow">Sobre a JABS</span>
+    <h2>Construindo muito mais<br><em>do que estruturas.</em></h2>
+  </div>
+  <div>
+    <p>Entregamos ambientes onde o conforto encontra a elegância. Cada projeto é pensado exclusivamente para quem vai viver nele — do primeiro traço à entrega das chaves, com o rigor técnico de uma engenharia especializada em obras de alto padrão.</p>
+    <div class="sig"><img src="img/simbolo_preto.png" alt=""><span>JABS ENGENHARIA</span></div>
+  </div>
+</div></section>
+
+<section class="dif" id="diferenciais"><div class="wrap">
+  <span class="eyebrow">Diferenciais</span>
+  <h2>O padrão JABS em <em class="serif" style="font-style:italic">cada detalhe.</em></h2>
+  <div class="cols">
+    <div class="col"><span class="n">01</span><h3>Projeto exclusivo</h3><p>Cada obra é planejada sob medida, antes do primeiro tijolo.</p></div>
+    <div class="col"><span class="n">02</span><h3>Precisão em cada etapa</h3><p>Execução técnica rigorosa, do alicerce à cobertura.</p></div>
+    <div class="col"><span class="n">03</span><h3>Acabamento impecável</h3><p>Materiais nobres e atenção ao detalhe em todos os ambientes.</p></div>
+    <div class="col"><span class="n">04</span><h3>Cronograma cumprido</h3><p>Prazo é compromisso: a sua obra não atrasa.</p></div>
+  </div>
+</div></section>
+
+<section class="obras" id="obras"><div class="wrap">
+  <div class="head">
+    <div><span class="eyebrow">Obras</span><h2>Endereços que <em class="serif" style="font-style:italic">falam por nós.</em></h2></div>
+    <p>Arquitetura contemporânea, volumes limpos e materiais que valorizam o imóvel por décadas.</p>
+  </div>
+  <div class="gal">
+    <figure class="big"><img src="img/obra_cor.jpg" alt="Obra JL"><figcaption>OBRA JL</figcaption></figure>
+    <div class="side">
+      <figure><img src="img/detalhe_pb.jpg" alt=""><figcaption>DETALHES</figcaption></figure>
+      <figure><img src="img/detalhe_cor.jpg" alt=""><figcaption>ACABAMENTO</figcaption></figure>
+    </div>
+  </div>
+</div></section>
+
+<section class="ivory proc" id="processo"><div class="wrap">
+  <span class="eyebrow" style="color:#8C8982">Processo</span>
+  <h2>Do projeto <em class="serif" style="font-style:italic">à chave.</em></h2>
+  <div class="steps">
+    <div class="step"><div class="dot"></div><h3>Projeto</h3><p>Planejamento completo, orçamento e cronograma definidos.</p></div>
+    <div class="step"><div class="dot"></div><h3>Estrutura</h3><p>Execução técnica com acompanhamento de engenharia.</p></div>
+    <div class="step"><div class="dot"></div><h3>Acabamento</h3><p>Materiais nobres aplicados com precisão.</p></div>
+    <div class="step"><div class="dot"></div><h3>Entrega</h3><p>Obra concluída no prazo, pronta para viver.</p></div>
+  </div>
+</div></section>
+
+<section class="quote">
+  <div class="bg"></div><div class="shade"></div>
+  <div><blockquote>Onde o conforto encontra a elegância.</blockquote><span class="eyebrow">JABS Engenharia</span></div>
+</section>
+
+<footer id="contato"><div class="wrap">
+  <div class="grid">
+    <div class="logo"><img src="img/logo_branco.png" alt="JABS Engenharia"></div>
+    <div><h4>Contato</h4><p>WhatsApp (61) 99325-4777<br>@jabsengenharia</p></div>
+    <div><h4>Atuação</h4><p>Brasília · DF<br>Obras de alto padrão</p></div>
+  </div>
+  <div class="bottom"><span>© JABS ENGENHARIA</span><span>CONSTRUTORA &amp; INCORPORADORA</span></div>
+</div></footer>
+
+</body>
+</html>

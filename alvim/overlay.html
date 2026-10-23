@@ -1,0 +1,62 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face { font-family: Anton; src: url(fonts/anton-latin-400-normal.woff); }
+@font-face { font-family: M; font-weight: 600; src: url(fonts/montserrat-latin-600-normal.woff); }
+@font-face { font-family: M; font-weight: 800; src: url(fonts/montserrat-latin-800-normal.woff); }
+@font-face { font-family: M; font-weight: 900; src: url(fonts/montserrat-latin-900-normal.woff); }
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body { width:1080px; height:1920px; background:transparent; overflow:hidden; font-family:M; color:#fff; }
+.abs { position:absolute; }
+#vin { inset:0; background:radial-gradient(ellipse at 50% 45%, transparent 55%, rgba(0,0,0,.5) 100%); }
+#grad { left:0; right:0; bottom:0; height:950px; background:linear-gradient(180deg, transparent, rgba(0,0,0,.8)); }
+.k { font-weight:600; letter-spacing:.38em; font-size:28px; color:#C9D3FF; text-transform:uppercase; }
+.big { font-family:Anton; font-size:140px; line-height:.95; text-transform:uppercase; text-shadow:0 6px 30px rgba(0,0,0,.5); }
+.azul { color:#8FA6FF; } .lar { color:#FF8A1F; }
+.mask { overflow:hidden; padding:64px 0 10px; margin:-58px 0 -10px; }
+.item { position:absolute; left:70px; right:70px; opacity:0; }
+.chip { display:inline-flex; align-items:center; gap:14px; background:#2E46C8; padding:12px 26px; border-radius:10px; font-weight:800; font-size:34px; letter-spacing:.04em; }
+.chip img { height:42px; }
+.fio { height:6px; width:0; margin-top:16px; background:#fff; border-radius:3px; }
+.sub { font-weight:800; font-size:38px; margin-top:14px; text-transform:uppercase; letter-spacing:.05em; text-shadow:0 4px 18px rgba(0,0,0,.6); }
+.num { font-family:Anton; font-size:230px; line-height:.9; text-shadow:0 8px 34px rgba(0,0,0,.55); }
+#bug { right:46px; top:60px; display:flex; align-items:center; gap:10px; font-weight:800; font-size:22px; letter-spacing:.24em; text-transform:uppercase;
+       padding:10px 20px; border:1.5px solid rgba(255,255,255,.5); border-radius:40px; background:rgba(0,0,0,.28); opacity:0; }
+#bug img { height:30px; }
+#flash { inset:0; background:#fff; opacity:0; }
+#fim { inset:0; opacity:0; background:radial-gradient(ellipse at 50% 40%, #1d2a5c 0%, #0b1030 55%, #05060f 100%);
+       display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; }
+#fim img { width:620px; }
+#fim .linha { width:0; height:4px; background:linear-gradient(90deg,transparent,#8FA6FF,transparent); margin:44px auto 36px; }
+</style></head><body>
+<div id="vin" class="abs"></div><div id="grad" class="abs"></div>
+<div class="item" data-a="0.300" data-b="5.200" style="top:1180px"><div class="mask"><div class="k s">Líderes do Brasil</div></div><div class="mask"><div class="big s " style="font-size:136px">Reunião da</div></div><div class="mask"><div class="big s azul" style="font-size:136px">presidência</div></div><div class="mask"><div class="sub s">com o presidente do Grupo Alvim</div></div><div class="fio"></div></div><div class="item" data-a="5.450" data-b="7.100" style="top:1420px"><div class="mask"><div class="k s">Nosso presidente</div></div><div class="mask"><div class="big s " style="font-size:150px">Daher</div></div><div class="mask"><div class="sub s">Presidente · Líderes do Brasil</div></div><div class="fio"></div></div><div class="item" data-a="7.250" data-b="8.850" style="top:1440px"><div class="mask"><div class="big s " style="font-size:140px">Cláudia</div></div><div class="mask"><div class="sub s">Vice-presidente · Líderes do Brasil</div></div><div class="fio"></div></div><div class="item" data-a="10.000" data-b="14.200" style="top:1400px"><div class="mask"><div class="k s">Especialista em alimentação e varejo</div></div><div class="mask"><div class="big s " style="font-size:136px">Felipe Alvim</div></div><div class="mask"><div class="sub s">Presidente do Grupo Alvim</div></div><div class="fio"></div></div><div class="item" data-a="14.400" data-b="21.250" style="top:1180px"><div class="mask"><div class="k s">Grupo Alvim · desde 2008</div></div><div class="mask"><div class="big s " style="font-size:112px">+20 restaurantes</div></div><div class="mask"><div class="big s azul" style="font-size:112px">+400 colaboradores</div></div></div><div class="item" data-a="21.400" data-b="25.880" style="top:1180px"><div class="mask"><div class="k s">Somando tudo, fatura</div></div><div class="mask"><div class="num s"><span class="lar">+</span>R$ <span class="cont" data-v="100">0</span> MI</div></div><div class="mask"><div class="sub s">por ano</div></div><div class="fio"></div></div><div class="item" data-a="26.080" data-b="30.430" style="top:1400px"><div class="mask"><div class="k s">Uma tarde de troca de</div></div><div class="mask"><div class="big s " style="font-size:124px">Experiência</div></div><div class="mask"><div class="big s azul" style="font-size:124px">gestão e visão</div></div></div><div class="item" data-a="30.630" data-b="33.580" style="top:1420px"><div class="mask"><div class="k s">Direto da operação</div></div><div class="mask"><div class="big s " style="font-size:136px">Da cozinha</div></div><div class="mask"><div class="big s azul" style="font-size:136px">ao balcão</div></div></div>
+<div id="bug" class="abs"><img src="assets/lideres_logo.png"></div>
+<div id="fim" class="abs"><img id="flogo" src="assets/lideres_logo.png"><div class="linha" id="flin"></div>
+  <div class="mask"><div class="big" id="f1" style="font-size:110px">Vem novidade</div></div>
+  <div class="mask"><div class="big azul" id="f2" style="font-size:110px">por aí</div></div>
+  <div class="mask" style="margin-top:24px"><div class="k" id="f3">Fica atento</div></div></div>
+<div id="flash" class="abs"></div>
+<script>
+const C = [0.0, 3.0, 5.35, 7.2, 8.9, 9.95, 12.2, 14.3, 17.6, 21.35, 25.98, 28.13, 30.53, 31.93, 33.68, 35.38], FIM = 35.380, BUG = [5.55, 35.080000000000005], FL = true;
+const cl = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x)), e5 = x => 1 - Math.pow(1 - x, 5), eo = x => 1 - Math.pow(1 - x, 3);
+const $ = id => document.getElementById(id);
+function sobe(el, t, t0, t1) { const p = e5(cl((t - t0) / .5)), q = eo(cl((t - t1) / .35)); el.style.transform = `translateY(${((1 - p) * 175 + q * 175).toFixed(1)}%)`; }
+function render(t) {
+  document.querySelectorAll(".item").forEach(it => {
+    const a = +it.dataset.a, b = +it.dataset.b;
+    it.style.opacity = (t > a - .05 && t < b + .4) ? 1 : 0;
+    it.querySelectorAll(".s").forEach((s, k) => sobe(s, t, a + k * .12, b - .1 + k * .04));
+    const ch = it.querySelector(".chip"); if (ch) { ch.style.opacity = cl((t - a) / .3) * (1 - cl((t - b) / .3)); ch.style.transform = `translateX(${((1 - e5(cl((t - a) / .5))) * -80).toFixed(1)}px)`; }
+    const f = it.querySelector(".fio"); if (f) { f.style.width = (e5(cl((t - a - .3) / .7)) * 320 * (1 - cl((t - b) / .3))).toFixed(0) + "px"; }
+    const n = it.querySelector(".cont"); if (n) n.textContent = Math.round(+n.dataset.v * eo(cl((t - a - .2) / 1.2)));
+  });
+  $("bug").style.opacity = BUG[0] === null ? 0 : (.9 * cl((t - BUG[0]) / .4) * (1 - cl((t - BUG[1]) / .4))).toFixed(3);
+  let f = 0; if (FL) C.slice(1).forEach(c => { const q = t - c; if (q >= 0 && q < .16) f = Math.max(f, .28 * (1 - q / .16)); });
+  $("flash").style.opacity = f;
+  $("fim").style.opacity = cl((t - FIM) / .35);
+  const ql = e5(cl((t - FIM - .1) / .6));
+  $("flogo").style.transform = `scale(${(0.75 + 0.25 * ql + .03 * cl((t - FIM) / 4)).toFixed(4)})`; $("flogo").style.opacity = ql;
+  $("flin").style.width = (e5(cl((t - FIM - .35) / .7)) * 600).toFixed(0) + "px";
+  sobe($("f1"), t, FIM + .45, 999); sobe($("f2"), t, FIM + .6, 999); sobe($("f3"), t, FIM + .9, 999);
+}
+window.render = render; render(0);
+</script></body></html>

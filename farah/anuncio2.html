@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Farah Banca e Tabacaria - Reels v3</title>
+<style>
+@font-face { font-family: Anton; src: url(fonts/anton-latin-400-normal.woff); }
+@font-face { font-family: Mont; font-weight: 700; src: url(fonts/montserrat-latin-700-normal.woff); }
+@font-face { font-family: Mont; font-weight: 800; src: url(fonts/montserrat-latin-800-normal.woff); }
+@font-face { font-family: Mont; font-weight: 900; src: url(fonts/montserrat-latin-900-normal.woff); }
+@font-face { font-family: Cinzel; src: url(fonts/cinzel-latin-600-normal.woff); }
+@font-face { font-family: Pacifico; src: url(fonts/pacifico-latin-400-normal.woff); }
+:root {
+  --coral: #E8473B; --coral2: #C9322A; --mar: #0B6E99; --mar2: #084C6B; --areia: #F7E6C4;
+  --sol: #FFC93C; --tinta: #0D1B2A; --branco: #FFFFFF; --verde: #25D366;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--tinta); }
+#stage { position: relative; width: 1080px; height: 1920px; overflow: hidden; font-family: Mont, sans-serif; }
+.scene { position: absolute; inset: 0; opacity: 0; }
+.bg { position: absolute; inset: -110px; background-size: cover; background-position: center; will-change: transform; }
+.shade { position: absolute; inset: 0; }
+.el { position: absolute; left: 0; right: 0; text-align: center; opacity: 0; will-change: transform, opacity; }
+.anton { font-family: Anton, sans-serif; text-transform: uppercase; line-height: .95; letter-spacing: 1px; }
+.pac { font-family: Pacifico, cursive; }
+.tag { display: inline-block; padding: 14px 34px 18px; border-radius: 18px; }
+.sombra { text-shadow: 0 6px 24px rgba(0,0,0,.45); }
+.card { display: inline-flex; align-items: center; gap: 34px; background: var(--branco); border-radius: 36px;
+        padding: 34px 54px 34px 40px; box-shadow: 0 24px 60px rgba(0,0,0,.35); }
+.card .txt { font-family: Anton; font-size: 92px; color: var(--tinta); text-transform: uppercase; line-height: 1; text-align: left; }
+.card svg { width: 170px; height: 170px; flex: none; }
+.chip { display: inline-block; background: rgba(255,255,255,.14); border: 3px solid rgba(255,255,255,.55);
+        color: #fff; font-weight: 800; font-size: 40px; padding: 14px 30px; border-radius: 60px; margin: 8px 6px; }
+.foto { display: inline-block; border: 14px solid #fff; border-radius: 26px; box-shadow: 0 30px 70px rgba(0,0,0,.45); overflow: hidden; }
+.foto img { display: block; }
+.wave { position: absolute; left: -60px; right: -60px; height: 220px; }
+</style>
+</head>
+<body>
+<div id="stage">
+
+  <!-- 1. GANCHO (rápido): Atenção, Ubatuba! -->
+  <div class="scene" id="s1" data-start="0" data-end="1.7">
+    <div class="bg" data-kb="1.12,1.04" style="background-image:url(assets/orla_hd.png)"></div>
+    <div class="shade" style="background:radial-gradient(ellipse at 50% 45%, rgba(13,27,42,.55) 0%, rgba(13,27,42,.2) 70%)"></div>
+    <div class="el" data-in="0.25" data-a="pop" style="top:640px"><span class="tag anton" style="background:var(--sol);color:var(--tinta);font-size:150px;transform:rotate(-3deg)">ATENÇÃO,</span></div>
+    <div class="el anton sombra" data-in="0.8" data-a="pop" style="top:860px;font-size:240px;color:#fff">UBATUBA!</div>
+  </div>
+
+  <!-- 2. DOR: tá na praia e faltou alguma coisa? -->
+  <div class="scene" id="s2" data-start="1.7" data-end="3.95">
+    <div class="bg" data-kb="1.08,1.16" style="background-image:url(assets/orla_hd.png);background-position:60% center;filter:blur(5px) saturate(.7)"></div>
+    <div class="shade" style="background:rgba(13,27,42,.55)"></div>
+    <div class="el pac sombra" data-in="1.75" data-a="rise" style="top:330px;font-size:86px;color:var(--areia)">tá na praia e...</div>
+    <div class="el anton sombra" data-in="2.5" data-a="pop" style="top:500px;font-size:190px;color:var(--sol)">FALTOU</div>
+    <div class="el anton sombra" data-in="2.9" data-a="pop" style="top:700px;font-size:140px;color:#fff">ALGUMA COISA?</div>
+    <div class="el" data-in="3.0" data-a="rise" style="top:1000px;display:flex;justify-content:center;gap:40px">
+      <div style="background:#fff;border-radius:30px;padding:26px;box-shadow:0 14px 34px rgba(0,0,0,.3)"><svg viewBox="0 0 100 100" style="width:170px;height:170px"><use href="#i-agua"/></svg></div><div style="background:#fff;border-radius:30px;padding:26px;box-shadow:0 14px 34px rgba(0,0,0,.3)"><svg viewBox="0 0 100 100" style="width:170px;height:170px"><use href="#i-bateria"/></svg></div><div style="background:#fff;border-radius:30px;padding:26px;box-shadow:0 14px 34px rgba(0,0,0,.3)"><svg viewBox="0 0 100 100" style="width:170px;height:170px"><use href="#i-chinelo-quebrado"/></svg></div>
+    </div>
+  </div>
+
+  <!-- 3. MARCA falada: Corre na Farah, Banca e Tabacaria! -->
+  <div class="scene" id="s3" data-start="3.95" data-end="6.4">
+    <div class="shade" style="background:var(--coral)"></div>
+    <svg class="wave" style="bottom:-30px" viewBox="0 0 1200 220" preserveAspectRatio="none"><path d="M0 90 Q150 30 300 90 T600 90 T900 90 T1200 90 V220 H0Z" fill="var(--coral2)"/></svg>
+    <div class="el anton" data-in="4.0" data-a="pop" style="top:190px;font-size:120px;color:#fff">CORRE NA</div>
+    <div class="el" data-in="4.75" data-a="pop" style="top:330px;font-family:Cinzel;font-size:240px;color:var(--sol);letter-spacing:12px">FARAH</div>
+    <div class="el anton" data-in="5.25" data-a="rise" style="top:620px;font-size:100px;color:#fff">BANCA E</div>
+    <div class="el anton" data-in="5.65" data-a="pop" style="top:730px;font-size:200px;color:#fff">TABACARIA</div>
+    <div class="el" data-in="4.3" data-a="rise" style="top:1030px"><div class="foto" style="transform:rotate(-2deg)"><img src="assets/fachada_hd.png" style="width:860px;height:600px;object-fit:cover"></div></div>
+  </div>
+
+  <!-- 4. TEM DE TUDO + TABACARIA COMPLETA (versão com tabaco mostra a ilustração) -->
+  <div class="scene" id="s4" data-start="6.4" data-end="10.1">
+    <div class="shade" style="background:radial-gradient(ellipse at 50% 40%, #1A3550 0%, #0D1B2A 75%)"></div>
+    <div class="el pac" data-in="6.45" data-a="rise" style="top:120px;font-size:76px;color:var(--areia)">pertinho da praia,</div>
+    <div class="el anton" data-in="7.7" data-a="pop" style="top:290px;font-size:150px;color:var(--sol)">TEM DE TUDO:</div>
+    <div class="el anton" data-in="8.85" data-a="pop" style="top:490px;font-size:200px;color:#fff">TABACARIA</div>
+    <div class="el anton" data-in="9.35" data-a="rise" style="top:705px;font-size:120px;color:var(--coral)">COMPLETA</div>
+    <div class="el so-tabaco" data-in="8.9" data-a="rise" style="top:820px" id="tab"></div>
+    <div class="el so-tabaco" data-in="8.9" data-a="fade" style="top:1660px" id="tabaviso"></div>
+    <div class="el sem-tabaco" data-in="9.0" data-a="pop" style="top:960px">
+      <div style="display:inline-block;width:520px;height:520px;border-radius:50%;background:var(--coral);border:14px solid var(--sol);box-shadow:0 30px 70px rgba(0,0,0,.45)">
+        <div class="anton" style="font-size:230px;color:#fff;margin-top:110px">18+</div></div></div>
+    <div class="el sem-tabaco" data-in="9.2" data-a="fade" style="top:1560px;font-weight:800;font-size:40px;color:var(--areia)">só para maiores de 18 anos</div>
+  </div>
+
+  <!-- 5. PRODUTOS no ritmo da voz -->
+  <div class="scene" id="s5" data-start="10.1" data-end="16.85">
+    <div class="shade" style="background:linear-gradient(180deg,#FFC93C 0%,#FFB020 100%)"></div>
+    <div class="el" data-in="10.1" data-a="fade" style="top:110px;font-family:Mont;font-weight:800;font-size:40px;letter-spacing:8px;color:var(--coral2)">NA FARAH BANCA E TABACARIA</div>
+    <div class="el anton" data-in="10.1" data-a="fade" style="top:180px;font-size:84px;color:var(--tinta)">TEM DE TUDO:</div>
+    <div id="prod"></div>
+    <div class="el" data-in="16.2" data-a="rise" style="top:1540px;padding:0 60px">
+      <span class="chip" style="background:var(--tinta);border-color:var(--tinta)">vinhos</span>
+      <span class="chip" style="background:var(--tinta);border-color:var(--tinta)">mangás</span>
+      <span class="chip" style="background:var(--tinta);border-color:var(--tinta)">ímãs de Ubatuba</span>
+      <span class="chip" style="background:var(--coral);border-color:var(--coral)">e muito mais</span>
+    </div>
+  </div>
+
+  <!-- 6. DELIVERY E iFOOD: pediu, a Farah leva! -->
+  <div class="scene" id="s6" data-start="16.85" data-end="20.6">
+    <div class="shade" style="background:linear-gradient(180deg,#FFC93C 0%,#FFB020 100%)"></div>
+    <svg class="wave" style="bottom:-30px" viewBox="0 0 1200 220" preserveAspectRatio="none"><path d="M0 90 Q150 30 300 90 T600 90 T900 90 T1200 90 V220 H0Z" fill="var(--mar)"/></svg>
+    <div class="el anton" data-in="16.95" data-a="pop" style="top:170px;font-size:110px;color:var(--coral2)">E TEM</div>
+    <div class="el anton" data-in="17.35" data-a="pop" style="top:290px;font-size:250px;color:var(--tinta)">DELIVERY</div>
+    <div class="el" data-in="17.5" data-a="slideR" style="top:570px"><svg viewBox="0 0 100 100" style="width:400px;height:400px"><use href="#i-delivery"/></svg></div>
+    <div class="el" data-in="18.1" data-a="pop" style="top:990px">
+      <span style="display:inline-block;background:#EA1D2C;color:#fff;border-radius:40px;padding:20px 60px 28px;box-shadow:0 16px 40px rgba(0,0,0,.25);transform:rotate(-2deg)">
+        <span class="anton" style="font-size:66px;vertical-align:middle">E NO </span><span style="font-family:Mont;font-weight:900;font-size:92px;vertical-align:middle;letter-spacing:-2px">iFood</span></span></div>
+    <div class="el anton" data-in="19.0" data-a="rise" style="top:1210px;font-size:110px;color:var(--tinta)">PEDIU, A FARAH LEVA!</div>
+    <div class="el" data-in="19.3" data-a="rise" style="top:1400px"><div style="display:inline-flex;align-items:center;gap:22px;background:var(--verde);border-radius:100px;padding:22px 48px;box-shadow:0 20px 50px rgba(0,0,0,.25)">
+        <svg viewBox="0 0 100 100" style="width:80px;height:80px"><use href="#i-whats"/></svg><div class="anton" style="font-size:70px;color:#fff">(11) 99745-7700</div></div></div>
+  </div>
+
+  <!-- 7. ENDEREÇO falado: Farah, Banca e Tabacaria: Av. Iperoig, 301, no Centro -->
+  <div class="scene" id="s7" data-start="20.6" data-end="26.3">
+    <div class="shade" style="background:linear-gradient(180deg,#0D1B2A 0%,#0B2E45 100%)"></div>
+    <div class="el" data-in="20.65" data-a="pop" style="top:120px;font-family:Cinzel;font-size:210px;color:var(--coral);letter-spacing:10px">FARAH</div>
+    <div class="el anton" data-in="21.45" data-a="rise" style="top:370px;font-size:104px;color:#fff">BANCA E TABACARIA</div>
+    <div class="el" data-in="21.0" data-a="rise" style="top:560px"><div class="foto" style="transform:rotate(1.5deg)"><img src="assets/fachada_hd.png" style="width:860px;height:580px;object-fit:cover"></div></div>
+    <div class="el" data-in="22.9" data-a="pop" style="top:1230px"><svg viewBox="0 0 100 100" style="width:120px;height:120px"><use href="#i-pin"/></svg></div>
+    <div class="el anton" data-in="22.95" data-a="rise" style="top:1370px;font-size:120px;color:#fff">AV. IPEROIG, 301</div>
+    <div class="el" data-in="25.5" data-a="rise" style="top:1520px;font-weight:800;font-size:54px;color:var(--sol)">CENTRO · UBATUBA-SP</div>
+    <div class="el pac" data-in="25.7" data-a="fade" style="top:1610px;font-size:52px;color:var(--areia)">pertinho da praia</div>
+    <div class="el" data-in="20.65" data-a="fade" style="top:1850px;font-weight:700;font-size:25px;color:rgba(255,255,255,.8)">Venda de produtos de tabacaria proibida para menores de 18 anos.</div>
+  </div>
+
+  <!-- 8. SLOGAN falado: Pensou em Ubatuba? Pensou em Tabacaria Farah! -->
+  <div class="scene" id="s8" data-start="26.3" data-end="31">
+    <div class="shade" style="background:radial-gradient(ellipse at 50% 30%, #12304A 0%, #0D1B2A 70%)"></div>
+    <svg class="wave" style="bottom:-30px" viewBox="0 0 1200 220" preserveAspectRatio="none"><path d="M0 90 Q150 30 300 90 T600 90 T900 90 T1200 90 V220 H0Z" fill="var(--mar)"/></svg>
+    <div class="el" data-in="26.35" data-a="pop" style="top:130px" id="s8logo"></div>
+    <div class="el pac" data-in="26.7" data-a="rise" style="top:760px;font-size:96px;color:var(--areia)">Pensou em Ubatuba?</div>
+    <div class="el anton" data-in="27.95" data-a="rise" style="top:930px;font-size:110px;color:#fff">PENSOU EM TABACARIA</div>
+    <div class="el" data-in="29.0" data-a="pop" style="top:1090px;font-family:Cinzel;font-size:210px;color:var(--coral);letter-spacing:12px">FARAH!</div>
+    <div class="el" data-in="28.6" data-a="fade" style="top:1420px;font-weight:800;font-size:44px;color:#fff">Delivery e iFood · (11) 99745-7700</div>
+    <div class="el" data-in="28.6" data-a="fade" style="top:1490px;font-weight:800;font-size:40px;color:var(--sol)">@banca_farah_ubatuba</div>
+    <div class="el" data-in="26.35" data-a="fade" style="top:1850px;font-weight:700;font-size:25px;color:rgba(255,255,255,.8)">Venda de produtos de tabacaria proibida para menores de 18 anos.</div>
+  </div>
+
+</div>
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <symbol id="i-agua" viewBox="0 0 100 100"><rect x="34" y="6" width="32" height="12" rx="4" fill="#0B6E99"/><path d="M30 22h40l6 14v52a8 8 0 0 1-8 8H32a8 8 0 0 1-8-8V36z" fill="#CFEAF7" stroke="#0B6E99" stroke-width="4"/><path d="M27 80h46v6a6 6 0 0 1-6 6H33a6 6 0 0 1-6-6z" fill="#7CC4E4"/><path d="M27 46h46" stroke="#0B6E99" stroke-width="3"/></symbol>
+    <symbol id="i-bateria" viewBox="0 0 100 100"><rect x="22" y="6" width="56" height="88" rx="12" fill="#0D1B2A"/><rect x="28" y="16" width="44" height="68" rx="6" fill="#fff"/><rect x="32" y="66" width="36" height="14" rx="3" fill="#E8473B"/><path d="M52 26 40 48h10l-4 14 14-24H50z" fill="#FFC93C"/></symbol>
+    <symbol id="i-chinelo-quebrado" viewBox="0 0 100 100"><path d="M50 8c18 0 26 16 26 40s-6 44-26 44-26-20-26-44S32 8 50 8z" fill="#0B6E99"/><path d="M50 18c12 0 18 12 18 30s-4 34-18 34-18-16-18-34 6-30 18-30z" fill="#7CC4E4"/><path d="M50 30 30 52" stroke="#E8473B" stroke-width="7" stroke-linecap="round"/><path d="M50 30l12 10" stroke="#E8473B" stroke-width="7" stroke-linecap="round"/><path d="M70 42l14-6M72 50l14 2" stroke="#0D1B2A" stroke-width="4" stroke-linecap="round"/></symbol>
+    <symbol id="i-gelada" viewBox="0 0 100 100"><path d="M36 10h28v14l8 12v52a6 6 0 0 1-6 6H34a6 6 0 0 1-6-6V36l8-12z" fill="#2E9F5B"/><rect x="34" y="46" width="32" height="26" rx="3" fill="#F7E6C4"/><path d="M14 30l10 6M86 30l-10 6M12 60h10M88 60H78" stroke="#7CC4E4" stroke-width="5" stroke-linecap="round"/></symbol>
+    <symbol id="i-refri" viewBox="0 0 100 100"><path d="M30 14h40l-2 8v58l2 8H30l2-8V22z" fill="#E8473B"/><rect x="30" y="10" width="40" height="6" rx="3" fill="#B9C2CC"/><rect x="30" y="86" width="40" height="6" rx="3" fill="#B9C2CC"/><path d="M33 40c12 8 22-8 34 0v14c-12-8-22 8-34 0z" fill="#fff"/></symbol>
+    <symbol id="i-energetico" viewBox="0 0 100 100"><path d="M32 12h36l-2 8v62l2 8H32l2-8V20z" fill="#0D1B2A"/><rect x="32" y="8" width="36" height="6" rx="3" fill="#B9C2CC"/><path d="M54 28 40 54h12l-6 20 18-30H52z" fill="#FFC93C"/></symbol>
+    <symbol id="i-doce" viewBox="0 0 100 100"><path d="M8 50l14-14v28z M92 50 78 36v28z" fill="#E8473B"/><ellipse cx="50" cy="50" rx="30" ry="22" fill="#FF6FA8"/><path d="M30 42c8 6 32 6 40 0M30 58c8-6 32-6 40 0" stroke="#fff" stroke-width="5" fill="none"/></symbol>
+    <symbol id="i-chinelo" viewBox="0 0 100 100"><path d="M50 6c18 0 26 16 26 42s-6 46-26 46-26-20-26-46S32 6 50 6z" fill="#FFC93C"/><path d="M50 16c12 0 18 12 18 32s-4 36-18 36-18-16-18-36 6-32 18-32z" fill="#0B6E99"/><path d="M50 28 32 52M50 28l18 24" stroke="#fff" stroke-width="7" stroke-linecap="round"/><circle cx="50" cy="28" r="5" fill="#fff"/></symbol>
+    <symbol id="i-bone" viewBox="0 0 100 100"><path d="M14 62c0-24 16-40 36-40s36 16 36 40z" fill="#E8473B"/><path d="M50 22v40" stroke="#C9322A" stroke-width="3"/><path d="M14 62h76c4 0 6 4 4 8-4 6-26 10-46 4H14z" fill="#0D1B2A"/><circle cx="50" cy="22" r="4" fill="#C9322A"/></symbol>
+    <symbol id="i-carregador" viewBox="0 0 100 100"><rect x="30" y="18" width="40" height="38" rx="8" fill="#fff" stroke="#0D1B2A" stroke-width="4"/><path d="M40 6v14M60 6v14" stroke="#0D1B2A" stroke-width="6" stroke-linecap="round"/><path d="M50 56v12c0 14-20 10-20 24" stroke="#0D1B2A" stroke-width="6" fill="none" stroke-linecap="round"/><path d="M52 28 44 40h8l-4 10 10-14h-8z" fill="#FFC93C"/></symbol>
+    <symbol id="i-card" viewBox="0 0 100 100"><rect x="18" y="10" width="64" height="84" rx="8" fill="#FFC93C" transform="rotate(-8 50 50)"/><rect x="24" y="16" width="52" height="40" rx="4" fill="#7CC4E4" transform="rotate(-8 50 50)"/><circle cx="50" cy="36" r="12" fill="#E8473B" transform="rotate(-8 50 50)"/><rect x="26" y="62" width="48" height="6" rx="3" fill="#0D1B2A" transform="rotate(-8 50 50)"/><rect x="26" y="74" width="34" height="6" rx="3" fill="#0D1B2A" transform="rotate(-8 50 50)"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 100 100"><path d="M50 4C30 4 16 18 16 38c0 26 34 58 34 58s34-32 34-58C84 18 70 4 50 4z" fill="#E8473B"/><circle cx="50" cy="38" r="14" fill="#fff"/></symbol>
+    <symbol id="i-whats" viewBox="0 0 100 100"><path d="M50 8a42 42 0 0 0-36 63L8 92l22-6A42 42 0 1 0 50 8z" fill="#fff"/><path d="M50 15a35 35 0 0 0-30 53l-4 13 13-4a35 35 0 1 0 21-62z" fill="#25D366"/><path d="M37 30c-2 0-5 2-5 7s4 11 8 15 11 9 17 10 7-2 8-4 0-4-1-4l-7-4c-2-1-3 0-4 1l-2 2c-3-1-9-6-10-9l2-2c1-1 1-2 0-4l-3-6c0-1-2-2-3-2z" fill="#fff"/></symbol>
+    <symbol id="i-delivery" viewBox="0 0 100 100"><rect x="8" y="22" width="34" height="30" rx="5" fill="#E8473B"/><path d="M14 30h22M14 37h16" stroke="#fff" stroke-width="4" stroke-linecap="round"/><path d="M10 56h44l8-18h12l6 14" fill="none" stroke="#0D1B2A" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><path d="M40 56c0-10 8-16 18-16h4" fill="none" stroke="#0B6E99" stroke-width="7" stroke-linecap="round"/><rect x="64" y="30" width="14" height="6" rx="3" fill="#0D1B2A"/><circle cx="24" cy="70" r="12" fill="#0D1B2A"/><circle cx="24" cy="70" r="5" fill="#FFC93C"/><circle cx="78" cy="70" r="12" fill="#0D1B2A"/><circle cx="78" cy="70" r="5" fill="#FFC93C"/><path d="M84 18c4 3 6 7 6 12M90 12c6 5 9 11 9 18" stroke="#FFC93C" stroke-width="4" fill="none" stroke-linecap="round"/></symbol>
+  </defs>
+</svg>
+
+<script src="marca/brand.js"></script>
+<script src="marca/tabaco.js"></script>
+<script>
+document.getElementById("s8logo").innerHTML = FARAH.emblema(560, "escuro");
+const VERSAO = new URLSearchParams(location.search).get("v") || "sem";
+document.querySelectorAll(VERSAO === "tabaco" ? ".sem-tabaco" : ".so-tabaco").forEach(e => e.remove());
+if (VERSAO === "tabaco") document.getElementById("tabaviso").innerHTML = TABACO.aviso(980);
+const PRODUTOS = [
+  ["i-gelada", "BEBIDA<br>GELADA", 10.15], ["i-energetico", "ENERGÉTICO", 11.27], ["i-doce", "DOCES", 12.33],
+  ["i-chinelo", "CHINELO", 12.86], ["i-bone", "BONÉ", 13.61], ["i-carregador", "CARREGADOR", 14.29],
+  ["i-card", "CARD<br>POKÉMON", 15.69],
+];
+// cartão grande que troca a cada palavra + faixa de miniaturas que vai se acumulando
+const prod = document.getElementById("prod");
+PRODUTOS.forEach(([ic, txt, t0], i) => {
+  const big = document.createElement("div");
+  big.className = "el"; big.dataset.in = t0; big.dataset.a = "swap";
+  big.dataset.out = i + 1 < PRODUTOS.length ? PRODUTOS[i + 1][2] : 16.95;
+  big.style.top = "380px";
+  big.innerHTML = `<div class="card" style="padding:50px 70px 50px 56px"><svg viewBox="0 0 100 100" style="width:240px;height:240px"><use href="#${ic}"/></svg><div class="txt" style="font-size:118px">${txt}</div></div>`;
+  prod.appendChild(big);
+  const mini = document.createElement("div");
+  mini.className = "el"; mini.dataset.in = t0 + 0.15; mini.dataset.a = "pop";
+  const col = i % 4, row = Math.floor(i / 4);
+  mini.style.cssText = `top:${900 + row * 290}px;left:${70 + col * 240}px;right:auto;width:220px`;
+  mini.innerHTML = `<div style="background:#fff;border-radius:30px;padding:24px;box-shadow:0 12px 30px rgba(0,0,0,.2)"><svg viewBox="0 0 100 100" style="width:172px;height:172px"><use href="#${ic}"/></svg></div>`;
+  prod.appendChild(mini);
+});
+
+const clamp = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
+const eo = x => 1 - Math.pow(1 - x, 3);
+const back = (x, c = 1.8) => 1 + (c + 1) * Math.pow(x - 1, 3) + c * Math.pow(x - 1, 2);
+const XF = 0.28;
+
+function anim(el, t) {
+  const t0 = parseFloat(el.dataset.in), a = el.dataset.a;
+  const tout = el.dataset.out ? parseFloat(el.dataset.out) : 1e9;
+  const d = a === "pop" ? 0.36 : 0.45;
+  const p = clamp((t - t0) / d);
+  let op = a === "pop" ? clamp(p * 3) : eo(p), tf = "";
+  const pe = eo(p);
+  if (a === "rise") tf = `translateY(${(1 - pe) * 60}px)`;
+  if (a === "drop") tf = `translateY(${-(1 - pe) * 80}px)`;
+  if (a === "fade") tf = "";
+  if (a === "pop") tf = `scale(${p > 0 ? back(p) : 0.01})`;
+  if (a === "slideL") tf = `translateX(${-(1 - pe) * 1100}px)`;
+  if (a === "slideR") tf = `translateX(${(1 - pe) * 1100}px)`;
+  if (a === "swap") tf = `translateX(${(1 - pe) * 900}px) rotate(${(1 - pe) * 6}deg)`;
+  if (t > tout) {                       // saída
+    const q = eo(clamp((t - tout) / 0.25));
+    op *= 1 - q;
+    if (a === "swap") tf = `translateX(${-q * 900}px) rotate(${-q * 6}deg)`;
+    else tf += ` translateY(${-q * 40}px)`;
+  }
+  el.style.opacity = op;
+  el.style.transform = tf;
+}
+
+function render(t) {
+  const tab = document.getElementById("tab");
+  if (tab) tab.innerHTML = TABACO.cena(820, t);
+  document.querySelectorAll(".scene").forEach(s => {
+    const a = parseFloat(s.dataset.start), b = parseFloat(s.dataset.end);
+    let op = 0;
+    if (t >= a && t < b + XF) op = clamp((t - a) / XF) * (t > b ? 1 - clamp((t - b) / XF) : 1);
+    if (a === 0) op = t < b ? 1 : op;
+    s.style.opacity = op;
+    s.style.visibility = op > 0 ? "visible" : "hidden";
+    s.style.zIndex = Math.round(a * 10);
+    if (op <= 0) return;
+    s.querySelectorAll(".bg").forEach(bg => {     // Ken Burns
+      const [z0, z1] = bg.dataset.kb.split(",").map(Number);
+      const p = clamp((t - a) / (b - a + XF));
+      let f = `scale(${z0 + (z1 - z0) * p})`;
+      bg.style.transform = f;
+      if (bg.dataset.blur) {
+        const [s0, s1, v0, v1] = bg.dataset.blur.split(",").map(Number);
+        bg.style.filter = `blur(${v0 + (v1 - v0) * clamp((t - s0) / 0.6)}px) saturate(${1 - .35 * clamp((t - s0) / 0.6)})`;
+      }
+    });
+    s.querySelectorAll("[data-darken]").forEach(sh => {
+      const [s0, v0, v1] = sh.dataset.darken.split(",").map(Number);
+      sh.style.background = `rgba(13,27,42,${v0 + (v1 - v0) * clamp((t - s0) / 0.6)})`;
+    });
+    s.querySelectorAll(".el").forEach(el => anim(el, t));
+  });
+}
+window.render = render;
+render(0);
+</script>
+</body>
+</html>
