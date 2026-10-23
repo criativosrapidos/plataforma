@@ -1,0 +1,244 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<meta name="robots" content="noindex, nofollow">
+<title>JL Fitness · Mês de conteúdo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+/* Entrega para o cliente: agenda do mês no topo, depois uma faixa por tipo (anúncios → stories), landing page, identidade e pontos pra conferir. Visual único, preto e amarelo da marca JL. */
+:root{
+  --bg:#0B0B0B; --surf:#151513; --surf2:#1d1d1a; --line:#2a2a24; --fg:#F4F4EE; --mute:#A9A99C; --am:#FFE100; --on-am:#0B0B0B;
+  --display:Anton,Impact,"Arial Narrow",sans-serif; --body:Montserrat,system-ui,-apple-system,"Segoe UI",sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:15px;line-height:1.5;margin:0}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3.d{font-family:var(--display);font-weight:400;text-transform:uppercase;letter-spacing:.4px;line-height:1.02;text-wrap:balance;margin:0}
+button{font:inherit;cursor:pointer}
+button:focus-visible,a:focus-visible,summary:focus-visible,.tira:focus-visible,.lp-desk:focus-visible{outline:3px solid var(--am);outline-offset:2px}
+
+header.topo{padding-block:34px 28px;border-bottom:4px solid var(--am);background:repeating-linear-gradient(135deg,rgba(255,225,0,.05) 0 20px,transparent 20px 40px)}
+.marca{display:inline-block;background:var(--am);color:var(--on-am);font-family:var(--display);text-transform:uppercase;padding:3px 10px;transform:rotate(-2deg);font-size:14px;letter-spacing:.6px}
+.ola{margin:18px 0 6px;font-weight:700;color:var(--am);font-size:17px}
+header.topo h1{font-size:clamp(40px,7vw,78px)}
+.periodo{margin-top:10px;font-weight:600;color:var(--mute);font-size:16px}
+.resumo{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:18px;font-weight:600;color:var(--mute)}
+.resumo b{color:var(--fg);font-family:var(--display);font-weight:400;font-size:22px;margin-right:5px}
+.intro{margin-top:18px;max-width:700px;font-size:15.5px}
+
+nav.chips{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:rgba(11,11,11,.95);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+nav.chips .wrap{display:flex;gap:8px;overflow-x:auto;padding-block:10px;scrollbar-width:none}
+nav.chips a{flex:none;text-decoration:none;color:var(--fg);border:1px solid var(--line);border-radius:999px;padding:6px 14px;font-weight:600;font-size:13px;white-space:nowrap}
+nav.chips a:hover{border-color:var(--am);color:var(--am)}
+
+section{padding-block:44px 8px;scroll-margin-top:60px}
+.sec-h{display:flex;align-items:baseline;gap:14px;margin-bottom:18px;flex-wrap:wrap}
+.sec-h h2{font-size:clamp(30px,4.5vw,44px)}
+.sec-h span{color:var(--mute);font-weight:600}
+
+/* agenda */
+.cal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}
+.cal .dow{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--mute);padding:0 6px 4px}
+.dia{background:var(--surf);border:1px solid var(--line);min-height:92px;padding:6px;display:flex;flex-direction:column;gap:4px;min-width:0}
+.dia.fora{background:transparent;border-style:dashed;opacity:.45}
+.dia .dn{font-family:var(--display);font-size:17px;color:var(--mute);line-height:1}
+.dia .dn small{font-family:var(--body);font-size:10px;font-weight:700;margin-left:4px;text-transform:uppercase}
+.ev{display:flex;gap:5px;align-items:baseline;text-decoration:none;color:var(--fg);font-size:11.5px;line-height:1.25;padding:3px 5px;background:var(--surf2);border-left:3px solid var(--am);min-width:0}
+.ev:hover{background:#262622}
+.ev b{font-variant-numeric:tabular-nums;color:var(--am);flex:none}
+.ev span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.legenda-cal{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:10px;font-size:12px;color:var(--mute)}
+
+/* peças */
+.grade{display:grid;gap:18px;grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}
+.grade.largo{grid-template-columns:repeat(auto-fill,minmax(330px,1fr))}
+.grade.alto{grid-template-columns:repeat(auto-fill,minmax(210px,1fr))}
+.card{background:var(--surf);border:1px solid var(--line);display:flex;flex-direction:column;min-width:0;scroll-margin-top:70px}
+.card:target{border-color:var(--am);box-shadow:0 0 0 2px var(--am)}
+.midia{background:#000;position:relative}
+.midia img,.midia video{display:block;width:100%;height:auto;max-width:100%}
+.tira{display:flex;gap:6px;overflow-x:auto;scroll-snap-type:x mandatory;padding:6px;background:#000}
+.tira img{flex:0 0 84%;width:84%;scroll-snap-align:start}
+.par{display:grid;grid-template-columns:1.25fr 1fr;gap:6px;padding:6px;align-items:start}
+.num{position:absolute;left:8px;top:8px;background:var(--am);color:var(--on-am);font-family:var(--display);font-size:16px;padding:1px 8px}
+.dica-slides{position:absolute;right:8px;bottom:10px;background:rgba(11,11,11,.8);color:var(--fg);font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px}
+.corpo{padding:14px 14px 16px;display:flex;flex-direction:column;gap:8px;flex:1}
+.meta{display:flex;flex-wrap:wrap;gap:6px;font-size:12px;font-weight:700;color:var(--mute);text-transform:uppercase;letter-spacing:.5px}
+.meta .tag{background:var(--am);color:var(--on-am);padding:1px 7px}
+.meta .bonus{border:1px solid var(--am);color:var(--am);padding:0 6px}
+.corpo h3{margin:0;font-size:17px;line-height:1.3}
+.para{font-size:13px;color:var(--mute)}
+.ig{font-size:13px;background:var(--surf2);padding:8px 10px;border-left:3px solid var(--am)}
+details{border-top:1px solid var(--line);padding-top:8px}
+summary{cursor:pointer;font-weight:700;font-size:13px;color:var(--am)}
+.leg{white-space:pre-wrap;font-family:var(--body);font-size:13.5px;margin:8px 0 0;max-width:65ch}
+.acoes{display:flex;flex-wrap:wrap;gap:8px;margin-top:auto;padding-top:6px}
+.bt{border:0;border-radius:999px;padding:8px 14px;font-weight:700;font-size:13px;background:var(--am);color:var(--on-am)}
+.bt.sec{background:transparent;color:var(--fg);border:1px solid var(--line)}
+.bt.sec:hover{border-color:var(--am)}
+.bt[disabled]{opacity:.5;cursor:default}
+
+/* landing */
+.lp{display:grid;grid-template-columns:minmax(0,2.2fr) minmax(0,1fr);gap:22px;align-items:start}
+.lp figure{margin:0;display:flex;flex-direction:column;gap:8px}
+.lp figcaption{font-size:13px;color:var(--mute);font-weight:600}
+.lp-desk{max-height:560px;overflow-y:auto;border:1px solid var(--line);background:#000}
+.lp-desk img,.lp-cel img{display:block;width:100%;height:auto}
+.lp-cel{border:8px solid #222;border-radius:26px;overflow:hidden;max-width:300px}
+.lp-txt{max-width:720px;margin-bottom:18px}
+
+/* identidade */
+.cores{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:16px}
+.cor{display:flex;align-items:center;gap:10px;background:var(--surf);border:1px solid var(--line);padding:8px 14px 8px 8px;font-weight:700;font-size:13px}
+.cor i{width:34px;height:34px;display:block;border:1px solid var(--line)}
+.id-grade{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(170px,1fr))}
+.id-card{background:repeating-conic-gradient(#1d1d1a 0 25%,#262622 0 50%) 0 0/18px 18px;border:1px solid var(--line);display:flex;flex-direction:column}
+.id-card img{width:100%;aspect-ratio:1/1;object-fit:contain;padding:10px}
+.id-card .corpo{background:var(--surf)}
+
+/* conferir */
+.conferir{counter-reset:c;list-style:none;margin:0;padding:0;display:grid;gap:12px;max-width:820px}
+.conferir li{counter-increment:c;display:grid;grid-template-columns:38px 1fr;gap:14px;align-items:start;background:var(--surf);border:1px solid var(--line);padding:14px}
+.conferir li::before{content:counter(c);background:var(--am);color:var(--on-am);font-family:var(--display);font-size:18px;display:grid;place-items:center;height:34px}
+.tudo{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px;margin-top:22px;border:2px solid var(--am);padding:18px;max-width:820px}
+.tudo strong{display:block;font-size:16px}
+.tudo small{color:var(--mute)}
+footer{padding-block:44px 64px;color:var(--mute);font-size:13px}
+.toast{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--am);color:var(--on-am);font-weight:700;padding:10px 18px;border-radius:999px;z-index:20}
+
+@media (max-width:760px){
+  .cal{grid-template-columns:1fr}
+  .cal .dow,.dia.fora,.dia.vazio{display:none}
+  .dia{min-height:0;flex-direction:row;flex-wrap:wrap;align-items:center}
+  .dia .dn{width:100%}
+  .lp{grid-template-columns:1fr}
+}
+@media (max-width:520px){.par{grid-template-columns:1fr}.grade.alto{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+
+<header class="topo">
+  <div class="wrap">
+    <span class="marca">Criativos Rápidos</span>
+    <p class="ola">Olá, Lucas!</p>
+    <h1>Seu mês de conteúdo</h1>
+    <p class="periodo">JL Fitness · Plano Presença · 26 de outubro a 21 de novembro de 2026</p>
+    <div class="resumo" id="resumo"></div>
+    <p class="intro">Aqui está tudo o que preparamos para o Instagram da JL, na ordem em que vai ao ar. Cada peça tem um número: se quiser mudar alguma coisa, é só falar o número e o que ajustar.</p>
+  </div>
+</header>
+<nav class="chips" aria-label="Seções"><div class="wrap" id="chips"></div></nav>
+<main class="wrap" id="conteudo"></main>
+<footer class="wrap">Feito com carinho pela Criativos Rápidos para a JL Fitness Assessoria Esportiva. Bora se movimentar!</footer>
+<div class="toast" id="toast" hidden></div>
+
+<script src="jszip.min.js"></script>
+<script>
+const D = {"formato":"criativos-rapidos/entrega@1","agencia":"Criativos Rápidos","cliente":{"nome":"JL Fitness","razao":"Prestes Assessoria Esportiva","instagram":"@jlfitnessassessoriaesportiva","whatsapp":"(61) 98345-9494"},"plano":"Presença","periodo":{"inicio":"2026-10-26","fim":"2026-11-21"},"ordem_tipos":["anuncio","carrossel","post","reels","stories"],"hashtags":"#jlfitness #assessoriaesportiva #condominio #qualidadedevida #aguasclaras #brasilia #aulasemgrupo #boraSeMovimentar","pecas":[{"ordem":1,"n":"01","tipo":"anuncio","tipo_label":"Anúncio","titulo":"Academia do prédio vazia?","para_quem":"Síndicos e gestores de condomínio","data":"2026-10-27","hora":"08:00","bonus":false,"legenda":"Academia do prédio vazia e esteira virando cabide? 😅\n\nA JL Fitness leva aulas em grupo com professor pra dentro do seu condomínio: funcional, pilates, dança, hidroginástica, natação, lutas e muito mais.\n\nQualidade de vida pro seu residencial, sem ninguém sair de casa. Toque em Chamar no WhatsApp e peça uma proposta.\n\n#jlfitness #assessoriaesportiva #condominio #qualidadedevida #aguasclaras #brasilia #aulasemgrupo #boraSeMovimentar","dica":null,"arquivos":[{"url":"p/01-feed.jpg","nome":"01 - Anuncio - Academia do predio vazia - feed 4x5.jpg","pasta":"01 Anuncios","formato":"4:5","mime":"image/jpeg","slide":null},{"url":"p/01-story.jpg","nome":"01 - Anuncio - Academia do predio vazia - stories 9x16.jpg","pasta":"01 Anuncios","formato":"9:16","mime":"image/jpeg","slide":null}]},{"ordem":2,"n":"02","tipo":"anuncio","tipo_label":"Anúncio","titulo":"Qualidade de vida sem sair do residencial","para_quem":"Moradores de condomínio","data":"2026-11-10","hora":"08:00","bonus":false,"legenda":"Já pensou treinar com professor sem sair do condomínio? 💛\n\nA JL Fitness leva aulas em grupo pro seu residencial: tem pra criança, pra adulto e pra melhor idade. É só descer e treinar com os vizinhos.\n\nMostre pro seu síndico e chame a gente no WhatsApp.\n\n#jlfitness #assessoriaesportiva #condominio #qualidadedevida #aguasclaras #brasilia #aulasemgrupo #boraSeMovimentar","dica":null,"arquivos":[{"url":"p/02-feed.jpg","nome":"02 - Anuncio - Qualidade de vida sem sair do residencial - feed 4x5.jpg","pasta":"01 Anuncios","formato":"4:5","mime":"image/jpeg","slide":null},{"url":"p/02-story.jpg","nome":"02 - Anuncio - Qualidade de vida sem sair do residencial - stories 9x16.jpg","pasta":"01 Anuncios","formato":"9:16","mime":"image/jpeg","slide":null}]},{"ordem":3,"n":"03","tipo":"carrossel","tipo_label":"Carrossel","titulo":"5 motivos pra treinar no seu condomínio","para_quem":null,"data":"2026-10-26","hora":"12:00","bonus":false,"legenda":"5 motivos pra treinar no seu condomínio: 🏢\n\n1. Zero trânsito\n2. Horário perto de casa\n3. Professor do seu lado\n4. Turma dos vizinhos\n5. Economia de tempo e dinheiro\n\nSalva e manda pro seu síndico! Pra levar a JL pro seu prédio, chama no WhatsApp.\n\n#jlfitness #assessoriaesportiva #condominio #qualidadedevida #aguasclaras #brasilia #aulasemgrupo #boraSeMovimentar","dica":null,"arquivos":[{"url":"p/03-1.jpg","nome":"slide-1.jpg","pasta":"02 Carrosseis/03 - Carrossel - 5 motivos pra treinar no seu condominio","formato":"4:5","mime":"image/jpeg","slide":1},{"url":"p/03-2.jpg","nome":"slide-2.jpg","pasta":"02 Carrosseis/03 - Carrossel - 5 motivos pra treinar no seu condominio","formato":"4:5","mime":"image/jpeg","slide":2},{"url":"p/03-3.jpg","nome":"slide-3.jpg","pasta":"02 Carrosseis/03 - Carrossel - 5 motivos pra treinar no seu condominio","formato":"4:5","mime":"image/jpeg","slide":3},{"url":"p/03-4.jpg","nome":"slide-4.jpg","pasta":"02 Carrosseis/03 - Carrossel - 5 motivos pra treinar no seu condominio","formato":"4:5","mime":"image/jpeg","slide":4},{"url":"p/03-5.jpg","nome":"slide-5.jpg","pasta":"02 Carrosseis/03 - Carrossel - 5 motivos pra treinar no seu condominio","formato":"4:5","mime":"image/jpeg","slide":5}]},{"ordem":4,"n":"04","tipo":"carrossel","tipo_label":"Carrossel","titulo":"Síndico: como levar aulas pro seu prédio","para_quem":null,"data":"2026-10-30","hora":"12:00","bonus":false,"legenda":"Síndico, levar aulas pro condomínio é mais simples do que parece: 📋\n\n1. Chame a JL no WhatsApp\n2. A gente visita o espaço\n3. Você recebe uma proposta sob medida\n4. Apresenta aos moradores com a nossa ajuda\n5. Começam as aulas!\n\nQualidade de vida pro seu residencial. Chama a gente!\n\n#jlfitness #assessoriaesportiva #condominio #qualidadedevida #aguasclaras #brasilia #aulasemgrupo #boraSeMovimentar","dica":null,"arquivos":[{"url":"p/04-1.jpg","nome":"slide-1.jpg","pasta":"02 Carrosseis/04 - Carrossel - Sindico como levar aulas pro seu predio","formato":"4:5","mime":"image/jpeg","slide":1},{"url":"p/04-2.jpg","nome":"slide-2.jpg","pasta":"02 Carrosseis/04 - Carrossel - Sindico como levar aulas pro seu predio","formato":"4:5","mime":"image/jpeg","slide":2},{"url":"p/04-3.jpg","nome":"slide-3.jpg","pasta":"02 Carrosseis/04 - Carrossel - Sindico como levar aulas pro seu predio","formato":"4:5","mime":"image/jpeg","slide":3},{"url":"p/04-4.jpg","nome":"slide-4.jpg","pasta":"02 Carrosseis/04 - Carrossel - Sindico como levar aulas pro seu predio","formato":"4:5","mime":"image/jpeg","slide":4},{"url":"p/04-5.jpg","nome":"slide-5.jpg","pasta":"02 Carrosseis/04 - Carrossel - Sindico como levar aulas pro seu predio","formato":"4:5","mime":"image/jpeg","slide":5}]},{"ordem":5,"n":"05","tipo":"carrossel","tipo_label":"Carrossel","titulo":"Perguntas que todo síndico faz","para_quem":null,"data":"2026-11-03","hora":"12:00","bonus":false,"legenda":"As perguntas que todo síndico faz antes de levar aulas pro condomínio: 🤔\n\n• Todos os moradores têm que pagar?\n• Precisa ter academia no prédio?\n• Quem dá as aulas?\n\nArrasta pra ver as respostas. Ficou alguma dúvida? Chama a gente no WhatsApp.\n\n#jlfitness #assessoriaesportiva #condominio #qualidadedevida #aguasclaras #brasilia #aulasemgrupo #boraSeMovimentar","dica":null,"arquivos":[{"url":"p/05-1.jpg","nome":"slide-1.jpg","pasta":"02 Carrosseis/05 - Carrossel - Perguntas que todo sindico faz","formato":"4:5","mime":"image/jpeg","slide":1},{"url":"p/05-2.jpg","nome":"slide-2.jpg","pasta":"02 Carrosseis/05 - Carrossel - Perguntas que todo sindico faz","formato":"4:5","mime":"image/jpeg","slide":2},{"url":"p/05-3.jpg","nome":"slide-3.jpg","pasta":"02 Carrosseis/05 - Carrossel - Perguntas que todo sindico faz","formato":"4:5","mime":"image/jpeg","slide":3},{"url":"p/05-4.jpg","nome":"slide-4.jpg","pasta":"02 Carrosseis/05 - Carrossel - Perguntas que todo sindico faz","formato":"4:5","mime":"image/jpeg","slide":4},{"url":"p/05-5.jpg","nome":"slide-5.jpg","pasta":"02 Carrosseis/05 - Carrossel - Perguntas que todo sindico faz","formato":"4:5","mime":"image/jpeg","slide":5}]},{"ordem":6,"n":"06","tipo":"carrossel","tipo_label":"Carrossel","titulo":"Nossas modalidades","para_quem":null,"data":"2026-11-07","hora":"12:00","bonus":false,"legenda":"Tem aula pra todo mundo do condomínio: 💪\n\nFuncional adulto, funcional kids, pilates, natação, hidroginástica, lutas, dança, alongamento e muito mais.\n\nQual aula o seu prédio quer? Comenta aqui ou chama no WhatsApp.\n\n#jlfitness #assessoriaesportiva #condominio #qualidadedevida #aguasclaras #brasilia #aulasemgrupo #boraSeMovimentar","dica":null,"arquivos":[{"url":"p/06-1.jpg","nome":"slide-1.jpg","pasta":"02 Carrosseis/06 - Carrossel - Nossas modalidades","formato":"4:5","mime":"image/jpeg","slide":1},{"url":"p/06-2.jpg","nome":"slide-2.jpg","pasta":"02 Carrosseis/06 - Carrossel - Nossas modalidades","formato":"4:5","mime":"image/jpeg","slide":2},{"url":"p/06-3.jpg","nome":"slide-3.jpg","pasta":"02 Carrosseis/06 - Carrossel - Nossas modalidades","formato":"4:5","mime":"image/jpeg","slide":3},{"url":"p/06-4.jpg","nome":"slide-4.jpg","pasta":"02 Carrosseis/06 - Carrossel - Nossas modalidades","formato":"4:5","mime":"image/jpeg","slide":4},{"url":"p/06-5.jpg","nome":"slide-5.jpg","pasta":"02 Carrosseis/06 - Carrossel - Nossas modalidades","formato":"4:5","mime":"image/jpeg","slide":5}]},{"ordem":7,"n":"07","tipo":"carrossel","tipo_label":"Carrossel","titulo":"Clubes e empresas","para_quem":null,"data":"2026-11-11","hora":"12:00","bonus":false,"legenda":"A JL Fitness também leva aulas em grupo pra clubes e empresas. 🏆\n\nGrade organizada, professores qualificados e aulas no espaço que vocês já têm. Mais qualidade de vida pra associados e colaboradores.\n\nVamos montar a sua grade? Chama no WhatsApp.\n\n#jlfitness #assessoriaesportiva #condominio #qualidadedevida #aguasclaras #brasilia #aulasemgrupo #boraSeMovimentar","dica":null,"arquivos":[{"url":"p/07-1.jpg","nome":"slide-1.jpg","pasta":"02 Carrosseis/07 - Carrossel - Clubes e empresas","formato":"4:5","mime":"image/jpeg","slide":1},{"url":"p/07-2.jpg","nome":"slide-2.jpg","pasta":"02 Carrosseis/07 - Carrossel - Clubes e empresas","formato":"4:5","mime":"image/jpeg","slide":2},{"url":"p/07-3.jpg","nome":"slide-3.jpg","pasta":"02 Carrosseis/07 - Carrossel - Clubes e empresas","formato":"4:5","mime":"image/jpeg","slide":3},{"url":"p/07-4.jpg","nome":"slide-4.jpg","pasta":"02 Carrosseis/07 - Carrossel - Clubes e empresas","formato":"4:5","mime":"image/jpeg","slide":4},{"url":"p/07-5.jpg","nome":"slide-5.jpg","pasta":"02 Carrosseis/07 - Carrossel - Clubes e empresas","formato":"4:5","mime":"image/jpeg","slide":5}]},{"ordem":8,"n":"08","tipo":"carrossel","tipo_label":"Carrossel","titulo":"Pra todas as idades","para_quem":null,"data":"2026-11-17","hora":"12:00","bonus":false,"legenda":"Do play à melhor idade: na JL Fitness tem aula pra família toda. 👨‍👩‍👧‍👦\n\nCrianças, adultos e melhor idade, cada um no seu ritmo e sem sair do condomínio.\n\nBora se movimentar? Chama no WhatsApp.\n\n#jlfitness #assessoriaesportiva #condominio #qualidadedevida #aguasclaras #brasilia #aulasemgrupo #boraSeMovimentar","dica":null,"arquivos":[{"url":"p/08-1.jpg","nome":"slide-1.jpg","pasta":"02 Carrosseis/08 - Carrossel - Pra todas as idades","formato":"4:5","mime":"image/jpeg","slide":1},{"url":"p/08-2.jpg","nome":"slide-2.jpg","pasta":"02 Carrosseis/08 - Carrossel - Pra todas as idades","formato":"4:5","mime":"image/jpeg","slide":2},{"url":"p/08-3.jpg","nome":"slide-3.jpg","pasta":"02 Carrosseis/08 - Carrossel - Pra todas as idades","formato":"4:5","mime":"image/jpeg","slide":3},{"url":"p/08-4.jpg","nome":"slide-4.jpg","pasta":"02 Carrosseis/08 - Carrossel - Pra todas as idades","formato":"4:5","mime":"image/jpeg","slide":4},{"url":"p/08-5.jpg","nome":"slide-5.jpg","pasta":"02 Carrosseis/08 - Carrossel - Pra todas as idades","formato":"4:5","mime":"image/jpeg","slide":5}]},{"ordem":9,"n":"09","tipo":"carrossel","tipo_label":"Carrossel","titulo":"Mitos e verdades da aula no condomínio","para_quem":null,"data":"2026-11-15","hora":"12:00","bonus":true,"legenda":"Aula no condomínio: mito ou verdade? 🤔\n\n❌ Precisa ter academia no prédio\n❌ É só pra quem já treina\n✅ Treinar com os vizinhos motiva mais\n\nArrasta e conta pra gente: qual você achava que era verdade? Chama no WhatsApp.\n\n#jlfitness #assessoriaesportiva #condominio #qualidadedevida #aguasclaras #brasilia #aulasemgrupo #boraSeMovimentar","dica":null,"arquivos":[{"url":"p/09-1.jpg","nome":"slide-1.jpg","pasta":"02 Carrosseis/09 - Carrossel - Mitos e verdades da aula no condominio","formato":"4:5","mime":"image/jpeg","slide":1},{"url":"p/09-2.jpg","nome":"slide-2.jpg","pasta":"02 Carrosseis/09 - Carrossel - Mitos e verdades da aula no condominio","formato":"4:5","mime":"image/jpeg","slide":2},{"url":"p/09-3.jpg","nome":"slide-3.jpg","pasta":"02 Carrosseis/09 - Carrossel - Mitos e verdades da aula no condominio","formato":"4:5","mime":"image/jpeg","slide":3},{"url":"p/09-4.jpg","nome":"slide-4.jpg","pasta":"02 Carrosseis/09 - Carrossel - Mitos e verdades da aula no condominio","formato":"4:5","mime":"image/jpeg","slide":4},{"url":"p/09-5.jpg","nome":"slide-5.jpg","pasta":"02 Carrosseis/09 - Carrossel - Mitos e verdades da aula no condominio","formato":"4:5","mime":"image/jpeg","slide":5}]},{"ordem":10,"n":"10","tipo":"carrossel","tipo_label":"Carrossel","titulo":"Por que contratar uma assessoria esportiva","para_quem":null,"data":"2026-11-21","hora":"12:00","bonus":true,"legenda":"Por que contratar uma assessoria esportiva pro condomínio? 🏢\n\n1. Professores qualificados\n2. Grade organizada\n3. Menos trabalho pro síndico\n4. Moradores mais ativos\n\nA JL Fitness cuida de tudo com qualidade na prestação de serviço. Chama no WhatsApp!\n\n#jlfitness #assessoriaesportiva #condominio #qualidadedevida #aguasclaras #brasilia #aulasemgrupo #boraSeMovimentar","dica":null,"arquivos":[{"url":"p/10-1.jpg","nome":"slide-1.jpg","pasta":"02 Carrosseis/10 - Carrossel - Por que contratar uma assessoria esportiva","formato":"4:5","mime":"image/jpeg","slide":1},{"url":"p/10-2.jpg","nome":"slide-2.jpg","pasta":"02 Carrosseis/10 - Carrossel - Por que contratar uma assessoria esportiva","formato":"4:5","mime":"image/jpeg","slide":2},{"url":"p/10-3.jpg","nome":"slide-3.jpg","pasta":"02 Carrosseis/10 - Carrossel - Por que contratar uma assessoria esportiva","formato":"4:5","mime":"image/jpeg","slide":3},{"url":"p/10-4.jpg","nome":"slide-4.jpg","pasta":"02 Carrosseis/10 - Carrossel - Por que contratar uma assessoria esportiva","formato":"4:5","mime":"image/jpeg","slide":4},{"url":"p/10-5.jpg","nome":"slide-5.jpg","pasta":"02 Carrosseis/10 - Carrossel - Por que contratar uma assessoria esportiva","formato":"4:5","mime":"image/jpeg","slide":5}]},{"ordem":11,"n":"11","tipo":"post","tipo_label":"Post","titulo":"Academia do prédio vazia? A gente resolve.","para_quem":null,"data":"2026-10-27","hora":"18:00","bonus":false,"legenda":"Academia do prédio vazia? A gente resolve. 💪\n\nAula em grupo com professor, no espaço que o condomínio já tem.\n\nChama no WhatsApp e leve a JL pro seu prédio.\n\n#jlfitness #assessoriaesportiva #condominio #qualidadedevida #aguasclaras #brasilia #aulasemgrupo #boraSeMovimentar","dica":null,"arquivos":[{"url":"p/11.jpg","nome":"11 - Post - Academia do predio vazia A gente resolve.jpg","pasta":"03 Posts","formato":"4:5","mime":"image/jpeg","slide":null}]},{"ordem":12,"n":"12","tipo":"post","tipo_label":"Post","titulo":"Professor do seu lado","para_quem":null,"data":"2026-10-29","hora":"18:00","bonus":false,"legenda":"Professor do seu lado, sem sair do condomínio. 🙌\n\nNas aulas da JL cada aluno recebe atenção, do iniciante ao mais experiente.\n\nQuer no seu prédio? Chama no WhatsApp.\n\n#jlfitness #assessoriaesportiva #condominio #qualidadedevida #aguasclaras #brasilia #aulasemgrupo #boraSeMovimentar","dica":null,"arquivos":[{"url":"p/12.jpg","nome":"12 - Post - Professor do seu lado.jpg","pasta":"03 Posts","formato":"4:5","mime":"image/jpeg","slide":null}]},{"ordem":13,"n":"13","tipo":"post","tipo_label":"Post","titulo":"Qualidade de vida pro seu residencial","para_quem":null,"data":"2026-10-31","hora":"18:00","bonus":false,"legenda":"Qualidade de vida pro seu residencial. 💛\n\nÉ isso que a gente leva pra cada condomínio: aula boa, perto de casa e com a turma dos vizinhos.\n\nChama no WhatsApp.\n\n#jlfitness #assessoriaesportiva #condominio #qualidadedevida #aguasclaras #brasilia #aulasemgrupo #boraSeMovimentar","dica":null,"arquivos":[{"url":"p/13.jpg","nome":"13 - Post - Qualidade de vida pro seu residencial.jpg","pasta":"03 Posts","formato":"4:5","mime":"image/jpeg","slide":null}]},{"ordem":14,"n":"14","tipo":"post","tipo_label":"Post","titulo":"Pilates no condomínio","para_quem":null,"data":"2026-11-04","hora":"18:00","bonus":false,"legenda":"Pilates no condomínio? Tem sim! 🧘\n\nPostura, força e flexibilidade, com professor e sem sair de casa.\n\nQuer essa aula no seu prédio? Chama no WhatsApp.\n\n#jlfitness #assessoriaesportiva #condominio #qualidadedevida #aguasclaras #brasilia #aulasemgrupo #boraSeMovimentar","dica":null,"arquivos":[{"url":"p/14.jpg","nome":"14 - Post - Pilates no condominio.jpg","pasta":"03 Posts","formato":"4:5","mime":"image/jpeg","slide":null}]},{"ordem":15,"n":"15","tipo":"post","tipo_label":"Post","titulo":"Pra todas as idades","para_quem":null,"data":"2026-11-06","hora":"18:00","bonus":false,"legenda":"Pra todas as idades. 💛\n\nNa turma da JL tem lugar pra todo mundo, e o melhor: todo mundo se diverte.\n\nChama no WhatsApp.\n\n#jlfitness #assessoriaesportiva #condominio #qualidadedevida #aguasclaras #brasilia #aulasemgrupo #boraSeMovimentar","dica":null,"arquivos":[{"url":"p/15.jpg","nome":"15 - Post - Pra todas as idades.jpg","pasta":"03 Posts","formato":"4:5","mime":"image/jpeg","slide":null}]},{"ordem":16,"n":"16","tipo":"post","tipo_label":"Post","titulo":"Funcional kids no play","para_quem":null,"data":"2026-11-10","hora":"18:00","bonus":false,"legenda":"Funcional kids no play do prédio. 🧒\n\nCriança gastando energia com orientação de professor, pertinho de casa.\n\nQuer no seu condomínio? Chama no WhatsApp.\n\n#jlfitness #assessoriaesportiva #condominio #qualidadedevida #aguasclaras #brasilia #aulasemgrupo #boraSeMovimentar","dica":null,"arquivos":[{"url":"p/16.jpg","nome":"16 - Post - Funcional kids no play.jpg","pasta":"03 Posts","formato":"4:5","mime":"image/jpeg","slide":null}]},{"ordem":17,"n":"17","tipo":"post","tipo_label":"Post","titulo":"Aula na quadra","para_quem":null,"data":"2026-11-12","hora":"18:00","bonus":false,"legenda":"A quadra do prédio virou aula! 🏐\n\nA gente aproveita o espaço que o condomínio já tem: quadra, salão, piscina ou área comum.\n\nChama no WhatsApp.\n\n#jlfitness #assessoriaesportiva #condominio #qualidadedevida #aguasclaras #brasilia #aulasemgrupo #boraSeMovimentar","dica":null,"arquivos":[{"url":"p/17.jpg","nome":"17 - Post - Aula na quadra.jpg","pasta":"03 Posts","formato":"4:5","mime":"image/jpeg","slide":null}]},{"ordem":18,"n":"18","tipo":"post","tipo_label":"Post","titulo":"Hidroginástica e natação","para_quem":null,"data":"2026-11-14","hora":"18:00","bonus":false,"legenda":"A piscina do prédio pode ser muito mais que lazer. 🏊\n\nHidroginástica e natação com professor da JL, pra criança, adulto e melhor idade.\n\nChama no WhatsApp.\n\n#jlfitness #assessoriaesportiva #condominio #qualidadedevida #aguasclaras #brasilia #aulasemgrupo #boraSeMovimentar","dica":null,"arquivos":[{"url":"p/18.jpg","nome":"18 - Post - Hidroginastica e natacao.jpg","pasta":"03 Posts","formato":"4:5","mime":"image/jpeg","slide":null}]},{"ordem":19,"n":"19","tipo":"post","tipo_label":"Post","titulo":"Bora se movimentar! Peça uma proposta","para_quem":null,"data":"2026-11-19","hora":"18:00","bonus":false,"legenda":"Bora se movimentar? 💪\n\nLeve a JL Fitness pro seu condomínio, clube ou empresa. A gente monta a proposta com as modalidades e os horários certos pro seu espaço.\n\nChama no WhatsApp: (61) 98345-9494.\n\n#jlfitness #assessoriaesportiva #condominio #qualidadedevida #aguasclaras #brasilia #aulasemgrupo #boraSeMovimentar","dica":null,"arquivos":[{"url":"p/19.jpg","nome":"19 - Post - Bora se movimentar Peca uma proposta.jpg","pasta":"03 Posts","formato":"4:5","mime":"image/jpeg","slide":null}]},{"ordem":20,"n":"20","tipo":"reels","tipo_label":"Reels","titulo":"Academia do prédio vazia?","para_quem":null,"data":"2026-10-28","hora":"19:00","bonus":false,"legenda":"Academia do prédio vazia? A gente resolve. 💪\n\nAula em grupo com professor, no espaço que o condomínio já tem: funcional, pilates, dança, hidroginástica e mais.\n\nMostra esse vídeo pro seu síndico!\n\n#jlfitness #assessoriaesportiva #condominio #qualidadedevida #aguasclaras #brasilia #aulasemgrupo #boraSeMovimentar","dica":null,"arquivos":[{"url":"p/20.mp4","nome":"20 - Reels - Academia do predio vazia.mp4","pasta":"04 Reels","formato":"9:16","mime":"video/mp4","slide":null}]},{"ordem":21,"n":"21","tipo":"reels","tipo_label":"Reels","titulo":"Aulas pra família toda","para_quem":null,"data":"2026-11-05","hora":"19:00","bonus":false,"legenda":"Aula pra família toda, sem sair do condomínio. 💛\n\nDa melhor idade às crianças, cada um no seu ritmo e com professor do lado.\n\nQuer no seu prédio? Chama no WhatsApp.\n\n#jlfitness #assessoriaesportiva #condominio #qualidadedevida #aguasclaras #brasilia #aulasemgrupo #boraSeMovimentar","dica":null,"arquivos":[{"url":"p/21.mp4","nome":"21 - Reels - Aulas pra familia toda.mp4","pasta":"04 Reels","formato":"9:16","mime":"video/mp4","slide":null}]},{"ordem":22,"n":"22","tipo":"reels","tipo_label":"Reels","titulo":"Síndico, mostra esse vídeo","para_quem":null,"data":"2026-11-13","hora":"19:00","bonus":false,"legenda":"Síndico, essa é pra você. 📋\n\nAula em grupo no condomínio valoriza o residencial, integra os moradores e aproveita o espaço que vocês já têm. A JL cuida de tudo e monta uma proposta sob medida.\n\nChama no WhatsApp!\n\n#jlfitness #assessoriaesportiva #condominio #qualidadedevida #aguasclaras #brasilia #aulasemgrupo #boraSeMovimentar","dica":null,"arquivos":[{"url":"p/22.mp4","nome":"22 - Reels - Sindico, mostra esse video.mp4","pasta":"04 Reels","formato":"9:16","mime":"video/mp4","slide":null}]},{"ordem":23,"n":"23","tipo":"stories","tipo_label":"Stories","titulo":"Enquete: seu condomínio tem academia?","para_quem":null,"data":"2026-10-26","hora":"10:00","bonus":false,"legenda":"","dica":"Enquete: Tem e é usada / Tem e vive vazia / Não tem","arquivos":[{"url":"p/23.jpg","nome":"23 - Stories - Enquete seu condominio tem academia.jpg","pasta":"05 Stories","formato":"9:16","mime":"image/jpeg","slide":null}]},{"ordem":24,"n":"24","tipo":"stories","tipo_label":"Stories","titulo":"Novo no feed: 5 motivos","para_quem":null,"data":"2026-10-28","hora":"10:00","bonus":false,"legenda":"","dica":"Compartilhe o carrossel dos 5 motivos por cima da arte.","arquivos":[{"url":"p/24.jpg","nome":"24 - Stories - Novo no feed 5 motivos.jpg","pasta":"05 Stories","formato":"9:16","mime":"image/jpeg","slide":null}]},{"ordem":25,"n":"25","tipo":"stories","tipo_label":"Stories","titulo":"Caixinha: qual aula você quer?","para_quem":null,"data":"2026-10-30","hora":"10:00","bonus":false,"legenda":"","dica":"Caixinha de perguntas: qual aula você quer no seu prédio?","arquivos":[{"url":"p/25.jpg","nome":"25 - Stories - Caixinha qual aula voce quer.jpg","pasta":"05 Stories","formato":"9:16","mime":"image/jpeg","slide":null}]},{"ordem":26,"n":"26","tipo":"stories","tipo_label":"Stories","titulo":"Bastidores: turma do condomínio","para_quem":null,"data":"2026-11-04","hora":"10:00","bonus":false,"legenda":"","dica":"Bastidores da turma do condomínio.","arquivos":[{"url":"p/26.jpg","nome":"26 - Stories - Bastidores turma do condominio.jpg","pasta":"05 Stories","formato":"9:16","mime":"image/jpeg","slide":null}]},{"ordem":27,"n":"27","tipo":"stories","tipo_label":"Stories","titulo":"Enquete: você treinaria no condomínio?","para_quem":null,"data":"2026-11-06","hora":"10:00","bonus":false,"legenda":"","dica":"Enquete: Com certeza / Talvez","arquivos":[{"url":"p/27.jpg","nome":"27 - Stories - Enquete voce treinaria no condominio.jpg","pasta":"05 Stories","formato":"9:16","mime":"image/jpeg","slide":null}]},{"ordem":28,"n":"28","tipo":"stories","tipo_label":"Stories","titulo":"Fale com a gente","para_quem":null,"data":"2026-11-10","hora":"10:00","bonus":false,"legenda":"","dica":"Sticker de link: wa.me/5561983459494","arquivos":[{"url":"p/28.jpg","nome":"28 - Stories - Fale com a gente.jpg","pasta":"05 Stories","formato":"9:16","mime":"image/jpeg","slide":null}]},{"ordem":29,"n":"29","tipo":"stories","tipo_label":"Stories","titulo":"Quiz: quantas modalidades?","para_quem":null,"data":"2026-11-12","hora":"10:00","bonus":false,"legenda":"","dica":"Quiz: 3 / 5 / 8 ou mais (certa)","arquivos":[{"url":"p/29.jpg","nome":"29 - Stories - Quiz quantas modalidades.jpg","pasta":"05 Stories","formato":"9:16","mime":"image/jpeg","slide":null}]},{"ordem":30,"n":"30","tipo":"stories","tipo_label":"Stories","titulo":"Pra todas as idades","para_quem":null,"data":"2026-11-14","hora":"10:00","bonus":false,"legenda":"","dica":"Foto da turma pra todas as idades.","arquivos":[{"url":"p/30.jpg","nome":"30 - Stories - Pra todas as idades.jpg","pasta":"05 Stories","formato":"9:16","mime":"image/jpeg","slide":null}]},{"ordem":31,"n":"31","tipo":"stories","tipo_label":"Stories","titulo":"Caixinha: dúvidas de síndico","para_quem":null,"data":"2026-11-18","hora":"10:00","bonus":false,"legenda":"","dica":"Caixinha de perguntas: dúvidas de síndico.","arquivos":[{"url":"p/31.jpg","nome":"31 - Stories - Caixinha duvidas de sindico.jpg","pasta":"05 Stories","formato":"9:16","mime":"image/jpeg","slide":null}]},{"ordem":32,"n":"32","tipo":"stories","tipo_label":"Stories","titulo":"Bora se movimentar!","para_quem":null,"data":"2026-11-21","hora":"10:00","bonus":false,"legenda":"","dica":"Sticker de link: wa.me/5561983459494","arquivos":[{"url":"p/32.jpg","nome":"32 - Stories - Bora se movimentar.jpg","pasta":"05 Stories","formato":"9:16","mime":"image/jpeg","slide":null}]}],"identidade":{"cores":["#FFE100","#0B0B0B","#FFFFFF"],"fontes":["Anton","Montserrat"],"slogan":"Bora se movimentar!","arquivos":[{"nome":"Icone amarelo.png","url":"id/01.png"},{"nome":"Icone preto.png","url":"id/02.png"},{"nome":"Identidade visual JL Fitness.png","url":"id/03.png"},{"nome":"Logo principal.png","url":"id/04.png"},{"nome":"Selo perfil.png","url":"id/05.png"},{"nome":"Silhueta amarela (transparente).png","url":"id/06.png"},{"nome":"Silhueta preta (transparente).png","url":"id/07.png"}]},"landing":{"desktop":"lp/desktop.jpg","celular":"lp/celular.jpg","whatsapp_link":"https://wa.me/5561983459494"},"conferir":["A pergunta \"Todos os moradores têm que pagar?\" foi respondida assim: \"Depende do formato que o condomínio escolher. Na proposta, a JL apresenta as opções de contratação e ajuda o síndico a levar pra assembleia.\" Se a regra de vocês for outra, avisa que a gente ajusta.","Os preços não aparecem em nenhuma peça. O valor fica para a conversa no WhatsApp.","As fotos vieram do Instagram e estão em resolução baixa. Se puder, manda as fotos originais das aulas que a gente troca e as artes ficam ainda mais nítidas."]};
+const SECOES = [
+  {tipo:"anuncio", id:"anuncios", nome:"Anúncios", cls:"largo", txt:"Para impulsionar no Instagram. Cada um vem no formato do feed e dos stories."},
+  {tipo:"carrossel", id:"carrosseis", nome:"Carrosséis", cls:"", txt:"Arraste as imagens para o lado para ver os 5 slides."},
+  {tipo:"post", id:"posts", nome:"Posts", cls:"", txt:""},
+  {tipo:"reels", id:"reels", nome:"Reels", cls:"alto", txt:"Vídeos com narração. Toque no play para assistir com som."},
+  {tipo:"stories", id:"stories", nome:"Stories", cls:"alto", txt:"O espaço tracejado recebe a figurinha do Instagram (enquete, caixinha, quiz ou link) na hora de postar."}
+];
+const $ = (t, a = {}, filhos = []) => { const e = document.createElement(t); for (const k in a) { if (k === "text") e.textContent = a[k]; else if (k.startsWith("on")) e.addEventListener(k.slice(2), a[k]); else e.setAttribute(k, a[k]); } (Array.isArray(filhos) ? filhos : [filhos]).forEach(f => f && e.append(f)); return e; };
+const DIAS = ["dom", "seg", "ter", "qua", "qui", "sex", "sáb"];
+const dt = s => { const [a, m, d] = s.split("-").map(Number); return new Date(a, m - 1, d); };
+const iso = d => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+const dataBR = s => { const d = dt(s); return `${DIAS[d.getDay()]} ${String(d.getDate()).padStart(2, "0")}/${String(d.getMonth() + 1).padStart(2, "0")}`; };
+const nomeSec = t => SECOES.find(s => s.tipo === t).nome;
+const salvar = (blob, nome) => { const u = URL.createObjectURL(blob), a = document.createElement("a"); a.href = u; a.download = nome; document.body.append(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(u), 4000); };
+const toast = msg => { const t = document.getElementById("toast"); t.textContent = msg; t.hidden = false; clearTimeout(toast.t); toast.t = setTimeout(() => t.hidden = true, 2600); };
+const falha = e => toast(e && e.code === "declined" ? "Download cancelado" : e && e.code === "rate_limited" ? "Já tem um download aberto. Conclua e tente de novo." : "Não deu para baixar agora. Tente de novo.");
+
+async function baixar(src, nome, botao) {
+  const txt = botao.textContent; botao.disabled = true; botao.textContent = "Preparando…";
+  try { const r = await fetch(src); if (!r.ok) throw new Error(); salvar(await r.blob(), nome); toast("Download iniciado"); }
+  catch (e) { falha(e); } finally { botao.disabled = false; botao.textContent = txt; }
+}
+async function zipar(itens, nome, botao) {
+  if (!window.JSZip) { toast("O download não está disponível aqui."); return; }
+  const txt = botao.textContent; botao.disabled = true;
+  try {
+    const z = new JSZip(); let k = 0;
+    for (const it of itens) { botao.textContent = `Juntando ${++k} de ${itens.length}…`; const r = await fetch(it.src); if (!r.ok) throw new Error(); z.file(it.path, await r.blob()); }
+    botao.textContent = "Compactando…";
+    salvar(await z.generateAsync({ type: "blob", compression: "STORE" }), nome);
+    toast("Download iniciado");
+  } catch (e) { falha(e); } finally { botao.disabled = false; botao.textContent = txt; }
+}
+
+function midia(p) {
+  const n = $("span", { class: "num", text: p.n }), a = p.arquivos;
+  if (p.tipo === "carrossel") return $("div", { class: "midia" }, [$("div", { class: "tira", tabindex: "0", "aria-label": `${p.titulo}: ${a.length} slides, role para o lado` }, a.map(f => $("img", { src: f.url, alt: `${p.titulo}, slide ${f.slide}`, loading: "lazy" }))), n, $("span", { class: "dica-slides", text: `${a.length} slides →` })]);
+  if (p.tipo === "reels") return $("div", { class: "midia" }, [$("video", { src: a[0].url, controls: "", playsinline: "", preload: "metadata", "aria-label": p.titulo }), n]);
+  if (p.tipo === "anuncio") return $("div", { class: "midia" }, [$("div", { class: "par" }, a.map(f => $("img", { src: f.url, alt: `${p.titulo}, ${f.formato === "9:16" ? "stories" : "feed"}`, loading: "lazy" }))), n]);
+  return $("div", { class: "midia" }, [$("img", { src: a[0].url, alt: p.titulo, loading: "lazy" }), n]);
+}
+function card(p) {
+  const meta = $("div", { class: "meta" }, [$("span", { class: "tag", text: p.tipo_label }), $("span", { text: `${dataBR(p.data)} · ${p.hora}` }), p.bonus ? $("span", { class: "bonus", text: "Bônus" }) : null]);
+  const acoes = $("div", { class: "acoes" });
+  if (p.tipo === "carrossel") acoes.append($("button", { class: "bt sec", type: "button", text: "Baixar os slides", onclick: e => zipar(p.arquivos.map(f => ({ src: f.url, path: f.nome })), `${p.n} - ${p.titulo.replace(/[\\/:*?"<>|]/g, "")}.zip`, e.currentTarget) }));
+  else p.arquivos.forEach(f => acoes.append($("button", { class: "bt sec", type: "button", text: p.arquivos.length > 1 ? `Baixar ${f.formato === "9:16" ? "stories" : "feed"}` : p.tipo === "reels" ? "Baixar vídeo" : "Baixar", onclick: e => baixar(f.url, f.nome, e.currentTarget) })));
+  const texto = p.tipo === "stories"
+    ? $("div", { class: "ig", text: "No Instagram: " + p.dica })
+    : $("details", {}, [$("summary", { text: "Ver legenda" }), $("pre", { class: "leg", text: p.legenda })]);
+  return $("article", { class: "card", id: "peca-" + p.n }, [midia(p), $("div", { class: "corpo" }, [meta, $("h3", { text: p.titulo }), p.para_quem ? $("div", { class: "para", text: "Para: " + p.para_quem }) : null, texto, acoes])]);
+}
+
+function agenda() {
+  const ini = dt(D.periodo.inicio), fim = dt(D.periodo.fim);
+  const a = new Date(ini); a.setDate(a.getDate() - ((a.getDay() + 6) % 7));
+  const b = new Date(fim); b.setDate(b.getDate() + (7 - ((b.getDay() + 6) % 7)) - 1);
+  const porDia = {}; D.pecas.forEach(p => (porDia[p.data] = porDia[p.data] || []).push(p));
+  const cal = $("div", { class: "cal", role: "list" });
+  ["seg", "ter", "qua", "qui", "sex", "sáb", "dom"].forEach(d => cal.append($("div", { class: "dow", "aria-hidden": "true", text: d })));
+  for (const d = new Date(a); d <= b; d.setDate(d.getDate() + 1)) {
+    const k = iso(d), fora = d < ini || d > fim, lista = (porDia[k] || []).sort((x, y) => x.hora.localeCompare(y.hora));
+    const cel = $("div", { class: "dia" + (fora ? " fora" : "") + (lista.length ? "" : " vazio"), role: "listitem" }, [$("div", { class: "dn" }, [String(d.getDate()).padStart(2, "0"), $("small", { text: d.getDate() === 1 || +d === +a ? ["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"][d.getMonth()] : DIAS[d.getDay()] })])]);
+    lista.forEach(p => cel.append($("a", { class: "ev", href: "#peca-" + p.n, title: `${p.n} · ${p.tipo_label}: ${p.titulo}` }, [$("b", { text: p.hora }), $("span", { text: `${p.tipo_label} ${p.n}` })])));
+    cal.append(cel);
+  }
+  return $("section", { id: "agenda" }, [$("div", { class: "sec-h" }, [$("h2", { text: "Agenda do mês" }), $("span", { text: "Toque numa peça para ver" })]), cal]);
+}
+
+function montar() {
+  const main = document.getElementById("conteudo"), chips = document.getElementById("chips"), res = document.getElementById("resumo");
+  chips.append($("a", { href: "#agenda", text: "Agenda" }));
+  main.append(agenda());
+  SECOES.forEach(s => {
+    const lista = D.pecas.filter(p => p.tipo === s.tipo);
+    res.append($("span", {}, [$("b", { text: String(lista.length) }), s.nome.toLowerCase()]));
+    chips.append($("a", { href: "#" + s.id, text: `${s.nome} (${lista.length})` }));
+    main.append($("section", { id: s.id }, [$("div", { class: "sec-h" }, [$("h2", { text: s.nome }), $("span", { text: s.txt })]), $("div", { class: "grade " + s.cls }, lista.map(card))]));
+  });
+  const bonus = D.pecas.filter(p => p.bonus).length;
+  if (bonus) res.append($("span", {}, [$("b", { text: String(bonus) }), "de bônus"]));
+  chips.append($("a", { href: "#landing", text: "Landing page" }), $("a", { href: "#identidade", text: "Identidade visual" }), $("a", { href: "#conferir", text: "Pra conferir" }));
+
+  main.append($("section", { id: "landing" }, [$("div", { class: "sec-h" }, [$("h2", { text: "Landing page" })]),
+    $("p", { class: "lp-txt", text: "A página da JL para mandar no WhatsApp e colocar na bio do Instagram: modalidades, como funciona, dúvidas dos síndicos e o botão que abre a conversa direto com vocês." }),
+    $("div", { class: "lp" }, [
+      $("figure", {}, [$("div", { class: "lp-desk", tabindex: "0", "aria-label": "Landing page no computador, role para ver a página inteira" }, $("img", { src: D.landing.desktop, alt: "Landing page da JL Fitness no computador, página inteira", loading: "lazy" })), $("figcaption", { text: "No computador (role dentro do quadro para ver a página inteira)" })]),
+      $("figure", {}, [$("div", { class: "lp-cel" }, $("img", { src: D.landing.celular, alt: "Landing page da JL Fitness no celular", loading: "lazy" })), $("figcaption", { text: "No celular" })])
+    ])]));
+
+  main.append($("section", { id: "identidade" }, [$("div", { class: "sec-h" }, [$("h2", { text: "Identidade visual" }), $("span", { text: `${D.identidade.fontes.join(" nos títulos, ")} nos textos · ${D.identidade.slogan}` })]),
+    $("div", { class: "cores" }, D.identidade.cores.map(c => $("div", { class: "cor" }, [$("i", { style: "background:" + c }), c]))),
+    $("div", { class: "id-grade" }, D.identidade.arquivos.map(i => $("div", { class: "id-card" }, [$("img", { src: i.url, alt: i.nome, loading: "lazy" }), $("div", { class: "corpo" }, [$("strong", { text: i.nome.replace(/\.png$/, "") }), $("div", { class: "acoes" }, [$("button", { class: "bt sec", type: "button", text: "Baixar", onclick: e => baixar(i.url, i.nome, e.currentTarget) })])])])))]));
+
+  const tudo = [];
+  D.pecas.forEach(p => p.arquivos.forEach(f => tudo.push({ src: f.url, path: f.pasta + "/" + f.nome })));
+  D.identidade.arquivos.forEach(i => tudo.push({ src: i.url, path: "Identidade visual/" + i.nome }));
+  main.append($("section", { id: "conferir" }, [$("div", { class: "sec-h" }, [$("h2", { text: "Pra conferir com você" })]),
+    $("ol", { class: "conferir" }, D.conferir.map(t => $("li", {}, $("span", { text: t })))),
+    $("div", { class: "tudo" }, [$("div", {}, [$("strong", { text: "Quer tudo no computador?" }), $("small", { text: `${tudo.length} arquivos organizados em pastas, num arquivo .zip` })]), $("button", { class: "bt", type: "button", text: "Baixar tudo", onclick: e => zipar(tudo, "JL Fitness - Conteudo do mes.zip", e.currentTarget) })])]));
+}
+montar();
+</script>
+
+</body></html>
