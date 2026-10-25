@@ -1,0 +1,770 @@
+<title>Gestão Bolão</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Layout: uma página de marca + plano; faixas largas alternadas, conteúdo em coluna de 1080px. Motivo gráfico: a grade de 60 números do volante. */
+:root {
+  /* marca (fixas, usadas nas peças) */
+  --b-ink: #141A33;      /* Noite */
+  --b-amber: #FFB020;    /* Sorte */
+  --b-mint: #19C37D;     /* Pago */
+  --b-coral: #FF5A4E;    /* Pendente */
+  --b-paper: #F4F6FB;    /* Bilhete */
+  --b-blue: #3D5AFE;     /* Virada */
+
+  /* página */
+  --bg: #F4F6FB;
+  --surface: #FFFFFF;
+  --fg: #141A33;
+  --muted: #5B6384;
+  --line: #DCE1EE;
+  --accent: #B87400;
+  --accent-soft: #FFF1D6;
+  --ok: #0E8F5A;
+  --warn: #C2362C;
+
+  --f-display: "Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --f-body: "Figtree", "Segoe UI", system-ui, sans-serif;
+  --f-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0D1124; --surface: #161C36; --fg: #EEF1FA; --muted: #9AA3C4; --line: #283055;
+    --accent: #FFB020; --accent-soft: #2E2814; --ok: #3DDC97; --warn: #FF7A70; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0D1124; --surface: #161C36; --fg: #EEF1FA; --muted: #9AA3C4; --line: #283055;
+  --accent: #FFB020; --accent-soft: #2E2814; --ok: #3DDC97; --warn: #FF7A70; color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font-family: var(--f-body); font-size: 16px; line-height: 1.55; }
+.band { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 64px; }
+.band + .band { border-top: 1px solid var(--line); }
+.wrap { max-width: 1080px; margin-inline: auto; display: grid; gap: 28px; }
+h1, h2, h3 { font-family: var(--f-display); text-wrap: balance; margin: 0; line-height: 1.05; }
+h2 { font-size: clamp(30px, 5vw, 46px); font-weight: 800; letter-spacing: -0.02em; }
+h3 { font-size: 21px; font-weight: 700; letter-spacing: -0.01em; }
+p { margin: 0; }
+.lede { font-size: 18px; color: var(--muted); max-width: 64ch; }
+.eyebrow { font-family: var(--f-mono); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); }
+.head { display: grid; gap: 12px; }
+.grid { display: grid; gap: 16px; }
+.g2 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); }
+.g3 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 22px; display: grid; gap: 10px; align-content: start; min-width: 0; }
+.card p, .card li { color: var(--muted); }
+.card ul { margin: 0; padding-left: 18px; display: grid; gap: 6px; }
+.num { font-variant-numeric: tabular-nums; }
+.tag { display: inline-flex; align-items: center; gap: 6px; font-family: var(--f-mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; padding: 4px 9px; border-radius: 99px; border: 1px solid var(--line); color: var(--muted); width: fit-content; }
+
+/* HERO */
+.hero { background: var(--b-ink); color: #EEF1FA; position: relative; overflow: hidden; }
+.hero .wrap { gap: 22px; padding-block: 24px; position: relative; z-index: 1; }
+.hero-logo { display: flex; align-items: center; gap: 14px; }
+.hero h1 { font-size: clamp(44px, 9vw, 104px); font-weight: 800; letter-spacing: -0.035em; color: #fff; }
+.hero h1 em { font-style: normal; color: var(--b-amber); }
+.hero p { color: #B9C0DC; font-size: clamp(17px, 2.2vw, 21px); max-width: 58ch; }
+.hero .stats { display: flex; flex-wrap: wrap; gap: 10px 28px; font-family: var(--f-mono); font-size: 13px; color: #B9C0DC; }
+.hero .stats b { color: var(--b-amber); font-weight: 700; }
+.volante { position: absolute; right: -40px; top: 50%; transform: translateY(-50%); display: grid; grid-template-columns: repeat(10, 34px); gap: 8px; opacity: .22; z-index: 0; }
+.volante span { width: 34px; height: 34px; border: 1.5px solid #8C96C4; border-radius: 50%; display: grid; place-items: center; font: 700 11px var(--f-mono); color: #8C96C4; }
+.volante span.on { background: var(--b-amber); border-color: var(--b-amber); color: var(--b-ink); opacity: 1; }
+@media (max-width: 760px) { .volante { opacity: .1; right: -160px; } }
+
+/* WORDMARK */
+.wm { font-family: var(--f-display); font-size: 26px; letter-spacing: -0.02em; line-height: 1; }
+.wm .a { font-weight: 500; } .wm .b { font-weight: 800; }
+
+/* MARCA */
+.logo-stage { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); }
+.logo-tile { border-radius: 14px; padding: 28px 22px; display: grid; place-items: center; gap: 14px; min-height: 200px; border: 1px solid var(--line); }
+.logo-tile small { font-family: var(--f-mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; }
+.lt-ink { background: var(--b-ink); color: #fff; } .lt-ink small { color: #8C96C4; }
+.lt-paper { background: var(--b-paper); color: var(--b-ink); } .lt-paper small { color: #5B6384; }
+.lt-amber { background: var(--b-amber); color: var(--b-ink); } .lt-amber small { color: #6B4A00; }
+.swatches { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 160px), 1fr)); }
+.sw { border-radius: 12px; padding: 16px; min-height: 130px; display: grid; align-content: end; gap: 2px; border: 1px solid var(--line); }
+.sw b { font-family: var(--f-display); font-size: 19px; }
+.sw span { font-family: var(--f-mono); font-size: 12px; opacity: .85; }
+.type-row { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); }
+.balls { display: flex; gap: 8px; flex-wrap: wrap; }
+.ball { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; font: 700 16px var(--f-mono); background: var(--b-amber); color: var(--b-ink); }
+.ball.ghost { background: transparent; border: 2px solid var(--line); color: var(--muted); }
+
+/* COMPARATIVO */
+.tbl-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; min-width: 640px; font-size: 15px; }
+th, td { text-align: left; padding: 13px 16px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-family: var(--f-mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 500; }
+tr:last-child td { border-bottom: 0; }
+td.us { background: var(--accent-soft); font-weight: 600; }
+.y { color: var(--ok); font-weight: 700; } .n { color: var(--warn); font-weight: 700; }
+
+/* PREÇOS */
+.plans { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)); }
+.plan { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 22px; display: grid; gap: 12px; align-content: start; }
+.plan.hot { border: 2px solid var(--accent); }
+.plan .price { font-family: var(--f-display); font-size: 38px; font-weight: 800; letter-spacing: -0.02em; line-height: 1; }
+.plan .price small { font-family: var(--f-body); font-size: 14px; font-weight: 500; color: var(--muted); letter-spacing: 0; }
+.plan ul { margin: 0; padding-left: 18px; display: grid; gap: 5px; color: var(--muted); font-size: 15px; }
+
+/* FLUXO */
+.flow { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); counter-reset: s; }
+.step { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 18px; display: grid; gap: 8px; align-content: start; }
+.step::before { counter-increment: s; content: counter(s); width: 30px; height: 30px; border-radius: 50%; background: var(--b-amber); color: var(--b-ink); display: grid; place-items: center; font: 700 14px var(--f-mono); }
+.step p { color: var(--muted); font-size: 15px; }
+.note { border-left: 3px solid var(--warn); background: var(--surface); padding: 16px 18px; border-radius: 0 12px 12px 0; display: grid; gap: 6px; }
+.note p, .note li { color: var(--muted); font-size: 15px; }
+.note ul { margin: 0; padding-left: 18px; display: grid; gap: 4px; }
+
+/* CALCULADORA */
+.calc { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr)); }
+.ctrl { display: grid; gap: 6px; }
+.ctrl label { font-weight: 600; display: flex; justify-content: space-between; gap: 12px; }
+.ctrl label output { font-family: var(--f-mono); color: var(--accent); }
+input[type=range] { width: 100%; accent-color: var(--accent); }
+.seg { display: flex; gap: 6px; flex-wrap: wrap; }
+.seg button { font: 600 14px var(--f-body); padding: 8px 12px; border-radius: 99px; border: 1px solid var(--line); background: var(--surface); color: var(--fg); cursor: pointer; }
+.seg button[aria-pressed=true] { background: var(--b-ink); color: #fff; border-color: var(--b-ink); }
+:root[data-theme="dark"] .seg button[aria-pressed=true] { background: var(--b-amber); color: var(--b-ink); border-color: var(--b-amber); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .seg button[aria-pressed=true] { background: var(--b-amber); color: var(--b-ink); border-color: var(--b-amber); } }
+button:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.result { background: var(--b-ink); color: #EEF1FA; border-radius: 14px; padding: 24px; display: grid; gap: 14px; align-content: start; }
+.result .big { font-family: var(--f-display); font-size: clamp(40px, 7vw, 60px); font-weight: 800; color: var(--b-amber); line-height: 1; letter-spacing: -0.02em; }
+.result dl { display: grid; grid-template-columns: 1fr auto; gap: 6px 16px; margin: 0; font-size: 15px; }
+.result dt { color: #B9C0DC; } .result dd { margin: 0; font-family: var(--f-mono); text-align: right; }
+.result .sep { grid-column: 1 / -1; border-top: 1px solid #2D3560; }
+.result small { color: #8C96C4; font-size: 13px; }
+
+/* INSTAGRAM KIT */
+.ig-grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); }
+.ig-item { display: grid; gap: 10px; align-content: start; min-width: 0; }
+.ig-item figcaption { font-size: 14px; color: var(--muted); }
+.ig-item figcaption b { color: var(--fg); }
+figure { margin: 0; }
+.ig { aspect-ratio: 4 / 5; max-width: 100%; border-radius: 10px; overflow: hidden; container-type: inline-size; position: relative; display: flex; flex-direction: column; padding: 7cqw; gap: 4cqw; box-shadow: 0 1px 0 var(--line); }
+.ig .t { font-family: var(--f-display); font-weight: 800; letter-spacing: -0.03em; line-height: .98; font-size: 11cqw; }
+.ig .s { font-family: var(--f-body); font-size: 4.4cqw; line-height: 1.35; }
+.ig .foot { margin-top: auto; display: flex; justify-content: space-between; align-items: center; font-family: var(--f-mono); font-size: 3.2cqw; letter-spacing: .06em; }
+.ig .mini-wm { font-family: var(--f-display); font-size: 4.6cqw; letter-spacing: -0.02em; display: flex; align-items: center; gap: 2cqw; }
+.ig .mini-wm svg { width: 7cqw; height: 7cqw; }
+.ig.ink { background: var(--b-ink); color: #fff; }
+.ig.amber { background: var(--b-amber); color: var(--b-ink); }
+.ig.paper { background: var(--b-paper); color: var(--b-ink); }
+.ig.blue { background: var(--b-blue); color: #fff; }
+.ig .hl { color: var(--b-amber); }
+.ig.amber .hl, .ig.paper .hl { color: var(--b-blue); }
+.ig .list { display: grid; gap: 2.2cqw; margin-top: 2cqw; }
+.ig .row { display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,.07); border-radius: 2.5cqw; padding: 2.8cqw 3.6cqw; font-size: 4.2cqw; }
+.ig .chip { font-family: var(--f-mono); font-size: 3cqw; font-weight: 700; padding: 1cqw 2.4cqw; border-radius: 99px; }
+.ig .chip.ok { background: var(--b-mint); color: var(--b-ink); }
+.ig .chip.no { background: var(--b-coral); color: #fff; }
+.ig .countdown { font-family: var(--f-display); font-weight: 800; font-size: 44cqw; line-height: .8; letter-spacing: -0.05em; }
+.ig .ticket { background: #fff; color: var(--b-ink); border-radius: 3cqw; padding: 4cqw; display: grid; gap: 2.4cqw; transform: rotate(-3deg); box-shadow: 0 3cqw 6cqw rgba(20,26,51,.25); }
+.ig .ticket .tn { display: flex; gap: 1.6cqw; flex-wrap: wrap; }
+.ig .ticket .tn i { font-style: normal; width: 8.5cqw; height: 8.5cqw; border-radius: 50%; background: var(--b-amber); display: grid; place-items: center; font: 700 3.6cqw var(--f-mono); }
+.ig .ticket .meta { font-family: var(--f-mono); font-size: 2.8cqw; color: #5B6384; display: flex; justify-content: space-between; gap: 2cqw; }
+.ig .seal { font-family: var(--f-mono); font-size: 3cqw; font-weight: 700; background: var(--b-mint); color: var(--b-ink); padding: 1.4cqw 3cqw; border-radius: 99px; width: fit-content; }
+.ig .rules { display: grid; gap: 2.6cqw; counter-reset: r; }
+.ig .rules div { display: flex; gap: 3cqw; align-items: baseline; font-size: 4.4cqw; font-weight: 600; }
+.ig .rules div::before { counter-increment: r; content: counter(r); font: 700 3.6cqw var(--f-mono); background: var(--b-ink); color: var(--b-amber); width: 6.4cqw; height: 6.4cqw; border-radius: 50%; display: grid; place-items: center; flex: none; transform: translateY(0.6cqw); }
+.ig .pricebox { display: grid; grid-template-columns: 1fr 1fr; gap: 3cqw; margin-top: 2cqw; }
+.ig .pricebox div { border-radius: 3cqw; padding: 4cqw; display: grid; gap: 1cqw; }
+.ig .pricebox b { font-family: var(--f-display); font-size: 9cqw; letter-spacing: -0.03em; line-height: 1; }
+.ig .pricebox span { font-size: 3.6cqw; }
+.ig .bg-grid { position: absolute; inset: auto -8cqw -8cqw auto; display: grid; grid-template-columns: repeat(6, 9cqw); gap: 2cqw; opacity: .18; pointer-events: none; }
+.ig .bg-grid i { width: 9cqw; height: 9cqw; border-radius: 50%; border: .5cqw solid currentColor; }
+
+.stories { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 210px), 1fr)); }
+.story { aspect-ratio: 9 / 16; max-width: 100%; border-radius: 14px; overflow: hidden; container-type: inline-size; display: flex; flex-direction: column; padding: 8cqw; gap: 5cqw; }
+.story .t { font-family: var(--f-display); font-weight: 800; font-size: 12cqw; line-height: 1; letter-spacing: -0.03em; }
+.story .poll { display: grid; gap: 3cqw; margin-top: auto; margin-bottom: auto; background: #fff; color: var(--b-ink); border-radius: 5cqw; padding: 5cqw; }
+.story .poll div { border: .6cqw solid #DCE1EE; border-radius: 99px; padding: 3cqw 5cqw; font-weight: 700; font-size: 5cqw; text-align: center; }
+.story .bar { height: 1cqw; background: rgba(255,255,255,.35); border-radius: 99px; overflow: hidden; }
+.story .bar i { display: block; height: 100%; width: 40%; background: #fff; }
+.story.amber .bar { background: rgba(20,26,51,.2); } .story.amber .bar i { background: var(--b-ink); }
+
+.profile { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 22px; display: grid; gap: 16px; }
+.p-top { display: flex; gap: 18px; align-items: center; flex-wrap: wrap; }
+.avatar { width: 84px; height: 84px; border-radius: 50%; padding: 3px; background: conic-gradient(var(--b-amber), var(--b-coral), var(--b-blue), var(--b-amber)); flex: none; }
+.avatar svg { width: 100%; height: 100%; border-radius: 50%; display: block; }
+.p-bio { display: grid; gap: 4px; font-size: 15px; min-width: 0; }
+.p-bio b { font-size: 16px; }
+.p-bio a { color: var(--accent); text-decoration: none; font-weight: 600; }
+.hls { display: flex; gap: 16px; flex-wrap: wrap; }
+.hl-item { display: grid; justify-items: center; gap: 6px; font-size: 12px; color: var(--muted); }
+.hl-item i { width: 58px; height: 58px; border-radius: 50%; border: 1.5px solid var(--line); display: grid; place-items: center; font: 700 15px var(--f-mono); font-style: normal; background: var(--b-ink); color: var(--b-amber); }
+
+.captions { display: grid; gap: 12px; }
+.cap { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; display: grid; gap: 8px; min-width: 0; }
+.cap pre { margin: 0; white-space: pre-wrap; font-family: var(--f-body); font-size: 15px; color: var(--fg); }
+.cap-h { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.cap-h b { font-size: 14px; }
+.copy { font: 600 13px var(--f-body); padding: 6px 12px; border-radius: 99px; border: 1px solid var(--line); background: transparent; color: var(--fg); cursor: pointer; }
+
+.timeline { display: grid; gap: 0; border-left: 2px solid var(--line); margin-left: 8px; }
+.tl { position: relative; padding: 0 0 22px 24px; display: grid; gap: 4px; }
+.tl::before { content: ""; position: absolute; left: -8px; top: 4px; width: 14px; height: 14px; border-radius: 50%; background: var(--b-amber); border: 2px solid var(--bg); }
+.tl .when { font-family: var(--f-mono); font-size: 12px; color: var(--accent); letter-spacing: .06em; text-transform: uppercase; }
+.tl p { color: var(--muted); font-size: 15px; }
+.foot-note { font-size: 13px; color: var(--muted); }
+.foot-note a { color: var(--accent); }
+@media (prefers-reduced-motion: no-preference) {
+  .volante span.on { animation: pop .5s ease both; }
+  @keyframes pop { from { transform: scale(.6); } to { transform: scale(1); } }
+}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="mark" viewBox="0 0 64 64">
+      <rect width="64" height="64" rx="16" fill="#141A33"/>
+      <circle cx="32" cy="33" r="19" fill="#FFB020"/>
+      <circle cx="25" cy="24" r="3.2" fill="#FFF6DF"/>
+      <path d="M22.5 33.5l6.5 6.5 12.5-13.5" stroke="#141A33" stroke-width="5.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="ballmark" viewBox="0 0 64 64">
+      <circle cx="32" cy="32" r="30" fill="#FFB020"/>
+      <circle cx="22" cy="20" r="4.4" fill="#FFF6DF"/>
+      <path d="M19 33l9 9 17-19" stroke="#141A33" stroke-width="6.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- HERO -->
+<header class="band hero">
+  <div class="volante" id="volante" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="hero-logo">
+      <svg width="52" height="52"><use href="#ballmark"/></svg>
+      <span class="wm" style="color:#fff"><span class="a">gestão</span> <span class="b">bolão</span></span>
+    </div>
+    <h1>O bolão com <em>recibo</em>.</h1>
+    <p>Quem pagou, quem falta, qual jogo foi feito e quanto cada um leva. Tudo num link que o grupo do WhatsApp entende. Sem planilha, sem print, sem treta.</p>
+    <div class="stats">
+      <span>Mega da Virada 2025: <b>R$ 1,09 bi</b> de prêmio</span>
+      <span>Arrecadação: <b>+R$ 3 bi</b></span>
+      <span>Faltam <b id="days">67</b> dias pra Virada 2026</span>
+    </div>
+  </div>
+</header>
+
+<!-- 1. DIFERENCIAL -->
+<section class="band">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">Posicionamento</span>
+      <h2>Qual é o nosso diferencial</h2>
+      <p class="lede">Os sites de bolão que existem hoje, em geral, <b>vendem cota</b>. A gente não vende jogo e não guarda o dinheiro de ninguém. A gente é a <b>ferramenta de quem organiza</b>: o tio da família, o RH da empresa, o dono do grupo da pelada. O inimigo não é a concorrência. É a planilha e o print no WhatsApp.</p>
+    </div>
+    <div class="grid g3">
+      <div class="card"><span class="tag">Confiança</span><h3>Jogo registrado antes do sorteio</h3><p>O organizador fotografa o comprovante da lotérica. O app grava data, hora e uma assinatura digital. Ninguém troca o jogo depois. Esse é o recurso que vende o app.</p></div>
+      <div class="card"><span class="tag">Pix</span><h3>Cobrança e baixa automática</h3><p>Cada participante recebe o Pix copia e cola com o valor da cota. Pagou, fica verde. Não pagou, o app lembra sozinho. O dinheiro cai direto na conta do organizador.</p></div>
+      <div class="card"><span class="tag">Sem atrito</span><h3>Participante não baixa nada</h3><p>Só quem organiza instala o app. O resto entra por um link no WhatsApp, paga e acompanha. Isso derruba a barreira da família inteira.</p></div>
+      <div class="card"><span class="tag">Resultado</span><h3>Conferência automática</h3><p>Saiu o resultado, o app confere todos os jogos do bolão e manda push: "o bolão da firma fez uma quadra".</p></div>
+      <div class="card"><span class="tag">Rateio</span><h3>Quanto cada um recebe</h3><p>Cotas diferentes, quem entrou com 2, quem entrou com meia. O app calcula a divisão do prêmio e gera o extrato que todo mundo vê.</p></div>
+      <div class="card"><span class="tag">Regras</span><h3>Termo do bolão aceito no link</h3><p>Valor, prazo, o que acontece se ganhar. Cada participante dá "aceito" antes de pagar. Evita a briga clássica da Virada.</p></div>
+    </div>
+
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th></th><th>Planilha + WhatsApp</th><th>Sites que vendem cota</th><th>Gestão Bolão</th></tr></thead>
+        <tbody>
+          <tr><td>Quem manda</td><td>O organizador, no braço</td><td>O site</td><td class="us">O organizador, com ferramenta</td></tr>
+          <tr><td>Dinheiro do bolão</td><td>Pix solto, conferência manual</td><td>Fica com o site</td><td class="us">Direto na conta do organizador</td></tr>
+          <tr><td>Prova do jogo</td><td>Print, se lembrar</td><td>Do site</td><td class="us"><span class="y">✓</span> Foto + data + assinatura</td></tr>
+          <tr><td>Quem pagou</td><td><span class="n">✗</span> Você pergunta um por um</td><td>Não se aplica</td><td class="us"><span class="y">✓</span> Lista verde e vermelha</td></tr>
+          <tr><td>Bolão da família e da firma</td><td>Funciona até dar treta</td><td>Cada um compra sozinho</td><td class="us"><span class="y">✓</span> Feito pra grupo fechado</td></tr>
+          <tr><td>Risco regulatório</td><td>Baixo</td><td>Alto (revenda de jogo)</td><td class="us">Baixo: é software de gestão</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- 2. MARCA -->
+<section class="band">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">Identidade visual</span>
+      <h2>A marca</h2>
+      <p class="lede">O símbolo é uma bola de sorteio com um check dentro: sorte com conferência. O check é a promessa da marca, o "tá pago, tá registrado". Fugimos de propósito do verde da Caixa, pra ninguém achar que somos a Caixa.</p>
+    </div>
+    <div class="logo-stage">
+      <div class="logo-tile lt-ink">
+        <div style="display:flex;align-items:center;gap:12px"><svg width="46" height="46"><use href="#ballmark"/></svg><span class="wm"><span class="a">gestão</span> <span class="b">bolão</span></span></div>
+        <small>Principal · fundo Noite</small>
+      </div>
+      <div class="logo-tile lt-paper">
+        <div style="display:flex;align-items:center;gap:12px"><svg width="46" height="46"><use href="#ballmark"/></svg><span class="wm"><span class="a">gestão</span> <span class="b">bolão</span></span></div>
+        <small>Fundo claro</small>
+      </div>
+      <div class="logo-tile lt-amber">
+        <svg width="96" height="96"><use href="#mark"/></svg>
+        <small>Ícone do app · Play Store e App Store</small>
+      </div>
+    </div>
+
+    <div class="swatches">
+      <div class="sw" style="background:#141A33;color:#fff"><b>Noite</b><span>#141A33 · base</span></div>
+      <div class="sw" style="background:#FFB020;color:#141A33"><b>Sorte</b><span>#FFB020 · destaque</span></div>
+      <div class="sw" style="background:#3D5AFE;color:#fff"><b>Virada</b><span>#3D5AFE · campanhas</span></div>
+      <div class="sw" style="background:#19C37D;color:#141A33"><b>Pago</b><span>#19C37D · status ok</span></div>
+      <div class="sw" style="background:#FF5A4E;color:#fff"><b>Pendente</b><span>#FF5A4E · cobrança</span></div>
+      <div class="sw" style="background:#F4F6FB;color:#141A33"><b>Bilhete</b><span>#F4F6FB · fundo claro</span></div>
+    </div>
+
+    <div class="type-row">
+      <div class="card">
+        <span class="tag">Títulos</span>
+        <div style="font-family:var(--f-display);font-weight:800;font-size:40px;line-height:1;letter-spacing:-0.03em;color:var(--fg)">Bricolage Grotesque</div>
+        <p>Pesada, com personalidade, levemente irregular. Usada em títulos curtos e números grandes.</p>
+      </div>
+      <div class="card">
+        <span class="tag">Texto</span>
+        <div style="font-family:var(--f-body);font-weight:600;font-size:30px;line-height:1.1;color:var(--fg)">Figtree</div>
+        <p>Redonda e clara no celular. Usada em tudo que é texto corrido e interface.</p>
+      </div>
+      <div class="card">
+        <span class="tag">Números do volante</span>
+        <div class="balls"><span class="ball">04</span><span class="ball">17</span><span class="ball">23</span><span class="ball">38</span><span class="ball">51</span><span class="ball ghost">60</span></div>
+        <p>JetBrains Mono, sempre com dois dígitos, dentro da bola. Valores em reais também em mono.</p>
+      </div>
+    </div>
+    <div class="card">
+      <span class="tag">Tom de voz</span>
+      <h3>Fala como o primo que organiza o bolão, não como banco.</h3>
+      <ul>
+        <li><b>Diz:</b> "Faltam 3 pagarem. Quer que eu lembre eles?" · <b>Não diz:</b> "Existem 3 pendências financeiras."</li>
+        <li><b>Diz:</b> "Jogo registrado às 14:32. Ninguém mexe mais." · <b>Não diz:</b> "Seu comprovante foi armazenado com sucesso."</li>
+        <li>Nunca promete prêmio, nunca diz "aumente suas chances". A gente vende organização e paz no grupo, não sorte.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 3. COMO FICA SIMPLES -->
+<section class="band">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">Experiência</span>
+      <h2>Simples pra família, sério pra empresa</h2>
+      <p class="lede">Mesmo app, dois jeitos de usar. A família quer rapidez. A empresa quer registro e ninguém reclamando no RH.</p>
+    </div>
+    <h3>Família e amigos · 2 minutos</h3>
+    <div class="flow">
+      <div class="step"><h3>Cria o bolão</h3><p>Nome, valor da cota, prazo pra pagar. Ex.: "Virada da Família Souza", R$ 50.</p></div>
+      <div class="step"><h3>Manda o link</h3><p>Cola no grupo do WhatsApp. Cada um entra com nome e celular, sem baixar app.</p></div>
+      <div class="step"><h3>Todo mundo paga no Pix</h3><p>A lista fica verde sozinha. Quem atrasou recebe lembrete.</p></div>
+      <div class="step"><h3>Registra o jogo</h3><p>Foto do comprovante da lotérica. Todo mundo vê os números.</p></div>
+      <div class="step"><h3>Resultado e rateio</h3><p>Conferência automática e divisão do prêmio por cota.</p></div>
+    </div>
+    <h3>Empresa</h3>
+    <div class="grid g3">
+      <div class="card"><h3>Vários organizadores</h3><p>RH e um representante por setor administram juntos. Cada setor pode ter sua lista.</p></div>
+      <div class="card"><h3>Relatório pra prestar contas</h3><p>PDF com participantes, valores, jogos e resultado. Pronto pra mandar no e-mail geral.</p></div>
+      <div class="card"><h3>Até 500 pessoas</h3><p>Cotas, sub-bolões por setor, importação de lista de funcionários por planilha.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 4. PAGAMENTOS -->
+<section class="band">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">Financeiro</span>
+      <h2>Como integrar pagamento</h2>
+      <p class="lede">Existem dois dinheiros diferentes, e eles nunca podem se misturar: o dinheiro do bolão (dos participantes) e o dinheiro da assinatura (nossa receita).</p>
+    </div>
+    <div class="grid g2">
+      <div class="card">
+        <span class="tag">Dinheiro do bolão</span>
+        <h3>Cai direto na conta do organizador</h3>
+        <ul>
+          <li><b>Plano grátis:</b> o app gera o Pix copia e cola com a chave do próprio organizador e o valor da cota. O participante anexa o comprovante e o organizador confirma com um toque.</li>
+          <li><b>Plano pago:</b> o organizador conecta a conta dele no Mercado Pago ou Asaas. O app cria cobranças Pix em nome dele e recebe o aviso de pagamento: baixa 100% automática.</li>
+          <li>A Gestão Bolão nunca guarda esse dinheiro. Isso protege a gente juridicamente e é argumento de venda: "o dinheiro não passa pela gente".</li>
+        </ul>
+      </div>
+      <div class="card">
+        <span class="tag">Nossa receita</span>
+        <h3>Assinatura pelas lojas e pelo site</h3>
+        <ul>
+          <li><b>Dentro do app:</b> compra pela App Store e Google Play (obrigatório pra assinatura digital). Com o programa de pequenos desenvolvedores, a taxa é 15%.</li>
+          <li><b>Use RevenueCat</b> pra unificar as duas lojas e o site num painel só.</li>
+          <li><b>No site:</b> Pix e cartão via Asaas ou Mercado Pago, taxa bem menor. Plano empresa vende melhor por aqui, com nota fiscal.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="note">
+      <b>Pontos de atenção antes de lançar</b>
+      <ul>
+        <li>Loterias federais são exclusividade da Caixa. O app <b>não pode vender aposta nem cota</b>, nem comprar jogo pelo usuário. Ele só organiza o que o grupo fez na lotérica ou no app da Caixa.</li>
+        <li>A Apple e o Google revisam com rigor apps ligados a jogos de azar. Descreva o app como "organizador de grupo e controle de pagamentos", sem botão de apostar. Classificação 18+.</li>
+        <li>Vale uma consulta com um advogado de direito digital e regulação de loterias antes de cobrar. Isso aqui é análise de negócio, não parecer jurídico.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 5. PREÇO -->
+<section class="band">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">Preço</span>
+      <h2>Quanto a gente cobra</h2>
+      <p class="lede">Quem paga é só o organizador. O grátis tem que ser bom de verdade, porque cada bolão grátis coloca a marca na frente de 10 a 30 pessoas. A grana vem da Virada e das empresas.</p>
+    </div>
+    <div class="plans">
+      <div class="plan">
+        <span class="tag">Família</span>
+        <div class="price num">R$ 0</div>
+        <ul><li>1 bolão ativo</li><li>Até 15 participantes</li><li>Pix copia e cola + comprovante</li><li>Registro do jogo e conferência</li></ul>
+      </div>
+      <div class="plan hot">
+        <span class="tag">Passe Virada</span>
+        <div class="price num">R$ 29,90 <small>pagamento único</small></div>
+        <ul><li>1 bolão da Mega da Virada</li><li>Até 200 participantes</li><li>Baixa automática do Pix</li><li>Lembretes, rateio e extrato em PDF</li></ul>
+      </div>
+      <div class="plan">
+        <span class="tag">Organizador</span>
+        <div class="price num">R$ 14,90 <small>/mês</small></div>
+        <ul><li>Ou R$ 99 por ano</li><li>Bolões ilimitados, até 100 pessoas cada</li><li>Tudo do Passe Virada, o ano todo</li><li>Bolão recorrente (todo sábado)</li></ul>
+      </div>
+      <div class="plan">
+        <span class="tag">Empresa</span>
+        <div class="price num">R$ 79 <small>/mês</small></div>
+        <ul><li>Ou R$ 149 só na Virada</li><li>Até 500 pessoas, vários admins</li><li>Setores, relatório, logo da empresa</li><li>Nota fiscal, venda pelo site</li></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6. PROJEÇÃO -->
+<section class="band">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">Projeção · Mega da Virada 2026</span>
+      <h2>Quanto dá pra faturar na Virada</h2>
+      <p class="lede">A Virada 2025 arrecadou mais de R$ 3 bilhões e pagou R$ 1,09 bilhão. Mercado tem. A pergunta real é quantos organizadores a gente consegue alcançar em 67 dias, partindo do zero. Mexe nos números:</p>
+    </div>
+    <div class="seg" role="group" aria-label="Cenário">
+      <button type="button" data-s="cons" aria-pressed="false">Conservador</button>
+      <button type="button" data-s="base" aria-pressed="true">Realista</button>
+      <button type="button" data-s="otim" aria-pressed="false">Otimista</button>
+    </div>
+    <div class="calc">
+      <div class="card" style="gap:18px">
+        <div class="ctrl"><label for="org">Bolões criados no app <output id="o-org"></output></label><input id="org" type="range" min="500" max="100000" step="500" value="15000"></div>
+        <div class="ctrl"><label for="conv">% que compra o Passe Virada <output id="o-conv"></output></label><input id="conv" type="range" min="2" max="30" step="1" value="12"></div>
+        <div class="ctrl"><label for="emp">Empresas no plano Virada (R$ 149) <output id="o-emp"></output></label><input id="emp" type="range" min="0" max="2000" step="10" value="150"></div>
+        <div class="ctrl"><label for="loja">% das vendas pelas lojas (taxa 15%) <output id="o-loja"></output></label><input id="loja" type="range" min="0" max="100" step="5" value="70"></div>
+        <div class="ctrl"><label for="ads">Investimento em anúncios <output id="o-ads"></output></label><input id="ads" type="range" min="0" max="150000" step="2500" value="30000"></div>
+        <small class="foot-note">Taxa web considerada: ~3% (Pix e cartão). Imposto Simples Nacional estimado em 6% sobre o bruto.</small>
+      </div>
+      <div class="result" aria-live="polite">
+        <small>Lucro estimado na campanha da Virada</small>
+        <div class="big num" id="r-liq">R$ 0</div>
+        <dl class="num">
+          <dt>Passes Virada vendidos</dt><dd id="r-pass">0</dd>
+          <dt>Faturamento bruto</dt><dd id="r-bruto">R$ 0</dd>
+          <dt>Taxas das lojas e de pagamento</dt><dd id="r-taxa">R$ 0</dd>
+          <dt>Imposto (estimado)</dt><dd id="r-imp">R$ 0</dd>
+          <dt>Anúncios</dt><dd id="r-ads">R$ 0</dd>
+          <dd class="sep"></dd>
+          <dt>Pessoas que conhecem a marca</dt><dd id="r-alc">0</dd>
+        </dl>
+        <small>Cada bolão tem em média 20 participantes que entram pelo link. É essa base que vira cliente em 2027.</small>
+      </div>
+    </div>
+    <div class="grid g3">
+      <div class="card"><span class="tag">Conservador</span><h3 class="num" id="sc-cons">—</h3><p>3 mil bolões, 8% pagam, 30 empresas, R$ 10 mil em anúncio. Lançamento atrasado ou pouca divulgação.</p></div>
+      <div class="card"><span class="tag">Realista</span><h3 class="num" id="sc-base">—</h3><p>15 mil bolões, 12% pagam, 150 empresas, R$ 30 mil em anúncio. App nas lojas até o fim de novembro.</p></div>
+      <div class="card"><span class="tag">Otimista</span><h3 class="num" id="sc-otim">—</h3><p>60 mil bolões, 15% pagam, 600 empresas, R$ 80 mil em anúncio. Algum post viraliza ou parceria com influenciador.</p></div>
+    </div>
+    <p class="foot-note">Projeções com premissas próprias, não são promessa. O número que mais pesa é "bolões criados": ele depende de o app estar nas lojas cedo e do conteúdo no Instagram rodar desde já. Fonte dos dados de mercado: <a href="https://oimparcial.com.br/noticias/2026/01/mega-da-virada-2025-tem-seis-vencedores-e-premio-recorde-de-r-109-bi/" target="_blank" rel="noopener">O Imparcial</a>, <a href="https://sigma.world/pt-br/news/mega-da-virada-2025-arrecada-mais-de-r-3-bi/" target="_blank" rel="noopener">Sigma</a>.</p>
+  </div>
+</section>
+
+<!-- 7. INSTAGRAM -->
+<section class="band">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">Kit Instagram · @gestaobolao</span>
+      <h2>Perfil, posts e stories</h2>
+      <p class="lede">Feed alternando Noite, Sorte e Virada. Sempre um elemento do produto na arte (lista de pagos, bilhete, contagem). Nada de foto de banco de imagem com gente segurando dinheiro.</p>
+    </div>
+
+    <div class="profile">
+      <div class="p-top">
+        <div class="avatar"><svg viewBox="0 0 64 64"><rect width="64" height="64" fill="#141A33"/><g transform="translate(12 12) scale(.625)"><use href="#ballmark"/></g></svg></div>
+        <div class="p-bio">
+          <b>Gestão Bolão</b>
+          <span>O bolão com recibo. ✓</span>
+          <span>Quem pagou, qual jogo, quanto cada um leva.</span>
+          <span>Grátis pra família · Passe Virada R$ 29,90</span>
+          <a href="#">gestaobolao.com.br</a>
+        </div>
+      </div>
+      <div class="hls">
+        <div class="hl-item"><i>?</i>Como usa</div>
+        <div class="hl-item"><i>R$</i>Planos</div>
+        <div class="hl-item"><i>31</i>Virada</div>
+        <div class="hl-item"><i>✓</i>Provas</div>
+        <div class="hl-item"><i>RH</i>Empresas</div>
+      </div>
+    </div>
+
+    <div class="ig-grid">
+      <figure class="ig-item">
+        <div class="ig ink">
+          <div class="mini-wm"><svg><use href="#ballmark"/></svg><span><span style="font-weight:500">gestão</span> <b>bolão</b></span></div>
+          <div class="t">Bolão sem planilha, sem print, <span class="hl">sem treta.</span></div>
+          <div class="s" style="color:#B9C0DC">Quem pagou, qual jogo foi feito e quanto cada um leva. Num link só.</div>
+          <div class="foot"><span>LINK NA BIO</span><span style="color:#FFB020">APP GRÁTIS →</span></div>
+          <div class="bg-grid" style="color:#8C96C4"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        </div>
+        <figcaption><b>Post 1 · Lançamento.</b> Fixar no topo do perfil.</figcaption>
+      </figure>
+
+      <figure class="ig-item">
+        <div class="ig ink">
+          <div class="t" style="font-size:9.5cqw">Quem pagou o bolão da firma?</div>
+          <div class="list">
+            <div class="row"><span>Carla · RH</span><span class="chip ok">PAGO</span></div>
+            <div class="row"><span>Marcão · TI</span><span class="chip ok">PAGO</span></div>
+            <div class="row"><span>Juliana · Vendas</span><span class="chip ok">PAGO</span></div>
+            <div class="row"><span>Rogério · Financeiro</span><span class="chip no">FALTA</span></div>
+            <div class="row"><span>Bia · Comercial</span><span class="chip ok">PAGO</span></div>
+          </div>
+          <div class="s" style="color:#B9C0DC">A lista fica verde sozinha quando o Pix cai.</div>
+          <div class="foot"><span>@GESTAOBOLAO</span><span style="color:#FFB020">MARCA O ROGÉRIO</span></div>
+        </div>
+        <figcaption><b>Post 2 · Produto.</b> Bom pra impulsionar: mostra a função em 2 segundos.</figcaption>
+      </figure>
+
+      <figure class="ig-item">
+        <div class="ig blue">
+          <div class="mini-wm"><svg><use href="#ballmark"/></svg><span>Mega da Virada 2026</span></div>
+          <div style="margin-top:auto"><div class="countdown num" id="ig-days">67</div><div class="t" style="font-size:10cqw">dias pra Virada.</div></div>
+          <div class="s">Seu bolão já tem organizador?</div>
+          <div class="foot"><span>31.12.2026</span><span style="color:#FFB020">CRIA O SEU →</span></div>
+        </div>
+        <figcaption><b>Post 3 · Contagem.</b> Série semanal, trocando só o número.</figcaption>
+      </figure>
+
+      <figure class="ig-item">
+        <div class="ig amber">
+          <div class="t" style="font-size:9cqw">5 regras pro bolão da família não virar briga</div>
+          <div class="rules">
+            <div>Valor e prazo combinados antes</div>
+            <div>Pagou antes, entrou no jogo</div>
+            <div>Foto do jogo pra todo mundo</div>
+            <div>Prêmio dividido por cota</div>
+            <div>Um organizador, um registro</div>
+          </div>
+          <div class="foot"><span>SALVA ESSE POST</span><span>1/6 →</span></div>
+        </div>
+        <figcaption><b>Post 4 · Carrossel educativo.</b> Conteúdo que salva e compartilha.</figcaption>
+      </figure>
+
+      <figure class="ig-item">
+        <div class="ig paper">
+          <div class="t" style="font-size:9.5cqw">O jogo foi feito <span class="hl">mesmo?</span></div>
+          <div class="ticket">
+            <div class="meta"><span>BOLÃO VIRADA · FAMÍLIA SOUZA</span><span>12 COTAS</span></div>
+            <div class="tn"><i>04</i><i>11</i><i>23</i><i>35</i><i>42</i><i>58</i></div>
+            <div class="meta"><span>REGISTRADO 30/12 · 14:32</span><span>#A7F3-91C0</span></div>
+          </div>
+          <div class="seal">✓ REGISTRADO ANTES DO SORTEIO</div>
+          <div class="s">Foto, data e assinatura digital. Ninguém troca o jogo depois.</div>
+          <div class="foot"><span>@GESTAOBOLAO</span><span>O BOLÃO COM RECIBO</span></div>
+        </div>
+        <figcaption><b>Post 5 · Confiança.</b> O diferencial principal em uma imagem.</figcaption>
+      </figure>
+
+      <figure class="ig-item">
+        <div class="ig ink">
+          <div class="t" style="font-size:10cqw">Quanto custa?</div>
+          <div class="pricebox">
+            <div style="background:#1F2748"><span>Família</span><b>R$ 0</b><span style="color:#B9C0DC">até 15 pessoas</span></div>
+            <div style="background:#FFB020;color:#141A33"><span>Passe Virada</span><b>R$ 29,90</b><span>até 200 pessoas</span></div>
+          </div>
+          <div class="s" style="color:#B9C0DC">Só quem organiza paga. Quem participa entra pelo link, sem baixar nada.</div>
+          <div class="foot"><span>PLAY STORE · APP STORE</span><span style="color:#FFB020">LINK NA BIO</span></div>
+        </div>
+        <figcaption><b>Post 6 · Oferta.</b> Usar a partir de dezembro, quando a Virada esquenta.</figcaption>
+      </figure>
+    </div>
+
+    <h3>Stories</h3>
+    <div class="stories">
+      <div class="story" style="background:#141A33;color:#fff">
+        <div class="bar"><i></i></div>
+        <div class="t">Você já tomou calote em bolão?</div>
+        <div class="poll"><div>Já 😤</div><div>Nunca, sou o organizador</div></div>
+        <div style="font:500 4.5cqw var(--f-mono);color:#FFB020">@GESTAOBOLAO</div>
+      </div>
+      <div class="story amber" style="background:#FFB020;color:#141A33">
+        <div class="bar"><i></i></div>
+        <div class="t">Como criar seu bolão em 2 minutos</div>
+        <div style="display:grid;gap:4cqw;font-weight:700;font-size:6cqw;margin-top:auto">
+          <span>1 · Cria o bolão</span><span>2 · Manda o link</span><span>3 · Acompanha o Pix</span>
+        </div>
+        <div style="font:500 4.5cqw var(--f-mono)">ARRASTA PRA CIMA ↑</div>
+      </div>
+      <div class="story" style="background:#3D5AFE;color:#fff">
+        <div class="bar"><i style="width:75%"></i></div>
+        <div class="t">Bolão da Virada no trabalho?</div>
+        <div style="margin-top:auto;display:grid;gap:3cqw;font-size:5.5cqw">
+          <span>Lista de quem pagou</span><span>Relatório pro RH</span><span>Até 500 pessoas</span>
+        </div>
+        <div style="background:#fff;color:#141A33;border-radius:99px;padding:3.5cqw;text-align:center;font-weight:700;font-size:5cqw">Plano Empresa · R$ 149</div>
+      </div>
+      <div class="story" style="background:#F4F6FB;color:#141A33">
+        <div class="bar" style="background:#DCE1EE"><i style="background:#141A33;width:100%"></i></div>
+        <div class="t">Saiu o resultado. O app já conferiu.</div>
+        <div style="margin-top:auto;display:flex;gap:2cqw;flex-wrap:wrap">
+          <span style="width:13cqw;height:13cqw;border-radius:50%;background:#FFB020;display:grid;place-items:center;font:700 5cqw var(--f-mono)">09</span>
+          <span style="width:13cqw;height:13cqw;border-radius:50%;background:#FFB020;display:grid;place-items:center;font:700 5cqw var(--f-mono)">13</span>
+          <span style="width:13cqw;height:13cqw;border-radius:50%;background:#DCE1EE;display:grid;place-items:center;font:700 5cqw var(--f-mono)">21</span>
+          <span style="width:13cqw;height:13cqw;border-radius:50%;background:#FFB020;display:grid;place-items:center;font:700 5cqw var(--f-mono)">32</span>
+          <span style="width:13cqw;height:13cqw;border-radius:50%;background:#FFB020;display:grid;place-items:center;font:700 5cqw var(--f-mono)">33</span>
+        </div>
+        <div style="background:#19C37D;border-radius:4cqw;padding:4cqw;font-weight:700;font-size:5.5cqw">Bolão da Família fez uma quadra! R$ 18,06 por cota.</div>
+      </div>
+    </div>
+
+    <h3>Legendas prontas</h3>
+    <div class="captions">
+      <div class="cap">
+        <div class="cap-h"><b>Lançamento</b><button class="copy" type="button">Copiar</button></div>
+        <pre>Todo grupo tem um bolão. E todo bolão tem aquele momento: "quem ainda não pagou?" 🙃
+
+O Gestão Bolão organiza tudo num link:
+✓ quem pagou e quem falta
+✓ foto do jogo registrada antes do sorteio
+✓ conferência automática do resultado
+✓ quanto cada um leva se ganhar
+
+Grátis pra família. Link na bio.
+
+#bolão #megadavirada #megasena #bolaodavirada #gestaobolao</pre>
+      </div>
+      <div class="cap">
+        <div class="cap-h"><b>Bolão da firma</b><button class="copy" type="button">Copiar</button></div>
+        <pre>Marca aqui o colega que sempre paga o bolão "amanhã" 👇
+
+No Gestão Bolão a lista fica verde sozinha quando o Pix cai. E quem atrasou recebe lembrete. Você não precisa cobrar ninguém.
+
+#bolãodafirma #megadavirada #rh #gestaobolao</pre>
+      </div>
+      <div class="cap">
+        <div class="cap-h"><b>Contagem regressiva</b><button class="copy" type="button">Copiar</button></div>
+        <pre>Faltam <span class="d-cap">67</span> dias pra Mega da Virada. 🎆
+
+O bolão da sua família já tem organizador? Cria agora, manda o link no grupo e deixa o app cobrar por você.
+
+Jogue com responsabilidade. +18.
+#megadavirada2026 #bolão #gestaobolao</pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 8. CRONOGRAMA -->
+<section class="band">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">Cronograma até 31/12</span>
+      <h2>O relógio é o maior risco</h2>
+      <p class="lede">A revisão da Apple pode levar dias e, pra app perto do tema jogo, pode pedir ajustes. Por isso o caminho é lançar a versão web primeiro e as lojas logo em seguida.</p>
+    </div>
+    <div class="timeline">
+      <div class="tl"><span class="when">Agora até 3/nov</span><h3>Instagram no ar + lista de espera</h3><p>Posts 1, 3 e 4. Página simples com "avise quando lançar". Comprar o domínio e o @.</p></div>
+      <div class="tl"><span class="when">Até 15/nov</span><h3>MVP web (link pelo WhatsApp)</h3><p>Criar bolão, link de entrada, Pix copia e cola, comprovante, lista de pagos, registro do jogo.</p></div>
+      <div class="tl"><span class="when">Até 22/nov</span><h3>App enviado pras lojas</h3><p>Mesmo código empacotado (React Native ou Flutter). Assinatura com RevenueCat. Ficha nas lojas como "organizador de grupos".</p></div>
+      <div class="tl"><span class="when">1 a 20/dez</span><h3>Campanha da Virada</h3><p>Anúncios no Meta pra "organizador de bolão", plano Empresa por e-mail e LinkedIn pra RH, posts 2, 5 e 6.</p></div>
+      <div class="tl"><span class="when">31/dez</span><h3>Noite do sorteio</h3><p>Conferência automática, push com resultado, stories ao vivo. Na semana seguinte, oferta do plano anual pra quem usou o Passe.</p></div>
+    </div>
+  </div>
+</section>
+
+<script>
+(function () {
+  var brl = function (v) { return "R$ " + Math.round(v).toLocaleString("pt-BR"); };
+  var int = function (v) { return Math.round(v).toLocaleString("pt-BR"); };
+
+  // dias até a Virada
+  var now = new Date(); var target = new Date(2026, 11, 31);
+  var d = Math.max(0, Math.ceil((target - new Date(now.getFullYear(), now.getMonth(), now.getDate())) / 864e5));
+  ["days", "ig-days"].forEach(function (id) { var el = document.getElementById(id); if (el) el.textContent = d; });
+  document.querySelectorAll(".d-cap").forEach(function (el) { el.textContent = d; });
+
+  // volante decorativo
+  var v = document.getElementById("volante"); var on = [4, 11, 23, 35, 42, 58];
+  for (var i = 1; i <= 60; i++) { var s = document.createElement("span"); s.textContent = (i < 10 ? "0" : "") + i; if (on.indexOf(i) > -1) s.className = "on"; v.appendChild(s); }
+
+  // calculadora
+  var PASS = 29.9, EMP = 149, LOJA = 0.15, WEB = 0.03, IMP = 0.06, PESSOAS = 20;
+  function calc(p) {
+    var passes = p.org * p.conv / 100;
+    var bruto = passes * PASS + p.emp * EMP;
+    var shareLoja = p.loja / 100;
+    // empresas compram pelo site
+    var taxa = passes * PASS * (shareLoja * LOJA + (1 - shareLoja) * WEB) + p.emp * EMP * WEB;
+    var imp = bruto * IMP;
+    return { passes: passes, bruto: bruto, taxa: taxa, imp: imp, ads: p.ads, liq: bruto - taxa - imp - p.ads, alc: p.org * PESSOAS };
+  }
+  var S = {
+    cons: { org: 3000, conv: 8, emp: 30, loja: 70, ads: 10000 },
+    base: { org: 15000, conv: 12, emp: 150, loja: 70, ads: 30000 },
+    otim: { org: 60000, conv: 15, emp: 600, loja: 70, ads: 80000 }
+  };
+  var ids = ["org", "conv", "emp", "loja", "ads"];
+  function read() { var p = {}; ids.forEach(function (k) { p[k] = +document.getElementById(k).value; }); return p; }
+  function render() {
+    var p = read(), r = calc(p);
+    document.getElementById("o-org").textContent = int(p.org);
+    document.getElementById("o-conv").textContent = p.conv + "%";
+    document.getElementById("o-emp").textContent = int(p.emp);
+    document.getElementById("o-loja").textContent = p.loja + "%";
+    document.getElementById("o-ads").textContent = brl(p.ads);
+    document.getElementById("r-pass").textContent = int(r.passes);
+    document.getElementById("r-bruto").textContent = brl(r.bruto);
+    document.getElementById("r-taxa").textContent = "− " + brl(r.taxa);
+    document.getElementById("r-imp").textContent = "− " + brl(r.imp);
+    document.getElementById("r-ads").textContent = "− " + brl(r.ads);
+    document.getElementById("r-liq").textContent = (r.liq < 0 ? "− " : "") + brl(Math.abs(r.liq));
+    document.getElementById("r-alc").textContent = int(r.alc);
+  }
+  ids.forEach(function (k) { document.getElementById(k).addEventListener("input", function () { setPressed(null); render(); }); });
+  var btns = document.querySelectorAll(".seg button");
+  function setPressed(key) { btns.forEach(function (b) { b.setAttribute("aria-pressed", b.dataset.s === key ? "true" : "false"); }); }
+  btns.forEach(function (b) {
+    b.addEventListener("click", function () {
+      var p = S[b.dataset.s]; ids.forEach(function (k) { document.getElementById(k).value = p[k]; });
+      setPressed(b.dataset.s); render();
+    });
+  });
+  Object.keys(S).forEach(function (k) {
+    var r = calc(S[k]);
+    document.getElementById("sc-" + k).textContent = brl(r.bruto) + " bruto · " + brl(r.liq) + " lucro";
+  });
+  render();
+
+  // copiar legendas
+  document.querySelectorAll(".copy").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var pre = btn.closest(".cap").querySelector("pre");
+      var done = function () { btn.textContent = "Copiado"; setTimeout(function () { btn.textContent = "Copiar"; }, 1600); };
+      var fallback = function () { var r = document.createRange(); r.selectNodeContents(pre); var s = getSelection(); s.removeAllRanges(); s.addRange(r); btn.textContent = "Selecionado"; };
+      try { navigator.clipboard.writeText(pre.innerText).then(done, fallback); } catch (e) { fallback(); }
+    });
+  });
+})();
+</script>
