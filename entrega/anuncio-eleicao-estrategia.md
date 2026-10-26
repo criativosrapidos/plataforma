@@ -1,4 +1,10 @@
-# Versão 5 (atual) — 29s
+# Versão 6 (atual) — 29s
+
+**Arquivo:** `criativos-rapidos-eleicao-case-alessandra-v6-29s-9x16.mp4`. Final reordenado: **"Faça como a Alessandra!"** (ainda na cena do case, com a faixa virando de "10 procedimentos vendidos" pra "Faça como a Alessandra!") → **"Chama no WhatsApp agora!"** (botão com clique) → **"Seu criativo a partir de R$97!"** (frase nova).
+
+---
+
+# Versão 5 (anterior) — 29s
 
 **Arquivo:** `criativos-rapidos-eleicao-case-alessandra-v5-29s-9x16.mp4`. Igual à v4, agora com a frase **falada** "Você não controla a política!" (voz Matheus), com o "A POLÍTICA." batendo na tela junto com a palavra.
 
