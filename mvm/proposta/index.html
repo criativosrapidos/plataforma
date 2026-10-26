@@ -1,0 +1,277 @@
+<title>Proposta MVM Ótica</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@400;600;700;800&display=swap">
+<style>
+/* Layout: proposta em capítulos (anúncio → identidade → landing → pacotes → próximos passos), no visual de feira brasileira da MVM: amarelo, verde-bandeira, rosa e laranja; assinada pela Criativos Rápidos. Visual único, sempre claro. */
+:root {
+  --bg:#F7EEDC; --surface:#FFFFFF; --fg:#0B3524; --mute:#4A6B5C; --line:#E7D9BC;
+  --verde:#14573A; --verde2:#0B3524; --rosa:#E23C5B; --laranja:#F0801E; --amarelo:#FDD20A; --ambar:#F2B33D; --terra:#E46F4F; --cr:#FFD400;
+  --disp:Anton, Impact, "Arial Narrow", sans-serif; --sans:Montserrat, system-ui, -apple-system, "Segoe UI", sans-serif;
+  color-scheme:light;
+}
+* { box-sizing:border-box; }
+body { background:var(--bg); color:var(--fg); font-family:var(--sans); font-size:16px; line-height:1.6; -webkit-font-smoothing:antialiased; }
+img, video { max-width:100%; display:block; }
+a { color:inherit; }
+.wrap { max-width:1180px; margin:0 auto; padding-left:max(22px, env(safe-area-inset-left, 0px)); padding-right:max(22px, env(safe-area-inset-right, 0px)); }
+h1, h2, h3 { font-family:var(--disp); font-weight:400; text-transform:uppercase; line-height:.98; letter-spacing:.005em; margin:0; text-wrap:balance; }
+h2 { font-size:clamp(40px, 5.6vw, 72px); color:var(--verde); margin-top:14px; }
+h2 span { color:var(--rosa); }
+p { margin:0; }
+.tag { display:inline-flex; align-items:center; gap:10px; font-size:12.5px; font-weight:800; letter-spacing:.16em; text-transform:uppercase; color:var(--verde); }
+.tag b { font-family:var(--disp); font-weight:400; font-size:17px; letter-spacing:0; background:var(--rosa); color:#fff; border-radius:8px; padding:3px 10px 4px; }
+.lead { color:var(--mute); font-size:17px; font-weight:600; line-height:1.65; max-width:58ch; }
+:focus-visible { outline:3px solid var(--rosa); outline-offset:3px; }
+section { padding-block:96px; }
+.cab { display:grid; grid-template-columns:minmax(0, 1fr) minmax(0, 1fr); gap:48px; align-items:end; margin-bottom:46px; }
+.bt { display:inline-flex; align-items:center; gap:10px; text-decoration:none; font-weight:800; font-size:15px; padding:16px 26px; border-radius:50px; background:var(--verde); color:#fff; box-shadow:0 8px 0 var(--verde2); transition:transform .2s; }
+.bt:hover { transform:translateY(-2px); }
+.bt.rosa { background:var(--rosa); box-shadow:0 8px 0 #B82543; }
+
+/* topo */
+.top { background:var(--verde2); color:#fff; }
+.top .wrap { display:flex; justify-content:space-between; align-items:center; gap:14px; padding-block:13px; flex-wrap:wrap; }
+.cr { display:inline-flex; align-items:center; gap:10px; text-decoration:none; color:#fff; }
+.cr i { width:34px; height:34px; border-radius:9px; background:var(--cr); display:grid; place-items:center; flex:none; }
+.cr span { line-height:1.02; font-size:14.5px; font-weight:600; }
+.cr b { display:block; font-weight:800; font-style:italic; color:var(--cr); }
+.selo { font-size:11.5px; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:#A8C9B8; }
+
+/* abertura */
+.abre { background:radial-gradient(circle at 75% 40%, #FFE14D, var(--amarelo) 45%, var(--ambar) 100%); position:relative; overflow:hidden; }
+.abre::before { content:""; position:absolute; inset:0; background:repeating-conic-gradient(from 0deg at 76% 45%, rgba(255,255,255,.16) 0 7.5deg, transparent 7.5deg 15deg); }
+.abre .wrap { position:relative; display:grid; grid-template-columns:minmax(0, 1.2fr) minmax(0, .8fr); gap:44px; align-items:center; padding-block:64px 80px; }
+.abre .logo { width:min(360px, 100%); margin-top:18px; }
+h1 { font-size:clamp(46px, 6.4vw, 88px); color:var(--verde); margin-top:22px; }
+h1 span { color:var(--rosa); display:block; }
+.abre .lead { color:var(--verde2); margin-top:18px; }
+.indice { display:flex; flex-wrap:wrap; gap:8px; margin-top:30px; }
+.indice a { text-decoration:none; font-size:13.5px; font-weight:800; color:var(--verde); background:rgba(255,255,255,.65); border-radius:30px; padding:9px 16px; transition:background .2s; }
+.indice a:hover { background:#fff; }
+.fone { justify-self:center; width:min(300px, 100%); aspect-ratio:9/19.2; border-radius:42px; padding:11px; background:var(--verde2); box-shadow:0 34px 70px rgba(11,53,36,.35); transform:rotate(3deg); }
+.fone .tela { width:100%; height:100%; border-radius:32px; overflow:hidden; background:#000; }
+.fone video { width:100%; height:100%; object-fit:cover; }
+
+/* anúncio */
+.video-grid { display:grid; grid-template-columns:minmax(0, .75fr) minmax(0, 1.25fr); gap:48px; align-items:center; }
+.player { width:100%; max-width:380px; aspect-ratio:9/16; border-radius:28px; overflow:hidden; background:#000; border:6px solid var(--surface); box-shadow:0 26px 60px rgba(11,53,36,.22); }
+.player video { width:100%; height:100%; object-fit:cover; }
+.roteiro { display:grid; gap:10px; margin-top:26px; }
+.cena { display:grid; grid-template-columns:92px minmax(0, 1fr); gap:14px; align-items:center; background:var(--surface); border-radius:18px; padding:14px 18px; box-shadow:0 8px 24px rgba(11,53,36,.07); }
+.cena b { font-family:var(--disp); font-weight:400; font-size:20px; text-transform:uppercase; }
+.cena:nth-child(1) b { color:var(--laranja); } .cena:nth-child(2) b { color:var(--rosa); } .cena:nth-child(3) b { color:var(--verde); } .cena:nth-child(4) b { color:var(--terra); }
+.specs { display:flex; flex-wrap:wrap; gap:8px; margin-top:20px; }
+.specs span { font-size:13px; font-weight:700; background:var(--surface); border-radius:20px; padding:6px 13px; color:var(--mute); }
+
+/* identidade */
+.idgrid { display:grid; grid-template-columns:minmax(0, 1.1fr) minmax(0, .9fr); gap:18px; }
+.idgrid figure { margin:0; border-radius:26px; overflow:hidden; background:var(--surface); box-shadow:0 12px 34px rgba(11,53,36,.09); }
+.idgrid figcaption { font-size:12.5px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--mute); padding:12px 18px 14px; }
+.idgrid .alta { grid-row:span 2; display:flex; flex-direction:column; }
+.idgrid .alta img { flex:1; object-fit:cover; }
+.cores { display:grid; grid-template-columns:repeat(5, minmax(0, 1fr)); gap:12px; margin-top:18px; }
+.cores div { border-radius:20px; padding:16px; min-height:120px; display:flex; flex-direction:column; justify-content:space-between; font-weight:800; font-size:14px; }
+.cores small { font-weight:600; font-size:11.5px; opacity:.9; line-height:1.4; font-variant-numeric:tabular-nums; }
+.tipos { display:grid; grid-template-columns:minmax(0, 1fr) minmax(0, 1fr); gap:12px; margin-top:12px; }
+.tipos > div { background:var(--surface); border-radius:20px; padding:24px 26px; }
+.tipos .a { font-family:var(--disp); font-size:44px; color:var(--verde); line-height:1; text-transform:uppercase; }
+.tipos .b { font-weight:800; font-size:30px; color:var(--rosa); line-height:1.1; }
+.tipos small { display:block; color:var(--mute); font-weight:600; font-size:14px; margin-top:8px; }
+.nota { color:var(--mute); font-weight:600; font-size:14.5px; margin-top:16px; }
+
+/* landing */
+.lp { background:var(--verde); color:#fff; }
+.lp h2 { color:#fff; } .lp h2 span { color:var(--amarelo); }
+.lp .tag { color:var(--amarelo); }
+.lp .lead { color:#CFE5D9; }
+.telas { display:grid; grid-template-columns:minmax(0, 1fr) 290px; gap:34px; align-items:start; }
+.navegador { border-radius:16px; overflow:hidden; background:#fff; box-shadow:0 26px 60px rgba(0,0,0,.3); }
+.barra { display:flex; align-items:center; gap:7px; padding:11px 14px; background:#F1ECE0; }
+.barra i { width:10px; height:10px; border-radius:50%; background:#D6CDB8; }
+.barra span { margin-left:10px; font-size:12px; color:#7C8B83; background:#fff; padding:4px 14px; border-radius:20px; flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.rolagem { height:600px; overflow-y:auto; overscroll-behavior:contain; }
+.cel { border-radius:38px; padding:10px; background:var(--verde2); box-shadow:0 26px 60px rgba(0,0,0,.35); }
+.cel .rolagem { height:590px; border-radius:29px; }
+.legenda { font-size:13px; font-weight:600; color:#A8C9B8; margin-top:10px; }
+
+/* pacotes */
+.planos { display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); gap:18px; align-items:stretch; }
+.plano { background:var(--surface); border-radius:28px; padding:32px 30px; box-shadow:0 12px 34px rgba(11,53,36,.08); position:relative; }
+.plano.dest { border:3px solid var(--rosa); box-shadow:0 24px 60px rgba(226,60,91,.18); }
+.plano.dest::before { content:"Mais escolhido"; position:absolute; top:-15px; left:50%; transform:translateX(-50%); background:var(--rosa); color:#fff; font-size:12px; font-weight:800; letter-spacing:.1em; text-transform:uppercase; padding:5px 14px; border-radius:20px; white-space:nowrap; }
+.plano h3 { font-size:34px; color:var(--verde); }
+.preco { display:flex; align-items:flex-start; gap:6px; margin-top:10px; font-family:var(--disp); color:var(--fg); }
+.preco small { font-size:20px; margin-top:10px; }
+.preco b { font-weight:400; font-size:72px; line-height:1; font-variant-numeric:tabular-nums; }
+.plano ul { list-style:none; padding:0; margin:22px 0 0; display:grid; gap:10px; }
+.plano li { display:flex; gap:10px; align-items:flex-start; font-size:15.5px; font-weight:600; }
+.plano li::before { content:""; flex:none; width:20px; height:20px; margin-top:2px; border-radius:50%; background:var(--verde) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M5.5 10.5l3 3 6-6.5' fill='none' stroke='%23FDD20A' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/20px no-repeat; }
+.plano li.forte { font-weight:800; color:var(--rosa); }
+
+/* passos */
+.passos { display:grid; grid-template-columns:repeat(4, minmax(0, 1fr)); gap:14px; }
+.passo { background:var(--surface); border-radius:24px; padding:26px; box-shadow:0 10px 28px rgba(11,53,36,.07); }
+.passo .n { width:46px; height:46px; border-radius:14px; display:grid; place-items:center; font-family:var(--disp); font-size:24px; color:#fff; }
+.passo:nth-child(1) .n { background:var(--verde); } .passo:nth-child(2) .n { background:var(--rosa); } .passo:nth-child(3) .n { background:var(--laranja); } .passo:nth-child(4) .n { background:var(--terra); }
+.passo h3 { font-size:26px; color:var(--verde); margin-top:16px; }
+.passo p { color:var(--mute); font-weight:600; font-size:15px; margin-top:6px; }
+.fecha { margin-top:54px; background:var(--amarelo); border-radius:32px; padding:46px; display:grid; grid-template-columns:minmax(0, 1fr) auto; gap:28px; align-items:center; position:relative; overflow:hidden; }
+.fecha::before { content:""; position:absolute; inset:0; background:repeating-conic-gradient(from 0deg at 100% 0%, rgba(255,255,255,.2) 0 6deg, transparent 6deg 12deg); }
+.fecha > * { position:relative; }
+.fecha h3 { font-size:clamp(32px, 4vw, 52px); color:var(--verde); }
+.fecha h3 span { color:var(--rosa); }
+.fecha p { color:var(--verde2); font-weight:600; margin-top:10px; }
+
+footer { background:var(--verde2); }
+footer .wrap { display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; padding-block:26px; color:#A8C9B8; font-size:13px; font-weight:600; }
+
+@media (max-width: 920px) {
+  .abre .wrap, .cab, .video-grid, .telas, .fecha, .idgrid { grid-template-columns:minmax(0, 1fr); gap:32px; }
+  .idgrid { gap:14px; } .idgrid .alta { grid-row:auto; }
+  .planos { grid-template-columns:minmax(0, 1fr); }
+  .plano.dest { margin-top:10px; }
+  .passos { grid-template-columns:repeat(2, minmax(0, 1fr)); }
+  .cores { grid-template-columns:repeat(3, minmax(0, 1fr)); }
+  .telas .cel { max-width:290px; }
+  .rolagem { height:470px; }
+  section { padding-block:70px; }
+  .fecha { padding:32px 24px; }
+  .fone { transform:none; }
+}
+@media (max-width: 560px) {
+  .passos, .tipos { grid-template-columns:minmax(0, 1fr); }
+  .cores { grid-template-columns:repeat(2, minmax(0, 1fr)); }
+}
+@media (prefers-reduced-motion: reduce) { * { transition:none !important; } }
+</style>
+
+<div class="top"><div class="wrap">
+  <a class="cr" href="https://criativosrapidos.com.br" target="_blank" rel="noopener">
+    <i><svg viewBox="0 0 40 40" width="24" aria-hidden="true"><g fill="#0B0B0B"><rect x="4" y="12" width="9" height="3.2" rx="1.6"/><rect x="2" y="18.4" width="11" height="3.2" rx="1.6"/><rect x="4" y="24.8" width="9" height="3.2" rx="1.6"/><path d="M16 9 L35 20 L16 31 Z"/></g></svg></i>
+    <span>criativos<b>rápidos</b></span>
+  </a>
+  <span class="selo">Proposta exclusiva · Outubro 2026</span>
+</div></div>
+
+<header class="abre">
+  <div class="wrap">
+    <div>
+      <div class="tag">Proposta de marketing para</div>
+      <img class="logo" src="m/logo.png" alt="MVM Ótica" width="1082" height="416">
+      <h1>Ótica nova no pedaço. <span>Todo mundo vai saber.</span></h1>
+      <p class="lead">Para a inauguração no Shopping Popular da Ceilândia preparamos um anúncio pronto para rodar, a identidade “A brasilidade em cada olhar” aplicada e uma landing page para levar o povo até o box 62 e 63.</p>
+      <nav class="indice" aria-label="Capítulos da proposta">
+        <a href="#anuncio">Anúncio</a><a href="#identidade">Identidade</a><a href="#landing">Landing page</a><a href="#pacotes">Pacotes</a><a href="#passos">Próximos passos</a>
+      </nav>
+    </div>
+    <div class="fone" aria-hidden="true"><div class="tela"><video src="m/video.mp4" poster="m/poster.jpg" muted autoplay loop playsinline preload="metadata"></video></div></div>
+  </div>
+</header>
+
+<section id="anuncio">
+  <div class="wrap">
+    <div class="video-grid">
+      <div class="player"><video src="m/video.mp4" poster="m/poster.jpg" controls playsinline preload="metadata" aria-label="Anúncio de lançamento da MVM Ótica (prévia)"></video></div>
+      <div>
+        <div class="tag"><b>01</b> O anúncio de lançamento</div>
+        <h2>Atenção, <span>Ceilândia!</span></h2>
+        <p class="lead" style="margin-top:16px">Um vídeo de 30 segundos com locução animada e groove de samba, feito para parar o dedo de quem passa pelo feed.</p>
+        <div class="roteiro">
+          <div class="cena"><b>Gancho</b><span>“Atenção, Ceilândia! Chegou ótica nova no pedaço!”</span></div>
+          <div class="cena"><b>Dor</b><span>Vista cansada, letrinha embaçando e óculos que custa os olhos da cara</span></div>
+          <div class="cena"><b>Virada</b><span>“Acabou! Chegou a MVM Ótica: a brasilidade em cada olhar”</span></div>
+          <div class="cena"><b>Convite</b><span>Shopping Popular da Ceilândia, box 62 e 63: “vem ver o mundo do seu jeito!”</span></div>
+        </div>
+        <div class="specs"><span>Vertical 1080×1920</span><span>Locução + trilha de samba</span><span>Reels e anúncio</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="identidade" style="padding-top:0">
+  <div class="wrap">
+    <div class="cab">
+      <div><div class="tag"><b>02</b> Identidade visual</div><h2>A brasilidade <span>em cada olhar.</span></h2></div>
+      <p class="lead">A identidade que vocês já têm, aplicada com o padrão de ladrilhos, o sol e as cores da feira: fachada, banners e redes falando a mesma língua.</p>
+    </div>
+    <div class="idgrid">
+      <figure class="alta"><img src="m/fachada.jpg" alt="Arte da fachada com logo MVM Ótica e o slogan sobre padrão de ladrilhos" loading="lazy" width="1200" height="671"><figcaption>Fachada · lona</figcaption></figure>
+      <figure><img src="m/banner_pessoas.jpg" alt="Banner com ilustração de pessoas de óculos e o slogan" loading="lazy" width="1600" height="533"><figcaption>Banner · redes e site</figcaption></figure>
+      <figure><img src="m/banner_creme.jpg" alt="Banner creme com o slogan e a logo" loading="lazy" width="1200" height="670"><figcaption>Banner · versão clara</figcaption></figure>
+    </div>
+    <div class="cores">
+      <div style="background:#14573A;color:#fff">Verde<small>C85 M30 Y70 K50</small></div>
+      <div style="background:#E23C5B;color:#fff">Vermelho<small>C0 M90 Y60 K0</small></div>
+      <div style="background:#FDD20A;color:#0B3524">Amarelo<small>C8 M35 Y95 K0</small></div>
+      <div style="background:#E46F4F;color:#fff">Terracota<small>C15 M65 Y80 K0</small></div>
+      <div style="background:#F0801E;color:#fff">Laranja<small>Apoio</small></div>
+    </div>
+    <div class="tipos">
+      <div><div class="a">Anton Bold</div><small>Títulos</small></div>
+      <div><div class="b">Komika Axis</div><small>Apoio · na web usamos Montserrat para leitura no celular</small></div>
+    </div>
+    <p class="nota">Cores e fontes conforme o Guia de Produção Gráfica da MVM Ótica.</p>
+  </div>
+</section>
+
+<section id="landing" class="lp">
+  <div class="wrap">
+    <div class="cab">
+      <div><div class="tag"><b style="background:var(--amarelo);color:var(--verde2)">03</b> Landing page</div><h2>Do feed <span>até o box.</span></h2></div>
+      <div>
+        <p class="lead">Uma página alegre e direta: o slogan, por que a MVM, “óculos é pra todo mundo” e o endereço com botão para abrir o mapa.</p>
+        <div style="margin-top:22px"><a class="bt rosa" href="landing/index.html" target="_blank" rel="noopener">Abrir a landing navegável →</a></div>
+      </div>
+    </div>
+    <div class="telas">
+      <div>
+        <div class="navegador">
+          <div class="barra"><i></i><i></i><i></i><span>MVM Ótica · página de lançamento</span></div>
+          <div class="rolagem" tabindex="0" aria-label="Landing page no computador, role para ver inteira"><img src="m/lp_desktop.jpg" alt="Landing page da MVM Ótica no computador" loading="lazy" width="1440" height="3824"></div>
+        </div>
+        <p class="legenda">Role dentro da janela para ver a página inteira.</p>
+      </div>
+      <div>
+        <div class="cel"><div class="rolagem" tabindex="0" aria-label="Landing page no celular, role para ver inteira"><img src="m/lp_celular.jpg" alt="Landing page da MVM Ótica no celular" loading="lazy" width="390" height="4630"></div></div>
+        <p class="legenda">Versão para celular.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="pacotes">
+  <div class="wrap">
+    <div class="cab">
+      <div><div class="tag"><b>04</b> Pacotes</div><h2>Escolha o <span>seu ritmo.</span></h2></div>
+      <p class="lead">Conteúdo pronto para postar, entregue na ordem: anúncios, carrosséis, posts, reels e stories.</p>
+    </div>
+    <div class="planos">
+      <div class="plano"><h3>Largada</h3><div class="preco"><small>R$</small><b>247</b></div>
+        <ul><li>1 anúncio</li><li>3 carrosséis</li><li>3 posts</li><li>1 reels com locução</li><li>3 stories</li></ul></div>
+      <div class="plano dest"><h3>Acelera</h3><div class="preco"><small>R$</small><b>497</b></div>
+        <ul><li class="forte">Identidade aplicada</li><li>3 anúncios</li><li>6 carrosséis</li><li>9 posts</li><li>3 reels com locução</li><li>6 stories</li></ul></div>
+      <div class="plano"><h3>Turbo</h3><div class="preco"><small>R$</small><b>997</b></div>
+        <ul><li class="forte">Landing page</li><li class="forte">Identidade aplicada</li><li>6 anúncios</li><li>9 carrosséis</li><li>12 posts</li><li>6 reels com locução</li><li>12 stories</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<section id="passos" style="padding-top:0">
+  <div class="wrap">
+    <div class="cab"><div><div class="tag"><b>05</b> Próximos passos</div><h2>Bora encher <span>esse box?</span></h2></div></div>
+    <div class="passos">
+      <div class="passo"><div class="n">1</div><h3>Escolhe o pacote</h3><p>Largada, Acelera ou Turbo.</p></div>
+      <div class="passo"><div class="n">2</div><h3>Aprova as peças</h3><p>Ajustamos a prévia com vocês.</p></div>
+      <div class="passo"><div class="n">3</div><h3>Liga os anúncios</h3><p>O vídeo de lançamento já está pronto.</p></div>
+      <div class="passo"><div class="n">4</div><h3>Recebe tudo no mês</h3><p>É só aprovar e postar.</p></div>
+    </div>
+    <div class="fecha">
+      <div><h3>Vamos fazer a Ceilândia <span>ver a MVM?</span></h3><p>Proposta criada pela Criativos Rápidos para a MVM Ótica.</p></div>
+      <a class="bt" href="https://criativosrapidos.com.br" target="_blank" rel="noopener">Falar com a Criativos Rápidos</a>
+    </div>
+  </div>
+</section>
+
+<footer><div class="wrap"><span>© Criativos Rápidos · criativosrapidos.com.br</span><span>Material de proposta. Peças em caráter de prévia, sujeitas à aprovação da MVM Ótica.</span></div></footer>

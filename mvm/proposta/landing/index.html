@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>MVM Ótica · A brasilidade em cada olhar</title>
+<style>
+@font-face { font-family:Anton; src:url(f/anton-latin-400-normal.woff) format("woff"); }
+@font-face { font-family:M; font-weight:400; src:url(f/montserrat-latin-400-normal.woff) format("woff"); }
+@font-face { font-family:M; font-weight:600; src:url(f/montserrat-latin-600-normal.woff) format("woff"); }
+@font-face { font-family:M; font-weight:700; src:url(f/montserrat-latin-700-normal.woff) format("woff"); }
+@font-face { font-family:M; font-weight:800; src:url(f/montserrat-latin-800-normal.woff) format("woff"); }
+@font-face { font-family:M; font-weight:900; src:url(f/montserrat-latin-900-normal.woff) format("woff"); }
+:root { --verde:#14573A; --verde2:#0B3524; --rosa:#E23C5B; --laranja:#F0801E; --amarelo:#FDD20A; --ambar:#F2B33D; --terra:#E46F4F; --creme:#F7EEDC; }
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { font-family:M, system-ui, sans-serif; color:var(--verde2); background:var(--creme); line-height:1.6; }
+img { display:block; max-width:100%; }
+a { color:inherit; text-decoration:none; }
+.wrap { max-width:1180px; margin:0 auto; padding:0 24px; }
+.A { font-family:Anton, Impact, sans-serif; text-transform:uppercase; line-height:.98; letter-spacing:.005em; font-weight:400; }
+.bt { display:inline-flex; align-items:center; gap:10px; font-weight:800; font-size:16px; padding:18px 30px; border-radius:60px; transition:transform .2s, box-shadow .2s; }
+.bt:hover { transform:translateY(-2px); }
+.bt.verde { background:var(--verde); color:#fff; box-shadow:0 10px 0 var(--verde2); }
+.bt.rosa { background:var(--rosa); color:#fff; box-shadow:0 10px 0 #B82543; }
+.bt.claro { background:#fff; color:var(--verde); box-shadow:0 10px 0 rgba(11,53,36,.2); }
+
+.prev { background:#111; color:#bbb; font-size:12.5px; text-align:center; padding:8px 16px; }
+.prev b { color:#FFD400; }
+
+/* topo */
+header { background:var(--amarelo); }
+.nav { display:flex; align-items:center; justify-content:space-between; gap:20px; padding-top:16px; padding-bottom:16px; }
+.nav img { width:150px; }
+.nav nav { display:flex; gap:28px; font-weight:700; font-size:15px; }
+.nav nav a:hover { color:var(--rosa); }
+
+.hero { background:radial-gradient(circle at 70% 40%, #FFE14D, var(--amarelo) 45%, var(--ambar) 100%); position:relative; overflow:hidden; }
+.hero::before { content:""; position:absolute; inset:0; background:repeating-conic-gradient(from 0deg at 72% 46%, rgba(255,255,255,.18) 0 7.5deg, transparent 7.5deg 15deg); }
+.hero .wrap { position:relative; display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:center; padding-top:60px; padding-bottom:90px; }
+.selo { display:inline-block; background:var(--rosa); color:#fff; font-family:Anton; text-transform:uppercase; font-size:22px; padding:8px 20px 10px; border-radius:12px; transform:rotate(-2deg); }
+.hero h1 { font-size:clamp(56px, 8vw, 116px); color:var(--verde); margin:22px 0 18px; }
+.hero h1 span { color:var(--rosa); display:block; }
+.hero p { font-size:19px; font-weight:600; max-width:470px; }
+.hero .acoes { display:flex; flex-wrap:wrap; gap:16px; margin-top:34px; }
+.hero .foto { border-radius:36px; overflow:hidden; border:8px solid #fff; box-shadow:0 30px 60px rgba(11,53,36,.25); transform:rotate(2deg); }
+.hero .foto img { aspect-ratio:4/4.2; object-fit:cover; object-position:30% center; width:100%; }
+
+/* faixa */
+.faixa { background:var(--verde); color:#fff; overflow:hidden; white-space:nowrap; }
+.faixa div { display:inline-block; padding:18px 0; font-family:Anton; text-transform:uppercase; font-size:28px; letter-spacing:.02em; animation:corre 28s linear infinite; }
+.faixa span { color:var(--amarelo); margin:0 24px; }
+@keyframes corre { to { transform:translateX(-50%); } }
+
+section { padding:100px 0; }
+.titulo { text-align:center; max-width:760px; margin:0 auto 56px; }
+.titulo .A { font-size:clamp(42px, 5.6vw, 72px); color:var(--verde); }
+.titulo .A span { color:var(--rosa); }
+.titulo p { font-weight:600; font-size:18px; margin-top:14px; color:#36574A; }
+
+.cards { display:grid; grid-template-columns:repeat(3, 1fr); gap:24px; }
+.card { background:#fff; border-radius:32px; padding:36px 30px; box-shadow:0 16px 40px rgba(11,53,36,.1); }
+.card .ic { width:84px; height:84px; border-radius:24px; display:grid; place-items:center; margin-bottom:22px; }
+.card h3 { font-family:Anton; text-transform:uppercase; font-weight:400; font-size:36px; line-height:1; color:var(--verde); }
+.card p { margin-top:12px; font-size:16px; color:#36574A; }
+
+.todos { background:var(--verde); color:#fff; position:relative; overflow:hidden; }
+.todos .wrap { display:grid; grid-template-columns:1.1fr .9fr; gap:56px; align-items:center; }
+.todos .A { font-size:clamp(52px, 7vw, 96px); }
+.todos .A span { color:var(--amarelo); display:block; }
+.todos p { font-size:18px; font-weight:600; color:#D6EADF; margin-top:20px; max-width:480px; }
+.todos img { border-radius:30px; border:6px solid var(--amarelo); }
+
+.onde { background:url(img/padrao.jpg) center/cover; position:relative; }
+.onde::before { content:""; position:absolute; inset:0; background:rgba(253,210,10,.82); }
+.onde .wrap { position:relative; }
+.mapa { background:#fff; border-radius:40px; padding:56px; display:grid; grid-template-columns:1fr auto; gap:40px; align-items:center; box-shadow:0 30px 60px rgba(11,53,36,.2); }
+.mapa .A { font-size:clamp(40px, 5vw, 64px); color:var(--verde); }
+.mapa .box { display:inline-block; background:var(--rosa); color:#fff; font-family:Anton; font-size:clamp(36px, 4.4vw, 56px); padding:6px 24px 10px; border-radius:16px; margin-top:16px; transform:rotate(-2deg); }
+.mapa p { font-weight:600; margin-top:18px; color:#36574A; }
+
+.final { text-align:center; background:var(--creme); }
+.final img { width:min(520px, 90%); margin:0 auto; }
+.final .A { font-size:clamp(40px, 5vw, 64px); color:var(--verde); margin-top:26px; }
+.final .acoes { display:flex; justify-content:center; flex-wrap:wrap; gap:16px; margin-top:34px; }
+
+footer { background:var(--verde2); color:#A8C9B8; font-size:14px; padding:30px 0 100px; }
+footer .wrap { display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+
+@media (max-width: 880px) {
+  .nav nav { display:none; }
+  .hero .wrap, .todos .wrap, .mapa { grid-template-columns:1fr; }
+  .cards { grid-template-columns:1fr; }
+  section { padding:72px 0; }
+  .mapa { padding:34px 26px; }
+  .hero .foto { transform:none; }
+}
+@media (prefers-reduced-motion: reduce) { .faixa div { animation:none; } }
+</style>
+</head>
+<body>
+<div class="prev">Prévia de landing page criada pela <b>Criativos Rápidos</b> para a MVM Ótica</div>
+
+<header><div class="wrap nav">
+  <img src="img/logo.png" alt="MVM Ótica">
+  <nav><a href="#porque">Por que a MVM</a><a href="#todos">Pra todo mundo</a><a href="#onde">Onde estamos</a></nav>
+  <a class="bt verde" href="#onde" style="padding:12px 22px;font-size:14px;box-shadow:0 6px 0 var(--verde2)">Como chegar</a>
+</div></header>
+
+<div class="hero"><div class="wrap">
+  <div>
+    <span class="selo">Inauguração · Ceilândia</span>
+    <h1 class="A">A brasilidade <span>em cada olhar</span></h1>
+    <p>Armação de todo estilo, lente de qualidade e preço que cabe no seu bolso. A ótica nova do Shopping Popular da Ceilândia.</p>
+    <div class="acoes"><a class="bt rosa" href="#onde">Vem ver de perto →</a><a class="bt claro" href="#porque">Conhecer a MVM</a></div>
+  </div>
+  <div class="foto"><img src="img/pessoas.jpg" alt="Pessoas de óculos em uma feira colorida, com placa 'Óculos é pra todos'"></div>
+</div></div>
+
+<div class="faixa" aria-hidden="true"><div>Óculos é pra todo mundo <span>✦</span> Armação de todo estilo <span>✦</span> Lente de qualidade <span>✦</span> Preço que cabe no bolso <span>✦</span> Óculos é pra todo mundo <span>✦</span> Armação de todo estilo <span>✦</span> Lente de qualidade <span>✦</span> Preço que cabe no bolso <span>✦</span></div></div>
+
+<section id="porque">
+  <div class="wrap">
+    <div class="titulo"><h2 class="A">Vista cansada? <span>Letrinha embaçando?</span></h2><p>A MVM chegou pra resolver, sem o óculos custar os olhos da cara.</p></div>
+    <div class="cards">
+      <div class="card"><div class="ic" style="background:var(--amarelo)"><svg viewBox="0 0 48 48" width="46" fill="none" stroke="#14573A" stroke-width="3.2" stroke-linecap="round"><circle cx="13" cy="28" r="8"/><circle cx="35" cy="28" r="8"/><path d="M21 27c2-2 4-2 6 0M5 26l3-10M43 26l-3-10"/></svg></div>
+        <h3>Armação de todo estilo</h3><p>Do clássico ao colorido: modelos pra combinar com o seu jeito e o seu dia a dia.</p></div>
+      <div class="card"><div class="ic" style="background:var(--rosa)"><svg viewBox="0 0 48 48" width="46" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round"><path d="M4 24s7-12 20-12 20 12 20 12-7 12-20 12S4 24 4 24z"/><circle cx="24" cy="24" r="6"/></svg></div>
+        <h3>Lente de qualidade</h3><p>Pra enxergar bem de perto, de longe e o dia inteiro, com o conforto que seus olhos merecem.</p></div>
+      <div class="card"><div class="ic" style="background:var(--laranja)"><svg viewBox="0 0 48 48" width="46" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="12" width="36" height="24" rx="5"/><circle cx="24" cy="24" r="5"/><path d="M12 18h2M34 30h2"/></svg></div>
+        <h3>Preço que cabe no bolso</h3><p>Óculos bom não precisa ser caro. Aqui o preço é pensado pra você levar o seu sem aperto.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="todos" id="todos">
+  <div class="wrap">
+    <div><h2 class="A">Óculos é pra <span>todo mundo!</span></h2><p>Da criança à vovó, do primeiro óculos à troca da armação: a MVM é a ótica de toda a família, com a cara e as cores do Brasil.</p>
+      <div style="margin-top:34px"><a class="bt claro" href="#onde">Quero conhecer →</a></div></div>
+    <img src="img/banner_pessoas.jpg" alt="Ilustração de pessoas de óculos com a marca MVM Ótica">
+  </div>
+</section>
+
+<section class="onde" id="onde">
+  <div class="wrap">
+    <div class="mapa">
+      <div>
+        <h2 class="A">Corre lá! A gente te espera</h2>
+        <div class="box">Box 62 e 63</div>
+        <p>Shopping Popular da Ceilândia · Ceilândia – DF</p>
+      </div>
+      <a class="bt verde" href="https://www.google.com/maps/search/Shopping+Popular+da+Ceil%C3%A2ndia" target="_blank" rel="noopener">Abrir no mapa →</a>
+    </div>
+  </div>
+</section>
+
+<section class="final">
+  <div class="wrap">
+    <img src="img/logo_slogan.jpg" alt="MVM Ótica · A brasilidade em cada olhar" style="border-radius:30px">
+    <h2 class="A">Vem ver o mundo do seu jeito!</h2>
+    <div class="acoes"><a class="bt rosa" href="https://www.google.com/maps/search/Shopping+Popular+da+Ceil%C3%A2ndia" target="_blank" rel="noopener">Como chegar →</a></div>
+  </div>
+</section>
+
+<footer><div class="wrap"><span>MVM Ótica · Shopping Popular da Ceilândia, box 62 e 63 · Ver bem. Viver melhor.</span><span>Prévia · Criativos Rápidos</span></div></footer>
+</body>
+</html>
