@@ -1,4 +1,10 @@
-# Versão 6 (atual) — 29s
+# Versão 7 (atual) — 29s com camada de motion
+
+**Arquivo:** `criativos-rapidos-eleicao-case-alessandra-v7-motion-29s-9x16.mp4`. Mesmo conteúdo e tempos da v6, com uma camada de motion por cima: chicote (whip pan) com borrão nos cortes, zoom blur + flash + onda de choque + raios nas batidas, glitch RGB com fatias deslocadas em "nenhum político" e "a política", persianas diagonais amarelas/pretas nas viradas, confete no R$2.850 e no R$97, luz quente vazando, câmera "na mão", vinheta e grão de filme. SFX novos: whooshes, glitch digital e reforço grave nas batidas.
+
+---
+
+# Versão 6 (anterior) — 29s
 
 **Arquivo:** `criativos-rapidos-eleicao-case-alessandra-v6-29s-9x16.mp4`. Final reordenado: **"Faça como a Alessandra!"** (ainda na cena do case, com a faixa virando de "10 procedimentos vendidos" pra "Faça como a Alessandra!") → **"Chama no WhatsApp agora!"** (botão com clique) → **"Seu criativo a partir de R$97!"** (frase nova).
 
