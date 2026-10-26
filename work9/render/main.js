@@ -34,8 +34,11 @@ window.renderFrame = (t) => {
   ctx.setTransform(1, 0, 0, 1, 0, 0);
   ctx.globalAlpha = 1; ctx.filter = 'none';
   ctx.save(); applyCamera(t);
+  // câmera "na mão": leve rotação contínua quando a camada de motion está ligada
+  if (window.FX) { ctx.translate(W / 2, H / 2); ctx.rotate(0.006 * Math.sin(t * 1.7) + 0.004 * Math.sin(t * 3.1)); ctx.translate(-W / 2, -H / 2); }
   drawScenes(t);
   ctx.restore();
+  if (window.FX && typeof applyFX === 'function') applyFX(t);
   if (window.SHOW_SAFE) {
     ctx.strokeStyle = 'red'; ctx.lineWidth = 3;
     ctx.strokeRect(SAFE.x0, SAFE.y0, SAFE.x1 - SAFE.x0, SAFE.y1 - SAFE.y0);
