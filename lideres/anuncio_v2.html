@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><title>Líderes - Encontro das Comunidades v2</title>
+<style>
+@font-face { font-family: Anton; src: url(fonts/anton-latin-400-normal.woff); }
+@font-face { font-family: Mont; font-weight: 700; src: url(fonts/montserrat-latin-700-normal.woff); }
+@font-face { font-family: Mont; font-weight: 800; src: url(fonts/montserrat-latin-800-normal.woff); }
+@font-face { font-family: Mont; font-weight: 900; src: url(fonts/montserrat-latin-900-normal.woff); }
+:root { --az:#3F5BFF; --az2:#6E8BFF; --royal:#3F4FA0; --ciano:#7FC4FF; --ouro:#F2C14E; --noite:#03061A; }
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body { width:1080px; height:1920px; overflow:hidden; background:var(--noite); }
+#stage { position:relative; width:1080px; height:1920px; overflow:hidden; font-family:Mont, sans-serif; color:#fff; background:var(--noite); }
+#bg, #fx { position:absolute; inset:0; }
+.beam { position:absolute; left:50%; top:-300px; width:260px; height:2600px; margin-left:-130px; transform-origin:50% 0;
+        background:linear-gradient(180deg,rgba(110,139,255,.0),rgba(110,139,255,.20) 30%,rgba(110,139,255,0) 85%); filter:blur(30px); }
+.glow { position:absolute; border-radius:50%; filter:blur(120px); }
+.pt { position:absolute; border-radius:50%; background:#BFD0FF; }
+.grain { position:absolute; inset:0; opacity:.07; mix-blend-mode:overlay; }
+.vin { position:absolute; inset:0; background:radial-gradient(ellipse at 50% 45%,transparent 45%,rgba(0,0,0,.75) 100%); }
+#flash { position:absolute; inset:0; background:radial-gradient(circle at 50% 45%,#fff,#8FB0FF 40%,transparent 75%); opacity:0; mix-blend-mode:screen; }
+.scene { position:absolute; inset:0; opacity:0; }
+.el { position:absolute; left:0; right:0; text-align:center; opacity:0; will-change:transform, opacity, filter; }
+.A { font-family:Anton; text-transform:uppercase; line-height:.92; letter-spacing:.01em; }
+.grad, .ouro { padding:.16em .03em; margin:-.16em -.03em; }
+.grad { background:linear-gradient(180deg,#FFFFFF 35%,#A9BCFF 100%); -webkit-background-clip:text; background-clip:text; color:transparent; }
+.ouro { background:linear-gradient(180deg,#FFE7A6 10%,#F2C14E 55%,#C98F1E 100%); -webkit-background-clip:text; background-clip:text; color:transparent; }
+.out { color:transparent; -webkit-text-stroke:3px rgba(200,214,255,.9); }
+.lab { font-family:Mont; font-weight:800; letter-spacing:.42em; text-transform:uppercase; }
+.ch { display:inline-block; will-change:transform, opacity, filter; }
+.vidro { display:inline-block; text-align:left; background:linear-gradient(135deg,rgba(255,255,255,.14),rgba(255,255,255,.04)); border:1.5px solid rgba(180,200,255,.35);
+         border-radius:34px; box-shadow:0 30px 80px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.25); }
+.risco { position:absolute; left:-20px; right:-20px; top:48%; height:14px; border-radius:7px; background:linear-gradient(90deg,#F2C14E,#FFE7A6); transform-origin:left; box-shadow:0 0 30px rgba(242,193,78,.8); }
+.item { display:flex; align-items:center; gap:34px; padding:30px 44px; }
+.item + .item { border-top:1.5px solid rgba(180,200,255,.18); }
+.box { flex:none; width:84px; height:84px; border-radius:20px; border:3px solid rgba(200,214,255,.7); display:flex; align-items:center; justify-content:center; }
+.item .t { font-family:Anton; font-size:84px; text-transform:uppercase; line-height:1; }
+.sweep { position:absolute; inset:0; background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.65) 50%,transparent 65%); mix-blend-mode:overlay; }
+</style></head><body>
+<div id="stage">
+<div id="bg"></div>
+
+  <section class="scene" data-start="0" data-end="1.44">
+    <div class="el " data-in="0.00" data-a="emb" style="top:420px"><div id="emb1" style="position:relative;display:inline-flex;align-items:center;gap:34px"></div></div>
+    <div class="el A grad" data-in="0.07" data-a="letras" data-passo="0.05" style="top:900px;font-size:200px">FALA,</div>
+    <div class="el A ouro" data-in="0.28" data-a="letras" data-passo="0.04" style="top:1090px;font-size:200px">LIDERANÇA!</div>
+  </section>
+
+  <section class="scene" data-start="1.44" data-end="4.45">
+    <div class="el A out" data-in="1.56" data-a="letras" data-passo="0.03" style="top:430px;font-size:210px">SEXTA-FEIRA</div>
+    <div class="el " data-in="2.21" data-a="letras" data-passo="0.02" style="top:720px;font-weight:800;font-size:62px;color:#C9D6FF">não é dia de ficar</div>
+    <div class="el " data-in="3.11" data-a="punch" style="top:830px"><div style="position:relative;display:inline-block"><span class="A grad" style="font-size:122px;white-space:nowrap">PRESO NO ESCRITÓRIO</span><div class="risco" id="risco"></div></div></div>
+    <div class="el " data-in="4.11" data-a="stamp" style="top:1110px"><div class="lab" style="display:inline-block;padding:22px 46px;border:3px solid #F2C14E;border-radius:16px;font-size:58px;color:#F2C14E;transform:rotate(-5deg)">NÃO, HEIN.</div></div>
+  </section>
+
+  <section class="scene" data-start="4.45" data-end="8.38">
+    <div class="el " data-in="4.91" data-a="zoomin" style="top:120px"><span class="A out" style="font-size:560px;-webkit-text-stroke:4px rgba(200,214,255,.55)">16</span></div>
+    <div class="el " data-in="5.21" data-a="rise" style="top:700px"><span class="lab" style="font-size:44px;color:#7FC4FF">SEXTA · 16 DE OUTUBRO</span></div>
+    <div class="el " data-in="5.72" data-a="rise" style="top:800px"><div class="lab" style="font-size:34px;color:#C9D6FF;margin-bottom:6px">— CONVITE —</div></div>
+    <div class="el A grad" data-in="5.82" data-a="letras" data-passo="0.03" style="top:880px;font-size:150px">ENCONTRO DAS</div>
+    <div class="el A grad" data-in="6.46" data-a="letras" data-passo="0.03" style="top:1030px;font-size:170px;color:#fff">COMUNIDADES</div>
+    <div class="el " data-in="7.08" data-a="wipe" style="top:1220px"><span class="A ouro" style="font-size:118px">LÍDERES DO BRASIL</span></div>
+  </section>
+
+  <section class="scene" data-start="8.38" data-end="15.12">
+    <div class="el " data-in="8.48" data-a="fade" style="top:180px"><svg viewBox="0 0 1080 820" style="width:1080px;height:820px"><line class="ln" data-i="0" x1="170" y1="260" x2="420" y2="120" stroke="rgba(127,196,255,.55)" stroke-width="3" pathLength="1" style="stroke-dasharray:1;stroke-dashoffset:1"/><line class="ln" data-i="1" x1="420" y1="120" x2="700" y2="230" stroke="rgba(127,196,255,.55)" stroke-width="3" pathLength="1" style="stroke-dasharray:1;stroke-dashoffset:1"/><line class="ln" data-i="2" x1="700" y1="230" x2="920" y2="110" stroke="rgba(127,196,255,.55)" stroke-width="3" pathLength="1" style="stroke-dasharray:1;stroke-dashoffset:1"/><line class="ln" data-i="3" x1="170" y1="260" x2="300" y2="470" stroke="rgba(127,196,255,.55)" stroke-width="3" pathLength="1" style="stroke-dasharray:1;stroke-dashoffset:1"/><line class="ln" data-i="4" x1="300" y1="470" x2="620" y2="520" stroke="rgba(127,196,255,.55)" stroke-width="3" pathLength="1" style="stroke-dasharray:1;stroke-dashoffset:1"/><line class="ln" data-i="5" x1="620" y1="520" x2="700" y2="230" stroke="rgba(127,196,255,.55)" stroke-width="3" pathLength="1" style="stroke-dasharray:1;stroke-dashoffset:1"/><line class="ln" data-i="6" x1="620" y1="520" x2="880" y2="430" stroke="rgba(127,196,255,.55)" stroke-width="3" pathLength="1" style="stroke-dasharray:1;stroke-dashoffset:1"/><line class="ln" data-i="7" x1="880" y1="430" x2="920" y2="110" stroke="rgba(127,196,255,.55)" stroke-width="3" pathLength="1" style="stroke-dasharray:1;stroke-dashoffset:1"/><line class="ln" data-i="8" x1="300" y1="470" x2="120" y2="640" stroke="rgba(127,196,255,.55)" stroke-width="3" pathLength="1" style="stroke-dasharray:1;stroke-dashoffset:1"/><line class="ln" data-i="9" x1="120" y1="640" x2="480" y2="720" stroke="rgba(127,196,255,.55)" stroke-width="3" pathLength="1" style="stroke-dasharray:1;stroke-dashoffset:1"/><line class="ln" data-i="10" x1="480" y1="720" x2="620" y2="520" stroke="rgba(127,196,255,.55)" stroke-width="3" pathLength="1" style="stroke-dasharray:1;stroke-dashoffset:1"/><line class="ln" data-i="11" x1="480" y1="720" x2="800" y2="700" stroke="rgba(127,196,255,.55)" stroke-width="3" pathLength="1" style="stroke-dasharray:1;stroke-dashoffset:1"/><line class="ln" data-i="12" x1="800" y1="700" x2="880" y2="430" stroke="rgba(127,196,255,.55)" stroke-width="3" pathLength="1" style="stroke-dasharray:1;stroke-dashoffset:1"/><line class="ln" data-i="13" x1="420" y1="120" x2="620" y2="520" stroke="rgba(127,196,255,.55)" stroke-width="3" pathLength="1" style="stroke-dasharray:1;stroke-dashoffset:1"/><circle class="no" data-i="0" cx="170" cy="260" r="13" fill="#fff" style="filter:drop-shadow(0 0 14px #7FC4FF)"/><circle class="no" data-i="1" cx="420" cy="120" r="13" fill="#fff" style="filter:drop-shadow(0 0 14px #7FC4FF)"/><circle class="no" data-i="2" cx="700" cy="230" r="13" fill="#fff" style="filter:drop-shadow(0 0 14px #7FC4FF)"/><circle class="no" data-i="3" cx="920" cy="110" r="13" fill="#fff" style="filter:drop-shadow(0 0 14px #7FC4FF)"/><circle class="no" data-i="4" cx="300" cy="470" r="13" fill="#fff" style="filter:drop-shadow(0 0 14px #7FC4FF)"/><circle class="no" data-i="5" cx="620" cy="520" r="13" fill="#fff" style="filter:drop-shadow(0 0 14px #7FC4FF)"/><circle class="no" data-i="6" cx="880" cy="430" r="13" fill="#fff" style="filter:drop-shadow(0 0 14px #7FC4FF)"/><circle class="no" data-i="7" cx="120" cy="640" r="13" fill="#fff" style="filter:drop-shadow(0 0 14px #7FC4FF)"/><circle class="no" data-i="8" cx="480" cy="720" r="13" fill="#fff" style="filter:drop-shadow(0 0 14px #7FC4FF)"/><circle class="no" data-i="9" cx="800" cy="700" r="13" fill="#fff" style="filter:drop-shadow(0 0 14px #7FC4FF)"/></svg></div>
+    <div class="el A grad" data-in="8.48" data-a="letras" data-passo="0.025" style="top:1000px;font-size:118px">É ALI QUE O NEGÓCIO</div>
+    <div class="el A ouro" data-in="9.23" data-a="letras" data-passo="0.04" style="top:1120px;font-size:150px">ACONTECE.</div>
+    <div class="el " data-in="10.23" data-a="rise" style="top:1340px"><span class="lab" style="font-size:40px;color:#fff">✦ CONEXÃO DE VERDADE</span></div>
+    <div class="el " data-in="11.46" data-a="rise" style="top:1420px"><span class="lab" style="font-size:40px;color:#fff">✦ TROCA DE EXPERIÊNCIA</span></div>
+    <div class="el " data-in="12.77" data-a="rise" style="top:1510px"><span class="lab" style="font-size:32px;color:#7FC4FF;letter-spacing:.25em">COM QUEM ESTÁ NO MESMO JOGO QUE VOCÊ</span></div>
+  </section>
+
+  <section class="scene" data-start="15.12" data-end="20.97">
+    <div class="el " data-in="15.17" data-a="rise" style="top:300px"><span class="lab" style="font-size:40px;color:#7FC4FF">ANOTA NA AGENDA</span></div>
+    <div class="el " data-in="15.27" data-a="glass" style="top:400px"><div class="vidro" style="padding:36px 56px;width:900px"><div class="lab" style="font-size:26px;color:#A9BCFF">HORÁRIO</div><div class="A grad" style="font-size:150px">16H <span class="ouro" style="font-size:96px">HAPPY HOUR</span></div></div></div>
+    <div class="el " data-in="17.11" data-a="glass" style="top:750px"><div class="vidro" style="padding:36px 56px;width:900px"><div class="lab" style="font-size:26px;color:#A9BCFF">LOCAL</div><div class="A grad" style="font-size:130px">ESPAÇO RC</div><div style="font-weight:800;font-size:46px;color:#7FC4FF;margin-top:6px">Asa Sul · Brasília</div></div></div>
+    <div class="el " data-in="19.18" data-a="glass" style="top:1120px"><div class="vidro" style="padding:36px 56px;width:900px"><div class="lab" style="font-size:26px;color:#A9BCFF">ENDEREÇO</div><div class="A grad" style="font-size:96px">QUADRA 2</div><div style="font-weight:800;font-size:46px;color:#7FC4FF;margin-top:6px">Prédio do Hotel Bonaparte</div></div></div>
+  </section>
+
+  <section class="scene" data-start="20.97" data-end="26.77">
+    <div class="el A ouro" data-in="21.68" data-a="letras" data-passo="0.035" style="top:330px;font-size:190px">CHECKLIST</div>
+    <div class="el " data-in="22.03" data-a="rise" style="top:530px"><span class="lab" style="font-size:40px;color:#C9D6FF">DO LÍDER PARA SEXTA</span></div>
+    <div class="el " data-in="22.35" data-a="glass" style="top:680px"><div class="vidro" style="width:940px;padding:14px 0" id="lista"><div class="item" data-ck="22.80"><div class="box"><svg viewBox="0 0 100 100" style="width:62px;height:62px"><path class="ck" d="M18 54l20 20 44-46" fill="none" stroke="#F2C14E" stroke-width="13" stroke-linecap="round" stroke-linejoin="round" pathLength="1" style="stroke-dasharray:1;stroke-dashoffset:1"/></svg></div><div class="t">Avisa em casa</div></div><div class="item" data-ck="23.83"><div class="box"><svg viewBox="0 0 100 100" style="width:62px;height:62px"><path class="ck" d="M18 54l20 20 44-46" fill="none" stroke="#F2C14E" stroke-width="13" stroke-linecap="round" stroke-linejoin="round" pathLength="1" style="stroke-dasharray:1;stroke-dashoffset:1"/></svg></div><div class="t">Desmarca a reunião</div></div><div class="item" data-ck="25.47"><div class="box"><svg viewBox="0 0 100 100" style="width:62px;height:62px"><path class="ck" d="M18 54l20 20 44-46" fill="none" stroke="#F2C14E" stroke-width="13" stroke-linecap="round" stroke-linejoin="round" pathLength="1" style="stroke-dasharray:1;stroke-dashoffset:1"/></svg></div><div class="t">Chama aquele sócio</div></div></div></div>
+  </section>
+
+  <section class="scene" data-start="26.77" data-end="28.82" data-escuro="1">
+    <div class="el A" data-in="26.95" data-a="letras" data-passo="0.03" style="top:720px;font-size:150px;color:#fff">QUEM É LÍDER,</div>
+    <div class="el A ouro" data-in="27.70" data-a="letras" data-passo="0.06" style="top:890px;font-size:230px">APARECE.</div>
+  </section>
+
+  <section class="scene" data-start="28.82" data-end="33.43">
+    <div class="el " data-in="28.92" data-a="emb" style="top:300px"><div id="emb2" style="position:relative;display:inline-flex;align-items:center;gap:28px"></div></div>
+    <div class="el A grad" data-in="28.92" data-a="letras" data-passo="0.022" style="top:690px;font-size:132px">BORA FORTALECER</div>
+    <div class="el A ouro" data-in="29.68" data-a="letras" data-passo="0.035" style="top:830px;font-size:170px">O MOVIMENTO!</div>
+    <div class="el " data-in="30.14" data-a="glass" style="top:1080px"><div class="vidro" style="padding:26px 50px;text-align:center"><div class="A grad" style="font-size:78px">SEXTA · 16/10 · 16H</div><div style="font-weight:800;font-size:34px;color:#7FC4FF;margin-top:8px;white-space:nowrap">Espaço RC – Asa Sul · Prédio Hotel Bonaparte</div></div></div>
+    <div class="el " data-in="30.64" data-a="rise" style="top:1390px"><span class="lab" style="font-size:52px;color:#fff">TE VEJO LÁ.</span></div>
+    <div class="el " data-in="30.99" data-a="rise" style="top:1500px"><span class="lab" style="font-size:26px;color:#7C8BC4">SERVIR · CONECTAR · FORTALECER</span></div>
+  </section>
+<div id="wm" style="position:absolute;left:60px;top:70px;display:flex;align-items:center;gap:16px;z-index:900;opacity:0"></div>
+<div id="fx"><svg class="grain" viewBox="0 0 1080 1920"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" stitchTiles="stitch"/></filter><rect width="1080" height="1920" filter="url(#n)"/></svg><div class="vin"></div><div id="flash"></div></div>
+</div>
+<script src="emblema.js"></script>
+<script>
+const L = 0.15, C = {"fala": 0.072, "lideranca": 0.28, "sexta": 1.557, "naoe": 2.205, "preso": 3.109, "naohein": 4.105, "dia": 4.545, "dezesseis": 5.005, "encontro": 5.818, "comunidades": 6.465, "lideres": 7.085, "ali": 8.477, "negocio": 8.925, "conexao": 10.232, "troca": 11.465, "quem": 12.773, "jogo": 13.733, "quatro": 15.272, "happy": 16.192, "espaco": 17.105, "asa": 18.245, "predio": 19.178, "entao": 21.092, "checklist": 21.676, "avisa": 22.705, "desmarca": 23.732, "chama": 25.372, "quemelider": 26.954, "lider": 27.199, "aparece": 27.705, "bora": 28.924, "fortalecer": 29.02, "movimento": 29.682, "tevejo": 30.385, "fim": 31.13}, CORTES = [1.4569999999999999, 4.445, 8.377, 15.172, 20.991999999999997, 28.823999999999998];
+document.getElementById("bg").innerHTML = `<div class="glow" id="g1" style="width:900px;height:900px;left:-250px;top:-200px;background:rgba(63,91,255,.55)"></div><div class="glow" id="g2" style="width:800px;height:800px;right:-300px;bottom:-150px;background:rgba(63,79,160,.6)"></div><div class="beam" data-rot="-38" data-sp="1"></div><div class="beam" data-rot="-12" data-sp="-1"></div><div class="beam" data-rot="16" data-sp="1"></div><div class="beam" data-rot="40" data-sp="-1"></div><div class="pt" data-x="350" data-y="290" data-v="43.9" data-ph="0.45" style="width:12px;height:12px;opacity:0.19;filter:blur(3px)"></div><div class="pt" data-x="629" data-y="1747" data-v="23.9" data-ph="0.54" style="width:8px;height:8px;opacity:0.18;filter:blur(3px)"></div><div class="pt" data-x="98" data-y="815" data-v="52.0" data-ph="0.78" style="width:4px;height:4px;opacity:0.43;filter:blur(0px)"></div><div class="pt" data-x="630" data-y="119" data-v="40.9" data-ph="0.31" style="width:4px;height:4px;opacity:0.17;filter:blur(0px)"></div><div class="pt" data-x="927" data-y="556" data-v="20.6" data-ph="0.74" style="width:5px;height:5px;opacity:0.40;filter:blur(0px)"></div><div class="pt" data-x="737" data-y="198" data-v="40.3" data-ph="1.18" style="width:3px;height:3px;opacity:0.40;filter:blur(0px)"></div><div class="pt" data-x="68" data-y="114" data-v="23.5" data-ph="4.27" style="width:8px;height:8px;opacity:0.50;filter:blur(3px)"></div><div class="pt" data-x="503" data-y="1773" data-v="30.6" data-ph="1.56" style="width:4px;height:4px;opacity:0.46;filter:blur(0px)"></div><div class="pt" data-x="264" data-y="1103" data-v="38.2" data-ph="5.50" style="width:8px;height:8px;opacity:0.28;filter:blur(3px)"></div><div class="pt" data-x="1059" data-y="227" data-v="33.2" data-ph="4.75" style="width:4px;height:4px;opacity:0.57;filter:blur(0px)"></div><div class="pt" data-x="455" data-y="1847" data-v="17.6" data-ph="3.50" style="width:5px;height:5px;opacity:0.30;filter:blur(0px)"></div><div class="pt" data-x="378" data-y="954" data-v="50.7" data-ph="0.43" style="width:3px;height:3px;opacity:0.58;filter:blur(0px)"></div><div class="pt" data-x="512" data-y="1275" data-v="16.8" data-ph="4.41" style="width:12px;height:12px;opacity:0.60;filter:blur(3px)"></div><div class="pt" data-x="888" data-y="546" data-v="31.7" data-ph="4.20" style="width:3px;height:3px;opacity:0.57;filter:blur(0px)"></div><div class="pt" data-x="384" data-y="1173" data-v="36.7" data-ph="1.37" style="width:5px;height:5px;opacity:0.21;filter:blur(0px)"></div><div class="pt" data-x="267" data-y="751" data-v="54.1" data-ph="0.51" style="width:8px;height:8px;opacity:0.33;filter:blur(3px)"></div><div class="pt" data-x="300" data-y="263" data-v="33.8" data-ph="3.46" style="width:8px;height:8px;opacity:0.59;filter:blur(3px)"></div><div class="pt" data-x="737" data-y="730" data-v="24.6" data-ph="0.52" style="width:4px;height:4px;opacity:0.25;filter:blur(0px)"></div><div class="pt" data-x="252" data-y="931" data-v="41.1" data-ph="1.65" style="width:3px;height:3px;opacity:0.22;filter:blur(0px)"></div><div class="pt" data-x="577" data-y="1171" data-v="28.7" data-ph="0.79" style="width:12px;height:12px;opacity:0.58;filter:blur(3px)"></div><div class="pt" data-x="707" data-y="1420" data-v="35.0" data-ph="5.47" style="width:12px;height:12px;opacity:0.33;filter:blur(3px)"></div><div class="pt" data-x="431" data-y="199" data-v="43.2" data-ph="0.39" style="width:3px;height:3px;opacity:0.59;filter:blur(0px)"></div><div class="pt" data-x="476" data-y="211" data-v="41.6" data-ph="0.64" style="width:12px;height:12px;opacity:0.22;filter:blur(3px)"></div><div class="pt" data-x="110" data-y="698" data-v="15.2" data-ph="5.49" style="width:12px;height:12px;opacity:0.32;filter:blur(3px)"></div><div class="pt" data-x="685" data-y="1834" data-v="41.7" data-ph="2.98" style="width:3px;height:3px;opacity:0.53;filter:blur(0px)"></div><div class="pt" data-x="1073" data-y="895" data-v="36.3" data-ph="0.54" style="width:3px;height:3px;opacity:0.49;filter:blur(0px)"></div><div class="pt" data-x="800" data-y="919" data-v="45.8" data-ph="3.24" style="width:4px;height:4px;opacity:0.58;filter:blur(0px)"></div><div class="pt" data-x="571" data-y="281" data-v="39.0" data-ph="0.17" style="width:12px;height:12px;opacity:0.28;filter:blur(3px)"></div><div class="pt" data-x="694" data-y="175" data-v="52.9" data-ph="3.26" style="width:4px;height:4px;opacity:0.31;filter:blur(0px)"></div><div class="pt" data-x="241" data-y="1040" data-v="37.1" data-ph="4.00" style="width:12px;height:12px;opacity:0.52;filter:blur(3px)"></div><div class="pt" data-x="1064" data-y="1637" data-v="51.1" data-ph="5.14" style="width:4px;height:4px;opacity:0.24;filter:blur(0px)"></div><div class="pt" data-x="532" data-y="1404" data-v="59.5" data-ph="4.96" style="width:8px;height:8px;opacity:0.27;filter:blur(3px)"></div><div class="pt" data-x="748" data-y="1837" data-v="34.6" data-ph="5.88" style="width:5px;height:5px;opacity:0.58;filter:blur(0px)"></div><div class="pt" data-x="394" data-y="423" data-v="24.4" data-ph="1.24" style="width:4px;height:4px;opacity:0.37;filter:blur(0px)"></div><div class="pt" data-x="1064" data-y="1172" data-v="14.1" data-ph="5.71" style="width:5px;height:5px;opacity:0.51;filter:blur(0px)"></div><div class="pt" data-x="92" data-y="1268" data-v="55.8" data-ph="4.91" style="width:4px;height:4px;opacity:0.37;filter:blur(0px)"></div><div class="pt" data-x="193" data-y="1515" data-v="29.3" data-ph="5.03" style="width:8px;height:8px;opacity:0.36;filter:blur(3px)"></div><div class="pt" data-x="803" data-y="163" data-v="21.3" data-ph="6.24" style="width:3px;height:3px;opacity:0.22;filter:blur(0px)"></div><div class="pt" data-x="977" data-y="1548" data-v="20.7" data-ph="5.19" style="width:8px;height:8px;opacity:0.45;filter:blur(3px)"></div><div class="pt" data-x="378" data-y="1053" data-v="20.0" data-ph="0.09" style="width:3px;height:3px;opacity:0.39;filter:blur(0px)"></div><div class="pt" data-x="1008" data-y="833" data-v="54.1" data-ph="5.19" style="width:4px;height:4px;opacity:0.16;filter:blur(0px)"></div><div class="pt" data-x="230" data-y="962" data-v="49.1" data-ph="2.05" style="width:12px;height:12px;opacity:0.34;filter:blur(3px)"></div><div class="pt" data-x="142" data-y="1747" data-v="30.3" data-ph="2.88" style="width:12px;height:12px;opacity:0.52;filter:blur(3px)"></div><div class="pt" data-x="558" data-y="1588" data-v="54.4" data-ph="0.82" style="width:4px;height:4px;opacity:0.39;filter:blur(0px)"></div><div class="pt" data-x="20" data-y="845" data-v="22.4" data-ph="0.02" style="width:4px;height:4px;opacity:0.23;filter:blur(0px)"></div><div class="pt" data-x="511" data-y="1392" data-v="39.6" data-ph="2.05" style="width:12px;height:12px;opacity:0.39;filter:blur(3px)"></div>`;
+const embHTML = s => `<div style="position:absolute;inset:-60px;border-radius:50%;background:radial-gradient(circle,rgba(63,91,255,.65),transparent 70%);filter:blur(20px)"></div>`
+  + `<div style="position:relative;width:${s}px;height:${s}px;border-radius:50%;overflow:hidden;box-shadow:0 0 0 3px rgba(190,205,255,.35),0 30px 90px rgba(0,0,0,.6)">${EMB(s, "#3F4FA0")}<div class="sweep"></div></div>`;
+const marca = (s, fs) => `<div style="position:relative">${embHTML(s)}</div><div class="A" style="font-size:${fs}px;line-height:.86;letter-spacing:-.005em;color:#fff;text-shadow:0 6px 40px rgba(63,91,255,.6);padding-top:.08em">LÍDERES</div>`;
+emb1.innerHTML = marca(230, 236); emb2.innerHTML = marca(170, 176);
+wm.innerHTML = `<div style="width:64px;height:64px;border-radius:50%;overflow:hidden">${EMB(64, "#3F4FA0")}</div><div class="A" style="font-size:60px;line-height:.86;color:#fff;padding-top:.08em">LÍDERES</div>`;
+// quebra em letras
+document.querySelectorAll('[data-a="letras"]').forEach(el => {
+  const cls = ["grad", "ouro", "out"].filter(k => el.classList.contains(k)); cls.forEach(k => el.classList.remove(k));
+  el.innerHTML = [...el.textContent].map(ch => ch === " " ? " " : `<span class="ch ${cls.join(" ")}">${ch}</span>`).join("");
+});
+const clamp = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
+const eo = x => 1 - Math.pow(1 - x, 3);
+const eo5 = x => 1 - Math.pow(1 - x, 5);
+const back = (x, k = 1.6) => 1 + (k + 1) * Math.pow(x - 1, 3) + k * Math.pow(x - 1, 2);
+const XF = 0.16;
+function anim(el, t) {
+  const t0 = parseFloat(el.dataset.in), a = el.dataset.a;
+  if (a === "letras") {
+    const passo = parseFloat(el.dataset.passo); let vis = false;
+    el.querySelectorAll(".ch").forEach((s, i) => {
+      const p = clamp((t - t0 - i * passo) / 0.38), pe = eo5(p);
+      s.style.opacity = pe.toFixed(3);
+      s.style.transform = `translateY(${((1 - pe) * 70).toFixed(1)}px) scale(${(1 + (1 - pe) * .25).toFixed(3)})`;
+      s.style.filter = p < 1 ? `blur(${((1 - pe) * 14).toFixed(1)}px)` : "none";
+      if (p > 0) vis = true;
+    });
+    el.style.opacity = vis ? 1 : 0; el.style.visibility = vis ? "visible" : "hidden"; return;
+  }
+  const d = {punch: .45, stamp: .3, zoomin: .9, wipe: .6, rise: .5, glass: .6, emb: 1.0, fade: .8}[a] || .5;
+  const p = clamp((t - t0) / d), pe = eo5(p);
+  let op = pe, tf = "", fl = "", cp = "";
+  if (a === "punch") { tf = `scale(${(1 + (1 - pe) * .35).toFixed(4)})`; fl = p < 1 ? `blur(${((1 - pe) * 16).toFixed(1)}px)` : ""; }
+  if (a === "stamp") { op = clamp(p * 4); tf = `scale(${(1 + (1 - eo(p)) * 1.6).toFixed(4)})`; }
+  if (a === "zoomin") { tf = `scale(${(1.5 - .5 * pe + .04 * clamp((t - t0) / 3)).toFixed(4)})`; op = pe * .9; fl = p < 1 ? `blur(${((1 - pe) * 20).toFixed(1)}px)` : ""; }
+  if (a === "wipe") { op = clamp(p * 5); cp = `inset(-60px ${((1 - pe) * 100).toFixed(1)}% -60px -20px)`; }
+  if (a === "rise") tf = `translateY(${((1 - pe) * 40).toFixed(1)}px)`;
+  if (a === "fade") op = pe;
+  if (a === "glass") { tf = `translateY(${((1 - pe) * 120).toFixed(1)}px) rotateX(${((1 - pe) * 35).toFixed(1)}deg)`; fl = p < 1 ? `blur(${((1 - pe) * 10).toFixed(1)}px)` : ""; }
+  if (a === "emb") { tf = `scale(${(0.6 + 0.4 * back(p)).toFixed(4)}) rotate(${((1 - pe) * -45).toFixed(1)}deg)`; op = clamp(p * 2.5);
+    const sw = el.querySelector(".sweep"); if (sw) sw.style.transform = `translateX(${(-140 + 280 * clamp((t - t0 - .5) / .9)).toFixed(0)}%)`; }
+  op = op < 0.003 ? 0 : op;
+  el.style.opacity = op.toFixed(3); el.style.visibility = op > 0 ? "visible" : "hidden";
+  el.style.transform = tf; el.style.filter = fl || "none"; el.style.clipPath = cp || "none";
+}
+function render(tv) {
+  const t = tv - L;
+  // fundo vivo
+  document.querySelectorAll(".beam").forEach((b, i) => b.style.transform = `rotate(${(parseFloat(b.dataset.rot) + Math.sin(t * .35 + i) * 9 * b.dataset.sp).toFixed(2)}deg)`);
+  g1.style.transform = `translate(${(Math.sin(t * .3) * 120).toFixed(0)}px,${(Math.cos(t * .25) * 160).toFixed(0)}px)`;
+  g2.style.transform = `translate(${(Math.cos(t * .28) * 140).toFixed(0)}px,${(Math.sin(t * .22) * 120).toFixed(0)}px)`;
+  document.querySelectorAll(".pt").forEach(p => {
+    const y = ((+p.dataset.y - t * +p.dataset.v) % 1920 + 1920) % 1920, x = +p.dataset.x + Math.sin(t * .6 + +p.dataset.ph) * 24;
+    p.style.transform = `translate(${x.toFixed(1)}px,${y.toFixed(1)}px)`;
+  });
+  let fo = 0; CORTES.forEach(k => { const q = t - k; if (q > -0.06 && q < 0.35) fo = Math.max(fo, q < 0 ? (q + .06) / .06 * .55 : .55 * (1 - q / .35)); });
+  flash.style.opacity = fo.toFixed(3);
+  wm.style.opacity = (clamp((t - C.sexta + .1) / .4) * (1 - clamp((t - C.bora + .2) / .3)) * .85).toFixed(3);
+  const escuro = document.querySelector('[data-escuro]'), ea = parseFloat(escuro.dataset.start), eb = parseFloat(escuro.dataset.end);
+  bg.style.opacity = (t > ea && t < eb + .2) ? (.25).toString() : "1";
+  document.querySelectorAll(".scene").forEach(s => {
+    const a = parseFloat(s.dataset.start), b = parseFloat(s.dataset.end);
+    let op = 0;
+    if (t >= a && t < b + XF) op = clamp((t - a) / XF) * (t > b ? 1 - clamp((t - b) / XF) : 1);
+    if (a === 0) op = t < b ? 1 : op;
+    s.style.opacity = op; s.style.visibility = op > 0 ? "visible" : "hidden"; s.style.zIndex = Math.round(a * 10 + 10);
+    if (op <= 0) return;
+    const sa = eo(clamp((t - a) / .6)), out = t > b ? clamp((t - b) / XF) : 0;
+    s.style.transform = `scale(${(1.08 - .08 * sa + .02 * clamp((t - a) / 6) + out * .12).toFixed(4)})`;
+    s.style.filter = out > 0 ? `blur(${(out * 14).toFixed(1)}px)` : "none";
+    s.querySelectorAll(".el").forEach(el => anim(el, t));
+  });
+  const r = document.getElementById("risco"); if (r) r.style.transform = `scaleX(${eo(clamp((t - C.naohein + .25) / .3)).toFixed(3)})`;
+  document.querySelectorAll(".ln").forEach(l => l.style.strokeDashoffset = (1 - eo(clamp((t - C.ali - .1 - l.dataset.i * .12) / .5))).toFixed(3));
+  document.querySelectorAll(".no").forEach(n => { const p = eo(clamp((t - C.ali - n.dataset.i * .1) / .35)); n.setAttribute("r", (13 * p + 2 * Math.sin(t * 3 + +n.dataset.i) * p).toFixed(1)); });
+  document.querySelectorAll(".item").forEach(it => {
+    const p = eo(clamp((t - parseFloat(it.dataset.ck)) / .35));
+    it.querySelector(".ck").style.strokeDashoffset = (1 - p).toFixed(3);
+    it.querySelector(".box").style.borderColor = p > .1 ? "#F2C14E" : "rgba(200,214,255,.7)";
+    it.querySelector(".box").style.boxShadow = p > .1 ? `0 0 ${(30 * p).toFixed(0)}px rgba(242,193,78,.7)` : "none";
+    it.querySelector(".t").style.color = p > .1 ? "#fff" : "rgba(255,255,255,.45)";
+  });
+}
+window.render = render;
+render(0);
+</script>
+</body></html>

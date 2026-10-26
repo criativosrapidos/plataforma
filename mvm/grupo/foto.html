@@ -1,0 +1,20 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face { font-family:Anton; src:url(../fonts/anton-latin-400-normal.woff); }
+@font-face { font-family:M; font-weight:600; src:url(../fonts/montserrat-latin-600-normal.woff); }
+@font-face { font-family:M; font-weight:800; src:url(../fonts/montserrat-latin-800-normal.woff); }
+* { margin:0; padding:0; box-sizing:border-box; } body { background:transparent; }
+#g { position:relative; overflow:hidden; width:1000px; height:1000px; background:#14573A; font-family:M; }
+.topo { position:absolute; left:0; right:0; top:0; height:580px; background:radial-gradient(circle at 50% 55%, #FFE14D, #FDD20A 45%, #F2B33D 100%); overflow:hidden; }
+.topo::before { content:""; position:absolute; inset:0; background:repeating-conic-gradient(from 0deg at 50% 60%, rgba(255,255,255,.2) 0 7.5deg, transparent 7.5deg 15deg); }
+.topo img { position:absolute; left:50%; top:150px; width:700px; transform:translateX(-50%); }
+.faixa { position:absolute; left:0; right:0; top:580px; height:14px; background:repeating-linear-gradient(90deg,#E23C5B 0 60px,#F0801E 60px 120px,#FDD20A 120px 180px,#14573A 180px 240px); }
+.slog { position:absolute; left:0; right:0; top:630px; text-align:center; font-family:Anton; text-transform:uppercase; font-size:76px; line-height:1; color:#fff; }
+.slog span { color:#FDD20A; }
+.cr { position:absolute; left:0; right:0; top:830px; display:flex; justify-content:center; align-items:center; gap:14px; }
+.cr .ic { width:64px; height:64px; background:#FFD400; border-radius:14px; display:flex; align-items:center; justify-content:center; }
+</style></head><body>
+<div id="g"><div class="topo"><img src="../assets/logo_mvm.png"></div><div class="faixa"></div>
+  <div class="slog">A brasilidade<br><span>em cada olhar</span></div>
+  <div class="cr"><div class="ic"><svg viewBox="0 0 40 40" style="width:42px"><g fill="#0B0B0B"><rect x="4" y="12" width="9" height="3.2" rx="1.6"/><rect x="2" y="18.4" width="11" height="3.2" rx="1.6"/><rect x="4" y="24.8" width="9" height="3.2" rx="1.6"/><path d="M16 9 L35 20 L16 31 Z"/></g></svg></div>
+    <div style="line-height:1.02"><div style="font-weight:600;font-size:29px;color:#fff">criativos</div><div style="font-weight:800;font-style:italic;font-size:31px;color:#FFD400">rápidos</div></div></div>
+</div></body></html>

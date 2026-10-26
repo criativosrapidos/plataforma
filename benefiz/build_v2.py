@@ -1,0 +1,117 @@
+#!/usr/bin/env python3
+"""Reels Benefiz v2 (voz masculina, copy na dor): monta anuncio_v2.html a partir do motor do anuncio.html
+e das cenas abaixo, com os tempos vindos de audio/cues_v2.json (palavras da locução)."""
+import json
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent
+src = (ROOT / "anuncio.html").read_text()
+head = src[:src.index('<div id="stage">')]
+script = src[src.index('<script src="marca/brand.js">'):]
+
+def arte_plano(nome, n, fundo):
+    """Arte vetorial do plano: pessoas ilustradas (1, 2 ou 4) + o cartãozinho Benefiz do site."""
+    tons = ["#8D5A3B", "#E8B98F", "#C68642", "#F1C9A5"]
+    roupas = ["#F08A3E", "#3E7C7E", "#F4C430", "#5E9C9D"]
+    pos = {1: [(150, 1.0)], 2: [(100, 1.0), (200, 1.0)], 4: [(70, 1.0), (230, 1.0), (122, 0.7), (178, 0.7)]}[n]
+    gente = ""
+    for k, (x, e) in enumerate(pos):
+        y = 92 if e == 1.0 else 150
+        r = 34 * e
+        gente += (f'<path d="M{x - 62 * e} {y + 150 * e} q0 -{88 * e} {62 * e} -{88 * e} t{62 * e} {88 * e}z" fill="{roupas[k]}"/>'
+                  f'<circle cx="{x}" cy="{y}" r="{r}" fill="{tons[k]}"/>'
+                  f'<path d="M{x - r} {y - 4} q{r} -{r * 1.5} {2 * r} 0 q-{r * .2} -{r * .9} -{r} -{r * .95} q-{r * .8} {0} -{r} {r * .95}z" fill="#2B1B12"/>')
+    cartao = (f'<g transform="translate(48 200) scale(.85)"><rect width="240" height="104" rx="14" fill="#3E7C7E"/>'
+              f'<rect x="208" width="32" height="104" rx="0" fill="#F08A3E"/><rect x="226" width="14" height="104" rx="7" fill="#F08A3E"/>'
+              f'<circle cx="40" cy="58" r="24" fill="#fff"/><circle cx="40" cy="51" r="8" fill="#3E7C7E"/><path d="M26 72q14-18 28 0" fill="#3E7C7E"/>'
+              f'<text x="74" y="30" font-family="Fira Sans" font-weight="700" font-size="11" fill="#fff">Benefiz</text>'
+              f'<text x="74" y="56" font-family="Fira Sans" font-weight="800" font-size="16" fill="#fff">Plano {nome}</text>'
+              f'<text x="74" y="76" font-family="Fira Sans" font-weight="500" font-size="10" fill="#D6EAEA">000.000.000-00</text>'
+              f'<text x="74" y="90" font-family="Fira Sans" font-weight="500" font-size="10" fill="#D6EAEA">123456789101112</text></g>')
+    return (f'<svg viewBox="0 0 300 300" style="width:300px;height:300px;border-radius:26px;flex:none;background:{fundo}">'
+            f'{gente}{cartao}</svg>')
+
+c = json.load(open(ROOT / "audio/cues_v2.json"))
+FIM = c["fim"] + 1.2
+
+cenas = f'''<div id="stage">
+
+  <!-- 1. Segunda, 8h: "Chefe, preciso conversar." -->
+  <section class="scene" data-start="0" data-end="{c['seu'] - 0.15}">
+    <div class="f-teal"></div><svg class="padrao" data-pad="rgba(255,255,255,.05)"></svg>
+    <div class="el h" data-in="0.1" data-a="drop" style="top:260px;font-size:84px;color:#fff">Segunda-feira, 8h</div>
+    <div class="el" data-in="{c['mensagem'] - 0.1}" data-a="pop" style="top:520px"><div style="display:inline-block;width:820px;background:#fff;border-radius:44px;padding:36px 44px;text-align:left;box-shadow:0 30px 70px rgba(0,0,0,.35)">
+      <div style="display:flex;align-items:center;gap:22px"><div style="width:96px;height:96px;border-radius:50%;background:#D9E6E6;display:flex;align-items:center;justify-content:center"><svg viewBox="0 0 100 100" style="width:62px;color:var(--teal)"><use href="#i-grupo"/></svg></div>
+        <div><div style="font-weight:800;font-size:40px;color:var(--tinta)">Seu melhor funcionário</div><div style="font-weight:600;font-size:28px;color:#7A8A8B">agora · WhatsApp</div></div></div>
+      <div class="el-txt" style="margin-top:30px;background:#E7F6EC;border-radius:30px 30px 30px 8px;padding:30px 36px;font-weight:700;font-size:62px;color:var(--tinta)">Chefe, preciso conversar.</div></div></div>
+    <div class="el" data-in="{c['chefe']}" data-a="pop" style="top:470px;left:860px;right:auto"><div class="h" style="width:150px;height:150px;border-radius:50%;background:#E5484D;color:#fff;font-size:90px;line-height:150px">1</div></div>
+  </section>
+
+  <!-- 2. Tá indo embora, por 200 reais -->
+  <section class="scene" data-start="{c['seu'] - 0.15}" data-end="{c['lavai'] - 0.1}" data-shake="{c['embora']}">
+    <div class="f-creme"></div>
+    <div class="el" data-in="{c['seu'] - 0.1}" data-a="pop" style="top:260px"><svg viewBox="0 0 100 100" style="width:300px;height:300px;color:var(--laranja)"><use href="#i-porta"/></svg></div>
+    <div class="el h" data-in="{c['seu']}" data-a="rise" style="top:640px;font-size:92px;color:var(--teal)">Seu melhor funcionário</div>
+    <div class="el h" data-in="{c['embora']}" data-a="slam" style="top:760px;font-size:118px;color:var(--laranja);white-space:nowrap">TÁ INDO EMBORA.</div>
+    <div class="el" data-in="{c['duzentos']}" data-a="pop" style="top:990px"><div class="h" style="display:inline-block;background:var(--tinta);color:#fff;font-size:76px;padding:22px 50px 30px;border-radius:26px">por <span style="color:var(--laranja)">R$ 200</span> a mais</div></div>
+    <div class="el" data-in="{c['concorrencia']}" data-a="rise" style="top:1180px;font-weight:700;font-size:58px;color:var(--tinta)">...na concorrência.</div>
+  </section>
+
+  <!-- 3. Contratar, treinar, tudo de novo -->
+  <section class="scene" data-start="{c['lavai'] - 0.1}" data-end="{c['agora'] - 0.1}">
+    <div class="f-lar"></div><svg class="padrao" data-pad="rgba(255,255,255,.12)"></svg>
+    <div class="el h" data-in="{c['lavai']}" data-a="drop" style="top:330px;font-size:84px;color:#fff">E lá vai você...</div>
+    <div class="el" data-in="{c['contratar']}" data-a="slideR" style="top:560px"><div class="h" style="display:inline-block;background:#fff;color:var(--teal);font-size:100px;padding:26px 60px 36px;border-radius:30px">contratar</div></div>
+    <div class="el" data-in="{c['treinar']}" data-a="slideL" style="top:790px"><div class="h" style="display:inline-block;background:#fff;color:var(--teal);font-size:100px;padding:26px 60px 36px;border-radius:30px">treinar</div></div>
+    <div class="el" data-in="{c['denovo']}" data-a="slam" style="top:1030px"><div class="h" style="display:inline-block;background:var(--tinta);color:#fff;font-size:110px;padding:26px 60px 36px;border-radius:30px;transform:rotate(-3deg)">TUDO DE NOVO.</div></div>
+  </section>
+
+  <!-- 4. E se ele tivesse motivo pra ficar? + o que o Benefiz dá -->
+  <section class="scene" data-start="{c['agora'] - 0.1}" data-end="{c['isso'] - 0.1}">
+    <div class="f-teal"></div><svg class="padrao" data-pad="rgba(255,255,255,.06)"></svg>
+    <div class="el h" data-in="{c['agora']}" data-a="drop" style="top:190px;font-size:80px;color:#fff">E se ele tivesse</div>
+    <div class="el h" data-in="{c['motivo']}" data-a="slam" style="top:300px;font-size:104px;color:var(--laranja);white-space:nowrap">MOTIVO PRA FICAR?</div>
+    <div class="el" data-in="{c['consulta']}" data-a="slideR" style="top:540px"><div class="card"><div class="ic" style="background:#FDE7D6"><svg viewBox="0 0 100 100" style="width:96px;color:var(--laranja)"><use href="#i-saude"/></svg></div><div class="t">CONSULTAS<small>e exames, de todas as especialidades</small></div></div></div>
+    <div class="el" data-in="{c['dentista']}" data-a="slideL" style="top:770px"><div class="card"><div class="ic" style="background:#DCEBEB"><svg viewBox="0 0 100 100" style="width:96px;color:var(--teal)"><use href="#i-dente"/></svg></div><div class="t">DENTISTA<small>Tratamentos odontológicos</small></div></div></div>
+    <div class="el" data-in="{c['farmacia']}" data-a="slideR" style="top:1000px"><div class="card"><div class="ic" style="background:#FDE7D6"><svg viewBox="0 0 100 100" style="width:100px;color:var(--laranja)"><use href="#i-remedio"/></svg></div><div class="t">FARMÁCIA<small>Desconto em medicamentos</small></div></div></div>
+    <div class="el" data-in="{c['seguro']}" data-a="slideL" style="top:1230px"><div class="card"><div class="ic" style="background:#DCEBEB"><svg viewBox="0 0 100 100" style="width:96px;color:var(--teal)"><use href="#i-seg"/></svg></div><div class="t">SEGURO DE VIDA<small>e assistência pra família toda</small></div></div></div>
+  </section>
+
+  <!-- 5. Isso é Benefiz + prova -->
+  <section class="scene" data-start="{c['isso'] - 0.1}" data-end="{c['cabe'] - 0.1}">
+    <div class="f-lar"></div><svg class="padrao" data-pad="rgba(255,255,255,.14)"></svg>
+    <div class="el h" data-in="{c['isso']}" data-a="drop" style="top:200px;font-size:84px;color:#fff">Isso é</div>
+    <div class="el" data-in="{c['benefiz']}" data-a="pop" style="top:320px" id="logo5"></div>
+    <div class="el h" data-in="{c['vinte']}" data-a="slam" id="vidas" style="top:700px;font-size:200px;color:#fff">+0</div>
+    <div class="el h" data-in="{c['vidas']}" data-a="rise" style="top:920px;font-size:76px;color:#fff">vidas acolhidas</div>
+    <div class="el" data-in="{c['cento']}" data-a="pop" style="top:1090px"><div class="h" style="display:inline-block;background:#fff;color:var(--teal);font-size:76px;padding:22px 50px 30px;border-radius:30px">120 empresas confiam</div></div>
+  </section>
+
+  <!-- 6. Preços -->
+  <section class="scene" data-start="{c['cabe'] - 0.1}" data-end="{c['chama'] - 0.1}">
+    <div class="f-creme"></div>
+    <div class="el h" data-in="{c['cabe']}" data-a="drop" style="top:150px;font-size:96px;color:var(--teal)">E cabe no bolso</div>
+    <div class="el" data-in="{c['apartir']}" data-a="rise" style="top:290px;font-weight:700;font-size:48px;color:var(--tinta)">planos a partir de <b style="color:var(--laranja)">R$ 209,90/mês</b></div>
+    {''.join(f"""<div class="el" data-in="{c['apartir'] + 0.35 + i * 0.35:.2f}" data-a="slideR" style="top:{430 + i * 380}px"><div style="display:inline-flex;align-items:center;gap:30px;width:940px;background:#fff;border-radius:36px;padding:22px;text-align:left;box-shadow:0 20px 50px rgba(31,58,59,.15);{'border:6px solid var(--laranja);' if dest else ''}">
+      {arte_plano(nome, {"Individual": 1, "Duplo": 2, "Quádruplo": 4}[nome], fundo)}
+      <div><div class="h" style="font-size:58px;color:var(--teal)">{nome}</div><div style="font-weight:600;font-size:30px;color:var(--tinta);margin-top:6px">{sub}</div>
+        <div style="margin-top:14px"><span style="font-weight:700;font-size:34px;color:#7A8A8B">R$ </span><span class="h" style="font-size:96px;color:var(--laranja)">{preco}</span><span style="font-weight:700;font-size:32px;color:#7A8A8B">/mês</span></div>{'<div style="display:inline-block;margin-top:8px;background:var(--laranja);color:#fff;font-weight:800;font-size:30px;padding:8px 20px;border-radius:30px">menos de R$ 70 por pessoa</div>' if dest else ''}</div></div></div>"""
+      for i, (fundo, nome, sub, preco, dest) in enumerate([("linear-gradient(160deg,#F7C548,#F0A93E)", "Individual", "1 pessoa", "209,90", False), ("linear-gradient(160deg,#E9E1D6,#D8CDBF)", "Duplo", "2 pessoas", "239,90", False), ("linear-gradient(160deg,#F3D9C4,#E8BFA0)", "Quádruplo", "a família toda: 4 pessoas", "279,90", True)]))}
+  </section>
+
+  <!-- 6. CTA -->
+  <section class="scene" data-start="{c['chama'] - 0.1}" data-end="{FIM + 1}">
+    <div class="f-creme"></div>
+    <div class="el" data-in="{c['chama'] - 0.05}" data-a="pop" style="top:230px" id="logo7"></div>
+    <div class="el" data-in="{c['chama'] + 0.2}" data-a="pop" style="top:620px"><div class="pill" style="background:#25D366;color:#fff;font-size:66px;box-shadow:0 20px 50px rgba(37,211,102,.35)"><svg viewBox="0 0 32 32" style="width:84px;height:84px;color:#fff"><use href="#i-whats"/></svg>CHAMA NO WHATS</div></div>
+    <div class="el h" data-in="{c['escolhe']}" data-a="rise" style="top:830px;font-size:96px;color:var(--teal);padding:0 70px">e escolha o seu plano</div>
+    <div class="el h" data-in="{c['escolhe'] + 0.4}" data-a="rise" style="top:1130px;font-size:72px;color:var(--laranja)">(61) 8199-0171</div>
+    <div class="el" data-in="{c['escolhe'] + 0.7}" data-a="rise" style="top:1250px;font-weight:700;font-size:40px;color:var(--teal)">@benefiz.br · Cultivando bem-estar</div>
+  </section>
+</div>
+
+'''
+script = script.replace("eo(clamp((t - 22.68) / 1.8))", f"eo(clamp((t - {c['vinte']}) / 1.2))")
+script = script.replace('BENEFIZ.logo(700, "branco")', 'BENEFIZ.logo(760, "branco")')
+(ROOT / "anuncio_v2.html").write_text(head + cenas + script)
+print("anuncio_v2.html · duração", round(FIM, 2))

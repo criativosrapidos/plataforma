@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><title>Líderes - Encontro das Comunidades v3</title>
+<style>
+@font-face { font-family: M; font-weight: 300; src: url(fonts/montserrat-latin-300-normal.woff); }
+@font-face { font-family: M; font-weight: 400; src: url(fonts/montserrat-latin-400-normal.woff); }
+@font-face { font-family: M; font-weight: 500; src: url(fonts/montserrat-latin-500-normal.woff); }
+@font-face { font-family: M; font-weight: 600; src: url(fonts/montserrat-latin-600-normal.woff); }
+@font-face { font-family: M; font-weight: 700; src: url(fonts/montserrat-latin-700-normal.woff); }
+@font-face { font-family: M; font-weight: 800; src: url(fonts/montserrat-latin-800-normal.woff); }
+@font-face { font-family: M; font-weight: 900; src: url(fonts/montserrat-latin-900-normal.woff); }
+:root { --az:#4F6BFF; --royal:#3F4FA0; --ciano:#8FC2FF; --ouro:#F2C14E; --noite:#040818; }
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body { width:1080px; height:1920px; overflow:hidden; background:var(--noite); }
+#stage { position:relative; width:1080px; height:1920px; overflow:hidden; font-family:M, sans-serif; color:#fff; background:var(--noite); }
+.scene { position:absolute; inset:0; opacity:0; overflow:hidden; }
+.ph { position:absolute; inset:-4%; background-size:cover; background-position:center; will-change:transform; }
+.grade { position:absolute; inset:0; background:linear-gradient(180deg,rgba(4,8,24,.55) 0%,rgba(4,8,24,.05) 30%,rgba(4,8,24,.25) 55%,rgba(4,8,24,.92) 100%); }
+.tint { position:absolute; inset:0; background:#2B3FA8; mix-blend-mode:soft-light; opacity:.55; }
+.banda { position:absolute; left:40px; right:40px; border-radius:28px; overflow:hidden; box-shadow:0 40px 100px rgba(0,0,0,.6), 0 0 0 1.5px rgba(170,190,255,.25); }
+.banda .ph { inset:-6%; }
+.blurbg { position:absolute; inset:-80px; background-size:cover; background-position:center; filter:blur(40px) brightness(.45) saturate(1.2); }
+.el { position:absolute; left:70px; right:70px; opacity:0; will-change:transform, opacity; }
+.c { text-align:center; }
+.H { font-weight:900; text-transform:uppercase; letter-spacing:-.02em; line-height:.98; }
+.T { font-weight:300; text-transform:uppercase; letter-spacing:.32em; }
+.w { display:inline-block; overflow:hidden; vertical-align:top; padding:.06em .02em .1em; margin:-.06em -.02em -.1em; }
+.w > span { display:inline-block; will-change:transform; }
+.ouro { color:var(--ouro); }
+.ciano { color:var(--ciano); }
+.pill { display:inline-flex; align-items:center; gap:18px; padding:16px 34px; border-radius:60px; background:rgba(255,255,255,.1); border:1.5px solid rgba(255,255,255,.3); font-weight:600; letter-spacing:.18em; text-transform:uppercase; }
+.vidro { background:linear-gradient(135deg,rgba(255,255,255,.16),rgba(255,255,255,.05)); border:1.5px solid rgba(200,215,255,.35); border-radius:30px; box-shadow:0 30px 80px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.25); }
+.linha { height:3px; background:linear-gradient(90deg,var(--ouro),rgba(242,193,78,0)); transform-origin:left; }
+.grain { position:absolute; inset:0; opacity:.08; mix-blend-mode:overlay; pointer-events:none; }
+.vin { position:absolute; inset:0; background:radial-gradient(ellipse at 50% 45%,transparent 50%,rgba(0,0,0,.7) 100%); pointer-events:none; }
+.leak { position:absolute; width:1400px; height:1400px; border-radius:50%; filter:blur(140px); mix-blend-mode:screen; pointer-events:none; }
+#flash { position:absolute; inset:0; background:#fff; opacity:0; pointer-events:none; }
+.row { display:flex; align-items:center; gap:24px; padding:22px 34px; border-bottom:1.5px solid rgba(200,215,255,.15); font-size:38px; font-weight:600; }
+.row i { flex:none; width:44px; height:44px; border-radius:50%; background:rgba(143,194,255,.18); border:2px solid rgba(143,194,255,.6); }
+.row b { display:block; height:18px; border-radius:9px; background:rgba(255,255,255,.22); }
+.campo { margin:0 40px 22px; padding:22px 28px; border-radius:18px; background:rgba(255,255,255,.08); border:1.5px solid rgba(200,215,255,.3); font-size:34px; font-weight:500; text-align:left; color:rgba(255,255,255,.9); }
+.campo small { display:block; font-size:22px; letter-spacing:.2em; color:var(--ciano); margin-bottom:6px; font-weight:600; }
+.btn { margin:10px 40px 40px; padding:30px; border-radius:20px; background:linear-gradient(180deg,#F7D27A,#E0A82E); color:#1A1400; font-weight:900; font-size:40px; letter-spacing:.06em; text-transform:uppercase; text-align:center; box-shadow:0 18px 50px rgba(242,193,78,.45); }
+</style></head><body><div id="stage">
+
+  <section class="scene" data-start="0" data-end="2.21">
+    <div class="ph" data-kb="in" style="background-image:url(fotos/hd/f05.png);background-position:center 20%"></div><div class="tint"></div><div class="grade"></div>
+    <div class="el c" data-in="0.00" data-a="fade" style="top:120px"><div style="display:inline-flex;align-items:center;gap:11px"><div class="emb" data-s="74"></div><div style="font-weight:600;font-size:46px;letter-spacing:.07em;line-height:1;padding-top:.06em">LÍDERES</div></div></div>
+    <div class="el H c" data-in="0.08" data-a="palavras" data-passo="0.07" style="top:1160px;font-size:190px">FALA,</div>
+    <div class="el H c" data-in="0.43" data-a="palavras" data-passo="0.07" style="top:1350px;font-size:136px;white-space:nowrap"><span class="ouro">LIDERANÇA!</span></div>
+  </section>
+
+  <section class="scene" data-start="2.21" data-end="6.17" data-cinza="1">
+    <div class="ph" data-kb="out" style="background-image:url(fotos/hd/f02.png);filter:grayscale(1) blur(6px) brightness(.45)"></div><div class="tint"></div><div class="grade"></div>
+    <div class="el H c" data-in="2.46" data-a="palavras" data-passo="0.07" style="top:560px;font-size:124px;white-space:nowrap">Sexta-feira</div>
+    <div class="el H c" data-in="3.08" data-a="palavras" data-passo="0.05" style="top:740px;font-size:58px;font-weight:500;text-transform:none;letter-spacing:0">você vai ficar no escritório...</div>
+    <div class="el H c" data-in="4.48" data-a="palavras" data-passo="0.07" style="top:900px;font-size:84px;color:#FF7A45;white-space:nowrap">APAGANDO INCÊNDIO</div>
+    <div class="el H c" data-in="5.24" data-a="palavras" data-passo="0.07" style="top:1010px;font-size:150px">SOZINHO?</div>
+  </section>
+
+  <section class="scene" data-start="6.17" data-end="10.57">
+    <div class="blurbg" style="background-image:url(fotos/hd/f09.png)"></div><div class="banda" style="top:640px;height:640px"><div class="ph" data-kb="right" style="background-image:url(fotos/hd/f09.png)"></div><div style="position:absolute;inset:0;background:linear-gradient(180deg,transparent 60%,rgba(4,8,24,.55))"></div></div>
+    <div class="el T c" data-in="6.37" data-a="palavras" data-passo="0.12" style="top:260px;font-size:58px;font-weight:300;letter-spacing:.2em">Enquanto isso...</div>
+    <div class="el H c" data-in="7.52" data-a="palavras" data-passo="0.06" style="top:370px;font-size:76px">Os empresários que <span class="ouro">mais crescem</span> em Brasília</div>
+    <div class="el H c" data-in="9.85" data-a="palavras" data-passo="0.07" style="top:1340px;font-size:118px">NA MESMA SALA.</div>
+  </section>
+
+  <section class="scene" data-start="10.57" data-end="11.96">
+    <div class="blurbg" style="background-image:url(fotos/hd/f06.png)"></div><div class="banda" style="top:420px;height:700px"><div class="ph" data-kb="in" style="background-image:url(fotos/hd/f06.png)"></div><div style="position:absolute;inset:0;background:linear-gradient(180deg,transparent 60%,rgba(4,8,24,.55))"></div></div>
+    <div class="el H c" data-in="10.72" data-a="palavras" data-passo="0.07" style="top:1180px;font-size:120px">Trocando</div>
+    <div class="el H c" data-in="11.02" data-a="palavras" data-passo="0.07" style="top:1310px;font-size:120px"><span class="ciano">experiência.</span></div>
+  </section>
+
+  <section class="scene" data-start="11.96" data-end="13.34">
+    <div class="blurbg" style="background-image:url(fotos/hd/f11.png)"></div><div class="banda" style="top:420px;height:700px"><div class="ph" data-kb="left" style="background-image:url(fotos/hd/f11.png)"></div><div style="position:absolute;inset:0;background:linear-gradient(180deg,transparent 60%,rgba(4,8,24,.55))"></div></div>
+    <div class="el H c" data-in="12.08" data-a="palavras" data-passo="0.07" style="top:1180px;font-size:120px">Fechando</div>
+    <div class="el H c" data-in="12.38" data-a="palavras" data-passo="0.07" style="top:1310px;font-size:120px"><span class="ouro">negócio.</span></div>
+  </section>
+
+  <section class="scene" data-start="13.34" data-end="15.45">
+    <div class="ph" data-kb="in" style="background-image:url(fotos/hd/f07.png);background-position:center 25%"></div><div class="tint"></div><div class="grade"></div>
+    <div class="el T c" data-in="13.49" data-a="palavras" data-passo="0.08" style="top:1190px;font-size:40px;font-weight:400;letter-spacing:.18em;white-space:nowrap">Imagina sair de lá com</div>
+    <div class="el H c" data-in="14.52" data-a="palavras" data-passo="0.07" style="top:1280px;font-size:118px">O CONTATO <span class="ouro">CERTO.</span></div>
+  </section>
+
+  <section class="scene" data-start="15.45" data-end="16.92">
+    <div class="ph" data-kb="right" style="background-image:url(fotos/hd/f01.png);background-position:center 40%"></div><div class="tint"></div><div class="grade"></div>
+    <div class="el H c" data-in="15.60" data-a="palavras" data-passo="0.07" style="top:1280px;font-size:108px;white-space:nowrap">A IDEIA <span class="ouro">CERTA.</span></div>
+  </section>
+
+  <section class="scene" data-start="16.92" data-end="19.45">
+    <div class="ph" data-kb="in" style="background-image:url(fotos/hd/f10.png);background-position:center 35%;filter:saturate(1.15)"></div><div class="tint"></div><div class="grade"></div>
+    <div class="el H c" data-in="17.12" data-a="palavras" data-passo="0.07" style="top:1180px;font-size:100px;white-space:nowrap">E AQUELE <span class="ouro">BRINDE</span></div>
+    <div class="el H c" data-in="17.86" data-a="palavras" data-passo="0.05" style="top:1320px;font-size:46px;font-weight:500;text-transform:none;letter-spacing:0">com quem joga no mesmo nível que você.</div>
+  </section>
+
+  <section class="scene" data-start="19.45" data-end="21.85">
+    <div class="blurbg" style="background-image:url(fotos/hd/f12.png)"></div><div class="banda" style="top:860px;height:560px"><div class="ph" data-kb="in" style="background-image:url(fotos/hd/f12.png)"></div><div style="position:absolute;inset:0;background:linear-gradient(180deg,transparent 60%,rgba(4,8,24,.55))"></div></div>
+    <div class="el c" data-in="19.50" data-a="fade" style="top:250px"><div style="display:inline-flex;align-items:center;gap:17px"><div class="emb" data-s="110"></div><div style="font-weight:600;font-size:74px;letter-spacing:.07em;line-height:1;padding-top:.06em">LÍDERES</div></div></div>
+    <div class="el H c" data-in="19.60" data-a="palavras" data-passo="0.08" style="top:430px;font-size:88px">Encontro das Comunidades</div>
+    <div class="el " data-in="20.72" data-a="line" style="top:640px"><div class="linha" style="width:220px;margin:0 auto"></div></div>
+    <div class="el T c ouro" data-in="20.72" data-a="palavras" data-passo="0.1" style="top:680px;font-size:54px;font-weight:300;letter-spacing:.3em">Líderes do Brasil</div>
+  </section>
+
+  <section class="scene" data-start="21.85" data-end="25.88">
+    <div class="ph" data-kb="in" style="background-image:url(fotos/hd/f03.png);background-position:center 15%"></div><div class="tint"></div><div class="grade"></div>
+    <div class="el c" data-in="21.90" data-a="up" style="top:150px"><div class="pill" style="font-size:30px">Convite · Encontro das Comunidades</div></div>
+    <div class="el " data-in="22.00" data-a="card" style="top:1000px"><div class="vidro" style="padding:34px 44px"><div class="T ciano" style="font-size:26px;font-weight:600">Quando</div><div class="H" style="font-size:96px;margin-top:8px">SEXTA · 16/10</div></div></div>
+    <div class="el " data-in="23.52" data-a="card" style="top:1240px"><div class="vidro" style="padding:34px 44px;display:flex;justify-content:space-between;align-items:flex-end"><div><div class="T ciano" style="font-size:26px;font-weight:600">Horário</div><div class="H" style="font-size:96px;margin-top:8px">16H</div></div><div class="H ouro" style="font-size:54px">HAPPY HOUR</div></div></div>
+    <div class="el " data-in="24.44" data-a="card" style="top:1480px"><div class="vidro" style="padding:34px 44px"><div class="T ciano" style="font-size:26px;font-weight:600">Onde</div><div class="H" style="font-size:80px;margin-top:8px">ESPAÇO RC</div><div style="font-size:36px;font-weight:500;margin-top:6px">Asa Sul · Prédio do Hotel Bonaparte</div></div></div>
+  </section>
+
+  <section class="scene" data-start="25.88" data-end="28.57">
+    <div class="ph" data-kb="out" style="background-image:url(fotos/hd/f08.png);filter:blur(14px) brightness(.35) grayscale(.4)"></div><div class="tint"></div><div class="grade"></div>
+    <div class="el H c" data-in="26.00" data-a="palavras" data-passo="0.07" style="top:360px;font-size:110px">Mas <span class="ouro">atenção:</span></div>
+    <div class="el " data-in="26.30" data-a="card" style="top:620px"><div class="vidro" style="overflow:hidden"><div style="padding:26px 34px;display:flex;justify-content:space-between;align-items:center;border-bottom:1.5px solid rgba(200,215,255,.25)"><div class="T" style="font-size:28px;font-weight:600">Lista de confirmados</div><div class="T ouro" style="font-size:24px;font-weight:700">16/10</div></div><div class="row"><i></i><b style="width:420px"></b></div><div class="row"><i></i><b style="width:300px"></b></div><div class="row"><i></i><b style="width:380px"></b></div><div class="row"><i></i><b style="width:260px"></b></div></div></div>
+    <div class="el H c" data-in="27.12" data-a="palavras" data-passo="0.07" style="top:1270px;font-size:96px">Só entra quem</div>
+    <div class="el H c" data-in="27.76" data-a="palavras" data-passo="0.07" style="top:1380px;font-size:96px"><span class="ouro">está na lista.</span></div>
+  </section>
+
+  <section class="scene" data-start="28.57" data-end="30.67">
+    <div class="ph" data-kb="in" style="background-image:url(fotos/hd/f13.png);filter:blur(14px) brightness(.35)"></div><div class="tint"></div><div class="grade"></div>
+    <div class="el H c" data-in="28.72" data-a="palavras" data-passo="0.06" style="top:250px;font-size:84px">Preenche o formulário</div>
+    <div class="el " data-in="28.92" data-a="card" style="top:500px"><div class="vidro" style="width:820px;margin:0 auto;padding-top:34px"><div class="T c" style="font-size:26px;font-weight:600;margin-bottom:26px">Confirmação de presença</div><div class="campo"><small>NOME</small><span class="dig" data-txt="Seu nome completo" data-t="0"></span></div><div class="campo"><small>EMPRESA</small><span class="dig" data-txt="Sua empresa" data-t="0.45"></span></div><div class="btn" id="btn">Garantir minha vaga</div></div></div>
+    <div class="el H c" data-in="29.60" data-a="palavras" data-passo="0.06" style="top:1300px;font-size:84px">e garante a sua <span class="ouro">vaga.</span></div>
+  </section>
+
+  <section class="scene" data-start="30.67" data-end="34.879999999999995">
+    <div class="ph" data-kb="in" style="background-image:url(fotos/hd/f04.png);background-position:center 60%"></div><div class="tint"></div><div class="grade"></div>
+    <div class="el c" data-in="30.74" data-a="fade" style="top:150px"><div style="display:inline-flex;align-items:center;gap:15px"><div class="emb" data-s="96"></div><div style="font-weight:600;font-size:64px;letter-spacing:.07em;line-height:1;padding-top:.06em">LÍDERES</div></div></div>
+    <div class="el H c" data-in="30.79" data-a="palavras" data-passo="0.07" style="top:830px;font-size:86px;white-space:nowrap">Bora fortalecer</div>
+    <div class="el H c" data-in="31.63" data-a="palavras" data-passo="0.07" style="top:945px;font-size:120px;white-space:nowrap"><span class="ouro">o movimento!</span></div>
+    <div class="el " data-in="32.03" data-a="card" style="top:1220px"><div class="vidro" style="padding:28px 40px;text-align:center"><div class="H" style="font-size:62px">SEXTA · 16/10 · 16H</div><div style="font-size:34px;font-weight:500;margin-top:10px">Espaço RC – Asa Sul · Prédio do Hotel Bonaparte</div></div></div>
+    <div class="el c" data-in="32.43" data-a="up" style="top:1470px"><div class="T c" style="font-size:28px;font-weight:600;color:var(--ouro)">Entrada somente com nome na lista</div></div>
+  </section>
+
+<div class="leak" id="lk1" style="background:rgba(79,107,255,.35)"></div>
+<div class="leak" id="lk2" style="width:900px;height:900px;background:rgba(242,193,78,.18)"></div>
+<svg class="grain" viewBox="0 0 1080 1920"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" stitchTiles="stitch"/></filter><rect width="1080" height="1920" filter="url(#n)"/></svg><div class="vin"></div><div id="flash"></div>
+</div>
+<script src="emblema.js"></script>
+<script>
+const L = 0.15, C = {"fala": 0.08, "sexta": 2.464, "escritorio": 3.48, "apagando": 4.48, "sozinho": 5.24, "enquanto": 6.368, "empresarios": 7.52, "brasilia": 8.84, "sala": 10.0, "trocando": 10.72, "fechando": 12.08, "imagina": 13.493, "contato": 14.52, "ideia": 15.6, "brinde": 17.12, "nivel": 18.16, "encontro": 19.6, "lideres": 20.72, "sexta2": 22.0, "dezesseis": 22.64, "quatro": 23.52, "espaco": 24.44, "asa": 25.2, "atencao": 26.0, "soentra": 27.12, "lista": 28.16, "preenche": 28.72, "formulario": 29.12, "garante": 29.6, "bora": 30.787, "movimento": 31.627, "fim": 32.48}, CORTES = [6.218, 13.343, 19.450000000000003, 30.637];
+document.querySelectorAll(".emb").forEach(e => { const s = +e.dataset.s;
+  e.innerHTML = `<div style="width:${s}px;height:${s}px;border-radius:50%;overflow:hidden;box-shadow:0 0 0 2px rgba(255,255,255,.35),0 10px 40px rgba(63,79,160,.6)">${EMB(s, "#3F4FA0")}</div>`; });
+document.querySelectorAll('[data-a="palavras"]').forEach(el => {
+  const tmp = document.createElement("div"); tmp.innerHTML = el.innerHTML; let out = "";
+  const walk = (node, wrap) => node.childNodes.forEach(n => {
+    if (n.nodeType === 3) n.textContent.split(/(\s+)/).forEach(p => { if (!p) return; out += /^\s+$/.test(p) ? " " : `<span class="w"><span${wrap ? ` class="${wrap}"` : ""}>${p}</span></span>`; });
+    else walk(n, n.className || wrap);
+  });
+  walk(tmp, ""); el.innerHTML = out;
+});
+const clamp = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
+const eo = x => 1 - Math.pow(1 - x, 3), eo5 = x => 1 - Math.pow(1 - x, 5);
+const XF = 0.14;
+function anim(el, t) {
+  const t0 = parseFloat(el.dataset.in), a = el.dataset.a;
+  if (a === "palavras") {
+    const passo = parseFloat(el.dataset.passo); let vis = false;
+    el.querySelectorAll(".w > span").forEach((s, i) => {
+      const p = clamp((t - t0 - i * passo) / 0.5), pe = eo5(p);
+      s.style.transform = `translateY(${((1 - pe) * 105).toFixed(1)}%) rotate(${((1 - pe) * 4).toFixed(2)}deg)`;
+      if (p > 0) vis = true;
+    });
+    el.style.opacity = vis ? 1 : 0; el.style.visibility = vis ? "visible" : "hidden"; return;
+  }
+  const d = {fade: .8, up: .6, card: .7, line: .7}[a] || .6;
+  const p = clamp((t - t0) / d), pe = eo5(p);
+  let op = pe, tf = "";
+  if (a === "up") tf = `translateY(${((1 - pe) * 40).toFixed(1)}px)`;
+  if (a === "fade") tf = `scale(${(1.06 - .06 * pe).toFixed(4)})`;
+  if (a === "card") tf = `translateY(${((1 - pe) * 90).toFixed(1)}px) scale(${(.96 + .04 * pe).toFixed(4)})`;
+  if (a === "line") { const l = el.querySelector(".linha"); l.style.transform = `scaleX(${pe.toFixed(3)})`; }
+  op = op < 0.003 ? 0 : op;
+  el.style.opacity = op.toFixed(3); el.style.visibility = op > 0 ? "visible" : "hidden"; el.style.transform = tf;
+}
+function render(tv) {
+  const t = tv - L;
+  let fo = 0; CORTES.forEach(k => { const q = t - k; if (q > 0 && q < 0.3) fo = Math.max(fo, .45 * (1 - q / .3)); });
+  if (t < 0.25) fo = Math.max(fo, .9 * (1 - t / .25));
+  flash.style.opacity = fo.toFixed(3);
+  lk1.style.transform = `translate(${(-500 + Math.sin(t * .35) * 500).toFixed(0)}px,${(-300 + Math.cos(t * .27) * 700).toFixed(0)}px)`;
+  lk2.style.transform = `translate(${(300 + Math.cos(t * .3) * 300).toFixed(0)}px,${(900 + Math.sin(t * .4) * 400).toFixed(0)}px)`;
+  document.querySelectorAll(".scene").forEach(s => {
+    const a = parseFloat(s.dataset.start), b = parseFloat(s.dataset.end);
+    let op = 0;
+    if (t >= a && t < b + XF) op = clamp((t - a) / XF) * (t > b ? 1 - clamp((t - b) / XF) : 1);
+    if (a === 0) op = t < b ? 1 : op;
+    s.style.opacity = op; s.style.visibility = op > 0 ? "visible" : "hidden"; s.style.zIndex = Math.round(a * 10 + 10);
+    if (op <= 0) return;
+    const k = clamp((t - a) / (b - a + .5)), ent = eo(clamp((t - a) / .45));
+    s.style.transform = `scale(${(1.06 - .06 * ent).toFixed(4)})`;
+    s.querySelectorAll(".ph").forEach(p => {
+      const kb = p.dataset.kb, z = kb === "out" ? 1.16 - .1 * k : 1.04 + .12 * k;
+      const x = kb === "right" ? -30 + 60 * k : kb === "left" ? 30 - 60 * k : 0;
+      p.style.transform = `translateX(${x.toFixed(1)}px) scale(${z.toFixed(4)})`;
+    });
+    s.querySelectorAll(".el").forEach(el => anim(el, t));
+  });
+  const t0 = C.formulario - .2 + .5;
+  document.querySelectorAll(".dig").forEach(d => { const txt = d.dataset.txt, n = Math.floor(clamp((t - t0 - +d.dataset.t) / .45) * txt.length);
+    d.textContent = txt.slice(0, n) + ((n < txt.length && t > t0 + +d.dataset.t) ? "|" : ""); });
+  const pb = clamp((t - C.garante - .1) / .35);
+  btn.style.transform = `scale(${(1 - .06 * Math.sin(pb * Math.PI)).toFixed(4)})`;
+  btn.style.boxShadow = `0 18px ${(50 + 60 * pb).toFixed(0)}px rgba(242,193,78,${(.45 + .35 * pb).toFixed(2)})`;
+  btn.textContent = t > C.garante + .3 ? "✓ Vaga garantida" : "Garantir minha vaga";
+}
+window.render = render;
+render(0);
+</script>
+</body></html>

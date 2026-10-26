@@ -1,0 +1,265 @@
+<title>Proposta Nanoz Consultoria</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap">
+<style>
+/* Layout: proposta em capítulos verticais (vídeo → identidade → landing → próximos passos), visual noturno de banco privado, aberta e assinada pela Criativos Rápidos. */
+:root {
+  --bg:#070A11; --bg2:#0C1220; --surface:#111A2C; --line:rgba(228,214,179,.14); --line2:rgba(255,255,255,.08);
+  --fg:#F2EFE8; --mute:#A3AABA; --dim:#6F7789; --gold:#C2A66B; --champ:#E4D6B3; --cr:#FFD400;
+  --serif:"EB Garamond", "Times New Roman", serif; --sans:Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+  color-scheme:dark;
+}
+* { box-sizing:border-box; }
+body { background:var(--bg); color:var(--fg); font-family:var(--sans); font-size:16px; line-height:1.6; -webkit-font-smoothing:antialiased; font-variant-numeric:lining-nums; }
+img, video { max-width:100%; display:block; }
+a { color:inherit; }
+.wrap { max-width:1180px; margin:0 auto; padding-left:max(24px, env(safe-area-inset-left, 0px)); padding-right:max(24px, env(safe-area-inset-right, 0px)); }
+.serif { font-family:var(--serif); font-weight:400; }
+.eyebrow { font-size:12px; font-weight:500; letter-spacing:.26em; text-transform:uppercase; color:var(--gold); display:flex; align-items:center; gap:12px; }
+.eyebrow::before { content:""; width:26px; height:1px; background:currentColor; }
+h1, h2, h3 { text-wrap:balance; margin:0; font-weight:400; }
+h2 { font-family:var(--serif); font-size:clamp(34px, 4.6vw, 56px); line-height:1.04; letter-spacing:-.01em; margin-top:18px; }
+h2 em, h1 em { font-style:italic; color:var(--champ); }
+p { margin:0; }
+.lead { color:var(--mute); font-size:17px; line-height:1.7; font-weight:300; max-width:62ch; }
+:focus-visible { outline:2px solid var(--champ); outline-offset:3px; }
+
+/* barra superior */
+.top { border-bottom:1px solid var(--line2); background:var(--bg); }
+.top .wrap { display:flex; justify-content:space-between; align-items:center; gap:16px; padding-block:16px; flex-wrap:wrap; }
+.cr { display:inline-flex; align-items:center; gap:10px; text-decoration:none; }
+.cr i { width:36px; height:36px; border-radius:9px; background:var(--cr); display:grid; place-items:center; flex:none; }
+.cr span { line-height:1.02; font-size:15px; }
+.cr b { display:block; font-weight:700; font-style:italic; color:var(--cr); }
+.selo { font-size:11.5px; letter-spacing:.2em; text-transform:uppercase; color:var(--mute); border:1px solid var(--line2); padding:8px 14px; }
+
+/* abertura */
+.abre { position:relative; overflow:hidden; background:radial-gradient(ellipse 60% 70% at 78% 40%, #16264A 0%, transparent 70%), var(--bg); }
+.abre .wrap { display:grid; grid-template-columns:minmax(0, 1.15fr) minmax(0, .85fr); gap:56px; align-items:center; padding-block:88px 96px; }
+.marca { display:flex; align-items:center; gap:16px; margin-top:34px; }
+.marca svg { width:64px; flex:none; }
+.marca div { border-left:1px solid rgba(194,166,107,.5); padding-left:16px; line-height:1.1; }
+.marca small { display:block; font-size:12px; letter-spacing:.5em; color:var(--gold); }
+.marca strong { font-family:var(--serif); font-weight:400; font-size:24px; }
+h1 { font-family:var(--serif); font-size:clamp(42px, 5.6vw, 78px); line-height:1.02; letter-spacing:-.015em; margin-top:30px; }
+.abre .lead { margin-top:26px; }
+.indice { display:flex; flex-wrap:wrap; gap:10px; margin-top:38px; }
+.indice a { text-decoration:none; font-size:13px; letter-spacing:.06em; color:var(--fg); border:1px solid var(--line); padding:10px 16px; transition:background .2s, border-color .2s; }
+.indice a:hover { background:rgba(228,214,179,.08); border-color:var(--champ); }
+.indice a span { color:var(--gold); margin-right:8px; font-family:var(--serif); font-style:italic; }
+
+/* celular com o vídeo */
+.fone { justify-self:center; width:min(330px, 100%); aspect-ratio:9/19.2; border-radius:44px; padding:12px; background:linear-gradient(160deg, #2A2F3A, #0D1017); box-shadow:0 40px 90px rgba(0,0,0,.55), inset 0 0 0 1px rgba(255,255,255,.08); }
+.fone .tela { width:100%; height:100%; border-radius:34px; overflow:hidden; background:#000; position:relative; }
+.fone video { width:100%; height:100%; object-fit:cover; }
+
+section { padding-block:110px; border-top:1px solid var(--line2); }
+.cab { display:grid; grid-template-columns:minmax(0, 1fr) minmax(0, 1fr); gap:56px; align-items:end; margin-bottom:56px; }
+
+/* vídeo */
+.video-grid { display:grid; grid-template-columns:minmax(0, .8fr) minmax(0, 1.2fr); gap:56px; align-items:start; }
+.player { width:100%; max-width:420px; aspect-ratio:9/16; background:#000; border:1px solid var(--line); }
+.player video { width:100%; height:100%; object-fit:cover; }
+.fichas { display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:1px; background:var(--line2); border:1px solid var(--line2); }
+.ficha { background:var(--bg); padding:22px 24px; }
+.ficha small { display:block; font-size:11px; letter-spacing:.2em; text-transform:uppercase; color:var(--dim); }
+.ficha b { display:block; font-family:var(--serif); font-weight:400; font-size:26px; margin-top:4px; }
+.roteiro { margin-top:34px; border-left:1px solid var(--gold); padding-left:24px; }
+.roteiro small { font-size:11px; letter-spacing:.2em; text-transform:uppercase; color:var(--gold); }
+.roteiro p { font-family:var(--serif); font-size:22px; line-height:1.5; color:var(--fg); margin-top:12px; font-style:italic; }
+
+/* identidade */
+.cores { display:grid; grid-template-columns:repeat(6, minmax(0, 1fr)); gap:12px; margin-bottom:40px; }
+.cor i { display:block; height:84px; border:1px solid var(--line2); }
+.cor b { display:block; font-size:14px; font-weight:500; margin-top:10px; }
+.cor span { font-size:12.5px; color:var(--dim); font-variant-numeric:tabular-nums; }
+.tipos { display:grid; grid-template-columns:minmax(0, 1fr) minmax(0, 1fr); gap:1px; background:var(--line2); border:1px solid var(--line2); margin-bottom:40px; }
+.tipos > div { background:var(--bg2); padding:30px 32px; }
+.tipos .a { font-family:var(--serif); font-size:52px; line-height:1; }
+.tipos .b { font-size:40px; font-weight:500; line-height:1; letter-spacing:-.01em; }
+.tipos small { display:block; color:var(--mute); font-size:14px; margin-top:12px; }
+.prancha { border:1px solid var(--line); background:#F6F3ED; }
+.logos { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:16px; }
+.logos figure { margin:0; border:1px solid var(--line2); background:var(--bg2); padding:22px; display:flex; flex-direction:column; gap:14px; }
+.logos figure img { margin:auto; max-height:210px; width:auto; }
+.logos figcaption { font-size:12px; letter-spacing:.16em; text-transform:uppercase; color:var(--dim); }
+.logos .perfil img { max-height:210px; border-radius:50%; }
+
+/* landing */
+.telas { display:grid; grid-template-columns:minmax(0, 1fr) 300px; gap:40px; align-items:start; }
+.navegador { border:1px solid var(--line); background:var(--bg2); }
+.barra { display:flex; align-items:center; gap:8px; padding:12px 16px; border-bottom:1px solid var(--line2); }
+.barra i { width:10px; height:10px; border-radius:50%; background:#2B3242; }
+.barra span { margin-left:12px; font-size:12px; color:var(--dim); background:#0A0F1A; padding:5px 14px; border-radius:20px; flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.rolagem { height:620px; overflow-y:auto; overscroll-behavior:contain; }
+.cel { border-radius:38px; padding:10px; background:linear-gradient(160deg, #2A2F3A, #0D1017); box-shadow:0 30px 70px rgba(0,0,0,.5); }
+.cel .rolagem { height:600px; border-radius:30px; }
+.dica { font-size:13px; color:var(--dim); margin-top:14px; }
+.bt { display:inline-flex; align-items:center; gap:12px; text-decoration:none; font-size:13px; font-weight:500; letter-spacing:.12em; text-transform:uppercase; padding:17px 26px; background:var(--champ); color:#0A0D14; transition:background .2s; }
+.bt:hover { background:#fff; }
+.bt.linha { background:transparent; color:var(--fg); box-shadow:inset 0 0 0 1px var(--line); }
+.bt.linha:hover { box-shadow:inset 0 0 0 1px var(--champ); }
+
+/* próximos passos */
+.passos { display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); gap:1px; background:var(--line2); border:1px solid var(--line2); }
+.passo { background:var(--bg); padding:34px 30px 38px; }
+.passo .n { font-family:var(--serif); font-style:italic; color:var(--gold); font-size:26px; }
+.passo h3 { font-family:var(--serif); font-size:30px; margin-top:16px; }
+.passo p { color:var(--mute); font-size:15.5px; margin-top:10px; }
+.fecha { margin-top:70px; padding:56px; border:1px solid var(--line); background:radial-gradient(ellipse 70% 100% at 100% 0%, rgba(194,166,107,.12), transparent 60%), var(--bg2);
+  display:grid; grid-template-columns:minmax(0, 1fr) auto; gap:40px; align-items:center; }
+.fecha h3 { font-family:var(--serif); font-size:clamp(30px, 3.6vw, 44px); line-height:1.1; }
+.fecha h3 em { font-style:italic; color:var(--champ); }
+.fecha p { color:var(--mute); margin-top:12px; }
+.acoes { display:flex; flex-wrap:wrap; gap:12px; }
+
+footer { border-top:1px solid var(--line2); }
+footer .wrap { display:flex; justify-content:space-between; align-items:center; gap:20px; flex-wrap:wrap; padding-block:34px; color:var(--dim); font-size:13px; }
+
+@media (max-width: 900px) {
+  .abre .wrap, .cab, .video-grid, .telas, .fecha { grid-template-columns:minmax(0, 1fr); gap:40px; }
+  .abre .wrap { padding-block:56px 72px; }
+  .player { max-width:360px; }
+  .cores { grid-template-columns:repeat(3, minmax(0, 1fr)); }
+  .tipos, .logos, .passos { grid-template-columns:minmax(0, 1fr); }
+  .telas .cel { max-width:300px; }
+  .rolagem { height:480px; }
+  section { padding-block:80px; }
+  .fecha { padding:34px 26px; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition:none !important; } }
+</style>
+
+<div class="top"><div class="wrap">
+  <a class="cr" href="https://criativosrapidos.com.br" target="_blank" rel="noopener">
+    <i><svg viewBox="0 0 40 40" width="26" aria-hidden="true"><g fill="#0B0B0B"><rect x="4" y="12" width="9" height="3.2" rx="1.6"/><rect x="2" y="18.4" width="11" height="3.2" rx="1.6"/><rect x="4" y="24.8" width="9" height="3.2" rx="1.6"/><path d="M16 9 L35 20 L16 31 Z"/></g></svg></i>
+    <span>criativos<b>rápidos</b></span>
+  </a>
+  <span class="selo">Proposta exclusiva · Outubro 2026</span>
+</div></div>
+
+<header class="abre">
+  <div class="wrap">
+    <div>
+      <div class="eyebrow">Proposta preparada para</div>
+      <div class="marca">
+        <svg viewBox="0 0 347.5 154.6" aria-hidden="true"><path fill="#C2A66B" d="M344.00 90.00 L341.00 88.00 L339.62 87.50 L337.00 87.00 L333.88 87.25 L332.38 87.75 L330.00 89.00 L328.75 90.00 L283.88 134.88 L282.12 137.00 L280.88 139.38 L280.25 141.62 L280.25 144.75 L281.00 147.50 L281.62 148.75 L284.38 152.00 L286.88 153.50 L289.12 154.12 L291.38 154.38 L336.38 154.38 L338.62 154.12 L340.50 153.62 L342.75 152.38 L344.75 150.62 L345.88 149.12 L346.62 147.62 L347.50 144.12 L347.50 97.50 L347.25 95.38 L346.75 94.00 L345.25 91.38 Z M4.25 2.75 L2.50 4.50 L1.12 6.62 L0.38 8.62 L0.00 10.75 L0.00 143.62 L0.62 146.75 L1.62 148.88 L2.62 150.38 L4.38 152.12 L7.25 153.75 L9.38 154.38 L12.38 154.62 L26.38 154.62 L29.38 154.38 L31.62 153.75 L33.12 153.00 L34.88 151.75 L36.00 150.62 L38.00 147.38 L38.50 146.00 L38.88 143.88 L38.88 106.00 L39.25 103.25 L39.88 101.38 L41.12 99.12 L43.88 96.50 L47.12 94.88 L50.00 94.38 L52.00 94.38 L53.38 94.62 L56.25 95.75 L59.75 98.50 L112.50 151.38 L114.62 153.00 L117.38 154.12 L121.12 154.62 L142.25 154.62 L146.62 153.88 L149.38 152.50 L150.75 151.38 L152.38 149.38 L153.62 147.00 L154.38 143.75 L154.25 141.12 L153.50 138.75 L152.62 137.00 L150.75 134.50 L19.25 3.00 L17.50 1.75 L15.75 0.88 L13.38 0.25 L10.12 0.25 L8.25 0.62 L6.00 1.62 Z M90.12 3.62 L89.25 4.62 L87.88 7.12 L87.12 10.38 L87.38 13.88 L89.00 17.50 L90.62 19.50 L134.88 63.88 L137.50 66.00 L139.62 67.00 L141.75 67.50 L144.38 67.50 L147.38 66.75 L149.12 65.88 L152.00 63.38 L152.88 62.12 L153.75 60.25 L154.38 56.88 L154.38 10.75 L153.62 7.25 L152.50 5.12 L150.62 3.00 L149.12 1.88 L147.12 0.88 L144.62 0.25 L142.38 0.12 L98.75 0.12 L96.12 0.38 L94.25 0.88 L91.88 2.12 Z M343.50 2.88 L340.00 0.75 L336.12 0.00 L204.50 0.00 L202.25 0.25 L200.50 0.75 L197.88 2.25 L195.88 4.12 L194.12 6.88 L193.25 10.25 L193.12 27.75 L193.62 30.50 L194.88 33.38 L195.75 34.62 L198.12 36.88 L200.12 38.00 L203.88 38.88 L240.12 38.88 L244.00 39.25 L245.38 39.62 L247.50 40.62 L248.62 41.38 L250.88 43.62 L252.25 46.00 L253.12 49.12 L253.12 52.25 L252.75 53.88 L251.75 56.38 L249.88 58.88 L236.50 72.25 L235.50 73.50 L196.00 112.88 L194.75 114.62 L193.50 117.62 L193.12 120.38 L193.12 143.38 L193.62 146.12 L194.75 148.75 L197.50 151.88 L199.00 152.88 L201.00 153.75 L203.12 154.25 L205.62 154.38 L207.50 154.12 L209.38 153.50 L212.38 151.62 L343.50 20.50 L346.00 17.12 L347.00 14.88 L347.38 13.25 L347.38 10.25 L346.62 7.25 L345.12 4.62 Z"/></svg>
+        <div><small>NANOZ</small><strong>Consultoria</strong></div>
+      </div>
+      <h1>Uma presença digital à altura do <em>patrimônio que vocês protegem.</em></h1>
+      <p class="lead">Preparamos uma amostra de como a Nanoz pode aparecer para brasileiros no exterior: um vídeo institucional, uma identidade visual com padrão de banco privado e uma landing page pronta para converter conversas no WhatsApp.</p>
+      <nav class="indice" aria-label="Capítulos da proposta">
+        <a href="#video"><span>i.</span>Vídeo</a>
+        <a href="#identidade"><span>ii.</span>Identidade visual</a>
+        <a href="#landing"><span>iii.</span>Landing page</a>
+        <a href="#passos"><span>iv.</span>Próximos passos</a>
+      </nav>
+    </div>
+    <div class="fone" aria-hidden="true"><div class="tela">
+      <video src="m/video.mp4" poster="m/poster.jpg" muted autoplay loop playsinline preload="metadata"></video>
+    </div></div>
+  </div>
+</header>
+
+<section id="video">
+  <div class="wrap">
+    <div class="cab">
+      <div><div class="eyebrow">i. Vídeo institucional</div><h2>Quem é a Nanoz, <em>em 30 segundos.</em></h2></div>
+      <p class="lead">Um vídeo em motion design, sem depender de gravação: globo com as rotas do mundo até o Brasil, as soluções apresentadas como um app de banco e, no final, o convite para falar com o especialista no WhatsApp.</p>
+    </div>
+    <div class="video-grid">
+      <div class="player"><video src="m/video.mp4" poster="m/poster.jpg" controls playsinline preload="metadata" aria-label="Vídeo institucional da Nanoz Consultoria (prévia)"></video></div>
+      <div>
+        <div class="fichas">
+          <div class="ficha"><small>Formato</small><b>Vertical 9:16</b></div>
+          <div class="ficha"><small>Duração</small><b>33 segundos</b></div>
+          <div class="ficha"><small>Narração</small><b>Voz masculina, tom sóbrio</b></div>
+          <div class="ficha"><small>Chamada final</small><b>WhatsApp da Nanoz</b></div>
+        </div>
+        <div class="roteiro">
+          <small>Roteiro</small>
+          <p>“Você conquistou o mundo. Agora, o seu patrimônio merece um porto seguro no Brasil. A Nanoz Consultoria é especializada em brasileiros que vivem no exterior. Há mais de dez anos, protegendo e multiplicando patrimônios, com segurança e transparência. Dolarização. Alavancagem patrimonial. Home equity. Financiamento bancário. Um planejamento completo, desenhado para a sua realidade. Nanoz Consultoria. O próximo nível dos seus investimentos. Fale com o nosso especialista.”</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="identidade">
+  <div class="wrap">
+    <div class="cab">
+      <div><div class="eyebrow">ii. Identidade visual</div><h2>A mesma marca, <em>com postura de banco privado.</em></h2></div>
+      <p class="lead">A logo NZ foi mantida e redesenhada em vetor, nítida em qualquer tamanho. Em volta dela, uma paleta noturna com dourado, uma serifada clássica nos títulos e aplicações para feed, stories e cartão de visita.</p>
+    </div>
+    <div class="cores">
+      <div class="cor"><i style="background:#070B14"></i><b>Preto institucional</b><span>#070B14</span></div>
+      <div class="cor"><i style="background:#0A1730"></i><b>Azul noite</b><span>#0A1730</span></div>
+      <div class="cor"><i style="background:#13254A"></i><b>Azul Nanoz</b><span>#13254A</span></div>
+      <div class="cor"><i style="background:#B89B5E"></i><b>Dourado</b><span>#B89B5E</span></div>
+      <div class="cor"><i style="background:#E4D6B3"></i><b>Champagne</b><span>#E4D6B3</span></div>
+      <div class="cor"><i style="background:#F7F4EE"></i><b>Marfim</b><span>#F7F4EE</span></div>
+    </div>
+    <div class="tipos">
+      <div><div class="a">EB Garamond</div><small>Títulos · serifada clássica, de instituição financeira</small></div>
+      <div><div class="b">Inter</div><small>Textos, números e rótulos em caixa alta espaçada</small></div>
+    </div>
+    <img class="prancha" src="m/identidade.png" alt="Prancha de identidade visual da Nanoz: logo, versões horizontais, paleta, tipografia, tom de voz e aplicações em post e story" loading="lazy" width="1600" height="2160">
+    <div class="logos">
+      <figure><img src="m/logo_horizontal_escura.png" alt="Logo horizontal da Nanoz em fundo escuro" loading="lazy"><figcaption>Horizontal · fundo escuro</figcaption></figure>
+      <figure style="background:#fff"><img src="m/logo_horizontal_clara.png" alt="Logo horizontal da Nanoz em fundo claro" loading="lazy"><figcaption style="color:#6F7789">Horizontal · fundo claro</figcaption></figure>
+      <figure class="perfil"><img src="m/perfil_instagram.png" alt="Foto de perfil da Nanoz para o Instagram" loading="lazy"><figcaption>Perfil do Instagram</figcaption></figure>
+      <figure style="background:#E9E4D8"><img src="m/cartao_de_visita.png" alt="Cartão de visita da Nanoz, frente e verso" loading="lazy"><figcaption style="color:#6F7789">Cartão de visita</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section id="landing">
+  <div class="wrap">
+    <div class="cab">
+      <div><div class="eyebrow">iii. Landing page</div><h2>Uma página para <em>abrir conversas.</em></h2></div>
+      <div>
+        <p class="lead">Direta, sóbria e pensada para quem vive fora: soluções, segurança, como funciona, o fundador e um botão de WhatsApp sempre à mão.</p>
+        <div class="acoes" style="margin-top:26px"><a class="bt" href="landing/index.html" target="_blank" rel="noopener">Abrir a landing navegável
+          <svg viewBox="0 0 16 16" width="14" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M1 8h13M9 3l5 5-5 5"/></svg></a></div>
+      </div>
+    </div>
+    <div class="telas">
+      <div>
+        <div class="navegador">
+          <div class="barra"><i></i><i></i><i></i><span>nanozconsultoria.com.br</span></div>
+          <div class="rolagem" tabindex="0" aria-label="Landing page no computador, role para ver a página inteira"><img src="m/lp_desktop.jpg" alt="Landing page da Nanoz no computador, página inteira" loading="lazy" width="1440" height="6782"></div>
+        </div>
+        <p class="dica">Role dentro da janela para ver a página inteira.</p>
+      </div>
+      <div>
+        <div class="cel"><div class="rolagem" tabindex="0" aria-label="Landing page no celular, role para ver a página inteira"><img src="m/lp_celular.jpg" alt="Landing page da Nanoz no celular, página inteira" loading="lazy" width="390" height="9097"></div></div>
+        <p class="dica">Versão para celular.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="passos">
+  <div class="wrap">
+    <div class="cab">
+      <div><div class="eyebrow">iv. Próximos passos</div><h2>Do aceite ao <em>primeiro post.</em></h2></div>
+      <p class="lead">Tudo o que você viu aqui é uma amostra. Com o aceite, ajustamos os detalhes com vocês e colocamos no ar.</p>
+    </div>
+    <div class="passos">
+      <div class="passo"><div class="n">1</div><h3>Aprovação da direção</h3><p>Vocês validam o vídeo, a identidade e a landing, e pedem os ajustes que quiserem.</p></div>
+      <div class="passo"><div class="n">2</div><h3>Briefing e materiais</h3><p>Fotos do Rico Rósas e da equipe, textos finais e contatos oficiais para cada peça.</p></div>
+      <div class="passo"><div class="n">3</div><h3>Produção e publicação</h3><p>Landing no ar, vídeo finalizado e conteúdo do Instagram seguindo a nova identidade.</p></div>
+    </div>
+    <div class="fecha">
+      <div>
+        <h3>Vamos levar a Nanoz <em>ao próximo nível?</em></h3>
+        <p>Proposta criada pela Criativos Rápidos para a Nanoz Consultoria.</p>
+      </div>
+      <div class="acoes"><a class="bt" href="https://criativosrapidos.com.br" target="_blank" rel="noopener">Falar com a Criativos Rápidos</a></div>
+    </div>
+  </div>
+</section>
+
+<footer><div class="wrap"><span>© Criativos Rápidos · criativosrapidos.com.br</span><span>Material de proposta. Peças em caráter de prévia, sujeitas à aprovação da Nanoz Consultoria.</span></div></footer>

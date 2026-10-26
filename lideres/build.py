@@ -1,0 +1,189 @@
+#!/usr/bin/env python3
+"""Vídeo Líderes do Brasil - Encontro das Comunidades (para membros, tom divertido). Tempos de audio/cues.json se existir."""
+import json
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent
+PAD = {"atencao": 0.1, "sexta": 2.2, "naohein": 4.6, "dia": 6.2, "encontro": 6.9, "lideres": 8.3, "quatro": 11.0, "happy": 11.5,
+       "rc": 12.6, "quadra": 13.8, "conexao": 16.6, "troca": 17.3, "network": 18.0, "brinde": 19.4, "ferro": 20.4,
+       "avisa": 22.6, "desmarca": 23.5, "chama": 24.4, "bora": 26.4, "teespero": 27.8, "fim": 29.3}
+cj = ROOT / "audio/cues.json"
+c = json.load(open(cj)) if cj.exists() else PAD
+FIM = c["fim"] + 1.2
+
+head = '''<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><title>Líderes - Encontro das Comunidades</title>
+<style>
+@font-face { font-family: Anton; src: url(fonts/anton-latin-400-normal.woff); }
+@font-face { font-family: Mont; font-weight: 700; src: url(fonts/montserrat-latin-700-normal.woff); }
+@font-face { font-family: Mont; font-weight: 800; src: url(fonts/montserrat-latin-800-normal.woff); }
+@font-face { font-family: Mont; font-weight: 900; src: url(fonts/montserrat-latin-900-normal.woff); }
+:root { --azul:#1B4FE0; --azul2:#2E6BFF; --marinho:#0A1A4A; --tinta:#081233; --ciano:#5FB4FF; --ouro:#E8B931; --gelo:#EEF4FF; }
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body { width:1080px; height:1920px; overflow:hidden; background:var(--tinta); }
+#stage { position:relative; width:1080px; height:1920px; overflow:hidden; font-family:Mont, sans-serif; }
+.scene { position:absolute; inset:0; opacity:0; }
+.el { position:absolute; left:0; right:0; text-align:center; opacity:0; will-change:transform, opacity; }
+.a { font-family:Anton; line-height:.95; letter-spacing:.005em; text-transform:uppercase; }
+.f-azul { position:absolute; inset:0; background:radial-gradient(circle at 70% 25%,#3B7BFF,#1B4FE0 45%,#0A1A4A 100%); }
+.f-esc { position:absolute; inset:0; background:radial-gradient(circle at 30% 30%,#173489,#0A1A4A 55%,#050C24 100%); }
+.f-gelo { position:absolute; inset:0; background:linear-gradient(170deg,#FFFFFF,#DCE8FF); }
+.raios { position:absolute; left:-400px; top:-400px; width:1880px; height:2720px; }
+.diag { position:absolute; width:1400px; height:180px; transform:rotate(-38deg); }
+.card { display:inline-flex; align-items:center; gap:34px; width:920px; background:#fff; border-radius:32px; padding:30px 40px; text-align:left; box-shadow:0 24px 60px rgba(0,0,0,.35); border-left:16px solid var(--azul); }
+.card .k { font-family:Mont; font-weight:800; font-size:28px; letter-spacing:.3em; color:#6B7BA8; }
+.card .v { font-family:Anton; font-size:84px; line-height:1; color:var(--tinta); text-transform:uppercase; }
+.card .v small { font-family:Mont; font-weight:800; font-size:38px; text-transform:none; display:block; margin-top:6px; color:var(--azul); }
+.card .ic { flex:none; width:120px; height:120px; border-radius:28px; background:var(--azul); display:flex; align-items:center; justify-content:center; color:#fff; }
+.chk { display:inline-flex; align-items:center; gap:26px; font-family:Mont; font-weight:900; font-size:62px; color:#fff; }
+.chk i { flex:none; width:78px; height:78px; border-radius:50%; background:var(--ouro); display:flex; align-items:center; justify-content:center; font-style:normal; color:var(--tinta); font-size:46px; }
+.tag { display:inline-block; font-family:Anton; text-transform:uppercase; padding:14px 46px 20px; border-radius:20px; }
+.risco { position:relative; display:inline-block; }
+.risco::after { content:""; position:absolute; left:-12px; right:-12px; top:52%; height:12px; background:var(--ouro); border-radius:6px; transform-origin:left; transform:scaleX(var(--r,0)); }
+</style></head><body>
+'''
+
+
+def ic(path, w=74):
+    return f'<svg viewBox="0 0 100 100" style="width:{w}px;height:{w}px" fill="none" stroke="currentColor" stroke-width="8" stroke-linecap="round" stroke-linejoin="round">{path}</svg>'
+
+
+I_CAL = '<rect x="12" y="18" width="76" height="70" rx="10"/><path d="M12 40h76M32 8v18M68 8v18"/>'
+I_REL = '<circle cx="50" cy="50" r="38"/><path d="M50 26v24l16 10"/>'
+I_PIN = '<path d="M50 90S20 60 20 38a30 30 0 0 1 60 0c0 22-30 52-30 52z"/><circle cx="50" cy="38" r="10"/>'
+I_PRED = '<path d="M22 90V14h56v76M14 90h72M36 30h8M56 30h8M36 48h8M56 48h8M36 66h8M56 66h8"/>'
+TACA = '''<svg viewBox="0 0 240 240" style="width:300px;height:300px">
+  <g transform="rotate(-14 100 140)"><path d="M70 30h50l-6 60a19 19 0 0 1-38 0z" fill="rgba(232,185,49,.9)" stroke="#fff" stroke-width="6"/><path d="M95 109v62M75 175h40" stroke="#fff" stroke-width="7" stroke-linecap="round"/></g>
+  <g transform="rotate(14 140 140)"><path d="M120 30h50l-6 60a19 19 0 0 1-38 0z" fill="rgba(232,185,49,.9)" stroke="#fff" stroke-width="6"/><path d="M145 109v62M125 175h40" stroke="#fff" stroke-width="7" stroke-linecap="round"/></g>
+  <g stroke="#E8B931" stroke-width="6" stroke-linecap="round"><path d="M120 6v-0M120 18V2M96 22l-8-12M144 22l8-12"/></g></svg>'''
+
+cards = [(I_CAL, "DATA", '16/10 <small>sexta-feira</small>', "dia"), (I_REL, "HORÁRIO", '16H <small>com happy hour</small>', "quatro"),
+         (I_PIN, "LOCAL", 'ESPAÇO RC <small>Asa Sul</small>', "rc"), (I_PRED, "ENDEREÇO", 'QUADRA 2 <small>Prédio Hotel Bonaparte</small>', "quadra")]
+cards_html = "".join(
+    f'<div class="el" data-in="{(c['quatro'] - 0.2 if k == 'dia' else c['quatro'] + 0.25 if k == 'quatro' else c[k]):.2f}" data-a="{"slideR" if i % 2 else "slideL"}" style="top:{430 + i * 290}px"><div class="card">'
+    f'<div class="ic">{ic(p)}</div><div><div class="k">{kk}</div><div class="v">{v}</div></div></div></div>'
+    for i, (p, kk, v, k) in enumerate(cards))
+
+chks = [("Conexão", "conexao"), ("Troca de experiência", "troca"), ("Networking de verdade", "network")]
+chk_html = "".join(f'<div class="el" data-in="{c[k]}" data-a="slideL" style="top:{360 + i * 140}px;left:90px;right:auto;text-align:left"><div class="chk"><i>✓</i>{t}</div></div>'
+                   for i, (t, k) in enumerate(chks))
+
+lista = [("Avisa em casa", "avisa"), ("Desmarca a reunião", "desmarca"), ("Chama aquele sócio", "chama")]
+lista_html = "".join(
+    f'<div class="el" data-in="{c[k]}" data-a="pop" style="top:{470 + i * 210}px"><div class="tag" style="background:{"var(--azul)" if i < 2 else "var(--ouro)"};color:{"#fff" if i < 2 else "var(--tinta)"};font-size:92px;transform:rotate({(-2, 2, -1)[i]}deg)">{t}</div></div>'
+    for i, (t, k) in enumerate(lista))
+
+diag = ('<div class="diag" style="left:-300px;top:1500px;background:linear-gradient(90deg,transparent,rgba(95,180,255,.35),transparent)"></div>'
+        '<div class="diag" style="left:200px;top:120px;height:60px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.25),transparent)"></div>')
+
+cenas = f'''<div id="stage">
+  <section class="scene" data-start="0" data-end="{c['sexta'] - 0.1:.2f}" data-shake="{c['atencao']}">
+    <div class="f-azul"></div><svg class="raios"></svg>{diag}
+    <div class="el a" data-in="{c['atencao']}" data-a="slam" style="top:640px;font-size:210px;color:#fff">ATENÇÃO,</div>
+    <div class="el" data-in="{c['atencao'] + 0.45:.2f}" data-a="slam" style="top:860px"><div class="tag" style="background:var(--ouro);color:var(--tinta);font-size:190px">LÍDERES!</div></div>
+  </section>
+
+  <section class="scene" data-start="{c['sexta'] - 0.1:.2f}" data-end="{c['dia'] - 0.1:.2f}" data-shake="{c['naohein']}">
+    <div class="f-gelo"></div>
+    <div class="el a" data-in="{c['sexta']}" data-a="drop" style="top:420px;font-size:150px;color:var(--azul)">SEXTA-FEIRA</div>
+    <div class="el" data-in="{c['sexta'] + 0.5:.2f}" data-a="rise" style="top:620px;font-family:Mont;font-weight:900;font-size:68px;color:var(--tinta);line-height:1.15">não é dia de ficar<br><span class="risco" id="risco">preso no escritório</span></div>
+    <div class="el" data-in="{c['naohein']}" data-a="slam" style="top:960px"><div class="tag" style="background:var(--tinta);color:#fff;font-size:150px;transform:rotate(-4deg)">NÃO, HEIN!</div></div>
+  </section>
+
+  <section class="scene" data-start="{c['dia'] - 0.1:.2f}" data-end="{c['quatro'] - 0.35:.2f}" data-shake="{c['encontro']}">
+    <div class="f-esc"></div><svg class="raios"></svg>{diag}
+    <div class="el" data-in="{c['dia']}" data-a="drop" style="top:330px;font-family:Mont;font-weight:800;font-size:44px;letter-spacing:.4em;color:var(--ciano)">CONVITE</div>
+    <div class="el a" data-in="{c['encontro']}" data-a="slam" style="top:440px;font-size:180px;color:#fff">ENCONTRO DAS</div>
+    <div class="el a" data-in="{c['encontro'] + 0.35:.2f}" data-a="slam" style="top:630px;font-size:200px;color:var(--ciano)">COMUNIDADES</div>
+    <div class="el a" data-in="{c['lideres']}" data-a="rise" style="top:860px;font-size:150px;color:#fff">LÍDERES DO BRASIL</div>
+    <div class="el" data-in="{c['lideres'] + 0.4:.2f}" data-a="pop" style="top:1080px"><div class="tag" style="background:var(--ouro);color:var(--tinta);font-size:90px">16/10 · SEXTA</div></div>
+  </section>
+
+  <section class="scene" data-start="{c['quatro'] - 0.35:.2f}" data-end="{c['conexao'] - 0.15:.2f}">
+    <div class="f-gelo"></div>
+    <div class="el a" data-in="{c['quatro'] - 0.3:.2f}" data-a="drop" style="top:220px;font-size:110px;color:var(--azul)">ANOTA AÍ 📝</div>
+    {cards_html}
+  </section>
+
+  <section class="scene" data-start="{c['conexao'] - 0.15:.2f}" data-end="{c['avisa'] - 0.15:.2f}" data-shake="{c['brinde']}">
+    <div class="f-azul"></div><svg class="raios"></svg>
+    <div class="el" data-in="{c['conexao'] - 0.1:.2f}" data-a="drop" style="top:220px;font-family:Mont;font-weight:800;font-size:46px;letter-spacing:.3em;color:var(--gelo)">VAI TER</div>
+    {chk_html}
+    <div class="el" data-in="{c['brinde'] - 0.2:.2f}" data-a="pop" style="top:860px">{TACA}</div>
+    <div class="el a" data-in="{c['brinde']}" data-a="slam" style="top:1180px;font-size:130px;color:var(--ouro)">E AQUELE BRINDE</div>
+    <div class="el" data-in="{c['ferro']}" data-a="rise" style="top:1340px;font-family:Mont;font-weight:800;font-size:56px;color:#fff">(porque ninguém é de ferro)</div>
+  </section>
+
+  <section class="scene" data-start="{c['avisa'] - 0.15:.2f}" data-end="{c['bora'] - 0.1:.2f}">
+    <div class="f-gelo"></div>
+    <div class="el" data-in="{c['avisa'] - 0.1:.2f}" data-a="drop" style="top:300px;font-family:Mont;font-weight:800;font-size:46px;letter-spacing:.3em;color:#6B7BA8">CHECKLIST DO LÍDER</div>
+    {lista_html}
+  </section>
+
+  <section class="scene" data-start="{c['bora'] - 0.1:.2f}" data-end="{FIM + 1}" data-shake="{c['bora']}">
+    <div class="f-azul"></div><svg class="raios"></svg>{diag}
+    <div class="el a" data-in="{c['bora']}" data-a="slam" style="top:380px;font-size:190px;color:#fff">BORA</div>
+    <div class="el a" data-in="{c['bora'] + 0.4:.2f}" data-a="slam" style="top:560px;font-size:120px;color:#fff;line-height:1">FORTALECER<br><span style="color:var(--ouro)">O MOVIMENTO!</span></div>
+    <div class="el" data-in="{c['teespero']}" data-a="pop" style="top:880px"><div class="tag" style="background:#fff;color:var(--azul);font-size:110px;transform:rotate(-3deg)">TE ESPERO LÁ!</div></div>
+    <div class="el" data-in="{c['teespero'] + 0.4:.2f}" data-a="rise" style="top:1130px;font-family:Mont;font-weight:800;font-size:46px;line-height:1.45;color:#fff">16/10 · sexta · 16h · happy hour<br><span style="color:var(--ciano)">Espaço RC – Asa Sul<br>Quadra 2 · Prédio Hotel Bonaparte</span></div>
+    <div class="el" data-in="{c['teespero'] + 0.7:.2f}" data-a="rise" style="top:1440px;font-family:Mont;font-weight:800;font-size:34px;letter-spacing:.35em;color:var(--gelo)">SERVIR · CONECTAR · FORTALECER</div>
+  </section>
+</div>
+'''
+
+script = '''<script>
+const L = 0.15, C = ''' + json.dumps(c) + ''';
+document.querySelectorAll(".raios").forEach(sv => {
+  sv.setAttribute("viewBox", "0 0 1880 2720"); let g = "";
+  for (let i = 0; i < 18; i++) { const a = i * 20 * Math.PI / 180; g += `<path d="M940 1360 L${940 + Math.cos(a) * 2400} ${1360 + Math.sin(a) * 2400} L${940 + Math.cos(a + .09) * 2400} ${1360 + Math.sin(a + .09) * 2400}z" fill="rgba(255,255,255,.05)"/>`; }
+  sv.innerHTML = g;
+});
+const clamp = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
+const eo = x => 1 - Math.pow(1 - x, 3);
+const back = (x, c = 1.8) => 1 + (c + 1) * Math.pow(x - 1, 3) + c * Math.pow(x - 1, 2);
+const XF = 0.2;
+function anim(el, t) {
+  const t0 = parseFloat(el.dataset.in), a = el.dataset.a;
+  const d = a === "pop" ? 0.36 : a === "slam" ? 0.3 : 0.4;
+  const p = clamp((t - t0) / d), pe = eo(p);
+  let op = a === "pop" || a === "slam" ? clamp(p * 4) : pe, tf = "";
+  if (a === "rise") tf = `translateY(${((1 - pe) * 70).toFixed(1)}px)`;
+  if (a === "drop") tf = `translateY(${(-(1 - pe) * 90).toFixed(1)}px)`;
+  if (a === "pop") tf = `scale(${Math.max(0.02, back(p)).toFixed(4)})`;
+  if (a === "slam") tf = `scale(${(1 + (1 - pe) * 1.4).toFixed(4)})`;
+  if (a === "slideL") tf = `translateX(${(-(1 - pe) * 1100).toFixed(1)}px)`;
+  if (a === "slideR") tf = `translateX(${((1 - pe) * 1100).toFixed(1)}px)`;
+  op = op < 0.003 ? 0 : op;
+  el.style.opacity = op.toFixed(3);
+  el.style.visibility = op > 0 ? "visible" : "hidden";
+  el.style.transform = tf;
+}
+function render(tv) {
+  const t = tv - L;
+  document.querySelectorAll(".scene").forEach(s => {
+    const a = parseFloat(s.dataset.start), b = parseFloat(s.dataset.end);
+    let op = 0;
+    if (t >= a && t < b + XF) op = clamp((t - a) / XF) * (t > b ? 1 - clamp((t - b) / XF) : 1);
+    if (a === 0) op = t < b ? 1 : op;
+    s.style.opacity = op;
+    s.style.visibility = op > 0 ? "visible" : "hidden";
+    s.style.zIndex = Math.round(a * 10 + 10);
+    if (op <= 0) return;
+    let sh = "";
+    (s.dataset.shake || "").split(",").filter(Boolean).map(Number).forEach(k => {
+      const q = t - k; if (q > 0 && q < 0.35) { const amp = 14 * (1 - q / 0.35); sh = ` translate(${(Math.sin(q * 90) * amp).toFixed(1)}px,${(Math.cos(q * 70) * amp).toFixed(1)}px)`; }
+    });
+    s.style.transform = `scale(${(1 + 0.05 * (1 - eo(clamp((t - a) / 0.5)))).toFixed(4)})${sh}`;
+    s.querySelectorAll(".raios").forEach(r => r.style.transform = `rotate(${(t * 6).toFixed(2)}deg)`);
+    s.querySelectorAll(".diag").forEach((d, i) => d.style.marginLeft = `${(((t * 260) + i * 700) % 1800 - 600).toFixed(0)}px`);
+    s.querySelectorAll(".el").forEach(el => anim(el, t));
+  });
+  const r = document.getElementById("risco");
+  r.style.setProperty("--r", eo(clamp((t - (C.naohein - 0.45)) / 0.35)).toFixed(3));
+}
+window.render = render;
+render(0);
+</script>
+</body></html>'''
+(ROOT / "anuncio.html").write_text(head + cenas + script)
+print("anuncio.html · duração", round(FIM, 2))

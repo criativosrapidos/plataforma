@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><title>High Table - convite</title>
+<style>
+@font-face { font-family: Anton; src: url(fonts/anton-latin-400-normal.woff); }
+@font-face { font-family: M; font-weight: 500; src: url(fonts/montserrat-latin-500-normal.woff); }
+@font-face { font-family: M; font-weight: 600; src: url(fonts/montserrat-latin-600-normal.woff); }
+@font-face { font-family: M; font-weight: 700; src: url(fonts/montserrat-latin-700-normal.woff); }
+@font-face { font-family: M; font-weight: 800; src: url(fonts/montserrat-latin-800-normal.woff); }
+@font-face { font-family: M; font-weight: 900; src: url(fonts/montserrat-latin-900-normal.woff); }
+:root { --ouro:#E2B65C; --ouro2:#F7DC98; --preto:#070605; }
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body { width:1080px; height:1920px; overflow:hidden; background:var(--preto); }
+#stage { position:relative; width:1080px; height:1920px; overflow:hidden; font-family:M, sans-serif; color:#fff; background:var(--preto); }
+.scene { position:absolute; inset:0; opacity:0; overflow:hidden; }
+.el { position:absolute; left:50px; right:50px; text-align:center; opacity:0; will-change:transform, opacity, filter; }
+.A { font-family:Anton; line-height:.95; text-transform:uppercase; }
+.T { font-weight:600; letter-spacing:.38em; text-transform:uppercase; }
+.ouro { background:linear-gradient(180deg,#FFF1C4 0%,#EBC46C 40%,#A97A2E 75%,#F0CF7E 100%); -webkit-background-clip:text; background-clip:text; color:transparent; padding:.1em .03em; margin:-.1em -.03em; }
+.fundo { position:absolute; inset:0; background:radial-gradient(ellipse at 50% 35%,#2A1D0C 0%,#0E0A06 60%,#050404 100%); }
+.ph { position:absolute; inset:-4%; background-size:cover; background-position:center; }
+.foto { border-radius:26px; overflow:hidden; position:relative; margin:0 auto; box-shadow:0 30px 80px rgba(0,0,0,.75), 0 0 0 2px rgba(226,182,92,.55); }
+.linha { display:flex; align-items:center; gap:34px; text-align:left; }
+.ic { flex:none; width:150px; height:150px; border-radius:50%; border:4px solid var(--ouro); display:flex; align-items:center; justify-content:center; background:rgba(10,8,5,.75); }
+.ic svg { width:76px; height:76px; stroke:var(--ouro); fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+.rot { font-weight:600; letter-spacing:.3em; font-size:30px; color:#E8E2D4; text-transform:uppercase; }
+.val { font-weight:800; font-size:92px; line-height:1.05; }
+.txt { font-weight:600; font-size:46px; line-height:1.2; }
+.fio { height:2px; background:linear-gradient(90deg,transparent,var(--ouro),transparent); }
+.w { display:inline-block; overflow:hidden; vertical-align:top; padding:.1em .03em .14em; margin:-.1em -.03em -.14em; }
+.w > span { display:inline-block; }
+#flash { position:absolute; inset:0; background:radial-gradient(circle,#FFF3D6,#E2B65C 55%,transparent 85%); opacity:0; z-index:600; mix-blend-mode:screen; }
+.vin { position:absolute; inset:0; background:radial-gradient(ellipse at 50% 45%,transparent 50%,rgba(0,0,0,.75) 100%); z-index:550; pointer-events:none; }
+.bokeh { position:absolute; border-radius:50%; background:radial-gradient(circle,rgba(255,200,120,.55),transparent 70%); }
+</style></head><body><div id="stage">
+
+  <section class="scene" data-start="0" data-end="1.88" data-shake="1">
+    <div class="ph kb" style="background-image:url(../lideres/fotos/hd/f11.png);background-position:center 30%;filter:brightness(.4) saturate(1.1)"></div>
+    <div class="el " data-in="0.00" data-a="fade" style="top:260px"><img src="assets/lideres_logo.png" style="width:520px;display:block;margin:0 auto;mix-blend-mode:screen"></div>
+    <div class="el " data-in="0.15" data-a="slam" style="top:640px"><div class="A" style="font-size:200px;color:#fff">FAAALA,</div></div>
+    <div class="el " data-in="0.60" data-a="slam" style="top:850px"><div class="A ouro" style="font-size:190px">LIDERANÇA!</div></div>
+  </section>
+
+  <section class="scene" data-start="1.88" data-end="5.85">
+    <div class="ph kb" style="background-image:url(../lideres/fotos/hd/f01.png);background-position:center;filter:grayscale(1) brightness(.32)"></div>
+    <div class="el A" data-in="2.03" data-a="palavras" data-passo="0.07" style="top:380px;font-size:96px;color:#cfcfcf">Sabe aquele</div>
+    <div class="el A" data-in="2.60" data-a="palavras" data-passo="0.08" style="top:500px;font-size:140px;color:#fff">NEGÓCIO GRANDE...</div>
+    <div class="el A" data-in="4.03" data-a="palavras" data-passo="0.06" style="top:900px;font-size:80px;color:#bdbdbd">que nunca sai numa</div>
+    <div class="el " data-in="4.58" data-a="slam" style="top:1010px"><div class="A" style="font-size:96px;white-space:nowrap;color:#fff;text-decoration:line-through;text-decoration-color:#C0392B;text-decoration-thickness:12px">REUNIÃO DE ESCRITÓRIO?</div></div>
+  </section>
+
+  <section class="scene" data-start="5.85" data-end="7.84">
+    <div class="ph kb" style="background-image:url(../lideres/fotos/hd/f10.png);background-position:center 40%;filter:brightness(.55) saturate(1.2)"></div>
+    <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.7),transparent 40%,transparent 60%,rgba(0,0,0,.8))"></div>
+    <div class="el A" data-in="5.97" data-a="palavras" data-passo="0.07" style="top:260px;font-size:110px;color:#fff">Ele sai numa</div>
+    <div class="el A" data-in="6.42" data-a="palavras" data-passo="0.08" style="top:390px;font-size:150px"><span class="ouro">mesa como essa.</span></div>
+  </section>
+
+  <section class="scene" data-start="7.84" data-end="12.12">
+    <div class="ph kb" style="background-image:url(assets/bar_dir.jpg);background-position:center 30%;filter:brightness(.42) blur(2px)"></div><div class="bokeh" style="left:80px;top:180px;width:160px;height:160px;opacity:0.5"></div><div class="bokeh" style="left:820px;top:120px;width:220px;height:220px;opacity:0.4"></div><div class="bokeh" style="left:900px;top:640px;width:120px;height:120px;opacity:0.5"></div><div class="bokeh" style="left:40px;top:900px;width:200px;height:200px;opacity:0.3"></div><div class="bokeh" style="left:700px;top:1500px;width:260px;height:260px;opacity:0.35"></div><div class="bokeh" style="left:180px;top:1650px;width:140px;height:140px;opacity:0.45"></div>
+    <div class="el " data-in="7.96" data-a="up" style="top:420px"><div class="T" style="font-size:40px;color:var(--ouro2)">Chegou o</div></div>
+    <div class="el " data-in="8.60" data-a="slam" style="top:500px"><img src="assets/high.jpg" style="width:900px;display:block;margin:0 auto;mix-blend-mode:screen"><div style="display:flex;align-items:center;gap:30px;justify-content:center;margin-top:6px"><div class="fio" style="width:150px"></div><div style="font-weight:800;font-size:110px;letter-spacing:.32em;margin-right:-.32em">TABLE</div><div class="fio" style="width:150px"></div></div></div>
+    <div class="el " data-in="9.47" data-a="up" style="top:960px"><div class="T" style="font-size:38px;line-height:1.6;color:#F2EBDD;letter-spacing:.24em">Conexões que geram<br>grandes oportunidades.</div></div>
+    <div class="el " data-in="9.77" data-a="rise" style="top:1170px"><img src="assets/chopp.jpg" style="width:520px;display:block;margin:0 auto;border-radius:24px;box-shadow:0 0 0 2px rgba(226,182,92,.5),0 30px 80px rgba(0,0,0,.7)"></div>
+  </section>
+
+  <section class="scene" data-start="12.12" data-end="19.28">
+    <div class="fundo"></div><div class="bokeh" style="left:80px;top:180px;width:160px;height:160px;opacity:0.5"></div><div class="bokeh" style="left:820px;top:120px;width:220px;height:220px;opacity:0.4"></div><div class="bokeh" style="left:900px;top:640px;width:120px;height:120px;opacity:0.5"></div><div class="bokeh" style="left:40px;top:900px;width:200px;height:200px;opacity:0.3"></div><div class="bokeh" style="left:700px;top:1500px;width:260px;height:260px;opacity:0.35"></div><div class="bokeh" style="left:180px;top:1650px;width:140px;height:140px;opacity:0.45"></div>
+    <div class="el " data-in="12.14" data-a="up" style="top:250px"><div class="T" style="font-size:36px;color:var(--ouro2)">Anota aí</div></div>
+    <div class="el " data-in="12.24" data-a="slideL" style="top:360px;left:110px"><div class="linha"><div class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4M7 14h2M11 14h2M15 14h2M7 17h2M11 17h2"/></svg></div><div><div class="rot">Data</div><div class="val ouro">23/10</div></div></div></div>
+    <div class="el " data-in="13.60" data-a="slideL" style="top:600px;left:110px"><div class="linha"><div class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div><div><div class="rot">Horário</div><div class="val ouro">15:00</div></div></div></div>
+    <div class="el " data-in="14.98" data-a="slideL" style="top:840px;left:110px"><div class="linha"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 22s7-7.2 7-12a7 7 0 1 0-14 0c0 4.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.6"/></svg></div><div><div class="rot">Local de encontro</div><div class="txt ">Estacionamento em frente<br>ao edifício <b>Lá Quartier</b>,<br>Asa Norte.</div></div></div></div>
+    <div class="el " data-in="15.18" data-a="fade" style="top:1160px;left:110px;right:110px"><div class="fio"></div></div>
+  </section>
+
+  <section class="scene" data-start="19.28" data-end="25.23">
+    <div class="ph kb" style="background-image:url(assets/bar_dir.jpg);background-position:center 60%;filter:brightness(.18) blur(6px)"></div>
+    <div class="el " data-in="19.40" data-a="slideL" style="top:250px;left:110px"><div class="linha"><div class="ic"><svg viewBox="0 0 24 24"><path d="M2 16V8a2 2 0 0 1 2-2h11l4 4h1.5A1.5 1.5 0 0 1 22 11.5V16h-2M2 16h2m4 0h8M2 10h17"/><circle cx="6" cy="17" r="2"/><circle cx="18" cy="17" r="2"/></svg></div><div><div class="rot">Transporte</div><div class="txt ">Deixa o carro ali e<br>partimos de <b>van</b>.</div></div></div></div>
+    <div class="el" id="van" data-in="20.97" data-a="fade" style="top:560px;left:0;right:0;height:120px">
+      <div id="vanbox" style="position:absolute;left:0;top:0;width:180px"><svg style="width:170px;height:120px;stroke:#E2B65C;fill:none;stroke-width:1.6" viewBox="0 0 24 24"><path d="M2 16V8a2 2 0 0 1 2-2h11l4 4h1.5A1.5 1.5 0 0 1 22 11.5V16h-2M2 16h2m4 0h8M2 10h17"/><circle cx="6" cy="17" r="2"/><circle cx="18" cy="17" r="2"/></svg></div>
+      <div style="position:absolute;left:60px;right:60px;top:110px;border-top:4px dashed rgba(226,182,92,.5)"></div></div>
+    <div class="el " data-in="22.29" data-a="slideL" style="top:760px;left:110px;font-size:0"><div class="linha"><div class="ic"><svg viewBox="0 0 24 24"><path d="M5 7h10v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1zM15 10h2.5a1.5 1.5 0 0 1 1.5 1.5v4a1.5 1.5 0 0 1-1.5 1.5H15M5 7a2.5 2.5 0 0 1 2-4 3 3 0 0 1 5 0 2.5 2.5 0 0 1 3 4M8 11v6M12 11v6"/></svg></div><div><div class="rot">Destino</div><div class="val ouro">Cervejaria Brasília</div></div></div></div>
+    <div class="el " data-in="23.73" data-a="slideL" style="top:1030px;left:110px"><div class="linha"><div class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div><div><div class="rot">Retorno</div><div class="val ouro">20:00</div></div></div></div>
+    <div class="el " data-in="22.49" data-a="rise" style="top:1300px"><img src="assets/chopp.jpg" style="width:430px;display:block;margin:0 auto;border-radius:22px;box-shadow:0 0 0 2px rgba(226,182,92,.5)"></div>
+  </section>
+
+  <section class="scene" data-start="25.23" data-end="28.67">
+    <div class="fundo"></div><div class="bokeh" style="left:80px;top:180px;width:160px;height:160px;opacity:0.5"></div><div class="bokeh" style="left:820px;top:120px;width:220px;height:220px;opacity:0.4"></div><div class="bokeh" style="left:900px;top:640px;width:120px;height:120px;opacity:0.5"></div><div class="bokeh" style="left:40px;top:900px;width:200px;height:200px;opacity:0.3"></div><div class="bokeh" style="left:700px;top:1500px;width:260px;height:260px;opacity:0.35"></div><div class="bokeh" style="left:180px;top:1650px;width:140px;height:140px;opacity:0.45"></div>
+    <div class="el " data-in="25.35" data-a="up" style="top:520px"><div style="display:flex;align-items:center;gap:30px;justify-content:center"><div class="fio" style="width:160px"></div><div class="T" style="font-size:40px;color:var(--ouro)">Realização</div><div class="fio" style="width:160px"></div></div></div>
+    <div class="el " data-in="26.35" data-a="pop" style="top:680px"><img src="assets/lideres_logo.png" style="width:700px;display:block;margin:0 auto;mix-blend-mode:screen"></div>
+    <div class="el " data-in="27.60" data-a="pop" style="top:1000px"><img src="assets/chopp_logo.png" style="width:480px;display:block;margin:0 auto;mix-blend-mode:screen;border-radius:50%"></div>
+  </section>
+
+  <section class="scene" data-start="28.67" data-end="34.9">
+    <div class="ph kb" style="background-image:url(../lideres/fotos/hd/f14.png);background-position:center 30%;filter:brightness(.35) saturate(1.1)"></div>
+    <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.6),rgba(0,0,0,.2) 40%,rgba(0,0,0,.85))"></div>
+    <div class="el " data-in="28.69" data-a="pop" style="top:180px"><img src="assets/high.jpg" style="width:760px;display:block;margin:0 auto;mix-blend-mode:screen"><div style="display:flex;align-items:center;gap:30px;justify-content:center;margin-top:6px"><div class="fio" style="width:150px"></div><div style="font-weight:800;font-size:92px;letter-spacing:.32em;margin-right:-.32em">TABLE</div><div class="fio" style="width:150px"></div></div></div>
+    <div class="el A" data-in="28.89" data-a="palavras" data-passo="0.07" style="top:640px;font-size:104px;color:#fff">Confirma tua presença</div>
+    <div class="el A" data-in="29.66" data-a="palavras" data-passo="0.06" style="top:770px;font-size:84px"><span class="ouro">e vem fortalecer o movimento!</span></div>
+    <div class="el " data-in="30.36" data-a="pop" style="top:1080px"><div style="display:inline-flex;gap:26px;align-items:center;border:3px solid var(--ouro);border-radius:80px;padding:22px 50px;background:rgba(8,6,4,.8)"><span class="ouro" style="font-weight:900;font-size:64px">23/10</span><span style="width:3px;height:56px;background:var(--ouro)"></span><span style="font-weight:800;font-size:64px">15H</span><span style="width:3px;height:56px;background:var(--ouro)"></span><span style="font-weight:700;font-size:40px;text-align:left;line-height:1.1">Saída: Lá Quartier<br>Asa Norte</span></div></div>
+    <div class="el " data-in="30.76" data-a="up" style="top:1420px"><div style="display:flex;align-items:center;justify-content:center;gap:40px"><img src="assets/lideres_logo.png" style="width:420px;display:block;margin:0 auto;mix-blend-mode:screen;margin:0"><div style="width:2px;height:120px;background:var(--ouro)"></div><img src="assets/chopp_logo.png" style="width:230px;display:block;margin:0 auto;mix-blend-mode:screen;margin:0;border-radius:50%"></div></div>
+  </section>
+
+<div class="vin"></div><div id="flash"></div></div>
+<script>
+const L = 0.15, C = {"fala": 0.151, "sabe": 2.033, "negocio": 2.599, "nunca": 4.028, "escritorio": 4.783, "mesa": 5.974, "chegou": 7.958, "high": 8.6, "conexoes": 9.468, "dia": 12.245, "tres": 13.604, "estacionamento": 14.984, "carro": 19.396, "van": 20.972, "cervejaria": 22.292, "retorno": 23.725, "realizacao": 25.346, "lideres": 26.353, "chopp": 27.598, "confirma": 28.794, "fortalecer": 29.964, "fim": 31.7, "bora": 7.958};
+const FL = [C.fala, C.high, C.dia, C.confirma];
+document.querySelectorAll('[data-a="palavras"]').forEach(el => {
+  const tmp = document.createElement("div"); tmp.innerHTML = el.innerHTML; let out = "";
+  const walk = (node, cls) => node.childNodes.forEach(n => {
+    if (n.nodeType === 3) n.textContent.split(/(\s+)/).forEach(p => { if (!p) return; out += /^\s+$/.test(p) ? " " : `<span class="w"><span${cls ? ` class="${cls}"` : ""}>${p}</span></span>`; });
+    else walk(n, n.className || cls);
+  });
+  walk(tmp, ""); el.innerHTML = out;
+});
+const clamp = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
+const eo = x => 1 - Math.pow(1 - x, 3), eo5 = x => 1 - Math.pow(1 - x, 5);
+const back = (x, k = 1.6) => 1 + (k + 1) * Math.pow(x - 1, 3) + k * Math.pow(x - 1, 2);
+const XF = 0.14;
+function anim(el, t) {
+  const t0 = parseFloat(el.dataset.in), a = el.dataset.a;
+  if (a === "palavras") {
+    const passo = parseFloat(el.dataset.passo); let vis = false;
+    el.querySelectorAll(".w > span").forEach((s, i) => {
+      const p = clamp((t - t0 - i * passo) / 0.42), pe = eo5(p);
+      s.style.transform = `translateY(${((1 - pe) * 110).toFixed(1)}%)`;
+      if (p > 0) vis = true;
+    });
+    el.style.opacity = vis ? 1 : 0; el.style.visibility = vis ? "visible" : "hidden"; return;
+  }
+  const d = {pop: .4, slam: .3, up: .5, fade: .7, rise: .7, slideL: .5}[a] || .5;
+  const p = clamp((t - t0) / d), pe = eo(p);
+  let op = (a === "pop" || a === "slam") ? clamp(p * 4) : pe, tf = "", fl = "";
+  if (a === "pop") tf = `scale(${Math.max(.02, back(p)).toFixed(4)})`;
+  if (a === "slam") { tf = `scale(${(1 + (1 - pe) * 1.3).toFixed(4)})`; fl = p < 1 ? `blur(${((1 - pe) * 8).toFixed(1)}px)` : ""; }
+  if (a === "up") tf = `translateY(${((1 - pe) * 60).toFixed(1)}px)`;
+  if (a === "rise") tf = `translateY(${((1 - eo5(p)) * 200).toFixed(1)}px)`;
+  if (a === "slideL") tf = `translateX(${((1 - eo5(p)) * -160).toFixed(1)}px)`;
+  op = op < 0.003 ? 0 : op;
+  el.style.opacity = op.toFixed(3); el.style.visibility = op > 0 ? "visible" : "hidden"; el.style.transform = tf; el.style.filter = fl || "none";
+}
+function render(tv) {
+  const t = tv - L;
+  let fo = 0; FL.forEach(k => { const q = t - k; if (q > 0 && q < .32) fo = Math.max(fo, .4 * (1 - q / .32)); });
+  flash.style.opacity = fo.toFixed(3);
+  document.querySelectorAll(".scene").forEach(s => {
+    const a = parseFloat(s.dataset.start), b = parseFloat(s.dataset.end);
+    let op = 0;
+    if (t >= a && t < b + XF) op = clamp((t - a) / XF) * (t > b ? 1 - clamp((t - b) / XF) : 1);
+    if (a === 0) op = t < b ? 1 : op;
+    s.style.opacity = op; s.style.visibility = op > 0 ? "visible" : "hidden"; s.style.zIndex = Math.round(a * 10 + 10);
+    if (op <= 0) return;
+    let sh = "";
+    if (s.dataset.shake) { const q = t - C.fala; if (q > 0 && q < .5) { const k = (1 - q / .5) * 14; sh = ` translate(${(Math.sin(t * 90) * k).toFixed(1)}px,${(Math.cos(t * 77) * k).toFixed(1)}px)`; } }
+    s.style.transform = `scale(${(1.05 - .05 * eo(clamp((t - a) / .4))).toFixed(4)})` + sh;
+    s.querySelectorAll(".kb").forEach(k => k.style.transform = `scale(${(1.02 + .08 * clamp((t - a) / 6)).toFixed(4)})`);
+    s.querySelectorAll(".bokeh").forEach((b, i) => b.style.transform = `translateY(${(Math.sin(t * .8 + i) * 30).toFixed(1)}px)`);
+    s.querySelectorAll(".el").forEach(el => anim(el, t));
+  });
+  const vb = document.getElementById("vanbox");
+  if (vb) vb.style.transform = `translateX(${(60 + 780 * eo(clamp((t - C.van) / 1.6))).toFixed(0)}px)`;
+}
+window.render = render;
+render(0);
+</script>
+</body></html>

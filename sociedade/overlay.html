@@ -1,0 +1,83 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face { font-family: Anton; src: url(fonts/anton-latin-400-normal.woff); }
+@font-face { font-family: M; font-weight: 600; src: url(fonts/montserrat-latin-600-normal.woff); }
+@font-face { font-family: M; font-weight: 800; src: url(fonts/montserrat-latin-800-normal.woff); }
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body { width:1080px; height:1920px; background:transparent; overflow:hidden; font-family:M; color:#fff; }
+.abs { position:absolute; }
+#vin { inset:0; background:radial-gradient(ellipse at 50% 45%, transparent 55%, rgba(0,0,0,.55) 100%); }
+#grad { left:0; right:0; bottom:0; height:900px; background:linear-gradient(180deg, transparent, rgba(0,0,0,.82)); }
+#tit { left:70px; right:70px; top:1210px; }
+.k { font-weight:600; letter-spacing:.42em; font-size:30px; color:#D9C38A; text-transform:uppercase; }
+.big { font-family:Anton; font-size:150px; line-height:.95; text-transform:uppercase; text-shadow:0 6px 30px rgba(0,0,0,.5); }
+.ouro { background:linear-gradient(180deg,#FFF1C4,#E7C06A 45%,#B08333 80%,#F0CF7E); -webkit-background-clip:text; background-clip:text; color:transparent; padding:.08em .03em; margin:-.08em -.03em; }
+.mask { overflow:hidden; padding:.24em 0 .08em; margin:-.24em 0 -.08em; }
+.mask > div { will-change:transform; }
+.data { display:inline-flex; gap:18px; align-items:center; margin-top:26px; padding:14px 30px; border:2px solid rgba(226,182,92,.8); border-radius:60px;
+        background:rgba(10,8,5,.55); font-weight:800; font-size:38px; letter-spacing:.06em; }
+.data i { width:2px; height:34px; background:#E2B65C; }
+.lt { position:absolute; left:70px; top:1500px; opacity:0; }
+.lt .kick { font-weight:600; letter-spacing:.38em; font-size:26px; color:#D9C38A; text-transform:uppercase; }
+.lt .pal { font-family:Anton; font-size:118px; text-transform:uppercase; line-height:1; margin-top:8px; text-shadow:0 6px 26px rgba(0,0,0,.6); }
+.lt .sub { font-weight:800; font-size:38px; letter-spacing:.06em; margin-top:16px; color:#F2E6C4; text-transform:uppercase; text-shadow:0 4px 18px rgba(0,0,0,.6); }
+.lt .fio { height:6px; width:0; margin-top:14px; background:linear-gradient(90deg,#E2B65C,#F7DC98); border-radius:3px; }
+#bug { right:46px; top:60px; font-weight:800; font-size:24px; letter-spacing:.3em; color:rgba(255,255,255,.85); text-transform:uppercase;
+        padding:10px 20px; border:1.5px solid rgba(255,255,255,.45); border-radius:40px; background:rgba(0,0,0,.25); opacity:0; }
+#flash { inset:0; background:#fff; opacity:0; }
+#fim { inset:0; opacity:0; background:radial-gradient(ellipse at 50% 40%, #1d2a5c 0%, #0b1030 55%, #05060f 100%);
+        display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; }
+#fim img { width:640px; }
+#fim .linha { width:0; height:4px; background:linear-gradient(90deg,transparent,#E2B65C,transparent); margin:44px auto 40px; }
+</style></head><body>
+<div id="vin" class="abs"></div><div id="grad" class="abs"></div>
+<div id="tit" class="abs">
+  <div class="mask"><div class="k" id="t0">Líderes do Brasil apresenta</div></div>
+  <div class="mask" style="margin-top:14px"><div class="big" id="t1">Sociedade</div></div>
+  <div class="mask"><div class="big ouro" id="t2" style="font-size:170px">JABS</div></div>
+  <div class="data" id="t3">ENCONTRO <i></i> 20/10 <i></i> 17H</div>
+</div>
+<div class="lt" data-in="8.136" data-out="13.036"><div class="pal">Jabs Matheus</div><div class="fio"></div><div class="sub">Jabs Engenharia</div></div><div class="lt" data-in="14.532" data-out="16.364"><div class="kick">O que rola aqui</div><div class="pal">Conselhos</div><div class="fio"></div></div><div class="lt" data-in="16.514" data-out="18.345"><div class="kick">O que rola aqui</div><div class="pal">Acessos</div><div class="fio"></div></div><div class="lt" data-in="18.495" data-out="20.327"><div class="kick">O que rola aqui</div><div class="pal">Conexões</div><div class="fio"></div></div><div class="lt" data-in="21.227" data-out="26.127"><div class="pal">Daher</div><div class="fio"></div><div class="sub">Presidente do Líderes do Brasil</div></div>
+<div id="bug" class="abs">Sociedade JABS</div>
+<div id="fim" class="abs">
+  <img id="flogo" src="assets/lideres_logo.png">
+  <div class="linha" id="flin"></div>
+  <div class="mask"><div class="big" id="f1" style="font-size:130px">Sociedade <span class="ouro">JABS</span></div></div>
+  <div class="mask" style="margin-top:22px"><div class="k" id="f2" style="font-size:32px;letter-spacing:.32em;color:#F2E6C4">Fortalecendo o movimento</div></div>
+</div>
+<div id="flash" class="abs"></div>
+<script>
+const C = [0.0, 7.636363636363636, 14.18181818181818, 20.727272727272727, 27.272727272727273], FIMV = 27.2727;
+const cl = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
+const eo = x => 1 - Math.pow(1 - x, 3), e5 = x => 1 - Math.pow(1 - x, 5);
+const io = (t, a, b, d = .35) => cl((t - a) / d) * (1 - cl((t - b) / d));
+const $ = id => document.getElementById(id);
+function sobe(el, t, t0, t1) {                        // entra subindo pela máscara, sai descendo
+  const pin = e5(cl((t - t0) / .55)), pout = eo(cl((t - t1) / .4));
+  el.style.transform = `translateY(${((1 - pin) * 110 + pout * 110).toFixed(1)}%)`;
+}
+function render(t) {
+  // abertura
+  sobe($("t0"), t, .5, 5.6); sobe($("t1"), t, .7, 5.7); sobe($("t2"), t, .9, 5.8);
+  const d = io(t, 1.4, 5.8, .4); $("t3").style.opacity = d; $("t3").style.transform = `translateY(${((1 - eo(cl((t - 1.4) / .4))) * 30).toFixed(1)}px)`;
+  $("grad").style.opacity = (0.55 + 0.45 * io(t, 0, 6.0, .6)).toFixed(3);
+  // palavras de cada take
+  document.querySelectorAll(".lt").forEach(l => {
+    const a = +l.dataset.in, b = +l.dataset.out, o = io(t, a, b, .3);
+    l.style.opacity = o.toFixed(3);
+    l.style.transform = `translateX(${((1 - e5(cl((t - a) / .5))) * -80 - eo(cl((t - b) / .3)) * 40).toFixed(1)}px)`;
+    l.querySelector(".fio").style.width = (e5(cl((t - a - .2) / .7)) * 300).toFixed(0) + "px";
+  });
+  $("bug").style.opacity = (0.9 * io(t, C[1] + .2, FIMV - .6, .4)).toFixed(3);
+  // flash nos cortes
+  let f = 0; C.slice(1).forEach(c => { const q = t - c; if (q >= 0 && q < .18) f = Math.max(f, .32 * (1 - q / .18)); });
+  $("flash").style.opacity = f.toFixed(3);
+  // cartela final
+  const pf = cl((t - (FIMV - .35)) / .35);
+  $("fim").style.opacity = pf.toFixed(3);
+  const ql = e5(cl((t - FIMV - .05) / .6));
+  $("flogo").style.transform = `scale(${(0.7 + 0.3 * ql + 0.03 * cl((t - FIMV) / 4)).toFixed(4)})`; $("flogo").style.opacity = ql.toFixed(3);
+  $("flin").style.width = (e5(cl((t - FIMV - .35) / .7)) * 600).toFixed(0) + "px";
+  sobe($("f1"), t, FIMV + .45, 999); sobe($("f2"), t, FIMV + .8, 999);
+}
+window.render = render; render(0);
+</script></body></html>

@@ -1,0 +1,14 @@
+@font-face { font-family: "Fira Sans"; font-weight: 400; src: url(../fonts/fira-sans-latin-400-normal.woff); }
+@font-face { font-family: "Fira Sans"; font-weight: 500; src: url(../fonts/fira-sans-latin-500-normal.woff); }
+@font-face { font-family: "Fira Sans"; font-weight: 600; src: url(../fonts/fira-sans-latin-600-normal.woff); }
+@font-face { font-family: "Fira Sans"; font-weight: 700; src: url(../fonts/fira-sans-latin-700-normal.woff); }
+@font-face { font-family: "Fira Sans"; font-weight: 800; src: url(../fonts/fira-sans-latin-800-normal.woff); }
+@font-face { font-family: "Fira Sans"; font-weight: 900; src: url(../fonts/fira-sans-latin-900-normal.woff); }
+@font-face { font-family: Mont; font-weight: 900; src: url(../fonts/montserrat-latin-900-normal.woff); }
+:root { --laranja:#F08A3E; --laranja2:#E07A35; --teal:#3E7C7E; --teal2:#2F6365; --tealc:#5E9C9D; --creme:#F7F4EF; --tinta:#1F3A3B; --cinza:#5E6F70; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#555; font-family:"Fira Sans", sans-serif; display:flex; flex-direction:column; gap:40px; padding:40px; align-items:flex-start; }
+.abs { position:absolute; }
+.w100 { left:0; right:0; }
+.c { text-align:center; }
+.h { font-family:"Fira Sans"; font-weight:800; line-height:1.02; letter-spacing:-.01em; }

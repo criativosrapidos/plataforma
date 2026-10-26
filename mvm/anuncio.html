@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><title>MVM Ótica - lançamento</title>
+<style>
+@font-face { font-family: Anton; src: url(fonts/anton-latin-400-normal.woff); }
+@font-face { font-family: M; font-weight: 600; src: url(fonts/montserrat-latin-600-normal.woff); }
+@font-face { font-family: M; font-weight: 700; src: url(fonts/montserrat-latin-700-normal.woff); }
+@font-face { font-family: M; font-weight: 800; src: url(fonts/montserrat-latin-800-normal.woff); }
+@font-face { font-family: M; font-weight: 900; src: url(fonts/montserrat-latin-900-normal.woff); }
+:root { --verde:#14573A; --verde2:#0E3F2A; --rosa:#E23C5B; --laranja:#F0801E; --amarelo:#FDD20A; --ambar:#F2B33D; --terra:#E46F4F; --creme:#F7EEDC; }
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body { width:1080px; height:1920px; overflow:hidden; background:var(--amarelo); }
+#stage { position:relative; width:1080px; height:1920px; overflow:hidden; font-family:M, sans-serif; }
+.scene { position:absolute; inset:0; opacity:0; overflow:hidden; }
+.el { position:absolute; left:50px; right:50px; text-align:center; opacity:0; will-change:transform, opacity; }
+.A { font-family:Anton; line-height:.95; text-transform:uppercase; letter-spacing:.005em; }
+.f-am { position:absolute; inset:0; background:radial-gradient(circle at 50% 40%,#FFE14D,#FDD20A 45%,#F2B33D 100%); }
+.f-cr { position:absolute; inset:0; background:var(--creme); }
+.f-vd { position:absolute; inset:0; background:radial-gradient(circle at 50% 35%,#1E7A50,#14573A 50%,#0B3524 100%); }
+.f-rs { position:absolute; inset:0; background:radial-gradient(circle at 50% 40%,#F2566F,#E23C5B 50%,#B82543 100%); }
+.sol { position:absolute; left:50%; top:50%; width:2600px; height:2600px; margin:-1300px 0 0 -1300px; }
+.ladrilho { position:absolute; inset:0; opacity:.18; }
+.tag { display:inline-block; font-family:Anton; text-transform:uppercase; padding:14px 46px 22px; border-radius:22px; line-height:1; }
+.card { display:flex; align-items:center; gap:34px; background:#fff; border-radius:36px; padding:30px 40px; box-shadow:0 22px 50px rgba(14,63,42,.25); text-align:left; }
+.card .ic { flex:none; width:130px; height:130px; border-radius:32px; display:flex; align-items:center; justify-content:center; }
+.card .t { font-family:Anton; font-size:74px; line-height:1; color:var(--verde); text-transform:uppercase; }
+.w { display:inline-block; overflow:hidden; vertical-align:top; padding:.08em .03em .12em; margin:-.08em -.03em -.12em; }
+.w > span { display:inline-block; }
+.risco { position:absolute; left:-14px; right:-14px; top:50%; height:14px; background:var(--rosa); border-radius:7px; transform-origin:left; }
+</style></head><body><div id="stage">
+
+  <section class="scene" data-start="0" data-end="2.37" data-shake="0.68">
+    <div class="f-am"></div><svg class="sol" data-sol="1" viewBox="-100 -100 200 200"><path d="M0 0 L120.00 0.00 L118.99 15.56Z" fill="rgba(240,128,30,.22)"/><path d="M0 0 L115.91 31.06 L110.91 45.82Z" fill="rgba(240,128,30,.22)"/><path d="M0 0 L103.92 60.00 L95.27 72.97Z" fill="rgba(240,128,30,.22)"/><path d="M0 0 L84.85 84.85 L73.14 95.14Z" fill="rgba(240,128,30,.22)"/><path d="M0 0 L60.00 103.92 L46.02 110.82Z" fill="rgba(240,128,30,.22)"/><path d="M0 0 L31.06 115.91 L15.77 118.96Z" fill="rgba(240,128,30,.22)"/><path d="M0 0 L-0.00 120.00 L-15.56 118.99Z" fill="rgba(240,128,30,.22)"/><path d="M0 0 L-31.06 115.91 L-45.82 110.91Z" fill="rgba(240,128,30,.22)"/><path d="M0 0 L-60.00 103.92 L-72.97 95.27Z" fill="rgba(240,128,30,.22)"/><path d="M0 0 L-84.85 84.85 L-95.14 73.14Z" fill="rgba(240,128,30,.22)"/><path d="M0 0 L-103.92 60.00 L-110.82 46.02Z" fill="rgba(240,128,30,.22)"/><path d="M0 0 L-115.91 31.06 L-118.96 15.77Z" fill="rgba(240,128,30,.22)"/><path d="M0 0 L-120.00 -0.00 L-118.99 -15.56Z" fill="rgba(240,128,30,.22)"/><path d="M0 0 L-115.91 -31.06 L-110.91 -45.82Z" fill="rgba(240,128,30,.22)"/><path d="M0 0 L-103.92 -60.00 L-95.27 -72.97Z" fill="rgba(240,128,30,.22)"/><path d="M0 0 L-84.85 -84.85 L-73.14 -95.14Z" fill="rgba(240,128,30,.22)"/><path d="M0 0 L-60.00 -103.92 L-46.02 -110.82Z" fill="rgba(240,128,30,.22)"/><path d="M0 0 L-31.06 -115.91 L-15.77 -118.96Z" fill="rgba(240,128,30,.22)"/><path d="M0 0 L0.00 -120.00 L15.56 -118.99Z" fill="rgba(240,128,30,.22)"/><path d="M0 0 L31.06 -115.91 L45.82 -110.91Z" fill="rgba(240,128,30,.22)"/><path d="M0 0 L60.00 -103.92 L72.97 -95.27Z" fill="rgba(240,128,30,.22)"/><path d="M0 0 L84.85 -84.85 L95.14 -73.14Z" fill="rgba(240,128,30,.22)"/><path d="M0 0 L103.92 -60.00 L110.82 -46.02Z" fill="rgba(240,128,30,.22)"/><path d="M0 0 L115.91 -31.06 L118.96 -15.77Z" fill="rgba(240,128,30,.22)"/></svg>
+    <div class="el " data-in="0.00" data-a="fade" style="top:150px"><img src="assets/logo_mvm.png" style="width:420px"></div>
+    <div class="el A" data-in="0.07" data-a="slam" data-passo="0.06" style="top:620px;font-size:230px;color:var(--verde)">ATENÇÃO,</div>
+    <div class="el A" data-in="0.68" data-a="slam" data-passo="0.06" style="top:860px;font-size:230px;color:var(--rosa)">CEILÂNDIA!</div>
+  </section>
+
+  <section class="scene" data-start="2.37" data-end="4.64">
+    <div class="f-cr"></div><svg class="ladrilho" viewBox="0 0 1080 1920"><defs><pattern id="lad" width="180" height="180" patternUnits="userSpaceOnUse"><rect width="180" height="180" fill="none"/><path d="M0 0h90v90H0z" fill="#F2B33D"/><circle cx="135" cy="45" r="38" fill="#E46F4F"/><path d="M90 180 180 90v90z" fill="#E46F4F"/><circle cx="45" cy="135" r="20" fill="#F2B33D"/></pattern></defs><rect width="1080" height="1920" fill="url(#lad)"/></svg>
+    <div class="el " data-in="2.44" data-a="fade" style="top:360px"><svg viewBox="0 0 400 160" style="width:640px;height:256px"><g fill="none" stroke="#14573A" stroke-width="16" stroke-linecap="round" stroke-linejoin="round">
+  <path class="tr" pathLength="1" d="M20 50 Q22 140 100 140 Q170 140 172 70 Q172 40 140 38 L40 38 Q20 38 20 50Z"/>
+  <path class="tr" pathLength="1" d="M380 50 Q378 140 300 140 Q230 140 228 70 Q228 40 260 38 L360 38 Q380 38 380 50Z"/>
+  <path class="tr" pathLength="1" d="M172 62 Q200 44 228 62"/></g>
+  <g fill="#F0801E"><circle cx="70" cy="80" r="10" opacity=".0" class="br"/></g></svg></div>
+    <div class="el A" data-in="2.49" data-a="palavras" data-passo="0.1" style="top:720px;font-size:150px;color:var(--verde)">Chegou ótica</div>
+    <div class="el A" data-in="2.99" data-a="palavras" data-passo="0.06" style="top:880px;font-size:230px;color:var(--rosa)">nova</div>
+    <div class="el " data-in="3.70" data-a="slam" style="top:1140px"><div class="tag" style="background:var(--laranja);color:#fff;font-size:100px;transform:rotate(-4deg)">NO PEDAÇO!</div></div>
+  </section>
+
+  <section class="scene" data-start="4.64" data-end="8.41">
+    <div class="f-vd"></div><svg class="ladrilho" viewBox="0 0 1080 1920"><defs><pattern id="lad" width="180" height="180" patternUnits="userSpaceOnUse"><rect width="180" height="180" fill="none"/><path d="M0 0h90v90H0z" fill="#1E7A50"/><circle cx="135" cy="45" r="38" fill="#0E3F2A"/><path d="M90 180 180 90v90z" fill="#0E3F2A"/><circle cx="45" cy="135" r="20" fill="#1E7A50"/></pattern></defs><rect width="1080" height="1920" fill="url(#lad)"/></svg>
+    <div class="el A" data-in="4.51" data-a="palavras" data-passo="0.08" style="top:150px;font-size:70px;color:#FFE14D">Sabe aquela</div>
+    <div class="el A" data-in="4.76" data-a="palavras" data-passo="0.08" style="top:240px;font-size:120px;color:#fff">VISTA CANSADA?</div>
+    <div class="el " data-in="4.96" data-a="rise" style="top:520px"><div style="display:inline-block;width:500px;height:880px;border-radius:70px;background:#0B3524;padding:26px;box-shadow:0 40px 90px rgba(0,0,0,.35)">
+  <div style="width:100%;height:100%;border-radius:50px;background:#F7EEDC;padding:60px 40px;text-align:left" id="tela">
+    <div style="font-weight:800;font-size:34px;color:#14573A">Mensagens</div>
+    <div style="margin-top:40px;background:#fff;border-radius:26px;padding:24px 28px;font-weight:600;font-size:32px;color:#333;line-height:1.35">Oi! A entrega do seu pedido chega amanhã entre 8h e 12h 😊</div>
+    <div style="margin-top:26px;margin-left:80px;background:#FDD20A;border-radius:26px;padding:24px 28px;font-weight:600;font-size:32px;color:#333;line-height:1.35">Perfeito, obrigado! Qual o número do pedido?</div>
+    <div style="margin-top:26px;background:#fff;border-radius:26px;padding:24px 28px;font-weight:600;font-size:32px;color:#333;line-height:1.35">Pedido nº 48.213 · confira no app</div>
+  </div></div></div>
+    <div class="el " data-in="6.48" data-a="slam" style="top:1500px"><div class="tag" style="background:var(--rosa);color:#fff;font-size:72px;transform:rotate(-3deg)">LETRINHA EMBAÇANDO...</div></div>
+  </section>
+
+  <section class="scene" data-start="8.41" data-end="10.61">
+    <div class="f-am"></div><svg class="sol" data-sol="-1" viewBox="-100 -100 200 200"><path d="M0 0 L120.00 0.00 L118.99 15.56Z" fill="rgba(226,60,91,.12)"/><path d="M0 0 L115.91 31.06 L110.91 45.82Z" fill="rgba(226,60,91,.12)"/><path d="M0 0 L103.92 60.00 L95.27 72.97Z" fill="rgba(226,60,91,.12)"/><path d="M0 0 L84.85 84.85 L73.14 95.14Z" fill="rgba(226,60,91,.12)"/><path d="M0 0 L60.00 103.92 L46.02 110.82Z" fill="rgba(226,60,91,.12)"/><path d="M0 0 L31.06 115.91 L15.77 118.96Z" fill="rgba(226,60,91,.12)"/><path d="M0 0 L-0.00 120.00 L-15.56 118.99Z" fill="rgba(226,60,91,.12)"/><path d="M0 0 L-31.06 115.91 L-45.82 110.91Z" fill="rgba(226,60,91,.12)"/><path d="M0 0 L-60.00 103.92 L-72.97 95.27Z" fill="rgba(226,60,91,.12)"/><path d="M0 0 L-84.85 84.85 L-95.14 73.14Z" fill="rgba(226,60,91,.12)"/><path d="M0 0 L-103.92 60.00 L-110.82 46.02Z" fill="rgba(226,60,91,.12)"/><path d="M0 0 L-115.91 31.06 L-118.96 15.77Z" fill="rgba(226,60,91,.12)"/><path d="M0 0 L-120.00 -0.00 L-118.99 -15.56Z" fill="rgba(226,60,91,.12)"/><path d="M0 0 L-115.91 -31.06 L-110.91 -45.82Z" fill="rgba(226,60,91,.12)"/><path d="M0 0 L-103.92 -60.00 L-95.27 -72.97Z" fill="rgba(226,60,91,.12)"/><path d="M0 0 L-84.85 -84.85 L-73.14 -95.14Z" fill="rgba(226,60,91,.12)"/><path d="M0 0 L-60.00 -103.92 L-46.02 -110.82Z" fill="rgba(226,60,91,.12)"/><path d="M0 0 L-31.06 -115.91 L-15.77 -118.96Z" fill="rgba(226,60,91,.12)"/><path d="M0 0 L0.00 -120.00 L15.56 -118.99Z" fill="rgba(226,60,91,.12)"/><path d="M0 0 L31.06 -115.91 L45.82 -110.91Z" fill="rgba(226,60,91,.12)"/><path d="M0 0 L60.00 -103.92 L72.97 -95.27Z" fill="rgba(226,60,91,.12)"/><path d="M0 0 L84.85 -84.85 L95.14 -73.14Z" fill="rgba(226,60,91,.12)"/><path d="M0 0 L103.92 -60.00 L110.82 -46.02Z" fill="rgba(226,60,91,.12)"/><path d="M0 0 L115.91 -31.06 L118.96 -15.77Z" fill="rgba(226,60,91,.12)"/></svg>
+    <div class="el A" data-in="8.53" data-a="palavras" data-passo="0.08" style="top:300px;font-size:110px;color:var(--verde)">E o óculos que</div>
+    <div class="el A" data-in="9.51" data-a="palavras" data-passo="0.08" style="top:440px;font-size:150px;color:var(--rosa)">CUSTA OS OLHOS</div>
+    <div class="el A" data-in="10.12" data-a="slam" data-passo="0.06" style="top:600px;font-size:150px;color:var(--rosa)">DA CARA?</div>
+    <div class="el " data-in="9.41" data-a="balanca" style="top:900px"><svg viewBox="0 0 420 260" style="width:600px;height:372px"><g transform="translate(10 10)">
+  <path d="M60 0h330a10 10 0 0 1 10 10v220a10 10 0 0 1-10 10H60L0 120z" fill="#E23C5B"/><circle cx="58" cy="120" r="18" fill="#FDD20A"/>
+  <text x="235" y="110" text-anchor="middle" font-family="Anton" font-size="78" fill="#fff">R$ $$$$</text>
+  <text x="235" y="185" text-anchor="middle" font-family="M" font-weight="800" font-size="34" fill="#FFE14D">CARO DEMAIS</text></g></svg></div>
+  </section>
+
+  <section class="scene" data-start="10.61" data-end="12.21" data-shake="11.43">
+    <div class="f-rs"></div><svg class="sol" data-sol="1" viewBox="-100 -100 200 200"><path d="M0 0 L120.00 0.00 L118.99 15.56Z" fill="rgba(255,255,255,.08)"/><path d="M0 0 L115.91 31.06 L110.91 45.82Z" fill="rgba(255,255,255,.08)"/><path d="M0 0 L103.92 60.00 L95.27 72.97Z" fill="rgba(255,255,255,.08)"/><path d="M0 0 L84.85 84.85 L73.14 95.14Z" fill="rgba(255,255,255,.08)"/><path d="M0 0 L60.00 103.92 L46.02 110.82Z" fill="rgba(255,255,255,.08)"/><path d="M0 0 L31.06 115.91 L15.77 118.96Z" fill="rgba(255,255,255,.08)"/><path d="M0 0 L-0.00 120.00 L-15.56 118.99Z" fill="rgba(255,255,255,.08)"/><path d="M0 0 L-31.06 115.91 L-45.82 110.91Z" fill="rgba(255,255,255,.08)"/><path d="M0 0 L-60.00 103.92 L-72.97 95.27Z" fill="rgba(255,255,255,.08)"/><path d="M0 0 L-84.85 84.85 L-95.14 73.14Z" fill="rgba(255,255,255,.08)"/><path d="M0 0 L-103.92 60.00 L-110.82 46.02Z" fill="rgba(255,255,255,.08)"/><path d="M0 0 L-115.91 31.06 L-118.96 15.77Z" fill="rgba(255,255,255,.08)"/><path d="M0 0 L-120.00 -0.00 L-118.99 -15.56Z" fill="rgba(255,255,255,.08)"/><path d="M0 0 L-115.91 -31.06 L-110.91 -45.82Z" fill="rgba(255,255,255,.08)"/><path d="M0 0 L-103.92 -60.00 L-95.27 -72.97Z" fill="rgba(255,255,255,.08)"/><path d="M0 0 L-84.85 -84.85 L-73.14 -95.14Z" fill="rgba(255,255,255,.08)"/><path d="M0 0 L-60.00 -103.92 L-46.02 -110.82Z" fill="rgba(255,255,255,.08)"/><path d="M0 0 L-31.06 -115.91 L-15.77 -118.96Z" fill="rgba(255,255,255,.08)"/><path d="M0 0 L0.00 -120.00 L15.56 -118.99Z" fill="rgba(255,255,255,.08)"/><path d="M0 0 L31.06 -115.91 L45.82 -110.91Z" fill="rgba(255,255,255,.08)"/><path d="M0 0 L60.00 -103.92 L72.97 -95.27Z" fill="rgba(255,255,255,.08)"/><path d="M0 0 L84.85 -84.85 L95.14 -73.14Z" fill="rgba(255,255,255,.08)"/><path d="M0 0 L103.92 -60.00 L110.82 -46.02Z" fill="rgba(255,255,255,.08)"/><path d="M0 0 L115.91 -31.06 L118.96 -15.77Z" fill="rgba(255,255,255,.08)"/></svg>
+    <div class="el A" data-in="10.73" data-a="palavras" data-passo="0.12" style="top:560px;font-size:110px;color:#FFE14D">Pois é...</div>
+    <div class="el " data-in="11.43" data-a="slam" style="top:760px"><div class="tag" style="background:#fff;color:var(--rosa);font-size:230px;transform:rotate(-5deg);box-shadow:0 30px 70px rgba(0,0,0,.25)">ACABOU!</div></div>
+  </section>
+
+  <section class="scene" data-start="12.21" data-end="15.71">
+    <div class="f-am"></div><svg class="sol" data-sol="1" viewBox="-100 -100 200 200"><path d="M0 0 L120.00 0.00 L118.99 15.56Z" fill="rgba(240,128,30,.2)"/><path d="M0 0 L115.91 31.06 L110.91 45.82Z" fill="rgba(240,128,30,.2)"/><path d="M0 0 L103.92 60.00 L95.27 72.97Z" fill="rgba(240,128,30,.2)"/><path d="M0 0 L84.85 84.85 L73.14 95.14Z" fill="rgba(240,128,30,.2)"/><path d="M0 0 L60.00 103.92 L46.02 110.82Z" fill="rgba(240,128,30,.2)"/><path d="M0 0 L31.06 115.91 L15.77 118.96Z" fill="rgba(240,128,30,.2)"/><path d="M0 0 L-0.00 120.00 L-15.56 118.99Z" fill="rgba(240,128,30,.2)"/><path d="M0 0 L-31.06 115.91 L-45.82 110.91Z" fill="rgba(240,128,30,.2)"/><path d="M0 0 L-60.00 103.92 L-72.97 95.27Z" fill="rgba(240,128,30,.2)"/><path d="M0 0 L-84.85 84.85 L-95.14 73.14Z" fill="rgba(240,128,30,.2)"/><path d="M0 0 L-103.92 60.00 L-110.82 46.02Z" fill="rgba(240,128,30,.2)"/><path d="M0 0 L-115.91 31.06 L-118.96 15.77Z" fill="rgba(240,128,30,.2)"/><path d="M0 0 L-120.00 -0.00 L-118.99 -15.56Z" fill="rgba(240,128,30,.2)"/><path d="M0 0 L-115.91 -31.06 L-110.91 -45.82Z" fill="rgba(240,128,30,.2)"/><path d="M0 0 L-103.92 -60.00 L-95.27 -72.97Z" fill="rgba(240,128,30,.2)"/><path d="M0 0 L-84.85 -84.85 L-73.14 -95.14Z" fill="rgba(240,128,30,.2)"/><path d="M0 0 L-60.00 -103.92 L-46.02 -110.82Z" fill="rgba(240,128,30,.2)"/><path d="M0 0 L-31.06 -115.91 L-15.77 -118.96Z" fill="rgba(240,128,30,.2)"/><path d="M0 0 L0.00 -120.00 L15.56 -118.99Z" fill="rgba(240,128,30,.2)"/><path d="M0 0 L31.06 -115.91 L45.82 -110.91Z" fill="rgba(240,128,30,.2)"/><path d="M0 0 L60.00 -103.92 L72.97 -95.27Z" fill="rgba(240,128,30,.2)"/><path d="M0 0 L84.85 -84.85 L95.14 -73.14Z" fill="rgba(240,128,30,.2)"/><path d="M0 0 L103.92 -60.00 L110.82 -46.02Z" fill="rgba(240,128,30,.2)"/><path d="M0 0 L115.91 -31.06 L118.96 -15.77Z" fill="rgba(240,128,30,.2)"/></svg>
+    <div class="el A" data-in="12.33" data-a="palavras" data-passo="0.1" style="top:380px;font-size:90px;color:var(--verde)">Chegou a</div>
+    <div class="el " data-in="12.81" data-a="pop" style="top:540px"><img src="assets/logo_mvm.png" style="width:960px"></div>
+    <div class="el A" data-in="13.99" data-a="palavras" data-passo="0.08" style="top:1020px;font-size:150px;color:var(--verde)">A brasilidade</div>
+    <div class="el A" data-in="14.59" data-a="palavras" data-passo="0.08" style="top:1180px;font-size:150px;color:var(--terra)">em cada olhar</div>
+  </section>
+
+  <section class="scene" data-start="15.71" data-end="20.23">
+    <div class="f-cr"></div><svg class="ladrilho" viewBox="0 0 1080 1920"><defs><pattern id="lad" width="180" height="180" patternUnits="userSpaceOnUse"><rect width="180" height="180" fill="none"/><path d="M0 0h90v90H0z" fill="#F2B33D"/><circle cx="135" cy="45" r="38" fill="#14573A"/><path d="M90 180 180 90v90z" fill="#14573A"/><circle cx="45" cy="135" r="20" fill="#F2B33D"/></pattern></defs><rect width="1080" height="1920" fill="url(#lad)"/></svg>
+    <div class="el " data-in="15.73" data-a="fade" style="top:330px"><img src="assets/logo_mvm.png" style="width:440px"></div>
+    <div class="el" data-in="15.83" data-a="slideL" style="top:760px"><div class="card"><div class="ic" style="background:var(--verde)"><svg viewBox="0 0 100 100" style="width:84px;height:84px" fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 40h84M18 40c0 22 8 30 22 30s20-10 20-20M82 40c0 22-8 30-22 30"/></svg></div><div class="t" style="font-size:80px">Armação de todo estilo</div></div></div><div class="el" data-in="17.49" data-a="slideR" style="top:1010px"><div class="card"><div class="ic" style="background:var(--rosa)"><svg viewBox="0 0 100 100" style="width:84px;height:84px" fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"><circle cx="50" cy="50" r="34"/><path d="M34 44a18 18 0 0 1 16-14"/></svg></div><div class="t" style="font-size:86px">Lente de qualidade</div></div></div><div class="el" data-in="18.55" data-a="slideL" style="top:1260px"><div class="card"><div class="ic" style="background:var(--laranja)"><svg viewBox="0 0 100 100" style="width:84px;height:84px" fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 34h60l-6 50H26z"/><path d="M36 34v-6a14 14 0 0 1 28 0v6"/><path d="M42 58h16M50 50v16"/></svg></div><div class="t" style="font-size:80px">Preço que cabe no bolso</div></div></div>
+  </section>
+
+  <section class="scene" data-start="20.23" data-end="22.33">
+    <div class="f-vd"></div>
+    <div class="el " data-in="20.25" data-a="rise" style="top:200px"><div style="border-radius:40px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.4);border:8px solid #FDD20A"><img src="assets/pessoas.jpg" style="width:980px;display:block" class="kb"></div></div>
+    <div class="el A" data-in="20.35" data-a="palavras" data-passo="0.08" style="top:900px;font-size:130px;color:#fff">Óculos é pra</div>
+    <div class="el A" data-in="21.41" data-a="slam" data-passo="0.06" style="top:1060px;font-size:200px;color:#FDD20A">TODO MUNDO!</div>
+  </section>
+
+  <section class="scene" data-start="22.33" data-end="33.433">
+    <div class="f-am"></div><svg class="sol" data-sol="1" viewBox="-100 -100 200 200"><path d="M0 0 L120.00 0.00 L118.99 15.56Z" fill="rgba(240,128,30,.18)"/><path d="M0 0 L115.91 31.06 L110.91 45.82Z" fill="rgba(240,128,30,.18)"/><path d="M0 0 L103.92 60.00 L95.27 72.97Z" fill="rgba(240,128,30,.18)"/><path d="M0 0 L84.85 84.85 L73.14 95.14Z" fill="rgba(240,128,30,.18)"/><path d="M0 0 L60.00 103.92 L46.02 110.82Z" fill="rgba(240,128,30,.18)"/><path d="M0 0 L31.06 115.91 L15.77 118.96Z" fill="rgba(240,128,30,.18)"/><path d="M0 0 L-0.00 120.00 L-15.56 118.99Z" fill="rgba(240,128,30,.18)"/><path d="M0 0 L-31.06 115.91 L-45.82 110.91Z" fill="rgba(240,128,30,.18)"/><path d="M0 0 L-60.00 103.92 L-72.97 95.27Z" fill="rgba(240,128,30,.18)"/><path d="M0 0 L-84.85 84.85 L-95.14 73.14Z" fill="rgba(240,128,30,.18)"/><path d="M0 0 L-103.92 60.00 L-110.82 46.02Z" fill="rgba(240,128,30,.18)"/><path d="M0 0 L-115.91 31.06 L-118.96 15.77Z" fill="rgba(240,128,30,.18)"/><path d="M0 0 L-120.00 -0.00 L-118.99 -15.56Z" fill="rgba(240,128,30,.18)"/><path d="M0 0 L-115.91 -31.06 L-110.91 -45.82Z" fill="rgba(240,128,30,.18)"/><path d="M0 0 L-103.92 -60.00 L-95.27 -72.97Z" fill="rgba(240,128,30,.18)"/><path d="M0 0 L-84.85 -84.85 L-73.14 -95.14Z" fill="rgba(240,128,30,.18)"/><path d="M0 0 L-60.00 -103.92 L-46.02 -110.82Z" fill="rgba(240,128,30,.18)"/><path d="M0 0 L-31.06 -115.91 L-15.77 -118.96Z" fill="rgba(240,128,30,.18)"/><path d="M0 0 L0.00 -120.00 L15.56 -118.99Z" fill="rgba(240,128,30,.18)"/><path d="M0 0 L31.06 -115.91 L45.82 -110.91Z" fill="rgba(240,128,30,.18)"/><path d="M0 0 L60.00 -103.92 L72.97 -95.27Z" fill="rgba(240,128,30,.18)"/><path d="M0 0 L84.85 -84.85 L95.14 -73.14Z" fill="rgba(240,128,30,.18)"/><path d="M0 0 L103.92 -60.00 L110.82 -46.02Z" fill="rgba(240,128,30,.18)"/><path d="M0 0 L115.91 -31.06 L118.96 -15.77Z" fill="rgba(240,128,30,.18)"/></svg>
+    <div class="el " data-in="22.45" data-a="slam" style="top:170px"><div class="tag" style="background:var(--rosa);color:#fff;font-size:80px;transform:rotate(-3deg)">CORRE LÁ!</div></div>
+    <div class="el " data-in="23.03" data-a="pop" style="top:340px"><svg viewBox="0 0 100 100" style="width:150px;height:150px"><path d="M50 94S16 60 16 38a34 34 0 0 1 68 0c0 22-34 56-34 56z" fill="#14573A"/><circle cx="50" cy="38" r="13" fill="#FDD20A"/></svg></div>
+    <div class="el A" data-in="23.13" data-a="palavras" data-passo="0.08" style="top:520px;font-size:110px;color:var(--verde)">Shopping Popular</div>
+    <div class="el A" data-in="23.88" data-a="palavras" data-passo="0.08" style="top:640px;font-size:110px;color:var(--verde)">da Ceilândia</div>
+    <div class="el " data-in="24.66" data-a="slam" style="top:800px"><div class="tag" style="background:var(--verde);color:#FDD20A;font-size:150px">BOX 62 E 63</div></div>
+    <div class="el " data-in="26.70" data-a="pop" style="top:1050px"><div style="display:inline-flex;align-items:center;gap:22px;background:#fff;border-radius:60px;padding:18px 44px;font-weight:900;font-size:50px;color:var(--rosa);letter-spacing:.06em">★ INAUGURAÇÃO ★</div></div>
+    <div class="el " data-in="28.15" data-a="pop" style="top:1200px"><img src="assets/logo_mvm.png" style="width:720px"></div>
+    <div class="el A" data-in="29.40" data-a="palavras" data-passo="0.07" style="top:1520px;font-size:66px;color:var(--terra)">Vem ver o mundo do seu jeito!</div>
+  </section>
+
+</div>
+<script>
+const L = 0.15, C = {"atencao": 0.075, "ceilandia": 0.679, "chegou": 2.491, "pedaco": 3.698, "vista": 4.762, "cansada": 5.366, "letrinha": 6.476, "embacando": 7.382, "oculos": 8.533, "olhos": 9.514, "cara": 10.118, "pois": 10.733, "acabou": 11.425, "chegou2": 12.334, "mvm": 12.862, "brasilidade": 13.994, "olhar": 15.353, "armacao": 15.831, "lente": 17.492, "preco": 18.548, "bolso": 19.831, "porque": 20.354, "todo": 21.41, "corre": 22.45, "shopping": 23.129, "ceilandia2": 23.884, "box": 24.659, "inauguracao": 26.697, "mvm2": 28.251, "vemver": 29.397, "fim": 31.133};
+document.querySelectorAll('[data-a="palavras"],[data-a="slam"]').forEach(el => {
+  if (el.dataset.a !== "palavras") return;
+  el.innerHTML = el.textContent.split(/(\s+)/).map(p => /^\s+$/.test(p) ? " " : `<span class="w"><span>${p}</span></span>`).join("");
+});
+const clamp = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
+const eo = x => 1 - Math.pow(1 - x, 3), eo5 = x => 1 - Math.pow(1 - x, 5);
+const back = (x, k = 1.8) => 1 + (k + 1) * Math.pow(x - 1, 3) + k * Math.pow(x - 1, 2);
+const XF = 0.14;
+function anim(el, t) {
+  const t0 = parseFloat(el.dataset.in), a = el.dataset.a;
+  if (a === "palavras") {
+    const passo = parseFloat(el.dataset.passo); let vis = false;
+    el.querySelectorAll(".w > span").forEach((s, i) => {
+      const p = clamp((t - t0 - i * passo) / 0.4), pe = eo5(p);
+      s.style.transform = `translateY(${((1 - pe) * 110).toFixed(1)}%) rotate(${((1 - pe) * 6).toFixed(2)}deg)`;
+      if (p > 0) vis = true;
+    });
+    el.style.opacity = vis ? 1 : 0; el.style.visibility = vis ? "visible" : "hidden"; return;
+  }
+  const d = {pop: .4, slam: .28, fade: .6, rise: .5, slideL: .45, slideR: .45, balanca: .5}[a] || .5;
+  const p = clamp((t - t0) / d), pe = eo(p);
+  let op = (a === "pop" || a === "slam") ? clamp(p * 4) : pe, tf = "";
+  if (a === "pop") tf = `scale(${Math.max(.02, back(p)).toFixed(4)})`;
+  if (a === "slam") tf = `scale(${(1 + (1 - pe) * 1.5).toFixed(4)})`;
+  if (a === "fade") tf = `scale(${(1.08 - .08 * pe).toFixed(4)})`;
+  if (a === "rise") tf = `translateY(${((1 - pe) * 120).toFixed(1)}px)`;
+  if (a === "slideL") tf = `translateX(${(-(1 - pe) * 1100).toFixed(1)}px)`;
+  if (a === "slideR") tf = `translateX(${((1 - pe) * 1100).toFixed(1)}px)`;
+  if (a === "balanca") { const q = Math.max(0, t - t0); tf = `translateY(${((1 - pe) * -400).toFixed(1)}px) rotate(${(Math.sin(q * 5) * 14 * Math.exp(-q * 1.2)).toFixed(2)}deg)`; el.style.transformOrigin = "50% 0"; }
+  op = op < 0.003 ? 0 : op;
+  el.style.opacity = op.toFixed(3); el.style.visibility = op > 0 ? "visible" : "hidden"; el.style.transform = tf;
+}
+function render(tv) {
+  const t = tv - L;
+  document.querySelectorAll(".scene").forEach(s => {
+    const a = parseFloat(s.dataset.start), b = parseFloat(s.dataset.end);
+    let op = 0;
+    if (t >= a && t < b + XF) op = clamp((t - a) / XF) * (t > b ? 1 - clamp((t - b) / XF) : 1);
+    if (a === 0) op = t < b ? 1 : op;
+    s.style.opacity = op; s.style.visibility = op > 0 ? "visible" : "hidden"; s.style.zIndex = Math.round(a * 10 + 10);
+    if (op <= 0) return;
+    let sh = "";
+    (s.dataset.shake || "").split(",").filter(Boolean).map(Number).forEach(k => {
+      const q = t - k; if (q > 0 && q < .35) { const amp = 16 * (1 - q / .35); sh = ` translate(${(Math.sin(q * 90) * amp).toFixed(1)}px,${(Math.cos(q * 70) * amp).toFixed(1)}px)`; }
+    });
+    s.style.transform = `scale(${(1.06 - .06 * eo(clamp((t - a) / .45))).toFixed(4)})${sh}`;
+    s.querySelectorAll(".sol").forEach(o => o.style.transform = `rotate(${(t * 10 * (+o.dataset.sol || 1)).toFixed(2)}deg)`);
+    s.querySelectorAll(".ladrilho").forEach(o => o.style.transform = `translate(${((t * 20) % 180).toFixed(1)}px,${((t * 14) % 180).toFixed(1)}px)`);
+    s.querySelectorAll(".kb").forEach(o => o.style.transform = `scale(${(1 + .06 * clamp((t - a) / 2.5)).toFixed(4)})`);
+    s.querySelectorAll(".el").forEach(el => anim(el, t));
+  });
+  document.querySelectorAll(".tr").forEach((p, i) => p.style.strokeDasharray = `${eo(clamp((t - C.chegou + .05 - i * .15) / .7)).toFixed(3)} 1`);
+  const tela = document.getElementById("tela");
+  if (tela) tela.style.filter = `blur(${(Math.max(0, clamp((t - C.cansada) / 1.2)) * 7 + clamp((t - C.letrinha) / .6) * 5).toFixed(1)}px)`;
+}
+window.render = render;
+render(0);
+</script>
+</body></html>
