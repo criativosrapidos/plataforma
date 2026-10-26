@@ -1,0 +1,244 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><title>Nanoz · prévia v2</title><style>
+@font-face { font-family: CG; font-weight: 500; src: url(fonts/eb-garamond-latin-500-normal.woff2); }
+@font-face { font-family: CG; font-weight: 600; src: url(fonts/eb-garamond-latin-600-normal.woff2); }
+@font-face { font-family: CG; font-weight: 500; font-style: italic; src: url(fonts/eb-garamond-latin-500-italic.woff2); }
+@font-face { font-family: IN; font-weight: 300; src: url(fonts/inter-latin-300-normal.woff2); }
+@font-face { font-family: IN; font-weight: 400; src: url(fonts/inter-latin-400-normal.woff2); }
+@font-face { font-family: IN; font-weight: 500; src: url(fonts/inter-latin-500-normal.woff2); }
+@font-face { font-family: IN; font-weight: 600; src: url(fonts/inter-latin-600-normal.woff2); }
+@font-face { font-family: IN; font-weight: 700; src: url(fonts/inter-latin-700-normal.woff2); }
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body { width:1080px; height:1920px; overflow:hidden; background:#070B14; }
+#stage { font-variant-numeric:lining-nums; position:relative; width:1080px; height:1920px; overflow:hidden; color:#fff; font-family:CG;
+  background:radial-gradient(ellipse 90% 60% at 50% 38%, #111C33 0%, #070B14 70%); }
+#globo { position:absolute; left:0; top:0; z-index:5; }
+#linhas { position:absolute; inset:0; background-image:linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px); background-size:180px 100%; }
+.scene { position:absolute; inset:0; opacity:0; z-index:10; }
+.fimcr { background:#04060B; z-index:300; }
+.el { position:absolute; left:70px; right:70px; text-align:center; opacity:0; font-weight:500; line-height:1.04; }
+.w { display:inline-block; overflow:hidden; vertical-align:top; padding:.26em .03em .16em; margin:-.26em -.03em -.16em; }
+.w > span { display:inline-block; }
+.lbl { font-family:IN; font-weight:500; font-size:26px; letter-spacing:.36em; text-transform:uppercase; color:#C8B183; padding-left:.36em; }
+.marca b { display:block; font-family:IN; font-weight:500; font-size:44px; letter-spacing:.5em; padding-left:.5em; color:#C8B183; }
+.marca span { display:block; font-family:CG; font-size:58px; color:#fff; margin-top:4px; }
+.fio { width:220px; height:2px; margin:0 auto; background:linear-gradient(90deg, transparent, #C8B183, transparent); }
+.num { font-family:CG; font-weight:500; font-size:380px; line-height:1; color:#fff; letter-spacing:-.02em; }
+.num span { color:#C8B183; font-size:220px; vertical-align:top; position:relative; top:40px; margin-right:6px; }
+.pills { display:flex; justify-content:center; gap:20px; }
+.pills span { font-family:IN; font-size:30px; letter-spacing:.2em; text-transform:uppercase; border:1px solid rgba(200,177,131,.55); color:#E4D6B3; padding:16px 30px 16px 36px; }
+.prod { display:flex; align-items:center; gap:34px; background:linear-gradient(120deg, rgba(255,255,255,.08), rgba(255,255,255,.025)); border:1px solid rgba(255,255,255,.12);
+  border-left:3px solid #C8B183; padding:36px 40px; text-align:left; }
+.pic { width:84px; flex:none; }
+.pn { font-family:CG; font-weight:600; font-size:58px; line-height:1.05; color:#fff; }
+.ps { font-family:IN; font-weight:400; font-size:26px; color:#9AA3B5; margin-top:6px; }
+.pk { margin-left:auto; font-family:IN; font-size:22px; letter-spacing:.2em; color:rgba(200,177,131,.7); }
+.app { margin:0 auto; width:860px; background:linear-gradient(160deg, rgba(255,255,255,.09), rgba(255,255,255,.02)); border:1px solid rgba(255,255,255,.14); padding:44px 50px; text-align:left;
+  box-shadow:0 40px 90px rgba(0,0,0,.45); }
+.apph { display:flex; align-items:center; gap:22px; padding-bottom:28px; border-bottom:1px solid rgba(255,255,255,.12); margin-bottom:16px; }
+.apph svg { margin:0 !important; }
+.apph span { font-family:CG; font-weight:600; font-size:46px; }
+.apph em { margin-left:auto; font-family:IN; font-style:normal; font-size:20px; letter-spacing:.2em; text-transform:uppercase; color:#C8B183; border:1px solid rgba(200,177,131,.5); padding:8px 14px; }
+.pl { padding:22px 0; }
+.pl span { font-family:IN; font-size:30px; color:#E3E7EE; }
+.bar { height:8px; background:rgba(255,255,255,.08); margin-top:14px; position:relative; overflow:hidden; }
+.fill { position:absolute; left:0; top:0; bottom:0; width:0; background:linear-gradient(90deg, #C8B183, #E4D6B3); }
+.zap { display:inline-flex; align-items:center; gap:26px; background:#1FA855; padding:30px 50px 30px 40px; text-align:left; box-shadow:0 30px 70px rgba(0,0,0,.4); }
+.zap small { display:block; font-family:IN; font-size:22px; letter-spacing:.24em; text-transform:uppercase; color:rgba(255,255,255,.8); }
+.zap b { display:block; font-family:IN; font-weight:600; font-size:46px; color:#fff; }
+#wm { position:absolute; top:70px; right:56px; display:flex; align-items:center; gap:14px; z-index:900;
+  background:rgba(4,6,11,.6); border:1px solid rgba(255,255,255,.14); border-radius:40px; padding:10px 22px 10px 12px; }
+#wm .pv { font-family:IN; font-weight:600; font-size:20px; letter-spacing:.24em; color:#FFD400; }
+#rodape { position:absolute; left:0; right:0; bottom:70px; text-align:center; z-index:900; font-family:IN; font-weight:500; font-size:21px; letter-spacing:.3em; color:rgba(255,255,255,.4); }
+#vinheta { position:absolute; inset:0; z-index:800; pointer-events:none; background:radial-gradient(ellipse 80% 70% at 50% 45%, transparent 55%, rgba(0,0,0,.55) 100%); }
+</style></head><body><div id="stage"><div id="linhas"></div><canvas id="globo" width="1080" height="1920"></canvas>
+
+<section class="scene" data-start="0" data-end="1.75">
+  <div class="el" data-in="0.18" data-a="up" style="top:230px"><span class="lbl">Para brasileiros no exterior</span></div>
+  <div class="el" data-in="0.08" data-a="palavras" data-passo="0.09" style="top:1320px;font-size:118px">Você conquistou<br><span style="font-style:italic;color:#E4D6B3">o mundo.</span></div>
+</section>
+
+<section class="scene" data-start="1.75" data-end="5.81">
+  <div class="el" data-in="1.93" data-a="palavras" data-passo="0.07" style="top:1280px;font-size:92px;line-height:1.08">Agora, o seu patrimônio<br>merece um <span style="font-style:italic;color:#E4D6B3">porto seguro</span><br>no Brasil.</div>
+</section>
+
+<section class="scene" data-start="5.81" data-end="9.60">
+  <div class="el" data-in="5.86" data-a="nz" style="top:560px"><svg class="nzlogo" viewBox="0 0 347.5 154.6" style="width:560px;display:block;margin:0 auto"><path d="M344.00 90.00 L341.00 88.00 L339.62 87.50 L337.00 87.00 L333.88 87.25 L332.38 87.75 L330.00 89.00 L328.75 90.00 L283.88 134.88 L282.12 137.00 L280.88 139.38 L280.25 141.62 L280.25 144.75 L281.00 147.50 L281.62 148.75 L284.38 152.00 L286.88 153.50 L289.12 154.12 L291.38 154.38 L336.38 154.38 L338.62 154.12 L340.50 153.62 L342.75 152.38 L344.75 150.62 L345.88 149.12 L346.62 147.62 L347.50 144.12 L347.50 97.50 L347.25 95.38 L346.75 94.00 L345.25 91.38 Z M4.25 2.75 L2.50 4.50 L1.12 6.62 L0.38 8.62 L0.00 10.75 L0.00 143.62 L0.62 146.75 L1.62 148.88 L2.62 150.38 L4.38 152.12 L7.25 153.75 L9.38 154.38 L12.38 154.62 L26.38 154.62 L29.38 154.38 L31.62 153.75 L33.12 153.00 L34.88 151.75 L36.00 150.62 L38.00 147.38 L38.50 146.00 L38.88 143.88 L38.88 106.00 L39.25 103.25 L39.88 101.38 L41.12 99.12 L43.88 96.50 L47.12 94.88 L50.00 94.38 L52.00 94.38 L53.38 94.62 L56.25 95.75 L59.75 98.50 L112.50 151.38 L114.62 153.00 L117.38 154.12 L121.12 154.62 L142.25 154.62 L146.62 153.88 L149.38 152.50 L150.75 151.38 L152.38 149.38 L153.62 147.00 L154.38 143.75 L154.25 141.12 L153.50 138.75 L152.62 137.00 L150.75 134.50 L19.25 3.00 L17.50 1.75 L15.75 0.88 L13.38 0.25 L10.12 0.25 L8.25 0.62 L6.00 1.62 Z M90.12 3.62 L89.25 4.62 L87.88 7.12 L87.12 10.38 L87.38 13.88 L89.00 17.50 L90.62 19.50 L134.88 63.88 L137.50 66.00 L139.62 67.00 L141.75 67.50 L144.38 67.50 L147.38 66.75 L149.12 65.88 L152.00 63.38 L152.88 62.12 L153.75 60.25 L154.38 56.88 L154.38 10.75 L153.62 7.25 L152.50 5.12 L150.62 3.00 L149.12 1.88 L147.12 0.88 L144.62 0.25 L142.38 0.12 L98.75 0.12 L96.12 0.38 L94.25 0.88 L91.88 2.12 Z M343.50 2.88 L340.00 0.75 L336.12 0.00 L204.50 0.00 L202.25 0.25 L200.50 0.75 L197.88 2.25 L195.88 4.12 L194.12 6.88 L193.25 10.25 L193.12 27.75 L193.62 30.50 L194.88 33.38 L195.75 34.62 L198.12 36.88 L200.12 38.00 L203.88 38.88 L240.12 38.88 L244.00 39.25 L245.38 39.62 L247.50 40.62 L248.62 41.38 L250.88 43.62 L252.25 46.00 L253.12 49.12 L253.12 52.25 L252.75 53.88 L251.75 56.38 L249.88 58.88 L236.50 72.25 L235.50 73.50 L196.00 112.88 L194.75 114.62 L193.50 117.62 L193.12 120.38 L193.12 143.38 L193.62 146.12 L194.75 148.75 L197.50 151.88 L199.00 152.88 L201.00 153.75 L203.12 154.25 L205.62 154.38 L207.50 154.12 L209.38 153.50 L212.38 151.62 L343.50 20.50 L346.00 17.12 L347.00 14.88 L347.38 13.25 L347.38 10.25 L346.62 7.25 L345.12 4.62 Z" fill="#C8B183"/></svg></div>
+  <div class="el" data-in="6.41" data-a="up" style="top:880px"><div class="marca"><b>NANOZ</b><span>Consultoria</span></div></div>
+  <div class="el" data-in="6.81" data-a="line" style="top:1110px"><div class="fio"></div></div>
+  <div class="el" data-in="7.01" data-a="palavras" data-passo="0.06" style="top:1170px;font-size:72px;line-height:1.12">Especializada em brasileiros<br>que vivem <span style="font-style:italic;color:#E4D6B3">no exterior.</span></div>
+</section>
+
+<section class="scene" data-start="9.60" data-end="15.25">
+  <div class="el" data-in="9.70" data-a="up" style="top:300px"><span class="lbl">Há mais de</span></div>
+  <div class="el" data-in="9.70" data-a="fade" style="top:360px"><div class="num"><span>+</span><b class="cont" data-v="10" data-t="9.80">0</b></div></div>
+  <div class="el" data-in="10.51" data-a="up" style="top:760px"><span class="lbl">anos de consultoria</span></div>
+  <div class="el" data-in="10.97" data-a="palavras" data-passo="0.06" style="top:900px;font-size:82px;line-height:1.1">Protegendo e multiplicando<br><span style="font-style:italic;color:#E4D6B3">patrimônios.</span></div>
+  <div class="el" data-in="13.31" data-a="up" style="top:1210px"><div class="pills"><span>Segurança</span><span>Transparência</span></div></div>
+  <div class="el" data-in="13.21" data-a="pop" style="top:1380px"><svg viewBox="0 0 120 140" style="width:130px"><path d="M60 8 L108 26 V66 C108 98 88 120 60 132 C32 120 12 98 12 66 V26 Z" fill="none" stroke="#C8B183" stroke-width="5"/><path class="chk" data-t="13.51" d="M38 70 L54 86 L84 54" fill="none" stroke="#E4D6B3" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+</section>
+
+<section class="scene" data-start="15.25" data-end="19.82">
+  <div class="el" data-in="15.30" data-a="up" style="top:400px"><span class="lbl">As melhores ferramentas de investimento</span></div>
+  <div class="el" data-in="15.30" data-a="slideR" style="top:560px"><div class="prod"><svg viewBox="0 0 48 48" class="pic" fill="none" stroke="#C8B183" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="17"/><path d="M30 17.5c-1.2-2-3.4-3-6-3-3.4 0-6 1.8-6 4.4 0 6 12 3.2 12 9.2 0 2.6-2.6 4.4-6 4.4-2.8 0-5.2-1.2-6.4-3.2M24 11v3.5M24 33.5V37"/></svg>
+      <div style="text-align:left"><div class="pn">Dolarização</div><div class="ps">Proteção em moeda forte</div></div><div class="pk">01</div></div></div>
+  <div class="el" data-in="16.24" data-a="slideR" style="top:800px"><div class="prod"><svg viewBox="0 0 48 48" class="pic" fill="none" stroke="#C8B183" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 36l12-12 8 8 16-16"/><path d="M30 16h12v12"/></svg>
+      <div style="text-align:left"><div class="pn">Alavancagem patrimonial</div><div class="ps">Crescimento com estratégia</div></div><div class="pk">02</div></div></div>
+  <div class="el" data-in="17.77" data-a="slideR" style="top:1040px"><div class="prod"><svg viewBox="0 0 48 48" class="pic" fill="none" stroke="#C8B183" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 22L24 8l18 14"/><path d="M10 19v21h28V19"/><path d="M20 40V28h8v12"/></svg>
+      <div style="text-align:left"><div class="pn">Home Equity</div><div class="ps">Seu imóvel virando crédito</div></div><div class="pk">03</div></div></div>
+  <div class="el" data-in="18.57" data-a="slideR" style="top:1280px"><div class="prod"><svg viewBox="0 0 48 48" class="pic" fill="none" stroke="#C8B183" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 18h36L24 7z"/><path d="M10 18v16M19 18v16M29 18v16M38 18v16M6 40h36"/></svg>
+      <div style="text-align:left"><div class="pn">Financiamento bancário</div><div class="ps">As melhores taxas e condições</div></div><div class="pk">04</div></div></div>
+</section>
+
+<section class="scene" data-start="19.82" data-end="23.44">
+  <div class="el" data-in="19.92" data-a="palavras" data-passo="0.07" style="top:250px;font-size:92px;line-height:1.05">Um planejamento<br><span style="font-style:italic;color:#E4D6B3">completo,</span></div>
+  <div class="el" data-in="21.49" data-a="palavras" data-passo="0.05" style="top:480px;font-size:60px;color:#C9CFDA">desenhado para a sua realidade.</div>
+  <div class="el" data-in="19.94" data-a="rise" style="top:690px"><div class="app"><div class="apph"><svg class="" viewBox="0 0 347.5 154.6" style="width:70px;display:block;margin:0 auto"><path d="M344.00 90.00 L341.00 88.00 L339.62 87.50 L337.00 87.00 L333.88 87.25 L332.38 87.75 L330.00 89.00 L328.75 90.00 L283.88 134.88 L282.12 137.00 L280.88 139.38 L280.25 141.62 L280.25 144.75 L281.00 147.50 L281.62 148.75 L284.38 152.00 L286.88 153.50 L289.12 154.12 L291.38 154.38 L336.38 154.38 L338.62 154.12 L340.50 153.62 L342.75 152.38 L344.75 150.62 L345.88 149.12 L346.62 147.62 L347.50 144.12 L347.50 97.50 L347.25 95.38 L346.75 94.00 L345.25 91.38 Z M4.25 2.75 L2.50 4.50 L1.12 6.62 L0.38 8.62 L0.00 10.75 L0.00 143.62 L0.62 146.75 L1.62 148.88 L2.62 150.38 L4.38 152.12 L7.25 153.75 L9.38 154.38 L12.38 154.62 L26.38 154.62 L29.38 154.38 L31.62 153.75 L33.12 153.00 L34.88 151.75 L36.00 150.62 L38.00 147.38 L38.50 146.00 L38.88 143.88 L38.88 106.00 L39.25 103.25 L39.88 101.38 L41.12 99.12 L43.88 96.50 L47.12 94.88 L50.00 94.38 L52.00 94.38 L53.38 94.62 L56.25 95.75 L59.75 98.50 L112.50 151.38 L114.62 153.00 L117.38 154.12 L121.12 154.62 L142.25 154.62 L146.62 153.88 L149.38 152.50 L150.75 151.38 L152.38 149.38 L153.62 147.00 L154.38 143.75 L154.25 141.12 L153.50 138.75 L152.62 137.00 L150.75 134.50 L19.25 3.00 L17.50 1.75 L15.75 0.88 L13.38 0.25 L10.12 0.25 L8.25 0.62 L6.00 1.62 Z M90.12 3.62 L89.25 4.62 L87.88 7.12 L87.12 10.38 L87.38 13.88 L89.00 17.50 L90.62 19.50 L134.88 63.88 L137.50 66.00 L139.62 67.00 L141.75 67.50 L144.38 67.50 L147.38 66.75 L149.12 65.88 L152.00 63.38 L152.88 62.12 L153.75 60.25 L154.38 56.88 L154.38 10.75 L153.62 7.25 L152.50 5.12 L150.62 3.00 L149.12 1.88 L147.12 0.88 L144.62 0.25 L142.38 0.12 L98.75 0.12 L96.12 0.38 L94.25 0.88 L91.88 2.12 Z M343.50 2.88 L340.00 0.75 L336.12 0.00 L204.50 0.00 L202.25 0.25 L200.50 0.75 L197.88 2.25 L195.88 4.12 L194.12 6.88 L193.25 10.25 L193.12 27.75 L193.62 30.50 L194.88 33.38 L195.75 34.62 L198.12 36.88 L200.12 38.00 L203.88 38.88 L240.12 38.88 L244.00 39.25 L245.38 39.62 L247.50 40.62 L248.62 41.38 L250.88 43.62 L252.25 46.00 L253.12 49.12 L253.12 52.25 L252.75 53.88 L251.75 56.38 L249.88 58.88 L236.50 72.25 L235.50 73.50 L196.00 112.88 L194.75 114.62 L193.50 117.62 L193.12 120.38 L193.12 143.38 L193.62 146.12 L194.75 148.75 L197.50 151.88 L199.00 152.88 L201.00 153.75 L203.12 154.25 L205.62 154.38 L207.50 154.12 L209.38 153.50 L212.38 151.62 L343.50 20.50 L346.00 17.12 L347.00 14.88 L347.38 13.25 L347.38 10.25 L346.62 7.25 L345.12 4.62 Z" fill="#C8B183"/></svg><span>Seu plano Nanoz</span><em>sob medida</em></div><div class="pl"><span>Objetivos</span><div class="bar"><i class="fill" data-t="20.34"></i></div></div><div class="pl"><span>Perfil</span><div class="bar"><i class="fill" data-t="20.69"></i></div></div><div class="pl"><span>Patrimônio atual</span><div class="bar"><i class="fill" data-t="21.04"></i></div></div><div class="pl"><span>Estratégia</span><div class="bar"><i class="fill" data-t="21.39"></i></div></div></div></div>
+</section>
+
+<section class="scene" data-start="23.44" data-end="27.14">
+  <div class="el" data-in="23.49" data-a="nz" style="top:520px"><svg class="nzlogo" viewBox="0 0 347.5 154.6" style="width:500px;display:block;margin:0 auto"><path d="M344.00 90.00 L341.00 88.00 L339.62 87.50 L337.00 87.00 L333.88 87.25 L332.38 87.75 L330.00 89.00 L328.75 90.00 L283.88 134.88 L282.12 137.00 L280.88 139.38 L280.25 141.62 L280.25 144.75 L281.00 147.50 L281.62 148.75 L284.38 152.00 L286.88 153.50 L289.12 154.12 L291.38 154.38 L336.38 154.38 L338.62 154.12 L340.50 153.62 L342.75 152.38 L344.75 150.62 L345.88 149.12 L346.62 147.62 L347.50 144.12 L347.50 97.50 L347.25 95.38 L346.75 94.00 L345.25 91.38 Z M4.25 2.75 L2.50 4.50 L1.12 6.62 L0.38 8.62 L0.00 10.75 L0.00 143.62 L0.62 146.75 L1.62 148.88 L2.62 150.38 L4.38 152.12 L7.25 153.75 L9.38 154.38 L12.38 154.62 L26.38 154.62 L29.38 154.38 L31.62 153.75 L33.12 153.00 L34.88 151.75 L36.00 150.62 L38.00 147.38 L38.50 146.00 L38.88 143.88 L38.88 106.00 L39.25 103.25 L39.88 101.38 L41.12 99.12 L43.88 96.50 L47.12 94.88 L50.00 94.38 L52.00 94.38 L53.38 94.62 L56.25 95.75 L59.75 98.50 L112.50 151.38 L114.62 153.00 L117.38 154.12 L121.12 154.62 L142.25 154.62 L146.62 153.88 L149.38 152.50 L150.75 151.38 L152.38 149.38 L153.62 147.00 L154.38 143.75 L154.25 141.12 L153.50 138.75 L152.62 137.00 L150.75 134.50 L19.25 3.00 L17.50 1.75 L15.75 0.88 L13.38 0.25 L10.12 0.25 L8.25 0.62 L6.00 1.62 Z M90.12 3.62 L89.25 4.62 L87.88 7.12 L87.12 10.38 L87.38 13.88 L89.00 17.50 L90.62 19.50 L134.88 63.88 L137.50 66.00 L139.62 67.00 L141.75 67.50 L144.38 67.50 L147.38 66.75 L149.12 65.88 L152.00 63.38 L152.88 62.12 L153.75 60.25 L154.38 56.88 L154.38 10.75 L153.62 7.25 L152.50 5.12 L150.62 3.00 L149.12 1.88 L147.12 0.88 L144.62 0.25 L142.38 0.12 L98.75 0.12 L96.12 0.38 L94.25 0.88 L91.88 2.12 Z M343.50 2.88 L340.00 0.75 L336.12 0.00 L204.50 0.00 L202.25 0.25 L200.50 0.75 L197.88 2.25 L195.88 4.12 L194.12 6.88 L193.25 10.25 L193.12 27.75 L193.62 30.50 L194.88 33.38 L195.75 34.62 L198.12 36.88 L200.12 38.00 L203.88 38.88 L240.12 38.88 L244.00 39.25 L245.38 39.62 L247.50 40.62 L248.62 41.38 L250.88 43.62 L252.25 46.00 L253.12 49.12 L253.12 52.25 L252.75 53.88 L251.75 56.38 L249.88 58.88 L236.50 72.25 L235.50 73.50 L196.00 112.88 L194.75 114.62 L193.50 117.62 L193.12 120.38 L193.12 143.38 L193.62 146.12 L194.75 148.75 L197.50 151.88 L199.00 152.88 L201.00 153.75 L203.12 154.25 L205.62 154.38 L207.50 154.12 L209.38 153.50 L212.38 151.62 L343.50 20.50 L346.00 17.12 L347.00 14.88 L347.38 13.25 L347.38 10.25 L346.62 7.25 L345.12 4.62 Z" fill="#C8B183"/></svg></div>
+  <div class="el" data-in="23.94" data-a="up" style="top:810px"><div class="marca"><b>NANOZ</b><span>Consultoria</span></div></div>
+  <div class="el" data-in="24.91" data-a="palavras" data-passo="0.07" style="top:1080px;font-size:88px;line-height:1.08">O próximo nível dos<br>seus <span style="font-style:italic;color:#E4D6B3">investimentos.</span></div>
+</section>
+
+<section class="scene" data-start="27.14" data-end="30.52">
+  <svg class="" viewBox="0 0 347.5 154.6" style="position:absolute;left:0;right:0;top:330px;width:150px;display:block;margin:0 auto"><path d="M344.00 90.00 L341.00 88.00 L339.62 87.50 L337.00 87.00 L333.88 87.25 L332.38 87.75 L330.00 89.00 L328.75 90.00 L283.88 134.88 L282.12 137.00 L280.88 139.38 L280.25 141.62 L280.25 144.75 L281.00 147.50 L281.62 148.75 L284.38 152.00 L286.88 153.50 L289.12 154.12 L291.38 154.38 L336.38 154.38 L338.62 154.12 L340.50 153.62 L342.75 152.38 L344.75 150.62 L345.88 149.12 L346.62 147.62 L347.50 144.12 L347.50 97.50 L347.25 95.38 L346.75 94.00 L345.25 91.38 Z M4.25 2.75 L2.50 4.50 L1.12 6.62 L0.38 8.62 L0.00 10.75 L0.00 143.62 L0.62 146.75 L1.62 148.88 L2.62 150.38 L4.38 152.12 L7.25 153.75 L9.38 154.38 L12.38 154.62 L26.38 154.62 L29.38 154.38 L31.62 153.75 L33.12 153.00 L34.88 151.75 L36.00 150.62 L38.00 147.38 L38.50 146.00 L38.88 143.88 L38.88 106.00 L39.25 103.25 L39.88 101.38 L41.12 99.12 L43.88 96.50 L47.12 94.88 L50.00 94.38 L52.00 94.38 L53.38 94.62 L56.25 95.75 L59.75 98.50 L112.50 151.38 L114.62 153.00 L117.38 154.12 L121.12 154.62 L142.25 154.62 L146.62 153.88 L149.38 152.50 L150.75 151.38 L152.38 149.38 L153.62 147.00 L154.38 143.75 L154.25 141.12 L153.50 138.75 L152.62 137.00 L150.75 134.50 L19.25 3.00 L17.50 1.75 L15.75 0.88 L13.38 0.25 L10.12 0.25 L8.25 0.62 L6.00 1.62 Z M90.12 3.62 L89.25 4.62 L87.88 7.12 L87.12 10.38 L87.38 13.88 L89.00 17.50 L90.62 19.50 L134.88 63.88 L137.50 66.00 L139.62 67.00 L141.75 67.50 L144.38 67.50 L147.38 66.75 L149.12 65.88 L152.00 63.38 L152.88 62.12 L153.75 60.25 L154.38 56.88 L154.38 10.75 L153.62 7.25 L152.50 5.12 L150.62 3.00 L149.12 1.88 L147.12 0.88 L144.62 0.25 L142.38 0.12 L98.75 0.12 L96.12 0.38 L94.25 0.88 L91.88 2.12 Z M343.50 2.88 L340.00 0.75 L336.12 0.00 L204.50 0.00 L202.25 0.25 L200.50 0.75 L197.88 2.25 L195.88 4.12 L194.12 6.88 L193.25 10.25 L193.12 27.75 L193.62 30.50 L194.88 33.38 L195.75 34.62 L198.12 36.88 L200.12 38.00 L203.88 38.88 L240.12 38.88 L244.00 39.25 L245.38 39.62 L247.50 40.62 L248.62 41.38 L250.88 43.62 L252.25 46.00 L253.12 49.12 L253.12 52.25 L252.75 53.88 L251.75 56.38 L249.88 58.88 L236.50 72.25 L235.50 73.50 L196.00 112.88 L194.75 114.62 L193.50 117.62 L193.12 120.38 L193.12 143.38 L193.62 146.12 L194.75 148.75 L197.50 151.88 L199.00 152.88 L201.00 153.75 L203.12 154.25 L205.62 154.38 L207.50 154.12 L209.38 153.50 L212.38 151.62 L343.50 20.50 L346.00 17.12 L347.00 14.88 L347.38 13.25 L347.38 10.25 L346.62 7.25 L345.12 4.62 Z" fill="#C8B183"/></svg>
+  <div class="el" data-in="27.24" data-a="palavras" data-passo="0.07" style="top:560px;font-size:100px;line-height:1.06">Fale com o nosso<br><span style="font-style:italic;color:#E4D6B3">especialista.</span></div>
+  <div class="el" data-in="27.79" data-a="pop" style="top:930px"><div class="zap"><svg viewBox="0 0 24 24" fill="#fff" style="width:52px"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7a2.8 2.8 0 0 0 1.8-1.3 2.3 2.3 0 0 0 .2-1.3c-.1-.1-.2-.2-.4-.3z"/></svg><div><small>WhatsApp</small><b>+55 (61) 92002-3306</b></div></div></div>
+  <div class="el" data-in="28.29" data-a="up" style="top:1200px"><div style="font-family:IN;font-weight:400;font-size:34px;letter-spacing:.12em;color:#C9CFDA">nanozconsultoria.com.br</div></div>
+</section>
+
+<section class="scene fimcr" data-start="30.52" data-end="34.12">
+  <div class="el" data-in="30.67" data-a="up" style="top:600px"><span class="lbl">Prévia · proposta de conteúdo</span></div>
+  <div class="el" data-in="30.82" data-a="up" style="top:680px"><div style="font-family:CG;font-weight:500;font-size:82px;line-height:1.1;color:#fff">Vídeo criado para a<br><span style="font-style:italic;color:#E4D6B3">Nanoz Consultoria</span><br>pela</div></div>
+  <div class="el" data-in="31.22" data-a="pop" style="top:1050px"><div style="display:inline-flex;align-items:center;gap:24px"><div style="width:116px;height:116px;background:#FFD400;border-radius:26px;display:flex;align-items:center;justify-content:center"><svg viewBox="0 0 40 40" style="width:80px"><g fill="#0B0B0B"><rect x="4" y="12" width="9" height="3.2" rx="1.6"/><rect x="2" y="18.4" width="11" height="3.2" rx="1.6"/><rect x="4" y="24.8" width="9" height="3.2" rx="1.6"/><path d="M16 9 L35 20 L16 31 Z"/></g></svg></div><div style="text-align:left;line-height:1.02;font-family:IN"><div style="font-weight:500;font-size:54px;color:#fff">criativos</div><div style="font-weight:700;font-style:italic;font-size:58px;color:#FFD400">rápidos</div></div></div></div>
+  <div class="el" data-in="31.52" data-a="up" style="top:1250px"><div style="font-family:IN;font-weight:400;font-size:32px;color:#AEB5C4;letter-spacing:.06em">criativosrapidos.com.br</div></div>
+</section>
+
+<div id="vinheta"></div>
+<div id="wm"><div style="display:inline-flex;align-items:center;gap:8px"><div style="width:40px;height:40px;background:#FFD400;border-radius:9px;display:flex;align-items:center;justify-content:center"><svg viewBox="0 0 40 40" style="width:28px"><g fill="#0B0B0B"><rect x="4" y="12" width="9" height="3.2" rx="1.6"/><rect x="2" y="18.4" width="11" height="3.2" rx="1.6"/><rect x="4" y="24.8" width="9" height="3.2" rx="1.6"/><path d="M16 9 L35 20 L16 31 Z"/></g></svg></div><div style="text-align:left;line-height:1.02;font-family:IN"><div style="font-weight:500;font-size:18px;color:#fff">criativos</div><div style="font-weight:700;font-style:italic;font-size:20px;color:#FFD400">rápidos</div></div></div><span class="pv">PRÉVIA</span></div>
+<div id="rodape">PROPOSTA · CRIATIVOS RÁPIDOS</div>
+</div>
+<script>
+const L = 0.3, C = {"voce": 0.076, "agora": 1.829, "porto": 4.114, "brasil": 4.914, "nanoz": 5.905, "especializada": 7.01, "exterior": 8.99, "ha": 9.702, "dez": 10.21, "protegendo": 10.971, "multiplicando": 11.657, "seguranca": 13.41, "transparencia": 14.324, "dolarizacao": 15.352, "alavancagem": 16.343, "home": 17.867, "financiamento": 18.667, "um": 19.924, "planejamento": 20.038, "desenhado": 21.486, "realidade": 22.552, "nanoz2": 23.543, "proximo": 24.914, "investimentos": 26.21, "fale": 27.238, "especialista": 27.886, "fim": 28.724}, CARD = 30.524;
+document.querySelectorAll('[data-a="palavras"]').forEach(el => {
+  const tmp = document.createElement("div"); tmp.innerHTML = el.innerHTML; let out = "";
+  const walk = (node, st) => node.childNodes.forEach(n => {
+    if (n.nodeType === 3) n.textContent.split(/(\s+)/).forEach(p => { if (!p) return; out += /^\s+$/.test(p) ? " " : `<span class="w"><span${st ? ` style="${st}"` : ""}>${p}</span></span>`; });
+    else if (n.nodeName === "BR") out += "<br>";
+    else walk(n, n.getAttribute("style") || st);
+  });
+  walk(tmp, ""); el.innerHTML = out;
+});
+const cl = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
+const eo = x => 1 - Math.pow(1 - x, 3), e5 = x => 1 - Math.pow(1 - x, 5), eio = x => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+const back = (x, k = 1.2) => 1 + (k + 1) * Math.pow(x - 1, 3) + k * Math.pow(x - 1, 2);
+document.querySelectorAll(".nzlogo path, .chk").forEach(p => { const n = p.getTotalLength(); p.dataset.n = n; p.style.strokeDasharray = n; });
+
+/* ---------- globo pontilhado (projeção ortográfica) ---------- */
+const g = document.getElementById("globo").getContext("2d");
+const R0 = Math.PI / 180, PTS = [];
+for (let la = -84; la <= 84; la += 4) { const n = Math.max(1, Math.round(90 * Math.cos(la * R0))); for (let k = 0; k < n; k++) PTS.push([la, -180 + 360 * k / n]); }
+const BR = [-15.8, -47.9], CID = [[38.7, -9.1], [40.7, -74.0], [51.5, -0.1], [25.8, -80.2], [48.9, 2.35], [-33.9, 151.2], [35.7, 139.7]];
+function proj(la, lo, rotLo, rotLa, R, cx, cy) {
+  const p = la * R0, l = (lo - rotLo) * R0, t = rotLa * R0;
+  const x = Math.cos(p) * Math.sin(l), y0 = Math.sin(p), z0 = Math.cos(p) * Math.cos(l);
+  const y = y0 * Math.cos(t) - z0 * Math.sin(t), z = y0 * Math.sin(t) + z0 * Math.cos(t);
+  return [cx + R * x, cy - R * y, z];
+}
+function slerp(a, b, f) {
+  const v = q => [Math.cos(q[0] * R0) * Math.cos(q[1] * R0), Math.cos(q[0] * R0) * Math.sin(q[1] * R0), Math.sin(q[0] * R0)];
+  const A = v(a), B = v(b), d = Math.acos(Math.max(-1, Math.min(1, A[0] * B[0] + A[1] * B[1] + A[2] * B[2])));
+  const s = Math.sin(d) || 1, k1 = Math.sin((1 - f) * d) / s, k2 = Math.sin(f * d) / s;
+  const P = [k1 * A[0] + k2 * B[0], k1 * A[1] + k2 * B[1], k1 * A[2] + k2 * B[2]];
+  return [Math.asin(P[2]) / R0, Math.atan2(P[1], P[0]) / R0, d];
+}
+function globo(t) {
+  g.clearRect(0, 0, 1080, 1920);
+  const fimG = C.nanoz - .1;
+  let op = cl(t / .6) * (1 - cl((t - fimG) / .4));
+  if (op <= 0) return;
+  const foco = eio(cl((t - C.agora) / 2.2));                       /* gira até o Brasil e aproxima */
+  const rotLo = -10 + 60 * (t / 6) * (1 - foco) + (-47.9) * foco - 10 * (1 - foco);
+  const rotLa = 18 * (1 - foco) + (-15.8) * foco;
+  const R = 330 + 150 * foco, cx = 540, cy = 760 - 30 * foco;
+  g.globalAlpha = op;
+  const grd = g.createRadialGradient(cx - R * .3, cy - R * .4, R * .1, cx, cy, R * 1.05);
+  grd.addColorStop(0, "rgba(40,60,100,.55)"); grd.addColorStop(1, "rgba(7,11,20,0)");
+  g.fillStyle = grd; g.beginPath(); g.arc(cx, cy, R * 1.04, 0, 7); g.fill();
+  g.strokeStyle = "rgba(200,177,131,.25)"; g.lineWidth = 2; g.beginPath(); g.arc(cx, cy, R, 0, 7); g.stroke();
+  for (const [la, lo] of PTS) {
+    const [x, y, z] = proj(la, lo, rotLo, rotLa, R, cx, cy);
+    if (z <= 0) continue;
+    g.fillStyle = `rgba(190,200,220,${(.18 + .55 * z).toFixed(3)})`; g.fillRect(x - 1.6, y - 1.6, 3.2, 3.2);
+  }
+  /* rotas do mundo até o Brasil */
+  CID.forEach((cd, i) => {
+    const t0 = .35 + i * .18, q = e5(cl((t - t0) / 1.4));
+    if (q <= 0) return;
+    g.beginPath(); let started = false;
+    for (let s = 0; s <= 60 * q; s++) {
+      const f = s / 60, [la, lo, d] = slerp(cd, BR, f), alt = 1 + .22 * Math.sin(Math.PI * f) * Math.min(1, d);
+      let [x, y, z] = proj(la, lo, rotLo, rotLa, R, cx, cy); x = cx + (x - cx) * alt; y = cy + (y - cy) * alt;
+      if (z < -.15) { started = false; continue; }
+      started ? g.lineTo(x, y) : g.moveTo(x, y); started = true;
+    }
+    g.strokeStyle = `rgba(228,214,179,${(.75 * (1 - .6 * foco)).toFixed(3)})`; g.lineWidth = 2.6; g.stroke();
+  });
+  const [bx, by, bz] = proj(BR[0], BR[1], rotLo, rotLa, R, cx, cy);
+  if (bz > 0) {
+    const pul = (t * 1.2) % 1;
+    g.strokeStyle = `rgba(200,177,131,${(1 - pul).toFixed(3)})`; g.lineWidth = 3; g.beginPath(); g.arc(bx, by, 10 + 50 * pul, 0, 7); g.stroke();
+    g.fillStyle = "#E4D6B3"; g.beginPath(); g.arc(bx, by, 11 + 5 * foco, 0, 7); g.fill();
+    const rot = cl((t - C.porto) / .5);
+    if (rot > 0) { g.globalAlpha = op * rot; g.font = "500 30px IN"; g.textAlign = "center"; g.fillStyle = "#E4D6B3"; g.fillText("BRASIL", bx, by - 40); }
+  }
+  g.globalAlpha = 1;
+}
+
+function anim(el, t) {
+  const t0 = +el.dataset.in, a = el.dataset.a;
+  if (a === "palavras") {
+    const passo = +el.dataset.passo; let vis = false;
+    el.querySelectorAll(".w > span").forEach((s, i) => { const p = cl((t - t0 - i * passo) / .6); s.style.transform = `translateY(${((1 - e5(p)) * 110).toFixed(1)}%)`; s.style.opacity = cl(p * 2); if (p > 0) vis = true; });
+    el.style.opacity = vis ? 1 : 0; return;
+  }
+  if (a === "nz") {
+    el.style.opacity = t >= t0 ? 1 : 0;
+    el.querySelectorAll("path").forEach(p => {
+      const q = eio(cl((t - t0) / 1.1)), f = cl((t - t0 - .7) / .6);
+      p.style.strokeDashoffset = (+p.dataset.n * (1 - q)).toFixed(1); p.style.stroke = "#C8B183"; p.style.strokeWidth = 2;
+      p.style.fillOpacity = eo(f).toFixed(3);
+    });
+    el.style.transform = `scale(${(1.06 - .06 * eo(cl((t - t0) / 1.6))).toFixed(4)})`; return;
+  }
+  const d = { pop: .7, up: .7, fade: .8, slideR: .75, line: .9, rise: .9 }[a] || .7, p = cl((t - t0) / d);
+  let tf = "";
+  if (a === "pop") tf = `scale(${Math.max(.01, .8 + .2 * back(p)).toFixed(4)})`;
+  if (a === "up") tf = `translateY(${((1 - e5(p)) * 40).toFixed(1)}px)`;
+  if (a === "slideR") tf = `translateX(${((1 - e5(p)) * 300).toFixed(1)}px)`;
+  if (a === "rise") tf = `translateY(${((1 - e5(p)) * 160).toFixed(1)}px)`;
+  if (a === "line") tf = `scaleX(${e5(p).toFixed(4)})`;
+  el.style.opacity = (a === "line" ? (p > 0 ? 1 : 0) : eo(p)).toFixed(3); el.style.transform = tf;
+}
+function render(tv) {
+  const t = tv - L;
+  globo(t);
+  document.querySelectorAll(".scene").forEach(s => {
+    const a = +s.dataset.start, b = +s.dataset.end, X = .3;
+    let op = (t >= a - X && t < b + X) ? cl((t - a + X) / X) * (1 - cl((t - b) / X)) : 0;
+    if (a === 0 && t < b) op = 1;
+    s.style.opacity = op.toFixed(3);
+    if (op <= 0) return;
+    s.style.transform = `scale(${(1 + .025 * cl((t - a) / 6)).toFixed(4)})`;
+    s.querySelectorAll(".el").forEach(el => anim(el, t));
+  });
+  document.querySelectorAll(".cont").forEach(n => n.textContent = Math.round(+n.dataset.v * eo(cl((t - +n.dataset.t) / 1.2))));
+  document.querySelectorAll(".fill").forEach(f => f.style.width = (e5(cl((t - +f.dataset.t) / 1.1)) * 100).toFixed(1) + "%");
+  document.querySelectorAll(".chk").forEach(p => { const q = eo(cl((t - +p.dataset.t) / .5)); p.style.strokeDashoffset = (+p.dataset.n * (1 - q)).toFixed(1); });
+  document.getElementById("linhas").style.transform = `translateX(${(-(t * 12) % 180).toFixed(1)}px)`;
+  const fq = cl((t - CARD) / .3);
+  wm.style.opacity = (1 - fq).toFixed(3); rodape.style.opacity = (1 - fq).toFixed(3);
+}
+window.render = render; render(0);
+</script></body></html>
