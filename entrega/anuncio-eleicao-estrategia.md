@@ -1,4 +1,10 @@
-# Versão 4 (atual) — 29s
+# Versão 5 (atual) — 29s
+
+**Arquivo:** `criativos-rapidos-eleicao-case-alessandra-v5-29s-9x16.mp4`. Igual à v4, agora com a frase **falada** "Você não controla a política!" (voz Matheus), com o "A POLÍTICA." batendo na tela junto com a palavra.
+
+---
+
+# Versão 4 (anterior) — 29s
 
 **Arquivo:** `criativos-rapidos-eleicao-case-alessandra-v4-29s-9x16.mp4` (capa: `criativos-rapidos-eleicao-v4-capa.png`).
 
