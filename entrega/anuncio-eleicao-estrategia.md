@@ -1,4 +1,17 @@
-# Versão 3 (atual) — 28s
+# Versão 4 (atual) — 29s
+
+**Arquivo:** `criativos-rapidos-eleicao-case-alessandra-v4-29s-9x16.mp4` (capa: `criativos-rapidos-eleicao-v4-capa.png`).
+
+- **Trilha de suspense de volta no começo** (bumbo acelerando, tique, subida e boom no "acabou!"), tocando por baixo da voz nos primeiros ~4s. A voz continua entrando já no início.
+- **Política com voz:** "Você não controla..." (voz) + "A POLÍTICA." batendo na tela com impacto + "Mas controla o seu marketing." (voz). Essa parte veio pra antes do case e ficou mais longa (3,4s).
+- **Case numa cena só, mais longa (~12s):** a bonequinha e o anúncio real dela ficam juntos. As vendas saem do celular e voam pro contador até R$2.850. No fim, a bonequinha vai pro canto, o anúncio fica à esquerda e o **feedback dela no WhatsApp** entra num segundo celular grande à direita, com marca-texto nas frases fortes.
+- **Fechamento:** depois de "Seu criativo por R$97. Chama no WhatsApp agora!", a voz fala **"Faça como a Alessandra!"** e a faixa aparece na tela.
+
+**Locução v4 (ordem):** A eleição acabou! → E o resultado... talvez não seja o que você queria. → Mas o seu boleto vence do mesmo jeito. → Você não controla... [A POLÍTICA na tela] → Mas controla o seu marketing. → Olha a Alessandra: fez um criativo de R$97 com a gente... e em 24 horas faturou R$2.850! Dez procedimentos vendidos! → Seu criativo por R$97. Chama no WhatsApp agora! → Faça como a Alessandra!
+
+---
+
+# Versão 3 (anterior) — 28s
 
 **Arquivo:** `criativos-rapidos-eleicao-case-alessandra-v3-28s-9x16.mp4` (capa: `criativos-rapidos-eleicao-v3-capa.png`).
 
