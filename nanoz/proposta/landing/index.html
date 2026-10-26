@@ -1,0 +1,410 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Nanoz Consultoria · Patrimônio no Brasil para quem vive no mundo</title>
+<meta name="description" content="Consultoria patrimonial para brasileiros no exterior: dolarização, alavancagem patrimonial, home equity e financiamento, com segurança e transparência.">
+<style>
+@font-face { font-family: EB; font-weight: 400; src: url(fonts/eb-garamond-latin-400-normal.woff2) format("woff2"); }
+@font-face { font-family: EB; font-weight: 500; src: url(fonts/eb-garamond-latin-500-normal.woff2) format("woff2"); }
+@font-face { font-family: EB; font-weight: 400; font-style: italic; src: url(fonts/eb-garamond-latin-400-italic.woff2) format("woff2"); }
+@font-face { font-family: EB; font-weight: 500; font-style: italic; src: url(fonts/eb-garamond-latin-500-italic.woff2) format("woff2"); }
+@font-face { font-family: IN; font-weight: 300; src: url(fonts/inter-latin-300-normal.woff2) format("woff2"); }
+@font-face { font-family: IN; font-weight: 400; src: url(fonts/inter-latin-400-normal.woff2) format("woff2"); }
+@font-face { font-family: IN; font-weight: 500; src: url(fonts/inter-latin-500-normal.woff2) format("woff2"); }
+@font-face { font-family: IN; font-weight: 600; src: url(fonts/inter-latin-600-normal.woff2) format("woff2"); }
+:root {
+  --ink:#06090F; --noite:#0A1428; --navy:#13254A; --ouro:#B89B5E; --champ:#E4D6B3;
+  --marfim:#F6F3ED; --papel:#FBFAF7; --linha:#E3DED3; --txt:#545C6B; --mute:#8D95A5;
+  --serif: EB, "Times New Roman", serif; --sans: IN, system-ui, -apple-system, sans-serif;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { font-family:var(--sans); color:var(--noite); background:var(--papel); -webkit-font-smoothing:antialiased; font-variant-numeric:lining-nums; }
+a { color:inherit; text-decoration:none; }
+img, svg { display:block; }
+.wrap { max-width:1200px; margin:0 auto; padding:0 32px; }
+.eyebrow { font-size:12px; font-weight:500; letter-spacing:.28em; text-transform:uppercase; color:var(--ouro); display:flex; align-items:center; gap:14px; }
+.eyebrow::before { content:""; width:28px; height:1px; background:currentColor; }
+.h2 { font-family:var(--serif); font-weight:400; font-size:clamp(38px, 5vw, 64px); line-height:1.02; letter-spacing:-.015em; margin-top:22px; }
+.h2 em, h1 em { font-style:italic; color:var(--ouro); }
+.lead { font-size:17px; line-height:1.7; color:var(--txt); font-weight:300; }
+.bt { display:inline-flex; align-items:center; gap:14px; font-size:13px; font-weight:500; letter-spacing:.14em; text-transform:uppercase;
+  padding:19px 30px; background:var(--champ); color:var(--ink); transition:background .25s, transform .25s; }
+.bt:hover { background:#fff; }
+.bt svg { width:16px; transition:transform .25s; }
+.bt:hover svg { transform:translateX(4px); }
+.bt.ghost { background:transparent; color:#fff; box-shadow:inset 0 0 0 1px rgba(255,255,255,.28); }
+.bt.ghost:hover { box-shadow:inset 0 0 0 1px #fff; }
+.bt.dark { background:var(--noite); color:#fff; }
+.bt.dark:hover { background:var(--navy); }
+
+/* prévia */
+.prev { background:#000; color:#9AA1AF; font-size:12px; letter-spacing:.04em; text-align:center; padding:8px 16px; }
+.prev b { color:#FFD400; font-weight:600; }
+
+/* navegação */
+header { position:absolute; left:0; right:0; top:0; z-index:20; padding-top:28px; }
+.nav { display:flex; align-items:center; justify-content:space-between; }
+.marca { display:flex; align-items:center; gap:16px; color:#fff; }
+.marca svg { width:54px; }
+.marca .t { border-left:1px solid rgba(184,155,94,.55); padding-left:16px; line-height:1.05; }
+.marca b { display:block; font-size:11.5px; font-weight:500; letter-spacing:.5em; color:var(--ouro); }
+.marca span { font-family:var(--serif); font-size:21px; }
+.menu { display:flex; gap:36px; font-size:13.5px; color:rgba(255,255,255,.72); }
+.menu a { transition:color .2s; } .menu a:hover { color:#fff; }
+.nav .bt { padding:13px 22px; font-size:12px; }
+
+/* hero */
+.hero { position:relative; background:var(--ink); color:#fff; min-height:100vh; min-height:min(100vh, 980px); display:flex; align-items:center; overflow:hidden; isolation:isolate; }
+.hero::before { content:""; position:absolute; inset:0; z-index:-1;
+  background:radial-gradient(ellipse 55% 60% at 72% 48%, rgba(30,52,96,.55), transparent 70%), radial-gradient(ellipse 40% 40% at 10% 90%, rgba(184,155,94,.10), transparent 70%); }
+.hero::after { content:""; position:absolute; inset:0; z-index:-1; background-image:linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px); background-size:calc(100% / 6) 100%; }
+.hero > .wrap { width:100%; display:grid; grid-template-columns:1.1fr .9fr; gap:40px; align-items:center; padding-top:130px; padding-bottom:100px; }
+h1 { font-family:var(--serif); font-weight:400; font-size:clamp(44px, 5.3vw, 78px); line-height:1.02; letter-spacing:-.02em; margin:28px 0 28px; }
+h1 em { display:block; }
+.hero p { font-size:18px; line-height:1.7; font-weight:300; color:#B9C0CD; max-width:500px; }
+.hero .acoes { display:flex; flex-wrap:wrap; gap:14px; margin-top:44px; }
+#globo { width:100%; aspect-ratio:1; max-width:560px; justify-self:end; }
+.rolar { position:absolute; left:50%; bottom:30px; transform:translateX(-50%); font-size:11px; letter-spacing:.3em; color:rgba(255,255,255,.4); text-transform:uppercase; }
+
+/* faixa de confiança */
+.faixa { background:var(--noite); color:#fff; border-top:1px solid rgba(255,255,255,.06); }
+.faixa .wrap { display:grid; grid-template-columns:repeat(4, 1fr); }
+.faixa div > div { padding:34px 26px 34px 0; }
+.faixa b { display:block; font-family:var(--serif); font-weight:400; font-size:34px; line-height:1.1; }
+.faixa span { font-size:13px; color:var(--mute); }
+
+section { padding:140px 0; }
+
+/* manifesto */
+.manifesto { text-align:center; }
+.manifesto p.big { font-family:var(--serif); font-size:clamp(32px, 4.3vw, 56px); line-height:1.15; letter-spacing:-.01em; max-width:980px; margin:30px auto 0; }
+.manifesto p.big em { font-style:italic; color:var(--ouro); }
+.manifesto .eyebrow { justify-content:center; }
+.manifesto .eyebrow::after { content:""; width:28px; height:1px; background:currentColor; }
+
+/* soluções */
+.sol-top { display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:end; margin-bottom:64px; }
+.lista { border-top:1px solid var(--linha); }
+.item { display:grid; grid-template-columns:90px 1fr 1.2fr 40px; gap:30px; align-items:center; padding:38px 0; border-bottom:1px solid var(--linha); transition:padding .35s, background .35s; }
+.item:hover { padding-left:18px; padding-right:18px; background:#fff; }
+.item .n { font-family:var(--serif); font-style:italic; font-size:22px; color:var(--ouro); }
+.item h3 { font-family:var(--serif); font-weight:400; font-size:clamp(28px, 3vw, 40px); line-height:1.05; }
+.item p { font-size:15.5px; line-height:1.65; color:var(--txt); }
+.item .seta { width:40px; height:40px; border:1px solid var(--linha); display:flex; align-items:center; justify-content:center; transition:.3s; }
+.item:hover .seta { background:var(--noite); border-color:var(--noite); color:#fff; }
+
+/* segurança */
+.seg { background:var(--noite); color:#fff; position:relative; overflow:hidden; }
+.seg .wrap { display:grid; grid-template-columns:1fr 1fr; gap:90px; align-items:center; }
+.seg .lead { color:#AEB6C4; margin-top:26px; }
+.checks { list-style:none; }
+.checks li { display:grid; grid-template-columns:52px 1fr; gap:20px; padding:30px 0; border-bottom:1px solid rgba(255,255,255,.1); }
+.checks li:first-child { border-top:1px solid rgba(255,255,255,.1); }
+.checks .ic { width:52px; height:52px; border:1px solid rgba(184,155,94,.5); display:flex; align-items:center; justify-content:center; }
+.checks b { display:block; font-family:var(--serif); font-weight:400; font-size:26px; margin-bottom:6px; }
+.checks span { font-size:15px; color:#AEB6C4; line-height:1.6; }
+
+/* como funciona */
+.passos { display:grid; grid-template-columns:repeat(3, 1fr); gap:0; margin-top:70px; position:relative; }
+.passos::before { content:""; position:absolute; left:0; right:0; top:27px; height:1px; background:var(--linha); }
+.passo { padding-right:40px; position:relative; }
+.passo .dot { width:56px; height:56px; border-radius:50%; background:var(--papel); border:1px solid var(--ouro); display:flex; align-items:center; justify-content:center; font-family:var(--serif); font-size:22px; color:var(--ouro); position:relative; }
+.passo h3 { font-family:var(--serif); font-weight:400; font-size:30px; margin:28px 0 12px; }
+.passo p { font-size:15.5px; line-height:1.65; color:var(--txt); max-width:320px; }
+
+/* fundador */
+.fund { background:var(--marfim); }
+.fund .wrap { display:grid; grid-template-columns:.8fr 1.2fr; gap:90px; align-items:center; }
+.retrato { aspect-ratio:4/5; background:linear-gradient(160deg, var(--navy), var(--ink)); position:relative; display:flex; align-items:flex-end; padding:34px; overflow:hidden; }
+.retrato::before { content:""; position:absolute; right:-80px; top:-60px; width:380px; height:380px; border:1px solid rgba(184,155,94,.25); border-radius:50%; }
+.retrato svg.marca-d { position:absolute; left:34px; top:34px; width:70px; }
+.retrato .nome { color:#fff; position:relative; }
+.retrato .nome b { display:block; font-family:var(--serif); font-weight:400; font-size:36px; }
+.retrato .nome span { font-size:11.5px; letter-spacing:.24em; text-transform:uppercase; color:var(--champ); }
+.retrato small { position:absolute; right:30px; bottom:34px; font-size:10.5px; letter-spacing:.14em; text-transform:uppercase; color:rgba(255,255,255,.35); }
+blockquote { font-family:var(--serif); font-size:clamp(30px, 3.6vw, 46px); line-height:1.2; letter-spacing:-.01em; margin-top:26px; }
+blockquote em { font-style:italic; color:var(--ouro); }
+.fund .lead { margin-top:28px; max-width:560px; }
+
+/* faq */
+.faq .wrap { display:grid; grid-template-columns:.8fr 1.2fr; gap:90px; }
+details { border-bottom:1px solid var(--linha); }
+details:first-of-type { border-top:1px solid var(--linha); }
+summary { list-style:none; cursor:pointer; display:flex; justify-content:space-between; align-items:center; gap:24px; padding:30px 0; font-family:var(--serif); font-size:25px; line-height:1.25; }
+summary::-webkit-details-marker { display:none; }
+summary i { flex:none; width:34px; height:34px; border:1px solid var(--linha); position:relative; transition:.3s; }
+summary i::before, summary i::after { content:""; position:absolute; left:50%; top:50%; width:12px; height:1px; background:var(--noite); transform:translate(-50%, -50%); transition:.3s; }
+summary i::after { transform:translate(-50%, -50%) rotate(90deg); }
+details[open] summary i::after { transform:translate(-50%, -50%) rotate(0); }
+details p { padding:0 60px 30px 0; font-size:16px; line-height:1.7; color:var(--txt); }
+
+/* cta final */
+.cta { background:var(--ink); color:#fff; text-align:center; position:relative; overflow:hidden; padding:150px 0; }
+.cta::before { content:""; position:absolute; left:50%; top:50%; width:900px; height:900px; transform:translate(-50%, -50%); border-radius:50%; border:1px solid rgba(184,155,94,.14); box-shadow:0 0 0 120px rgba(184,155,94,.025), 0 0 0 240px rgba(184,155,94,.02); }
+.cta .h2 { max-width:900px; margin:22px auto 0; position:relative; }
+.cta .lead { color:#AEB6C4; max-width:560px; margin:24px auto 0; position:relative; }
+.cta .acoes { display:flex; justify-content:center; flex-wrap:wrap; gap:14px; margin-top:46px; position:relative; }
+.cta .eyebrow { justify-content:center; }
+
+footer { background:#030509; color:#7D8698; font-size:13px; padding:70px 0 40px; }
+footer .grid { display:grid; grid-template-columns:1.3fr 1fr 1fr 1fr; gap:40px; padding-bottom:50px; border-bottom:1px solid rgba(255,255,255,.08); }
+footer h4 { font-size:11px; font-weight:500; letter-spacing:.24em; text-transform:uppercase; color:var(--champ); margin-bottom:16px; }
+footer p, footer a { line-height:1.75; color:#9AA2B2; }
+footer a:hover { color:#fff; }
+footer .base { display:flex; justify-content:space-between; gap:20px; flex-wrap:wrap; padding-top:28px; }
+
+.zap { position:fixed; right:24px; bottom:24px; z-index:60; display:flex; align-items:center; gap:12px; background:#1FA855; color:#fff; padding:14px 20px 14px 16px; border-radius:40px; font-size:14px; font-weight:500; box-shadow:0 14px 34px rgba(0,0,0,.28); }
+.zap svg { width:24px; }
+
+/* entrada suave */
+.js .rv { opacity:0; transform:translateY(26px); transition:opacity .9s cubic-bezier(.2,.7,.2,1), transform .9s cubic-bezier(.2,.7,.2,1); }
+.js .rv.on { opacity:1; transform:none; }
+
+@media (max-width: 960px) {
+  .menu { display:none; }
+  .hero .wrap, .sol-top, .seg .wrap, .fund .wrap, .faq .wrap { grid-template-columns:1fr; gap:48px; }
+  .hero > .wrap { padding-top:120px; padding-bottom:90px; }
+  #globo { justify-self:center; max-width:420px; }
+  .faixa .wrap { grid-template-columns:1fr 1fr; }
+  section { padding:96px 0; }
+  .item { grid-template-columns:44px 1fr 40px; gap:16px; }
+  .item p { grid-column:2 / 4; }
+  .item .seta { grid-row:1; grid-column:3; }
+  .passos { grid-template-columns:1fr; gap:46px; }
+  .passos::before { left:27px; right:auto; top:0; bottom:0; width:1px; height:auto; }
+  .passo { padding-left:84px; padding-right:0; }
+  .passo .dot { position:absolute; left:0; top:0; }
+  .passo h3 { margin-top:8px; }
+  footer .grid { grid-template-columns:1fr 1fr; }
+  .nav .bt { display:none; }
+  .zap span { display:none; }
+  .zap { padding:14px; }
+}
+@media (max-width: 560px) {
+  .wrap { padding:0 22px; }
+  .faixa .wrap { grid-template-columns:1fr; }
+  .faixa div > div { padding:22px 0; border-bottom:1px solid rgba(255,255,255,.07); }
+  footer .grid { grid-template-columns:1fr; }
+  details p { padding-right:0; }
+}
+</style>
+</head>
+<body>
+<script>if (!navigator.webdriver && "IntersectionObserver" in window) document.documentElement.classList.add("js");</script>
+
+<div class="prev">Prévia de landing page criada pela <b>Criativos Rápidos</b> para a Nanoz Consultoria</div>
+
+
+
+<div class="hero">
+<header>
+  <div class="wrap nav">
+    <a class="marca" href="#" aria-label="Nanoz Consultoria">
+      <svg viewBox="0 0 347.5 154.6"><path fill="#B89B5E" d="M344.00 90.00 L341.00 88.00 L339.62 87.50 L337.00 87.00 L333.88 87.25 L332.38 87.75 L330.00 89.00 L328.75 90.00 L283.88 134.88 L282.12 137.00 L280.88 139.38 L280.25 141.62 L280.25 144.75 L281.00 147.50 L281.62 148.75 L284.38 152.00 L286.88 153.50 L289.12 154.12 L291.38 154.38 L336.38 154.38 L338.62 154.12 L340.50 153.62 L342.75 152.38 L344.75 150.62 L345.88 149.12 L346.62 147.62 L347.50 144.12 L347.50 97.50 L347.25 95.38 L346.75 94.00 L345.25 91.38 Z M4.25 2.75 L2.50 4.50 L1.12 6.62 L0.38 8.62 L0.00 10.75 L0.00 143.62 L0.62 146.75 L1.62 148.88 L2.62 150.38 L4.38 152.12 L7.25 153.75 L9.38 154.38 L12.38 154.62 L26.38 154.62 L29.38 154.38 L31.62 153.75 L33.12 153.00 L34.88 151.75 L36.00 150.62 L38.00 147.38 L38.50 146.00 L38.88 143.88 L38.88 106.00 L39.25 103.25 L39.88 101.38 L41.12 99.12 L43.88 96.50 L47.12 94.88 L50.00 94.38 L52.00 94.38 L53.38 94.62 L56.25 95.75 L59.75 98.50 L112.50 151.38 L114.62 153.00 L117.38 154.12 L121.12 154.62 L142.25 154.62 L146.62 153.88 L149.38 152.50 L150.75 151.38 L152.38 149.38 L153.62 147.00 L154.38 143.75 L154.25 141.12 L153.50 138.75 L152.62 137.00 L150.75 134.50 L19.25 3.00 L17.50 1.75 L15.75 0.88 L13.38 0.25 L10.12 0.25 L8.25 0.62 L6.00 1.62 Z M90.12 3.62 L89.25 4.62 L87.88 7.12 L87.12 10.38 L87.38 13.88 L89.00 17.50 L90.62 19.50 L134.88 63.88 L137.50 66.00 L139.62 67.00 L141.75 67.50 L144.38 67.50 L147.38 66.75 L149.12 65.88 L152.00 63.38 L152.88 62.12 L153.75 60.25 L154.38 56.88 L154.38 10.75 L153.62 7.25 L152.50 5.12 L150.62 3.00 L149.12 1.88 L147.12 0.88 L144.62 0.25 L142.38 0.12 L98.75 0.12 L96.12 0.38 L94.25 0.88 L91.88 2.12 Z M343.50 2.88 L340.00 0.75 L336.12 0.00 L204.50 0.00 L202.25 0.25 L200.50 0.75 L197.88 2.25 L195.88 4.12 L194.12 6.88 L193.25 10.25 L193.12 27.75 L193.62 30.50 L194.88 33.38 L195.75 34.62 L198.12 36.88 L200.12 38.00 L203.88 38.88 L240.12 38.88 L244.00 39.25 L245.38 39.62 L247.50 40.62 L248.62 41.38 L250.88 43.62 L252.25 46.00 L253.12 49.12 L253.12 52.25 L252.75 53.88 L251.75 56.38 L249.88 58.88 L236.50 72.25 L235.50 73.50 L196.00 112.88 L194.75 114.62 L193.50 117.62 L193.12 120.38 L193.12 143.38 L193.62 146.12 L194.75 148.75 L197.50 151.88 L199.00 152.88 L201.00 153.75 L203.12 154.25 L205.62 154.38 L207.50 154.12 L209.38 153.50 L212.38 151.62 L343.50 20.50 L346.00 17.12 L347.00 14.88 L347.38 13.25 L347.38 10.25 L346.62 7.25 L345.12 4.62 Z"/></svg>
+      <div class="t"><b>NANOZ</b><span>Consultoria</span></div>
+    </a>
+    <nav class="menu"><a href="#solucoes">Soluções</a><a href="#seguranca">Segurança</a><a href="#como">Como funciona</a><a href="#sobre">Sobre</a></nav>
+    <a class="bt" href="https://wa.me/5561920023306" target="_blank" rel="noopener">Falar com especialista</a>
+  </div>
+</header>
+  <div class="wrap">
+    <div>
+      <div class="eyebrow">Consultoria patrimonial</div>
+      <h1>Você conquistou o mundo. <em>Seu patrimônio merece o Brasil.</em></h1>
+      <p>Estratégia, proteção e acompanhamento para brasileiros que vivem no exterior construírem um patrimônio sólido na sua terra natal.</p>
+      <div class="acoes">
+        <a class="bt" href="https://wa.me/5561920023306" target="_blank" rel="noopener">Agendar uma conversa
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1 8h13M9 3l5 5-5 5"/></svg></a>
+        <a class="bt ghost" href="#solucoes">Conhecer as soluções</a>
+      </div>
+    </div>
+    <canvas id="globo" width="1120" height="1120" aria-hidden="true"></canvas>
+  </div>
+  <div class="rolar">Role</div>
+</div>
+
+<div class="faixa"><div class="wrap">
+  <div><div><b>+10 anos</b><span>de consultoria no mercado brasileiro</span></div></div>
+  <div><div><b>Qualquer país</b><span>atendimento onde você estiver</span></div></div>
+  <div><div><b>Verificação</b><span>rigorosa em cada recomendação</span></div></div>
+  <div><div><b>Brasília</b><span>sede e operação no Brasil</span></div></div>
+</div></div>
+
+<section class="manifesto">
+  <div class="wrap rv">
+    <div class="eyebrow">Nossa convicção</div>
+    <p class="big">Todo brasileiro que conquista o mundo merece, também, um <em>porto seguro</em> e um patrimônio sólido em sua terra natal. Não acreditamos em fórmulas prontas. Acreditamos em <em>estratégia sob medida.</em></p>
+  </div>
+</section>
+
+<section id="solucoes" style="padding-top:0">
+  <div class="wrap">
+    <div class="sol-top rv">
+      <div><div class="eyebrow">Soluções</div><h2 class="h2">Ferramentas de quem leva <em>patrimônio a sério.</em></h2></div>
+      <p class="lead">Cada estratégia é desenhada para o seu momento, usando a força da sua moeda estrangeira a favor do seu patrimônio no Brasil.</p>
+    </div>
+    <div class="lista">
+      <a class="item rv" href="https://wa.me/5561920023306" target="_blank" rel="noopener"><span class="n">01</span><h3>Dolarização</h3><p>Proteja seu poder de compra investindo em moeda forte, com estratégias que preservam e valorizam o capital no médio e longo prazo.</p><span class="seta"><svg viewBox="0 0 16 16" width="14" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1 8h13M9 3l5 5-5 5"/></svg></span></a>
+      <a class="item rv" href="https://wa.me/5561920023306" target="_blank" rel="noopener"><span class="n">02</span><h3>Alavancagem patrimonial</h3><p>Use recursos de forma estratégica para acelerar o crescimento do seu patrimônio, sempre com proteção e segurança.</p><span class="seta"><svg viewBox="0 0 16 16" width="14" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1 8h13M9 3l5 5-5 5"/></svg></span></a>
+      <a class="item rv" href="https://wa.me/5561920023306" target="_blank" rel="noopener"><span class="n">03</span><h3>Home Equity</h3><p>Transforme um imóvel parado em crédito inteligente, com taxas reduzidas, para aproveitar novas oportunidades.</p><span class="seta"><svg viewBox="0 0 16 16" width="14" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1 8h13M9 3l5 5-5 5"/></svg></span></a>
+      <a class="item rv" href="https://wa.me/5561920023306" target="_blank" rel="noopener"><span class="n">04</span><h3>Financiamento e aquisição planejada</h3><p>Acesso aos principais bancos para as melhores condições, e alternativas aos juros altos para comprar com inteligência.</p><span class="seta"><svg viewBox="0 0 16 16" width="14" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1 8h13M9 3l5 5-5 5"/></svg></span></a>
+    </div>
+  </div>
+</section>
+
+<section class="seg" id="seguranca">
+  <div class="wrap">
+    <div class="rv">
+      <div class="eyebrow">Segurança</div>
+      <h2 class="h2">Investir à distância, <em>sem ciladas.</em></h2>
+      <p class="lead">Sua segurança é a nossa obsessão. Cada recomendação passa por um processo rigoroso de verificação antes de chegar até você.</p>
+    </div>
+    <ul class="checks rv">
+      <li><div class="ic"><svg viewBox="0 0 24 24" width="22" fill="none" stroke="#E4D6B3" stroke-width="1.4"><path d="M12 3l8 3v6c0 4.5-3.3 7.9-8 9-4.7-1.1-8-4.5-8-9V6z"/><path d="M8.5 12l2.3 2.3 4.7-4.6"/></svg></div><div><b>Verificação rigorosa</b><span>Análise de cada oportunidade para livrar você das armadilhas comuns na aquisição à distância.</span></div></li>
+      <li><div class="ic"><svg viewBox="0 0 24 24" width="22" fill="none" stroke="#E4D6B3" stroke-width="1.4"><circle cx="12" cy="12" r="3"/><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/></svg></div><div><b>Transparência total</b><span>Você tem visibilidade e controle sobre cada etapa do seu plano.</span></div></li>
+      <li><div class="ic"><svg viewBox="0 0 24 24" width="22" fill="none" stroke="#E4D6B3" stroke-width="1.4"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg></div><div><b>Visão global</b><span>Sua moeda forte usada da forma mais inteligente para otimizar o poder de compra no Brasil.</span></div></li>
+    </ul>
+  </div>
+</section>
+
+<section id="como">
+  <div class="wrap">
+    <div class="rv" style="max-width:720px"><div class="eyebrow">Como funciona</div><h2 class="h2">Do primeiro contato ao <em>patrimônio construído.</em></h2></div>
+    <div class="passos">
+      <div class="passo rv"><div class="dot">1</div><h3>Conversa inicial</h3><p>Entendemos sua história, seu momento de vida e onde você quer chegar.</p></div>
+      <div class="passo rv"><div class="dot">2</div><h3>Planejamento completo</h3><p>Uma estratégia sob medida, alinhada ao seu perfil, às suas metas e às suas expectativas.</p></div>
+      <div class="passo rv"><div class="dot">3</div><h3>Execução acompanhada</h3><p>Seguimos juntos em cada passo, com gestão transparente e segurança do início ao fim.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="fund" id="sobre">
+  <div class="wrap">
+    <div class="retrato rv">
+      <svg class="marca-d" viewBox="0 0 347.5 154.6"><path fill="#B89B5E" d="M344.00 90.00 L341.00 88.00 L339.62 87.50 L337.00 87.00 L333.88 87.25 L332.38 87.75 L330.00 89.00 L328.75 90.00 L283.88 134.88 L282.12 137.00 L280.88 139.38 L280.25 141.62 L280.25 144.75 L281.00 147.50 L281.62 148.75 L284.38 152.00 L286.88 153.50 L289.12 154.12 L291.38 154.38 L336.38 154.38 L338.62 154.12 L340.50 153.62 L342.75 152.38 L344.75 150.62 L345.88 149.12 L346.62 147.62 L347.50 144.12 L347.50 97.50 L347.25 95.38 L346.75 94.00 L345.25 91.38 Z M4.25 2.75 L2.50 4.50 L1.12 6.62 L0.38 8.62 L0.00 10.75 L0.00 143.62 L0.62 146.75 L1.62 148.88 L2.62 150.38 L4.38 152.12 L7.25 153.75 L9.38 154.38 L12.38 154.62 L26.38 154.62 L29.38 154.38 L31.62 153.75 L33.12 153.00 L34.88 151.75 L36.00 150.62 L38.00 147.38 L38.50 146.00 L38.88 143.88 L38.88 106.00 L39.25 103.25 L39.88 101.38 L41.12 99.12 L43.88 96.50 L47.12 94.88 L50.00 94.38 L52.00 94.38 L53.38 94.62 L56.25 95.75 L59.75 98.50 L112.50 151.38 L114.62 153.00 L117.38 154.12 L121.12 154.62 L142.25 154.62 L146.62 153.88 L149.38 152.50 L150.75 151.38 L152.38 149.38 L153.62 147.00 L154.38 143.75 L154.25 141.12 L153.50 138.75 L152.62 137.00 L150.75 134.50 L19.25 3.00 L17.50 1.75 L15.75 0.88 L13.38 0.25 L10.12 0.25 L8.25 0.62 L6.00 1.62 Z M90.12 3.62 L89.25 4.62 L87.88 7.12 L87.12 10.38 L87.38 13.88 L89.00 17.50 L90.62 19.50 L134.88 63.88 L137.50 66.00 L139.62 67.00 L141.75 67.50 L144.38 67.50 L147.38 66.75 L149.12 65.88 L152.00 63.38 L152.88 62.12 L153.75 60.25 L154.38 56.88 L154.38 10.75 L153.62 7.25 L152.50 5.12 L150.62 3.00 L149.12 1.88 L147.12 0.88 L144.62 0.25 L142.38 0.12 L98.75 0.12 L96.12 0.38 L94.25 0.88 L91.88 2.12 Z M343.50 2.88 L340.00 0.75 L336.12 0.00 L204.50 0.00 L202.25 0.25 L200.50 0.75 L197.88 2.25 L195.88 4.12 L194.12 6.88 L193.25 10.25 L193.12 27.75 L193.62 30.50 L194.88 33.38 L195.75 34.62 L198.12 36.88 L200.12 38.00 L203.88 38.88 L240.12 38.88 L244.00 39.25 L245.38 39.62 L247.50 40.62 L248.62 41.38 L250.88 43.62 L252.25 46.00 L253.12 49.12 L253.12 52.25 L252.75 53.88 L251.75 56.38 L249.88 58.88 L236.50 72.25 L235.50 73.50 L196.00 112.88 L194.75 114.62 L193.50 117.62 L193.12 120.38 L193.12 143.38 L193.62 146.12 L194.75 148.75 L197.50 151.88 L199.00 152.88 L201.00 153.75 L203.12 154.25 L205.62 154.38 L207.50 154.12 L209.38 153.50 L212.38 151.62 L343.50 20.50 L346.00 17.12 L347.00 14.88 L347.38 13.25 L347.38 10.25 L346.62 7.25 L345.12 4.62 Z"/></svg>
+      <div class="nome"><b>Rico Rósas</b><span>Fundador · Nanoz Consultoria</span></div>
+      <small>Espaço para foto</small>
+    </div>
+    <div class="rv">
+      <div class="eyebrow">Sobre a Nanoz</div>
+      <blockquote>“Somos seus estrategistas, seus aliados e sua <em>ponte para o futuro</em> no Brasil.”</blockquote>
+      <p class="lead">A Nanoz nasceu do entendimento profundo das dores e dos sonhos de quem vive fora. Há mais de 10 anos, construímos parcerias duradouras sobre a base da confiança, do conhecimento técnico e de um compromisso inabalável com o sucesso de cada cliente.</p>
+      <div style="margin-top:38px"><a class="bt dark" href="https://wa.me/5561920023306" target="_blank" rel="noopener">Conversar com a Nanoz
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1 8h13M9 3l5 5-5 5"/></svg></a></div>
+    </div>
+  </div>
+</section>
+
+<section class="faq">
+  <div class="wrap">
+    <div class="rv"><div class="eyebrow">Dúvidas frequentes</div><h2 class="h2">Antes de <em>começar.</em></h2></div>
+    <div class="rv">
+      <details open><summary>Moro no exterior. Como a Nanoz pode me ajudar?<i></i></summary>
+        <p>Desenhamos uma estratégia para a sua realidade: protegemos seu capital, usamos sua moeda forte de forma inteligente e construímos com você um patrimônio sólido no Brasil, com atendimento de onde você estiver.</p></details>
+      <details><summary>É seguro adquirir um imóvel no Brasil à distância?<i></i></summary>
+        <p>Cada recomendação passa por processos rigorosos de verificação, e você acompanha todas as etapas com total visibilidade e controle.</p></details>
+      <details><summary>O que é a aquisição planejada?<i></i></summary>
+        <p>Uma alternativa aos juros altos do financiamento tradicional. Avaliamos com você o caminho mais econômico e inteligente para o seu perfil.</p></details>
+    </div>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="wrap rv">
+    <div class="eyebrow">O próximo passo</div>
+    <h2 class="h2">O próximo nível dos seus <em>investimentos.</em></h2>
+    <p class="lead">Converse com um especialista da Nanoz e descubra a estratégia certa para o seu patrimônio no Brasil.</p>
+    <div class="acoes">
+      <a class="bt" href="https://wa.me/5561920023306" target="_blank" rel="noopener">Falar no WhatsApp
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1 8h13M9 3l5 5-5 5"/></svg></a>
+      <a class="bt ghost" href="mailto:investimento1@nanozconsultoria.com.br">Enviar e-mail</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="grid">
+      <div>
+        <a class="marca" href="#"><svg viewBox="0 0 347.5 154.6"><path fill="#B89B5E" d="M344.00 90.00 L341.00 88.00 L339.62 87.50 L337.00 87.00 L333.88 87.25 L332.38 87.75 L330.00 89.00 L328.75 90.00 L283.88 134.88 L282.12 137.00 L280.88 139.38 L280.25 141.62 L280.25 144.75 L281.00 147.50 L281.62 148.75 L284.38 152.00 L286.88 153.50 L289.12 154.12 L291.38 154.38 L336.38 154.38 L338.62 154.12 L340.50 153.62 L342.75 152.38 L344.75 150.62 L345.88 149.12 L346.62 147.62 L347.50 144.12 L347.50 97.50 L347.25 95.38 L346.75 94.00 L345.25 91.38 Z M4.25 2.75 L2.50 4.50 L1.12 6.62 L0.38 8.62 L0.00 10.75 L0.00 143.62 L0.62 146.75 L1.62 148.88 L2.62 150.38 L4.38 152.12 L7.25 153.75 L9.38 154.38 L12.38 154.62 L26.38 154.62 L29.38 154.38 L31.62 153.75 L33.12 153.00 L34.88 151.75 L36.00 150.62 L38.00 147.38 L38.50 146.00 L38.88 143.88 L38.88 106.00 L39.25 103.25 L39.88 101.38 L41.12 99.12 L43.88 96.50 L47.12 94.88 L50.00 94.38 L52.00 94.38 L53.38 94.62 L56.25 95.75 L59.75 98.50 L112.50 151.38 L114.62 153.00 L117.38 154.12 L121.12 154.62 L142.25 154.62 L146.62 153.88 L149.38 152.50 L150.75 151.38 L152.38 149.38 L153.62 147.00 L154.38 143.75 L154.25 141.12 L153.50 138.75 L152.62 137.00 L150.75 134.50 L19.25 3.00 L17.50 1.75 L15.75 0.88 L13.38 0.25 L10.12 0.25 L8.25 0.62 L6.00 1.62 Z M90.12 3.62 L89.25 4.62 L87.88 7.12 L87.12 10.38 L87.38 13.88 L89.00 17.50 L90.62 19.50 L134.88 63.88 L137.50 66.00 L139.62 67.00 L141.75 67.50 L144.38 67.50 L147.38 66.75 L149.12 65.88 L152.00 63.38 L152.88 62.12 L153.75 60.25 L154.38 56.88 L154.38 10.75 L153.62 7.25 L152.50 5.12 L150.62 3.00 L149.12 1.88 L147.12 0.88 L144.62 0.25 L142.38 0.12 L98.75 0.12 L96.12 0.38 L94.25 0.88 L91.88 2.12 Z M343.50 2.88 L340.00 0.75 L336.12 0.00 L204.50 0.00 L202.25 0.25 L200.50 0.75 L197.88 2.25 L195.88 4.12 L194.12 6.88 L193.25 10.25 L193.12 27.75 L193.62 30.50 L194.88 33.38 L195.75 34.62 L198.12 36.88 L200.12 38.00 L203.88 38.88 L240.12 38.88 L244.00 39.25 L245.38 39.62 L247.50 40.62 L248.62 41.38 L250.88 43.62 L252.25 46.00 L253.12 49.12 L253.12 52.25 L252.75 53.88 L251.75 56.38 L249.88 58.88 L236.50 72.25 L235.50 73.50 L196.00 112.88 L194.75 114.62 L193.50 117.62 L193.12 120.38 L193.12 143.38 L193.62 146.12 L194.75 148.75 L197.50 151.88 L199.00 152.88 L201.00 153.75 L203.12 154.25 L205.62 154.38 L207.50 154.12 L209.38 153.50 L212.38 151.62 L343.50 20.50 L346.00 17.12 L347.00 14.88 L347.38 13.25 L347.38 10.25 L346.62 7.25 L345.12 4.62 Z"/></svg><div class="t"><b>NANOZ</b><span>Consultoria</span></div></a>
+        <p style="margin-top:22px;max-width:280px">Consultoria patrimonial para brasileiros no exterior.</p>
+      </div>
+      <div><h4>Contato</h4><p><a href="https://wa.me/5561920023306" target="_blank" rel="noopener">+55 (61) 92002-3306</a><br><a href="mailto:investimento1@nanozconsultoria.com.br">investimento1@nanozconsultoria.com.br</a></p></div>
+      <div><h4>Escritório</h4><p>SBS Q. 2, Ed. Prime, Sala 206<br>Asa Sul · Brasília – DF<br>70070-120</p></div>
+      <div><h4>Operação</h4><p>SAUS Q. 3, Bl. C, Ed. Business Point<br>3º andar, salas 310/311<br>Brasília – DF · 70070-934</p></div>
+    </div>
+    <div class="base"><span>© Nanoz Consultoria · CNPJ 15.478.304/0001-36</span><span>Prévia · Criativos Rápidos</span></div>
+  </div>
+</footer>
+
+<a class="zap" href="https://wa.me/5561920023306" target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
+  <svg viewBox="0 0 24 24" fill="#fff"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7a2.8 2.8 0 0 0 1.8-1.3 2.3 2.3 0 0 0 .2-1.3c-.1-.1-.2-.2-.4-.3z"/></svg>
+  <span>Fale conosco</span>
+</a>
+
+<script>
+/* entrada suave das seções */
+if (document.documentElement.classList.contains("js")) {
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("on"); io.unobserve(e.target); } }), { threshold: .14 });
+  document.querySelectorAll(".rv").forEach(el => io.observe(el));
+}
+
+/* globo pontilhado com rotas do mundo até Brasília */
+(() => {
+  const cv = document.getElementById("globo"), g = cv.getContext("2d"), S = cv.width, R0 = Math.PI / 180;
+  const PTS = [];
+  for (let la = -84; la <= 84; la += 3.6) { const n = Math.max(1, Math.round(100 * Math.cos(la * R0))); for (let k = 0; k < n; k++) PTS.push([la, -180 + 360 * k / n]); }
+  const BR = [-15.8, -47.9], CID = [[38.7, -9.1], [40.7, -74], [51.5, -.1], [25.8, -80.2], [48.9, 2.35], [45.5, -73.6], [41.9, 12.5], [-34.6, -58.4]];
+  const v = q => [Math.cos(q[0] * R0) * Math.cos(q[1] * R0), Math.cos(q[0] * R0) * Math.sin(q[1] * R0), Math.sin(q[0] * R0)];
+  function proj(la, lo, rl, rt, R, c) {
+    const p = la * R0, l = (lo - rl) * R0, t = rt * R0;
+    const x = Math.cos(p) * Math.sin(l), y0 = Math.sin(p), z0 = Math.cos(p) * Math.cos(l);
+    return [c + R * x, c - R * (y0 * Math.cos(t) - z0 * Math.sin(t)), y0 * Math.sin(t) + z0 * Math.cos(t)];
+  }
+  function slerp(a, b, f) {
+    const A = v(a), B = v(b), d = Math.acos(Math.min(1, A[0] * B[0] + A[1] * B[1] + A[2] * B[2])), s = Math.sin(d) || 1;
+    const k1 = Math.sin((1 - f) * d) / s, k2 = Math.sin(f * d) / s, P = [k1 * A[0] + k2 * B[0], k1 * A[1] + k2 * B[1], k1 * A[2] + k2 * B[2]];
+    return [Math.asin(P[2]) / R0, Math.atan2(P[1], P[0]) / R0, d];
+  }
+  const parado = matchMedia("(prefers-reduced-motion: reduce)").matches || navigator.webdriver;
+  function frame(ms) {
+    const t = parado ? 4 : ms / 1000, c = S / 2, R = S * .4;
+    const rl = -38 + 14 * Math.sin(t * .12), rt = -8;
+    g.clearRect(0, 0, S, S);
+    const grd = g.createRadialGradient(c - R * .35, c - R * .4, R * .1, c, c, R * 1.1);
+    grd.addColorStop(0, "rgba(44,70,120,.55)"); grd.addColorStop(1, "rgba(6,9,15,0)");
+    g.fillStyle = grd; g.beginPath(); g.arc(c, c, R * 1.05, 0, 7); g.fill();
+    g.strokeStyle = "rgba(184,155,94,.28)"; g.lineWidth = 2; g.beginPath(); g.arc(c, c, R, 0, 7); g.stroke();
+    for (const [la, lo] of PTS) { const [x, y, z] = proj(la, lo, rl, rt, R, c); if (z <= 0) continue; g.fillStyle = `rgba(190,200,222,${(.12 + .5 * z).toFixed(3)})`; g.fillRect(x - 1.7, y - 1.7, 3.4, 3.4); }
+    CID.forEach((cd, i) => {
+      const ciclo = ((t * .22 + i * .13) % 1), q = Math.min(1, ciclo * 1.6), fade = ciclo > .75 ? 1 - (ciclo - .75) / .25 : 1;
+      g.beginPath(); let on = false;
+      for (let s = 0; s <= 60; s++) {
+        const f = s / 60; if (f > q) break;
+        const [la, lo, d] = slerp(cd, BR, f), alt = 1 + .2 * Math.sin(Math.PI * f) * Math.min(1, d);
+        let [x, y, z] = proj(la, lo, rl, rt, R, c); x = c + (x - c) * alt; y = c + (y - c) * alt;
+        if (z < -.1) { on = false; continue; } on ? g.lineTo(x, y) : g.moveTo(x, y); on = true;
+      }
+      g.strokeStyle = `rgba(228,214,179,${(.7 * fade).toFixed(3)})`; g.lineWidth = 2.4; g.stroke();
+      const [ox, oy, oz] = proj(cd[0], cd[1], rl, rt, R, c);
+      if (oz > 0) { g.fillStyle = "rgba(228,214,179,.8)"; g.beginPath(); g.arc(ox, oy, 4, 0, 7); g.fill(); }
+    });
+    const [bx, by, bz] = proj(BR[0], BR[1], rl, rt, R, c);
+    if (bz > 0) {
+      const p = (t * .8) % 1;
+      g.strokeStyle = `rgba(184,155,94,${(1 - p).toFixed(3)})`; g.lineWidth = 2.5; g.beginPath(); g.arc(bx, by, 10 + 46 * p, 0, 7); g.stroke();
+      g.fillStyle = "#E4D6B3"; g.beginPath(); g.arc(bx, by, 10, 0, 7); g.fill();
+      g.font = "500 22px IN, sans-serif"; g.textAlign = "center"; g.fillStyle = "rgba(228,214,179,.9)"; g.fillText("BRASÍLIA", bx, by - 30);
+    }
+    if (!parado) requestAnimationFrame(frame);
+  }
+  document.fonts.ready.then(() => requestAnimationFrame(frame));
+  if (parado) frame(0);
+})();
+</script>
+</body>
+</html>
