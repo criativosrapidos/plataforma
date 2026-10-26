@@ -1,4 +1,25 @@
-# Anúncio pós-eleição + case Alessandra — Criativos Rápidos
+# Versão 2 (atual) — 30s, mais animada
+
+**Arquivo:** `criativos-rapidos-eleicao-case-alessandra-v2-30s-9x16.mp4` (capa: `criativos-rapidos-eleicao-v2-capa.png`).
+
+O que mudou:
+- **Gancho com tensão:** nos primeiros 1,3s, antes da voz, toca uma trilha de apuração acirrada (bumbo acelerando, tique de relógio e uma subida) com a porcentagem correndo aos trancos até 100%. Um "boom" e um flash entram no "acabou!".
+- **Voz animada** (Matheus) e roteiro enxuto pra fechar em 30s.
+- **Case com a bonequinha da Alessandra** (ruiva, blusa verde): "fez um criativo de R$97" → "em 24 horas" → 10 notificações de "Nova venda · R$285" → contador até **R$2.850** → "10 PROCEDIMENTOS VENDIDOS", com ela comemorando com o celular.
+
+**Locução v2:**
+> [excited] A eleição acabou! [serious] E o resultado... talvez não seja o que você queria. [intense] Mas o seu boleto vence do mesmo jeito. [excited] Olha a Alessandra: fez um criativo de noventa e sete reais com a gente... e em vinte e quatro horas faturou dois mil oitocentos e cinquenta reais! Dez procedimentos vendidos! [intense] Você não controla Brasília. Mas controla o seu marketing. [urgent] Seu criativo por noventa e sete reais. Chama no WhatsApp agora!
+
+**Texto do anúncio v2:**
+> A eleição acabou. Seu boleto não. 📌
+> A nossa cliente Alessandra fez um criativo de R$97 com a gente e, em 24 horas, faturou R$2.850 vendendo 10 procedimentos.
+> Você não controla Brasília. Mas controla o seu marketing.
+> 🎬 Seu criativo por R$97 · ⚡ pronto em até 24h depois do briefing · ✅ sem contrato
+> 👉 Toca em "Enviar mensagem" e garante o seu.
+
+---
+
+# Versão 1 (anterior, 39s) — Anúncio pós-eleição + case Alessandra
 
 **Arquivo:** `criativos-rapidos-eleicao-case-alessandra-39s-9x16.mp4` (9:16, 39s, −14 LUFS, sem legenda). Capa: `criativos-rapidos-eleicao-capa.png`.
 **Voz:** Rodrigo (ElevenLabs v4, grave e firme).
