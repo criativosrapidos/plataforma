@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Nanoz Consultoria · Consultoria financeira</title>
+<meta name="description" content="Multiplique seu patrimônio com estratégia. Imóveis que geram renda passiva. Atendimento no Brasil e para quem mora fora.">
+<style>
+@font-face { font-family: M; font-weight: 400; src: url(fonts/montserrat-latin-400-normal.woff); }
+@font-face { font-family: M; font-weight: 500; src: url(fonts/montserrat-latin-500-normal.woff); }
+@font-face { font-family: M; font-weight: 600; src: url(fonts/montserrat-latin-600-normal.woff); }
+@font-face { font-family: M; font-weight: 700; src: url(fonts/montserrat-latin-700-normal.woff); }
+@font-face { font-family: M; font-weight: 800; src: url(fonts/montserrat-latin-800-normal.woff); }
+@font-face { font-family: PF; font-weight: 700; font-style: italic; src: url(fonts/playfair-display-latin-700-italic.woff); }
+:root { --navy:#16274D; --navy2:#0E1A36; --ouro:#BEA876; --ouro2:#E3D3A6; --cinza:#8C96AD; --claro:#F6F3EC; }
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { font-family:M, system-ui, sans-serif; color:var(--navy2); background:var(--claro); line-height:1.55; }
+a { color:inherit; }
+.wrap { max-width:1120px; margin:0 auto; padding:0 24px; }
+em.s { font-family:PF, Georgia, serif; font-style:italic; font-weight:700; color:var(--ouro); }
+.bt { display:inline-flex; align-items:center; gap:10px; background:var(--ouro); color:var(--navy2); font-weight:800; text-decoration:none;
+  padding:18px 30px; border-radius:60px; box-shadow:0 14px 34px rgba(14,26,54,.25); transition:transform .15s, background .15s; }
+.bt:hover { transform:translateY(-2px); background:var(--ouro2); }
+.bt.lin { background:transparent; color:#fff; border:2px solid rgba(255,255,255,.35); box-shadow:none; }
+.kick { font-weight:700; letter-spacing:.28em; font-size:12px; text-transform:uppercase; color:var(--ouro); }
+h1, h2 { font-weight:800; line-height:1.12; letter-spacing:-.01em; }
+
+/* faixa de proposta */
+.prop { background:#0B0F1C; color:#C9CED9; font-size:13px; text-align:center; padding:9px 16px; }
+.prop b { color:#FFD400; }
+
+/* topo */
+header { background:var(--navy2); }
+.nav { display:flex; align-items:center; justify-content:space-between; padding:18px 24px; max-width:1120px; margin:0 auto; }
+.marca { display:flex; align-items:center; gap:12px; text-decoration:none; color:#fff; }
+.marca svg { width:56px; }
+.marca b { display:block; font-weight:600; letter-spacing:.32em; font-size:13px; color:var(--ouro); }
+.marca span { display:block; font-size:15px; letter-spacing:.04em; }
+.nav .bt { padding:12px 20px; font-size:14px; }
+
+.hero { background:radial-gradient(ellipse 90% 80% at 70% 20%, var(--navy) 0%, var(--navy2) 70%); color:#fff; position:relative; overflow:hidden; }
+.hero::before { content:""; position:absolute; inset:0; background-image:linear-gradient(rgba(190,168,118,.06) 1px, transparent 1px), linear-gradient(90deg, rgba(190,168,118,.06) 1px, transparent 1px); background-size:56px 56px; }
+.hero .wrap { position:relative; display:grid; grid-template-columns:1.15fr .85fr; gap:40px; align-items:center; padding-top:72px; padding-bottom:88px; }
+.hero h1 { font-size:clamp(36px, 5.4vw, 60px); margin:16px 0 18px; }
+.hero p { color:#C9CED9; font-size:18px; max-width:540px; }
+.acoes { display:flex; flex-wrap:wrap; gap:14px; margin-top:30px; }
+.selos { display:flex; flex-wrap:wrap; gap:10px; margin-top:28px; }
+.selos span { font-size:13px; font-weight:600; color:var(--ouro2); border:1px solid rgba(190,168,118,.4); border-radius:40px; padding:7px 14px; }
+.graf { background:rgba(255,255,255,.04); border:1px solid rgba(190,168,118,.25); border-radius:24px; padding:26px; }
+.graf small { color:var(--cinza); font-weight:600; letter-spacing:.14em; font-size:11px; text-transform:uppercase; }
+
+section { padding:84px 0; }
+.titulo { max-width:640px; margin-bottom:40px; }
+.titulo h2 { font-size:clamp(28px, 3.6vw, 42px); margin-top:10px; }
+.cards { display:grid; grid-template-columns:repeat(3, 1fr); gap:20px; }
+.card { background:#fff; border-radius:22px; padding:30px; border:1px solid #E6E0D2; }
+.card .ic { width:54px; height:54px; border-radius:16px; background:var(--navy); display:flex; align-items:center; justify-content:center; margin-bottom:18px; }
+.card h3 { font-size:20px; margin-bottom:8px; }
+.card p { color:#4B5670; font-size:15px; }
+
+.escuro { background:var(--navy2); color:#fff; }
+.escuro .titulo h2 { color:#fff; }
+.passos { display:grid; grid-template-columns:repeat(3, 1fr); gap:20px; counter-reset:p; }
+.passo { border:1px solid rgba(190,168,118,.3); border-radius:22px; padding:30px; }
+.passo::before { counter-increment:p; content:"0" counter(p); font-family:PF, Georgia, serif; font-style:italic; font-weight:700; font-size:44px; color:var(--ouro); }
+.passo h3 { font-size:19px; margin:6px 0 8px; }
+.passo p { color:#C9CED9; font-size:15px; }
+
+.duo { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+.duo .card { padding:36px; }
+.duo .card .kick { display:block; margin-bottom:8px; }
+
+.cta { text-align:center; background:linear-gradient(135deg, var(--navy) 0%, var(--navy2) 100%); color:#fff; border-radius:30px; padding:64px 28px; }
+.cta h2 { font-size:clamp(28px, 4vw, 44px); margin-bottom:14px; }
+.cta p { color:#C9CED9; margin-bottom:28px; }
+
+footer { padding:36px 0 120px; color:#4B5670; font-size:14px; }
+footer .wrap { display:flex; flex-wrap:wrap; gap:16px; justify-content:space-between; align-items:center; }
+
+.flutua { position:fixed; right:18px; bottom:18px; z-index:50; }
+
+@media (max-width: 860px) {
+  .hero .wrap { grid-template-columns:1fr; padding-top:48px; padding-bottom:64px; }
+  .cards, .passos, .duo { grid-template-columns:1fr; }
+  section { padding:64px 0; }
+  .nav .bt { display:none; }
+}
+</style>
+</head>
+<body>
+
+<div class="prop">Proposta de landing page criada pela <b>Criativos Rápidos</b> para a Nanoz Consultoria · prévia</div>
+
+<header>
+  <div class="nav">
+    <a class="marca" href="#">
+      <svg viewBox="0 0 347.5 154.6" aria-hidden="true"><path fill="#BEA876" d="M344.00 90.00 L341.00 88.00 L339.62 87.50 L337.00 87.00 L333.88 87.25 L332.38 87.75 L330.00 89.00 L328.75 90.00 L283.88 134.88 L282.12 137.00 L280.88 139.38 L280.25 141.62 L280.25 144.75 L281.00 147.50 L281.62 148.75 L284.38 152.00 L286.88 153.50 L289.12 154.12 L291.38 154.38 L336.38 154.38 L338.62 154.12 L340.50 153.62 L342.75 152.38 L344.75 150.62 L345.88 149.12 L346.62 147.62 L347.50 144.12 L347.50 97.50 L347.25 95.38 L346.75 94.00 L345.25 91.38 Z M4.25 2.75 L2.50 4.50 L1.12 6.62 L0.38 8.62 L0.00 10.75 L0.00 143.62 L0.62 146.75 L1.62 148.88 L2.62 150.38 L4.38 152.12 L7.25 153.75 L9.38 154.38 L12.38 154.62 L26.38 154.62 L29.38 154.38 L31.62 153.75 L33.12 153.00 L34.88 151.75 L36.00 150.62 L38.00 147.38 L38.50 146.00 L38.88 143.88 L38.88 106.00 L39.25 103.25 L39.88 101.38 L41.12 99.12 L43.88 96.50 L47.12 94.88 L50.00 94.38 L52.00 94.38 L53.38 94.62 L56.25 95.75 L59.75 98.50 L112.50 151.38 L114.62 153.00 L117.38 154.12 L121.12 154.62 L142.25 154.62 L146.62 153.88 L149.38 152.50 L150.75 151.38 L152.38 149.38 L153.62 147.00 L154.38 143.75 L154.25 141.12 L153.50 138.75 L152.62 137.00 L150.75 134.50 L19.25 3.00 L17.50 1.75 L15.75 0.88 L13.38 0.25 L10.12 0.25 L8.25 0.62 L6.00 1.62 Z M90.12 3.62 L89.25 4.62 L87.88 7.12 L87.12 10.38 L87.38 13.88 L89.00 17.50 L90.62 19.50 L134.88 63.88 L137.50 66.00 L139.62 67.00 L141.75 67.50 L144.38 67.50 L147.38 66.75 L149.12 65.88 L152.00 63.38 L152.88 62.12 L153.75 60.25 L154.38 56.88 L154.38 10.75 L153.62 7.25 L152.50 5.12 L150.62 3.00 L149.12 1.88 L147.12 0.88 L144.62 0.25 L142.38 0.12 L98.75 0.12 L96.12 0.38 L94.25 0.88 L91.88 2.12 Z M343.50 2.88 L340.00 0.75 L336.12 0.00 L204.50 0.00 L202.25 0.25 L200.50 0.75 L197.88 2.25 L195.88 4.12 L194.12 6.88 L193.25 10.25 L193.12 27.75 L193.62 30.50 L194.88 33.38 L195.75 34.62 L198.12 36.88 L200.12 38.00 L203.88 38.88 L240.12 38.88 L244.00 39.25 L245.38 39.62 L247.50 40.62 L248.62 41.38 L250.88 43.62 L252.25 46.00 L253.12 49.12 L253.12 52.25 L252.75 53.88 L251.75 56.38 L249.88 58.88 L236.50 72.25 L235.50 73.50 L196.00 112.88 L194.75 114.62 L193.50 117.62 L193.12 120.38 L193.12 143.38 L193.62 146.12 L194.75 148.75 L197.50 151.88 L199.00 152.88 L201.00 153.75 L203.12 154.25 L205.62 154.38 L207.50 154.12 L209.38 153.50 L212.38 151.62 L343.50 20.50 L346.00 17.12 L347.00 14.88 L347.38 13.25 L347.38 10.25 L346.62 7.25 L345.12 4.62 Z"/></svg>
+      <div><b>NANOZ</b><span>Consultoria</span></div>
+    </a>
+    <a class="bt" href="https://ig.me/m/nanozconsultoria" target="_blank" rel="noopener">Agendar consultoria</a>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap">
+    <div>
+      <div class="kick">Consultoria financeira</div>
+      <h1>Multiplique seu patrimônio <em class="s">com estratégia.</em></h1>
+      <p>Na Nanoz, a gente monta um plano para o seu dinheiro trabalhar por você: investimentos, imóveis que geram renda passiva e acompanhamento de perto, no Brasil ou de onde você estiver.</p>
+      <div class="acoes">
+        <a class="bt" href="https://ig.me/m/nanozconsultoria" target="_blank" rel="noopener">Agendar consultoria gratuita →</a>
+        <a class="bt lin" href="#como">Como funciona</a>
+      </div>
+      <div class="selos"><span>Consultoria gratuita</span><span>Imóveis com renda</span><span>Brasil & expat</span></div>
+    </div>
+    <div class="graf" aria-hidden="true">
+      <small>Seu patrimônio com estratégia</small>
+      <svg viewBox="0 0 400 230" style="width:100%;margin-top:14px">
+        <g stroke="rgba(190,168,118,.15)"><line x1="0" x2="400" y1="40" y2="40"/><line x1="0" x2="400" y1="110" y2="110"/><line x1="0" x2="400" y1="180" y2="180"/></g>
+        <g fill="rgba(190,168,118,.4)"><rect x="14" y="170" width="34" height="40" rx="6"/><rect x="70" y="155" width="34" height="55" rx="6"/><rect x="126" y="140" width="34" height="70" rx="6"/><rect x="182" y="115" width="34" height="95" rx="6"/><rect x="238" y="90" width="34" height="120" rx="6"/><rect x="294" y="62" width="34" height="148" rx="6"/></g>
+        <rect x="350" y="28" width="34" height="182" rx="6" fill="#BEA876"/>
+        <polyline points="31,160 87,146 143,150 199,108 255,88 311,56 367,18" fill="none" stroke="#E3D3A6" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="367" cy="18" r="8" fill="#E3D3A6"/>
+      </svg>
+    </div>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <div class="titulo"><div class="kick">O que a gente faz</div><h2>Um plano feito para o <em class="s">seu momento</em>.</h2></div>
+    <div class="cards">
+      <div class="card">
+        <div class="ic"><svg viewBox="0 0 24 24" width="28" fill="none" stroke="#BEA876" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 17 9 11 13 15 21 7"/><polyline points="15 7 21 7 21 13"/></svg></div>
+        <h3>Estratégia patrimonial</h3><p>Diagnóstico do que você tem hoje e um plano claro para multiplicar seu patrimônio com segurança.</p>
+      </div>
+      <div class="card">
+        <div class="ic"><svg viewBox="0 0 24 24" width="28" fill="none" stroke="#BEA876" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="10" height="18" rx="1"/><path d="M14 9h6v12h-6"/><path d="M8 7h2M8 11h2M8 15h2"/></svg></div>
+        <h3>Imóveis que geram renda</h3><p>Imóveis escolhidos para gerar renda passiva e fazer parte da sua estratégia de longo prazo.</p>
+      </div>
+      <div class="card">
+        <div class="ic"><svg viewBox="0 0 24 24" width="28" fill="none" stroke="#BEA876" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg></div>
+        <h3>Brasil & expat</h3><p>Atendimento para quem mora no Brasil e para brasileiros que vivem fora e querem investir aqui.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="escuro" id="como">
+  <div class="wrap">
+    <div class="titulo"><div class="kick">Como funciona</div><h2>Três passos para o seu dinheiro <em class="s">trabalhar por você</em>.</h2></div>
+    <div class="passos">
+      <div class="passo"><h3>Agende a consultoria gratuita</h3><p>Chame a gente e escolha o melhor horário, online ou presencial.</p></div>
+      <div class="passo"><h3>Diagnóstico</h3><p>Entendemos seus objetivos, seu patrimônio atual e o seu perfil.</p></div>
+      <div class="passo"><h3>Estratégia sob medida</h3><p>Você recebe um plano claro e acompanhamento para colocar em prática.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="titulo"><div class="kick">Para quem é</div><h2>Onde você estiver, <em class="s">a estratégia vai junto</em>.</h2></div>
+    <div class="duo">
+      <div class="card"><span class="kick">No Brasil</span><h3>Quer sair do dinheiro parado</h3><p>Organize seus investimentos e construa renda com um plano feito para você.</p></div>
+      <div class="card"><span class="kick">Mora fora</span><h3>Quer investir no Brasil com confiança</h3><p>Acompanhamento de perto, mesmo à distância, para o seu patrimônio aqui.</p></div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="cta">
+      <div class="kick">Primeiro passo</div>
+      <h2>Agende sua <em class="s">consultoria gratuita</em>.</h2>
+      <p>Uma conversa para entender seus objetivos e mostrar o caminho.</p>
+      <a class="bt" href="https://ig.me/m/nanozconsultoria" target="_blank" rel="noopener">Quero agendar →</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div><b>Nanoz Consultoria</b> · Consultoria financeira · <a href="https://instagram.com/nanozconsultoria" target="_blank" rel="noopener">@nanozconsultoria</a></div>
+    <div>Prévia de landing page · Criativos Rápidos</div>
+  </div>
+</footer>
+
+<a class="bt flutua" href="https://ig.me/m/nanozconsultoria" target="_blank" rel="noopener" aria-label="Agendar consultoria gratuita">Agendar ✦</a>
+</body>
+</html>
