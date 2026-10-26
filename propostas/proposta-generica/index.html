@@ -49,8 +49,8 @@
   .light .head .num { color: var(--black); }
   .hl { background: var(--yellow); color: var(--black); padding: 0 .18em; border-radius: .12em; }
 
-  .card { background: var(--paper); border-radius: 28px; box-shadow: 0 18px 50px rgba(0,0,0,.07); }
-  .dark .card { background: var(--black-2); border: 1px solid rgba(255,255,255,.07); box-shadow: none; }
+  .card { background: var(--paper); border-radius: 28px; border: 2px solid rgba(16,18,22,.08); }
+  .dark .card { background: transparent; border: 2px solid rgba(255,255,255,.12); }
   .tick { flex: none; width: 34px; height: 34px; border-radius: 50%; background: var(--yellow); color: var(--black); display: grid; place-items: center; }
   .tick svg { width: 18px; height: 18px; }
   .chip { display: inline-block; padding: 10px 22px; border-radius: 999px; font-size: 18px; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; }
@@ -60,7 +60,7 @@
   .cover .eyebrow { color: var(--yellow); font-weight: 700; font-size: 22px; letter-spacing: .32em; text-transform: uppercase; margin: 72px 0 26px; }
   .cover-wrap { display: grid; grid-template-columns: 1.35fr .65fr; gap: 80px; align-items: center; }
   .kpis { display: grid; gap: 22px; }
-  .kpi { background: var(--black-2); border: 1px solid rgba(255,255,255,.08); border-radius: 26px; padding: 30px 34px; }
+  .kpi { background: transparent; border: 2px solid rgba(255,255,255,.12); border-radius: 26px; padding: 30px 34px; }
   .kpi b { display: block; font-family: "Montserrat"; font-weight: 900; font-size: 64px; line-height: 1; color: var(--yellow); letter-spacing: -.02em; }
   .kpi span { display: block; margin-top: 8px; font-size: 22px; color: #D4D4DA; font-weight: 600; }
   .cover h1 { font-size: 112px; font-weight: 900; line-height: .98; letter-spacing: -.02em; max-width: 1500px; }
@@ -105,8 +105,8 @@
   .pricing .tagline { text-align: center; font-size: 28px; margin-top: 12px; opacity: .85; }
   .plans { display: grid; grid-template-columns: 1fr 1.05fr 1fr; gap: 36px; margin-top: 56px; align-items: stretch; }
   .plan { background: #fff; color: var(--text); border-radius: 32px; padding: 50px 46px 44px; position: relative; display: flex; flex-direction: column; }
-  .plan.star { transform: translateY(-24px); box-shadow: 0 0 0 6px var(--yellow), 0 30px 70px rgba(0,0,0,.35); }
-  .yel .plan.star { box-shadow: 0 0 0 6px var(--black), 0 30px 70px rgba(0,0,0,.2); }
+  .plan.star { transform: translateY(-24px); box-shadow: 0 0 0 6px var(--yellow); }
+  .yel .plan.star { box-shadow: 0 0 0 6px var(--black); }
   .plan .badge { position: absolute; top: -22px; left: 50%; transform: translateX(-50%); background: var(--yellow); color: var(--black); white-space: nowrap; }
   .yel .plan .badge { background: var(--black); color: var(--yellow); }
   .plan h3 { text-align: center; font-size: 44px; font-weight: 900; }
@@ -135,12 +135,12 @@
   .plan.m li { font-size: 22px; }
 
   .pay { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
-  .card-cc { width: 100%; max-width: 640px; aspect-ratio: 1.6; border-radius: 34px; background: linear-gradient(135deg, #FFE14D, #FFD400 55%, #F2C200); color: var(--black); padding: 44px 48px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 30px 60px rgba(0,0,0,.35); }
+  .card-cc { width: 100%; max-width: 640px; aspect-ratio: 1.6; border-radius: 34px; background: linear-gradient(135deg, #FFE14D, #FFD400 55%, #F2C200); color: var(--black); padding: 44px 48px; display: flex; flex-direction: column; justify-content: space-between; }
   .card-cc i { width: 96px; height: 72px; border-radius: 14px; background: linear-gradient(135deg, #2C3038, #101216); }
   .card-cc b { font-family: "Montserrat"; font-weight: 800; font-size: 40px; letter-spacing: .08em; }
   .card-cc span { font-size: 26px; font-weight: 800; display: flex; justify-content: space-between; }
   .parc { display: flex; flex-wrap: wrap; gap: 14px; margin: 26px 0 30px; }
-  .parc span { background: var(--black-2); border: 1px solid rgba(255,255,255,.1); border-radius: 18px; padding: 14px 24px; font-family: "Montserrat"; font-weight: 900; font-size: 34px; }
+  .parc span { background: transparent; border: 2px solid rgba(255,255,255,.18); border-radius: 18px; padding: 14px 24px; font-family: "Montserrat"; font-weight: 900; font-size: 34px; }
   .parc span.on { background: var(--yellow); color: var(--black); }
   .pay h3 { font-size: 46px; font-weight: 900; line-height: 1.1; }
   .pay p { font-size: 26px; color: #D4D4DA; line-height: 1.5; }
@@ -266,8 +266,8 @@
 
 <!-- 5. PLANOS MENSAIS -->
 <section class="slide yel pricing">
-  <h2>PLANOS MENSAIS</h2>
-  <div class="tagline">Legendas, perfil completo e app pra aprovar e baixar em todos. <b>Sem fidelidade:</b> cancela quando quiser.</div>
+  <h2>PLANOS</h2>
+  <div class="tagline"><b>Sem contrato e sem fidelidade:</b> cancela quando quiser. Legendas, perfil completo e app em todos.</div>
   <div class="plans">
     <div class="plan m">
       <h3>PRESENÇA</h3>
