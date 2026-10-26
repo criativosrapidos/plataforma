@@ -1,0 +1,211 @@
+// Anúncio de tráfego v3 (28s): a voz entra já no começo (tensão por baixo), anúncio real da Alessandra,
+// "você não controla a política" e o feedback dela no WhatsApp. Voz: Matheus, acelerada 1,06x.
+window.DURATION = 28;
+const T = { s1: 0, s2: 4.6, s4: 7.15, s5: 17.3, s7: 19.75, s6: 22.5 };
+PUNCHES = [[0, 0.05], [0.4, 0.04], [0.95, 0.16], [1.5, 0.06], [2.9, 0.06], [4.75, 0.08], [5.2, 0.07], [5.8, 0.12], [6.4, 0.1],
+  [7.2, 0.07], [8.4, 0.06], [9.53, 0.1], [11.89, 0.08], [13.1, 0.06], [14.3, 0.07], [15.6, 0.15], [17.35, 0.14], [18.6, 0.1],
+  [19.8, 0.08], [20.6, 0.05], [21.4, 0.05], [22.55, 0.08], [23.8, 0.13], [25.8, 0.07]];
+const AD = []; for (let i = 1; i <= 150; i++) { const im = new Image(); im.src = `clips/ad_${String(i).padStart(3, '0')}.jpg`; AD.push(im); }
+window.ready = () => Promise.all([...AD, FEED].map((im) => im.complete ? 1 : new Promise((r) => { im.onload = r; im.onerror = r; })));
+const easeInOut = (x) => x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+
+// 1. ATENÇÃO — apuração acirrada correndo, boom em "acabou", zoom no Brasil
+function s1(t) {
+  bg(C.K); particles(t, C.Y, 60, 0.35);
+  // pisca vermelho/amarelo de tensão antes do boom
+  if (t < 0.95) { const k = Math.max(0, Math.sin(t * Math.PI * (4 + t * 8))) * 0.07 * (t / 0.95); ctx.save(); ctx.globalAlpha = k; ctx.fillStyle = C.Y; ctx.fillRect(0, 0, W, H); ctx.restore(); }
+  const fl = 1 - prog(t, 0.95, 0.35);
+  if (t >= 0.95 && fl > 0) { ctx.save(); ctx.globalAlpha = 0.6 * fl; ctx.fillStyle = C.WH; ctx.fillRect(0, 0, W, H); ctx.restore(); }
+  const z = easeInOut(prog(t, 1.5, 1.4));
+  const R = lerp(380, 745, z), lon0 = lerp(-20 + t * 60, -52, easeOut(prog(t, 0, 1.6))), lat0 = lerp(0, -14, z);
+  const m = prog(t, 2.5, 0.5);
+  ctx.save(); ctx.globalAlpha = 1 - m; globe(t, lon0, lat0, R, W / 2, lerp(1000, 960, z), z); ctx.restore();
+  if (m > 0) {
+    const P = brMap(W / 2, 960, 13, m, 0.14);
+    const [bx, by] = P(BSB);
+    const pin = easeOutBack(prog(t, 2.9, 0.3));
+    if (pin > 0) { ctx.save(); ctx.translate(bx, by); ctx.scale(pin, pin); ctx.fillStyle = C.Y; ctx.beginPath(); ctx.arc(0, 0, 16, 0, 7); ctx.fill();
+      ctx.strokeStyle = C.Y; ctx.lineWidth = 4; ctx.beginPath(); ctx.arc(0, 0, 30 + 10 * Math.sin(t * 6), 0, 7); ctx.stroke(); ctx.restore(); }
+  }
+  // título (capa)
+  text('A ELEIÇÃO', 100, 400, 120, C.WH);
+  const p = 1 + 0.14 * Math.sin(prog(t, 0.95, 0.35) * Math.PI);
+  ctx.save(); ctx.translate(100, 540); ctx.scale(p, p);
+  text('ACABOU.', 0, 0, 150, C.Y, { skew: -9 });
+  ctx.restore();
+  burst(t, 0.95, 400, 480, C.Y, 50, 700);
+  // urna + apuração correndo (acirrada: sobe aos trancos)
+  urna(830, 1180, 0.5);
+  const x = clamp(t / 0.95), jit = x < 1 ? 0.02 * Math.sin(t * 37) : 0;
+  const ap = clamp(easeIn(x) * 0.35 + x * 0.65 + jit);
+  ctx.save(); ctx.translate(100, 1330);
+  text('APURAÇÃO', 0, -24, 34, '#B9BBC1', { weight: 700 });
+  text((ap * 100).toFixed(x < 1 ? 2 : 0).replace('.', ',') + '%', 830, -24, 34, C.Y, { align: 'right' });
+  ctx.fillStyle = '#2A2D35'; roundRect(0, 0, 830, 26, 13); ctx.fill();
+  ctx.fillStyle = C.Y; roundRect(0, 0, 830 * ap, 26, 13); ctx.fill();
+  ctx.restore();
+  rise('E o resultado pode não ter sido', 100, 1415, 46, C.WH, t, 1.5, { weight: 700 });
+  rise('o que você queria.', 100, 1472, 46, C.WH, t, 3.0, { weight: 700 });
+}
+
+function s2(t) {
+  lightBg();
+  const pa = 1, out = 1;
+  if (out < 1) {
+    ctx.save(); ctx.globalAlpha = 1 - out;
+    hazard(820, t, -0.08, clamp(pa)); hazard(1100, -t, 0.06, clamp(pa));
+    ctx.save(); ctx.translate(W / 2, 960); ctx.scale(lerp(2.2, 1, easeOut(pa)), lerp(2.2, 1, easeOut(pa))); ctx.rotate(-0.02);
+    ctx.fillStyle = C.K; roundRect(-400, -78, 800, 140, 20); ctx.fill();
+    text('PRESTA ATENÇÃO.', 0, 22, 84, C.Y, { align: 'center' });
+    ctx.restore(); ctx.restore();
+  }
+    rise('O SEU BOLETO', 100, 420, 96, C.K, t, 4.75);
+  pop('VENCE DO MESMO', 100, 540, 96, C.K, t, 5.2, { skew: -9 });
+  pop('JEITO.', 100, 650, 96, C.K, t, 5.7, { skew: -9 });
+  // boletos empilhando
+  const B = [['BOLETO', '2.380,00', 4.8], ['ALUGUEL', '3.500,00', 5.1], ['FORNECEDOR', '4.120,00', 5.4], ['FUNCIONÁRIO', '1.890,00', 5.7]];
+  B.forEach(([l, v, at], i) => {
+    const p = easeOutBack(prog(t, at, 0.32));
+    if (p <= 0) return;
+    boleto(540 + (i % 2 ? 40 : -40), lerp(400, 830 + i * 115, clamp(p)), 0.8, (i % 2 ? 0.06 : -0.05), l, v);
+  });
+  // carimbo vence dia 10
+  const st = prog(t, 5.8, 0.2);
+  if (st > 0) { ctx.save(); ctx.translate(800, 700); ctx.rotate(-0.12); ctx.scale(lerp(2, 1, easeOut(st)), lerp(2, 1, easeOut(st))); ctx.globalAlpha = clamp(st * 2);
+    ctx.strokeStyle = '#E0322C'; ctx.lineWidth = 8; roundRect(-170, -50, 340, 100, 14); ctx.stroke();
+    text('VENCE DIA 10', 0, 16, 46, '#E0322C', { align: 'center' }); ctx.restore(); }
+  const n = easeOutBack(prog(t, 6.4, 0.32));
+  if (n > 0) {
+    ctx.save(); ctx.translate(W / 2, 1360); ctx.rotate(-0.03); ctx.scale(n, n);
+    ctx.fillStyle = C.K; roundRect(-420, -100, 840, 200, 30); ctx.fill();
+    text('NENHUM POLÍTICO VAI', 0, -12, 56, C.WH, { align: 'center' });
+    text('PAGAR ISSO POR VOCÊ.', 0, 58, 56, C.Y, { align: 'center' });
+    ctx.restore();
+  }
+}
+
+function s5(t) {
+  bg(C.K); grid('#FFFFFF', 0.05); particles(t, C.Y, 40, 0.3);
+  const P = brMap(W / 2, 1180, 9, 0.35, 0.05);
+  rise('Você não controla', 100, 420, 88, C.WH, t, T.s5 + 0.02);
+  const r = pop('A POLÍTICA.', 100, 570, 130, C.WH, t, T.s5 + 0.05);
+  if (r > 0) strike(100, 570, measure('A POLÍTICA.', 130), 130, t, 17.8);
+  rise('Mas controla', 100, 790, 88, C.WH, t, 18.2);
+  const st = easeOut(prog(t, 18.6, 0.25));
+  if (st > 0) stripWord('O SEU MARKETING.', 100, 930, 104, { reveal: st });
+  const f = easeOutBack(prog(t, 19.0, 0.32));
+  if (f > 0) { ctx.save(); ctx.translate(W / 2, 1380); ctx.scale(f, f); ctx.rotate(-0.02);
+    ctx.fillStyle = C.K; roundRect(-410, -110, 820, 220, 30); ctx.fill();
+    ctx.strokeStyle = C.Y; ctx.lineWidth = 6; roundRect(-410, -110, 820, 220, 30); ctx.stroke();
+    text('SEU FATURAMENTO NÃO', 0, -14, 56, C.WH, { align: 'center' });
+    text('PODE DEPENDER DE POLÍTICO.', 0, 56, 50, C.Y, { align: 'center' }); ctx.restore(); }
+}
+
+// 7. PROVA SOCIAL — o feedback real da Alessandra no WhatsApp
+const FEED = new Image(); FEED.src = 'clips/feedback.png';
+function s7(t) {
+  bg(C.K); grid('#FFFFFF', 0.05);
+  pill('FEEDBACK REAL', 270, 340, 40, C.Y, C.K, t, T.s7 + 0.05, -0.04);
+  rise('o que a Alessandra mandou pra gente:', 100, 450, 40, C.WH, t, T.s7 + 0.2, { weight: 700 });
+  const p = easeOutBack(prog(t, T.s7 + 0.1, 0.4));
+  if (p > 0 && FEED.complete && FEED.naturalWidth) {
+    const w = 880, h = w * FEED.naturalHeight / FEED.naturalWidth, k = w / FEED.naturalWidth;
+    ctx.save(); ctx.translate(W / 2, 900); ctx.rotate(-0.015); ctx.scale(clamp(p, 0, 1.1), clamp(p, 0, 1.1));
+    ctx.fillStyle = 'rgba(0,0,0,0.5)'; roundRect(-w / 2 + 10, -h / 2 + 16, w, h, 30); ctx.fill();
+    ctx.save(); roundRect(-w / 2, -h / 2, w, h, 30); ctx.clip();
+    ctx.drawImage(FEED, -w / 2, -h / 2, w, h);
+    // marca-texto amarelo nas frases fortes (coordenadas do print)
+    const mark = (x0, x1, y, at) => { const m = easeOut(prog(t, at, 0.35)); if (m <= 0) return;
+      ctx.fillStyle = 'rgba(255,212,0,0.32)'; ctx.fillRect(-w / 2 + x0 * k, -h / 2 + (y - 22) * k, (x1 - x0) * k * m, 44 * k); };
+    mark(205, 478, 82, 20.2); mark(48, 150, 118, 20.5);
+    mark(140, 305, 230, 20.9);
+    mark(48, 548, 383, 21.3); mark(48, 170, 420, 21.6);
+    ctx.restore();
+    ctx.restore();
+  }
+  rise('tráfego ela já fazia: faltava o criativo.', W / 2, 1360, 40, C.Y, t, 21.5, { align: 'center', weight: 700 });
+}
+
+function s6(t) {
+  yellowBg();
+  for (let k = 0; k < 3; k++) { const p = ((t - T.s6) * 0.9 + k * 0.33) % 1; speedLines(lerp(-500, W + 100, p), [300, 1540, 1660][k], 360, 18, C.K, 34); }
+  const lg = easeOutBack(prog(t, T.s6 + 0.1, 0.4));
+  ctx.save(); ctx.translate(W / 2, 430); ctx.scale(clamp(lg, 0, 1.2), clamp(lg, 0, 1.2)); drawLogo(0, 0, 560, 1, C.K); ctx.restore();
+  rise('SEU CRIATIVO POR', W / 2, 640, 60, C.K, t, 22.6, { align: 'center' });
+  const p = easeOutBack(prog(t, 23.75, 0.35));
+  if (p > 0) { ctx.save(); ctx.translate(W / 2, 900); ctx.scale(p, p);
+    ctx.fillStyle = C.K; roundRect(-330, -190, 660, 260, 44); ctx.fill();
+    text('R$', -210, -70, 70, C.Y, { align: 'right' });
+    text('97', 40, 40, 250, C.Y, { align: 'center' }); ctx.restore();
+    burst(t, 23.8, W / 2, 840, C.K, 40, 560); }
+  ctaButton('CHAMA NO WHATSAPP', null, 1170, t, 24.4, 25.8);
+  const r = easeOut(prog(t, 24.9, 0.4));
+  text('pronto em até 24h depois do briefing', W / 2, 1360, 40, C.K, { align: 'center', weight: 700, alpha: r });
+  text('sem contrato  ·  sem fidelidade', W / 2, 1420, 34, C.K, { align: 'center', weight: 600, alpha: r });
+}
+
+// 4. PROVA — a bonequinha da Alessandra: criativo de R$97 → R$2.850 em 24h, 10 procedimentos
+function s4(t) {
+  yellowBg();
+  pill('CASE REAL', 230, 330, 40, C.K, C.Y, t, T.s4 + 0.05, -0.04);
+  rise('Alessandra · estética · Goiânia', 100, 425, 38, C.K, t, 7.5, { weight: 700 });
+  // topo: primeiro o criativo de R$97, depois o faturamento contando
+  const c = prog(t, 12.93, 2.6), sw = easeOut(prog(t, 12.75, 0.25));
+  if (sw < 1) {
+    ctx.save(); ctx.globalAlpha = 1 - sw; ctx.translate(W / 2, 600);
+    text('fez um criativo de', 0, -70, 44, C.K, { align: 'center', weight: 700, alpha: easeOut(prog(t, 8.3, 0.3)) });
+    const q = easeOutBack(prog(t, 9.5, 0.32));
+    if (q > 0) { ctx.scale(clamp(q, 0, 1.2), clamp(q, 0, 1.2)); text('R$97', 0, 60, 150, C.K, { align: 'center' }); }
+    ctx.restore();
+  }
+  if (c > 0) {
+    const v = Math.min(10, Math.floor(c * 10.001)) * 285;
+    ctx.save(); ctx.translate(W / 2, 600); ctx.globalAlpha = sw;
+    text('e faturou', 0, -70, 44, C.K, { align: 'center', weight: 700 });
+    const k = 1 + 0.12 * Math.sin(prog(t, 15.6, 0.35) * Math.PI); ctx.scale(k, k);
+    text('R$' + v.toLocaleString('pt-BR'), 0, 60, 150, C.K, { align: 'center' });
+    ctx.restore();
+  }
+  burst(t, 15.6, W / 2, 560, C.K, 44, 600);
+  // a bonequinha entra de baixo e comemora
+  const e = easeOutBack(prog(t, T.s4, 0.5));
+  boneca(330, lerp(1700, 1080, clamp(e)), 0.82, t, prog(t, 13.1, 0.5));
+  // selo do criativo de R$97 e do tempo
+  pill('EM 24 HORAS', 330, 760, 40, C.WH, C.K, t, 11.89, 0.05);
+  // o anúncio real dela tocando no celular (some quando as vendas começam)
+  const ap = easeOutBack(prog(t, 8.4, 0.35)), aout = easeIn(prog(t, 12.5, 0.35));
+  if (ap > 0 && aout < 1) {
+    ctx.save(); ctx.globalAlpha = 1 - aout; ctx.translate(aout * 500, 0);
+    phone(790, 1090, 0.62 * clamp(ap, 0, 1.1), 0.06, (w, h) => {
+      const im = AD[Math.min(149, Math.max(0, Math.floor((t - 8.4) * 30)))];
+      if (im && im.complete && im.naturalWidth) { const dw = h * 0.5625; ctx.drawImage(im, (w - dw) / 2, 0, dw, h); }
+    });
+    pill('O ANÚNCIO DELA', 790, 790, 30, C.K, C.Y, t, 8.6, 0.05);
+    ctx.restore();
+  }
+  // 10 notificações de venda
+  for (let i = 0; i < 10; i++) {
+    const at = 12.93 + i * 0.26, p = easeOutBack(prog(t, at, 0.25));
+    if (p <= 0) continue;
+    const y = 720 + i * 66;
+    ctx.save(); ctx.translate(780, y); ctx.scale(p, p);
+    ctx.fillStyle = C.WH; roundRect(-150, -30, 300, 60, 18); ctx.fill();
+    ctx.fillStyle = '#2E9E5B'; ctx.beginPath(); ctx.arc(-118, 0, 16, 0, 7); ctx.fill();
+    text('$', -118, 9, 22, C.WH, { align: 'center' });
+    text('Nova venda', -92, -4, 22, '#5B5E66', { weight: 600 });
+    text('R$285', -92, 22, 26, C.K);
+    text('#' + (i + 1), 136, 10, 24, '#9A9CA3', { align: 'right' });
+    ctx.restore();
+  }
+  // faixa final
+  const b = easeOutBack(prog(t, 15.66, 0.3));
+  if (b > 0) { ctx.save(); ctx.translate(W / 2, 1445); ctx.rotate(-0.03); ctx.scale(b, b);
+    ctx.fillStyle = C.K; roundRect(-420, -56, 840, 100, 26); ctx.fill();
+    text('10 PROCEDIMENTOS VENDIDOS', 0, 14, 48, C.Y, { align: 'center' }); ctx.restore(); }
+  text('resultado real da cliente · resultados podem variar', W / 2, 1515, 24, '#3A3D44', { align: 'center', weight: 600, alpha: easeOut(prog(t, 16.0, 0.3)) });
+}
+
+const SCENES = [
+  { at: T.s1, fn: s1 }, { at: T.s2, fn: s2, wipe: true }, { at: T.s4, fn: s4, zoom: true },
+  { at: T.s5, fn: s5, zoom: true }, { at: T.s7, fn: s7, wipe: true }, { at: T.s6, fn: s6, zoom: true },
+];

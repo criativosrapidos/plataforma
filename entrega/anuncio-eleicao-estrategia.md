@@ -1,4 +1,23 @@
-# Versão 2 (atual) — 30s, mais animada
+# Versão 3 (atual) — 28s
+
+**Arquivo:** `criativos-rapidos-eleicao-case-alessandra-v3-28s-9x16.mp4` (capa: `criativos-rapidos-eleicao-v3-capa.png`).
+
+- A voz entra **já no primeiro quadro** (0,1s), 6% mais rápida, com a trilha de tensão por baixo e o boom no "acabou!".
+- O botão "CHAMA NO WHATSAPP" agora tem só o texto (a logo amarela saiu de dentro).
+- "Você não controla Brasília" virou **"Você não controla A POLÍTICA"** na tela, pra rodar no Brasil todo. A frase falada com "Brasília" foi cortada, e a voz segue com "Mas controla o seu marketing."
+- No case, o **anúncio real da Alessandra** (Águas Claras, Protocolo AM) aparece tocando num celular enquanto a voz fala do criativo de R$97.
+- Entrou o **feedback real dela no WhatsApp** (print), com marca-texto em "mesmo assim consegui vender", "fechei 10 clientes" e "só consegui converter em vendas com os criativos de vocês". Embaixo: "tráfego ela já fazia: faltava o criativo."
+
+**Texto do anúncio v3 (pode usar a frase dela):**
+> "Fim de mês, semana de política e mesmo assim consegui vender." — Alessandra, nossa cliente 💬
+> Ela fez um criativo de R$97 com a gente e, em 24 horas, faturou R$2.850 com 10 procedimentos vendidos.
+> Você não controla a política. Mas controla o seu marketing.
+> 🎬 Seu criativo por R$97 · ⚡ pronto em até 24h depois do briefing · ✅ sem contrato
+> 👉 Toca em "Enviar mensagem".
+
+---
+
+# Versão 2 (anterior) — 30s, mais animada
 
 **Arquivo:** `criativos-rapidos-eleicao-case-alessandra-v2-30s-9x16.mp4` (capa: `criativos-rapidos-eleicao-v2-capa.png`).
 

@@ -191,9 +191,9 @@ function ctaButton(l1, l2, cy, t, at, click) {
   ctx.save(); ctx.translate(W / 2, cy); ctx.scale(b * pulse * press, b * pulse * press);
   ctx.fillStyle = 'rgba(0,0,0,0.2)'; roundRect(-405, -85, 820, 180, 90); ctx.fill();
   ctx.fillStyle = C.K; roundRect(-410, -95, 820, 180, 90); ctx.fill();
-  logoMark(-350, -38, 0.6, C.Y);
-  if (l2) { text(l1, 40, -12, 54, C.Y, { align: 'center' }); text(l2, 40, 50, 54, C.Y, { align: 'center' }); }
-  else text(l1, 40, 20, 60, C.Y, { align: 'center' });
+  // só o texto no botão (a logo ficava por cima das letras)
+  if (l2) { text(l1, 0, -12, 54, C.Y, { align: 'center' }); text(l2, 0, 50, 54, C.Y, { align: 'center' }); }
+  else text(l1, 0, 20, 60, C.Y, { align: 'center' });
   ctx.restore();
   const hp = prog(t, click - 0.45, 0.45);
   if (hp > 0) {
