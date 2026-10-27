@@ -318,6 +318,89 @@ create policy "cobrança: ver" on public.cobrancas for select using (cliente_id 
 drop policy if exists "cobrança: agência" on public.cobrancas;
 create policy "cobrança: agência" on public.cobrancas for all using (public.is_admin()) with check (public.is_admin());
 
+-- ============================================================ agentes de IA
+-- cada agente tem uma função (missão), lê só as fontes marcadas e deixa RASCUNHOS que a agência aprova
+create table if not exists public.agentes (
+  id uuid primary key default gen_random_uuid(),
+  nome text not null,
+  cargo text,
+  missao text not null,                       -- a função do agente, em linguagem normal
+  fontes text[] not null default '{}',        -- crm, clientes, briefings, entregas, ideias, relatorios, financeiro, instagram, site
+  saidas text[] not null default '{}',        -- mensagem_whatsapp, ideia, legenda, comentario_relatorio, alerta, tarefa
+  frequencia text not null default 'manual' check (frequencia in ('manual', 'diaria', 'semanal')),
+  modelo text not null default 'claude-opus-5-5',
+  ativo boolean not null default true,
+  ultima_execucao timestamptz,
+  ultimo_resultado text,
+  ordem int not null default 0,
+  criado_em timestamptz not null default now()
+);
+alter table public.agentes enable row level security;
+drop policy if exists "agentes: agência" on public.agentes;
+create policy "agentes: agência" on public.agentes for all using (public.is_admin()) with check (public.is_admin());
+
+create table if not exists public.agente_sugestoes (
+  id uuid primary key default gen_random_uuid(),
+  agente_id uuid references public.agentes (id) on delete cascade,
+  tipo text not null check (tipo in ('mensagem_whatsapp', 'ideia', 'legenda', 'comentario_relatorio', 'alerta', 'tarefa')),
+  prioridade text not null default 'media' check (prioridade in ('alta', 'media', 'baixa')),
+  cliente_id uuid references public.perfis (id) on delete cascade,
+  lead_id uuid references public.leads (id) on delete cascade,
+  entrega_id uuid references public.entregas (id) on delete cascade,
+  titulo text,
+  conteudo jsonb not null,                    -- { texto, formato, detalhes, mes }
+  status text not null default 'pendente' check (status in ('pendente', 'aprovada', 'descartada')),
+  criado_em timestamptz not null default now()
+);
+create index if not exists agente_sugestoes_status on public.agente_sugestoes (status, criado_em desc);
+alter table public.agente_sugestoes enable row level security;
+drop policy if exists "agente: agência" on public.agente_sugestoes;
+create policy "agente: agência" on public.agente_sugestoes for all using (public.is_admin()) with check (public.is_admin());
+
+-- perguntas feitas ao assistente (pra limitar o uso por dia e acompanhar o custo)
+create table if not exists public.assistente_perguntas (
+  id uuid primary key default gen_random_uuid(),
+  autor_id uuid references public.perfis (id) on delete cascade,
+  cliente_id uuid references public.perfis (id) on delete cascade,
+  pergunta text not null,
+  resposta text,
+  tokens_entrada int,
+  tokens_saida int,
+  criado_em timestamptz not null default now()
+);
+alter table public.assistente_perguntas enable row level security;
+drop policy if exists "assistente: ver" on public.assistente_perguntas;
+create policy "assistente: ver" on public.assistente_perguntas for select using (autor_id = auth.uid() or public.is_admin());
+
+-- os 10 agentes iniciais (só entram se a tabela estiver vazia; depois vocês editam no painel)
+insert into public.agentes (nome, cargo, missao, fontes, saidas, frequencia, ordem)
+select * from (values
+  ('Diretor', 'CEO', 'Toda semana, olhe a agência inteira e diga as 3 a 5 prioridades da semana: clientes em risco, dinheiro parado, vendas que estão esfriando e oportunidades. Seja direto e diga quem deve fazer o quê.', array['crm','clientes','entregas','relatorios','financeiro','instagram'], array['alerta','tarefa'], 'semanal', 1),
+  ('Relacionamento', 'SDR / pré-vendas', 'Escreva a próxima mensagem de WhatsApp pra cada contato novo do CRM e pra quem tem retorno marcado pra hoje. Contato novo: apresente a Criativos Rápidos e faça uma pergunta sobre o negócio. Em andamento: retome a partir da anotação.', array['crm'], array['mensagem_whatsapp'], 'diaria', 2),
+  ('Sucesso do cliente', 'Atendimento', 'Ache clientes que precisam de atenção: conteúdo parado esperando aprovação há dias, ajuste pedido e não entregue, cliente sem briefing, entregas do mês abaixo do plano. Escreva a mensagem certa pra cada um ou uma tarefa pra equipe.', array['clientes','briefings','entregas'], array['mensagem_whatsapp','tarefa','alerta'], 'diaria', 3),
+  ('Estrategista de conteúdo', 'Planejamento', 'Pense ideias de reels, carrosséis, posts e stories pra cada cliente, com a cara do negócio dele (briefing e marca), sem repetir o que já foi feito. Até 3 ideias por cliente.', array['clientes','briefings','entregas','ideias','instagram'], array['ideia'], 'semanal', 4),
+  ('Redator', 'Copywriter', 'Escreva a legenda das entregas que ainda estão sem legenda, no tom de voz da marca do cliente, com chamada pra ação no final.', array['clientes','entregas'], array['legenda'], 'diaria', 5),
+  ('Monitor de redes', 'Social media', 'Acompanhe o Instagram dos clientes: quais posts tiveram mais e menos curtidas e comentários, se os seguidores cresceram ou caíram. Aponte o que funcionou e sugira o que repetir.', array['clientes','instagram','entregas'], array['alerta','ideia'], 'semanal', 6),
+  ('Gestor de tráfego', 'Tráfego pago', 'Analise os números dos anúncios de cada cliente (investido, alcance, cliques, conversas, campanhas). Aponte campanha cara demais, verba mal distribuída e o que testar. Seja específico.', array['relatorios','clientes'], array['alerta','tarefa'], 'semanal', 7),
+  ('Analista de resultados', 'Relatórios', 'Escreva o comentário do relatório do mês de cada cliente que ainda não tem comentário: o que foi bem, o que pode melhorar e o que vamos testar no próximo mês, em linguagem simples.', array['relatorios','entregas','instagram'], array['comentario_relatorio'], 'semanal', 8),
+  ('Financeiro', 'Cobrança', 'Escreva um lembrete educado pra cada cobrança em atraso e avise se algum cliente de plano mensal ficou sem mensalidade lançada no mês.', array['financeiro','clientes'], array['mensagem_whatsapp','alerta'], 'diaria', 9),
+  ('SEO', 'Site da agência', 'Analise as páginas do site da Criativos Rápidos (título, descrição, textos, títulos das seções) e sugira melhorias de SEO pra aparecer no Google em buscas de agência de marketing e social media. Uma tarefa por melhoria, com o texto pronto.', array['site'], array['tarefa'], 'semanal', 10)
+) as v(nome, cargo, missao, fontes, saidas, frequencia, ordem)
+where not exists (select 1 from public.agentes);
+
+-- métricas do Instagram dos clientes (coletadas pela função instagram, 1 por dia)
+create table if not exists public.ig_metricas (
+  cliente_id uuid not null references public.perfis (id) on delete cascade,
+  dia date not null,
+  seguidores int,
+  publicacoes int,
+  posts jsonb,                                -- últimos posts: [{ id, tipo, legenda, data, curtidas, comentarios, link }]
+  primary key (cliente_id, dia)
+);
+alter table public.ig_metricas enable row level security;
+drop policy if exists "ig: ver" on public.ig_metricas;
+create policy "ig: ver" on public.ig_metricas for select using (cliente_id = auth.uid() or public.is_admin());
+
 -- ============================================================ Instagram conectado (o token fica só no servidor)
 create table if not exists public.instagram_contas (
   cliente_id uuid primary key references public.perfis (id) on delete cascade,

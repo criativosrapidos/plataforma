@@ -36,6 +36,19 @@
     { nome: "Acelera", grupo: "pacote", preco: "R$ 297", ajustes: 2, qtd: { anuncio: 1 }, papel: "Identidade visual com 1 anúncio de brinde.", inclui: ["Identidade visual: logo, paleta, fontes, foto de perfil e destaques", "Brinde: 1 anúncio pronto"] },
     { nome: "Turbo", grupo: "pacote", preco: "R$ 497", ajustes: 3, papel: "Identidade visual completa, landing page e PDFs bônus.", inclui: ["Identidade visual completa", "Landing page completa", "PDFs bônus: boas práticas do Instagram e respostas prontas de vendas"] }
   ];
+  // os agentes de IA que já vêm prontos (iguais aos do supabase/schema.sql)
+  var AGENTES_INICIAIS = [
+    { nome: "Diretor", cargo: "CEO", missao: "Toda semana, olhe a agência inteira e diga as 3 a 5 prioridades da semana: clientes em risco, dinheiro parado, vendas que estão esfriando e oportunidades. Seja direto e diga quem deve fazer o quê.", fontes: ["crm", "clientes", "entregas", "relatorios", "financeiro", "instagram"], saidas: ["alerta", "tarefa"], frequencia: "semanal" },
+    { nome: "Relacionamento", cargo: "SDR / pré-vendas", missao: "Escreva a próxima mensagem de WhatsApp pra cada contato novo do CRM e pra quem tem retorno marcado pra hoje. Contato novo: apresente a Criativos Rápidos e faça uma pergunta sobre o negócio. Em andamento: retome a partir da anotação.", fontes: ["crm"], saidas: ["mensagem_whatsapp"], frequencia: "diaria" },
+    { nome: "Sucesso do cliente", cargo: "Atendimento", missao: "Ache clientes que precisam de atenção: conteúdo parado esperando aprovação há dias, ajuste pedido e não entregue, cliente sem briefing, entregas do mês abaixo do plano. Escreva a mensagem certa pra cada um ou uma tarefa pra equipe.", fontes: ["clientes", "briefings", "entregas"], saidas: ["mensagem_whatsapp", "tarefa", "alerta"], frequencia: "diaria" },
+    { nome: "Estrategista de conteúdo", cargo: "Planejamento", missao: "Pense ideias de reels, carrosséis, posts e stories pra cada cliente, com a cara do negócio dele (briefing e marca), sem repetir o que já foi feito. Até 3 ideias por cliente.", fontes: ["clientes", "briefings", "entregas", "ideias", "instagram"], saidas: ["ideia"], frequencia: "semanal" },
+    { nome: "Redator", cargo: "Copywriter", missao: "Escreva a legenda das entregas que ainda estão sem legenda, no tom de voz da marca do cliente, com chamada pra ação no final.", fontes: ["clientes", "entregas"], saidas: ["legenda"], frequencia: "diaria" },
+    { nome: "Monitor de redes", cargo: "Social media", missao: "Acompanhe o Instagram dos clientes: quais posts tiveram mais e menos curtidas e comentários, se os seguidores cresceram ou caíram. Aponte o que funcionou e sugira o que repetir.", fontes: ["clientes", "instagram", "entregas"], saidas: ["alerta", "ideia"], frequencia: "semanal" },
+    { nome: "Gestor de tráfego", cargo: "Tráfego pago", missao: "Analise os números dos anúncios de cada cliente (investido, alcance, cliques, conversas, campanhas). Aponte campanha cara demais, verba mal distribuída e o que testar. Seja específico.", fontes: ["relatorios", "clientes"], saidas: ["alerta", "tarefa"], frequencia: "semanal" },
+    { nome: "Analista de resultados", cargo: "Relatórios", missao: "Escreva o comentário do relatório do mês de cada cliente que ainda não tem comentário: o que foi bem, o que pode melhorar e o que vamos testar no próximo mês, em linguagem simples.", fontes: ["relatorios", "entregas", "instagram"], saidas: ["comentario_relatorio"], frequencia: "semanal" },
+    { nome: "Financeiro", cargo: "Cobrança", missao: "Escreva um lembrete educado pra cada cobrança em atraso e avise se algum cliente de plano mensal ficou sem mensalidade lançada no mês.", fontes: ["financeiro", "clientes"], saidas: ["mensagem_whatsapp", "alerta"], frequencia: "diaria" },
+    { nome: "SEO", cargo: "Site da agência", missao: "Analise as páginas do site da Criativos Rápidos (título, descrição, textos, títulos das seções) e sugira melhorias de SEO pra aparecer no Google em buscas de agência de marketing e social media. Uma tarefa por melhoria, com o texto pronto.", fontes: ["site"], saidas: ["tarefa"], frequencia: "semanal" }
+  ];
   function plano(nome) { return PLANOS.find(function (p) { return p.nome === nome; }) || PLANOS[0]; }
 
   // ---------------------------------------------------------------- utilidades
@@ -236,6 +249,16 @@
       async relatorios(clienteId) { return ok(await doCliente(sb.from("relatorios").select("*").order("mes", { ascending: false }), clienteId)); },
       async salvarRelatorio(campos) { ok(await sb.from("relatorios").upsert(campos, { onConflict: "cliente_id,mes" })); },
       // conexão com o Meta Ads (função supabase/functions/trafego)
+      // agentes de IA (função supabase/functions/agentes)
+      async agentes() { return ok(await sb.from("agentes").select("*").order("ordem").order("criado_em")); },
+      async salvarAgente(a) { if (a.id) ok(await sb.from("agentes").update(a).eq("id", a.id)); else ok(await sb.from("agentes").insert(a)); },
+      async apagarAgente(id) { ok(await sb.from("agentes").delete().eq("id", id)); },
+      async rodarAgente(id) { var r = await sb.functions.invoke("agentes/rodar", { method: "POST", body: { agente_id: id } }); if (r.error) throw new Error(await erroFuncao(r.error, "agentes")); return r.data; },
+      async perguntar(pergunta, clienteId) { var r = await sb.functions.invoke("agentes/perguntar", { method: "POST", body: { pergunta: pergunta, cliente_id: clienteId || null } }); if (r.error) throw new Error(await erroFuncao(r.error, "agentes")); return r.data.resposta; },
+      async igMetricas(clienteId) { return ok(await doCliente(sb.from("ig_metricas").select("*").order("dia", { ascending: false }).limit(clienteId ? 40 : 400), clienteId)); },
+      async atualizarMetricasIG() { var r = await sb.functions.invoke("instagram/metricas", { method: "POST" }); if (r.error) throw new Error(await erroFuncao(r.error)); return r.data.atualizados; },
+      async sugestoes() { return ok(await sb.from("agente_sugestoes").select("*").order("criado_em", { ascending: false }).limit(200)); },
+      async editarSugestao(id, campos) { ok(await sb.from("agente_sugestoes").update(campos).eq("id", id)); },
       async trafegoContas() { var r = await sb.functions.invoke("trafego/contas", { method: "POST" }); if (r.error) throw new Error(await erroFuncao(r.error, "tráfego")); return r.data.contas; },
       async sincronizarTrafego(mes, clienteId) { var r = await sb.functions.invoke("trafego/sincronizar", { method: "POST", body: { mes: mes, cliente_id: clienteId || null } }); if (r.error) throw new Error(await erroFuncao(r.error, "tráfego")); return r.data.resultado; },
       // financeiro
@@ -253,7 +276,7 @@
 
   // ---------------------------------------------------------------- modo demonstração
   function apiDemo() {
-    var KEY = "cr-demo-v6";
+    var KEY = "cr-demo-v7";
     function dia(n) { var d = new Date(); d.setDate(d.getDate() + n); return iso(d); }
     function semente() {
       var cli = "demo-cliente", adm = "demo-admin", cli2 = "demo-cliente-2";
@@ -299,6 +322,23 @@
           { id: "c1", cliente_id: cli, descricao: "Mensalidade Crescimento", valor: 797, vencimento: iso(new Date(new Date().getFullYear(), new Date().getMonth(), 10)), status: "paga", pago_em: iso(new Date(new Date().getFullYear(), new Date().getMonth(), 9)), forma: "PIX", criado_em: dia(-12) },
           { id: "c2", cliente_id: cli2, descricao: "Pacote Largada", valor: 97, vencimento: dia(-3), status: "paga", pago_em: dia(-3), forma: "Cartão", criado_em: dia(-3) }
         ],
+        // os agentes de IA (os mesmos 10 do schema.sql) e exemplos do que eles deixam pra aprovar
+        agentes: AGENTES_INICIAIS.map(function (a, k) { return Object.assign({ id: "ag" + (k + 1), ativo: true, modelo: "claude-opus-5-5", ordem: k + 1, criado_em: dia(-5) }, a); }),
+        sugestoes: [
+          { id: "s1", agente_id: "ag2", tipo: "mensagem_whatsapp", prioridade: "alta", lead_id: "l1", titulo: "Primeira mensagem: Rafael Lima", status: "pendente", criado_em: dia(0) + "T09:00",
+            conteudo: { texto: "Oi, Rafael! Aqui é da Criativos Rápidos. Vi que você se interessou pelo plano Crescimento pra Barbearia do Rafa. Hoje vocês já postam no Instagram com frequência ou está parado?" } },
+          { id: "s2", agente_id: "ag4", tipo: "ideia", prioridade: "media", cliente_id: cli, titulo: "Do pedido à porta", status: "pendente", criado_em: dia(0) + "T09:01",
+            conteudo: { formato: "reels", texto: "Cronômetro na tela: pedido chega, carne vai pra chapa, monta, embala e sai pro motoboy. Fecha com \"Peça pelo link da bio\"." } },
+          { id: "s3", agente_id: "ag1", tipo: "alerta", prioridade: "alta", cliente_id: cli, titulo: "Brasa Burger com 2 conteúdos parados", status: "pendente", criado_em: dia(0) + "T09:02",
+            conteudo: { texto: "Reels e post do combo duplo estão esperando aprovação e vão ao ar amanhã e quinta. Vale chamar a Marina hoje pra não atrasar o calendário." } }
+        ],
+        ig: [
+          { cliente_id: cli, dia: dia(-7), seguidores: 2380, publicacoes: 140, posts: [] },
+          { cliente_id: cli, dia: dia(0), seguidores: 2431, publicacoes: 143, posts: [
+            { id: "p1", tipo: "IMAGE", legenda: "Salva pra lembrar na hora da fome 😋", data: dia(-2) + "T12:00:00", curtidas: 214, comentarios: 18, link: "https://www.instagram.com/" },
+            { id: "p2", tipo: "VIDEO", legenda: "Delivery até 23h", data: dia(-4) + "T18:00:00", curtidas: 156, comentarios: 9, link: "https://www.instagram.com/" },
+            { id: "p3", tipo: "IMAGE", legenda: "Frete grátis acima de R$ 50", data: dia(-6) + "T12:00:00", curtidas: 88, comentarios: 3, link: "https://www.instagram.com/" }] }
+        ],
         equipe: [
           { id: "q1", nome: "Ana Cláudia", funcao: "Direção", email: "agencia@demo", whatsapp: "", cuida: ["relacionamento", "producao", "resultados"], ativo: true, criado_em: dia(-40) }
         ]
@@ -307,7 +347,7 @@
     function ler() { try { return JSON.parse(localStorage.getItem(KEY)) || semente(); } catch (e) { return semente(); } }
     function gravar(d) { try { localStorage.setItem(KEY, JSON.stringify(d)); } catch (e) {} }
     var db = ler();
-    ["leads", "ideias", "materiais", "relatorios", "cobrancas", "equipe"].forEach(function (k) { if (!db[k]) db[k] = []; });
+    ["leads", "ideias", "materiais", "relatorios", "cobrancas", "equipe", "sugestoes", "agentes", "ig"].forEach(function (k) { if (!db[k]) db[k] = []; });
     var mem = {}; // arquivos enviados nesta aba (não ficam salvos no modo demonstração)
     function salvar() { gravar(db); }
     function uid() { return "d" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6); }
@@ -419,6 +459,15 @@
       async equipe() { return db.equipe.slice(); },
       async salvarMembro(m) { if (m.id) Object.assign(achar("equipe", m.id), m); else db.equipe.push(Object.assign({ id: uid(), ativo: true, criado_em: new Date().toISOString() }, m)); salvar(); },
       async apagarMembro(id) { db.equipe = db.equipe.filter(function (x) { return x.id !== id; }); salvar(); },
+      async agentes() { return db.agentes.slice().sort(function (a, b) { return (a.ordem || 0) - (b.ordem || 0); }); },
+      async salvarAgente(a) { if (a.id) Object.assign(achar("agentes", a.id), a); else db.agentes.push(Object.assign({ id: uid(), ativo: true, ordem: db.agentes.length + 1, criado_em: new Date().toISOString() }, a)); salvar(); },
+      async apagarAgente(id) { db.agentes = db.agentes.filter(function (x) { return x.id !== id; }); salvar(); },
+      async rodarAgente() { await espera(); throw new Error("Na demonstração os agentes não rodam. No site de verdade, este botão chama o agente e os rascunhos aparecem na caixa de aprovação."); },
+      async perguntar() { await espera(); return "Na demonstração o assistente não está ligado. No site de verdade, ele responde com os dados da plataforma: entregas, relatórios, Instagram e financeiro."; },
+      async igMetricas(clienteId) { return doCli(db.ig, clienteId).slice().sort(function (a, b) { return a.dia < b.dia ? 1 : -1; }); },
+      async atualizarMetricasIG() { await espera(); throw new Error("Na demonstração não tem Instagram conectado."); },
+      async sugestoes() { return ordena(db.sugestoes); },
+      async editarSugestao(id, c) { Object.assign(achar("sugestoes", id), c); salvar(); },
       async trafegoContas() { await espera(); throw new Error("Na demonstração não tem conta do Meta ligada. No site de verdade, a lista das contas de anúncio aparece aqui."); },
       async sincronizarTrafego() { await espera(); throw new Error("Na demonstração os números não vêm do Meta. No site de verdade, este botão puxa tudo sozinho."); },
       resetar() { db = semente(); mem = {}; salvar(); }

@@ -250,10 +250,33 @@
         <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
           <div class="monthnav"><button class="icon-btn" type="button" id="rel-ant" aria-label="Mês anterior"></button><b id="rel-mes"></b><button class="icon-btn" type="button" id="rel-prox" aria-label="Próximo mês"></button></div>
           <button class="btn dark" type="button" id="rel-meta"></button>
+          <button class="btn ghost" type="button" id="rel-ig"></button>
         </div>
       </div>
       <div class="stats" id="rel-kpis"></div>
       <div class="card scroll"><table class="t" id="t-rel"><thead><tr><th>Cliente</th><th>Plano</th><th>Entregues</th><th>Aprovados</th><th>Publicados</th><th>Ajustes</th><th>Tráfego</th><th></th></tr></thead><tbody></tbody></table></div>
+    </main>
+
+    <!-- AGENTES IA -->
+    <main class="view" id="v-ia" hidden>
+      <div class="view-head">
+        <div><h1>Agentes de IA</h1><p class="lead">Cada agente tem uma função, lê só os dados que você marcar e deixa rascunhos aqui. Nada chega ao cliente sem alguém aprovar.</p></div>
+        <button class="btn" type="button" id="novo-agente"></button>
+      </div>
+      <section class="card pad-l" style="display:grid;gap:12px">
+        <h2>Pergunte ao assistente</h2>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <select id="as-cli" style="flex:0 1 260px" aria-label="Sobre qual cliente"></select>
+          <input type="text" id="as-perg" style="flex:1 1 280px;min-width:0" maxlength="1500" placeholder="Ex.: Como foi o mês da Brasa Burger? Quem está com cobrança atrasada?" aria-label="Pergunta">
+          <button class="btn dark" type="button" id="as-ir">Perguntar</button>
+        </div>
+        <div class="leg" id="as-resp" hidden></div>
+      </section>
+      <section class="sec">
+        <div class="sec-head"><h2>Pra aprovar</h2><div class="seg" role="group" aria-label="Filtrar rascunhos" id="seg-sug"></div></div>
+        <div class="list" id="l-sug"></div>
+      </section>
+      <section class="sec"><h2>Os agentes</h2><div class="cards" id="l-agentes"></div></section>
     </main>
 
     <!-- EQUIPE -->
@@ -297,6 +320,27 @@
     <div class="f"><label for="ld-prox">Próximo contato</label><input type="date" id="ld-prox"></div>
     <div class="err" id="ld-err" hidden></div>
     <div class="acts"><button class="btn ghost" type="button" id="ld-cancel">Cancelar</button><button class="btn" type="submit">Salvar</button></div>
+  </form>
+</dialog>
+
+<dialog id="dlg-agente">
+  <form class="in" id="f-agente" novalidate>
+    <h2 id="ag-titulo">Novo agente</h2>
+    <input type="hidden" id="ag-id">
+    <div class="row" style="margin-top:14px">
+      <div class="f"><label for="ag-nome">Nome</label><input type="text" id="ag-nome" placeholder="Ex.: Igor"></div>
+      <div class="f"><label for="ag-cargo">Cargo</label><input type="text" id="ag-cargo" placeholder="Ex.: Social media"></div>
+    </div>
+    <div class="f"><label for="ag-missao">Função <span class="muted small">o que ele faz, como você explicaria pra uma pessoa nova</span></label><textarea id="ag-missao" rows="5"></textarea></div>
+    <div class="f"><span class="q">O que ele pode ler</span><div class="chips-sel" id="ag-fontes"></div></div>
+    <div class="f"><span class="q">O que ele entrega</span><div class="chips-sel" id="ag-saidas"></div></div>
+    <div class="row">
+      <div class="f"><label for="ag-freq">Quando roda</label><select id="ag-freq"><option value="manual">Só quando eu mandar</option><option value="diaria">Todo dia de manhã</option><option value="semanal">Toda segunda de manhã</option></select></div>
+      <div class="f"><label for="ag-modelo">Inteligência</label><select id="ag-modelo"><option value="claude-opus-5-5">Máxima (Claude Opus 5.5)</option><option value="claude-sonnet-5-5">Equilibrada (Claude Sonnet 5.5)</option><option value="claude-haiku-5-5">Econômica (Claude Haiku 5.5)</option></select></div>
+    </div>
+    <label class="chk"><input type="checkbox" id="ag-ativo" checked> Ativo</label>
+    <div class="err" id="ag-err" hidden></div>
+    <div class="acts"><button class="btn ghost" type="button" id="ag-cancel">Cancelar</button><button class="btn" type="submit">Salvar agente</button></div>
   </form>
 </dialog>
 
@@ -349,12 +393,12 @@
       ["Relacionamento", [["crm", "CRM", "target"], ["clientes", "Clientes", "users"]]],
       ["Produção", [["briefings", "Briefings", "inbox"], ["ideias", "Ideias", "idea"], ["entregas", "Entregas", "grid"], ["marca", "Marca e materiais", "brand"]]],
       ["Resultados", [["financeiro", "Financeiro", "money"], ["relatorios", "Relatórios", "report"]]],
-      ["Equipe", [["equipe", "Agentes", "team"]]]
+      ["Equipe", [["ia", "Agentes IA", "bot"], ["equipe", "Equipe", "team"]]]
     ],
     aba: ["visao", "crm", "ideias", "entregas"]
   });
   var clientes = [], entregas = [], briefings = [], leads = [];
-  var ideias = [], materiais = [], relatorios = [], cobrancas = [], equipe = [], ajustes = [];
+  var ideias = [], materiais = [], relatorios = [], cobrancas = [], equipe = [], ajustes = [], agentesIA = [], sugestoes = [];
   var hoje = new Date(); hoje.setHours(0, 0, 0, 0);
   var hj = CR.iso(hoje);
   var mesAtual = new Date(hoje.getFullYear(), hoje.getMonth(), 1);
@@ -398,8 +442,10 @@
     cobrancas = await tenta(function () { return api.cobrancas(); }, []);
     equipe = await tenta(function () { return api.equipe(); }, []);
     ajustes = await tenta(function () { return api.ajustes(); }, []);
+    agentesIA = await tenta(function () { return api.agentes(); }, []);
+    sugestoes = await tenta(function () { return api.sugestoes(); }, []);
     selects(); badges(); visao(); renderEntregas(); renderClientes(); renderBriefings(); renderLeads();
-    renderIdeias(); briefDoCliente(); renderMarca(); renderFin(); renderRel(); renderEquipe();
+    renderIdeias(); briefDoCliente(); renderMarca(); renderFin(); renderRel(); renderEquipe(); renderIA();
   }
 
   function atrasadas() { return cobrancas.filter(function (c) { return c.status === "aberta" && c.vencimento < hj; }); }
@@ -410,7 +456,8 @@
       briefings: briefings.filter(function (b) { return (b.status || "novo") === "novo"; }).length,
       crm: leads.filter(function (l) { return l.status === "novo"; }).length + retornos().filter(function (l) { return l.status !== "novo"; }).length,
       ideias: ideias.filter(function (i) { return i.status === "nova"; }).length,
-      financeiro: atrasadas().length
+      financeiro: atrasadas().length,
+      ia: sugestoes.filter(function (x) { return x.status === "pendente"; }).length
     });
   }
 
@@ -498,6 +545,7 @@
     cliOptions(mk, ["", "Pra todos os clientes (guias gerais)"]);
     if (!mk.dataset.ini && clientes.length) { mk.dataset.ini = "1"; mk.value = clientes[0].id; }
     cliOptions(document.getElementById("c-cli"), ["", "Escolha o cliente"]);
+    cliOptions(document.getElementById("as-cli"), ["", "A agência toda"]);
   }
   function opcaoCarrossel() { document.getElementById("w-car").hidden = document.getElementById("n-arq").files.length < 2 || document.getElementById("o-drive").checked; }
   document.getElementById("n-arq").addEventListener("change", opcaoCarrossel);
@@ -1037,6 +1085,12 @@
   }
   document.getElementById("r-puxar").append(ic("down"), "Puxar do Meta agora");
   document.getElementById("rel-meta").append(ic("down"), "Atualizar tudo do Meta");
+  document.getElementById("rel-ig").append(ic("insta"), "Atualizar Instagram");
+  document.getElementById("rel-ig").addEventListener("click", async function () {
+    this.disabled = true;
+    try { var n = await api.atualizarMetricasIG(); CR.toast(n ? "Instagram de " + n + (n === 1 ? " cliente atualizado." : " clientes atualizado.") : "Nenhum cliente com Instagram conectado."); } catch (x) { CR.toast(x.message, true); }
+    this.disabled = false;
+  });
   document.getElementById("r-buscar").addEventListener("click", async function () {
     this.disabled = true;
     try {
@@ -1134,6 +1188,139 @@
     var id = document.getElementById("q-id").value; if (id) m.id = id;
     try { await api.salvarMembro(m); CR.toast("Equipe atualizada."); limparMembro(); await carregar(); } catch (x) { er.textContent = x.message; er.hidden = false; }
   });
+
+  // ---------------------------------------------------------------- agentes de IA
+  var FONTES = { crm: "CRM", clientes: "Clientes e marca", briefings: "Briefings", entregas: "Entregas", ideias: "Ideias", relatorios: "Relatórios e tráfego", financeiro: "Financeiro", instagram: "Instagram dos clientes", site: "Site da agência" };
+  var SAIDAS = { mensagem_whatsapp: "Mensagem de WhatsApp", ideia: "Ideia de conteúdo", legenda: "Legenda", comentario_relatorio: "Comentário do relatório", alerta: "Alerta", tarefa: "Tarefa" };
+  var FREQ = { manual: "quando você mandar", diaria: "todo dia", semanal: "toda segunda" };
+  var MODELOS = { "claude-opus-5-5": "Máxima", "claude-sonnet-5-5": "Equilibrada", "claude-haiku-5-5": "Econômica" };
+  var filtroSug = "pendente";
+  document.getElementById("novo-agente").append(ic("plus"), "Novo agente");
+  [["ag-fontes", FONTES], ["ag-saidas", SAIDAS]].forEach(function (x) {
+    Object.keys(x[1]).forEach(function (k) { document.getElementById(x[0]).appendChild(el("label", {}, [el("input", { type: "checkbox", value: k }), el("span", { text: x[1][k] })])); });
+  });
+  var segS = document.getElementById("seg-sug");
+  [["pendente", "Pendentes"], ["aprovada", "Aprovados"], ["descartada", "Descartados"]].forEach(function (f) {
+    segS.appendChild(el("button", { type: "button", "data-f": f[0], "aria-pressed": String(f[0] === filtroSug), text: f[1], onclick: function () {
+      filtroSug = f[0]; segS.querySelectorAll("button").forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.f === filtroSug)); }); renderSug();
+    } }));
+  });
+  function nomeAgente(id) { var a = agentesIA.find(function (x) { return x.id === id; }); return a ? a.nome : "Agente"; }
+  function renderIA() { renderSug(); renderAgentes(); }
+
+  function renderAgentes() {
+    var l = document.getElementById("l-agentes"); l.textContent = "";
+    if (!agentesIA.length) l.appendChild(el("div", { class: "empty" }, [ic("bot"), el("b", { text: "Nenhum agente ainda" }), el("span", { text: "Rode o schema.sql do Supabase pra criar os 10 agentes iniciais, ou crie em Novo agente." })]));
+    agentesIA.forEach(function (a) {
+      l.appendChild(el("article", { class: "idea" + (a.ativo === false ? " off" : "") }, [
+        el("div", { class: "top" }, [el("span", { class: "chip", text: a.cargo || "Agente" }), el("span", { class: "pill " + (a.ativo === false ? "descartada" : "aprovada"), text: a.ativo === false ? "Desligado" : "Roda " + FREQ[a.frequencia || "manual"] })]),
+        el("h3", { text: a.nome }),
+        el("p", { text: a.missao }),
+        el("div", { class: "small muted", text: "Lê: " + ((a.fontes || []).map(function (f) { return FONTES[f] || f; }).join(", ") || "nada") }),
+        el("div", { class: "small muted", text: "Entrega: " + ((a.saidas || []).map(function (f) { return SAIDAS[f] || f; }).join(", ") || "alertas e tarefas") + " · inteligência " + (MODELOS[a.modelo] || a.modelo) }),
+        a.ultima_execucao ? el("div", { class: "small", text: "Última vez " + CR.dataLonga(CR.iso(new Date(a.ultima_execucao))) + ": " + (a.ultimo_resultado || "") }) : null,
+        el("div", { class: "acts" }, [
+          el("button", { class: "btn sm", type: "button", onclick: async function () {
+            this.disabled = true; CR.toast(a.nome + " está trabalhando… pode levar até 1 minuto.");
+            try { var r = await api.rodarAgente(a.id); CR.toast(a.nome + ": " + (r.novas ? r.novas + (r.novas === 1 ? " rascunho novo." : " rascunhos novos.") : "nada novo agora.")); await carregar(); }
+            catch (x) { CR.toast(x.message, true); }
+            this.disabled = false;
+          } }, [ic("play"), "Rodar agora"]),
+          el("button", { class: "btn ghost sm", type: "button", onclick: function () { abrirAgente(a); } }, [ic("edit"), "Configurar"])
+        ])
+      ]));
+    });
+  }
+
+  function renderSug() {
+    var l = document.getElementById("l-sug"); l.textContent = "";
+    var vis = sugestoes.filter(function (x) { return x.status === filtroSug; });
+    var ordem = { alta: 0, media: 1, baixa: 2 };
+    if (filtroSug === "pendente") vis.sort(function (a, b) { return (ordem[a.prioridade] || 1) - (ordem[b.prioridade] || 1); });
+    if (!vis.length) l.appendChild(el("div", { class: "empty", style: "padding:22px" }, [ic("check"), el("b", { text: filtroSug === "pendente" ? "Nada pra aprovar" : "Nada aqui" }), el("span", { text: "O que os agentes prepararem aparece aqui." })]));
+    vis.slice(0, 60).forEach(function (s) { l.appendChild(cartaoSug(s)); });
+  }
+  function cartaoSug(s) {
+    var c = s.conteudo || {}, lead = leads.find(function (x) { return x.id === s.lead_id; }), cl = cli(s.cliente_id);
+    var txt = el("textarea", { rows: "4", "aria-label": "Texto do rascunho", disabled: s.status !== "pendente" });
+    txt.value = c.texto || "";
+    async function concluir(btn, extra, msg) {
+      btn.disabled = true;
+      try {
+        if (extra) await extra(txt.value.trim());
+        await api.editarSugestao(s.id, { status: "aprovada", conteudo: Object.assign({}, c, { texto: txt.value.trim() }) });
+        CR.toast(msg || "Feito."); await carregar();
+      } catch (x) { CR.toast(x.message, true); btn.disabled = false; }
+    }
+    var acts = [];
+    if (s.status === "pendente") {
+      if (s.tipo === "mensagem_whatsapp") {
+        var num = waLead(lead ? lead.whatsapp : cl && cl.whatsapp);
+        acts.push(el("button", { class: "btn sm", type: "button", disabled: !num, title: num ? "" : "Sem WhatsApp cadastrado", onclick: function () {
+          var t = txt.value.trim(); window.open(num + "?text=" + encodeURIComponent(t), "_blank", "noopener");
+          concluir(this, async function () { if (lead && lead.status === "novo") await api.statusLead(lead.id, "conversando"); }, "Aberto no WhatsApp.");
+        } }, [ic("chat"), "Abrir no WhatsApp"]));
+      } else if (s.tipo === "ideia" && s.cliente_id) {
+        acts.push(el("button", { class: "btn sm", type: "button", onclick: function () {
+          var b = this; concluir(b, function (t) { return api.criarIdeia({ cliente_id: s.cliente_id, origem: "agencia", tipo: c.formato && CR.TIPOS[c.formato] ? c.formato : "post", titulo: s.titulo, descricao: t, status: "sugerida" }); }, "Ideia enviada pro app do cliente.");
+        } }, [ic("idea"), "Mandar pro cliente"]));
+      } else if (s.tipo === "legenda" && s.entrega_id) {
+        acts.push(el("button", { class: "btn sm", type: "button", onclick: function () { concluir(this, function (t) { return api.editarEntrega(s.entrega_id, { legenda: t }); }, "Legenda colocada na entrega."); } }, [ic("check"), "Usar na entrega"]));
+      } else if (s.tipo === "comentario_relatorio" && c.relatorio_id) {
+        var r = relatorios.find(function (x) { return x.id === c.relatorio_id; });
+        acts.push(el("button", { class: "btn sm", type: "button", disabled: !r, onclick: function () { concluir(this, function (t) { return api.salvarRelatorio({ cliente_id: r.cliente_id, mes: String(r.mes).slice(0, 10), resumo: t }); }, "Comentário no relatório do cliente."); } }, [ic("check"), "Salvar no relatório"]));
+      } else acts.push(el("button", { class: "btn sm", type: "button", onclick: function () { concluir(this, null, "Marcado como feito."); } }, [ic("check"), "Feito"]));
+      acts.push(el("button", { class: "btn ghost sm", type: "button", onclick: function () { CR.copiar(txt.value, "Copiado"); } }, [ic("copy"), "Copiar"]));
+      acts.push(el("button", { class: "btn danger sm", type: "button", text: "Descartar", onclick: async function () { try { await api.editarSugestao(s.id, { status: "descartada" }); await carregar(); } catch (x) { CR.toast(x.message, true); } } }));
+    }
+    var sobre = [nomeAgente(s.agente_id), SAIDAS[s.tipo] || s.tipo, lead ? "contato: " + lead.nome : cl ? nomeCli(cl.id) : "", c.formato ? CR.TIPOS[c.formato] : "", CR.data(s.criado_em)].filter(Boolean).join(" · ");
+    return el("article", { class: "idea" }, [
+      el("div", { class: "top" }, [el("span", { class: "pill " + (s.prioridade === "alta" ? "atrasada" : s.prioridade === "baixa" ? "aprovada" : "sugerida"), text: "Prioridade " + ({ alta: "alta", media: "média", baixa: "baixa" }[s.prioridade] || "média") }), el("span", { class: "small muted", text: sobre })]),
+      el("h3", { text: s.titulo || "" }),
+      txt,
+      acts.length ? el("div", { class: "acts" }, acts) : null
+    ]);
+  }
+
+  var dlgAg = document.getElementById("dlg-agente");
+  function abrirAgente(a) {
+    a = a || {};
+    document.getElementById("ag-titulo").textContent = a.id ? "Configurar " + a.nome : "Novo agente";
+    document.getElementById("ag-id").value = a.id || "";
+    document.getElementById("ag-nome").value = a.nome || "";
+    document.getElementById("ag-cargo").value = a.cargo || "";
+    document.getElementById("ag-missao").value = a.missao || "";
+    document.getElementById("ag-freq").value = a.frequencia || "manual";
+    document.getElementById("ag-modelo").value = a.modelo || "claude-opus-5-5";
+    document.getElementById("ag-ativo").checked = a.ativo !== false;
+    document.querySelectorAll("#ag-fontes input").forEach(function (x) { x.checked = (a.fontes || []).indexOf(x.value) >= 0; });
+    document.querySelectorAll("#ag-saidas input").forEach(function (x) { x.checked = (a.saidas || ["alerta", "tarefa"]).indexOf(x.value) >= 0; });
+    document.getElementById("ag-err").hidden = true;
+    var del = document.getElementById("ag-apagar"); if (del) del.remove();
+    if (a.id) document.querySelector("#f-agente .acts").prepend(el("button", { class: "btn danger", type: "button", id: "ag-apagar", style: "margin-right:auto", text: "Apagar", onclick: function () { confirmar(this, async function () { await api.apagarAgente(a.id); dlgAg.close(); await carregar(); }); } }));
+    dlgAg.showModal();
+  }
+  document.getElementById("novo-agente").addEventListener("click", function () { abrirAgente(); });
+  document.getElementById("ag-cancel").addEventListener("click", function () { dlgAg.close(); });
+  document.getElementById("f-agente").addEventListener("submit", async function (ev) {
+    ev.preventDefault();
+    var er = document.getElementById("ag-err"), marcados = function (id) { return Array.prototype.map.call(document.querySelectorAll("#" + id + " input:checked"), function (x) { return x.value; }); };
+    var a = { nome: document.getElementById("ag-nome").value.trim(), cargo: document.getElementById("ag-cargo").value.trim() || null, missao: document.getElementById("ag-missao").value.trim(),
+      fontes: marcados("ag-fontes"), saidas: marcados("ag-saidas"), frequencia: document.getElementById("ag-freq").value, modelo: document.getElementById("ag-modelo").value, ativo: document.getElementById("ag-ativo").checked };
+    var m = !a.nome ? "Dê um nome." : a.missao.length < 20 ? "Explique a função com mais detalhe." : !a.saidas.length ? "Marque pelo menos uma coisa que ele entrega." : "";
+    er.textContent = m; er.hidden = !m; if (m) return;
+    var id = document.getElementById("ag-id").value; if (id) a.id = id;
+    try { await api.salvarAgente(a); dlgAg.close(); CR.toast("Agente salvo."); await carregar(); } catch (x) { er.textContent = x.message; er.hidden = false; }
+  });
+
+  document.getElementById("as-ir").addEventListener("click", async function () {
+    var p = document.getElementById("as-perg").value.trim(), out = document.getElementById("as-resp");
+    if (!p) { document.getElementById("as-perg").focus(); return; }
+    this.disabled = true; out.hidden = false; out.textContent = "Pensando…";
+    try { out.textContent = await api.perguntar(p, document.getElementById("as-cli").value || null); } catch (x) { out.textContent = x.message; }
+    this.disabled = false;
+  });
+  document.getElementById("as-perg").addEventListener("keydown", function (ev) { if (ev.key === "Enter") document.getElementById("as-ir").click(); });
 
   nav.ir(location.hash.slice(1) || "visao");
   carregar();

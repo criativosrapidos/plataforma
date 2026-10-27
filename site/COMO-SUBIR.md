@@ -197,3 +197,29 @@ Com isso, o investido, o alcance, as impressões, os cliques, as conversas (mens
    Todo dia às 6h (horário de Brasília; o Supabase usa UTC) ele atualiza o mês atual e, nos 3 primeiros dias do mês, fecha o mês anterior.
 
 Como é o token da própria agência lendo as contas que ela já administra, não precisa da análise da Meta como na Parte 3.
+
+---
+
+## Parte 5 · Agentes de IA e assistente
+
+- **Agentes IA** (painel, grupo Equipe): 10 agentes prontos (Diretor/CEO, Relacionamento, Sucesso do cliente, Estrategista de conteúdo, Redator, Monitor de redes, Gestor de tráfego, Analista de resultados, Financeiro e SEO). Em **Configurar** você muda o nome, a função, o que cada um lê, o que entrega, quando roda e o nível de inteligência. **Novo agente** cria quantos quiser.
+- Os agentes só deixam **rascunhos** em **Pra aprovar**: mensagem de WhatsApp, ideia, legenda, comentário de relatório, alerta ou tarefa. Aprovar faz a ação (abre o WhatsApp com o texto, manda a ideia pro app do cliente, coloca a legenda na entrega, salva o comentário no relatório).
+- **Assistente:** no painel (Agentes IA) a equipe pergunta sobre a agência ou um cliente; no app, o cliente pergunta sobre os dados dele (em Relatórios e em Ajuda), com limite de 20 perguntas por dia.
+- **Instagram dos clientes:** uma vez por dia a plataforma guarda seguidores, curtidas e comentários dos últimos posts de quem conectou o Instagram. Aparece em Relatórios no app e é lido pelo Monitor de redes.
+- **Ligar:** crie uma chave em https://platform.claude.com (API Keys) e coloque como `ANTHROPIC_API_KEY` (veja a Parte 6). O custo é por uso (veja a estimativa no painel ou peça pra equipe).
+
+## Parte 6 · Publicação automática (GitHub)
+
+Toda mudança na pasta `site/` do branch `claude/generic-sales-proposal-lok7t4` publica sozinha o site na HostGator, atualiza o banco, publica as funções e liga os agendamentos. Pra isso, em **GitHub → criativosrapidos/plataforma → Settings → Secrets and variables → Actions → New repository secret**, cadastre:
+
+| Secret | Onde pegar |
+|---|---|
+| `FTP_SERVER`, `FTP_USERNAME`, `FTP_PASSWORD` | cPanel da HostGator → **Contas FTP** (crie uma conta com acesso à `public_html`). Servidor: `ftp.criativosrapidos.com.br` |
+| `SUPABASE_ACCESS_TOKEN` | supabase.com → avatar → **Account → Access Tokens → Generate new token** |
+| `SUPABASE_DB_URL` | Supabase → **Connect** → **Session pooler** → copie a URI e troque `[YOUR-PASSWORD]` pela senha do banco |
+| `CRON_SECRET` | uma senha longa qualquer (use a mesma se já tiver feito a Parte 3) |
+| `ANTHROPIC_API_KEY` | platform.claude.com → API Keys |
+| `META_ADS_TOKEN` | o token do usuário do sistema (Parte 4) |
+| `IG_APP_ID`, `IG_APP_SECRET` | só se ainda não estiverem no Supabase (Parte 3) |
+
+O `assets/config.js` (com as chaves do Supabase) e o `enviar.php` que já estão na HostGator **não são substituídos**. Pra publicar na hora, sem esperar uma mudança: GitHub → **Actions → Publicar site e plataforma → Run workflow**.

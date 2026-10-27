@@ -4,7 +4,9 @@
 //   GET  /callback      o Instagram volta pra cá depois que o cliente autoriza
 //   POST /desconectar   cliente logado remove a conexão
 //   POST /publicar      agência publica uma entrega agora  { "entrega_id": "..." }
-//   POST /agendados     o agendador chama a cada 10 min (cabeçalho x-cron-secret)
+//   POST /agendados     o agendador chama a cada 10 min (cabeçalho x-cron-secret); 1 vez por dia também
+//                       guarda as métricas do Instagram de cada cliente (seguidores, curtidas e comentários)
+//   POST /metricas      agência atualiza as métricas de todos agora
 // Variáveis: IG_APP_ID, IG_APP_SECRET, SITE_URL, CRON_SECRET e, opcional, IG_API_VERSION (ex.: "v23.0").
 // SUPABASE_URL e SUPABASE_SERVICE_ROLE_KEY o Supabase já fornece.
 import { createClient, type SupabaseClient } from "npm:@supabase/supabase-js@2.45.4";
@@ -210,7 +212,32 @@ async function agendados() {
       } catch (err) { console.error("renovar token", c.cliente_id, err); }
     }
   }
-  return json({ verificados: vencidas.length, resultado });
+  const metricas = await coletarMetricas(true);
+  return json({ verificados: vencidas.length, resultado, metricas });
+}
+
+// ---------------------------------------------------------------- métricas (uma coleta por cliente por dia)
+async function coletarMetricas(soSeFaltar: boolean) {
+  const dia = agoraBrasilia().data;
+  const { data: contas } = await db.from("instagram_contas").select("cliente_id, token");
+  let feitas = 0;
+  for (const c of contas ?? []) {
+    if (soSeFaltar) {
+      const { data: ja } = await db.from("ig_metricas").select("dia").eq("cliente_id", c.cliente_id).eq("dia", dia).maybeSingle();
+      if (ja) continue;
+    }
+    try {
+      const conta = await ig("me", { fields: "followers_count,media_count", access_token: c.token });
+      const midia = await ig("me/media", { fields: "id,caption,media_type,timestamp,like_count,comments_count,permalink", limit: "12", access_token: c.token });
+      const posts = (midia.data ?? []).map((m: Record<string, unknown>) => ({
+        id: m.id, tipo: m.media_type, legenda: String(m.caption ?? "").slice(0, 300), data: m.timestamp,
+        curtidas: m.like_count ?? null, comentarios: m.comments_count ?? null, link: m.permalink,
+      }));
+      await db.from("ig_metricas").upsert({ cliente_id: c.cliente_id, dia, seguidores: conta.followers_count ?? null, publicacoes: conta.media_count ?? null, posts });
+      feitas++;
+    } catch (err) { console.error("métricas", c.cliente_id, err); }
+  }
+  return feitas;
 }
 
 // ---------------------------------------------------------------- roteador
@@ -228,6 +255,11 @@ Deno.serve(async (req) => {
       if (eu.papel !== "admin") throw new Erro("Só a agência pode publicar.", 403);
       const { entrega_id } = await req.json();
       return json({ resultado: await publicar(String(entrega_id)) });
+    }
+    if (rota === "/metricas") {
+      const eu = await usuario(req);
+      if (eu.papel !== "admin") throw new Erro("Só a agência pode fazer isso.", 403);
+      return json({ atualizados: await coletarMetricas(false) });
     }
     if (rota === "/agendados") {
       if (!env("CRON_SECRET") || req.headers.get("x-cron-secret") !== env("CRON_SECRET")) throw new Erro("Não autorizado.", 401);

@@ -109,6 +109,8 @@
       </div>
       <section class="sec"><h2>Conteúdos</h2><div class="stats" id="rel-cont"></div><div class="card" id="rel-tipos"></div></section>
       <section class="sec"><h2>Tráfego pago</h2><div id="rel-traf"></div></section>
+      <section class="sec"><h2>Instagram</h2><div id="rel-ig"></div></section>
+      <section class="card pad-l" id="as-rel"></section>
     </main>
 
     <!-- MATERIAIS -->
@@ -140,6 +142,7 @@
         <p class="small muted" style="margin:6px 0 12px">Qualquer dúvida, é só chamar.</p>
         <div id="ajuda" style="display:flex;gap:8px;flex-wrap:wrap"></div>
       </section>
+      <section class="card pad-l" id="as-ajuda"></section>
       <section class="sec faq"><h2>Dúvidas comuns</h2><div style="display:grid;gap:8px" id="faq"></div></section>
     </main>
 
@@ -213,7 +216,7 @@
 
   var P = CR.plano(eu.plano);
   var itens = [], usados = 0, meusBriefings = [], filtro = "aguardando", atual = null;
-  var ideias = [], materiais = [], relatorios = [], cobrancas = [], meusAjustes = [], filtroMat = "todos";
+  var ideias = [], materiais = [], relatorios = [], cobrancas = [], meusAjustes = [], igm = [], filtroMat = "todos";
   var hoje = new Date(); hoje.setHours(0, 0, 0, 0);
   var calMes = new Date(hoje.getFullYear(), hoje.getMonth(), 1), calDia = CR.iso(hoje);
 
@@ -263,10 +266,11 @@
     materiais = await tenta(function () { return api.materiais(eu.id); }, []);
     relatorios = await tenta(function () { return api.relatorios(eu.id); }, []);
     cobrancas = await tenta(function () { return api.cobrancas(eu.id); }, []);
+    igm = await tenta(function () { return api.igMetricas(eu.id); }, []);
     meusAjustes = (await tenta(function () { return api.ajustes(); }, [])).filter(function (a) { return a.cliente_id === eu.id; });
     renderTudo();
   }
-  function renderTudo() { badge(); planoCard(); avisoBriefing(); rail(); proximas(); stats(); renderLista(); renderCal(); renderIdeias(); renderRel(); renderMat(); renderMarca(); contaPag(); ajuda(); faq(); }
+  function renderTudo() { badge(); planoCard(); avisoBriefing(); rail(); proximas(); stats(); renderLista(); renderCal(); renderIdeias(); renderRel(); renderIG(); renderMat(); renderMarca(); contaPag(); ajuda(); faq(); }
 
   function contar(st) { return itens.filter(function (i) { return i.status === st; }).length; }
   function sugeridas() { return ideias.filter(function (i) { return i.status === "sugerida"; }); }
@@ -690,7 +694,7 @@
   var relMes = new Date(hoje.getFullYear(), hoje.getMonth(), 1);
   ["rel-ant", "rel-prox"].forEach(function (id, i) {
     var b = document.getElementById(id); b.appendChild(ic(i ? "right" : "left"));
-    b.addEventListener("click", function () { relMes = new Date(relMes.getFullYear(), relMes.getMonth() + (i ? 1 : -1), 1); renderRel(); });
+    b.addEventListener("click", function () { relMes = new Date(relMes.getFullYear(), relMes.getMonth() + (i ? 1 : -1), 1); renderRel(); renderIG(); });
   });
   function num(n) { return Number(n || 0).toLocaleString("pt-BR"); }
   function renderRel() {
@@ -758,6 +762,53 @@
       ]));
     }
   }
+
+  // Instagram: seguidores no mês e como foram os últimos posts (coleta diária da plataforma)
+  function renderIG() {
+    var w = document.getElementById("rel-ig"); w.textContent = "";
+    if (!eu.instagram && !igm.length) { w.appendChild(el("div", { class: "note" }, [ic("info"), el("div", {}, [posta ? "Conecte seu Instagram em " : "Os números do seu Instagram aparecem aqui quando ele estiver conectado na plataforma. ", posta ? el("a", { href: "#conta", style: "font-weight:700", text: "Conta" }) : null, posta ? " pra ver seguidores e engajamento aqui." : ""])])); return; }
+    var ini = CR.iso(relMes), fim = CR.iso(new Date(relMes.getFullYear(), relMes.getMonth() + 1, 1));
+    var doMes = igm.filter(function (m) { return m.dia >= ini && m.dia < fim; }).sort(function (a, b) { return a.dia < b.dia ? -1 : 1; });
+    if (!doMes.length) { w.appendChild(el("div", { class: "empty", style: "padding:20px" }, [el("span", { text: "Ainda sem números do Instagram nesse mês. A plataforma atualiza uma vez por dia." })])); return; }
+    var prim = doMes[0], ult = doMes[doMes.length - 1], posts = ult.posts || [];
+    var dif = (ult.seguidores || 0) - (prim.seguidores || 0);
+    var eng = posts.reduce(function (t, p) { return t + (p.curtidas || 0) + (p.comentarios || 0); }, 0);
+    var st = el("div", { class: "stats" });
+    [[num(ult.seguidores), "seguidores"], [(dif > 0 ? "+" : "") + num(dif), "seguidores no mês" + (doMes.length > 1 ? " (desde " + CR.data(prim.dia) + ")" : "")], [posts.length ? num(Math.round(eng / posts.length)) : "—", "curtidas + comentários por post"]].forEach(function (x) {
+      st.appendChild(el("div", { class: "stat" }, [el("b", { text: String(x[0]) }), el("span", { text: x[1] })]));
+    });
+    w.appendChild(st);
+    if (posts.length) {
+      var maior = Math.max.apply(null, posts.map(function (p) { return (p.curtidas || 0) + (p.comentarios || 0); })) || 1;
+      var cp = el("div", { class: "card", style: "margin-top:12px;display:grid;gap:12px" }, [el("div", { class: "eyebrow", text: "Últimos posts" })]);
+      posts.slice(0, 8).forEach(function (p) {
+        var e = (p.curtidas || 0) + (p.comentarios || 0);
+        cp.appendChild(el("div", { class: "prog" }, [
+          el("div", { class: "lb" }, [/^https?:\/\//.test(p.link || "") ? el("a", { href: p.link, target: "_blank", rel: "noopener", text: (p.legenda || "Post").slice(0, 60) || "Post" }) : el("span", { text: (p.legenda || "Post").slice(0, 60) }), el("b", { text: num(e) })]),
+          el("div", { class: "track" }, el("i", { style: "width:" + Math.round(e / maior * 100) + "%" })),
+          el("div", { class: "small muted", text: [CR.data(String(p.data || "").slice(0, 10)), num(p.curtidas) + " curtidas", num(p.comentarios) + " comentários"].join(" · ") })
+        ]));
+      });
+      w.appendChild(cp);
+    }
+  }
+
+  // assistente: o cliente pergunta sobre os conteúdos, os resultados e o Instagram dele
+  function assistente(id, titulo) {
+    var c = document.getElementById(id); c.textContent = "";
+    var inp = el("input", { type: "text", maxlength: "1500", placeholder: "Ex.: Qual post foi melhor esse mês?", "aria-label": "Sua pergunta", style: "flex:1 1 220px;min-width:0" });
+    var out = el("div", { class: "leg", hidden: true });
+    var btn = el("button", { class: "btn dark", type: "button", text: "Perguntar", onclick: async function () {
+      var p = inp.value.trim(); if (!p) { inp.focus(); return; }
+      btn.disabled = true; out.hidden = false; out.textContent = "Pensando…";
+      try { out.textContent = await api.perguntar(p); } catch (x) { out.textContent = x.message; }
+      btn.disabled = false;
+    } });
+    inp.addEventListener("keydown", function (ev) { if (ev.key === "Enter") btn.click(); });
+    c.appendChild(el("div", { style: "display:grid;gap:10px" }, [el("h2", { text: titulo }), el("p", { class: "small muted", style: "margin:0", text: "Responde na hora com os dados da sua conta: conteúdos, relatórios e Instagram." }), el("div", { style: "display:flex;gap:8px;flex-wrap:wrap" }, [inp, btn]), out]));
+  }
+  assistente("as-rel", "Dúvida sobre os números?");
+  assistente("as-ajuda", "Pergunte ao assistente");
 
   // ---------------------------------------------------------------- materiais e marca
   var CAT = { guia: "Guia", arquivo: "Arquivo", marca: "Marca" };

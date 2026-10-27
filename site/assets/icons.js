@@ -33,7 +33,10 @@
     money: "M3 6h18v12H3zM12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM6 9v.01M18 15v.01",
     report: "M6 3h9l4 4v14H6zM14 3v5h5M9 17v-3M12 17v-6M15 17v-4",
     team: "M12 11a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM5 20a7 7 0 0 1 14 0M4.5 11.5a2.5 2.5 0 1 1 1.5-4.6M19.5 11.5a2.5 2.5 0 1 0-1.5-4.6",
-    plus: "M12 5v14M5 12h14"
+    plus: "M12 5v14M5 12h14",
+    bot: "M12 3v3M5 9h14v10H5zM9 13h.01M15 13h.01M9.5 16.5h5M3 13v3M21 13v3",
+    play: "M7 5l12 7-12 7z",
+    insta: "M7 3h10a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V7a4 4 0 0 1 4-4zM12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM17.5 6.5h.01"
   };
   function ic(nome, cls) {
     var ns = "http://www.w3.org/2000/svg", s = document.createElementNS(ns, "svg");
