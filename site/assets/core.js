@@ -202,13 +202,55 @@
       async enviarLead(l) { ok(await sb.from("leads").insert(l)); },
       async leads() { return ok(await sb.from("leads").select("*").order("criado_em", { ascending: false })); },
       async statusLead(id, status) { ok(await sb.from("leads").update({ status: status }).eq("id", id)); },
-      async apagarLead(id) { ok(await sb.from("leads").delete().eq("id", id)); }
+      async apagarLead(id) { ok(await sb.from("leads").delete().eq("id", id)); },
+      async editarLead(id, campos) { ok(await sb.from("leads").update(campos).eq("id", id)); },
+      async ajustes() { return ok(await sb.from("ajustes").select("*").order("criado_em", { ascending: false })); },
+      // ideias de conteúdo: a agência sugere, o cliente aprova ou manda as dele
+      async ideias(clienteId) { return ok(await doCliente(sb.from("ideias").select("*").order("criado_em", { ascending: false }), clienteId)); },
+      async criarIdeia(campos) { return ok(await sb.from("ideias").insert(campos).select().single()); },
+      async editarIdeia(id, campos) { ok(await sb.from("ideias").update(campos).eq("id", id)); },
+      async apagarIdeia(id) { ok(await sb.from("ideias").delete().eq("id", id)); },
+      // materiais: arquivos da marca, guias e documentos (sem cliente = vale pra todos)
+      async materiais(clienteId) {
+        var q = sb.from("materiais").select("*").order("criado_em", { ascending: false });
+        if (clienteId) q = q.or("cliente_id.is.null,cliente_id.eq." + clienteId);
+        return ok(await q);
+      },
+      async criarMaterial(campos, arquivo) {
+        if (arquivo) {
+          var path = (campos.cliente_id || "geral") + "/materiais/" + Date.now() + "-" + nomeArquivo(arquivo.name);
+          ok(await sb.storage.from(BUCKET).upload(path, arquivo, { contentType: arquivo.type, upsert: false }));
+          campos.arquivo_path = path; campos.arquivo_nome = arquivo.name;
+        }
+        return ok(await sb.from("materiais").insert(campos).select().single());
+      },
+      async apagarMaterial(m) {
+        if (m.arquivo_path) await sb.storage.from(BUCKET).remove([m.arquivo_path]);
+        ok(await sb.from("materiais").delete().eq("id", m.id));
+      },
+      async urlMaterial(m, baixar) {
+        if (m.arquivo_path) return ok(await sb.storage.from(BUCKET).createSignedUrl(m.arquivo_path, 3600, baixar ? { download: m.arquivo_nome || true } : undefined)).signedUrl;
+        return baixar ? linkDownload(m.link_externo) : m.link_externo;
+      },
+      // relatório do mês: os números de tráfego que a agência lança (os de conteúdo saem das entregas)
+      async relatorios(clienteId) { return ok(await doCliente(sb.from("relatorios").select("*").order("mes", { ascending: false }), clienteId)); },
+      async salvarRelatorio(campos) { ok(await sb.from("relatorios").upsert(campos, { onConflict: "cliente_id,mes" })); },
+      // financeiro
+      async cobrancas(clienteId) { return ok(await doCliente(sb.from("cobrancas").select("*").order("vencimento", { ascending: false }), clienteId)); },
+      async criarCobranca(campos) { ok(await sb.from("cobrancas").insert(campos)); },
+      async editarCobranca(id, campos) { ok(await sb.from("cobrancas").update(campos).eq("id", id)); },
+      async apagarCobranca(id) { ok(await sb.from("cobrancas").delete().eq("id", id)); },
+      // equipe da agência
+      async equipe() { return ok(await sb.from("equipe").select("*").order("criado_em")); },
+      async salvarMembro(m) { if (m.id) ok(await sb.from("equipe").update(m).eq("id", m.id)); else ok(await sb.from("equipe").insert(m)); },
+      async apagarMembro(id) { ok(await sb.from("equipe").delete().eq("id", id)); }
     };
   }
+  function doCliente(q, clienteId) { return clienteId ? q.eq("cliente_id", clienteId) : q; }
 
   // ---------------------------------------------------------------- modo demonstração
   function apiDemo() {
-    var KEY = "cr-demo-v5";
+    var KEY = "cr-demo-v6";
     function dia(n) { var d = new Date(); d.setDate(d.getDate() + n); return iso(d); }
     function semente() {
       var cli = "demo-cliente", adm = "demo-admin", cli2 = "demo-cliente-2";
@@ -217,7 +259,8 @@
         sessao: null,
         perfis: [
           { id: adm, email: "agencia@demo", nome: "Ana Cláudia", empresa: "Criativos Rápidos", whatsapp: "", plano: "Sem plano", ajustes_mes: 0, papel: "admin", criado_em: dia(-40) },
-          { id: cli, email: "cliente@demo", nome: "Marina Souza", empresa: "Brasa Burger", whatsapp: "(61) 90000-0000", plano: "Crescimento", ajustes_mes: 2, papel: "cliente", instagram: "brasaburger", criado_em: dia(-12) },
+          { id: cli, email: "cliente@demo", nome: "Marina Souza", empresa: "Brasa Burger", whatsapp: "(61) 90000-0000", plano: "Crescimento", ajustes_mes: 2, papel: "cliente", instagram: "brasaburger", responsavel: "q1", criado_em: dia(-12),
+            marca: { cores: ["#E4572E", "#1B1B1B", "#FFC145", "#FFF8EC"], fontes: "Títulos em Montserrat Black, textos em Inter", tom: "Informal, como amigo. Frases curtas.", palavras: "bora, fominha, chapa quente", evitar: "Prometer entrega em 10 minutos", obs: "" } },
           { id: cli2, email: "lis@demo", nome: "Letícia Ramos", empresa: "Lis Moda", whatsapp: "(61) 90000-0001", plano: "Largada", ajustes_mes: 1, papel: "cliente", criado_em: dia(-3) }
         ],
         entregas: [
@@ -230,23 +273,45 @@
         ],
         ajustes: [{ id: "a1", entrega_id: "e5", cliente_id: cli, comentario: "Trocar para frete grátis acima de R$ 60.", criado_em: new Date().toISOString() }],
         briefings: [
-          { id: "b1", cliente_id: cli, nome: "Marina Souza", empresa: "Brasa Burger", whatsapp: "(61) 90000-0000", plano: "Crescimento", status: "pronto", criado_em: dia(-10) + "T09:00", texto: "*BRIEFING · CRIATIVOS RÁPIDOS*\n\n*Sobre*\n• Nome: Marina Souza\n• Empresa: Brasa Burger\n• Segmento: hamburgueria delivery\n\n*Negócio*\n• O que vende: hambúrgueres artesanais, combos e porções\n• Diferencial: carne moída na hora e entrega rápida\n\n*Cliente*\n• Quem é: jovens de 18 a 35 anos do bairro\n\n*Conteúdo*\n• Divulgar primeiro: combo duplo de terça e quarta" }
+          { id: "b1", cliente_id: cli, nome: "Marina Souza", empresa: "Brasa Burger", whatsapp: "(61) 90000-0000", plano: "Crescimento", status: "pronto", criado_em: dia(-10) + "T09:00",
+            respostas: { campos: { primeiro: "combo duplo de terça e quarta", promo: "Aniversário da casa no fim do mês", assuntos: "Como a gente escolhe a carne e o ponto certo", cores: "laranja e preto", palavras: "bora, fominha", proibido: "Prometer entrega em 10 minutos", publico: "jovens de 18 a 35 anos do bairro" }, grupos: { tom: ["t1"], estilo: ["e3", "e5"], aparecer: ["a2"] } },
+            texto: "*BRIEFING · CRIATIVOS RÁPIDOS*\n\n*Sobre*\n• Nome: Marina Souza\n• Empresa: Brasa Burger\n• Segmento: hamburgueria delivery\n\n*Negócio*\n• O que vende: hambúrgueres artesanais, combos e porções\n• Diferencial: carne moída na hora e entrega rápida\n\n*Cliente*\n• Quem é: jovens de 18 a 35 anos do bairro\n\n*Conteúdo*\n• Divulgar primeiro: combo duplo de terça e quarta" }
         ],
         leads: [
           { id: "l1", nome: "Rafael Lima", whatsapp: "(61) 98888-0000", empresa: "Barbearia do Rafa", interesse: "Crescimento", origem: "home", status: "novo", criado_em: dia(0) + "T11:30" },
-          { id: "l2", nome: "Patrícia Alves", whatsapp: "(61) 97777-0000", empresa: "@doces.paty", interesse: "Largada", origem: "videos", status: "conversando", criado_em: dia(-1) + "T19:10" }
+          { id: "l2", nome: "Patrícia Alves", whatsapp: "(61) 97777-0000", empresa: "@doces.paty", interesse: "Largada", origem: "videos", status: "conversando", proximo_contato: dia(0), observacao: "Pediu exemplo de vídeo de confeitaria.", criado_em: dia(-1) + "T19:10" }
+        ],
+        ideias: [
+          { id: "i1", cliente_id: cli, origem: "agencia", tipo: "reels", titulo: "Bastidores da chapa", descricao: "15 segundos mostrando a carne sendo moída na hora e indo pra chapa. Fecha com o combo duplo.", status: "sugerida", criado_em: dia(-1) + "T10:00" },
+          { id: "i2", cliente_id: cli, origem: "agencia", tipo: "carrossel", titulo: "Monte seu burger ideal", descricao: "Carrossel interativo: pão, carne, queijo e molho. Último slide chama pro pedido.", status: "sugerida", criado_em: dia(-1) + "T10:05" },
+          { id: "i3", cliente_id: cli, origem: "cliente", tipo: "post", titulo: "Aniversário da casa", descricao: "Queria um post avisando que no dia 30 tem sobremesa grátis no combo.", status: "nova", criado_em: dia(0) + "T08:40" },
+          { id: "i4", cliente_id: cli, origem: "agencia", tipo: "stories", titulo: "Enquete: qual o molho da semana?", descricao: "Sequência de 3 stories com enquete.", status: "producao", criado_em: dia(-6) + "T10:00" }
+        ],
+        materiais: [
+          { id: "m1", cliente_id: cli, categoria: "marca", titulo: "Logo Brasa Burger", descricao: "PNG com fundo transparente.", demo_url: D + "brasa-avatar.png", arquivo_nome: "logo-brasa.png", criado_em: dia(-11) + "T10:00" },
+          { id: "m2", cliente_id: cli, categoria: "arquivo", titulo: "Fotos do cardápio", descricao: "As fotos que a gente usa nos conteúdos.", demo_url: D + "brasa-post-combo.jpg", arquivo_nome: "fotos-cardapio.jpg", criado_em: dia(-9) + "T10:00" }
+        ],
+        relatorios: [],
+        cobrancas: [
+          { id: "c1", cliente_id: cli, descricao: "Mensalidade Crescimento", valor: 797, vencimento: iso(new Date(new Date().getFullYear(), new Date().getMonth(), 10)), status: "paga", pago_em: iso(new Date(new Date().getFullYear(), new Date().getMonth(), 9)), forma: "PIX", criado_em: dia(-12) },
+          { id: "c2", cliente_id: cli2, descricao: "Pacote Largada", valor: 97, vencimento: dia(-3), status: "paga", pago_em: dia(-3), forma: "Cartão", criado_em: dia(-3) }
+        ],
+        equipe: [
+          { id: "q1", nome: "Ana Cláudia", funcao: "Direção", email: "agencia@demo", whatsapp: "", cuida: ["relacionamento", "producao", "resultados"], ativo: true, criado_em: dia(-40) }
         ]
       };
     }
     function ler() { try { return JSON.parse(localStorage.getItem(KEY)) || semente(); } catch (e) { return semente(); } }
     function gravar(d) { try { localStorage.setItem(KEY, JSON.stringify(d)); } catch (e) {} }
     var db = ler();
-    if (!db.leads) db.leads = [];
+    ["leads", "ideias", "materiais", "relatorios", "cobrancas", "equipe"].forEach(function (k) { if (!db[k]) db[k] = []; });
     var mem = {}; // arquivos enviados nesta aba (não ficam salvos no modo demonstração)
     function salvar() { gravar(db); }
     function uid() { return "d" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6); }
     function espera() { return new Promise(function (r) { setTimeout(r, 120); }); }
     function achar(lista, id) { return db[lista].find(function (x) { return x.id === id; }); }
+    function doCli(lista, clienteId) { return lista.filter(function (x) { return !clienteId || x.cliente_id === clienteId; }); }
+    function ordena(lista) { return lista.slice().sort(function (a, b) { return a.criado_em < b.criado_em ? 1 : -1; }); }
     var ouvintes = [];
     return {
       demo: true,
@@ -323,6 +388,34 @@
       async leads() { return db.leads.slice().sort(function (a, b) { return a.criado_em < b.criado_em ? 1 : -1; }); },
       async statusLead(id, status) { achar("leads", id).status = status; salvar(); },
       async apagarLead(id) { db.leads = db.leads.filter(function (b) { return b.id !== id; }); salvar(); },
+      async editarLead(id, campos) { Object.assign(achar("leads", id), campos); salvar(); },
+      async ajustes() { return db.ajustes.slice(); },
+      async ideias(clienteId) { return ordena(doCli(db.ideias, clienteId)); },
+      async criarIdeia(c) { await espera(); var i = Object.assign({ id: uid(), criado_em: new Date().toISOString() }, c); db.ideias.push(i); salvar(); return i; },
+      async editarIdeia(id, c) { Object.assign(achar("ideias", id), c); salvar(); },
+      async apagarIdeia(id) { db.ideias = db.ideias.filter(function (x) { return x.id !== id; }); salvar(); },
+      async materiais(clienteId) { return ordena(db.materiais.filter(function (m) { return !clienteId || !m.cliente_id || m.cliente_id === clienteId; })); },
+      async criarMaterial(c, arquivo) {
+        await espera();
+        var m = Object.assign({ id: uid(), criado_em: new Date().toISOString() }, c);
+        if (arquivo) { mem[m.id] = URL.createObjectURL(arquivo); m.arquivo_nome = arquivo.name; }
+        db.materiais.push(m); salvar(); return m;
+      },
+      async apagarMaterial(m) { db.materiais = db.materiais.filter(function (x) { return x.id !== m.id; }); salvar(); },
+      async urlMaterial(m, baixar) { return mem[m.id] || m.demo_url || (baixar ? linkDownload(m.link_externo) : m.link_externo) || ""; },
+      async relatorios(clienteId) { return doCli(db.relatorios, clienteId).slice().sort(function (a, b) { return a.mes < b.mes ? 1 : -1; }); },
+      async salvarRelatorio(c) {
+        var r = db.relatorios.find(function (x) { return x.cliente_id === c.cliente_id && x.mes === c.mes; });
+        if (r) Object.assign(r, c); else db.relatorios.push(Object.assign({ id: uid(), criado_em: new Date().toISOString() }, c));
+        salvar();
+      },
+      async cobrancas(clienteId) { return doCli(db.cobrancas, clienteId).slice().sort(function (a, b) { return a.vencimento < b.vencimento ? 1 : -1; }); },
+      async criarCobranca(c) { [].concat(c).forEach(function (x) { db.cobrancas.push(Object.assign({ id: uid(), status: "aberta", criado_em: new Date().toISOString() }, x)); }); salvar(); },
+      async editarCobranca(id, c) { Object.assign(achar("cobrancas", id), c); salvar(); },
+      async apagarCobranca(id) { db.cobrancas = db.cobrancas.filter(function (x) { return x.id !== id; }); salvar(); },
+      async equipe() { return db.equipe.slice(); },
+      async salvarMembro(m) { if (m.id) Object.assign(achar("equipe", m.id), m); else db.equipe.push(Object.assign({ id: uid(), ativo: true, criado_em: new Date().toISOString() }, m)); salvar(); },
+      async apagarMembro(id) { db.equipe = db.equipe.filter(function (x) { return x.id !== id; }); salvar(); },
       resetar() { db = semente(); mem = {}; salvar(); }
     };
   }
@@ -364,7 +457,92 @@
   function instalado() { try { return matchMedia("(display-mode: standalone)").matches || navigator.standalone === true; } catch (e) { return false; } }
   function ios() { return /iphone|ipad|ipod/i.test(navigator.userAgent); }
 
+  // ---------------------------------------------------------------- menu (barra lateral, barra de baixo e "Mais")
+  // grupos: [[título ou "", [[id, rótulo, ícone], ...]], ...]; rodape: itens que ficam embaixo na lateral;
+  // aba: ids que aparecem na barra de baixo do celular (o resto vai pro "Mais")
+  function menu(o) {
+    var todos = [];
+    o.grupos.forEach(function (g) { todos = todos.concat(g[1]); });
+    todos = todos.concat(o.rodape || []);
+    function link(v, curto) {
+      var a = el("a", { href: "#" + v[0], "data-v": v[0] }, [CR.ic(v[2]), el("span", { text: curto && v[3] ? v[3] : v[1] })]);
+      a.appendChild(el("span", { class: "badge", hidden: true, "data-badge": v[0] }));
+      return a;
+    }
+    var side = document.getElementById("nav-side");
+    o.grupos.forEach(function (g) {
+      if (g[0]) side.appendChild(el("span", { class: "grp", text: g[0] }));
+      g[1].forEach(function (v) { side.appendChild(link(v)); });
+    });
+    var rod = document.getElementById("nav-rodape");
+    if (rod) (o.rodape || []).forEach(function (v) { rod.appendChild(link(v)); });
+    var tab = document.getElementById("nav-tab");
+    o.aba.forEach(function (id) { var v = todos.find(function (x) { return x[0] === id; }); tab.appendChild(link(v, true)); });
+    var resto = todos.filter(function (v) { return o.aba.indexOf(v[0]) < 0; });
+    var sheet = el("dialog", { class: "mais", "aria-label": "Mais opções" });
+    var lista = el("nav", { class: "mais-in" });
+    var grupoDe = {};
+    o.grupos.forEach(function (g) { g[1].forEach(function (v) { grupoDe[v[0]] = g[0]; }); });
+    var ultimo = null;
+    resto.forEach(function (v) {
+      var g = grupoDe[v[0]] || "";
+      if (g && g !== ultimo) lista.appendChild(el("span", { class: "grp", text: g }));
+      else if (!g && ultimo) lista.appendChild(el("hr"));
+      ultimo = g;
+      var a = link(v); a.addEventListener("click", function () { sheet.close(); }); lista.appendChild(a);
+    });
+    sheet.appendChild(lista);
+    sheet.addEventListener("click", function (ev) { if (ev.target === sheet) sheet.close(); });
+    document.body.appendChild(sheet);
+    var mais = el("a", { href: "#", "data-mais": "", role: "button" }, [CR.ic("menu"), el("span", { text: "Mais" })]);
+    mais.appendChild(el("span", { class: "badge", hidden: true, "data-badge-mais": "" }));
+    mais.addEventListener("click", function (ev) { ev.preventDefault(); sheet.showModal(); });
+    tab.appendChild(mais);
+
+    function ir(v) {
+      if (!todos.some(function (x) { return x[0] === v; })) v = todos[0][0];
+      todos.forEach(function (x) { var n = document.getElementById("v-" + x[0]); if (n) n.hidden = x[0] !== v; });
+      document.querySelectorAll("[data-v]").forEach(function (a) { if (a.dataset.v === v) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current"); });
+      var m = document.querySelector("[data-mais]");
+      if (resto.some(function (x) { return x[0] === v; })) m.setAttribute("aria-current", "page"); else m.removeAttribute("aria-current");
+      if (sheet.open) sheet.close();
+      window.scrollTo(0, 0);
+      if (o.aoIr) o.aoIr(v);
+    }
+    window.addEventListener("hashchange", function () { ir(location.hash.slice(1)); });
+    return {
+      ir: ir,
+      // n: { id: quantidade }
+      badges: function (n) {
+        document.querySelectorAll("[data-badge]").forEach(function (b) { var k = n[b.dataset.badge] || 0; b.textContent = k; b.hidden = !k; });
+        var r = resto.reduce(function (t, v) { return t + (n[v[0]] || 0); }, 0);
+        var b = document.querySelector("[data-badge-mais]"); b.textContent = r; b.hidden = !r;
+      }
+    };
+  }
+
+  // as respostas do /brief que ajudam a pensar ideias e a marca
+  var BRIEF_GRUPOS = {
+    tom: { t1: "Bem informal, como amigo", t2: "Simpático, mas profissional", t3: "Formal" },
+    aparecer: { a1: "Topa aparecer nos vídeos", a2: "Às vezes aparece nos vídeos", a3: "Prefere não aparecer" },
+    estilo: { e1: "Moderna", e2: "Elegante", e3: "Divertida", e4: "Minimalista", e5: "Popular", e6: "Premium", e7: "Acolhedora", e8: "Técnica / séria" }
+  };
+  function briefingResumo(b) {
+    var r = (b && b.respostas) || {}, c = r.campos || {}, g = r.grupos || {};
+    function grupo(k) { return (g[k] || []).map(function (id) { return (BRIEF_GRUPOS[k] || {})[id] || id; }).join(", "); }
+    return {
+      primeiro: c.primeiro || "", promo: c.promo || "", assuntos: c.assuntos || "", publico: c.publico || "",
+      cores: c.cores || "", naocores: c.naocores || "", palavras: c.palavras || "", proibido: c.proibido || "", refs: c.refs || "",
+      tom: grupo("tom"), estilo: grupo("estilo"), aparecer: grupo("aparecer")
+    };
+  }
+  function reais(v) { return "R$ " + Number(v || 0).toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
+  function precoNumero(p) { var m = String(p || "").replace(/\./g, "").match(/(\d+(?:,\d+)?)/); return m ? parseFloat(m[1].replace(",", ".")) : 0; }
+  // contratado no mês para um plano mensal (soma das quantidades)
+  function totalPlano(P) { return P && P.qtd ? Object.keys(P.qtd).reduce(function (t, k) { return t + P.qtd[k]; }, 0) : 0; }
+
   window.CR = {
+    menu: menu, briefingResumo: briefingResumo, reais: reais, precoNumero: precoNumero, totalPlano: totalPlano,
     api: api, demo: DEMO, demoForcado: DEMO_FORCADO, lancamento: LANCAMENTO, config: C,
     el: el, data: data, dataLonga: dataLonga, iso: iso, MESES: MESES, SEMANA: SEMANA,
     toast: toast, whats: whats, copiar: copiar, soDigitos: soDigitos,

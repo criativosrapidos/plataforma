@@ -81,7 +81,7 @@ O Supabase é onde ficam os logins dos clientes, o banco de dados e os arquivos 
    SUPABASE_ANON_KEY: "eyJ...",
    ```
    A chave "anon" pode ficar no site: as regras do banco garantem que cada cliente só vê o que é dele. **Nunca** coloque a chave "service_role" no site.
-3. A partir daí os pedidos de contato e os briefings passam a ficar no painel (abas **Interessados** e **Briefings**), e não mais só no e-mail.
+3. A partir daí os pedidos de contato e os briefings passam a ficar no painel (abas **CRM** e **Briefings**), e não mais só no e-mail.
 
 ### 5. Primeiro acesso da agência
 1. Entre em https://criativosrapidos.com.br/entrar e clique em **Criar minha conta** com o e-mail da agência.
@@ -96,7 +96,7 @@ Crie uma segunda conta com outro e-mail, escolha um plano pra ela no painel (aba
 
 ## Rotina com cada cliente
 
-0. **Interessados:** quem preenche o formulário da home ou de `/videos` aparece em **Interessados** no painel, com botão pra chamar no WhatsApp. Atualize o status (novo, conversando, fechou, não fechou).
+0. **CRM:** quem preenche o formulário da home ou de `/videos` aparece no **CRM** do painel, num quadro por etapa (novo, conversando, proposta enviada, fechou, não fechou), com botão pra chamar no WhatsApp. Você também cadastra contatos à mão, anota a conversa e marca o próximo contato: no dia, ele aparece em **Visão geral → Precisa de você**.
 
 1. Fechou a venda e recebeu o pagamento: mande o link `criativosrapidos.com.br/brief?plano=crescimento`, com o plano dele no final.
 2. O briefing chega na aba **Briefings** do painel (e, se ele quiser, também no WhatsApp).
@@ -110,6 +110,14 @@ Crie uma segunda conta com outro e-mail, escolha um plano pra ela no painel (aba
    - A entrega aparece **Em ajuste**, com o comentário dele.
    - Use **Enviar versão ajustada** e ela volta para ele aprovar.
    - O limite de ajustes do mês aparece para o cliente e é contado no banco.
+
+7. **Ideias:** no painel, aba **Ideias**, escolha o cliente: o que ele contou no briefing aparece do lado. Mande a sugestão e ela aparece no app dele, que responde **Quero essa** ou **Agora não**. O cliente também manda ideias pelo app. Quando for produzir, use **Virar entrega**.
+8. **Marca e materiais:** preencha cores, fontes e o jeito de falar de cada cliente (o botão **Puxar do briefing** adianta) e suba logo, manual, guias e arquivos. Tudo aparece no app do cliente, em **Marca** e **Materiais**. Escolha **Pra todos os clientes** pra guias que valem pra todo mundo.
+9. **Financeiro:** no começo do mês, clique em **Lançar mensalidades** (cria uma cobrança pra cada plano mensal, com o valor do plano). Lance pacotes avulsos em **Nova cobrança** e marque como **Paga** quando receber. O cliente vê os pagamentos dele em **Conta**.
+10. **Relatórios:** o que foi entregue, aprovado e publicado sai sozinho das entregas. No fim do mês, em **Relatórios → Lançar**, coloque os números do tráfego (investido, alcance, cliques, conversas…) e um comentário. O cliente vê em **Relatórios** no app.
+11. **Equipe:** cadastre os agentes, diga de que parte cada um cuida e escolha o responsável de cada cliente na aba **Clientes**.
+
+**Atualizou o site com essas abas novas?** Rode o `supabase/schema.sql` de novo no SQL Editor (pode rodar quantas vezes quiser): ele cria as tabelas de ideias, materiais, relatórios, cobranças e equipe sem apagar nada.
 
 **Link do Google Drive:** no Drive, clique em **Compartilhar** e escolha **Qualquer pessoa com o link** como **Leitor**. Copie o link e cole no painel.
 

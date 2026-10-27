@@ -14,6 +14,10 @@ create table if not exists public.perfis (
   criado_em timestamptz not null default now()
 );
 
+-- marca do cliente e quem da equipe cuida dele (a agência preenche)
+alter table public.perfis add column if not exists marca jsonb;        -- { cores: [], fontes, tom, palavras, evitar, obs }
+alter table public.perfis add column if not exists responsavel uuid;   -- id em public.equipe
+
 -- cria o perfil automaticamente quando alguém cria a conta em /entrar
 create or replace function public.novo_usuario() returns trigger
 language plpgsql security definer set search_path = public as $$
@@ -43,6 +47,7 @@ language plpgsql security definer set search_path = public as $$
 begin
   if auth.uid() is not null and not public.is_admin() then
     new.papel := old.papel; new.plano := old.plano; new.ajustes_mes := old.ajustes_mes; new.email := old.email; new.instagram := old.instagram;
+    new.marca := old.marca; new.responsavel := old.responsavel;
   end if;
   return new;
 end $$;
@@ -183,6 +188,132 @@ create policy "lead: editar" on public.leads for update using (public.is_admin()
 drop policy if exists "lead: apagar" on public.leads;
 create policy "lead: apagar" on public.leads for delete using (public.is_admin());
 
+-- CRM: etapa "proposta enviada", anotação e data do próximo contato
+alter table public.leads add column if not exists observacao text;
+alter table public.leads add column if not exists proximo_contato date;
+alter table public.leads drop constraint if exists leads_status_check;
+alter table public.leads add constraint leads_status_check check (status in ('novo', 'conversando', 'proposta', 'fechou', 'perdido'));
+drop policy if exists "lead: criar (agência)" on public.leads;
+create policy "lead: criar (agência)" on public.leads for insert to authenticated with check (public.is_admin());
+
+
+-- ============================================================ equipe da agência (os agentes de cada área)
+create table if not exists public.equipe (
+  id uuid primary key default gen_random_uuid(),
+  nome text not null,
+  funcao text,
+  email text,
+  whatsapp text,
+  cuida text[] not null default '{}',   -- relacionamento, producao, resultados
+  ativo boolean not null default true,
+  criado_em timestamptz not null default now()
+);
+alter table public.equipe enable row level security;
+drop policy if exists "equipe: agência" on public.equipe;
+create policy "equipe: agência" on public.equipe for all using (public.is_admin()) with check (public.is_admin());
+
+-- ============================================================ ideias de conteúdo
+-- a agência sugere (status sugerida) e o cliente diz se quer; o cliente também manda as dele (status nova)
+create table if not exists public.ideias (
+  id uuid primary key default gen_random_uuid(),
+  cliente_id uuid not null references public.perfis (id) on delete cascade,
+  origem text not null default 'agencia' check (origem in ('agencia', 'cliente')),
+  tipo text not null default 'post' check (tipo in ('stories', 'post', 'carrossel', 'reels', 'anuncio', 'video', 'outro')),
+  titulo text not null check (char_length(titulo) between 1 and 160),
+  descricao text check (char_length(descricao) <= 4000),
+  referencia text check (char_length(referencia) <= 500),
+  status text not null default 'sugerida' check (status in ('nova', 'sugerida', 'aprovada', 'producao', 'feita', 'descartada')),
+  criado_em timestamptz not null default now()
+);
+create index if not exists ideias_cliente on public.ideias (cliente_id, criado_em desc);
+
+-- o cliente só responde às sugestões (quero / agora não); o resto só a agência
+create or replace function public.protege_ideia() returns trigger
+language plpgsql security definer set search_path = public as $$
+begin
+  if auth.uid() is not null and not public.is_admin() then
+    if old.status <> 'sugerida' or new.status not in ('aprovada', 'descartada') then
+      raise exception 'Essa ideia não pode mais ser alterada';
+    end if;
+    new.cliente_id := old.cliente_id; new.origem := old.origem; new.tipo := old.tipo; new.titulo := old.titulo;
+    new.descricao := old.descricao; new.referencia := old.referencia;
+  end if;
+  return new;
+end $$;
+drop trigger if exists protege_ideia on public.ideias;
+create trigger protege_ideia before update on public.ideias for each row execute function public.protege_ideia();
+
+alter table public.ideias enable row level security;
+drop policy if exists "ideia: ver" on public.ideias;
+create policy "ideia: ver" on public.ideias for select using (cliente_id = auth.uid() or public.is_admin());
+drop policy if exists "ideia: criar" on public.ideias;
+create policy "ideia: criar" on public.ideias for insert with check (
+  public.is_admin() or (cliente_id = auth.uid() and origem = 'cliente' and status = 'nova')
+);
+drop policy if exists "ideia: editar" on public.ideias;
+create policy "ideia: editar" on public.ideias for update using (cliente_id = auth.uid() or public.is_admin());
+drop policy if exists "ideia: apagar" on public.ideias;
+create policy "ideia: apagar" on public.ideias for delete using (public.is_admin());
+
+-- ============================================================ materiais: marca, guias e arquivos (sem cliente = pra todos)
+create table if not exists public.materiais (
+  id uuid primary key default gen_random_uuid(),
+  cliente_id uuid references public.perfis (id) on delete cascade,
+  categoria text not null default 'arquivo' check (categoria in ('marca', 'guia', 'arquivo')),
+  titulo text not null,
+  descricao text,
+  arquivo_path text,
+  arquivo_nome text,
+  link_externo text,
+  criado_em timestamptz not null default now()
+);
+alter table public.materiais enable row level security;
+drop policy if exists "material: ver" on public.materiais;
+create policy "material: ver" on public.materiais for select to authenticated using (cliente_id is null or cliente_id = auth.uid() or public.is_admin());
+drop policy if exists "material: agência" on public.materiais;
+create policy "material: agência" on public.materiais for all using (public.is_admin()) with check (public.is_admin());
+
+-- ============================================================ relatório do mês (tráfego; os números de conteúdo saem das entregas)
+create table if not exists public.relatorios (
+  id uuid primary key default gen_random_uuid(),
+  cliente_id uuid not null references public.perfis (id) on delete cascade,
+  mes date not null,                 -- sempre o dia 1 do mês
+  investido numeric(10, 2),
+  alcance int,
+  impressoes int,
+  cliques int,
+  conversas int,                     -- mensagens ou contatos que vieram dos anúncios
+  seguidores int,                    -- seguidores novos no mês
+  resumo text,
+  link text,                         -- relatório completo (PDF, Drive, Looker…)
+  criado_em timestamptz not null default now(),
+  unique (cliente_id, mes)
+);
+alter table public.relatorios enable row level security;
+drop policy if exists "relatório: ver" on public.relatorios;
+create policy "relatório: ver" on public.relatorios for select using (cliente_id = auth.uid() or public.is_admin());
+drop policy if exists "relatório: agência" on public.relatorios;
+create policy "relatório: agência" on public.relatorios for all using (public.is_admin()) with check (public.is_admin());
+
+-- ============================================================ financeiro: cobranças (o cliente vê as dele)
+create table if not exists public.cobrancas (
+  id uuid primary key default gen_random_uuid(),
+  cliente_id uuid not null references public.perfis (id) on delete cascade,
+  descricao text not null,
+  valor numeric(10, 2) not null check (valor >= 0),
+  vencimento date not null,
+  status text not null default 'aberta' check (status in ('aberta', 'paga', 'cancelada')),
+  pago_em date,
+  forma text,
+  criado_em timestamptz not null default now()
+);
+create index if not exists cobrancas_venc on public.cobrancas (vencimento desc);
+alter table public.cobrancas enable row level security;
+drop policy if exists "cobrança: ver" on public.cobrancas;
+create policy "cobrança: ver" on public.cobrancas for select using (cliente_id = auth.uid() or public.is_admin());
+drop policy if exists "cobrança: agência" on public.cobrancas;
+create policy "cobrança: agência" on public.cobrancas for all using (public.is_admin()) with check (public.is_admin());
+
 -- ============================================================ Instagram conectado (o token fica só no servidor)
 create table if not exists public.instagram_contas (
   cliente_id uuid primary key references public.perfis (id) on delete cascade,
@@ -208,7 +339,8 @@ on conflict (id) do nothing;
 
 drop policy if exists "arquivos: ver" on storage.objects;
 create policy "arquivos: ver" on storage.objects for select
-  using (bucket_id = 'entregas' and (public.is_admin() or (storage.foldername(name))[1] = auth.uid()::text));
+  using (bucket_id = 'entregas' and (public.is_admin() or (storage.foldername(name))[1] = auth.uid()::text
+         or (auth.uid() is not null and (storage.foldername(name))[1] = 'geral')));
 drop policy if exists "arquivos: enviar" on storage.objects;
 create policy "arquivos: enviar" on storage.objects for insert with check (bucket_id = 'entregas' and public.is_admin());
 drop policy if exists "arquivos: trocar" on storage.objects;
