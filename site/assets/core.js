@@ -38,17 +38,47 @@
   ];
   // os agentes de IA que já vêm prontos (iguais aos do supabase/schema.sql)
   var AGENTES_INICIAIS = [
-    { nome: "Diretor", cargo: "CEO", missao: "Toda semana, olhe a agência inteira e diga as 3 a 5 prioridades da semana: clientes em risco, dinheiro parado, vendas que estão esfriando e oportunidades. Seja direto e diga quem deve fazer o quê.", fontes: ["crm", "clientes", "entregas", "relatorios", "financeiro", "instagram"], saidas: ["alerta", "tarefa"], frequencia: "semanal" },
-    { nome: "Relacionamento", cargo: "SDR / pré-vendas", missao: "Escreva a próxima mensagem de WhatsApp pra cada contato novo do CRM e pra quem tem retorno marcado pra hoje. Contato novo: apresente a Criativos Rápidos e faça uma pergunta sobre o negócio. Em andamento: retome a partir da anotação.", fontes: ["crm"], saidas: ["mensagem_whatsapp"], frequencia: "diaria" },
-    { nome: "Sucesso do cliente", cargo: "Atendimento", missao: "Ache clientes que precisam de atenção: conteúdo parado esperando aprovação há dias, ajuste pedido e não entregue, cliente sem briefing, entregas do mês abaixo do plano. Escreva a mensagem certa pra cada um ou uma tarefa pra equipe.", fontes: ["clientes", "briefings", "entregas"], saidas: ["mensagem_whatsapp", "tarefa", "alerta"], frequencia: "diaria" },
-    { nome: "Estrategista de conteúdo", cargo: "Planejamento", missao: "Pense ideias de reels, carrosséis, posts e stories pra cada cliente, com a cara do negócio dele (briefing e marca), sem repetir o que já foi feito. Até 3 ideias por cliente.", fontes: ["clientes", "briefings", "entregas", "ideias", "instagram"], saidas: ["ideia"], frequencia: "semanal" },
-    { nome: "Redator", cargo: "Copywriter", missao: "Escreva a legenda das entregas que ainda estão sem legenda, no tom de voz da marca do cliente, com chamada pra ação no final.", fontes: ["clientes", "entregas"], saidas: ["legenda"], frequencia: "diaria" },
-    { nome: "Monitor de redes", cargo: "Social media", missao: "Acompanhe o Instagram dos clientes: quais posts tiveram mais e menos curtidas e comentários, se os seguidores cresceram ou caíram. Aponte o que funcionou e sugira o que repetir.", fontes: ["clientes", "instagram", "entregas"], saidas: ["alerta", "ideia"], frequencia: "semanal" },
-    { nome: "Gestor de tráfego", cargo: "Tráfego pago", missao: "Analise os números dos anúncios de cada cliente (investido, alcance, cliques, conversas, campanhas). Aponte campanha cara demais, verba mal distribuída e o que testar. Seja específico.", fontes: ["relatorios", "clientes"], saidas: ["alerta", "tarefa"], frequencia: "semanal" },
-    { nome: "Analista de resultados", cargo: "Relatórios", missao: "Escreva o comentário do relatório do mês de cada cliente que ainda não tem comentário: o que foi bem, o que pode melhorar e o que vamos testar no próximo mês, em linguagem simples.", fontes: ["relatorios", "entregas", "instagram"], saidas: ["comentario_relatorio"], frequencia: "semanal" },
-    { nome: "Financeiro", cargo: "Cobrança", missao: "Escreva um lembrete educado pra cada cobrança em atraso e avise se algum cliente de plano mensal ficou sem mensalidade lançada no mês.", fontes: ["financeiro", "clientes"], saidas: ["mensagem_whatsapp", "alerta"], frequencia: "diaria" },
-    { nome: "SEO", cargo: "Site da agência", missao: "Analise as páginas do site da Criativos Rápidos (título, descrição, textos, títulos das seções) e sugira melhorias de SEO pra aparecer no Google em buscas de agência de marketing e social media. Uma tarefa por melhoria, com o texto pronto.", fontes: ["site"], saidas: ["tarefa"], frequencia: "semanal" }
+    { nome: "Helena Prado", cargo: "CEO", area: "direcao", genero: "f", frequencia: "semanal", fontes: ["crm", "clientes", "entregas", "relatorios", "financeiro", "instagram"], saidas: ["alerta", "tarefa"], missao: "Você dirige a Criativos Rápidos. Toda semana, olhe a agência inteira e diga as 3 a 5 prioridades: clientes em risco, dinheiro parado, vendas esfriando, gargalos na produção e oportunidades. Diga qual diretoria resolve cada uma." },
+    { nome: "Bruno Rocha", cargo: "Diretor Comercial", area: "comercial", genero: "m", chefe: "Helena Prado", frequencia: "semanal", fontes: ["crm", "clientes", "financeiro"], saidas: ["alerta", "tarefa"], missao: "Você cuida das vendas. Toda semana, analise o funil do CRM, a taxa de fechamento e os contatos parados. Diga o que o time comercial deve fazer pra fechar mais." },
+    { nome: "Renata Teles", cargo: "Diretora de Operações", area: "operacional", genero: "f", chefe: "Helena Prado", frequencia: "diaria", fontes: ["clientes", "entregas", "briefings", "instagram"], saidas: ["alerta", "tarefa"], missao: "Você cuida da produção e da entrega. Todo dia, veja se cada cliente está recebendo o que o plano promete, o que está parado esperando aprovação, ajustes pendentes e clientes sem briefing. Aponte o gargalo e quem resolve." },
+    { nome: "Ricardo Faria", cargo: "Diretor Administrativo", area: "administrativo", genero: "m", chefe: "Helena Prado", frequencia: "semanal", fontes: ["clientes", "briefings", "site"], saidas: ["alerta", "tarefa"], missao: "Você cuida da organização: cadastro completo dos clientes, contratos e o site da agência. Aponte o que está faltando ou desorganizado." },
+    { nome: "Paula Siqueira", cargo: "Diretora Financeira", area: "financeiro", genero: "f", chefe: "Helena Prado", frequencia: "semanal", fontes: ["financeiro", "clientes"], saidas: ["alerta", "tarefa"], missao: "Você cuida do dinheiro. Toda semana, mostre o previsto e o recebido no mês, as cobranças em atraso, mensalidades não lançadas e riscos de caixa." },
+    { nome: "Lívia Campos", cargo: "Pré-vendas (SDR)", area: "comercial", genero: "f", chefe: "Bruno Rocha", frequencia: "diaria", fontes: ["crm"], saidas: ["mensagem_whatsapp"], missao: "Escreva a próxima mensagem de WhatsApp pra cada contato novo do CRM e pra quem tem retorno marcado pra hoje." },
+    { nome: "Caio Nunes", cargo: "Consultor de vendas", area: "comercial", genero: "m", chefe: "Bruno Rocha", frequencia: "diaria", fontes: ["crm"], saidas: ["mensagem_whatsapp", "tarefa"], missao: "Cuide dos contatos em conversa e com proposta enviada: escreva a mensagem que leva pro fechamento, respondendo a objeção anotada e indicando o plano certo." },
+    { nome: "Gabriel Souza", cargo: "Atendimento e sucesso do cliente", area: "comercial", genero: "m", chefe: "Bruno Rocha", frequencia: "diaria", fontes: ["clientes", "briefings", "entregas", "financeiro"], saidas: ["mensagem_whatsapp", "alerta"], missao: "Cuide da jornada do cliente: quem pagou e não mandou o briefing recebe o link; quem tem conteúdo parado recebe um lembrete; quem pediu ajuste recebe retorno." },
+    { nome: "Diego Alves", cargo: "Estrategista de conteúdo", area: "operacional", genero: "m", chefe: "Renata Teles", etapa: "pauta", frequencia: "diaria", fontes: ["clientes", "briefings", "ideias", "instagram"], saidas: [], missao: "Monte a pauta do mês de cada cliente com a quantidade exata do plano: um mix que vende (atrair, educar, provar e vender)." },
+    { nome: "Bianca Reis", cargo: "Roteirista", area: "operacional", genero: "f", chefe: "Renata Teles", etapa: "roteiro", frequencia: "diaria", fontes: ["clientes", "briefings"], saidas: [], missao: "Escreva o roteiro de cada reels, vídeo e carrossel: gancho nos 3 primeiros segundos, desenvolvimento curto e chamada pra ação." },
+    { nome: "Thiago Brandão", cargo: "Copywriter", area: "operacional", genero: "m", chefe: "Renata Teles", etapa: "copy", frequencia: "diaria", fontes: ["clientes", "briefings"], saidas: [], missao: "Escreva a legenda e o texto da arte de cada conteúdo, no tom de voz da marca, com chamada pra ação clara." },
+    { nome: "Camila Duarte", cargo: "Diretora de arte", area: "operacional", genero: "f", chefe: "Renata Teles", etapa: "arte", frequencia: "diaria", fontes: ["clientes"], saidas: [], missao: "Faça a direção de arte de cada post, carrossel, story e anúncio: formato, composição, cores da marca, fontes e destaque." },
+    { nome: "Pedro Santana", cargo: "Editor de vídeo", area: "operacional", genero: "m", chefe: "Renata Teles", etapa: "edicao", frequencia: "diaria", fontes: ["clientes"], saidas: [], missao: "Faça o plano de edição de cada reels e vídeo: cortes segundo a segundo, texto na tela, legendas, trilha e duração." },
+    { nome: "Larissa Melo", cargo: "Social media", area: "operacional", genero: "f", chefe: "Renata Teles", frequencia: "semanal", fontes: ["clientes", "instagram", "entregas"], saidas: ["alerta", "ideia"], missao: "Acompanhe o Instagram dos clientes, aponte o que funcionou e sugira ideias pra repetir." },
+    { nome: "André Costa", cargo: "Gestor de tráfego", area: "operacional", genero: "m", chefe: "Renata Teles", frequencia: "semanal", fontes: ["relatorios", "clientes"], saidas: ["alerta", "tarefa"], missao: "Analise os números dos anúncios de cada cliente e da própria agência. Aponte campanha cara demais, verba mal distribuída e o que testar." },
+    { nome: "Natália Ribeiro", cargo: "Estrategista de tráfego", area: "operacional", genero: "f", chefe: "Renata Teles", frequencia: "manual", fontes: ["clientes", "briefings", "relatorios"], saidas: ["tarefa"], missao: "Monte a estratégia de tráfego: objetivo, público, oferta, ângulos de copy, formatos e por quê, duração dos vídeos, ganchos, campanhas e orçamento de teste." },
+    { nome: "Aline Barros", cargo: "Cadastro e contratos", area: "administrativo", genero: "f", chefe: "Ricardo Faria", frequencia: "semanal", fontes: ["clientes", "briefings", "financeiro"], saidas: ["tarefa"], missao: "Confira se cada cliente tem cadastro completo (contato, plano, briefing, marca e contrato) e liste o que falta." },
+    { nome: "Felipe Matos", cargo: "SEO e site", area: "administrativo", genero: "m", chefe: "Ricardo Faria", frequencia: "semanal", fontes: ["site"], saidas: ["tarefa"], missao: "Analise o site da Criativos Rápidos e sugira melhorias de SEO, uma tarefa por melhoria, com o texto pronto." },
+    { nome: "Sofia Andrade", cargo: "Analista de resultados", area: "administrativo", genero: "f", chefe: "Ricardo Faria", autonomia: "automatico", frequencia: "semanal", fontes: ["relatorios", "entregas", "instagram"], saidas: ["comentario_relatorio"], missao: "Escreva o comentário do relatório do mês de cada cliente: o que foi bem, o que melhorar e o que testar no próximo mês." },
+    { nome: "Vinícius Lopes", cargo: "Cobrança", area: "financeiro", genero: "m", chefe: "Paula Siqueira", frequencia: "diaria", fontes: ["financeiro", "clientes"], saidas: ["mensagem_whatsapp"], missao: "Escreva um lembrete educado pra cada cobrança em atraso, oferecendo ajuda se o cliente já pagou." }
   ];
+
+  // rosto ilustrado de cada agente (SVG desenhado aqui, igual sempre pro mesmo nome)
+  function avatar(nome, genero) {
+    var h = 0; String(nome || "").split("").forEach(function (c) { h = (h * 31 + c.charCodeAt(0)) >>> 0; });
+    function pega(l, k) { return l[(h >>> k) % l.length]; }
+    var pele = pega(["#F6D3B8", "#EDB98A", "#D08B5B", "#AE6B44", "#7A4A2D", "#5C3A26"], 0);
+    var cabelo = pega(["#1E1A18", "#2E211B", "#4A3022", "#7A4E2D", "#B07A43", "#D8B27A", "#6E6E6E"], 3);
+    var fundo = pega(["#FFD400", "#F2E6C9", "#CFE3F7", "#D8F0DF", "#F7D9D6", "#E3DDF7"], 6);
+    var roupa = pega(["#101216", "#2B4C7E", "#7A2E2E", "#2E6B4A", "#5A4A8A", "#C26A1E"], 9);
+    var f = genero === "f", estilo = (h >>> 12) % 3;
+    var atras = f ? ["M14 30c0-14 8-22 18-22s18 8 18 22v18H14z", "M16 30c0-13 7-21 16-21s16 8 16 21v8c-3 2-6 3-8 3H24c-2 0-5-1-8-3z", "M15 31c0-14 8-23 17-23s17 9 17 23v24H15z"][estilo] : "";
+    var topo = f ? ["M17 28c1-11 7-17 15-17s14 6 15 17c-5-6-11-8-15-8s-10 2-15 8z", "M18 27c2-10 7-15 14-15s12 5 14 15c-6-4-10-5-14-5s-8 1-14 5z", "M17 29c0-11 7-18 15-18s15 7 15 18c-4-7-9-9-15-9s-11 2-15 9z"][estilo]
+      : ["M18 27c0-9 6-15 14-15s14 6 14 15c-2-4-7-6-14-6s-12 2-14 6z", "M19 25c1-8 6-12 13-12s12 4 13 12c-4-3-8-4-13-4s-9 1-13 4z", "M17 28c0-10 6-17 15-17s15 7 15 17l-2-3c-3 0-4-4-7-4s-4 3-6 3-3-3-6-3-4 4-7 4z"][estilo];
+    return '<svg viewBox="0 0 64 64" class="av" aria-hidden="true"><circle cx="32" cy="32" r="32" fill="' + fundo + '"/>' +
+      (atras ? '<path d="' + atras + '" fill="' + cabelo + '"/>' : "") +
+      '<path d="M12 64c1-11 9-17 20-17s19 6 20 17z" fill="' + roupa + '"/><rect x="27" y="38" width="10" height="10" rx="4" fill="' + pele + '"/>' +
+      '<ellipse cx="32" cy="29" rx="13" ry="14" fill="' + pele + '"/><path d="' + topo + '" fill="' + cabelo + '"/>' +
+      '<circle cx="27" cy="30" r="1.6" fill="#1E1A18"/><circle cx="37" cy="30" r="1.6" fill="#1E1A18"/>' +
+      '<path d="M28 35.5c2.4 2 5.6 2 8 0" stroke="#7A3B2A" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg>';
+  }
   function plano(nome) { return PLANOS.find(function (p) { return p.nome === nome; }) || PLANOS[0]; }
 
   // ---------------------------------------------------------------- utilidades
@@ -257,6 +287,9 @@
       async perguntar(pergunta, clienteId) { var r = await sb.functions.invoke("agentes/perguntar", { method: "POST", body: { pergunta: pergunta, cliente_id: clienteId || null } }); if (r.error) throw new Error(await erroFuncao(r.error, "agentes")); return r.data.resposta; },
       async igMetricas(clienteId) { return ok(await doCliente(sb.from("ig_metricas").select("*").order("dia", { ascending: false }).limit(clienteId ? 40 : 400), clienteId)); },
       async atualizarMetricasIG() { var r = await sb.functions.invoke("instagram/metricas", { method: "POST" }); if (r.error) throw new Error(await erroFuncao(r.error)); return r.data.atualizados; },
+      async producao(clienteId) { return ok(await doCliente(sb.from("producao").select("*").neq("etapa", "cancelado").order("data_sugerida", { ascending: true, nullsFirst: false }).limit(1000), clienteId)); },
+      async editarProducao(id, c) { c.atualizado_em = new Date().toISOString(); ok(await sb.from("producao").update(c).eq("id", id)); },
+      async briefingIA(texto) { var r = await sb.functions.invoke("agentes/briefing", { method: "POST", body: { texto: texto } }); if (r.error) throw new Error(await erroFuncao(r.error, "agentes")); return r.data; },
       async sugestoes() { return ok(await sb.from("agente_sugestoes").select("*").order("criado_em", { ascending: false }).limit(200)); },
       async editarSugestao(id, campos) { ok(await sb.from("agente_sugestoes").update(campos).eq("id", id)); },
       async trafegoContas() { var r = await sb.functions.invoke("trafego/contas", { method: "POST" }); if (r.error) throw new Error(await erroFuncao(r.error, "tráfego")); return r.data.contas; },
@@ -276,7 +309,7 @@
 
   // ---------------------------------------------------------------- modo demonstração
   function apiDemo() {
-    var KEY = "cr-demo-v7";
+    var KEY = "cr-demo-v8";
     function dia(n) { var d = new Date(); d.setDate(d.getDate() + n); return iso(d); }
     function semente() {
       var cli = "demo-cliente", adm = "demo-admin", cli2 = "demo-cliente-2";
@@ -323,11 +356,20 @@
           { id: "c2", cliente_id: cli2, descricao: "Pacote Largada", valor: 97, vencimento: dia(-3), status: "paga", pago_em: dia(-3), forma: "Cartão", criado_em: dia(-3) }
         ],
         // os agentes de IA (os mesmos 10 do schema.sql) e exemplos do que eles deixam pra aprovar
-        agentes: AGENTES_INICIAIS.map(function (a, k) { return Object.assign({ id: "ag" + (k + 1), ativo: true, modelo: "claude-opus-5-5", ordem: k + 1, criado_em: dia(-5) }, a); }),
+        agentes: AGENTES_INICIAIS.map(function (a, k) {
+          var chefe = a.chefe ? AGENTES_INICIAIS.findIndex(function (x) { return x.nome === a.chefe; }) : -1;
+          return Object.assign({ id: "ag" + (k + 1), ativo: true, modelo: "claude-opus-5-5", ordem: k + 1, autonomia: a.etapa ? "automatico" : "aprovar", chefe_id: chefe >= 0 ? "ag" + (chefe + 1) : null, criado_em: dia(-5) }, a);
+        }),
+        producao: [
+          { id: "pr1", cliente_id: cli, mes: dia(0).slice(0, 8) + "01", tipo: "reels", titulo: "Do pedido à porta em 30 segundos", objetivo: "provar", data_sugerida: dia(5), etapa: "roteiro", criado_em: dia(-1) },
+          { id: "pr2", cliente_id: cli, mes: dia(0).slice(0, 8) + "01", tipo: "carrossel", titulo: "3 erros que deixam o hambúrguer seco", objetivo: "educar", data_sugerida: dia(6), etapa: "copy", roteiro: "Slide 1: Seu hambúrguer sai seco? · Slide 2: Erro 1, carne magra demais · Slide 3: Erro 2, prensar na chapa · Slide 4: Erro 3, passar do ponto · Slide 5: Na Brasa é carne moída na hora · Slide 6: Peça o combo duplo", criado_em: dia(-2) },
+          { id: "pr3", cliente_id: cli, mes: dia(0).slice(0, 8) + "01", tipo: "post", titulo: "Combo da semana", objetivo: "vender", data_sugerida: dia(7), etapa: "arte", legenda: "Duas carnes, queijo derretendo e preço de amigo. Peça pelo link da bio!", texto_arte: "COMBO DUPLO", criado_em: dia(-2) },
+          { id: "pr4", cliente_id: cli, mes: dia(0).slice(0, 8) + "01", tipo: "reels", titulo: "Bastidores da chapa", objetivo: "atrair", data_sugerida: dia(8), etapa: "producao", roteiro: "0-3s: close da carne caindo na chapa, texto \"Isso aqui é sexta à noite\". 3-15s: montagem do burger. 15-20s: mordida. Fecha com o logo.", legenda: "Ouviu esse barulho? 🔥 Peça pelo link da bio.", texto_arte: "Sexta à noite", plano_edicao: "Vertical 1080x1920, 20s. Cortes a cada 2s no ritmo da batida; texto na tela nos 3 primeiros segundos; legenda automática; trilha animada sem voz.", criado_em: dia(-3) }
+        ],
         sugestoes: [
-          { id: "s1", agente_id: "ag2", tipo: "mensagem_whatsapp", prioridade: "alta", lead_id: "l1", titulo: "Primeira mensagem: Rafael Lima", status: "pendente", criado_em: dia(0) + "T09:00",
+          { id: "s1", agente_id: "ag6", tipo: "mensagem_whatsapp", prioridade: "alta", lead_id: "l1", titulo: "Primeira mensagem: Rafael Lima", status: "pendente", criado_em: dia(0) + "T09:00",
             conteudo: { texto: "Oi, Rafael! Aqui é da Criativos Rápidos. Vi que você se interessou pelo plano Crescimento pra Barbearia do Rafa. Hoje vocês já postam no Instagram com frequência ou está parado?" } },
-          { id: "s2", agente_id: "ag4", tipo: "ideia", prioridade: "media", cliente_id: cli, titulo: "Do pedido à porta", status: "pendente", criado_em: dia(0) + "T09:01",
+          { id: "s2", agente_id: "ag14", tipo: "ideia", prioridade: "media", cliente_id: cli, titulo: "Do pedido à porta", status: "pendente", criado_em: dia(0) + "T09:01",
             conteudo: { formato: "reels", texto: "Cronômetro na tela: pedido chega, carne vai pra chapa, monta, embala e sai pro motoboy. Fecha com \"Peça pelo link da bio\"." } },
           { id: "s3", agente_id: "ag1", tipo: "alerta", prioridade: "alta", cliente_id: cli, titulo: "Brasa Burger com 2 conteúdos parados", status: "pendente", criado_em: dia(0) + "T09:02",
             conteudo: { texto: "Reels e post do combo duplo estão esperando aprovação e vão ao ar amanhã e quinta. Vale chamar a Marina hoje pra não atrasar o calendário." } }
@@ -347,7 +389,7 @@
     function ler() { try { return JSON.parse(localStorage.getItem(KEY)) || semente(); } catch (e) { return semente(); } }
     function gravar(d) { try { localStorage.setItem(KEY, JSON.stringify(d)); } catch (e) {} }
     var db = ler();
-    ["leads", "ideias", "materiais", "relatorios", "cobrancas", "equipe", "sugestoes", "agentes", "ig"].forEach(function (k) { if (!db[k]) db[k] = []; });
+    ["leads", "ideias", "materiais", "relatorios", "cobrancas", "equipe", "sugestoes", "agentes", "ig", "producao"].forEach(function (k) { if (!db[k]) db[k] = []; });
     var mem = {}; // arquivos enviados nesta aba (não ficam salvos no modo demonstração)
     function salvar() { gravar(db); }
     function uid() { return "d" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6); }
@@ -467,6 +509,9 @@
       async igMetricas(clienteId) { return doCli(db.ig, clienteId).slice().sort(function (a, b) { return a.dia < b.dia ? 1 : -1; }); },
       async atualizarMetricasIG() { await espera(); throw new Error("Na demonstração não tem Instagram conectado."); },
       async sugestoes() { return ordena(db.sugestoes); },
+      async producao(clienteId) { return doCli(db.producao, clienteId).filter(function (x) { return x.etapa !== "cancelado"; }).sort(function (a, b) { return (a.data_sugerida || "9") < (b.data_sugerida || "9") ? -1 : 1; }); },
+      async editarProducao(id, c) { Object.assign(achar("producao", id), c); salvar(); },
+      async briefingIA() { await espera(); throw new Error("Na demonstração a IA do briefing não está ligada. No site de verdade, ela lê o seu texto e preenche o formulário."); },
       async editarSugestao(id, c) { Object.assign(achar("sugestoes", id), c); salvar(); },
       async trafegoContas() { await espera(); throw new Error("Na demonstração não tem conta do Meta ligada. No site de verdade, a lista das contas de anúncio aparece aqui."); },
       async sincronizarTrafego() { await espera(); throw new Error("Na demonstração os números não vêm do Meta. No site de verdade, este botão puxa tudo sozinho."); },
@@ -596,7 +641,7 @@
   function totalPlano(P) { return P && P.qtd ? Object.keys(P.qtd).reduce(function (t, k) { return t + P.qtd[k]; }, 0) : 0; }
 
   window.CR = {
-    menu: menu, briefingResumo: briefingResumo, reais: reais, precoNumero: precoNumero, totalPlano: totalPlano,
+    menu: menu, avatar: avatar, briefingResumo: briefingResumo, reais: reais, precoNumero: precoNumero, totalPlano: totalPlano,
     api: api, demo: DEMO, demoForcado: DEMO_FORCADO, lancamento: LANCAMENTO, config: C,
     el: el, data: data, dataLonga: dataLonga, iso: iso, MESES: MESES, SEMANA: SEMANA,
     toast: toast, whats: whats, copiar: copiar, soDigitos: soDigitos,

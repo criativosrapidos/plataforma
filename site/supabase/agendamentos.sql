@@ -14,9 +14,12 @@ select cron.schedule('trafego-meta', '0 9 * * *', format($c$
     headers := jsonb_build_object('Content-Type', 'application/json', 'x-cron-secret', %L));
 $c$, :'projeto', :'segredo'));
 
--- os agentes rodam depois do tráfego e do Instagram, pra já pegarem os números do dia
-select cron.schedule('agentes-ia', '30 9 * * *', format($c$
+-- a esteira roda em sequência (pauta 6h, roteiro 6h20, copy 6h40, arte e edição 7h) e os outros agentes às 7h20 (Brasília)
+select cron.unschedule(jobname) from cron.job where jobname = 'agentes-ia';
+select cron.schedule('agentes-' || g, h, format($c$
   select net.http_post(url := 'https://%s.supabase.co/functions/v1/agentes/agendado',
+    body := jsonb_build_object('grupo', %L),
     headers := jsonb_build_object('Content-Type', 'application/json', 'x-cron-secret', %L),
     timeout_milliseconds := 300000);
-$c$, :'projeto', :'segredo'));
+$c$, :'projeto', g, :'segredo'))
+from (values ('pauta', '0 9 * * *'), ('roteiro', '20 9 * * *'), ('copy', '40 9 * * *'), ('arte', '0 10 * * *'), ('edicao', '5 10 * * *'), ('livres', '20 10 * * *')) as t(g, h);

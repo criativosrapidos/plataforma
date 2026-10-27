@@ -372,21 +372,105 @@ alter table public.assistente_perguntas enable row level security;
 drop policy if exists "assistente: ver" on public.assistente_perguntas;
 create policy "assistente: ver" on public.assistente_perguntas for select using (autor_id = auth.uid() or public.is_admin());
 
--- os 10 agentes iniciais (só entram se a tabela estiver vazia; depois vocês editam no painel)
-insert into public.agentes (nome, cargo, missao, fontes, saidas, frequencia, ordem)
-select * from (values
-  ('Diretor', 'CEO', 'Toda semana, olhe a agência inteira e diga as 3 a 5 prioridades da semana: clientes em risco, dinheiro parado, vendas que estão esfriando e oportunidades. Seja direto e diga quem deve fazer o quê.', array['crm','clientes','entregas','relatorios','financeiro','instagram'], array['alerta','tarefa'], 'semanal', 1),
-  ('Relacionamento', 'SDR / pré-vendas', 'Escreva a próxima mensagem de WhatsApp pra cada contato novo do CRM e pra quem tem retorno marcado pra hoje. Contato novo: apresente a Criativos Rápidos e faça uma pergunta sobre o negócio. Em andamento: retome a partir da anotação.', array['crm'], array['mensagem_whatsapp'], 'diaria', 2),
-  ('Sucesso do cliente', 'Atendimento', 'Ache clientes que precisam de atenção: conteúdo parado esperando aprovação há dias, ajuste pedido e não entregue, cliente sem briefing, entregas do mês abaixo do plano. Escreva a mensagem certa pra cada um ou uma tarefa pra equipe.', array['clientes','briefings','entregas'], array['mensagem_whatsapp','tarefa','alerta'], 'diaria', 3),
-  ('Estrategista de conteúdo', 'Planejamento', 'Pense ideias de reels, carrosséis, posts e stories pra cada cliente, com a cara do negócio dele (briefing e marca), sem repetir o que já foi feito. Até 3 ideias por cliente.', array['clientes','briefings','entregas','ideias','instagram'], array['ideia'], 'semanal', 4),
-  ('Redator', 'Copywriter', 'Escreva a legenda das entregas que ainda estão sem legenda, no tom de voz da marca do cliente, com chamada pra ação no final.', array['clientes','entregas'], array['legenda'], 'diaria', 5),
-  ('Monitor de redes', 'Social media', 'Acompanhe o Instagram dos clientes: quais posts tiveram mais e menos curtidas e comentários, se os seguidores cresceram ou caíram. Aponte o que funcionou e sugira o que repetir.', array['clientes','instagram','entregas'], array['alerta','ideia'], 'semanal', 6),
-  ('Gestor de tráfego', 'Tráfego pago', 'Analise os números dos anúncios de cada cliente (investido, alcance, cliques, conversas, campanhas). Aponte campanha cara demais, verba mal distribuída e o que testar. Seja específico.', array['relatorios','clientes'], array['alerta','tarefa'], 'semanal', 7),
-  ('Analista de resultados', 'Relatórios', 'Escreva o comentário do relatório do mês de cada cliente que ainda não tem comentário: o que foi bem, o que pode melhorar e o que vamos testar no próximo mês, em linguagem simples.', array['relatorios','entregas','instagram'], array['comentario_relatorio'], 'semanal', 8),
-  ('Financeiro', 'Cobrança', 'Escreva um lembrete educado pra cada cobrança em atraso e avise se algum cliente de plano mensal ficou sem mensalidade lançada no mês.', array['financeiro','clientes'], array['mensagem_whatsapp','alerta'], 'diaria', 9),
-  ('SEO', 'Site da agência', 'Analise as páginas do site da Criativos Rápidos (título, descrição, textos, títulos das seções) e sugira melhorias de SEO pra aparecer no Google em buscas de agência de marketing e social media. Uma tarefa por melhoria, com o texto pronto.', array['site'], array['tarefa'], 'semanal', 10)
-) as v(nome, cargo, missao, fontes, saidas, frequencia, ordem)
-where not exists (select 1 from public.agentes);
+-- organograma e esteira: área, chefe, passo da esteira que o agente executa e se age sozinho
+alter table public.agentes add column if not exists area text;            -- direcao, comercial, operacional, administrativo, financeiro
+alter table public.agentes add column if not exists chefe_id uuid references public.agentes (id) on delete set null;
+alter table public.agentes add column if not exists etapa text;           -- pauta, roteiro, copy, arte, edicao (vazio = agente de rascunhos)
+alter table public.agentes add column if not exists autonomia text not null default 'aprovar';
+alter table public.agentes add column if not exists genero text;          -- f ou m, só pro desenho do avatar
+alter table public.agentes drop constraint if exists agentes_autonomia_check;
+alter table public.agentes add constraint agentes_autonomia_check check (autonomia in ('aprovar', 'automatico'));
+
+-- o time inicial (só entra se a tabela estiver vazia; depois vocês editam no painel)
+do $$
+begin
+  if exists (select 1 from public.agentes) then return; end if;
+  insert into public.agentes (nome, cargo, area, genero, etapa, autonomia, frequencia, ordem, fontes, saidas, missao) values
+  ('Helena Prado', 'CEO', 'direcao', 'f', null, 'aprovar', 'semanal', 1, array['crm','clientes','entregas','relatorios','financeiro','instagram'], array['alerta','tarefa'],
+   'Você dirige a Criativos Rápidos. Toda semana, olhe a agência inteira e diga as 3 a 5 prioridades: clientes em risco, dinheiro parado, vendas esfriando, gargalos na produção e oportunidades. Diga qual diretoria resolve cada uma.'),
+  ('Bruno Rocha', 'Diretor Comercial', 'comercial', 'm', null, 'aprovar', 'semanal', 2, array['crm','clientes','financeiro'], array['alerta','tarefa'],
+   'Você cuida das vendas. Toda semana, analise o funil do CRM (novos, conversando, proposta, fechou, perdeu), a taxa de fechamento e os contatos parados. Diga o que o time comercial deve fazer pra fechar mais.'),
+  ('Renata Teles', 'Diretora de Operações', 'operacional', 'f', null, 'aprovar', 'diaria', 3, array['clientes','entregas','briefings','instagram'], array['alerta','tarefa'],
+   'Você cuida da produção e da entrega. Todo dia, veja se cada cliente está recebendo o que o plano promete no mês, o que está parado esperando aprovação, ajustes pendentes e clientes sem briefing. Aponte o gargalo e quem resolve.'),
+  ('Ricardo Faria', 'Diretor Administrativo', 'administrativo', 'm', null, 'aprovar', 'semanal', 4, array['clientes','briefings','site'], array['alerta','tarefa'],
+   'Você cuida da organização da agência: cadastro completo dos clientes (contato, plano, briefing, marca), contratos e o site da agência. Aponte o que está faltando ou desorganizado.'),
+  ('Paula Siqueira', 'Diretora Financeira', 'financeiro', 'f', null, 'aprovar', 'semanal', 5, array['financeiro','clientes'], array['alerta','tarefa'],
+   'Você cuida do dinheiro. Toda semana, mostre o previsto e o recebido no mês, as cobranças em atraso, clientes de plano mensal sem mensalidade lançada e riscos de caixa.'),
+  ('Lívia Campos', 'Pré-vendas (SDR)', 'comercial', 'f', null, 'aprovar', 'diaria', 6, array['crm'], array['mensagem_whatsapp'],
+   'Escreva a próxima mensagem de WhatsApp pra cada contato novo do CRM e pra quem tem retorno marcado pra hoje. Contato novo: apresente a Criativos Rápidos e faça uma pergunta sobre o negócio. Em andamento: retome a partir da anotação.'),
+  ('Caio Nunes', 'Consultor de vendas', 'comercial', 'm', null, 'aprovar', 'diaria', 7, array['crm'], array['mensagem_whatsapp','tarefa'],
+   'Cuide dos contatos em "conversando" e "proposta enviada": escreva a mensagem que leva pro fechamento, respondendo a objeção anotada e indicando o plano certo da tabela pro negócio dele.'),
+  ('Gabriel Souza', 'Atendimento e sucesso do cliente', 'comercial', 'm', null, 'aprovar', 'diaria', 8, array['clientes','briefings','entregas','financeiro'], array['mensagem_whatsapp','alerta'],
+   'Cuide da jornada do cliente: quem pagou e ainda não mandou o briefing recebe a mensagem com o link criativosrapidos.com.br/brief; quem tem conteúdo parado esperando aprovação recebe um lembrete simpático; quem pediu ajuste recebe retorno.'),
+  ('Diego Alves', 'Estrategista de conteúdo', 'operacional', 'm', 'pauta', 'automatico', 'diaria', 9, array['clientes','briefings','ideias','instagram'], array[]::text[],
+   'Monte a pauta do mês de cada cliente com a quantidade exata do plano: um mix que vende (atrair, educar, provar e vender), usando o briefing, a marca, as ideias aprovadas e o que funcionou no Instagram.'),
+  ('Bianca Reis', 'Roteirista', 'operacional', 'f', 'roteiro', 'automatico', 'diaria', 10, array['clientes','briefings'], array[]::text[],
+   'Escreva o roteiro de cada reels, vídeo e carrossel da pauta: gancho nos 3 primeiros segundos, desenvolvimento curto e chamada pra ação. Reels de 15 a 30 segundos, carrossel de 5 a 8 slides.'),
+  ('Thiago Brandão', 'Copywriter', 'operacional', 'm', 'copy', 'automatico', 'diaria', 11, array['clientes','briefings'], array[]::text[],
+   'Escreva a legenda e o texto da arte de cada conteúdo da pauta, no tom de voz da marca, com chamada pra ação clara. Texto de arte curto: no máximo 8 palavras no título.'),
+  ('Camila Duarte', 'Diretora de arte', 'operacional', 'f', 'arte', 'automatico', 'diaria', 12, array['clientes'], array[]::text[],
+   'Faça a direção de arte de cada post, carrossel, story e anúncio: formato, composição, elementos, cores da marca, fontes e o que fica em destaque, pra a arte sair pronta de primeira.'),
+  ('Pedro Santana', 'Editor de vídeo', 'operacional', 'm', 'edicao', 'automatico', 'diaria', 13, array['clientes'], array[]::text[],
+   'Faça o plano de edição de cada reels e vídeo: cortes segundo a segundo, texto na tela, legendas, trilha, ritmo e duração final, pensando em reter até o fim.'),
+  ('Larissa Melo', 'Social media', 'operacional', 'f', null, 'aprovar', 'semanal', 14, array['clientes','instagram','entregas'], array['alerta','ideia'],
+   'Acompanhe o Instagram dos clientes: quais posts tiveram mais e menos curtidas e comentários, se os seguidores cresceram ou caíram. Aponte o que funcionou e sugira ideias pra repetir.'),
+  ('André Costa', 'Gestor de tráfego', 'operacional', 'm', null, 'aprovar', 'semanal', 15, array['relatorios','clientes'], array['alerta','tarefa'],
+   'Analise os números dos anúncios de cada cliente (investido, alcance, cliques, conversas, campanhas). Aponte campanha cara demais, verba mal distribuída e o que testar. Seja específico.'),
+  ('Natália Ribeiro', 'Estrategista de tráfego', 'operacional', 'f', null, 'aprovar', 'manual', 16, array['clientes','briefings','relatorios'], array['tarefa'],
+   'Monte a estratégia de tráfego de cada cliente com tráfego pago: objetivo, público, oferta, ângulos de copy, formatos (imagem, vídeo, carrossel) e por quê, duração dos vídeos, ganchos dos primeiros segundos, estrutura de campanhas e orçamento sugerido pra testar.'),
+  ('Aline Barros', 'Cadastro e contratos', 'administrativo', 'f', null, 'aprovar', 'semanal', 17, array['clientes','briefings','financeiro'], array['tarefa'],
+   'Confira se cada cliente tem cadastro completo (nome, WhatsApp, e-mail, plano, briefing, marca e contrato) e liste o que falta, cliente por cliente.'),
+  ('Felipe Matos', 'SEO e site', 'administrativo', 'm', null, 'aprovar', 'semanal', 18, array['site'], array['tarefa'],
+   'Analise as páginas do site da Criativos Rápidos (título, descrição, textos, títulos das seções) e sugira melhorias de SEO pra aparecer no Google em buscas de agência de marketing e social media. Uma tarefa por melhoria, com o texto pronto.'),
+  ('Sofia Andrade', 'Analista de resultados', 'administrativo', 'f', null, 'automatico', 'semanal', 19, array['relatorios','entregas','instagram'], array['comentario_relatorio'],
+   'Escreva o comentário do relatório do mês de cada cliente que ainda não tem comentário: o que foi bem, o que pode melhorar e o que vamos testar no próximo mês, em linguagem simples.'),
+  ('Vinícius Lopes', 'Cobrança', 'financeiro', 'm', null, 'aprovar', 'diaria', 20, array['financeiro','clientes'], array['mensagem_whatsapp'],
+   'Escreva um lembrete educado de pagamento pra cada cobrança em atraso, sem tom agressivo, oferecendo ajuda se o cliente já pagou.');
+  -- quem responde a quem
+  update public.agentes a set chefe_id = c.id from public.agentes c
+   where c.nome = case
+     when a.area = 'direcao' then null
+     when a.ordem between 2 and 5 then 'Helena Prado'
+     when a.area = 'comercial' then 'Bruno Rocha'
+     when a.area = 'operacional' then 'Renata Teles'
+     when a.area = 'administrativo' then 'Ricardo Faria'
+     when a.area = 'financeiro' then 'Paula Siqueira' end;
+end $$;
+
+-- ============================================================ esteira de produção
+-- a pauta do mês de cada cliente passa por roteiro -> copy -> arte ou edição -> produção (alguém faz o arquivo) -> entregue
+create table if not exists public.producao (
+  id uuid primary key default gen_random_uuid(),
+  cliente_id uuid not null references public.perfis (id) on delete cascade,
+  mes date not null,
+  tipo text not null check (tipo in ('stories', 'post', 'carrossel', 'reels', 'anuncio', 'video', 'outro')),
+  titulo text not null,
+  objetivo text,                              -- atrair, educar, provar, vender
+  data_sugerida date,
+  roteiro text,
+  legenda text,
+  texto_arte text,
+  direcao_arte text,
+  plano_edicao text,
+  etapa text not null default 'roteiro' check (etapa in ('roteiro', 'copy', 'arte', 'edicao', 'producao', 'entregue', 'cancelado')),
+  ideia_id uuid references public.ideias (id) on delete set null,
+  entrega_id uuid references public.entregas (id) on delete set null,
+  atualizado_em timestamptz not null default now(),
+  criado_em timestamptz not null default now()
+);
+create index if not exists producao_etapa on public.producao (etapa, cliente_id);
+alter table public.producao enable row level security;
+drop policy if exists "produção: agência" on public.producao;
+create policy "produção: agência" on public.producao for all using (public.is_admin()) with check (public.is_admin());
+
+-- uso do briefing com IA (formulário público): limite por dia
+create table if not exists public.briefing_ia_uso (
+  chave text not null,
+  dia date not null,
+  usos int not null default 0,
+  primary key (chave, dia)
+);
+alter table public.briefing_ia_uso enable row level security;  -- sem políticas: só a função lê e grava
 
 -- métricas do Instagram dos clientes (coletadas pela função instagram, 1 por dia)
 create table if not exists public.ig_metricas (

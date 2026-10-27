@@ -43,6 +43,35 @@
   .ig a { margin-left: 4px; }
   .ig.erro { color: var(--warn); }
   .ig.ok { color: var(--ok); }
+  .org { display: grid; gap: 14px; }
+  .org-top { display: flex; justify-content: center; }
+  .org-areas { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr)); gap: 14px; align-items: start; }
+  .org-area { background: var(--surface-2); border: 1px solid var(--line); border-radius: 20px; padding: 10px; display: grid; gap: 8px; }
+  .org-area > h3 { font: 800 11px/1 var(--body); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); padding: 6px 6px 2px; }
+  .ag { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 10px 12px; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 4px 12px; align-items: start; }
+  .ag.chefe { border-color: var(--fg); }
+  .ag.off { opacity: .55; }
+  .ag .av { width: 44px; height: 44px; display: block; border-radius: 50%; }
+  .ag.ceo { min-width: min(420px, 100%); }
+  .ag.ceo .av { width: 56px; height: 56px; }
+  .ag .nm { font-weight: 800; font-size: 14px; }
+  .ag .cg { font-size: 12.5px; color: var(--muted); }
+  .ag .tags { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 4px; }
+  .ag .tags span { font-size: 11px; font-weight: 700; border-radius: 99px; padding: 1px 7px; background: var(--surface-2); border: 1px solid var(--line); }
+  .ag .tags span.auto { background: var(--ok-bg); color: var(--ok); border-color: transparent; }
+  .ag .bt { grid-column: 2; display: flex; gap: 2px; margin: 0 0 -6px -10px; }
+  .ag .bt .icon-btn { width: 34px; height: 34px; }
+  .jornada { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(118px, 1fr); gap: 8px; overflow-x: auto; padding-bottom: 6px; }
+  .jp { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 10px; display: grid; gap: 6px; align-content: start; position: relative; }
+  .jp .n { font: 900 22px/1 var(--display); }
+  .jp .t { font-size: 12.5px; font-weight: 700; }
+  .jp .s { font-size: 11.5px; color: var(--muted); }
+  .jp .avs { display: flex; }
+  .jp .avs .av { width: 26px; height: 26px; border-radius: 50%; border: 2px solid var(--surface); margin-right: -6px; }
+  .est-card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 10px; display: grid; gap: 4px; text-align: left; font: inherit; color: inherit; cursor: pointer; }
+  .est-card:hover { border-color: var(--fg); }
+  .est-card .tt { font-weight: 700; font-size: 13.5px; }
+  .est-card .st { font-size: 12px; color: var(--muted); }
   #kpis, #fin-kpis, #rel-kpis { grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr)); }
   @media (max-width: 600px) { #kpis, #fin-kpis, #rel-kpis { grid-template-columns: 1fr 1fr; } .stat b { font-size: 21px; } }
 </style>
@@ -133,6 +162,16 @@
           <div class="empty" id="v-ideias" hidden><b>Nenhuma ideia com esse filtro</b><span>As ideias que os clientes mandam pelo app também aparecem aqui.</span></div>
         </div>
       </div>
+    </main>
+
+    <!-- ESTEIRA -->
+    <main class="view" id="v-esteira" hidden>
+      <div class="view-head">
+        <div><h1>Esteira de produção</h1><p class="lead">A pauta do mês de cada cliente andando sozinha: roteiro, copy, arte ou edição. Em Produção falta só o arquivo; suba e ele vai pro cliente aprovar.</p></div>
+        <div class="f" style="margin:0;min-width:240px"><label for="es-cli">Cliente</label><select id="es-cli"></select></div>
+      </div>
+      <div class="stats" id="es-kpis"></div>
+      <div class="board" id="es-board"></div>
     </main>
 
     <!-- ENTREGAS -->
@@ -276,7 +315,12 @@
         <div class="sec-head"><h2>Pra aprovar</h2><div class="seg" role="group" aria-label="Filtrar rascunhos" id="seg-sug"></div></div>
         <div class="list" id="l-sug"></div>
       </section>
-      <section class="sec"><h2>Os agentes</h2><div class="cards" id="l-agentes"></div></section>
+      <section class="sec"><h2>A jornada</h2><p class="small muted" style="margin:-4px 0 0">Do contato ao relatório: quantos estão em cada etapa e quem cuida dela.</p><div class="jornada" id="jornada"></div></section>
+      <section class="sec">
+        <div class="sec-head"><h2>Organograma</h2><span class="small muted">Toque em ⚙ pra mudar a função de cada um</span></div>
+        <div class="org" id="org"></div>
+      </section>
+      <section class="card pad-l" id="casa" style="display:grid;gap:10px"></section>
     </main>
 
     <!-- EQUIPE -->
@@ -331,6 +375,11 @@
       <div class="f"><label for="ag-nome">Nome</label><input type="text" id="ag-nome" placeholder="Ex.: Igor"></div>
       <div class="f"><label for="ag-cargo">Cargo</label><input type="text" id="ag-cargo" placeholder="Ex.: Social media"></div>
     </div>
+    <div class="row">
+      <div class="f"><label for="ag-area">Área</label><select id="ag-area"><option value="direcao">Direção</option><option value="comercial">Comercial</option><option value="operacional">Operacional</option><option value="administrativo">Administrativo</option><option value="financeiro">Financeiro</option></select></div>
+      <div class="f"><label for="ag-chefe">Responde a</label><select id="ag-chefe"></select></div>
+      <div class="f"><label for="ag-genero">Rosto</label><select id="ag-genero"><option value="f">Mulher</option><option value="m">Homem</option></select></div>
+    </div>
     <div class="f"><label for="ag-missao">Função <span class="muted small">o que ele faz, como você explicaria pra uma pessoa nova</span></label><textarea id="ag-missao" rows="5"></textarea></div>
     <div class="f"><span class="q">O que ele pode ler</span><div class="chips-sel" id="ag-fontes"></div></div>
     <div class="f"><span class="q">O que ele entrega</span><div class="chips-sel" id="ag-saidas"></div></div>
@@ -338,9 +387,38 @@
       <div class="f"><label for="ag-freq">Quando roda</label><select id="ag-freq"><option value="manual">Só quando eu mandar</option><option value="diaria">Todo dia de manhã</option><option value="semanal">Toda segunda de manhã</option></select></div>
       <div class="f"><label for="ag-modelo">Inteligência</label><select id="ag-modelo"><option value="claude-opus-5-5">Máxima (Claude Opus 5.5)</option><option value="claude-sonnet-5-5">Equilibrada (Claude Sonnet 5.5)</option><option value="claude-haiku-5-5">Econômica (Claude Haiku 5.5)</option></select></div>
     </div>
+    <div class="row">
+      <div class="f"><label for="ag-etapa">Trabalha na esteira</label><select id="ag-etapa"><option value="">Não (deixa rascunhos)</option><option value="pauta">Pauta do mês</option><option value="roteiro">Roteiro</option><option value="copy">Copy (legenda e texto da arte)</option><option value="arte">Direção de arte</option><option value="edicao">Plano de edição de vídeo</option></select></div>
+      <div class="f"><label for="ag-auto">Aprovação</label><select id="ag-auto"><option value="aprovar">Pede aprovação antes</option><option value="automatico">Age sozinho</option></select></div>
+    </div>
     <label class="chk"><input type="checkbox" id="ag-ativo" checked> Ativo</label>
     <div class="err" id="ag-err" hidden></div>
     <div class="acts"><button class="btn ghost" type="button" id="ag-cancel">Cancelar</button><button class="btn" type="submit">Salvar agente</button></div>
+  </form>
+</dialog>
+
+<dialog id="dlg-prod">
+  <form class="in" id="f-prod" novalidate>
+    <div class="top" style="display:flex;gap:6px;align-items:center;flex-wrap:wrap"><span class="chip" id="pd-tipo"></span><span class="small muted" id="pd-sobre"></span></div>
+    <h2 id="pd-titulo" style="margin:8px 0 14px"></h2>
+    <div class="f"><label for="pd-roteiro">Roteiro</label><textarea id="pd-roteiro" rows="5"></textarea></div>
+    <div class="row">
+      <div class="f"><label for="pd-arte">Texto da arte</label><textarea id="pd-arte" rows="2"></textarea></div>
+      <div class="f"><label for="pd-data">Data de postagem</label><input type="date" id="pd-data"></div>
+    </div>
+    <div class="f"><label for="pd-legenda">Legenda</label><textarea id="pd-legenda" rows="4"></textarea></div>
+    <div class="f"><label for="pd-dir">Direção de arte</label><textarea id="pd-dir" rows="3"></textarea></div>
+    <div class="f"><label for="pd-ed">Plano de edição</label><textarea id="pd-ed" rows="3"></textarea></div>
+    <div class="row">
+      <div class="f"><label for="pd-etapa">Etapa</label><select id="pd-etapa"></select></div>
+      <div class="f"><label for="pd-arq">Arquivo pronto <span class="muted small">imagem ou vídeo</span></label><input type="file" id="pd-arq" multiple accept="video/*,image/*"></div>
+    </div>
+    <div class="err" id="pd-err" hidden></div>
+    <div class="acts">
+      <button class="btn ghost" type="button" id="pd-cancel">Fechar</button>
+      <button class="btn ghost" type="submit">Salvar</button>
+      <button class="btn" type="button" id="pd-enviar">Enviar pro cliente aprovar</button>
+    </div>
   </form>
 </dialog>
 
@@ -391,14 +469,14 @@
     grupos: [
       ["", [["visao", "Visão geral", "chart", "Geral"]]],
       ["Relacionamento", [["crm", "CRM", "target"], ["clientes", "Clientes", "users"]]],
-      ["Produção", [["briefings", "Briefings", "inbox"], ["ideias", "Ideias", "idea"], ["entregas", "Entregas", "grid"], ["marca", "Marca e materiais", "brand"]]],
+      ["Produção", [["briefings", "Briefings", "inbox"], ["ideias", "Ideias", "idea"], ["esteira", "Esteira", "play"], ["entregas", "Entregas", "grid"], ["marca", "Marca e materiais", "brand"]]],
       ["Resultados", [["financeiro", "Financeiro", "money"], ["relatorios", "Relatórios", "report"]]],
       ["Equipe", [["ia", "Agentes IA", "bot"], ["equipe", "Equipe", "team"]]]
     ],
     aba: ["visao", "crm", "ideias", "entregas"]
   });
   var clientes = [], entregas = [], briefings = [], leads = [];
-  var ideias = [], materiais = [], relatorios = [], cobrancas = [], equipe = [], ajustes = [], agentesIA = [], sugestoes = [];
+  var ideias = [], materiais = [], relatorios = [], cobrancas = [], equipe = [], ajustes = [], agentesIA = [], sugestoes = [], producao = [];
   var hoje = new Date(); hoje.setHours(0, 0, 0, 0);
   var hj = CR.iso(hoje);
   var mesAtual = new Date(hoje.getFullYear(), hoje.getMonth(), 1);
@@ -424,7 +502,7 @@
   var h = new Date().getHours();
   document.getElementById("ola").textContent = (h < 12 ? "Bom dia" : h < 18 ? "Boa tarde" : "Boa noite") + ", " + ((eu.nome || "").split(" ")[0] || "equipe") + "!";
 
-  function cli(id) { return clientes.find(function (x) { return x.id === id; }); }
+  function cli(id) { return id === eu.id ? Object.assign({}, eu, { empresa: "Criativos Rápidos (nós)" }) : clientes.find(function (x) { return x.id === id; }); }
   function nomeCli(id) { var c = cli(id); return c ? (c.empresa || c.nome || c.email) : "?"; }
   function waLead(n) { var d = CR.soDigitos(n); if (d.length === 10 || d.length === 11) d = "55" + d; return d.length >= 12 ? "https://wa.me/" + d : ""; }
 
@@ -444,8 +522,9 @@
     ajustes = await tenta(function () { return api.ajustes(); }, []);
     agentesIA = await tenta(function () { return api.agentes(); }, []);
     sugestoes = await tenta(function () { return api.sugestoes(); }, []);
+    producao = await tenta(function () { return api.producao(); }, []);
     selects(); badges(); visao(); renderEntregas(); renderClientes(); renderBriefings(); renderLeads();
-    renderIdeias(); briefDoCliente(); renderMarca(); renderFin(); renderRel(); renderEquipe(); renderIA();
+    renderIdeias(); briefDoCliente(); renderMarca(); renderFin(); renderRel(); renderEquipe(); renderIA(); renderEsteira();
   }
 
   function atrasadas() { return cobrancas.filter(function (c) { return c.status === "aberta" && c.vencimento < hj; }); }
@@ -457,7 +536,8 @@
       crm: leads.filter(function (l) { return l.status === "novo"; }).length + retornos().filter(function (l) { return l.status !== "novo"; }).length,
       ideias: ideias.filter(function (i) { return i.status === "nova"; }).length,
       financeiro: atrasadas().length,
-      ia: sugestoes.filter(function (x) { return x.status === "pendente"; }).length
+      ia: sugestoes.filter(function (x) { return x.status === "pendente"; }).length,
+      esteira: producao.filter(function (x) { return x.etapa === "producao"; }).length
     });
   }
 
@@ -546,6 +626,8 @@
     if (!mk.dataset.ini && clientes.length) { mk.dataset.ini = "1"; mk.value = clientes[0].id; }
     cliOptions(document.getElementById("c-cli"), ["", "Escolha o cliente"]);
     cliOptions(document.getElementById("as-cli"), ["", "A agência toda"]);
+    var ec = document.getElementById("es-cli"); cliOptions(ec, ["", "Todos"]);
+    if (eu.plano && CR.plano(eu.plano).grupo === "plano" && !ec.querySelector('option[value="' + eu.id + '"]')) ec.insertBefore(el("option", { value: eu.id, text: "Criativos Rápidos (nós)" }), ec.children[1]);
   }
   function opcaoCarrossel() { document.getElementById("w-car").hidden = document.getElementById("n-arq").files.length < 2 || document.getElementById("o-drive").checked; }
   document.getElementById("n-arq").addEventListener("change", opcaoCarrossel);
@@ -1206,31 +1288,149 @@
     } }));
   });
   function nomeAgente(id) { var a = agentesIA.find(function (x) { return x.id === id; }); return a ? a.nome : "Agente"; }
-  function renderIA() { renderSug(); renderAgentes(); }
+  function renderIA() { renderSug(); renderAgentes(); renderJornada(); renderCasa(); }
 
+  var AREAS_ORG = [["comercial", "Comercial"], ["operacional", "Operacional"], ["administrativo", "Administrativo"], ["financeiro", "Financeiro"]];
+  var ETAPAS_NOME = { pauta: "Pauta", roteiro: "Roteiro", copy: "Copy", arte: "Arte", edicao: "Edição" };
+  function avatarEl(a) { var w = el("span"); w.innerHTML = CR.avatar(a.nome, a.genero); return w.firstChild; }
+  function cartaoAg(a, extra) {
+    return el("div", { class: "ag" + (extra ? " " + extra : "") + (a.ativo === false ? " off" : "") }, [
+      avatarEl(a),
+      el("div", { style: "min-width:0" }, [
+        el("div", { class: "nm", text: a.nome }), el("div", { class: "cg", text: a.cargo || "" }),
+        el("div", { class: "tags" }, [
+          a.etapa ? el("span", { text: "Esteira · " + (ETAPAS_NOME[a.etapa] || a.etapa) }) : null,
+          el("span", { class: a.autonomia === "automatico" ? "auto" : "", text: a.autonomia === "automatico" ? "Age sozinho" : "Pede aprovação" }),
+          el("span", { text: a.ativo === false ? "Desligado" : FREQ[a.frequencia || "manual"] })
+        ]),
+        a.ultimo_resultado ? el("div", { class: "cg", style: "margin-top:4px", text: a.ultimo_resultado }) : null
+      ]),
+      el("div", { class: "bt" }, [
+        el("button", { class: "icon-btn", type: "button", "aria-label": "Rodar " + a.nome + " agora", title: "Rodar agora", onclick: async function () {
+          this.disabled = true; CR.toast(a.nome + " está trabalhando… pode levar até 1 minuto.");
+          try { var r = await api.rodarAgente(a.id); CR.toast(a.nome + ": " + (r.resumo || (r.novas ? r.novas + " novos." : "nada novo agora."))); await carregar(); }
+          catch (x) { CR.toast(x.message, true); }
+          this.disabled = false;
+        } }, ic("play")),
+        el("button", { class: "icon-btn", type: "button", "aria-label": "Configurar " + a.nome, title: "Configurar", onclick: function () { abrirAgente(a); } }, ic("edit"))
+      ])
+    ]);
+  }
   function renderAgentes() {
-    var l = document.getElementById("l-agentes"); l.textContent = "";
-    if (!agentesIA.length) l.appendChild(el("div", { class: "empty" }, [ic("bot"), el("b", { text: "Nenhum agente ainda" }), el("span", { text: "Rode o schema.sql do Supabase pra criar os 10 agentes iniciais, ou crie em Novo agente." })]));
-    agentesIA.forEach(function (a) {
-      l.appendChild(el("article", { class: "idea" + (a.ativo === false ? " off" : "") }, [
-        el("div", { class: "top" }, [el("span", { class: "chip", text: a.cargo || "Agente" }), el("span", { class: "pill " + (a.ativo === false ? "descartada" : "aprovada"), text: a.ativo === false ? "Desligado" : "Roda " + FREQ[a.frequencia || "manual"] })]),
-        el("h3", { text: a.nome }),
-        el("p", { text: a.missao }),
-        el("div", { class: "small muted", text: "Lê: " + ((a.fontes || []).map(function (f) { return FONTES[f] || f; }).join(", ") || "nada") }),
-        el("div", { class: "small muted", text: "Entrega: " + ((a.saidas || []).map(function (f) { return SAIDAS[f] || f; }).join(", ") || "alertas e tarefas") + " · inteligência " + (MODELOS[a.modelo] || a.modelo) }),
-        a.ultima_execucao ? el("div", { class: "small", text: "Última vez " + CR.dataLonga(CR.iso(new Date(a.ultima_execucao))) + ": " + (a.ultimo_resultado || "") }) : null,
-        el("div", { class: "acts" }, [
-          el("button", { class: "btn sm", type: "button", onclick: async function () {
-            this.disabled = true; CR.toast(a.nome + " está trabalhando… pode levar até 1 minuto.");
-            try { var r = await api.rodarAgente(a.id); CR.toast(a.nome + ": " + (r.novas ? r.novas + (r.novas === 1 ? " rascunho novo." : " rascunhos novos.") : "nada novo agora.")); await carregar(); }
-            catch (x) { CR.toast(x.message, true); }
-            this.disabled = false;
-          } }, [ic("play"), "Rodar agora"]),
-          el("button", { class: "btn ghost sm", type: "button", onclick: function () { abrirAgente(a); } }, [ic("edit"), "Configurar"])
-        ])
+    var o = document.getElementById("org"); o.textContent = "";
+    if (!agentesIA.length) { o.appendChild(el("div", { class: "empty" }, [ic("bot"), el("b", { text: "Nenhum agente ainda" }), el("span", { text: "Rode o schema.sql do Supabase pra criar o time inicial, ou crie em Novo agente." })])); return; }
+    var ceo = agentesIA.filter(function (a) { return a.area === "direcao"; });
+    if (ceo.length) o.appendChild(el("div", { class: "org-top" }, ceo.map(function (a) { return cartaoAg(a, "chefe ceo"); })));
+    var areas = el("div", { class: "org-areas" });
+    AREAS_ORG.concat([["", "Outros"]]).forEach(function (ar) {
+      var doArea = agentesIA.filter(function (a) { return ar[0] ? a.area === ar[0] : ["direcao", "comercial", "operacional", "administrativo", "financeiro"].indexOf(a.area) < 0; });
+      if (!doArea.length) return;
+      var chefes = doArea.filter(function (a) { return !a.chefe_id || ceo.some(function (c) { return c.id === a.chefe_id; }); });
+      var time = doArea.filter(function (a) { return chefes.indexOf(a) < 0; });
+      areas.appendChild(el("section", { class: "org-area" }, [el("h3", { text: ar[1] })].concat(chefes.map(function (a) { return cartaoAg(a, "chefe"); })).concat(time.map(function (a) { return cartaoAg(a); }))));
+    });
+    o.appendChild(areas);
+  }
+  function agentesDe(fn) { return agentesIA.filter(fn).slice(0, 4); }
+  function renderJornada() {
+    var j = document.getElementById("jornada"); j.textContent = "";
+    var hjMes = limites(mesAtual)[0];
+    var pc = function (e) { return producao.filter(function (p) { return p.etapa === e; }).length; };
+    var semBrief = clientes.filter(function (c) { return CR.plano(c.plano).grupo && !briefingDe(c.id); }).length;
+    [["Venda", leads.filter(function (l) { return l.status !== "fechou" && l.status !== "perdido"; }).length, "contatos em aberto", function (a) { return a.area === "comercial" && /SDR|vendas/i.test(a.cargo || ""); }],
+     ["Pagamento", cobrancas.filter(function (c) { return c.status === "aberta"; }).length, "cobranças em aberto", function (a) { return a.area === "financeiro"; }],
+     ["Briefing", semBrief, "clientes sem briefing", function (a) { return /Atendimento/i.test(a.cargo || ""); }],
+     ["Pauta", producao.filter(function (p) { return p.mes === hjMes; }).length, "conteúdos na pauta do mês", function (a) { return a.etapa === "pauta"; }],
+     ["Roteiro", pc("roteiro"), "esperando roteiro", function (a) { return a.etapa === "roteiro"; }],
+     ["Copy", pc("copy"), "esperando legenda", function (a) { return a.etapa === "copy"; }],
+     ["Arte e edição", pc("arte") + pc("edicao"), "esperando direção", function (a) { return a.etapa === "arte" || a.etapa === "edicao"; }],
+     ["Produção", pc("producao"), "falta o arquivo", function () { return false; }],
+     ["Aprovação", entregas.filter(function (e) { return e.status === "aguardando"; }).length, "com o cliente", function (a) { return /Atendimento/i.test(a.cargo || ""); }],
+     ["Postagem", entregas.filter(function (e) { return e.status === "aprovado" && !e.publicado_em; }).length, "aprovados pra postar", function (a) { return /Social/i.test(a.cargo || ""); }],
+     ["Tráfego", clientes.filter(function (c) { return c.meta_ad_account; }).length, "contas de anúncio ligadas", function (a) { return /tráfego/i.test(a.cargo || ""); }],
+     ["Relatório", relatorios.filter(function (r) { return String(r.mes).slice(0, 10) === hjMes && !r.resumo; }).length, "relatórios sem comentário", function (a) { return /resultados/i.test(a.cargo || ""); }]
+    ].forEach(function (x, k) {
+      var quem = agentesDe(x[3]);
+      j.appendChild(el("div", { class: "jp" }, [
+        el("div", { class: "s", text: (k + 1) + ". " + x[0] }),
+        el("div", { class: "n", text: String(x[1]) }),
+        el("div", { class: "t", text: x[2] }),
+        el("div", { class: "avs", title: quem.map(function (a) { return a.nome; }).join(", ") }, quem.length ? quem.map(avatarEl) : [el("span", { class: "s", text: x[0] === "Produção" ? "vocês ou a ferramenta de vídeo" : "—" })])
       ]));
     });
   }
+  // a própria agência como cliente: a esteira produz o conteúdo da Criativos Rápidos também
+  function renderCasa() {
+    var c = document.getElementById("casa"); c.textContent = "";
+    var sel = el("select", { "aria-label": "Plano da própria agência", style: "max-width:320px" });
+    sel.appendChild(el("option", { value: "Sem plano", text: "Não produzir pra nós" }));
+    CR.PLANOS.filter(function (p) { return p.grupo === "plano"; }).forEach(function (p) { sel.appendChild(el("option", { value: p.nome, text: "No ritmo do plano " + p.nome + " (" + CR.totalPlano(p) + " conteúdos/mês)" })); });
+    sel.value = CR.plano(eu.plano).grupo === "plano" ? eu.plano : "Sem plano";
+    c.append(el("h2", { text: "A Criativos Rápidos também é cliente" }),
+      el("p", { class: "small muted", style: "margin:0", text: "Escolha o ritmo e a esteira monta a pauta, os roteiros e as legendas do nosso próprio Instagram, como faz com os clientes. Pra ela conhecer a agência, preencha o /brief logado como agência e a nossa marca em Marca e materiais." }),
+      el("div", { style: "display:flex;gap:8px;flex-wrap:wrap" }, [sel, el("button", { class: "btn sm", type: "button", text: "Salvar", onclick: async function () {
+        try { await api.salvarPerfil(eu.id, { plano: sel.value }); eu.plano = sel.value; CR.toast("Pronto. A esteira inclui a agência a partir da próxima pauta."); await carregar(); } catch (x) { CR.toast(x.message, true); }
+      } })]));
+  }
+
+  // ---------------------------------------------------------------- esteira de produção
+  var ETAPAS_EST = [["roteiro", "Roteiro"], ["copy", "Copy"], ["arte", "Direção de arte"], ["edicao", "Edição de vídeo"], ["producao", "Produção · falta o arquivo"], ["entregue", "Entregue"]];
+  var prodAtual = null, dlgProd = document.getElementById("dlg-prod");
+  ETAPAS_EST.concat([["cancelado", "Cancelado"]]).forEach(function (e) { document.getElementById("pd-etapa").appendChild(el("option", { value: e[0], text: e[1] })); });
+  document.getElementById("es-cli").addEventListener("change", renderEsteira);
+  function renderEsteira() {
+    var c = document.getElementById("es-cli").value, vis = producao.filter(function (p) { return !c || p.cliente_id === c; });
+    var k = document.getElementById("es-kpis"); k.textContent = "";
+    [[vis.filter(function (p) { return p.mes === limites(mesAtual)[0]; }).length, "na pauta do mês"], [vis.filter(function (p) { return ["roteiro", "copy", "arte", "edicao"].indexOf(p.etapa) >= 0; }).length, "com os agentes"], [vis.filter(function (p) { return p.etapa === "producao"; }).length, "esperando o arquivo", vis.some(function (p) { return p.etapa === "producao"; })], [vis.filter(function (p) { return p.etapa === "entregue"; }).length, "entregues"]].forEach(function (x) {
+      k.appendChild(el("div", { class: "stat" + (x[2] ? " alert" : "") }, [el("b", { text: String(x[0]) }), el("span", { text: x[1] })]));
+    });
+    var b = document.getElementById("es-board"); b.textContent = "";
+    ETAPAS_EST.forEach(function (e) {
+      var l = vis.filter(function (p) { return p.etapa === e[0]; });
+      var col = el("section", { class: "col", "aria-label": e[1] }, [el("h3", {}, [el("span", { text: e[1] }), el("span", { class: "muted", text: String(l.length) })])]);
+      if (!l.length) col.appendChild(el("p", { class: "small muted", style: "margin:0;padding:0 6px 6px", text: "Nada aqui." }));
+      l.slice(0, 40).forEach(function (p) {
+        col.appendChild(el("button", { class: "est-card", type: "button", onclick: function () { abrirProd(p); } }, [
+          el("span", { class: "chip", style: "justify-self:start", text: CR.TIPOS[p.tipo] || p.tipo }),
+          el("span", { class: "tt", text: p.titulo }),
+          el("span", { class: "st", text: [nomeCli(p.cliente_id), p.objetivo, p.data_sugerida ? CR.dataLonga(p.data_sugerida) : ""].filter(Boolean).join(" · ") })
+        ]));
+      });
+      if (l.length > 40) col.appendChild(el("p", { class: "small muted", style: "margin:0;padding:0 6px", text: "+" + (l.length - 40) + " (filtre pelo cliente)" }));
+      b.appendChild(col);
+    });
+  }
+  function abrirProd(p) {
+    prodAtual = p;
+    document.getElementById("pd-tipo").textContent = CR.TIPOS[p.tipo] || p.tipo;
+    document.getElementById("pd-sobre").textContent = [nomeCli(p.cliente_id), p.objetivo].filter(Boolean).join(" · ");
+    document.getElementById("pd-titulo").textContent = p.titulo;
+    [["pd-roteiro", "roteiro"], ["pd-arte", "texto_arte"], ["pd-legenda", "legenda"], ["pd-dir", "direcao_arte"], ["pd-ed", "plano_edicao"], ["pd-data", "data_sugerida"], ["pd-etapa", "etapa"]].forEach(function (x) { document.getElementById(x[0]).value = p[x[1]] || ""; });
+    document.getElementById("pd-arq").value = "";
+    document.getElementById("pd-err").hidden = true;
+    document.getElementById("pd-enviar").hidden = p.etapa === "entregue";
+    dlgProd.showModal();
+  }
+  function camposProd() {
+    return { roteiro: document.getElementById("pd-roteiro").value.trim() || null, texto_arte: document.getElementById("pd-arte").value.trim() || null, legenda: document.getElementById("pd-legenda").value.trim() || null,
+      direcao_arte: document.getElementById("pd-dir").value.trim() || null, plano_edicao: document.getElementById("pd-ed").value.trim() || null, data_sugerida: document.getElementById("pd-data").value || null, etapa: document.getElementById("pd-etapa").value };
+  }
+  document.getElementById("pd-cancel").addEventListener("click", function () { dlgProd.close(); });
+  document.getElementById("f-prod").addEventListener("submit", async function (ev) {
+    ev.preventDefault();
+    try { await api.editarProducao(prodAtual.id, camposProd()); dlgProd.close(); CR.toast("Salvo."); await carregar(); } catch (x) { var er = document.getElementById("pd-err"); er.textContent = x.message; er.hidden = false; }
+  });
+  document.getElementById("pd-enviar").addEventListener("click", async function () {
+    var er = document.getElementById("pd-err"), arqs = Array.prototype.slice.call(document.getElementById("pd-arq").files), c = camposProd();
+    if (!arqs.length) { er.textContent = "Escolha o arquivo pronto (imagem ou vídeo)."; er.hidden = false; return; }
+    this.disabled = true; CR.toast("Enviando…");
+    try {
+      var ent = await api.criarEntrega({ cliente_id: prodAtual.cliente_id, titulo: prodAtual.titulo, tipo: prodAtual.tipo, legenda: c.legenda, data_postagem: c.data_sugerida, hora_postagem: "10:00", publicar: true }, arqs[0], null, arqs.slice(1));
+      await api.editarProducao(prodAtual.id, Object.assign(c, { etapa: "entregue", entrega_id: ent && ent.id || null }));
+      dlgProd.close(); CR.toast("Enviado! Já aparece no app do cliente pra aprovar."); await carregar();
+    } catch (x) { er.textContent = x.message; er.hidden = false; }
+    this.disabled = false;
+  });
 
   function renderSug() {
     var l = document.getElementById("l-sug"); l.textContent = "";
@@ -1293,6 +1493,14 @@
     document.getElementById("ag-freq").value = a.frequencia || "manual";
     document.getElementById("ag-modelo").value = a.modelo || "claude-opus-5-5";
     document.getElementById("ag-ativo").checked = a.ativo !== false;
+    document.getElementById("ag-area").value = a.area || "operacional";
+    document.getElementById("ag-genero").value = a.genero || "f";
+    document.getElementById("ag-etapa").value = a.etapa || "";
+    document.getElementById("ag-auto").value = a.autonomia || "aprovar";
+    var ch = document.getElementById("ag-chefe"); ch.textContent = "";
+    ch.appendChild(el("option", { value: "", text: "Ninguém (topo)" }));
+    agentesIA.filter(function (x) { return x.id !== a.id; }).forEach(function (x) { ch.appendChild(el("option", { value: x.id, text: x.nome + (x.cargo ? " · " + x.cargo : "") })); });
+    ch.value = a.chefe_id || "";
     document.querySelectorAll("#ag-fontes input").forEach(function (x) { x.checked = (a.fontes || []).indexOf(x.value) >= 0; });
     document.querySelectorAll("#ag-saidas input").forEach(function (x) { x.checked = (a.saidas || ["alerta", "tarefa"]).indexOf(x.value) >= 0; });
     document.getElementById("ag-err").hidden = true;
@@ -1306,8 +1514,10 @@
     ev.preventDefault();
     var er = document.getElementById("ag-err"), marcados = function (id) { return Array.prototype.map.call(document.querySelectorAll("#" + id + " input:checked"), function (x) { return x.value; }); };
     var a = { nome: document.getElementById("ag-nome").value.trim(), cargo: document.getElementById("ag-cargo").value.trim() || null, missao: document.getElementById("ag-missao").value.trim(),
-      fontes: marcados("ag-fontes"), saidas: marcados("ag-saidas"), frequencia: document.getElementById("ag-freq").value, modelo: document.getElementById("ag-modelo").value, ativo: document.getElementById("ag-ativo").checked };
-    var m = !a.nome ? "Dê um nome." : a.missao.length < 20 ? "Explique a função com mais detalhe." : !a.saidas.length ? "Marque pelo menos uma coisa que ele entrega." : "";
+      fontes: marcados("ag-fontes"), saidas: marcados("ag-saidas"), frequencia: document.getElementById("ag-freq").value, modelo: document.getElementById("ag-modelo").value, ativo: document.getElementById("ag-ativo").checked,
+      area: document.getElementById("ag-area").value, genero: document.getElementById("ag-genero").value, etapa: document.getElementById("ag-etapa").value || null,
+      autonomia: document.getElementById("ag-auto").value, chefe_id: document.getElementById("ag-chefe").value || null };
+    var m = !a.nome ? "Dê um nome." : a.missao.length < 20 ? "Explique a função com mais detalhe." : !a.saidas.length && !a.etapa ? "Marque pelo menos uma coisa que ele entrega." : "";
     er.textContent = m; er.hidden = !m; if (m) return;
     var id = document.getElementById("ag-id").value; if (id) a.id = id;
     try { await api.salvarAgente(a); dlgAg.close(); CR.toast("Agente salvo."); await carregar(); } catch (x) { er.textContent = x.message; er.hidden = false; }

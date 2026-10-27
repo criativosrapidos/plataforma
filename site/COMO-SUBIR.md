@@ -208,6 +208,13 @@ Como é o token da própria agência lendo as contas que ela já administra, nã
 - **Instagram dos clientes:** uma vez por dia a plataforma guarda seguidores, curtidas e comentários dos últimos posts de quem conectou o Instagram. Aparece em Relatórios no app e é lido pelo Monitor de redes.
 - **Ligar:** crie uma chave em https://platform.claude.com (API Keys) e coloque como `ANTHROPIC_API_KEY` (veja a Parte 6). O custo é por uso (veja a estimativa no painel ou peça pra equipe).
 
+### Organograma e esteira
+
+- **Organograma** (Agentes IA): CEO, 4 diretorias (Comercial, Operacional, Administrativo, Financeiro) e 20 agentes com nome, rosto e função. Em ⚙ você muda tudo: área, chefe, função, o que lê, o que entrega, se pede aprovação ou age sozinho.
+- **A jornada:** venda → pagamento → briefing (com IA ajudando a preencher em /brief) → pauta → roteiro → copy → arte ou edição → produção → aprovação do cliente → postagem → tráfego → relatório. Cada etapa mostra quantos estão nela e quem cuida.
+- **Esteira** (Produção): todo dia de manhã o Estrategista monta a pauta do mês de cada cliente na quantidade do plano, a Roteirista escreve os roteiros, o Copywriter as legendas e textos da arte, a Diretora de arte e o Editor de vídeo deixam a arte e a edição especificadas. Na coluna **Produção** falta só o arquivo: abra o card, suba a imagem ou o vídeo e toque em **Enviar pro cliente aprovar**.
+- **A própria agência:** em Agentes IA → "A Criativos Rápidos também é cliente", escolha o ritmo e a esteira produz o nosso conteúdo também.
+
 ## Parte 6 · Publicação automática (GitHub)
 
 Toda mudança na pasta `site/` do branch `claude/generic-sales-proposal-lok7t4` publica sozinha o site na HostGator, atualiza o banco, publica as funções e liga os agendamentos. Pra isso, em **GitHub → criativosrapidos/plataforma → Settings → Secrets and variables → Actions → New repository secret**, cadastre:

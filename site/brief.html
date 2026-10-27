@@ -142,6 +142,14 @@
     <div class="facts"><span>Responda em até <b>7 dias</b></span><span>Entrega em <b>24 h</b></span><span>Campos com <b style="color:var(--warn)">*</b> são obrigatórios</span></div>
   </header>
 
+  <fieldset id="ia-box" style="margin-bottom:18px">
+    <legend><span class="n">✦</span>Prefere contar do seu jeito?</legend>
+    <p class="sub" style="margin:0">Escreva (ou dite pelo teclado do celular) sobre o seu negócio: o que vende, pra quem, o que te diferencia, o que quer divulgar. A nossa IA organiza e preenche o formulário pra você revisar.</p>
+    <textarea id="ia-texto" maxlength="6000" placeholder="Ex.: Tenho uma hamburgueria delivery no Guará, a carne é moída na hora, meu público é jovem de 18 a 35..."></textarea>
+    <button type="button" class="btn dark" id="ia-ir">Preencher pra mim</button>
+    <div class="saved" id="ia-msg" hidden></div>
+  </fieldset>
+
   <form id="bf" novalidate>
     <fieldset>
       <legend><span class="n">1</span>Sobre você</legend>
@@ -414,6 +422,27 @@
   }
 
   form.addEventListener("input", save);
+
+  // a IA lê o texto livre e preenche só os campos que ainda estão vazios
+  document.getElementById("ia-ir").addEventListener("click", function () {
+    var btn = this, msg = document.getElementById("ia-msg"), t = document.getElementById("ia-texto").value.trim();
+    if (t.length < 30) { msg.hidden = false; msg.textContent = "Escreva um pouco mais (pelo menos umas duas frases)."; return; }
+    btn.disabled = true; msg.hidden = false; msg.textContent = "Organizando suas respostas…";
+    CR.api.briefingIA(t).then(function (r) {
+      var n = 0;
+      Object.keys(r.campos || {}).forEach(function (id) {
+        var campo = document.getElementById(id), v = r.campos[id];
+        if (campo && v && !campo.value.trim()) { campo.value = v; n++; }
+      });
+      [r.tom, r.aparecer].concat(r.estilo || []).forEach(function (id) {
+        var x = id && document.getElementById(id);
+        if (x && !x.checked) { if (x.type === "radio" && form.querySelector('input[name="' + x.name + '"]:checked')) return; x.checked = true; n++; }
+      });
+      save();
+      msg.textContent = n ? "Pronto! Preenchi " + n + " campos. Revise abaixo e complete o que faltar." : "Não achei nada novo pra preencher. Complete direto no formulário.";
+      if (r.faltou && r.faltou.length) msg.textContent += " Ainda falta: " + r.faltou.join(" ");
+    }).catch(function (e) { msg.textContent = e.message; }).then(function () { btn.disabled = false; });
+  });
   form.addEventListener("change", function (e) { if (e.target.name === "plano") { trim(); renderCredits(); } save(); });
 
   // ao trocar para um pacote com menos créditos, remove peças a partir das mais caras
@@ -461,7 +490,7 @@
       .then(function () { btnF.disabled = false; });
     var wa = document.getElementById("wa");
     if (WHATSAPP) { wa.href = "https://wa.me/" + WHATSAPP + "?text=" + encodeURIComponent(text); wa.hidden = false; }
-    form.hidden = true;
+    form.hidden = true; document.getElementById("ia-box").hidden = true;
     document.querySelector("header.hero").hidden = true;
     document.getElementById("done").hidden = false;
     window.scrollTo(0, 0);
