@@ -103,9 +103,9 @@
   function nomeArquivo(nome) { return nome.normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^\w.-]+/g, "_"); }
 
   // a função do Instagram devolve { error: "mensagem" } no corpo
-  async function erroFuncao(e) {
+  async function erroFuncao(e, qual) {
     try { var d = await e.context.json(); if (d && d.error) return d.error; } catch (x) {}
-    return /Failed to send|fetch/i.test(e.message) ? "Não consegui falar com o servidor. A função do Instagram foi publicada no Supabase?" : e.message;
+    return /Failed to send|fetch/i.test(e.message) ? "Não consegui falar com o servidor. A função do " + (qual || "Instagram") + " foi publicada no Supabase?" : e.message;
   }
 
   // ---------------------------------------------------------------- Supabase
@@ -235,6 +235,9 @@
       // relatório do mês: os números de tráfego que a agência lança (os de conteúdo saem das entregas)
       async relatorios(clienteId) { return ok(await doCliente(sb.from("relatorios").select("*").order("mes", { ascending: false }), clienteId)); },
       async salvarRelatorio(campos) { ok(await sb.from("relatorios").upsert(campos, { onConflict: "cliente_id,mes" })); },
+      // conexão com o Meta Ads (função supabase/functions/trafego)
+      async trafegoContas() { var r = await sb.functions.invoke("trafego/contas", { method: "POST" }); if (r.error) throw new Error(await erroFuncao(r.error, "tráfego")); return r.data.contas; },
+      async sincronizarTrafego(mes, clienteId) { var r = await sb.functions.invoke("trafego/sincronizar", { method: "POST", body: { mes: mes, cliente_id: clienteId || null } }); if (r.error) throw new Error(await erroFuncao(r.error, "tráfego")); return r.data.resultado; },
       // financeiro
       async cobrancas(clienteId) { return ok(await doCliente(sb.from("cobrancas").select("*").order("vencimento", { ascending: false }), clienteId)); },
       async criarCobranca(campos) { ok(await sb.from("cobrancas").insert(campos)); },
@@ -416,6 +419,8 @@
       async equipe() { return db.equipe.slice(); },
       async salvarMembro(m) { if (m.id) Object.assign(achar("equipe", m.id), m); else db.equipe.push(Object.assign({ id: uid(), ativo: true, criado_em: new Date().toISOString() }, m)); salvar(); },
       async apagarMembro(id) { db.equipe = db.equipe.filter(function (x) { return x.id !== id; }); salvar(); },
+      async trafegoContas() { await espera(); throw new Error("Na demonstração não tem conta do Meta ligada. No site de verdade, a lista das contas de anúncio aparece aqui."); },
+      async sincronizarTrafego() { await espera(); throw new Error("Na demonstração os números não vêm do Meta. No site de verdade, este botão puxa tudo sozinho."); },
       resetar() { db = semente(); mem = {}; salvar(); }
     };
   }

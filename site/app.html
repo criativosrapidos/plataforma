@@ -729,6 +729,22 @@
       });
       if (r.investido && r.conversas) st.appendChild(el("div", { class: "stat" }, [el("b", { text: CR.reais(r.investido / r.conversas) }), el("span", { text: "por conversa" })]));
       w.appendChild(st);
+      if (r.origem === "meta" && r.atualizado_em) {
+        var d = new Date(r.atualizado_em);
+        w.appendChild(el("p", { class: "small muted", style: "margin:8px 0 0", text: "Números direto do Meta Ads, atualizados em " + CR.data(CR.iso(d)) + " às " + String(d.getHours()).padStart(2, "0") + ":" + String(d.getMinutes()).padStart(2, "0") + "." }));
+      }
+      if (r.campanhas && r.campanhas.length) {
+        var cp = el("div", { class: "card", style: "margin-top:12px;display:grid;gap:12px" }, [el("div", { class: "eyebrow", text: "Campanhas do mês" })]);
+        var maior = Math.max.apply(null, r.campanhas.map(function (x) { return x.investido || 0; })) || 1;
+        r.campanhas.forEach(function (x) {
+          cp.appendChild(el("div", { class: "prog" }, [
+            el("div", { class: "lb" }, [el("span", { text: x.nome }), el("b", { text: CR.reais(x.investido) })]),
+            el("div", { class: "track" }, el("i", { style: "width:" + Math.round((x.investido || 0) / maior * 100) + "%" })),
+            el("div", { class: "small muted", text: [num(x.alcance) + " pessoas", num(x.cliques) + " cliques", x.conversas ? num(x.conversas) + " conversas" : ""].filter(Boolean).join(" · ") })
+          ]));
+        });
+        w.appendChild(cp);
+      }
     } else if (P.trafego) {
       w.appendChild(el("div", { class: "empty", style: "padding:22px" }, [ic("chart"), el("b", { text: "Relatório de tráfego ainda não saiu" }), el("span", { text: "Os números dos anúncios deste mês aparecem aqui quando a gente fechar o mês." })]));
     } else {

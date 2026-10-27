@@ -247,7 +247,10 @@
     <main class="view" id="v-relatorios" hidden>
       <div class="view-head">
         <div><h1>Relatórios</h1><p class="lead">O mês de cada cliente: entregue, aprovado e publicado. Lance os números do tráfego e eles aparecem no app do cliente, em Relatórios.</p></div>
-        <div class="monthnav"><button class="icon-btn" type="button" id="rel-ant" aria-label="Mês anterior"></button><b id="rel-mes"></b><button class="icon-btn" type="button" id="rel-prox" aria-label="Próximo mês"></button></div>
+        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+          <div class="monthnav"><button class="icon-btn" type="button" id="rel-ant" aria-label="Mês anterior"></button><b id="rel-mes"></b><button class="icon-btn" type="button" id="rel-prox" aria-label="Próximo mês"></button></div>
+          <button class="btn dark" type="button" id="rel-meta"></button>
+        </div>
       </div>
       <div class="stats" id="rel-kpis"></div>
       <div class="card scroll"><table class="t" id="t-rel"><thead><tr><th>Cliente</th><th>Plano</th><th>Entregues</th><th>Aprovados</th><th>Publicados</th><th>Ajustes</th><th>Tráfego</th><th></th></tr></thead><tbody></tbody></table></div>
@@ -301,6 +304,12 @@
   <form class="in" id="f-rel" novalidate>
     <h2>Números do tráfego</h2>
     <p class="small muted" id="r-info"></p>
+    <div class="f"><label for="r-conta">Conta de anúncio no Meta <span class="muted small">ligada, os números vêm sozinhos</span></label>
+      <div style="display:flex;gap:8px"><input type="text" id="r-conta" list="r-contas" placeholder="act_1234567890" style="flex:1;min-width:0"><button class="btn ghost sm" type="button" id="r-buscar">Buscar contas</button></div>
+      <datalist id="r-contas"></datalist>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin:-4px 0 14px"><button class="btn sm" type="button" id="r-puxar"></button><span class="small muted" id="r-origem" style="align-self:center"></span></div>
+    <div id="r-camp"></div>
     <div class="row">
       <div class="f"><label for="r-investido">Investido (R$)</label><input type="number" id="r-investido" min="0" step="0.01"></div>
       <div class="f"><label for="r-alcance">Alcance</label><input type="number" id="r-alcance" min="0"></div>
@@ -1002,19 +1011,70 @@
         el("td", { text: String(e.filter(function (x) { return x.status === "aprovado"; }).length) }),
         el("td", { text: String(pub.filter(function (x) { return x.cliente_id === c.id; }).length) }),
         el("td", { text: String(ajM.filter(function (a) { return a.cliente_id === c.id; }).length) }),
-        el("td", { class: "small" }, r && r.investido != null ? CR.reais(r.investido) + " investidos" : el("span", { class: "muted", text: P.trafego ? "falta lançar" : "—" })),
+        el("td", { class: "small" }, r && r.investido != null ? [CR.reais(r.investido) + " investidos", r.origem === "meta" ? el("div", { class: "muted", text: "Meta · " + quando(r.atualizado_em) }) : null]
+          : el("span", { class: "muted", text: c.meta_ad_account ? "conta ligada, falta atualizar" : P.trafego ? "falta lançar" : "—" })),
         el("td", {}, el("button", { class: "btn sm " + (P.trafego && !r ? "" : "ghost"), type: "button", onclick: function () { abrirRel(c, r); } }, [ic("edit"), r ? "Editar" : "Lançar"]))
       ]));
     });
   }
   var dlgRel = document.getElementById("dlg-rel"), CAMPOS_REL = ["investido", "alcance", "impressoes", "cliques", "conversas", "seguidores", "resumo", "link"];
+  function quando(iso) { if (!iso) return ""; var d = new Date(iso); return "atualizado " + CR.data(CR.iso(d)) + " às " + String(d.getHours()).padStart(2, "0") + ":" + String(d.getMinutes()).padStart(2, "0"); }
+  function contaMeta(t) { var n = String(t || "").match(/\d{5,}/); return n ? "act_" + n[0] : ""; }
   function abrirRel(c, r) {
     relAtual = c; r = r || {};
     document.getElementById("r-info").textContent = (c.empresa || c.nome) + " · " + nomeMes(relMes) + ". Os campos vazios não aparecem pro cliente.";
     CAMPOS_REL.forEach(function (k) { document.getElementById("r-" + k).value = r[k] != null ? r[k] : ""; });
+    document.getElementById("r-conta").value = c.meta_ad_account || "";
+    document.getElementById("r-origem").textContent = r.origem === "meta" ? "Números do Meta, " + quando(r.atualizado_em) + "." : "";
+    var w = document.getElementById("r-camp"); w.textContent = "";
+    if (r.campanhas && r.campanhas.length) {
+      w.appendChild(el("div", { class: "eyebrow", style: "margin-bottom:6px", text: "Campanhas" }));
+      r.campanhas.forEach(function (x) { w.appendChild(el("div", { class: "small", style: "display:flex;justify-content:space-between;gap:10px;padding:4px 0;border-bottom:1px solid var(--line)" }, [el("span", { text: x.nome }), el("b", { text: CR.reais(x.investido) + " · " + x.conversas + " conv." })])); });
+      w.style.marginBottom = "14px";
+    }
     document.getElementById("r-err").hidden = true;
     dlgRel.showModal();
   }
+  document.getElementById("r-puxar").append(ic("down"), "Puxar do Meta agora");
+  document.getElementById("rel-meta").append(ic("down"), "Atualizar tudo do Meta");
+  document.getElementById("r-buscar").addEventListener("click", async function () {
+    this.disabled = true;
+    try {
+      var contas = await api.trafegoContas(), dl = document.getElementById("r-contas"); dl.textContent = "";
+      contas.forEach(function (x) { dl.appendChild(el("option", { value: x.id, label: x.nome + (x.ativa ? "" : " (inativa)") })); });
+      CR.toast(contas.length + (contas.length === 1 ? " conta encontrada." : " contas encontradas.") + " Toque no campo pra escolher.");
+      document.getElementById("r-conta").focus();
+    } catch (x) { CR.toast(x.message, true); }
+    this.disabled = false;
+  });
+  // guarda a conta do cliente (se mudou) e puxa os números do mês
+  async function ligarEPuxar(btn) {
+    var er = document.getElementById("r-err"), act = contaMeta(document.getElementById("r-conta").value);
+    if (!act) { er.textContent = "Coloque a conta de anúncio (act_ seguido dos números)."; er.hidden = false; return; }
+    btn.disabled = true; er.hidden = true;
+    try {
+      if (act !== relAtual.meta_ad_account) { await api.salvarPerfil(relAtual.id, { meta_ad_account: act }); relAtual.meta_ad_account = act; }
+      var res = await api.sincronizarTrafego(limites(relMes)[0], relAtual.id);
+      var falha = Object.keys(res || {}).map(function (k) { return res[k]; }).find(function (v) { return /^erro/.test(v); });
+      if (falha) throw new Error(falha.replace(/^erro: /, ""));
+      await carregar();
+      abrirRel(relAtual, relatorios.find(function (x) { return x.cliente_id === relAtual.id && String(x.mes).slice(0, 10) === limites(relMes)[0]; }));
+      CR.toast("Números do Meta atualizados.");
+    } catch (x) { er.textContent = x.message; er.hidden = false; }
+    btn.disabled = false;
+  }
+  document.getElementById("r-puxar").addEventListener("click", function () { ligarEPuxar(this); });
+  document.getElementById("rel-meta").addEventListener("click", async function () {
+    if (!clientes.some(function (c) { return c.meta_ad_account; }) && !CR.demo) { CR.toast("Nenhum cliente com conta de anúncio ligada. Abra Lançar e coloque a conta.", true); return; }
+    this.disabled = true; CR.toast("Puxando do Meta…");
+    try {
+      var res = await api.sincronizarTrafego(limites(relMes)[0]);
+      var erros = Object.keys(res || {}).filter(function (k) { return /^erro/.test(res[k]); });
+      await carregar();
+      CR.toast(erros.length ? "Atualizado, mas deu erro em: " + erros.join(", ") + ". Abra o cliente pra ver o motivo." : "Tráfego de " + nomeMes(relMes) + " atualizado.", erros.length > 0);
+    } catch (x) { CR.toast(x.message, true); }
+    this.disabled = false;
+  });
   document.getElementById("r-cancel").addEventListener("click", function () { dlgRel.close(); });
   document.getElementById("f-rel").addEventListener("submit", async function (ev) {
     ev.preventDefault();
@@ -1024,7 +1084,10 @@
       campos[k] = v === "" ? null : (k === "resumo" || k === "link") ? v : k === "investido" ? parseFloat(v) : parseInt(v, 10);
     });
     if (campos.link && !/^https?:\/\//i.test(campos.link)) { er.textContent = "O link precisa começar com https://"; er.hidden = false; return; }
-    try { await api.salvarRelatorio(campos); dlgRel.close(); CR.toast("Relatório salvo. Já aparece no app do cliente."); await carregar(); } catch (x) { er.textContent = x.message; er.hidden = false; }
+    var act = contaMeta(document.getElementById("r-conta").value);
+    try {
+      if (act !== (relAtual.meta_ad_account || "")) await api.salvarPerfil(relAtual.id, { meta_ad_account: act || null });
+      await api.salvarRelatorio(campos); dlgRel.close(); CR.toast("Relatório salvo. Já aparece no app do cliente."); await carregar(); } catch (x) { er.textContent = x.message; er.hidden = false; }
   });
 
   // ---------------------------------------------------------------- equipe

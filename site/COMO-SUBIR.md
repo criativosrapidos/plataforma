@@ -7,6 +7,7 @@ O lançamento tem três partes. **Só a primeira é necessária pra colocar o si
 | 1 · Site no ar | Home, página do Largada (`/videos`), briefing (`/brief`) e política de privacidade. Os pedidos de contato e os briefings chegam no seu e-mail | Só a HostGator | 15 min |
 | 2 · Área do cliente | App do cliente, painel da agência, login, entregas, aprovação e download em alta | Supabase (gratuito) | 30 min |
 | 3 · Instagram | Postagem automática depois que o cliente aprova | App na Meta + análise da Meta | alguns dias |
+| 4 · Tráfego | Números dos anúncios (Meta Ads) entrando sozinhos no relatório de cada cliente | Gerenciador de Negócios da agência | 20 min |
 
 Enquanto a parte 2 não estiver ligada, quem clica em "Área do cliente" vê o aviso "abre em breve" e um botão pra ver a demonstração.
 
@@ -165,3 +166,34 @@ Funciona assim: o cliente toca em **Conectar meu Instagram** na aba Conta do app
 5. **Liberação da Meta:** enquanto o app está em teste, só funciona com contas que vocês adicionarem como **testadoras** no painel do app. Pra qualquer cliente conectar, peça a **análise do app** com as permissões `instagram_business_basic` e `instagram_business_content_publish`. A Meta pede um vídeo mostrando o uso e a política de privacidade: use `https://criativosrapidos.com.br/privacidade` (revisem o texto antes). Costuma levar de alguns dias a algumas semanas.
 
 Enquanto a Meta não libera, o resto da plataforma funciona normal e vocês postam pelo Meta Business, como hoje.
+
+
+---
+
+## Parte 4 · Tráfego direto do Meta Ads
+
+Com isso, o investido, o alcance, as impressões, os cliques, as conversas (mensagens iniciadas e cadastros) e as campanhas de cada cliente entram sozinhos em **Relatórios**, no painel e no app do cliente. O comentário, o link do relatório completo e os seguidores novos continuam sendo lançados à mão.
+
+**Configuração (uma vez só):**
+1. **As contas de anúncio dos clientes precisam estar no Gerenciador de Negócios da agência** (business.facebook.com). Se o cliente é dono da conta, ele compartilha com vocês como parceiro: no Gerenciador dele, **Configurações → Contas de anúncios → Atribuir parceiros**, com o ID do Gerenciador da agência.
+2. **Usuário do sistema:** no Gerenciador da agência, **Configurações → Usuários → Usuários do sistema → Adicionar** (função Administrador). Em **Atribuir ativos**, marque as contas de anúncio dos clientes com permissão de ver o desempenho.
+3. **Token:** nesse usuário do sistema, clique em **Gerar novo token**, escolha o mesmo app da Meta usado no Instagram (ou crie um app do tipo Empresa), validade **Nunca**, e marque as permissões `ads_read` e `read_insights`. Copie o token: ele aparece uma vez só.
+4. **Publicar a função** (na mesma pasta da Parte 3):
+   ```bash
+   npx supabase secrets set META_ADS_TOKEN=cole-o-token-aqui
+   npx supabase functions deploy trafego --no-verify-jwt
+   ```
+   (Se ainda não tiver feito a Parte 3, rode antes `npx supabase login`, `npx supabase link --project-ref SEU-PROJETO` e defina também `CRON_SECRET=uma-senha-longa-qualquer`.)
+5. **Ligar cada cliente:** no painel, **Relatórios → Lançar** no cliente → **Buscar contas**, escolha a conta de anúncio dele e toque em **Puxar do Meta agora**. Pronto: a partir daí o botão **Atualizar tudo do Meta** puxa todos de uma vez.
+6. **Atualizar sozinho todo dia** (opcional, precisa do `pg_cron` e do `pg_net` ligados, como na Parte 3):
+   ```sql
+   select cron.schedule('trafego-meta', '0 9 * * *', $$
+     select net.http_post(
+       url := 'https://SEU-PROJETO.supabase.co/functions/v1/trafego/agendado',
+       headers := '{"Content-Type": "application/json", "x-cron-secret": "uma-senha-longa-qualquer"}'::jsonb
+     );
+   $$);
+   ```
+   Todo dia às 6h (horário de Brasília; o Supabase usa UTC) ele atualiza o mês atual e, nos 3 primeiros dias do mês, fecha o mês anterior.
+
+Como é o token da própria agência lendo as contas que ela já administra, não precisa da análise da Meta como na Parte 3.

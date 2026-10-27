@@ -2,3 +2,7 @@
 # A função "instagram" confere o login por conta própria, porque o Instagram chama /callback sem login.
 [functions.instagram]
 verify_jwt = false
+
+# A "trafego" também confere o login sozinha, porque o agendador chama /agendado sem login.
+[functions.trafego]
+verify_jwt = false

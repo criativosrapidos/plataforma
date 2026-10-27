@@ -17,6 +17,7 @@ create table if not exists public.perfis (
 -- marca do cliente e quem da equipe cuida dele (a agência preenche)
 alter table public.perfis add column if not exists marca jsonb;        -- { cores: [], fontes, tom, palavras, evitar, obs }
 alter table public.perfis add column if not exists responsavel uuid;   -- id em public.equipe
+alter table public.perfis add column if not exists meta_ad_account text; -- conta de anúncio no Meta (act_...), pro relatório de tráfego
 
 -- cria o perfil automaticamente quando alguém cria a conta em /entrar
 create or replace function public.novo_usuario() returns trigger
@@ -47,7 +48,7 @@ language plpgsql security definer set search_path = public as $$
 begin
   if auth.uid() is not null and not public.is_admin() then
     new.papel := old.papel; new.plano := old.plano; new.ajustes_mes := old.ajustes_mes; new.email := old.email; new.instagram := old.instagram;
-    new.marca := old.marca; new.responsavel := old.responsavel;
+    new.marca := old.marca; new.responsavel := old.responsavel; new.meta_ad_account := old.meta_ad_account;
   end if;
   return new;
 end $$;
@@ -289,6 +290,9 @@ create table if not exists public.relatorios (
   criado_em timestamptz not null default now(),
   unique (cliente_id, mes)
 );
+alter table public.relatorios add column if not exists campanhas jsonb;          -- [{ nome, investido, alcance, cliques, conversas }]
+alter table public.relatorios add column if not exists origem text;              -- 'meta' quando veio da conexão
+alter table public.relatorios add column if not exists atualizado_em timestamptz;
 alter table public.relatorios enable row level security;
 drop policy if exists "relatório: ver" on public.relatorios;
 create policy "relatório: ver" on public.relatorios for select using (cliente_id = auth.uid() or public.is_admin());
