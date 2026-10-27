@@ -7,6 +7,9 @@
 //   POST /webhook     mensagens recebidas (assinatura x-hub-signature-256)
 //   POST /enviar      agência manda uma mensagem pra um contato  { "lead_id": "...", "texto": "..." }
 //   POST /contato     agência faz o primeiro contato com quem pediu pelo site (modelo aprovado)  { "lead_id": "..." }
+//   POST /chat        público: chat de IA no site (a mesma atendente), que pega o contato e marca reunião
+// Vendedores: a atendente (agente com etapa "whatsapp") qualifica e, quando o contato tem interesse, passa pra um dos
+// vendedores de IA (etapa "vendas"), em rodízio, pra comparar qual estilo vende mais. O vendedor continua a conversa.
 // Variáveis: WHATSAPP_TOKEN, WHATSAPP_PHONE_ID, WHATSAPP_VERIFY_TOKEN, WHATSAPP_APP_SECRET, ANTHROPIC_API_KEY
 // e, opcionais, WHATSAPP_TEMPLATE_CONTATO (nome do modelo aprovado, com {{1}} = primeiro nome), ELEVENLABS_API_KEY e ELEVENLABS_VOZ.
 import { createClient, type SupabaseClient } from "npm:@supabase/supabase-js@2.45.4";
@@ -119,13 +122,25 @@ const Resposta = z.object({
   etapa: z.enum(["novo", "conversando", "proposta", "fechou", "perdido"]),
   anotacao: z.string().describe("Resumo pro CRM: negócio, dores, interesse, objeções, próximo passo"),
   chamar_equipe: z.boolean().describe("true se a pessoa pediu humano, reclamou, ou é assunto que a IA não deve resolver"),
+  passar_para_vendedor: z.boolean().describe("Só a atendente usa: true quando já entendeu o negócio e a pessoa tem interesse de verdade"),
   nome: z.string().nullable(), empresa: z.string().nullable(),
 });
 
+// rodízio: o vendedor ativo com menos contatos nos últimos 30 dias (é o teste A/B dos estilos)
+async function escolherVendedor() {
+  const { data: vend } = await db.from("agentes").select("id, nome").eq("etapa", "vendas").eq("ativo", true);
+  if (!vend?.length) return null;
+  const { data: l } = await db.from("leads").select("vendedor_id").not("vendedor_id", "is", null).gte("criado_em", new Date(Date.now() - 30 * 864e5).toISOString());
+  const conta = (id: string) => (l ?? []).filter((x) => x.vendedor_id === id).length;
+  return vend.sort((x, y) => conta(x.id) - conta(y.id) || Math.random() - .5)[0];
+}
+
 async function atender(lead: Linha) {
-  const { data: ag } = await db.from("agentes").select("*").eq("etapa", "whatsapp").eq("ativo", true).order("ordem").limit(1);
-  const a = ag?.[0];
+  let a: Linha = null;
+  if (lead.vendedor_id) { const { data } = await db.from("agentes").select("*").eq("id", lead.vendedor_id).eq("ativo", true).maybeSingle(); a = data; }
+  if (!a) { const { data: ag } = await db.from("agentes").select("*").eq("etapa", "whatsapp").eq("ativo", true).order("ordem").limit(1); a = ag?.[0]; }
   if (!a || !lead.ia_ativa || !env("ANTHROPIC_API_KEY")) return;
+  const vendedor = a.etapa === "vendas";
   const [{ data: hist }, treino, agenda] = await Promise.all([
     db.from("whatsapp_mensagens").select("direcao, autor, texto, criado_em").eq("lead_id", lead.id).order("criado_em", { ascending: false }).limit(30),
     config("atendente"), horariosLivres(),
@@ -138,7 +153,7 @@ async function atender(lead: Linha) {
     fallbacks: "default",
     system: `Você é ${a.nome}, ${a.cargo ?? "atendente"} da Criativos Rápidos, agência de marketing e social media pra pequenos negócios.
 Diga que é assistente virtual da agência se perguntarem. Português do Brasil, tom de WhatsApp, simpático e direto.
-Sua função: ${a.missao}
+${vendedor ? "Você assumiu essa conversa depois da atendente: não se apresente de novo do zero, continue de onde ela parou.\n" : ""}Sua função: ${a.missao}
 Planos (os únicos preços que você pode citar): ${PLANOS}
 Nunca invente preço, prazo, desconto, resultado garantido ou case. Se não souber, diga que confirma com a equipe.
 Pra marcar reunião (${agenda.dur} minutos, online), ofereça 2 ou 3 horários da lista de livres e só marque um id que a pessoa confirmou.
@@ -168,6 +183,10 @@ ${treino.texto ? "Treino da agência (siga):\n" + treino.texto : ""}`,
   if (!(treinoAudio && o.em_audio && await mandarAudio(lead, o.resposta).catch((e) => { console.error(e); return false; })))
     await mandarTexto(lead, o.resposta + confirmacao, "ia");
   else if (confirmacao) await mandarTexto(lead, confirmacao.trim(), "ia");
+  if (!vendedor && o.passar_para_vendedor && !o.chamar_equipe && !lead.vendedor_id) {
+    const v = await escolherVendedor();
+    if (v) await db.from("leads").update({ vendedor_id: v.id }).eq("id", lead.id);
+  }
   if (o.chamar_equipe) await db.from("agente_sugestoes").insert({ agente_id: a.id, tipo: "alerta", prioridade: "alta", lead_id: lead.id, titulo: "Atender no WhatsApp: " + (o.nome ?? lead.nome), conteudo: { texto: "A atendente passou a conversa pra equipe. " + o.anotacao } });
 }
 
@@ -219,6 +238,67 @@ async function soAgencia(req: Request) {
   if (p?.papel !== "admin") throw new Erro("Só a agência pode fazer isso.", 403);
 }
 
+
+// ---------------------------------------------------------------- chat no site (público)
+const Chat = z.object({
+  resposta: z.string().describe("Resposta curta pro visitante, sem markdown"),
+  nome: z.string().nullable(), whatsapp: z.string().nullable().describe("Só se a pessoa informou"), empresa: z.string().nullable(),
+  quer_contato: z.boolean().describe("true se a pessoa passou o WhatsApp e quer que a agência fale com ela"),
+  reuniao: z.string().nullable().describe("id EXATO de um horário livre que a pessoa confirmou (só com nome e WhatsApp), ou null"),
+  anotacao: z.string().describe("Resumo pro CRM"),
+});
+async function chatSite(req: Request) {
+  if (!env("ANTHROPIC_API_KEY")) throw new Erro("O chat ainda não foi ligado.", 500);
+  const b = await req.json().catch(() => ({}));
+  const hist = (Array.isArray(b.historico) ? b.historico : []).slice(-20).map((m: Linha) => ({ de: m.de === "ia" ? "VOCÊ" : "VISITANTE", texto: String(m.texto ?? "").slice(0, 1000) }));
+  if (!hist.length || hist[hist.length - 1].de !== "VISITANTE") throw new Erro("Escreva sua mensagem.");
+  // limite por aparelho: 60 mensagens por dia
+  const ip = (req.headers.get("x-forwarded-for") ?? "").split(",")[0].trim() || "anon";
+  const chave = "chat:" + Array.from(new Uint8Array(await crypto.subtle.digest("SHA-256", new TextEncoder().encode(ip)))).slice(0, 12).map((x) => x.toString(16).padStart(2, "0")).join("");
+  const dia = new Intl.DateTimeFormat("en-CA", { timeZone: FUSO }).format(new Date());
+  const { data: uso } = await db.from("briefing_ia_uso").select("usos").eq("chave", chave).eq("dia", dia).maybeSingle();
+  if ((uso?.usos ?? 0) >= 60) throw new Erro("Chegamos ao limite de mensagens por hoje. Chama a gente no WhatsApp!", 429);
+  await db.from("briefing_ia_uso").upsert({ chave, dia, usos: (uso?.usos ?? 0) + 1 });
+  const { data: ag } = await db.from("agentes").select("*").eq("etapa", "whatsapp").eq("ativo", true).order("ordem").limit(1);
+  const a = ag?.[0] ?? { nome: "Atendente", cargo: "atendente", missao: "Atenda quem visita o site e marque uma reunião." };
+  const [treino, agenda] = await Promise.all([config("atendente"), horariosLivres()]);
+  const r = await claude.beta.messages.create({
+    model: a.modelo || "claude-opus-5-5",
+    max_tokens: 3000,
+    betas: ["server-side-fallback-2026-07-01"],
+    fallbacks: "default",
+    system: `Você é ${a.nome}, assistente virtual da Criativos Rápidos, no chat do site. Português do Brasil, simpático e direto, respostas curtas.
+Sua função: ${a.missao}
+Planos (os únicos preços que você pode citar): ${PLANOS}
+Nunca invente preço, prazo, desconto, resultado garantido ou case. Pra marcar reunião (${agenda.dur} min, online), peça o nome e o WhatsApp, ofereça 2 ou 3 horários livres e só marque um id que a pessoa confirmou.
+${treino.texto ? "Treino da agência (siga):\n" + treino.texto : ""}`,
+    output_config: { effort: "low", format: zodOutputFormat(Chat) },
+    messages: [{ role: "user", content: JSON.stringify({ pagina: String(b.pagina ?? "").slice(0, 200), horarios_livres: agenda.livres, conversa: hist }) }],
+  });
+  if (r.stop_reason === "refusal") return json({ resposta: "Não consigo ajudar com isso por aqui. Chama a gente no WhatsApp!" });
+  const ok = Chat.safeParse(JSON.parse(r.content.map((x) => (x.type === "text" ? x.text : "")).join("")));
+  if (!ok.success) throw new Erro("Não consegui responder agora. Tente de novo.", 502);
+  const o = ok.data;
+  let marcada = false;
+  const tel = o.whatsapp ? so(o.whatsapp) : "";
+  if (tel.length >= 10 && (o.quer_contato || o.reuniao)) {
+    // a pessoa deu o WhatsApp pra ser chamada: entra no CRM com consentimento
+    const { data: ja } = await db.from("leads").select("id").like("whatsapp_num", `%${tel.slice(-8)}`).limit(1);
+    let leadId = ja?.[0]?.id;
+    if (leadId) await db.from("leads").update({ observacao: o.anotacao, optin: true }).eq("id", leadId);
+    else {
+      const { data: novo } = await db.from("leads").insert({ nome: o.nome || "Visitante do site", whatsapp: o.whatsapp, empresa: o.empresa, origem: "site-chat", status: "conversando", optin: true, observacao: o.anotacao }).select("id").single();
+      leadId = novo?.id;
+    }
+    const slot = o.reuniao && agenda.livres.find((x) => x.id === o.reuniao);
+    if (slot && leadId) {
+      await db.from("reunioes").insert({ lead_id: leadId, nome: o.nome, telefone: o.whatsapp, inicio: slot.id, fim: new Date(Date.parse(slot.id) + agenda.dur * 60e3).toISOString(), marcada_por: "ia", observacao: o.anotacao });
+      marcada = true;
+    }
+  }
+  return json({ resposta: o.resposta + (marcada && agenda.link && !o.resposta.includes(agenda.link) ? `\n\nLink da reunião: ${agenda.link}` : ""), marcada });
+}
+
 declare const EdgeRuntime: { waitUntil(p: Promise<unknown>): void } | undefined;
 
 Deno.serve(async (req) => {
@@ -238,6 +318,7 @@ Deno.serve(async (req) => {
       if (typeof EdgeRuntime !== "undefined") EdgeRuntime.waitUntil(tarefa); else await tarefa;
       return new Response("ok");
     }
+    if (rota === "/chat") return await chatSite(req);
     await soAgencia(req);
     const b = await req.json().catch(() => ({}));
     const { data: lead } = await db.from("leads").select("*").eq("id", String(b.lead_id)).single();

@@ -233,7 +233,7 @@ O `assets/config.js` (com as chaves do Supabase) e o `enviar.php` que já estão
 
 ## Parte 7 · WhatsApp oficial com a atendente de IA
 
-A atendente (Lívia, no organograma) responde na hora quem chama a agência no WhatsApp, entende o negócio, tira dúvidas com os planos da tabela, manda áudio com a voz da agência (opcional) e marca a reunião nos horários livres da **Agenda**. A equipe vê a conversa no CRM (ícone de balão no cartão) e pode assumir a qualquer momento.
+A atendente (Lili do Zap, no organograma) responde na hora quem chama a agência no WhatsApp, entende o negócio, tira dúvidas com os planos da tabela, manda áudio com a voz da agência (opcional) e marca a reunião nos horários livres da **Agenda**. A equipe vê a conversa no CRM (ícone de balão no cartão) e pode assumir a qualquer momento.
 
 **Regra que mantém o número vivo:** pela API oficial a plataforma só responde quem chamou ou quem pediu contato no site. Lista fria (Importar lista no CRM) fica marcada como "sem consentimento": o agente de Prospecção prepara a abordagem e a equipe manda do próprio celular, poucas por dia.
 

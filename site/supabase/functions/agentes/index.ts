@@ -177,7 +177,7 @@ async function rodar(agenteId: string) {
   semChave();
   const { data: a } = await db.from("agentes").select("*").eq("id", agenteId).single();
   if (!a) throw new Erro("Agente não encontrado.", 404);
-  if (a.etapa === "whatsapp") throw new Erro(a.nome + " trabalha sozinha: responde no WhatsApp assim que alguém chama a agência.");
+  if (a.etapa === "whatsapp" || a.etapa === "vendas") throw new Erro(a.nome + " trabalha sozinho(a) no WhatsApp: responde assim que o contato manda mensagem.");
   if (a.etapa) return await esteira(a);
   const ctx = await lerFontes(a.fontes ?? []);
   const { data: pend } = await db.from("agente_sugestoes").select("titulo, tipo").eq("agente_id", a.id).eq("status", "pendente");

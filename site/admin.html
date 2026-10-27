@@ -129,6 +129,7 @@
         <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn ghost" type="button" id="importar-lista">Importar lista</button><button class="btn" type="button" id="novo-lead"></button></div>
       </div>
       <div class="stats" id="crm-kpis"></div>
+      <section class="sec" id="placar-sec"><div class="sec-head"><h2>Placar dos vendedores</h2><span class="small muted">últimos 30 dias · o lead vai pro vendedor com menos contatos</span></div><div class="cards" id="placar"></div></section>
       <div class="board" id="board"></div>
     </main>
 
@@ -450,7 +451,7 @@
       <div class="f"><label for="ag-modelo">Inteligência</label><select id="ag-modelo"><option value="claude-opus-5-5">Máxima (Claude Opus 5.5)</option><option value="claude-sonnet-5-5">Equilibrada (Claude Sonnet 5.5)</option><option value="claude-haiku-5-5">Econômica (Claude Haiku 5.5)</option></select></div>
     </div>
     <div class="row">
-      <div class="f"><label for="ag-etapa">Trabalha na esteira</label><select id="ag-etapa"><option value="">Não (deixa rascunhos)</option><option value="whatsapp">Atende o WhatsApp (responde na hora)</option><option value="pauta">Pauta do mês</option><option value="roteiro">Roteiro</option><option value="copy">Copy (legenda e texto da arte)</option><option value="arte">Direção de arte</option><option value="edicao">Plano de edição de vídeo</option></select></div>
+      <div class="f"><label for="ag-etapa">Trabalha na esteira</label><select id="ag-etapa"><option value="">Não (deixa rascunhos)</option><option value="whatsapp">Atende o WhatsApp e o chat do site (primeiro contato)</option><option value="vendas">Vendedor (assume quem tem interesse, em rodízio)</option><option value="pauta">Pauta do mês</option><option value="roteiro">Roteiro</option><option value="copy">Copy (legenda e texto da arte)</option><option value="arte">Direção de arte</option><option value="edicao">Plano de edição de vídeo</option></select></div>
       <div class="f"><label for="ag-auto">Aprovação</label><select id="ag-auto"><option value="aprovar">Pede aprovação antes</option><option value="automatico">Age sozinho</option></select></div>
     </div>
     <label class="chk"><input type="checkbox" id="ag-ativo" checked> Ativo</label>
@@ -903,6 +904,7 @@
      [decididos.length ? Math.round(leads.filter(function (l) { return l.status === "fechou"; }).length / decididos.length * 100) + "%" : "—", "taxa de fechamento"]].forEach(function (x) {
       k.appendChild(el("div", { class: "stat" + (x[2] ? " alert" : "") }, [el("b", { text: String(x[0]) }), el("span", { text: x[1] })]));
     });
+    placar();
     var b = document.getElementById("board"); b.textContent = "";
     Object.keys(ST_LEAD).forEach(function (st) {
       var doSt = leads.filter(function (l) { return l.status === st; });
@@ -912,13 +914,30 @@
       b.appendChild(col);
     });
   }
+  // cada vendedor de IA: contatos recebidos, reuniões, fechamentos e taxa (pra ver qual estilo vende mais)
+  function placar() {
+    var w = document.getElementById("placar"); w.textContent = "";
+    var vend = agentesIA.filter(function (a) { return a.etapa === "vendas"; });
+    document.getElementById("placar-sec").hidden = !vend.length;
+    var desde = Date.now() - 30 * 864e5;
+    vend.forEach(function (a) {
+      var meus = leads.filter(function (l) { return l.vendedor_id === a.id && Date.parse(l.criado_em) > desde; });
+      var reu = reunioes.filter(function (r) { return meus.some(function (l) { return l.id === r.lead_id; }); }).length;
+      var fech = meus.filter(function (l) { return l.status === "fechou"; }).length;
+      w.appendChild(el("div", { class: "ag" + (a.ativo === false ? " off" : "") }, [avatarEl(a), el("div", {}, [
+        el("div", { class: "nm", text: a.nome }), el("div", { class: "cg", text: a.cargo || "" }),
+        el("div", { class: "tags" }, [el("span", { text: meus.length + (meus.length === 1 ? " contato" : " contatos") }), el("span", { text: reu + (reu === 1 ? " reunião" : " reuniões") }), el("span", { class: fech ? "auto" : "", text: fech + " fechou" + (meus.length ? " · " + Math.round(fech / meus.length * 100) + "%" : "") })])
+      ])]));
+    });
+  }
   function cartaoLead(x) {
     var sel = el("select", { "aria-label": "Etapa de " + x.nome });
     Object.keys(ST_LEAD).forEach(function (k) { sel.appendChild(el("option", { value: k, text: ST_LEAD[k] })); });
     sel.value = x.status;
     sel.addEventListener("change", async function () { try { await api.statusLead(x.id, sel.value); x.status = sel.value; badges(); visao(); renderLeads(); } catch (e) { CR.toast(e.message, true); } });
     var w = waLead(x.whatsapp);
-    var origem = { videos: "veio da página de vídeos", home: "veio da home", manual: "cadastrado pela equipe", whatsapp: "chamou no WhatsApp", prospeccao: "lista de prospecção" }[x.origem] || "";
+    var origem = { videos: "veio da página de vídeos", home: "veio da home", manual: "cadastrado pela equipe", whatsapp: "chamou no WhatsApp", prospeccao: "lista de prospecção", "site-chat": "chat do site" }[x.origem] || "";
+    var vend = x.vendedor_id && agentesIA.find(function (a) { return a.id === x.vendedor_id; });
     var prox = x.proximo_contato ? el("div", { class: x.proximo_contato <= hj ? "hoje-tag" : "muted" }, [ic("cal"), " Próximo contato: " + CR.dataLonga(x.proximo_contato)]) : null;
     return el("article", { class: "lead-card" }, [
       el("div", { style: "display:flex;align-items:center;gap:2px" }, [
@@ -927,7 +946,7 @@
         el("button", { class: "icon-btn", type: "button", style: "width:32px;height:32px", "aria-label": "Anotar sobre " + x.nome, title: "Anotar", onclick: function () { abrirLead(x); } }, ic("edit")),
         el("button", { class: "icon-btn", type: "button", style: "width:32px;height:32px", "aria-label": "Apagar " + x.nome, onclick: function () { confirmar(this, async function () { await api.apagarLead(x.id); await carregar(); }); } }, ic("trash"))
       ]),
-      el("div", { class: "muted", text: [x.empresa, x.interesse ? "quer " + x.interesse : "", origem, CR.data(x.criado_em)].filter(Boolean).join(" · ") }),
+      el("div", { class: "muted", text: [x.empresa, x.interesse ? "quer " + x.interesse : "", origem, vend ? "com " + vend.nome : "", CR.data(x.criado_em)].filter(Boolean).join(" · ") }),
       x.observacao ? el("div", { style: "white-space:pre-wrap", text: x.observacao }) : null,
       prox,
       el("div", { class: "acts" }, [
@@ -1356,7 +1375,7 @@
   function renderIA() { renderSug(); renderAgentes(); renderJornada(); renderCasa(); }
 
   var AREAS_ORG = [["comercial", "Comercial"], ["operacional", "Operacional"], ["administrativo", "Administrativo"], ["financeiro", "Financeiro"]];
-  var ETAPAS_NOME = { whatsapp: "WhatsApp", pauta: "Pauta", roteiro: "Roteiro", copy: "Copy", arte: "Arte", edicao: "Edição" };
+  var ETAPAS_NOME = { whatsapp: "WhatsApp", vendas: "Vendedor", pauta: "Pauta", roteiro: "Roteiro", copy: "Copy", arte: "Arte", edicao: "Edição" };
   function avatarEl(a) { var w = el("span"); w.innerHTML = CR.avatar(a.nome, a.genero); return w.firstChild; }
   function cartaoAg(a, extra) {
     return el("div", { class: "ag" + (extra ? " " + extra : "") + (a.ativo === false ? " off" : "") }, [
@@ -1366,7 +1385,7 @@
         el("div", { class: "tags" }, [
           a.etapa ? el("span", { text: "Esteira · " + (ETAPAS_NOME[a.etapa] || a.etapa) }) : null,
           el("span", { class: a.autonomia === "automatico" ? "auto" : "", text: a.autonomia === "automatico" ? "Age sozinho" : "Pede aprovação" }),
-          el("span", { text: a.ativo === false ? "Desligado" : a.etapa === "whatsapp" ? "responde na hora" : FREQ[a.frequencia || "manual"] })
+          el("span", { text: a.ativo === false ? "Desligado" : (a.etapa === "whatsapp" || a.etapa === "vendas") ? "responde na hora" : FREQ[a.frequencia || "manual"] })
         ]),
         a.ultimo_resultado ? el("div", { class: "cg", style: "margin-top:4px", text: a.ultimo_resultado }) : null
       ]),
