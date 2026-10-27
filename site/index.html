@@ -1,0 +1,654 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>Criativos Rápidos · tudo que uma agência entrega, em 24 h</title>
+<meta name="description" content="Copywriter, designer, social media, editor de vídeo, locutor e gestor de tráfego num time só. Planos mensais sem fidelidade, pacotes a partir de R$ 97 e um app pra aprovar e baixar seus conteúdos.">
+<meta property="og:title" content="Criativos Rápidos · tudo que uma agência entrega, em 24 h">
+<meta property="og:description" content="Planos sem fidelidade, pacotes a partir de R$ 97 e app pra aprovar e baixar seus conteúdos.">
+<meta property="og:image" content="assets/logo-completo.png">
+<meta name="theme-color" content="#101216">
+<link rel="icon" href="assets/icons/favicon-32.png">
+<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,700;0,800;0,900;1,800;1,900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  /* Layout: faixas pretas e claras alternadas; o amarelo marca preço, prazo e ação.
+     A peça central é o app de verdade (prints do modo demonstração) dentro de um celular. Página de um visual só, sem modo escuro. */
+  :root {
+    --y: #FFD400;
+    --y-soft: #FFF3B0;
+    --ink: #101216;
+    --ink-2: #17191E;
+    --ink-3: #22252C;
+    --paper: #F4F3EE;
+    --white: #FFFFFF;
+    --mut: #62656D;
+    --mut-d: #A7A9B0;
+    --line: #E2E0D7;
+    --line-d: #2C2F36;
+    --ok: #1F7A3A;
+    --display: "Montserrat", "Arial Black", system-ui, sans-serif;
+    --body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+    color-scheme: light;
+  }
+  * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font: 16px/1.6 var(--body); }
+  body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 50; background: var(--ink); }
+  img, video { max-width: 100%; display: block; }
+  a { color: inherit; }
+  button { font-family: inherit; }
+  :focus-visible { outline: 3px solid var(--y); outline-offset: 3px; }
+  .in { max-width: 1160px; margin: 0 auto; padding-left: max(18px, env(safe-area-inset-left, 0px)); padding-right: max(18px, env(safe-area-inset-right, 0px)); }
+  .band { padding-block: 96px; }
+  .dark { background: var(--ink); color: #fff; }
+  .mut { color: var(--mut); }
+  .dark .mut { color: var(--mut-d); }
+  h1, h2, h3 { font-family: var(--display); margin: 0; text-wrap: balance; }
+  h2 { font-weight: 900; font-size: clamp(32px, 4.6vw, 52px); line-height: 1.04; letter-spacing: -.02em; }
+  h2 em, h1 em { font-style: italic; color: var(--y); }
+  .light h2 em { color: var(--ink); background: linear-gradient(transparent 60%, var(--y) 60%); padding: 0 .06em; }
+  .eyebrow { display: inline-flex; align-items: center; gap: 8px; font: 800 12px/1 var(--body); letter-spacing: .16em; text-transform: uppercase; color: var(--ink); background: var(--y); padding: 8px 11px; border-radius: 7px; margin-bottom: 20px; }
+  .head { max-width: 760px; margin-bottom: 44px; }
+  .head p { margin: 16px 0 0; font-size: 18px; max-width: 60ch; }
+
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 9px; border-radius: 14px; padding: 16px 22px; font: 800 15px/1 var(--body); text-decoration: none; border: 2px solid transparent; cursor: pointer; transition: transform .15s, box-shadow .15s; white-space: nowrap; }
+  .btn:hover { transform: translateY(-2px); }
+  .btn.y { background: var(--y); color: var(--ink); box-shadow: 0 6px 0 #C9A700; }
+  .btn.y:hover { box-shadow: 0 8px 0 #C9A700; }
+  .btn.k { background: var(--ink); color: #fff; }
+  .btn.o { border-color: #3A3D44; color: #fff; background: transparent; }
+  .btn.ok { border-color: var(--ink); color: var(--ink); background: transparent; }
+  .btn.sm { padding: 11px 15px; font-size: 13px; border-radius: 11px; box-shadow: none; }
+  .btn svg { width: 18px; height: 18px; }
+
+  /* ---------------------------------------------------------------- menu */
+  .nav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 40; background: rgba(16, 18, 22, .92); backdrop-filter: saturate(1.4) blur(10px); -webkit-backdrop-filter: saturate(1.4) blur(10px); color: #fff; border-bottom: 1px solid rgba(255, 255, 255, .06); }
+  .nav .in { display: flex; align-items: center; gap: 24px; padding-block: 12px; }
+  .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; flex: none; }
+  .logo img { width: 38px; height: 38px; }
+  .logo span { line-height: 1; font-size: 16px; }
+  .logo b { display: block; font-weight: 500; }
+  .logo i { display: block; font-family: var(--display); font-weight: 900; }
+  .nav .links { display: flex; gap: 22px; margin-left: auto; font-size: 14px; font-weight: 600; }
+  .nav .links a { text-decoration: none; color: #D6D7DC; }
+  .nav .links a:hover { color: var(--y); }
+  .nav .acts { display: flex; gap: 8px; }
+  @media (max-width: 960px) { .nav .links { display: none; } .nav .acts { margin-left: auto; } }
+  @media (max-width: 420px) { .nav .acts .o { display: none; } }
+
+  /* ---------------------------------------------------------------- abertura */
+  .hero { position: relative; overflow: hidden; padding-block: 72px 0; }
+  .hero::before { content: ""; position: absolute; right: -10%; top: 4%; width: 760px; height: 760px; border-radius: 50%; background: radial-gradient(circle, rgba(255, 212, 0, .22), rgba(255, 212, 0, 0) 62%); pointer-events: none; }
+  .hero .in { position: relative; display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: 40px; align-items: end; }
+  .hero .txt { padding-bottom: 96px; }
+  .hero h1 { font-weight: 900; font-size: clamp(42px, 6.4vw, 80px); line-height: .98; letter-spacing: -.025em; }
+  .hero .sub { font-size: clamp(17px, 1.7vw, 20px); color: #D6D7DC; max-width: 33em; margin: 24px 0 32px; }
+  .hero .ctas { display: flex; flex-wrap: wrap; gap: 14px; }
+  .facts { display: grid; grid-template-columns: repeat(4, auto); justify-content: start; gap: 12px 34px; margin-top: 44px; font-size: 13.5px; color: var(--mut-d); }
+  .facts b { display: block; font: 900 30px/1.05 var(--display); color: #fff; }
+  .facts b em { color: var(--y); font-style: normal; }
+  @media (max-width: 560px) { .facts { grid-template-columns: 1fr 1fr; } }
+
+  .stage { position: relative; justify-self: center; width: min(360px, 82vw); padding-top: 20px; }
+  .phone { position: relative; width: 100%; aspect-ratio: 390 / 844; border-radius: 52px; background: #050608; padding: 11px; box-shadow: 0 0 0 2px #2A2D34, 0 40px 90px rgba(0, 0, 0, .55), 0 0 120px rgba(255, 212, 0, .12); }
+  .phone .scr { width: 100%; height: 100%; border-radius: 42px; overflow: hidden; background: var(--ink); position: relative; padding-top: 38px; }
+  .phone .scr img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+  .phone .isl { position: absolute; top: 20px; left: 50%; width: 92px; height: 26px; margin-left: -46px; border-radius: 99px; background: #050608; z-index: 2; }
+  .hero .phone { border-radius: 52px 52px 0 0; aspect-ratio: 390 / 700; padding-bottom: 0; }
+  .hero .phone .scr { border-radius: 42px 42px 0 0; }
+  .float { position: absolute; z-index: 3; background: var(--white); color: var(--ink); border-radius: 18px; box-shadow: 0 18px 40px rgba(0, 0, 0, .35); display: flex; gap: 12px; align-items: center; padding: 12px 14px; font-size: 13px; line-height: 1.3; }
+  .float b { display: block; font-size: 14px; }
+  .float .ic { width: 38px; height: 38px; border-radius: 11px; display: grid; place-items: center; flex: none; }
+  .float .ic svg { width: 20px; height: 20px; }
+  .f-novo { left: -64px; top: 120px; }
+  .f-novo .ic { background: var(--y); }
+  .f-ok { right: -56px; top: 330px; }
+  .f-ok .ic { background: #E3F4E8; color: var(--ok); }
+  .f-24 { left: -40px; bottom: 70px; background: var(--y); font: 900 15px/1.1 var(--display); padding: 14px 16px; }
+  .f-24 .ic { background: var(--ink); color: var(--y); }
+  @media (max-width: 960px) {
+    .hero .in { grid-template-columns: 1fr; }
+    .hero .txt { padding-bottom: 20px; }
+    .f-novo { left: -14px; } .f-ok { right: -14px; } .f-24 { left: -10px; }
+  }
+  @keyframes entra { 0%, 6% { opacity: 0; transform: translateY(14px) scale(.96); } 12%, 88% { opacity: 1; transform: none; } 94%, 100% { opacity: 0; transform: translateY(-8px); } }
+  @keyframes boia { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+  .f-novo { animation: entra 7s ease-in-out infinite; }
+  .f-ok { animation: entra 7s ease-in-out 1.4s infinite backwards; }
+  .f-24 { animation: boia 5s ease-in-out infinite; }
+
+  /* ---------------------------------------------------------------- faixa amarela */
+  .ticker { background: var(--y); color: var(--ink); overflow: hidden; border-block: 2px solid var(--ink); }
+  .ticker .track { display: flex; width: max-content; animation: rola 38s linear infinite; }
+  .ticker span { display: inline-flex; align-items: center; gap: 22px; padding: 16px 11px; font: 900 18px var(--display); text-transform: uppercase; letter-spacing: .02em; white-space: nowrap; }
+  .ticker span svg { width: 22px; height: 17px; }
+  @keyframes rola { to { transform: translateX(-50%); } }
+
+  /* ---------------------------------------------------------------- time */
+  .team { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+  .role { background: var(--white); border: 1px solid var(--line); border-radius: 22px; padding: 22px 20px; display: grid; gap: 10px; align-content: start; }
+  .role .ic { width: 48px; height: 48px; border-radius: 14px; background: var(--ink); color: var(--y); display: grid; place-items: center; }
+  .role .ic svg { width: 24px; height: 24px; }
+  .role h3 { font-size: 18px; font-weight: 800; }
+  .role p { margin: 0; color: var(--mut); font-size: 14.5px; line-height: 1.5; }
+  .vs { margin-top: 26px; display: flex; flex-wrap: wrap; gap: 10px 26px; font-size: 15px; font-weight: 600; }
+  .vs span { display: inline-flex; gap: 8px; align-items: center; }
+  .vs svg { width: 20px; height: 20px; color: var(--ok); }
+  @media (max-width: 860px) { .team { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+  /* ---------------------------------------------------------------- passos */
+  .steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; position: relative; }
+  .steps::before { content: ""; position: absolute; left: 24px; right: 24px; top: 24px; height: 3px; background: repeating-linear-gradient(90deg, var(--ink) 0 10px, transparent 10px 18px); }
+  .step { position: relative; padding-right: 22px; }
+  .step .n { width: 50px; height: 50px; border-radius: 14px; background: var(--ink); color: var(--y); display: grid; place-items: center; font: 900 20px var(--display); position: relative; margin-bottom: 18px; }
+  .step:last-child .n { background: var(--y); color: var(--ink); box-shadow: 0 0 0 3px var(--ink); }
+  .step h3 { font-size: 19px; font-weight: 800; margin-bottom: 6px; }
+  .step p { margin: 0; color: var(--mut); font-size: 15px; }
+  .step .tm { justify-self: start; display: inline-block; margin-top: 12px; font: 800 12px var(--body); letter-spacing: .08em; text-transform: uppercase; background: var(--white); border: 1px solid var(--line); border-radius: 99px; padding: 5px 10px; }
+  @media (max-width: 860px) {
+    .steps { grid-template-columns: 1fr; gap: 26px; }
+    .steps::before { left: 24px; right: auto; top: 24px; bottom: 24px; width: 3px; height: auto; background: repeating-linear-gradient(180deg, var(--ink) 0 10px, transparent 10px 18px); }
+    .step { display: grid; grid-template-columns: 50px 1fr; gap: 0 18px; padding: 0; }
+    .step .n { margin: 0; grid-row: span 3; }
+  }
+
+  /* ---------------------------------------------------------------- planos */
+  .plans { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; align-items: stretch; }
+  .pc { position: relative; border-radius: 26px; padding: 30px 26px 26px; display: flex; flex-direction: column; gap: 18px; background: var(--ink-2); border: 1px solid var(--line-d); color: #fff; }
+  .pc.hot { border: 3px solid var(--y); }
+  .pc.top { background: var(--y); color: var(--ink); border-color: var(--y); }
+  .pc .badge { position: absolute; top: -15px; left: 24px; background: var(--y); color: var(--ink); font: 800 12px var(--body); letter-spacing: .1em; text-transform: uppercase; padding: 7px 11px; border-radius: 8px; }
+  .pc.top .badge { background: var(--ink); color: var(--y); }
+  .pc .role-t { font: 800 12px var(--body); letter-spacing: .14em; text-transform: uppercase; color: var(--y); }
+  .pc.top .role-t { color: var(--ink); opacity: .75; }
+  .pc h3 { font-size: 30px; font-weight: 900; letter-spacing: -.01em; margin-top: -10px; }
+  .pc .desc { margin: -8px 0 0; font-size: 15px; color: var(--mut-d); }
+  .pc.top .desc { color: #3D3A2A; }
+  .pc .val { font: 900 50px/1 var(--display); letter-spacing: -.03em; }
+  .pc .val sup { font-size: 19px; vertical-align: top; margin-right: 3px; letter-spacing: 0; }
+  .pc .val small { font-size: 16px; font-weight: 700; letter-spacing: 0; }
+  .who { display: flex; align-items: center; gap: 12px; border-radius: 16px; padding: 12px 14px; background: var(--ink-3); }
+  .pc.top .who { background: rgba(16, 18, 22, .1); }
+  .who .ic { width: 38px; height: 38px; border-radius: 11px; background: var(--y); color: var(--ink); display: grid; place-items: center; flex: none; }
+  .pc.top .who .ic { background: var(--ink); color: var(--y); }
+  .who .ic svg { width: 20px; height: 20px; }
+  .who span { font-size: 12px; color: var(--mut-d); display: block; }
+  .pc.top .who span { color: #3D3A2A; }
+  .who b { font-size: 15px; }
+  .qty { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px; }
+  .qty div { background: var(--ink-3); border-radius: 11px; padding: 8px 2px; text-align: center; font-size: 10.5px; color: var(--mut-d); }
+  .qty b { display: block; font: 900 20px/1.1 var(--display); color: #fff; }
+  .pc.top .qty div { background: rgba(16, 18, 22, .1); color: #3D3A2A; }
+  .pc.top .qty b { color: var(--ink); }
+  .pc ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; font-size: 15px; }
+  .pc li { display: flex; gap: 10px; align-items: flex-start; }
+  .pc li svg { width: 18px; height: 18px; flex: none; margin-top: 3px; color: var(--y); }
+  .pc.top li svg { color: var(--ink); }
+  .pc li.plus { font-weight: 700; }
+  .pc .btn { margin-top: auto; width: 100%; }
+  .pc.top .btn.y { background: var(--ink); color: var(--y); box-shadow: 0 6px 0 #000; }
+  .note-d { margin-top: 26px; font-size: 14px; color: var(--mut-d); display: flex; flex-wrap: wrap; gap: 8px 24px; }
+  @media (max-width: 980px) { .plans { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; gap: 30px; } }
+
+  .cmp { margin-top: 56px; border: 1px solid var(--line-d); border-radius: 22px; overflow: hidden; }
+  .cmp summary { cursor: pointer; list-style: none; padding: 20px 24px; display: flex; justify-content: space-between; align-items: center; gap: 12px; font: 800 18px var(--display); background: var(--ink-2); }
+  .cmp summary::-webkit-details-marker { display: none; }
+  .cmp summary::after { content: "+"; font: 900 26px/1 var(--display); color: var(--y); }
+  .cmp[open] summary::after { content: "–"; }
+  .cmp .scroll { overflow-x: auto; }
+  .cmp table { width: 100%; min-width: 620px; border-collapse: collapse; font-size: 14.5px; }
+  .cmp th, .cmp td { padding: 13px 18px; border-top: 1px solid var(--line-d); text-align: center; }
+  .cmp th:first-child, .cmp td:first-child { text-align: left; color: var(--mut-d); font-weight: 600; }
+  .cmp thead th { font: 900 15px var(--display); color: #fff; background: var(--ink-2); }
+  .cmp thead th.hl { color: var(--y); }
+  .cmp td svg { width: 20px; height: 20px; color: var(--y); vertical-align: middle; }
+  .cmp td.no { color: #50535B; }
+  .cmp tr.grp td { background: var(--ink-2); font: 800 12px var(--body); letter-spacing: .12em; text-transform: uppercase; color: var(--y) !important; text-align: left; }
+  .cmp td b { color: #fff; }
+
+  /* ---------------------------------------------------------------- pacotes */
+  .packs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+  .pk { background: var(--white); border: 1px solid var(--line); border-radius: 24px; padding: 26px; display: flex; flex-direction: column; gap: 14px; position: relative; }
+  .pk.hot { border: 3px solid var(--ink); }
+  .pk .badge { position: absolute; top: -14px; left: 22px; background: var(--ink); color: var(--y); font: 800 12px var(--body); letter-spacing: .1em; text-transform: uppercase; padding: 6px 10px; border-radius: 8px; }
+  .pk h3 { font-size: 22px; font-weight: 900; text-transform: uppercase; letter-spacing: .02em; }
+  .pk .val { font: 900 44px/1 var(--display); letter-spacing: -.02em; }
+  .pk .val sup { font-size: 17px; vertical-align: top; margin-right: 3px; }
+  .pk .role-p { font: 800 12px var(--body); letter-spacing: .12em; text-transform: uppercase; color: var(--mut); }
+  .pk li.gift { font-weight: 800; }
+  .pk .cr { display: inline-flex; align-items: baseline; gap: 6px; background: var(--y-soft); border-radius: 10px; padding: 6px 10px; font-weight: 800; align-self: start; }
+  .pk .cr b { font: 900 22px var(--display); }
+  .pk ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 9px; font-size: 15px; }
+  .pk li { display: flex; gap: 10px; }
+  .pk li svg { width: 18px; height: 18px; flex: none; margin-top: 3px; }
+  .pk .ex { font-size: 13.5px; color: var(--mut); border-top: 1px dashed var(--line); padding-top: 12px; }
+  .pk .btn { margin-top: auto; }
+  .rules { margin-top: 26px; display: flex; flex-wrap: wrap; gap: 10px; }
+  .rules span { background: var(--white); border: 1px solid var(--line); border-radius: 99px; padding: 8px 14px; font-size: 14px; font-weight: 600; }
+  @media (max-width: 980px) { .packs { grid-template-columns: 1fr; max-width: 480px; } }
+
+  /* ---------------------------------------------------------------- app */
+  .app { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 56px; align-items: center; }
+  .shots { position: relative; display: flex; justify-content: center; gap: 0; min-height: 560px; }
+  .shots .phone { width: min(270px, 44vw); position: absolute; }
+  .shots .p1 { left: 4%; top: 30px; transform: rotate(-6deg); }
+  .shots .p2 { right: 4%; top: 0; transform: rotate(5deg); z-index: 2; }
+  .feat { list-style: none; padding: 0; margin: 28px 0 32px; display: grid; gap: 16px; }
+  .feat li { display: grid; grid-template-columns: 44px 1fr; gap: 14px; align-items: start; }
+  .feat .ic { width: 44px; height: 44px; border-radius: 13px; background: var(--ink-3); color: var(--y); display: grid; place-items: center; }
+  .feat .ic svg { width: 22px; height: 22px; }
+  .feat b { display: block; font-size: 16px; }
+  .feat span { color: var(--mut-d); font-size: 14.5px; }
+  .app .ctas { display: flex; flex-wrap: wrap; gap: 12px; }
+  @media (max-width: 960px) { .app { grid-template-columns: 1fr; } .shots { min-height: 0; aspect-ratio: 1 / 1; max-width: 560px; width: 100%; margin: 0 auto; order: -1; } }
+
+  /* ---------------------------------------------------------------- dúvidas */
+  .faq { max-width: 860px; display: grid; gap: 10px; }
+  .faq details { background: var(--white); border: 1px solid var(--line); border-radius: 18px; }
+  .faq summary { cursor: pointer; list-style: none; padding: 19px 22px; font-weight: 700; display: flex; justify-content: space-between; gap: 14px; }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after { content: "+"; font: 900 22px/1 var(--display); }
+  .faq details[open] summary::after { content: "–"; }
+  .faq p { margin: 0; padding: 0 22px 20px; color: var(--mut); }
+
+  /* ---------------------------------------------------------------- final + formulário */
+  .final { background: var(--y); padding-block: 96px; }
+  .final .in { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 460px); gap: 48px; align-items: center; }
+  .final h2 { font-size: clamp(36px, 5.4vw, 62px); }
+  .final h2 em { color: var(--ink); font-style: italic; text-decoration: underline; text-decoration-thickness: 6px; text-underline-offset: 6px; }
+  .final p.big { font-size: 19px; margin: 18px 0 0; max-width: 32em; }
+  @media (max-width: 900px) { .final .in { grid-template-columns: 1fr; } }
+  .lead-card { background: var(--white); border-radius: 26px; padding: 26px; box-shadow: 0 24px 60px rgba(16, 18, 22, .18); border: 2px solid var(--ink); }
+  .lead-card h3 { font-size: 20px; font-weight: 900; margin-bottom: 4px; }
+  .fl { display: grid; gap: 6px; margin-bottom: 12px; }
+  .fl label { font-weight: 700; font-size: 14px; }
+  .fl input, .fl select { width: 100%; border: 1.5px solid var(--line); background: #FBFAF6; border-radius: 12px; padding: 13px 14px; font: 15px var(--body); color: var(--ink); }
+  .fl input:focus, .fl select:focus { outline: none; border-color: var(--ink); }
+  .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  .lead-err { color: #B4231B; background: #FBE7E5; border-radius: 10px; padding: 10px 12px; font-size: 14px; margin-bottom: 12px; }
+  .lead-ok { text-align: center; display: grid; gap: 12px; justify-items: center; padding: 10px 0; }
+  .lead-ok .ic { width: 60px; height: 60px; border-radius: 50%; background: #E3F4E8; color: var(--ok); display: grid; place-items: center; }
+  .lead-ok .ic svg { width: 30px; height: 30px; }
+  .lead-ok b { font: 900 22px var(--display); }
+  .small { font-size: 13px; }
+
+  dialog.lead { border: 0; padding: 0; background: transparent; max-width: min(460px, calc(100vw - 24px)); width: 100%; }
+  dialog.lead::backdrop { background: rgba(10, 11, 14, .7); }
+  dialog.lead .lead-card { position: relative; }
+  dialog.lead .x { position: absolute; top: 12px; right: 12px; width: 40px; height: 40px; border-radius: 12px; border: 0; background: #F0EFE9; cursor: pointer; display: grid; place-items: center; }
+  dialog.lead .x svg { width: 20px; height: 20px; }
+
+  footer { background: var(--ink); color: var(--mut-d); font-size: 13.5px; padding-block: 34px calc(34px + env(safe-area-inset-bottom, 0px)); }
+  footer .in { display: flex; flex-wrap: wrap; gap: 14px 28px; justify-content: space-between; align-items: center; }
+  footer a { color: #fff; text-decoration: none; }
+  footer a:hover { color: var(--y); }
+  footer .fnav { display: flex; gap: 20px; flex-wrap: wrap; }
+
+  svg.s { fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .btn { transition: none; } .f-novo, .f-ok, .f-24, .ticker .track { animation: none; } }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></symbol>
+  <symbol id="i-pen" viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16zM14 6l4 4"/></symbol>
+  <symbol id="i-palette" viewBox="0 0 24 24"><path d="M12 3a9 9 0 0 0 0 18c1.1 0 2-.9 2-2 0-.5-.2-1-.5-1.3-.3-.4-.5-.8-.5-1.3 0-1.1.9-2 2-2h2.4A4.6 4.6 0 0 0 21 9.8C21 5.9 17 3 12 3z"/><circle cx="7.5" cy="11" r="1.2"/><circle cx="10" cy="7" r="1.2"/><circle cx="15" cy="7" r="1.2"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24"><path d="M4 6h16v14H4zM4 10h16M8 3v4M16 3v4"/></symbol>
+  <symbol id="i-film" viewBox="0 0 24 24"><path d="M4 4h16v16H4zM8 4v16M16 4v16M4 8h4M4 12h4M4 16h4M16 8h4M16 12h4M16 16h4"/></symbol>
+  <symbol id="i-mic" viewBox="0 0 24 24"><path d="M12 3a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V6a3 3 0 0 0-3-3zM5 11a7 7 0 0 0 14 0M12 18v3"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21a8 8 0 0 1 16 0"/></symbol>
+  <symbol id="i-team" viewBox="0 0 24 24"><path d="M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM2 21a7 7 0 0 1 14 0M16 3.5a4 4 0 0 1 0 7.5M22 21a7 7 0 0 0-5-6.7"/></symbol>
+  <symbol id="i-rocket" viewBox="0 0 24 24"><path d="M5 15c-1.5 1.3-2 5-2 5s3.7-.5 5-2M14 4c3 0 6 3 6 6-2 4-6 7-8 8l-6-6c1-2 4-6 8-8zM9 15l-3-3M14 10.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 16V11a6 6 0 1 1 12 0v5l2 2H4zM10 20a2 2 0 0 0 4 0"/></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><path d="M9 9h11v11H9zM5 15H4V4h11v1"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><path d="M8 3h8v18H8zM11 18h2"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM12 7v5l3 2"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></symbol>
+  <symbol id="i-play" viewBox="0 0 100 74"><g fill="currentColor" stroke="none"><rect x="14" y="15.6" width="19" height="7" rx="3.5"/><rect x="6.5" y="33.5" width="26.5" height="7" rx="3.5"/><rect x="19" y="51.3" width="14" height="7" rx="3.5"/><path d="M40.5 9.5c0-2.6 2.8-4.2 5-2.9l44.6 26.5c2.2 1.3 2.2 4.5 0 5.8L45.5 65.4c-2.2 1.3-5-.3-5-2.9z"/></g></symbol>
+</svg>
+
+<header class="nav">
+  <div class="in">
+    <a class="logo" href="./" aria-label="Criativos Rápidos, início"><img src="assets/logo-icone.png" alt=""><span><b>criativos</b><i>rápidos</i></span></a>
+    <nav class="links" aria-label="Seções"><a href="#como">Como funciona</a><a href="#planos">Planos</a><a href="#pacotes">Pacotes</a><a href="#app">App</a><a href="#duvidas">Dúvidas</a></nav>
+    <div class="acts"><a class="btn o sm" href="entrar.html">Área do cliente</a><button class="btn y sm" type="button" data-lead="">Quero começar</button></div>
+  </div>
+</header>
+
+<section class="hero dark">
+  <div class="in">
+    <div class="txt">
+      <span class="eyebrow">Agência de conteúdo · sem fidelidade</span>
+      <h1>Tudo que uma agência entrega. <em>Em 24 horas.</em></h1>
+      <p class="sub">Copywriter, designer, social media, editor de vídeo, locutor e gestor de tráfego num time só. Você aprova pelo nosso app e recebe tudo pronto pra postar, ou deixa que a gente posta.</p>
+      <div class="ctas">
+        <a class="btn y" href="#planos">Ver planos</a>
+        <button class="btn o" type="button" data-lead="">Falar com a gente</button>
+      </div>
+      <div class="facts">
+        <div><b><em>24 h</em></b>pra entregar</div>
+        <div><b>0</b>fidelidade</div>
+        <div><b>12x</b>no cartão</div>
+        <div><b>App</b>pra aprovar e baixar</div>
+      </div>
+    </div>
+    <div class="stage" aria-label="O app da Criativos Rápidos">
+      <div class="phone"><span class="isl"></span><div class="scr"><img src="assets/img/app-inicio.jpg" alt="Tela inicial do app: plano Crescimento e conteúdos para aprovar" width="780" height="1688"></div></div>
+      <div class="float f-novo"><span class="ic"><svg class="s"><use href="#i-bell"/></svg></span><div><b>Conteúdo novo pronto</b>Reels do combo duplo</div></div>
+      <div class="float f-ok"><span class="ic"><svg class="s"><use href="#i-check"/></svg></span><div><b>Aprovado</b>Post vai ao ar sábado</div></div>
+      <div class="float f-24"><span class="ic"><svg class="s"><use href="#i-clock"/></svg></span>Entregue em 24 h</div>
+    </div>
+  </div>
+</section>
+
+<div class="ticker" aria-hidden="true"><div class="track" id="ticker"></div></div>
+
+<section class="band light" id="time">
+  <div class="in">
+    <div class="head"><span class="eyebrow">O time</span><h2>Um time inteiro, <em>sem contratar ninguém</em></h2><p class="mut">Tudo que uma agência entrega, com uma assinatura mensal e sem contrato longo.</p></div>
+    <div class="team">
+      <div class="role"><span class="ic"><svg class="s"><use href="#i-pen"/></svg></span><h3>Copywriter</h3><p>Textos e legendas que fazem o cliente chamar no WhatsApp.</p></div>
+      <div class="role"><span class="ic"><svg class="s"><use href="#i-palette"/></svg></span><h3>Designer</h3><p>Posts, carrosséis, stories e anúncios com a cara da sua marca.</p></div>
+      <div class="role"><span class="ic"><svg class="s"><use href="#i-cal"/></svg></span><h3>Social media</h3><p>Calendário de postagem e, nos planos maiores, a postagem feita por nós.</p></div>
+      <div class="role"><span class="ic"><svg class="s"><use href="#i-film"/></svg></span><h3>Editor de vídeo</h3><p>Reels e vídeos com motion que param o dedo no feed.</p></div>
+      <div class="role"><span class="ic"><svg class="s"><use href="#i-mic"/></svg></span><h3>Locutor</h3><p>Voz profissional nos vídeos, quando o conteúdo pede.</p></div>
+      <div class="role"><span class="ic"><svg class="s"><use href="#i-rocket"/></svg></span><h3>Gestor de tráfego</h3><p>Anúncios pagos rodando, acompanhados e ajustados pra trazer cliente.</p></div>
+    </div>
+    <div class="vs"><span><svg class="s"><use href="#i-check"/></svg>Sem fidelidade</span><span><svg class="s"><use href="#i-check"/></svg>Sem multa pra cancelar</span><span><svg class="s"><use href="#i-check"/></svg>Entrega em 24 h</span><span><svg class="s"><use href="#i-check"/></svg>Nunca pedimos sua senha</span></div>
+  </div>
+</section>
+
+<section class="band light" id="como" style="padding-top:0">
+  <div class="in">
+    <div class="head"><span class="eyebrow">Como funciona</span><h2>Do primeiro “oi” ao <em>post no ar</em></h2></div>
+    <div class="steps">
+      <div class="step"><span class="n">1</span><h3>Escolha</h3><p>Um plano mensal ou um pacote. A gente te ajuda a decidir pelo WhatsApp.</p></div>
+      <div class="step"><span class="n">2</span><h3>Pague</h3><p>No Pix ou em até 12x no cartão, com as taxas da maquininha.</p></div>
+      <div class="step"><span class="n">3</span><h3>Conte sobre você</h3><p>Você recebe o link do briefing e responde em uns 10 minutos.</p></div>
+      <div class="step"><span class="n">4</span><h3>Receba no app</h3><p>Aprove, peça ajuste e baixe em alta qualidade.</p><span class="tm">em até 24 h</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="band dark" id="planos">
+  <div class="in">
+    <div class="head"><span class="eyebrow">Planos mensais</span><h2>Escolha quanto <em>a gente faz por você</em></h2><p class="mut">Os três têm conteúdo todo mês, legendas, perfil completo e o app. A diferença é quem posta e se tem tráfego pago.</p></div>
+    <div class="plans">
+      <article class="pc">
+        <span class="role-t">Conteúdo pronto</span>
+        <h3>Presença</h3>
+        <p class="desc">A gente cria tudo e entrega com o calendário. Você só publica.</p>
+        <div class="val"><sup>R$</sup>597<small>/mês</small></div>
+        <div class="who"><span class="ic"><svg class="s"><use href="#i-user"/></svg></span><div><span>Quem posta</span><b>Você, no seu tempo</b></div></div>
+        <div class="qty" aria-label="30 conteúdos por mês"><div><b>10</b>stories</div><div><b>9</b>posts</div><div><b>6</b>carross.</div><div><b>3</b>reels</div><div><b>2</b>anúncios</div></div>
+        <ul>
+          <li><svg class="s"><use href="#i-check"/></svg>30 conteúdos no mês</li>
+          <li><svg class="s"><use href="#i-check"/></svg>Legendas prontas pra copiar</li>
+          <li><svg class="s"><use href="#i-check"/></svg>Perfil completo: bio, foto e destaques</li>
+          <li><svg class="s"><use href="#i-check"/></svg>Calendário de postagem pronto</li>
+          <li><svg class="s"><use href="#i-check"/></svg>1 ajuste no mês</li>
+        </ul>
+        <button class="btn y" type="button" data-lead="Presença">Quero o Presença</button>
+      </article>
+
+      <article class="pc hot">
+        <span class="badge">Mais escolhido</span>
+        <span class="role-t">Social media</span>
+        <h3>Crescimento</h3>
+        <p class="desc">Social media completo: a gente cria, programa e posta pra você.</p>
+        <div class="val"><sup>R$</sup>797<small>/mês</small></div>
+        <div class="who"><span class="ic"><svg class="s"><use href="#i-team"/></svg></span><div><span>Quem posta</span><b>A gente posta por você</b></div></div>
+        <div class="qty" aria-label="50 conteúdos por mês"><div><b>20</b>stories</div><div><b>12</b>posts</div><div><b>9</b>carross.</div><div><b>6</b>reels</div><div><b>3</b>anúncios</div></div>
+        <ul>
+          <li><svg class="s"><use href="#i-check"/></svg>50 conteúdos no mês</li>
+          <li><svg class="s"><use href="#i-check"/></svg>Legendas prontas</li>
+          <li><svg class="s"><use href="#i-check"/></svg>Perfil completo: bio, foto e destaques</li>
+          <li class="plus"><svg class="s"><use href="#i-check"/></svg>A gente programa e posta</li>
+          <li><svg class="s"><use href="#i-check"/></svg>2 ajustes no mês</li>
+        </ul>
+        <button class="btn y" type="button" data-lead="Crescimento">Quero o Crescimento</button>
+      </article>
+
+      <article class="pc top">
+        <span class="badge">Social + tráfego</span>
+        <span class="role-t">Social media + tráfego pago</span>
+        <h3>Autoridade</h3>
+        <p class="desc">Tudo do Crescimento, mais seus anúncios pagos rodando e acompanhados por nós.</p>
+        <div class="val"><sup>R$</sup>997<small>/mês</small></div>
+        <div class="who"><span class="ic"><svg class="s"><use href="#i-rocket"/></svg></span><div><span>Quem posta e anuncia</span><b>A gente faz tudo</b></div></div>
+        <div class="qty" aria-label="70 conteúdos por mês"><div><b>30</b>stories</div><div><b>15</b>posts</div><div><b>12</b>carross.</div><div><b>9</b>reels</div><div><b>4</b>anúncios</div></div>
+        <ul>
+          <li><svg class="s"><use href="#i-check"/></svg>70 conteúdos no mês</li>
+          <li><svg class="s"><use href="#i-check"/></svg>A gente programa e posta</li>
+          <li class="plus"><svg class="s"><use href="#i-check"/></svg>Gestão de tráfego pago: criamos, acompanhamos e ajustamos suas campanhas</li>
+          <li class="plus"><svg class="s"><use href="#i-check"/></svg>Relatório mensal de resultados</li>
+          <li class="plus"><svg class="s"><use href="#i-check"/></svg>Bônus: calendário humanizado e sequência de stories que vende</li>
+          <li><svg class="s"><use href="#i-check"/></svg>3 ajustes no mês</li>
+        </ul>
+        <button class="btn y" type="button" data-lead="Autoridade">Quero o Autoridade</button>
+      </article>
+    </div>
+    <div class="note-d"><span>Pagamento no Pix ou em até 12x no cartão, com as taxas da maquininha.</span><span>No Autoridade, a verba dos anúncios é sua e é paga direto à plataforma de anúncios.</span></div>
+
+    <details class="cmp">
+      <summary>Comparar os planos item por item</summary>
+      <div class="scroll">
+        <table>
+          <thead><tr><th scope="col">&nbsp;</th><th scope="col">Presença</th><th scope="col" class="hl">Crescimento</th><th scope="col">Autoridade</th></tr></thead>
+          <tbody>
+            <tr><td>Preço</td><td><b>R$ 597</b>/mês</td><td><b>R$ 797</b>/mês</td><td><b>R$ 997</b>/mês</td></tr>
+            <tr class="grp"><td colspan="4">Conteúdo no mês</td></tr>
+            <tr><td>Stories</td><td>10</td><td>20</td><td>30</td></tr>
+            <tr><td>Posts</td><td>9</td><td>12</td><td>15</td></tr>
+            <tr><td>Carrosséis</td><td>6</td><td>9</td><td>12</td></tr>
+            <tr><td>Reels</td><td>3</td><td>6</td><td>9</td></tr>
+            <tr><td>Anúncios (artes)</td><td>2</td><td>3</td><td>4</td></tr>
+            <tr><td>Total</td><td><b>30</b></td><td><b>50</b></td><td><b>70</b></td></tr>
+            <tr class="grp"><td colspan="4">O que está incluso</td></tr>
+            <tr><td>Legendas prontas</td><td><svg class="s"><use href="#i-check"/></svg></td><td><svg class="s"><use href="#i-check"/></svg></td><td><svg class="s"><use href="#i-check"/></svg></td></tr>
+            <tr><td>Perfil completo</td><td><svg class="s"><use href="#i-check"/></svg></td><td><svg class="s"><use href="#i-check"/></svg></td><td><svg class="s"><use href="#i-check"/></svg></td></tr>
+            <tr><td>Calendário de postagem</td><td><svg class="s"><use href="#i-check"/></svg></td><td><svg class="s"><use href="#i-check"/></svg></td><td><svg class="s"><use href="#i-check"/></svg></td></tr>
+            <tr><td>App pra aprovar e baixar</td><td><svg class="s"><use href="#i-check"/></svg></td><td><svg class="s"><use href="#i-check"/></svg></td><td><svg class="s"><use href="#i-check"/></svg></td></tr>
+            <tr><td>Quem posta</td><td>Você</td><td>A gente</td><td>A gente</td></tr>
+            <tr><td>Gestão de tráfego pago</td><td class="no">—</td><td class="no">—</td><td><svg class="s"><use href="#i-check"/></svg></td></tr>
+            <tr><td>Relatório mensal</td><td class="no">—</td><td class="no">—</td><td><svg class="s"><use href="#i-check"/></svg></td></tr>
+            <tr><td>Bônus</td><td class="no">—</td><td class="no">—</td><td>Calendário humanizado + sequência de stories</td></tr>
+            <tr><td>Ajustes no mês</td><td>1</td><td>2</td><td>3</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </details>
+  </div>
+</section>
+
+<section class="band light" id="pacotes">
+  <div class="in">
+    <div class="head"><span class="eyebrow">Pacotes · pagamento único</span><h2>Sem mensalidade? <em>Comece com um pacote.</em></h2><p class="mut">Você paga uma vez e recebe tudo pronto. Sem contrato e sem mensalidade.</p></div>
+    <div class="packs">
+      <article class="pk">
+        <span class="role-p">Pra começar a anunciar</span>
+        <h3>Largada</h3>
+        <div class="val"><sup>R$</sup>97</div>
+        <span class="cr"><b>3</b> anúncios</span>
+        <ul><li><svg class="s"><use href="#i-check"/></svg>2 vídeos pra anúncio</li><li><svg class="s"><use href="#i-check"/></svg>1 arte (design) pra anúncio</li><li><svg class="s"><use href="#i-check"/></svg>Com a sua marca, cores e oferta</li><li><svg class="s"><use href="#i-check"/></svg>1 ajuste no pacote</li></ul>
+        <button class="btn ok" type="button" data-lead="Largada">Quero o Largada</button>
+      </article>
+      <article class="pk hot">
+        <span class="badge">Marca profissional</span>
+        <span class="role-p">Pra marca ter cara de empresa</span>
+        <h3>Acelera</h3>
+        <div class="val"><sup>R$</sup>297</div>
+        <span class="cr">Identidade visual</span>
+        <ul><li><svg class="s"><use href="#i-check"/></svg>Identidade visual: logo, paleta de cores, fontes, foto de perfil e destaques</li><li class="gift"><svg class="s"><use href="#i-check"/></svg>Brinde: 1 anúncio pronto</li><li><svg class="s"><use href="#i-check"/></svg>2 ajustes no pacote</li></ul>
+        <button class="btn k" type="button" data-lead="Acelera">Quero o Acelera</button>
+      </article>
+      <article class="pk">
+        <span class="role-p">Pra vender também fora do Instagram</span>
+        <h3>Turbo</h3>
+        <div class="val"><sup>R$</sup>497</div>
+        <span class="cr">Identidade + landing page</span>
+        <ul><li><svg class="s"><use href="#i-check"/></svg>Identidade visual completa, criada do zero</li><li><svg class="s"><use href="#i-check"/></svg>Landing page completa pro seu negócio</li><li><svg class="s"><use href="#i-check"/></svg>PDFs bônus: boas práticas do Instagram e respostas prontas de vendas</li><li><svg class="s"><use href="#i-check"/></svg>3 ajustes no pacote</li></ul>
+        <button class="btn ok" type="button" data-lead="Turbo">Quero o Turbo</button>
+      </article>
+    </div>
+    <div class="rules"><span>7 dias pra responder o briefing</span><span>Entrega em 24 h</span><span>Ajustes valem pro pacote inteiro</span></div>
+  </div>
+</section>
+
+<section class="band dark" id="app">
+  <div class="in app">
+    <div class="shots" aria-label="Telas do app">
+      <div class="phone p1"><span class="isl"></span><div class="scr"><img src="assets/img/app-calendario.jpg" alt="Calendário de postagem no app" width="780" height="1688"></div></div>
+      <div class="phone p2"><span class="isl"></span><div class="scr"><img src="assets/img/app-conteudo.jpg" alt="Conteúdo aberto no app com os botões aprovar, pedir ajuste e baixar em alta" width="780" height="1688"></div></div>
+    </div>
+    <div>
+      <span class="eyebrow">O app da Criativos</span>
+      <h2>Seu conteúdo num app, <em>não perdido no WhatsApp</em></h2>
+      <ul class="feat">
+        <li><span class="ic"><svg class="s"><use href="#i-check"/></svg></span><div><b>Aprove com um toque</b><span>Ou peça ajuste escrevendo o que quer mudar.</span></div></li>
+        <li><span class="ic"><svg class="s"><use href="#i-cal"/></svg></span><div><b>Calendário de postagem</b><span>Veja o que vai ao ar em cada dia do mês.</span></div></li>
+        <li><span class="ic"><svg class="s"><use href="#i-down"/></svg></span><div><b>Baixe em alta qualidade</b><span>Sem a compressão do WhatsApp, com a legenda pronta pra copiar.</span></div></li>
+        <li><span class="ic"><svg class="s"><use href="#i-phone"/></svg></span><div><b>Instala no celular</b><span>Funciona como aplicativo no iPhone e no Android.</span></div></li>
+      </ul>
+      <div class="ctas"><a class="btn y" href="app.html?demo=1">Ver o app funcionando</a><a class="btn o" href="entrar.html">Já sou cliente</a></div>
+      <p class="small mut" style="margin:14px 0 0">A demonstração usa uma marca fictícia, a Brasa Burger.</p>
+    </div>
+  </div>
+</section>
+
+<section class="band light" id="duvidas">
+  <div class="in">
+    <div class="head"><span class="eyebrow">Dúvidas</span><h2>Perguntas que todo mundo faz</h2></div>
+    <div class="faq">
+      <details><summary>Qual a diferença entre Presença, Crescimento e Autoridade?</summary><p>No Presença a gente cria todo o conteúdo e entrega com o calendário: você publica. No Crescimento é social media completo: a gente cria, programa e posta. O Autoridade é o Crescimento com gestão de tráfego pago, relatório mensal e bônus.</p></details>
+      <details><summary>Tem fidelidade ou multa pra cancelar?</summary><p>Não. Os planos são mensais: você renova se quiser. Pra encerrar, é só avisar por WhatsApp ou e-mail. O mês que já foi pago é entregue até o fim.</p></details>
+      <details><summary>Em quanto tempo recebo?</summary><p>Em até 24 horas depois que o pagamento é confirmado e o briefing chega completo. Ajustes também saem em até 24 h.</p></details>
+      <details><summary>Como funciona o tráfego pago do Autoridade?</summary><p>A gente cria, acompanha e ajusta suas campanhas de anúncio, e você recebe um relatório todo mês. A verba dos anúncios é sua, definida por você e paga direto à plataforma de anúncios, separada do plano.</p></details>
+      <details><summary>Qual a diferença entre pacote e plano?</summary><p>O pacote é pagamento único: Largada (3 anúncios), Acelera (identidade visual) ou Turbo (identidade, landing page e PDFs bônus). O plano é mensal, com stories, posts, carrosséis, reels e anúncios todo mês.</p></details>
+      <details><summary>O que conta como ajuste?</summary><p>Mudar texto, cor, foto ou a ordem de uma peça. Refazer uma peça do zero conta como peça nova.</p></details>
+      <details><summary>Vocês precisam da senha do meu Instagram?</summary><p>Nunca. Nos planos em que a gente posta, você libera o acesso como parceiro no Meta Business, sem passar senha.</p></details>
+      <details><summary>Como eu pago?</summary><p>No Pix ou no cartão em até 12x pelo link de pagamento, com as taxas do parcelamento por sua conta.</p></details>
+      <details><summary>Vocês garantem vendas?</summary><p>A gente garante qualidade e prazo. Vendas dependem também do seu produto, preço e atendimento, então ninguém sério promete número.</p></details>
+    </div>
+  </div>
+</section>
+
+<section class="final" id="contato">
+  <div class="in">
+    <div>
+      <h2>Seu próximo post pode estar <em>pronto amanhã.</em></h2>
+      <p class="big">Deixa seu WhatsApp que a gente te chama, entende o seu negócio e te ajuda a escolher o plano certo. Sem compromisso.</p>
+    </div>
+    <div class="lead-card" data-form-wrap></div>
+  </div>
+</section>
+
+<footer>
+  <div class="in">
+    <span><b style="color:#fff">criativos rápidos</b> · tudo que uma agência entrega, em 24 h · CNPJ 67.844.754/0001-07</span>
+    <nav class="fnav" aria-label="Rodapé"><a href="videos.html">Largada · R$ 97</a><a href="privacidade.html">Privacidade</a><a href="entrar.html">Área do cliente</a><a href="#duvidas">Dúvidas</a><a id="f-insta" href="#" target="_blank" rel="noopener" hidden>Instagram</a><span id="f-email"></span></nav>
+  </div>
+</footer>
+
+<dialog class="lead" id="dlg-lead" aria-label="Falar com a gente">
+  <div class="lead-card"><button class="x" type="button" id="lead-x" aria-label="Fechar"><svg class="s"><use href="#i-x"/></svg></button><div data-form-wrap></div></div>
+</dialog>
+
+<template id="tpl-lead">
+  <form class="lead-form" novalidate>
+    <h3 data-t>Quero começar</h3>
+    <p class="small mut" style="margin:0 0 16px">A gente te chama no WhatsApp pra conversar.</p>
+    <div class="fl"><label data-for="nome">Seu nome</label><input type="text" data-k="nome" autocomplete="name" required></div>
+    <div class="fl"><label data-for="whatsapp">WhatsApp</label><input type="tel" data-k="whatsapp" autocomplete="tel" placeholder="(61) 90000-0000" required></div>
+    <div class="fl"><label data-for="empresa">Seu Instagram ou empresa</label><input type="text" data-k="empresa" placeholder="@suaempresa"></div>
+    <div class="fl"><label data-for="interesse">Tenho interesse em</label>
+      <select data-k="interesse">
+        <option value="Ainda não sei">Ainda não sei, quero ajuda</option>
+        <optgroup label="Planos mensais"><option>Presença</option><option>Crescimento</option><option>Autoridade</option></optgroup>
+        <optgroup label="Pacotes"><option>Largada</option><option>Acelera</option><option>Turbo</option></optgroup>
+      </select>
+    </div>
+    <div class="hp" aria-hidden="true"><label>Site <input type="text" data-k="site" tabindex="-1" autocomplete="off"></label></div>
+    <div class="lead-err" data-err hidden></div>
+    <button class="btn y" type="submit" style="width:100%">Quero que me chamem</button>
+    <p class="small mut" style="margin:12px 0 0;text-align:center">Seus dados servem só pra gente falar com você.</p>
+  </form>
+  <div class="lead-ok" hidden>
+    <span class="ic"><svg class="s"><use href="#i-check"/></svg></span>
+    <b>Recebemos!</b>
+    <span class="mut">A gente te chama no WhatsApp em breve.</span>
+    <a class="btn k" data-wa hidden target="_blank" rel="noopener"><svg class="s"><use href="#i-chat"/></svg>Prefiro chamar agora</a>
+  </div>
+</template>
+
+<script src="assets/config.js"></script>
+<script src="assets/vendor/supabase.js"></script>
+<script src="assets/core.js"></script>
+<script src="assets/chat.js" defer></script>
+<script>
+(function () {
+  var C = window.CR_CONFIG || {};
+
+  // faixa amarela: repete os itens para rolar sem emenda
+  var itens = ["Stories", "Posts", "Carrosséis", "Reels", "Anúncios", "Legendas", "Tráfego pago", "Identidade visual", "Vídeos com motion"];
+  var t = document.getElementById("ticker"), html = "";
+  for (var r = 0; r < 2; r++) itens.forEach(function (i) { html += '<span>' + i + '<svg><use href="#i-play"/></svg></span>'; });
+  t.innerHTML = html;
+
+  // formulário de contato: o mesmo modelo no fim da página e na janela dos botões "Quero o ..."
+  var tpl = document.getElementById("tpl-lead");
+  document.querySelectorAll("[data-form-wrap]").forEach(function (w, n) {
+    w.appendChild(tpl.content.cloneNode(true));
+    w.querySelectorAll("[data-k]").forEach(function (inp) { inp.id = "lead" + n + "-" + inp.dataset.k; });
+    w.querySelectorAll("[data-for]").forEach(function (l) { l.htmlFor = "lead" + n + "-" + l.dataset.for; });
+    if (n === 0) w.querySelector("[data-t]").textContent = "Fala com a gente";
+    var form = w.querySelector("form"), ok = w.querySelector(".lead-ok"), err = w.querySelector("[data-err]");
+    form.addEventListener("submit", async function (ev) {
+      ev.preventDefault();
+      var v = function (k) { return (form.querySelector('[data-k="' + k + '"]').value || "").trim(); };
+      var dig = v("whatsapp").replace(/\D/g, "");
+      var m = !v("nome") ? "Conta seu nome pra gente." : dig.length < 10 ? "Confere o WhatsApp com DDD." : "";
+      err.textContent = m; err.hidden = !m; if (m) return;
+      var btn = form.querySelector("button[type=submit]"); btn.disabled = true;
+      var lead = { nome: v("nome").slice(0, 120), whatsapp: v("whatsapp").slice(0, 30), empresa: v("empresa").slice(0, 160) || null, interesse: v("interesse").slice(0, 80), origem: "home" };
+      try { if (!v("site")) await CR.api.enviarLead(lead); }
+      catch (x) {
+        if (!C.WHATSAPP) { err.textContent = "Não conseguimos enviar agora. Tente de novo em instantes."; err.hidden = false; btn.disabled = false; return; }
+      }
+      var wa = w.querySelector("[data-wa]");
+      if (C.WHATSAPP) { wa.href = "https://wa.me/" + C.WHATSAPP + "?text=" + encodeURIComponent("Olá! Sou " + lead.nome + (lead.empresa ? " (" + lead.empresa + ")" : "") + " e tenho interesse em: " + lead.interesse + "."); wa.hidden = false; }
+      form.hidden = true; ok.hidden = false;
+    });
+  });
+
+  var dlg = document.getElementById("dlg-lead");
+  document.querySelectorAll("[data-lead]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      var w = dlg.querySelector("[data-form-wrap]");
+      w.querySelector("form").hidden = false; w.querySelector(".lead-ok").hidden = true;
+      w.querySelector("form button[type=submit]").disabled = false;
+      var sel = w.querySelector('[data-k="interesse"]');
+      sel.value = b.dataset.lead || "Ainda não sei";
+      w.querySelector("[data-t]").textContent = b.dataset.lead ? "Quero o " + b.dataset.lead : "Quero começar";
+      dlg.showModal();
+      w.querySelector('[data-k="nome"]').focus();
+    });
+  });
+  document.getElementById("lead-x").addEventListener("click", function () { dlg.close(); });
+  dlg.addEventListener("click", function (ev) { if (ev.target === dlg) dlg.close(); });
+
+  document.getElementById("f-email").textContent = C.EMAIL || "";
+  if (C.INSTAGRAM) { var ig = document.getElementById("f-insta"); ig.href = "https://instagram.com/" + C.INSTAGRAM; ig.hidden = false; }
+})();
+</script>
+</body>
+</html>

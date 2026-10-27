@@ -1,0 +1,1831 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>Criativos Rápidos · Painel da agência</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#101216">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="assets/icons/favicon-32.png">
+<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,800;0,900;1,900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<style>
+  .split { display: grid; grid-template-columns: minmax(0, 360px) minmax(0, 1fr); gap: 20px; align-items: start; }
+  @media (max-width: 1100px) { .split { grid-template-columns: 1fr; } }
+  .orig { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
+  .orig label { border: 1.5px solid var(--line); border-radius: 10px; padding: 7px 12px; font-size: 13px; font-weight: 600; cursor: pointer; }
+  .orig input { position: absolute; opacity: 0; pointer-events: none; }
+  .orig label:has(input:checked) { border-color: var(--fg); background: var(--surface-2); }
+  .orig label:has(input:focus-visible) { outline: 3px solid var(--yellow); }
+  .brf { border: 1px solid var(--line); border-radius: 16px; background: var(--surface); }
+  .brf summary { cursor: pointer; padding: 14px 16px; display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: center; list-style: none; }
+  .brf summary::-webkit-details-marker { display: none; }
+  .brf pre { margin: 0; padding: 0 16px 16px; white-space: pre-wrap; font: 13px/1.6 var(--body); color: var(--fg); }
+  .brf .acts { display: flex; gap: 8px; flex-wrap: wrap; padding: 0 16px 16px; }
+  .todo { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 12px; align-items: center; background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 12px 14px; }
+  .todo .k { width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center; background: var(--surface-2); }
+  .todo.ajuste .k { background: var(--warn-bg); color: var(--warn); }
+  .todo.brief .k { background: var(--wait-bg); color: var(--yellow-ink); }
+  .todo.lead .k { background: var(--ok-bg); color: var(--ok); }
+  .todo .tt { font-weight: 700; font-size: 14px; }
+  .todo .st { font-size: 13px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; }
+  .chk { display: flex; gap: 10px; align-items: flex-start; font-size: 14px; font-weight: 600; margin: -4px 0 16px; cursor: pointer; }
+  .chk input { width: 18px; height: 18px; margin-top: 1px; accent-color: var(--ink); flex: none; }
+  .ig { font-size: 12.5px; display: flex; gap: 6px; align-items: flex-start; }
+  .ig svg.i { width: 16px; height: 16px; margin-top: 2px; }
+  .ig a { margin-left: 4px; }
+  .ig.erro { color: var(--warn); }
+  .ig.ok { color: var(--ok); }
+  .org { display: grid; gap: 14px; }
+  .org-top { display: flex; justify-content: center; }
+  .org-areas { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr)); gap: 14px; align-items: start; }
+  .org-area { background: var(--surface-2); border: 1px solid var(--line); border-radius: 20px; padding: 10px; display: grid; gap: 8px; }
+  .org-area > h3 { font: 800 11px/1 var(--body); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); padding: 6px 6px 2px; }
+  .ag { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 10px 12px; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 4px 12px; align-items: start; }
+  .ag.chefe { border-color: var(--fg); }
+  .ag.off { opacity: .55; }
+  .ag .av { width: 44px; height: 44px; display: block; border-radius: 50%; }
+  .ag.ceo { min-width: min(420px, 100%); }
+  .ag.ceo .av { width: 56px; height: 56px; }
+  .ag .nm { font-weight: 800; font-size: 14px; }
+  .ag .cg { font-size: 12.5px; color: var(--muted); }
+  .ag .tags { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 4px; }
+  .ag .tags span { font-size: 11px; font-weight: 700; border-radius: 99px; padding: 1px 7px; background: var(--surface-2); border: 1px solid var(--line); }
+  .ag .tags span.auto { background: var(--ok-bg); color: var(--ok); border-color: transparent; }
+  .ag .bt { grid-column: 2; display: flex; gap: 2px; margin: 0 0 -6px -10px; }
+  .ag .bt .icon-btn { width: 34px; height: 34px; }
+  .ag.mini { grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; padding: 8px 10px; }
+  .ag.mini .av { width: 34px; height: 34px; }
+  .ag.mini .nm { font-size: 13.5px; }
+  .ag.mini .cg { font-size: 12px; }
+  .ag.mini .bt { grid-column: auto; margin: 0; }
+  .ag.mini .tags { display: none; }
+  .ag.mini .icon-btn { width: 30px; height: 30px; }
+  .ag.mini .flag { font-weight: 700; color: var(--ok); }
+  .org-area .cont { font-size: 11px; color: var(--muted); font-weight: 700; padding: 0 6px; }
+  .mk-resumo { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+  .mk-c { background: var(--surface); border: 1.5px solid var(--line); border-radius: 16px; padding: 12px; display: grid; gap: 8px; text-align: left; font: inherit; color: inherit; cursor: pointer; }
+  .mk-c[aria-pressed="true"] { border-color: var(--fg); }
+  .mk-c .sws { display: flex; gap: 4px; height: 22px; }
+  .mk-c .sws i { flex: 1; border-radius: 6px; border: 1px solid rgba(0,0,0,.08); }
+  .mk-c .sws.vazio { background: repeating-linear-gradient(45deg, var(--surface-2), var(--surface-2) 6px, var(--line) 6px, var(--line) 8px); border-radius: 6px; }
+  .jornada { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(118px, 1fr); gap: 8px; overflow-x: auto; padding-bottom: 6px; }
+  .jp { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 10px; display: grid; gap: 6px; align-content: start; position: relative; }
+  .jp .n { font: 900 22px/1 var(--display); }
+  .jp .t { font-size: 12.5px; font-weight: 700; }
+  .jp .s { font-size: 11.5px; color: var(--muted); }
+  .jp .avs { display: flex; }
+  .jp .avs .av { width: 26px; height: 26px; border-radius: 50%; border: 2px solid var(--surface); margin-right: -6px; }
+  .est-card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 10px; display: grid; gap: 4px; text-align: left; font: inherit; color: inherit; cursor: pointer; }
+  .est-card:hover { border-color: var(--fg); }
+  .est-card .tt { font-weight: 700; font-size: 13.5px; }
+  .est-card .st { font-size: 12px; color: var(--muted); }
+  .chat { display: grid; gap: 6px; max-height: 52vh; overflow-y: auto; padding: 4px 2px; margin: 10px 0; }
+  .bolha { max-width: 82%; padding: 8px 12px; border-radius: 14px; font-size: 14px; white-space: pre-wrap; background: var(--surface-2); border: 1px solid var(--line); justify-self: start; }
+  .bolha.saida { justify-self: end; background: var(--wait-bg); border-color: transparent; }
+  .bolha small { display: block; font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .reu { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 12px 14px; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 12px; align-items: center; }
+  .reu.passada { opacity: .6; }
+  .reu .q { font-size: 12.5px; color: var(--muted); }
+  .tag-mini { font-size: 11px; font-weight: 700; border-radius: 99px; padding: 1px 7px; background: var(--surface-2); border: 1px solid var(--line); margin-left: 6px; }
+  .tag-mini.ia { background: var(--ok-bg); color: var(--ok); border-color: transparent; }
+  .tag-mini.frio { background: var(--warn-bg); color: var(--warn); border-color: transparent; }
+  #kpis, #fin-kpis, #rel-kpis { grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr)); }
+  @media (max-width: 600px) { #kpis, #fin-kpis, #rel-kpis { grid-template-columns: 1fr 1fr; } .stat b { font-size: 21px; } }
+</style>
+</head>
+<body class="app">
+<div class="shell">
+  <aside class="side" aria-label="Menu">
+    <a class="logo" href="./"><img src="assets/logo-icone.png" alt=""><span><b>criativos</b><i>rápidos</i></span></a>
+    <nav id="nav-side"></nav>
+    <div class="foot">
+      <div class="card-mini"><b>Painel da agência</b><span id="side-email"></span></div>
+      <button class="btn ghost-w" type="button" data-sair>Sair</button>
+    </div>
+  </aside>
+
+  <div class="main">
+    <header class="appbar">
+      <div class="appbar-in">
+        <a class="logo" href="./"><img src="assets/logo-icone.png" alt=""><span><b>criativos</b><i>rápidos</i></span></a>
+        <div class="sp"></div>
+        <div class="who"><b>Painel da agência</b><span id="who"></span></div>
+        <button class="avatar" type="button" data-sair aria-label="Sair">A</button>
+      </div>
+    </header>
+
+    <!-- VISÃO GERAL -->
+    <main class="view" id="v-visao">
+      <div><span class="eyebrow" id="hoje"></span><h1 id="ola" style="margin-top:6px">Olá!</h1></div>
+      <div class="stats" id="kpis"></div>
+      <div class="two">
+        <section class="sec"><h2>Precisa de você</h2><div class="list" id="todo"></div></section>
+        <section class="sec">
+          <h2>Andamento do mês</h2>
+          <p class="small muted" style="margin:-4px 0 0">Entregues neste mês × contratado no plano de cada cliente</p>
+          <div class="card" id="andamento" style="display:grid;gap:14px"></div>
+        </section>
+      </div>
+      <section class="sec"><h2>Próximas postagens <span class="muted small" style="font-family:var(--body);font-weight:600">· clientes em que a gente posta</span></h2><div class="list" id="postar"></div></section>
+    </main>
+
+    <!-- CRM -->
+    <main class="view" id="v-crm" hidden>
+      <div class="view-head">
+        <div><h1>CRM</h1><p class="lead">Quem pediu contato pelo site e quem você cadastrou. Mude a etapa no cartão e anote o próximo contato.</p></div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn ghost" type="button" id="importar-lista">Importar lista</button><button class="btn" type="button" id="novo-lead"></button></div>
+      </div>
+      <div class="stats" id="crm-kpis"></div>
+      <section class="sec" id="placar-sec"><div class="sec-head"><h2>Placar dos vendedores</h2><span class="small muted">últimos 30 dias · o lead vai pro vendedor com menos contatos</span></div><div class="cards" id="placar"></div></section>
+      <div class="board" id="board"></div>
+    </main>
+
+    <!-- AGENDA -->
+    <main class="view" id="v-agenda" hidden>
+      <div class="view-head"><div><h1>Agenda</h1><p class="lead">As reuniões que a atendente de IA marca no WhatsApp e as que vocês marcam. Aqui vocês dizem os horários livres e treinam a atendente.</p></div></div>
+      <div class="stats" id="ag-kpis"></div>
+      <section class="sec"><h2>Próximas reuniões</h2><div class="list" id="l-reu"></div></section>
+      <div class="two">
+        <form class="card pad-l" id="f-agenda" novalidate>
+          <h2 style="margin-bottom:14px">Horários livres</h2>
+          <div class="f"><span class="q">Dias</span><div class="chips-sel" id="ag-dias"></div></div>
+          <div class="row">
+            <div class="f"><label for="ag-ini">Das</label><input type="time" id="ag-ini"></div>
+            <div class="f"><label for="ag-fim">Até</label><input type="time" id="ag-fim"></div>
+          </div>
+          <div class="row">
+            <div class="f"><label for="ag-dur">Duração</label><select id="ag-dur"><option value="15">15 min</option><option value="20">20 min</option><option value="30">30 min</option><option value="45">45 min</option><option value="60">1 hora</option></select></div>
+            <div class="f"><label for="ag-antes">Marcar com antecedência de</label><select id="ag-antes"><option value="1">1 hora</option><option value="3">3 horas</option><option value="12">12 horas</option><option value="24">1 dia</option></select></div>
+          </div>
+          <div class="f"><label for="ag-link">Link da sala <span class="muted small">Google Meet, Zoom… vai junto na confirmação</span></label><input type="url" id="ag-link" placeholder="https://meet.google.com/..."></div>
+          <button class="btn" type="submit">Salvar horários</button>
+        </form>
+        <form class="card pad-l" id="f-treino" novalidate>
+          <h2 style="margin-bottom:6px">Treino da atendente</h2>
+          <p class="small muted" style="margin:0 0 12px">Escreva como vocês querem que ela atenda: perguntas que deve fazer, respostas pras dúvidas comuns, objeções, o que nunca falar. Ela segue isso em toda conversa.</p>
+          <div class="f"><label for="tr-texto">Instruções</label><textarea id="tr-texto" rows="9" placeholder="Ex.: Sempre pergunte o segmento e se já anuncia. Se falar que está caro, explique que o Largada custa R$ 97 e é um bom começo..."></textarea></div>
+          <label class="chk"><input type="checkbox" id="tr-audio"> Responder em áudio quando fizer sentido (voz da agência, precisa da ElevenLabs ligada)</label>
+          <button class="btn" type="submit">Salvar treino</button>
+        </form>
+      </div>
+    </main>
+
+    <!-- CLIENTES -->
+    <main class="view" id="v-clientes" hidden>
+      <div class="view-head"><div><h1>Clientes</h1><p class="lead">O cliente cria a conta em <b>/entrar</b> com o e-mail do contrato. Aqui você escolhe o plano (os ajustes se preenchem sozinhos) e quem da equipe cuida dele.</p></div></div>
+      <div class="card scroll"><table class="t" id="t-cli"><thead><tr><th>Cliente</th><th>Contato</th><th>Instagram</th><th>Plano</th><th>Ajustes</th><th>Responsável</th><th>Redes</th><th>Entregas</th><th></th></tr></thead><tbody></tbody></table></div>
+    </main>
+
+    <!-- BRIEFINGS -->
+    <main class="view" id="v-briefings" hidden>
+      <div class="view-head"><div><h1>Briefings</h1><p class="lead">Tudo que chega pelo formulário <b>/brief</b>. Toque pra abrir. Dali você já cria as ideias e preenche a marca do cliente.</p></div></div>
+      <div class="list" id="l-brf"></div>
+      <div class="empty" id="v-brf" hidden><b>Nenhum briefing ainda</b><span>Depois do pagamento, mande o link criativosrapidos.com.br/brief pro cliente.</span></div>
+    </main>
+
+    <!-- IDEIAS -->
+    <main class="view" id="v-ideias" hidden>
+      <div class="view-head"><div><h1>Ideias</h1><p class="lead">Pense com o briefing do lado, mande a sugestão pro app do cliente e, quando ele quiser, transforme em entrega.</p></div></div>
+      <div class="split">
+        <div style="display:grid;gap:14px">
+          <form class="card pad-l" id="f-ideia" novalidate>
+            <h2 style="margin-bottom:14px">Nova ideia</h2>
+            <div class="f"><label for="i-cli">Cliente</label><select id="i-cli"></select></div>
+            <div class="row">
+              <div class="f"><label for="i-tipo">Formato</label><select id="i-tipo"></select></div>
+              <div class="f"><label for="i-st">Mandar como</label><select id="i-st"><option value="sugerida">Sugestão pro cliente aprovar</option><option value="aprovada">Já combinado (vai pra fila)</option></select></div>
+            </div>
+            <div class="f"><label for="i-tit">Ideia</label><input type="text" id="i-tit" maxlength="160" placeholder="Ex.: Bastidores da produção em 15 segundos"></div>
+            <div class="f"><label for="i-desc">Roteiro ou detalhes</label><textarea id="i-desc" maxlength="4000"></textarea></div>
+            <div class="f"><label for="i-ref">Link de referência <span class="muted small">opcional</span></label><input type="url" id="i-ref" maxlength="500"></div>
+            <div class="err" id="i-err" hidden></div>
+            <button class="btn full" type="submit">Mandar pro app do cliente</button>
+          </form>
+          <section class="card pad-l" id="i-brief"></section>
+        </div>
+        <div style="display:grid;gap:14px">
+          <div class="f" style="margin:0"><label for="vi-cli">Cliente</label><select id="vi-cli"></select></div>
+          <div class="seg" role="group" aria-label="Filtrar ideias" id="seg-ideias"></div>
+          <div class="cards" id="l-ideias"></div>
+          <div class="empty" id="v-ideias" hidden><b>Nenhuma ideia com esse filtro</b><span>As ideias que os clientes mandam pelo app também aparecem aqui.</span></div>
+        </div>
+      </div>
+    </main>
+
+    <!-- ESTEIRA -->
+    <main class="view" id="v-esteira" hidden>
+      <div class="view-head">
+        <div><h1>Esteira de produção</h1><p class="lead">A pauta do mês de cada cliente andando sozinha: roteiro, copy, arte ou edição. Em Produção falta só o arquivo; suba e ele vai pro cliente aprovar.</p></div>
+        <div class="f" style="margin:0;min-width:240px"><label for="es-cli">Cliente</label><select id="es-cli"></select></div>
+      </div>
+      <div class="stats" id="es-kpis"></div>
+      <div class="board" id="es-board"></div>
+    </main>
+
+    <!-- ENTREGAS -->
+    <main class="view" id="v-entregas" hidden>
+      <div class="view-head"><div><h1>Entregas</h1><p class="lead">Envie os conteúdos. O cliente aprova, pede ajuste e baixa pelo app.</p></div></div>
+      <div class="split">
+        <form class="card pad-l" id="f-ent" novalidate>
+          <h2 style="margin-bottom:14px">Nova entrega</h2>
+          <div class="f"><label for="n-cli">Cliente</label><select id="n-cli"></select></div>
+          <div class="f"><label for="n-tit">Título</label><input type="text" id="n-tit" placeholder="Ex.: Reels promoção de novembro"></div>
+          <div class="row">
+            <div class="f"><label for="n-tipo">Tipo</label><select id="n-tipo"></select></div>
+            <div class="f"><label for="n-data">Data de postagem</label><input type="date" id="n-data"></div>
+            <div class="f"><label for="n-hora">Horário</label><input type="time" id="n-hora" value="10:00"></div>
+          </div>
+          <label class="chk"><input type="checkbox" id="n-pub" checked> Postar sozinho no Instagram quando o cliente aprovar <span class="muted small">(se ele conectou o Instagram e o plano é Crescimento ou Autoridade)</span></label>
+          <div class="f"><label for="n-leg">Legenda</label><textarea id="n-leg"></textarea></div>
+          <span class="q" style="font-weight:600;font-size:14px;display:block;margin-bottom:6px">Arquivo</span>
+          <div class="orig" role="radiogroup" aria-label="Origem do arquivo">
+            <label><input type="radio" name="orig" value="up" id="o-up" checked><span>Enviar arquivo</span></label>
+            <label><input type="radio" name="orig" value="drive" id="o-drive"><span>Link do Google Drive</span></label>
+          </div>
+          <div class="f" id="w-up"><label for="n-arq">Arquivo em alta qualidade <span class="muted small">vídeo, imagem ou PDF</span></label><input type="file" id="n-arq" multiple accept="video/*,image/*,application/pdf"><span class="small muted">Pode escolher vários: cada arquivo vira uma entrega com o mesmo título numerado. Pra postar sozinho, use imagens JPG e vídeos MP4.</span></div>
+          <label class="chk" id="w-car" hidden><input type="checkbox" id="n-car" checked> Juntar os arquivos num carrossel só</label>
+          <div class="f" id="w-drive" hidden><label for="n-link">Link de compartilhar do Drive</label><input type="url" id="n-link" placeholder="https://drive.google.com/file/d/…"><span class="small muted">No Drive: Compartilhar → Qualquer pessoa com o link → Leitor.</span></div>
+          <div class="err" id="n-err" hidden></div>
+          <div class="small muted" id="n-prog" hidden style="margin-bottom:10px"></div>
+          <button class="btn full" type="submit">Enviar para o cliente aprovar</button>
+        </form>
+
+        <div style="display:grid;gap:14px">
+          <div class="row">
+            <div class="f" style="margin:0"><label for="v-cli">Cliente</label><select id="v-cli"></select></div>
+            <div class="f" style="margin:0"><label for="v-st">Status</label><select id="v-st"><option value="">Todos</option><option value="aguardando">Para aprovar</option><option value="ajuste">Em ajuste</option><option value="aprovado">Aprovado</option></select></div>
+          </div>
+          <div class="grid" id="l-ent"></div>
+          <div class="empty" id="v-ent" hidden><b>Nenhuma entrega com esse filtro</b></div>
+        </div>
+      </div>
+    </main>
+
+    <!-- MARCA E MATERIAIS -->
+    <main class="view" id="v-marca" hidden>
+      <div class="view-head"><div><h1>Marcas dos clientes</h1><p class="lead">A identidade de cada cliente (cores, fontes, jeito de falar) e os arquivos dele. É o que os agentes seguem pra criar e o que o cliente vê no app, em Marca e Materiais.</p></div></div>
+      <div class="mk-resumo" id="mk-resumo"></div>
+      <div class="f" style="max-width:420px;margin:0"><label for="mk-cli">Editando</label><select id="mk-cli"></select></div>
+      <div class="two">
+        <form class="card pad-l" id="f-marca" novalidate>
+          <h2 style="margin-bottom:14px">Identidade</h2>
+          <div class="f"><label for="mk-cores">Cores <span class="muted small">códigos separados por vírgula</span></label><input type="text" id="mk-cores" placeholder="#E4572E, #1B1B1B, #FFC145"><div class="sw-row" id="mk-prev"></div></div>
+          <div class="f"><label for="mk-fontes">Fontes</label><input type="text" id="mk-fontes" placeholder="Ex.: Títulos em Montserrat Black, textos em Inter"></div>
+          <div class="f"><label for="mk-tom">Tom de voz</label><input type="text" id="mk-tom"></div>
+          <div class="f"><label for="mk-palavras">Palavras que a marca usa</label><input type="text" id="mk-palavras"></div>
+          <div class="f"><label for="mk-evitar">O que evitar</label><input type="text" id="mk-evitar"></div>
+          <div class="f"><label for="mk-obs">Observações</label><textarea id="mk-obs"></textarea></div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" type="submit">Salvar marca</button><button class="btn ghost" type="button" id="mk-puxar">Puxar do briefing</button></div>
+        </form>
+        <div class="note" id="mk-geral" hidden><span></span><div>Estes materiais aparecem no app de <b>todos os clientes</b>, em Materiais. Bom pra guias e PDFs que valem pra todo mundo.</div></div>
+        <div style="display:grid;gap:14px">
+          <form class="card pad-l" id="f-mat" novalidate>
+            <h2 style="margin-bottom:14px">Novo material</h2>
+            <div class="row">
+              <div class="f"><label for="m-cat">Onde aparece</label><select id="m-cat"><option value="marca">Marca (logo, manual…)</option><option value="guia">Materiais · guia</option><option value="arquivo">Materiais · arquivo</option></select></div>
+              <div class="f"><label for="m-tit">Título</label><input type="text" id="m-tit"></div>
+            </div>
+            <div class="f"><label for="m-desc">Descrição <span class="muted small">opcional</span></label><input type="text" id="m-desc"></div>
+            <div class="orig" role="radiogroup" aria-label="Origem do material">
+              <label><input type="radio" name="morig" value="up" id="mo-up" checked><span>Enviar arquivo</span></label>
+              <label><input type="radio" name="morig" value="link" id="mo-link"><span>Link (Drive, Canva…)</span></label>
+            </div>
+            <div class="f" id="mw-up"><input type="file" id="m-arq" aria-label="Arquivo"></div>
+            <div class="f" id="mw-link" hidden><input type="url" id="m-link" placeholder="https://…" aria-label="Link"></div>
+            <div class="err" id="m-err" hidden></div>
+            <button class="btn full" type="submit">Adicionar</button>
+          </form>
+          <div class="list" id="l-mat"></div>
+        </div>
+      </div>
+    </main>
+
+    <!-- FINANCEIRO -->
+    <main class="view" id="v-financeiro" hidden>
+      <div class="view-head">
+        <div><h1>Financeiro</h1><p class="lead">Mensalidades e pacotes. Lance as cobranças do mês, marque o que foi pago e lembre o cliente pelo WhatsApp.</p></div>
+        <div class="monthnav"><button class="icon-btn" type="button" id="fin-ant" aria-label="Mês anterior"></button><b id="fin-mes"></b><button class="icon-btn" type="button" id="fin-prox" aria-label="Próximo mês"></button></div>
+      </div>
+      <div class="stats" id="fin-kpis"></div>
+      <div class="split">
+        <div style="display:grid;gap:14px">
+          <form class="card pad-l" id="f-cob" novalidate>
+            <h2 style="margin-bottom:14px">Nova cobrança</h2>
+            <div class="f"><label for="c-cli">Cliente</label><select id="c-cli"></select></div>
+            <div class="f"><label for="c-desc">Descrição</label><input type="text" id="c-desc" placeholder="Ex.: Pacote Turbo"></div>
+            <div class="row">
+              <div class="f"><label for="c-valor">Valor (R$)</label><input type="number" id="c-valor" min="0" step="0.01"></div>
+              <div class="f"><label for="c-venc">Vencimento</label><input type="date" id="c-venc"></div>
+            </div>
+            <div class="err" id="c-err" hidden></div>
+            <button class="btn full" type="submit">Lançar cobrança</button>
+          </form>
+          <div class="card pad-l" style="display:grid;gap:10px">
+            <h2>Mensalidades do mês</h2>
+            <p class="small muted" style="margin:0">Cria uma cobrança pra cada cliente de plano mensal que ainda não tem mensalidade lançada no mês, com o valor do plano.</p>
+            <div class="f" style="margin:0;max-width:200px"><label for="c-dia">Dia do vencimento</label><input type="number" id="c-dia" min="1" max="28" value="10"></div>
+            <button class="btn dark" type="button" id="c-mensal"></button>
+          </div>
+        </div>
+        <div class="card scroll"><table class="t" id="t-cob"><thead><tr><th>Cliente</th><th>Descrição</th><th>Vencimento</th><th>Valor</th><th>Status</th><th></th></tr></thead><tbody></tbody></table></div>
+      </div>
+    </main>
+
+    <!-- RELATÓRIOS -->
+    <main class="view" id="v-relatorios" hidden>
+      <div class="view-head">
+        <div><h1>Relatórios</h1><p class="lead">O mês de cada cliente: entregue, aprovado e publicado. Lance os números do tráfego e eles aparecem no app do cliente, em Relatórios.</p></div>
+        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+          <div class="monthnav"><button class="icon-btn" type="button" id="rel-ant" aria-label="Mês anterior"></button><b id="rel-mes"></b><button class="icon-btn" type="button" id="rel-prox" aria-label="Próximo mês"></button></div>
+          <button class="btn dark" type="button" id="rel-meta"></button>
+          <button class="btn ghost" type="button" id="rel-ig"></button>
+        </div>
+      </div>
+      <div class="stats" id="rel-kpis"></div>
+      <div class="card scroll"><table class="t" id="t-rel"><thead><tr><th>Cliente</th><th>Plano</th><th>Entregues</th><th>Aprovados</th><th>Publicados</th><th>Ajustes</th><th>Tráfego</th><th></th></tr></thead><tbody></tbody></table></div>
+    </main>
+
+    <!-- AGENTES IA -->
+    <main class="view" id="v-ia" hidden>
+      <div class="view-head">
+        <div><h1>Agentes de IA</h1><p class="lead">Cada agente tem uma função, lê só os dados que você marcar e deixa rascunhos aqui. Nada chega ao cliente sem alguém aprovar.</p></div>
+        <button class="btn" type="button" id="novo-agente"></button>
+      </div>
+      <section class="card pad-l" style="display:grid;gap:12px">
+        <h2>Pergunte ao assistente</h2>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <select id="as-cli" style="flex:0 1 260px" aria-label="Sobre qual cliente"></select>
+          <input type="text" id="as-perg" style="flex:1 1 280px;min-width:0" maxlength="1500" placeholder="Ex.: Como foi o mês da Brasa Burger? Quem está com cobrança atrasada?" aria-label="Pergunta">
+          <button class="btn dark" type="button" id="as-ir">Perguntar</button>
+        </div>
+        <div class="leg" id="as-resp" hidden></div>
+      </section>
+      <section class="sec">
+        <div class="sec-head"><h2>Pra aprovar</h2><div class="seg" role="group" aria-label="Filtrar rascunhos" id="seg-sug"></div></div>
+        <div class="list" id="l-sug"></div>
+      </section>
+      <section class="sec"><h2>A jornada</h2><p class="small muted" style="margin:-4px 0 0">Do contato ao relatório: quantos estão em cada etapa e quem cuida dela.</p><div class="jornada" id="jornada"></div></section>
+      <section class="sec">
+        <div class="sec-head"><h2>Organograma</h2><span class="small muted">Toque em ⚙ pra mudar a função de cada um</span></div>
+        <div class="org" id="org"></div>
+      </section>
+      <section class="card pad-l" id="casa" style="display:grid;gap:10px"></section>
+    </main>
+
+    <!-- EQUIPE -->
+    <main class="view" id="v-equipe" hidden>
+      <div class="view-head"><div><h1>Equipe</h1><p class="lead">Os agentes da agência e de que parte cada um cuida. O responsável de cada cliente você escolhe em Clientes.</p></div></div>
+      <div class="split">
+        <form class="card pad-l" id="f-membro" novalidate>
+          <h2 style="margin-bottom:14px" id="q-titulo">Novo agente</h2>
+          <input type="hidden" id="q-id">
+          <div class="f"><label for="q-nome">Nome</label><input type="text" id="q-nome"></div>
+          <div class="f"><label for="q-funcao">Função</label><input type="text" id="q-funcao" placeholder="Ex.: Social media, designer, gestor de tráfego"></div>
+          <div class="row">
+            <div class="f"><label for="q-email">E-mail</label><input type="email" id="q-email"></div>
+            <div class="f"><label for="q-whats">WhatsApp</label><input type="tel" id="q-whats"></div>
+          </div>
+          <div class="f"><span class="q">Cuida de</span><div class="chips-sel" id="q-areas"></div></div>
+          <div class="err" id="q-err" hidden></div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" type="submit">Salvar</button><button class="btn ghost" type="button" id="q-limpar" hidden>Cancelar edição</button></div>
+        </form>
+        <div class="cards" id="l-equipe"></div>
+      </div>
+    </main>
+  </div>
+
+  <nav class="tabbar" id="nav-tab" aria-label="Menu"></nav>
+</div>
+
+<dialog id="dlg-lead">
+  <form class="in" id="f-lead" novalidate>
+    <h2 id="ld-titulo">Novo contato</h2>
+    <input type="hidden" id="ld-id">
+    <div class="row" style="margin-top:14px">
+      <div class="f"><label for="ld-nome">Nome</label><input type="text" id="ld-nome" maxlength="120"></div>
+      <div class="f"><label for="ld-whats">WhatsApp</label><input type="tel" id="ld-whats" maxlength="30"></div>
+    </div>
+    <div class="row">
+      <div class="f"><label for="ld-emp">Empresa ou @</label><input type="text" id="ld-emp" maxlength="160"></div>
+      <div class="f"><label for="ld-int">Interesse</label><select id="ld-int"></select></div>
+    </div>
+    <div class="f"><label for="ld-obs">Anotação</label><textarea id="ld-obs" placeholder="O que conversaram, objeções, combinados…"></textarea></div>
+    <div class="f"><label for="ld-prox">Próximo contato</label><input type="date" id="ld-prox"></div>
+    <div class="err" id="ld-err" hidden></div>
+    <div class="acts"><button class="btn ghost" type="button" id="ld-cancel">Cancelar</button><button class="btn" type="submit">Salvar</button></div>
+  </form>
+</dialog>
+
+<dialog id="dlg-redes">
+  <div class="in">
+    <h2 id="rd-titulo">Redes</h2>
+    <p class="small muted" style="margin:6px 0 12px">Os conteúdos aprovados vão pra esses canais no dia e horário do calendário. Os canais são os conectados na conta da agência no Postiz.</p>
+    <div id="rd-lista" style="display:grid;gap:8px"></div>
+    <div class="err" id="rd-err" hidden></div>
+    <div class="acts" style="margin-top:14px"><button class="btn ghost" type="button" id="rd-cancel">Cancelar</button><button class="btn" type="button" id="rd-salvar">Salvar</button></div>
+  </div>
+</dialog>
+
+<dialog id="dlg-conversa">
+  <div class="in">
+    <div style="display:flex;justify-content:space-between;gap:10px;align-items:center"><h2 id="cv-nome"></h2><button class="icon-btn" type="button" id="cv-fechar" aria-label="Fechar"></button></div>
+    <div class="small muted" id="cv-sobre"></div>
+    <label class="chk" style="margin:10px 0 0"><input type="checkbox" id="cv-ia"> Atendente de IA respondendo esse contato</label>
+    <div class="chat" id="cv-chat"></div>
+    <div class="f" style="margin-bottom:8px"><label for="cv-txt">Responder como equipe</label><textarea id="cv-txt" rows="3"></textarea></div>
+    <div class="err" id="cv-err" hidden></div>
+    <div class="acts"><button class="btn ghost" type="button" id="cv-contato">Primeiro contato (modelo aprovado)</button><button class="btn" type="button" id="cv-enviar">Enviar</button></div>
+  </div>
+</dialog>
+
+<dialog id="dlg-import">
+  <form class="in" id="f-import" novalidate>
+    <h2>Importar lista de prospecção</h2>
+    <p class="small muted">Uma pessoa por linha: <b>Nome; WhatsApp; Empresa</b>. Quem entra por aqui fica marcado como <b>sem consentimento</b>: a plataforma não manda WhatsApp automático pra eles. O agente de Prospecção prepara a abordagem e a equipe manda do próprio celular, sem exagero.</p>
+    <div class="f"><label for="im-txt">Lista</label><textarea id="im-txt" rows="8" placeholder="Rafa Barbearia; (61) 98888-0000; Barbearia do Rafa"></textarea></div>
+    <div class="err" id="im-err" hidden></div>
+    <div class="acts"><button class="btn ghost" type="button" id="im-cancel">Cancelar</button><button class="btn" type="submit">Importar</button></div>
+  </form>
+</dialog>
+
+<dialog id="dlg-agente">
+  <form class="in" id="f-agente" novalidate>
+    <h2 id="ag-titulo">Novo agente</h2>
+    <input type="hidden" id="ag-id">
+    <div class="row" style="margin-top:14px">
+      <div class="f"><label for="ag-nome">Nome</label><input type="text" id="ag-nome" placeholder="Ex.: Igor"></div>
+      <div class="f"><label for="ag-cargo">Cargo</label><input type="text" id="ag-cargo" placeholder="Ex.: Social media"></div>
+    </div>
+    <div class="row">
+      <div class="f"><label for="ag-area">Área</label><select id="ag-area"><option value="direcao">Direção</option><option value="comercial">Comercial</option><option value="operacional">Operacional</option><option value="administrativo">Administrativo</option><option value="financeiro">Financeiro</option></select></div>
+      <div class="f"><label for="ag-chefe">Responde a</label><select id="ag-chefe"></select></div>
+      <div class="f"><label for="ag-genero">Rosto</label><select id="ag-genero"><option value="f">Mulher</option><option value="m">Homem</option></select></div>
+    </div>
+    <div class="f"><label for="ag-missao">Função <span class="muted small">o que ele faz, como você explicaria pra uma pessoa nova</span></label><textarea id="ag-missao" rows="5"></textarea></div>
+    <div class="f"><span class="q">O que ele pode ler</span><div class="chips-sel" id="ag-fontes"></div></div>
+    <div class="f"><span class="q">O que ele entrega</span><div class="chips-sel" id="ag-saidas"></div></div>
+    <div class="row">
+      <div class="f"><label for="ag-freq">Quando roda</label><select id="ag-freq"><option value="manual">Só quando eu mandar</option><option value="diaria">Todo dia de manhã</option><option value="semanal">Toda segunda de manhã</option></select></div>
+      <div class="f"><label for="ag-modelo">Inteligência</label><select id="ag-modelo"><option value="claude-opus-5-5">Máxima (Claude Opus 5.5)</option><option value="claude-sonnet-5-5">Equilibrada (Claude Sonnet 5.5)</option><option value="claude-haiku-5-5">Econômica (Claude Haiku 5.5)</option></select></div>
+    </div>
+    <div class="row">
+      <div class="f"><label for="ag-etapa">Trabalha na esteira</label><select id="ag-etapa"><option value="">Não (deixa rascunhos)</option><option value="whatsapp">Atende o WhatsApp e o chat do site (primeiro contato)</option><option value="vendas">Vendedor (assume quem tem interesse, em rodízio)</option><option value="pauta">Pauta do mês</option><option value="roteiro">Roteiro</option><option value="copy">Copy (legenda e texto da arte)</option><option value="arte">Direção de arte</option><option value="edicao">Plano de edição de vídeo</option></select></div>
+      <div class="f"><label for="ag-auto">Aprovação</label><select id="ag-auto"><option value="aprovar">Pede aprovação antes</option><option value="automatico">Age sozinho</option></select></div>
+    </div>
+    <label class="chk"><input type="checkbox" id="ag-ativo" checked> Ativo</label>
+    <div class="err" id="ag-err" hidden></div>
+    <div class="acts"><button class="btn ghost" type="button" id="ag-cancel">Cancelar</button><button class="btn" type="submit">Salvar agente</button></div>
+  </form>
+</dialog>
+
+<dialog id="dlg-prod">
+  <form class="in" id="f-prod" novalidate>
+    <div class="top" style="display:flex;gap:6px;align-items:center;flex-wrap:wrap"><span class="chip" id="pd-tipo"></span><span class="small muted" id="pd-sobre"></span></div>
+    <h2 id="pd-titulo" style="margin:8px 0 14px"></h2>
+    <div class="f"><label for="pd-roteiro">Roteiro</label><textarea id="pd-roteiro" rows="5"></textarea></div>
+    <div class="row">
+      <div class="f"><label for="pd-arte">Texto da arte</label><textarea id="pd-arte" rows="2"></textarea></div>
+      <div class="f"><label for="pd-data">Data de postagem</label><input type="date" id="pd-data"></div>
+    </div>
+    <div class="f"><label for="pd-legenda">Legenda</label><textarea id="pd-legenda" rows="4"></textarea></div>
+    <div class="f"><label for="pd-dir">Direção de arte</label><textarea id="pd-dir" rows="3"></textarea></div>
+    <div class="f"><label for="pd-ed">Plano de edição</label><textarea id="pd-ed" rows="3"></textarea></div>
+    <div class="row">
+      <div class="f"><label for="pd-etapa">Etapa</label><select id="pd-etapa"></select></div>
+      <div class="f"><label for="pd-arq">Arquivo pronto <span class="muted small">imagem ou vídeo</span></label><input type="file" id="pd-arq" multiple accept="video/*,image/*"></div>
+    </div>
+    <div class="err" id="pd-err" hidden></div>
+    <div class="acts">
+      <button class="btn ghost" type="button" id="pd-cancel">Fechar</button>
+      <button class="btn ghost" type="submit">Salvar</button>
+      <button class="btn" type="button" id="pd-enviar">Enviar pro cliente aprovar</button>
+    </div>
+  </form>
+</dialog>
+
+<dialog id="dlg-rel">
+  <form class="in" id="f-rel" novalidate>
+    <h2>Números do tráfego</h2>
+    <p class="small muted" id="r-info"></p>
+    <div class="f"><label for="r-conta">Conta de anúncio no Meta <span class="muted small">ligada, os números vêm sozinhos</span></label>
+      <div style="display:flex;gap:8px"><input type="text" id="r-conta" list="r-contas" placeholder="act_1234567890" style="flex:1;min-width:0"><button class="btn ghost sm" type="button" id="r-buscar">Buscar contas</button></div>
+      <datalist id="r-contas"></datalist>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin:-4px 0 14px"><button class="btn sm" type="button" id="r-puxar"></button><span class="small muted" id="r-origem" style="align-self:center"></span></div>
+    <div id="r-camp"></div>
+    <div class="row">
+      <div class="f"><label for="r-investido">Investido (R$)</label><input type="number" id="r-investido" min="0" step="0.01"></div>
+      <div class="f"><label for="r-alcance">Alcance</label><input type="number" id="r-alcance" min="0"></div>
+      <div class="f"><label for="r-impressoes">Impressões</label><input type="number" id="r-impressoes" min="0"></div>
+    </div>
+    <div class="row">
+      <div class="f"><label for="r-cliques">Cliques</label><input type="number" id="r-cliques" min="0"></div>
+      <div class="f"><label for="r-conversas">Conversas e contatos</label><input type="number" id="r-conversas" min="0"></div>
+      <div class="f"><label for="r-seguidores">Seguidores novos</label><input type="number" id="r-seguidores" min="0"></div>
+    </div>
+    <div class="f"><label for="r-resumo">Comentário pro cliente</label><textarea id="r-resumo" placeholder="O que funcionou, o que vamos testar no mês que vem…"></textarea></div>
+    <div class="f"><label for="r-link">Link do relatório completo <span class="muted small">opcional</span></label><input type="url" id="r-link"></div>
+    <div class="err" id="r-err" hidden></div>
+    <div class="acts"><button class="btn ghost" type="button" id="r-cancel">Cancelar</button><button class="btn" type="submit">Salvar e mostrar pro cliente</button></div>
+  </form>
+</dialog>
+
+<script src="assets/config.js"></script>
+<script src="assets/vendor/supabase.js"></script>
+<script src="assets/core.js"></script>
+<script src="assets/icons.js"></script>
+<script>
+(async function () {
+  var api = CR.api, el = CR.el, ic = CR.ic;
+  CR.avisoDemo();
+  CR.registrarApp();
+  var eu = await CR.exigirLogin("admin");
+  if (!eu) return;
+  document.getElementById("who").textContent = eu.email;
+  document.getElementById("side-email").textContent = eu.email;
+  document.querySelectorAll("[data-sair]").forEach(function (b) { b.addEventListener("click", async function () { await api.sair(); location.replace(CR.demoForcado ? "./" : "entrar.html"); }); });
+
+  // menu na ordem do trabalho: captar e atender, produzir, acompanhar os resultados, cuidar da equipe
+  var nav = CR.menu({
+    // as 4 áreas na ordem da jornada: vender, entregar, organizar e cuidar do dinheiro
+    grupos: [
+      ["", [["visao", "Visão geral", "chart", "Geral"]]],
+      ["Comercial", [["crm", "CRM e vendas", "target", "CRM"], ["agenda", "Agenda", "cal"]]],
+      ["Operacional", [["briefings", "Briefings", "inbox"], ["ideias", "Ideias", "idea"], ["esteira", "Esteira", "play"], ["entregas", "Entregas", "grid"], ["marca", "Marcas dos clientes", "brand", "Marcas"], ["relatorios", "Relatórios", "report"]]],
+      ["Administrativo", [["clientes", "Clientes", "users"], ["ia", "Agentes IA", "bot"], ["equipe", "Equipe", "team"]]],
+      ["Financeiro", [["financeiro", "Financeiro", "money"]]]
+    ],
+    aba: ["visao", "crm", "esteira", "entregas"]
+  });
+  var clientes = [], entregas = [], briefings = [], leads = [];
+  var ideias = [], materiais = [], relatorios = [], cobrancas = [], equipe = [], ajustes = [], agentesIA = [], sugestoes = [], producao = [], reunioes = [];
+  var hoje = new Date(); hoje.setHours(0, 0, 0, 0);
+  var hj = CR.iso(hoje);
+  var mesAtual = new Date(hoje.getFullYear(), hoje.getMonth(), 1);
+  function limites(m) { return [CR.iso(m), CR.iso(new Date(m.getFullYear(), m.getMonth() + 1, 1))]; }
+  function noMes(d, m) { var l = limites(m), x = String(d || "").slice(0, 10); return !!x && x >= l[0] && x < l[1]; }
+  function nomeMes(m) { return CR.MESES[m.getMonth()] + " " + m.getFullYear(); }
+  // botões de mês anterior / próximo
+  function navMes(pref, get, set, render) {
+    ["-ant", "-prox"].forEach(function (suf, i) {
+      var b = document.getElementById(pref + suf); b.appendChild(ic(i ? "right" : "left"));
+      b.addEventListener("click", function () { var m = get(); set(new Date(m.getFullYear(), m.getMonth() + (i ? 1 : -1), 1)); render(); });
+    });
+  }
+  async function tenta(fn, padrao) { try { return await fn(); } catch (e) { return padrao; } }
+  function cliOptions(sel, primeiro) {
+    var v = sel.value; sel.textContent = "";
+    if (primeiro) sel.appendChild(el("option", { value: primeiro[0], text: primeiro[1] }));
+    clientes.forEach(function (c) { sel.appendChild(el("option", { value: c.id, text: (c.empresa || c.nome || c.email) + (c.plano && c.plano !== "Sem plano" ? " · " + c.plano : "") })); });
+    sel.value = v; if (sel.selectedIndex < 0) sel.selectedIndex = 0;
+  }
+
+  document.getElementById("hoje").textContent = CR.SEMANA[hoje.getDay()] + ", " + hoje.getDate() + " de " + CR.MESES[hoje.getMonth()];
+  var h = new Date().getHours();
+  document.getElementById("ola").textContent = (h < 12 ? "Bom dia" : h < 18 ? "Boa tarde" : "Boa noite") + ", " + ((eu.nome || "").split(" ")[0] || "equipe") + "!";
+
+  function cli(id) { return id === eu.id ? Object.assign({}, eu, { empresa: "Criativos Rápidos (nós)" }) : clientes.find(function (x) { return x.id === id; }); }
+  function nomeCli(id) { var c = cli(id); return c ? (c.empresa || c.nome || c.email) : "?"; }
+  function waLead(n) { var d = CR.soDigitos(n); if (d.length === 10 || d.length === 11) d = "55" + d; return d.length >= 12 ? "https://wa.me/" + d : ""; }
+
+  async function carregar() {
+    try {
+      var todos = await api.clientes();
+      clientes = todos.filter(function (p) { return p.papel !== "admin"; });
+      entregas = await api.entregas();
+      briefings = await api.briefings();
+      leads = await api.leads();
+    } catch (e) { CR.toast(e.message, true); }
+    ideias = await tenta(function () { return api.ideias(); }, []);
+    materiais = await tenta(function () { return api.materiais(); }, []);
+    relatorios = await tenta(function () { return api.relatorios(); }, []);
+    cobrancas = await tenta(function () { return api.cobrancas(); }, []);
+    equipe = await tenta(function () { return api.equipe(); }, []);
+    ajustes = await tenta(function () { return api.ajustes(); }, []);
+    agentesIA = await tenta(function () { return api.agentes(); }, []);
+    sugestoes = await tenta(function () { return api.sugestoes(); }, []);
+    producao = await tenta(function () { return api.producao(); }, []);
+    reunioes = await tenta(function () { return api.reunioes(); }, []);
+    selects(); badges(); visao(); renderEntregas(); renderClientes(); renderBriefings(); renderLeads();
+    renderIdeias(); briefDoCliente(); renderMarca(); renderFin(); renderRel(); renderEquipe(); renderIA(); renderEsteira(); renderAgenda();
+  }
+
+  function atrasadas() { return cobrancas.filter(function (c) { return c.status === "aberta" && c.vencimento < hj; }); }
+  function retornos() { return leads.filter(function (l) { return l.proximo_contato && l.proximo_contato <= hj && l.status !== "fechou" && l.status !== "perdido"; }); }
+  function badges() {
+    nav.badges({
+      entregas: entregas.filter(function (e) { return e.status === "ajuste"; }).length,
+      briefings: briefings.filter(function (b) { return (b.status || "novo") === "novo"; }).length,
+      crm: leads.filter(function (l) { return l.status === "novo"; }).length + retornos().filter(function (l) { return l.status !== "novo"; }).length,
+      ideias: ideias.filter(function (i) { return i.status === "nova"; }).length,
+      financeiro: atrasadas().length,
+      ia: sugestoes.filter(function (x) { return x.status === "pendente"; }).length,
+      esteira: producao.filter(function (x) { return x.etapa === "producao"; }).length,
+      agenda: reunioes.filter(function (r) { return r.status === "marcada" && r.inicio.slice(0, 10) === hj; }).length
+    });
+  }
+
+  // ---------------------------------------------------------------- visão geral
+  function visao() {
+    var k = document.getElementById("kpis"); k.textContent = "";
+    var aj = entregas.filter(function (e) { return e.status === "ajuste"; });
+    var ativos = clientes.filter(function (c) { return c.plano && c.plano !== "Sem plano"; });
+    var mensais = clientes.filter(function (c) { return CR.plano(c.plano).grupo === "plano"; });
+    var contratado = mensais.reduce(function (t, c) { return t + CR.totalPlano(CR.plano(c.plano)); }, 0);
+    var feitoMes = entregas.filter(function (e) { return noMes(e.criado_em, mesAtual) && mensais.some(function (c) { return c.id === e.cliente_id; }); }).length;
+    var recebido = cobrancas.filter(function (c) { return c.status === "paga" && noMes(c.pago_em || c.vencimento, mesAtual); }).reduce(function (t, c) { return t + Number(c.valor || 0); }, 0);
+    var atr = atrasadas();
+    [[CR.reais(recebido), "recebido em " + CR.MESES[mesAtual.getMonth()], "financeiro"],
+     [atr.length, atr.length === 1 ? "cobrança em atraso" : "cobranças em atraso", "financeiro", null, atr.length > 0],
+     [ativos.length, "clientes ativos", "clientes"],
+     [feitoMes + (contratado ? " de " + contratado : ""), "entregas do mês nos planos", "relatorios"],
+     [entregas.filter(function (e) { return e.status === "aguardando"; }).length, "esperando o cliente aprovar", "entregas", "aguardando"],
+     [aj.length, "ajustes pra fazer", "entregas", "ajuste", aj.length > 0],
+     [leads.filter(function (l) { return l.status === "novo"; }).length, "contatos novos no CRM", "crm"],
+     [ideias.filter(function (i) { return i.status === "nova"; }).length, "ideias novas dos clientes", "ideias"]].forEach(function (x) {
+      var b = el("button", { class: "stat" + (x[4] ? " alert" : ""), type: "button" }, [el("b", { text: String(x[0]) }), el("span", { text: x[1] })]);
+      b.addEventListener("click", function () { if (x[3]) { document.getElementById("v-st").value = x[3]; renderEntregas(); } location.hash = x[2]; });
+      k.appendChild(b);
+    });
+
+    var t = document.getElementById("todo"); t.textContent = "";
+    var itens = [];
+    aj.forEach(function (e) { itens.push(el("div", { class: "todo ajuste" }, [el("span", { class: "k" }, ic("edit")), el("div", { style: "min-width:0" }, [el("div", { class: "tt", text: "Ajuste: " + e.titulo }), el("div", { class: "st", text: nomeCli(e.cliente_id) + " · “" + (e.comentario || "") + "”" })]), el("button", { class: "btn sm", type: "button", text: "Abrir", onclick: function () { document.getElementById("v-cli").value = e.cliente_id; document.getElementById("v-st").value = "ajuste"; renderEntregas(); location.hash = "entregas"; } })])); });
+    briefings.filter(function (b) { return (b.status || "novo") === "novo"; }).forEach(function (b) { itens.push(el("div", { class: "todo brief" }, [el("span", { class: "k" }, ic("inbox")), el("div", { style: "min-width:0" }, [el("div", { class: "tt", text: "Briefing novo: " + (b.empresa || b.nome || "sem nome") }), el("div", { class: "st", text: (b.plano || "") + " · " + CR.data(b.criado_em) })]), el("button", { class: "btn sm", type: "button", text: "Ler", onclick: function () { location.hash = "briefings"; } })])); });
+    ideias.filter(function (i) { return i.status === "nova"; }).forEach(function (i) { itens.push(el("div", { class: "todo brief" }, [el("span", { class: "k" }, ic("idea")), el("div", { style: "min-width:0" }, [el("div", { class: "tt", text: "Ideia do cliente: " + i.titulo }), el("div", { class: "st", text: nomeCli(i.cliente_id) + " · " + (CR.TIPOS[i.tipo] || i.tipo) })]), el("button", { class: "btn sm", type: "button", text: "Ver", onclick: function () { verIdeias(i.cliente_id, "nova"); } })])); });
+    atrasadas().forEach(function (c) { itens.push(el("div", { class: "todo ajuste" }, [el("span", { class: "k" }, ic("money")), el("div", { style: "min-width:0" }, [el("div", { class: "tt", text: "Em atraso: " + nomeCli(c.cliente_id) }), el("div", { class: "st", text: c.descricao + " · " + CR.reais(c.valor) + " · venceu " + CR.data(c.vencimento) })]), el("button", { class: "btn sm", type: "button", text: "Ver", onclick: function () { location.hash = "financeiro"; } })])); });
+    var vistos = {};
+    leads.filter(function (l) { return l.status === "novo"; }).concat(retornos()).forEach(function (l) {
+      if (vistos[l.id]) return; vistos[l.id] = 1;
+      var w = waLead(l.whatsapp), retorno = l.status !== "novo";
+      itens.push(el("div", { class: "todo lead" }, [el("span", { class: "k" }, ic("target")), el("div", { style: "min-width:0" }, [el("div", { class: "tt", text: (retorno ? "Retornar: " : "Contato novo: ") + l.nome }), el("div", { class: "st", text: [l.interesse, l.empresa || l.whatsapp, retorno ? "combinado pra " + CR.dataLonga(l.proximo_contato) : ""].filter(Boolean).join(" · ") })]), w ? el("a", { class: "btn sm", href: w + "?text=" + encodeURIComponent(msgLead(l)), target: "_blank", rel: "noopener" }, [ic("chat"), "Chamar"]) : el("button", { class: "btn sm", type: "button", text: "Ver", onclick: function () { location.hash = "crm"; } })]));
+    });
+    if (!itens.length) t.appendChild(el("div", { class: "empty", style: "padding:22px" }, [ic("check"), el("b", { text: "Nada pendente" }), el("span", { text: "Ajustes, briefings, ideias dos clientes, contatos e cobranças em atraso aparecem aqui." })]));
+    itens.forEach(function (i) { t.appendChild(i); });
+
+    var an = document.getElementById("andamento"); an.textContent = "";
+    if (!mensais.length) an.appendChild(el("p", { class: "small muted", style: "margin:0", text: "Nenhum cliente de plano mensal ainda." }));
+    mensais.forEach(function (c) {
+      var tot = CR.totalPlano(CR.plano(c.plano)), feito = entregas.filter(function (e) { return e.cliente_id === c.id && noMes(e.criado_em, mesAtual); }).length;
+      an.appendChild(el("div", { class: "prog" }, [
+        el("div", { class: "lb" }, [el("span", {}, [el("b", { text: c.empresa || c.nome || c.email }), " · " + c.plano]), el("span", { text: feito + " de " + tot })]),
+        el("div", { class: "track" }, el("i", { style: "width:" + Math.min(100, tot ? feito / tot * 100 : 0) + "%" }))
+      ]));
+    });
+
+    var p = document.getElementById("postar"); p.textContent = "";
+    var lista = entregas.filter(function (e) { var c = cli(e.cliente_id); return c && CR.plano(c.plano).posta && e.data_postagem && e.data_postagem >= hj; })
+      .sort(function (a, b) { return a.data_postagem < b.data_postagem ? -1 : 1; }).slice(0, 8);
+    if (!lista.length) p.appendChild(el("div", { class: "empty", style: "padding:22px" }, [el("span", { text: "Nenhuma postagem marcada. Coloque a data de postagem nas entregas dos planos Crescimento e Autoridade." })]));
+    lista.forEach(function (e) {
+      var pp = e.data_postagem.split("-"), d = new Date(+pp[0], +pp[1] - 1, +pp[2]);
+      p.appendChild(el("div", { class: "li" }, [
+        el("div", { class: "date" }, [el("b", { text: String(d.getDate()) }), el("span", { text: CR.SEMANA[d.getDay()] })]),
+        el("div", { style: "min-width:0" }, [el("div", { class: "tt", text: e.titulo }), el("div", { class: "st" }, [nomeCli(e.cliente_id) + " · ", el("span", { class: "pill " + (e.publicado_em ? "aprovado" : e.status), style: "padding:1px 8px", text: e.publicado_em ? "Publicado" : e.status === "aprovado" ? (igDe(e.cliente_id) && e.publicar !== false ? "Posta sozinho às " + String(e.hora_postagem || "10:00").slice(0, 5) : "Pronto pra postar") : CR.STATUS[e.status] })])]),
+        el("button", { class: "icon-btn", type: "button", "aria-label": "Baixar", title: "Baixar", onclick: async function () { var u = await api.urlArquivo(e, true); var a = el("a", { href: u, download: e.arquivo_nome || "", target: "_blank", rel: "noopener" }); document.body.appendChild(a); a.click(); a.remove(); } }, ic("down"))
+      ]));
+    });
+  }
+
+  // ---------------------------------------------------------------- entregas
+  Object.keys(CR.TIPOS).forEach(function (k) { document.getElementById("n-tipo").appendChild(el("option", { value: k, text: CR.TIPOS[k] })); });
+  document.querySelectorAll('input[name="orig"]').forEach(function (r) {
+    r.addEventListener("change", function () { var d = document.getElementById("o-drive").checked; document.getElementById("w-up").hidden = d; document.getElementById("w-drive").hidden = !d; });
+  });
+  function selects() {
+    var a = document.getElementById("n-cli"), b = document.getElementById("v-cli");
+    var va = a.value, vb = b.value;
+    a.textContent = ""; b.textContent = "";
+    a.appendChild(el("option", { value: "", text: clientes.length ? "Escolha o cliente" : "Nenhum cliente ainda" }));
+    b.appendChild(el("option", { value: "", text: "Todos os clientes" }));
+    clientes.forEach(function (c) {
+      var t = (c.empresa || c.nome || c.email) + (c.plano && c.plano !== "Sem plano" ? " · " + c.plano : "");
+      a.appendChild(el("option", { value: c.id, text: t })); b.appendChild(el("option", { value: c.id, text: t }));
+    });
+    a.value = va; b.value = vb;
+    cliOptions(document.getElementById("i-cli"), ["", "Escolha o cliente"]);
+    cliOptions(document.getElementById("vi-cli"), ["", "Todos os clientes"]);
+    var mk = document.getElementById("mk-cli");
+    cliOptions(mk, ["", "Pra todos os clientes (guias gerais)"]);
+    if (!mk.dataset.ini && clientes.length) { mk.dataset.ini = "1"; mk.value = clientes[0].id; }
+    cliOptions(document.getElementById("c-cli"), ["", "Escolha o cliente"]);
+    cliOptions(document.getElementById("as-cli"), ["", "A agência toda"]);
+    var ec = document.getElementById("es-cli"); cliOptions(ec, ["", "Todos"]);
+    if (eu.plano && CR.plano(eu.plano).grupo === "plano" && !ec.querySelector('option[value="' + eu.id + '"]')) ec.insertBefore(el("option", { value: eu.id, text: "Criativos Rápidos (nós)" }), ec.children[1]);
+  }
+  function opcaoCarrossel() { document.getElementById("w-car").hidden = document.getElementById("n-arq").files.length < 2 || document.getElementById("o-drive").checked; }
+  document.getElementById("n-arq").addEventListener("change", opcaoCarrossel);
+  document.querySelectorAll('input[name="orig"]').forEach(function (r) { r.addEventListener("change", opcaoCarrossel); });
+  document.getElementById("v-cli").addEventListener("change", renderEntregas);
+  document.getElementById("v-st").addEventListener("change", renderEntregas);
+
+  function renderEntregas() {
+    var c = document.getElementById("v-cli").value, st = document.getElementById("v-st").value;
+    var vis = entregas.filter(function (e) { return (!c || e.cliente_id === c) && (!st || e.status === st); });
+    var l = document.getElementById("l-ent"); l.textContent = "";
+    vis.forEach(function (e) { l.appendChild(cardEntrega(e)); });
+    document.getElementById("v-ent").hidden = vis.length > 0;
+  }
+
+  function miniatura(e) {
+    var b = el("div", { class: "thumb", style: "cursor:default" });
+    var tipo = CR.tipoArquivo(e.arquivo_nome || e.demo_url || "");
+    if (e.link_externo && !e.arquivo_path && !e.demo_url) b.appendChild(el("a", { class: "file", href: e.link_externo, target: "_blank", rel: "noopener", style: "color:#fff" }, [ic("ext"), el("br"), "Abrir no Google Drive"]));
+    else if (e.demo_capa) b.appendChild(el("img", { src: e.demo_capa, alt: "" }));
+    else api.urlArquivo(e, false).then(function (url) {
+      if (!url) b.appendChild(el("span", { class: "file", text: "Sem arquivo" }));
+      else if (tipo === "imagem") b.insertBefore(el("img", { src: url, alt: "" }), b.firstChild);
+      else if (tipo === "video") { var v = el("video", { src: url.indexOf("blob:") === 0 ? url : url + "#t=0.1", controls: true, playsinline: true, preload: "metadata" }); v.style.pointerEvents = "auto"; v.style.objectFit = "contain"; b.insertBefore(v, b.firstChild); }
+      else b.appendChild(el("span", { class: "file" }, [ic("file"), el("br"), e.arquivo_nome || "Arquivo"]));
+    }).catch(function () { b.appendChild(el("span", { class: "file", text: "Arquivo indisponível" })); });
+    b.appendChild(el("span", { class: "ov", style: "pointer-events:none" }, [el("span", { class: "chip", text: CR.TIPOS[e.tipo] || e.tipo }), el("span", { class: "pill " + e.status, text: CR.STATUS[e.status] })]));
+    return b;
+  }
+
+  function cardEntrega(e) {
+    var troca = el("input", { type: "file", hidden: true, accept: "video/*,image/*,application/pdf", onchange: async function () {
+      if (!this.files[0]) return;
+      CR.toast("Enviando a nova versão…");
+      try { await api.trocarArquivo(e, this.files[0]); CR.toast("Nova versão enviada. O cliente já pode aprovar."); await carregar(); } catch (x) { CR.toast(x.message, true); }
+    } });
+    var drive = e.link_externo && !e.arquivo_path;
+    return el("article", { class: "ent" }, [miniatura(e), el("div", { class: "body" }, [
+      el("h3", { text: e.titulo }),
+      el("div", { class: "meta", text: nomeCli(e.cliente_id) + (e.data_postagem ? " · postar " + CR.dataLonga(e.data_postagem) : "") }),
+      e.status === "ajuste" && e.comentario ? el("div", { class: "coment" }, [el("b", { text: "Pedido do cliente: " }), e.comentario]) : null,
+      linhaIG(e),
+      linhaRedes(e),
+      el("div", { class: "acts" }, [
+        // o nosso próprio marketing: quem aprova é a agência
+        e.cliente_id === eu.id && e.status !== "aprovado" ? el("button", { class: "btn ok sm", type: "button", onclick: async function () {
+          this.disabled = true; try { await api.editarEntrega(e.id, { status: "aprovado" }); CR.toast("Aprovado. Vai pras nossas redes no horário marcado."); await carregar(); } catch (x) { CR.toast(x.message, true); this.disabled = false; }
+        } }, [ic("check"), "Aprovar"]) : null,
+        e.status === "aprovado" && e.arquivo_path && !e.redes_enviado_em && redesDe(e).length ? el("button", { class: "btn sm", type: "button", onclick: async function () {
+          this.disabled = true; CR.toast("Mandando pro Postiz…");
+          try { var r = await api.enviarRedes(e.id); CR.toast("Agendado em: " + r.map(function (x) { return NOME_REDE[x] || x; }).join(", ")); await carregar(); } catch (x) { CR.toast(x.message, true); this.disabled = false; }
+        } }, [ic("send"), "Mandar pras redes"]) : null,
+        troca,
+        podePostar(e) ? el("button", { class: "btn dark sm", type: "button", onclick: async function () {
+          this.disabled = true; CR.toast("Publicando no Instagram…");
+          try { var r = await api.publicarAgora(e.id); CR.toast(r === "publicado" ? "Publicado no Instagram!" : "O Instagram ainda está processando o vídeo. Ele sai sozinho em alguns minutos."); await carregar(); }
+          catch (x) { CR.toast(x.message, true); await carregar(); }
+        } }, [ic("send"), e.publicacao_erro ? "Tentar de novo" : "Postar agora"]) : null,
+        drive ? null : el("button", { class: "btn sm", type: "button", onclick: function () { troca.click(); } }, [ic("up"), e.status === "ajuste" ? "Enviar ajustada" : "Trocar arquivo"]),
+        drive && e.status === "ajuste" ? el("button", { class: "btn sm", type: "button", text: "Ajuste feito no Drive", onclick: async function () {
+          try { await api.editarEntrega(e.id, { status: "aguardando" }); CR.toast("Voltou para o cliente aprovar."); await carregar(); } catch (x) { CR.toast(x.message, true); }
+        } }) : null,
+        el("button", { class: "btn danger sm", type: "button", "aria-label": "Apagar entrega", onclick: function () { confirmar(this, async function () {
+          try { await api.apagarEntrega(e); CR.toast("Entrega apagada."); await carregar(); } catch (x) { CR.toast(x.message, true); }
+        }); } }, [ic("trash")])
+      ])
+    ])]);
+  }
+
+  function redesDe(e) { var c = cli(e.cliente_id); return (e.redes && e.redes.length ? e.redes : c && c.redes) || []; }
+  function linhaRedes(e) {
+    if (e.redes_resultado && e.redes_resultado.erro) return el("div", { class: "ig erro" }, [ic("info"), "Redes: " + e.redes_resultado.erro]);
+    if (e.redes_enviado_em) return el("div", { class: "ig ok" }, [ic("check"), "Agendado nas redes: " + ((e.redes_resultado && e.redes_resultado.canais) || []).map(function (x) { return NOME_REDE[x] || x; }).join(", ")]);
+    var n = redesDe(e).length;
+    return n ? el("div", { class: "ig muted" }, [ic("send"), (e.status === "aprovado" ? "Vai pra " : "Depois de aprovado, vai pra ") + n + (n === 1 ? " rede" : " redes") + " pelo Postiz"]) : null;
+  }
+  function igDe(id) { var c = cli(id); return c && c.instagram; }
+  function podePostar(e) { return e.status === "aprovado" && !e.publicado_em && igDe(e.cliente_id) && (e.arquivo_path || e.demo_url); }
+  function linhaIG(e) {
+    if (e.publicado_em) return el("div", { class: "ig ok" }, [ic("check"), "Publicado " + CR.dataLonga(e.publicado_em.slice(0, 10)), e.publicado_link ? el("a", { href: e.publicado_link, target: "_blank", rel: "noopener", text: "ver post" }) : null]);
+    if (e.publicacao_erro) return el("div", { class: "ig erro" }, [ic("info"), "Não publicou: " + e.publicacao_erro]);
+    var c = cli(e.cliente_id);
+    if (!c || !CR.plano(c.plano).posta) return null;
+    if (!c.instagram) return el("div", { class: "ig muted" }, [ic("info"), "Cliente ainda não conectou o Instagram"]);
+    if (e.publicar === false) return el("div", { class: "ig muted" }, [ic("info"), "Postagem manual"]);
+    if (!e.data_postagem) return el("div", { class: "ig muted" }, [ic("cal"), "Sem data: não posta sozinho"]);
+    return el("div", { class: "ig" }, [ic("cal"), (e.status === "aprovado" ? "Agendado: " : "Posta sozinho depois de aprovado: ") + CR.dataLonga(e.data_postagem) + " às " + String(e.hora_postagem || "10:00").slice(0, 5) + " no @" + c.instagram]);
+  }
+
+  // confirmação em dois toques
+  function confirmar(btn, fn) {
+    if (btn.dataset.conf) { fn(); return; }
+    btn.dataset.conf = "1"; var antes = btn.innerHTML; btn.textContent = "Confirmar?"; btn.style.width = "auto"; btn.style.padding = "0 10px";
+    setTimeout(function () { delete btn.dataset.conf; btn.innerHTML = antes; btn.style.width = ""; btn.style.padding = ""; }, 3000);
+  }
+
+  document.getElementById("f-ent").addEventListener("submit", async function (ev) {
+    ev.preventDefault();
+    var err = document.getElementById("n-err"), prog = document.getElementById("n-prog");
+    var c = document.getElementById("n-cli").value, tit = document.getElementById("n-tit").value.trim();
+    var drive = document.getElementById("o-drive").checked;
+    var arqs = Array.prototype.slice.call(document.getElementById("n-arq").files), link = document.getElementById("n-link").value.trim();
+    var m = !c ? "Escolha o cliente." : !tit ? "Dê um título para a entrega." : drive && !/drive\.google\.com/.test(link) ? "Cole o link de compartilhar do Google Drive." : !drive && !arqs.length ? "Escolha pelo menos um arquivo." : "";
+    err.textContent = m; err.hidden = !m; if (m) return;
+    var btn = this.querySelector("button[type=submit]"); btn.disabled = true; prog.hidden = false;
+    var base = { cliente_id: c, tipo: document.getElementById("n-tipo").value, legenda: document.getElementById("n-leg").value.trim() || null, data_postagem: document.getElementById("n-data").value || null, hora_postagem: document.getElementById("n-hora").value || "10:00", publicar: document.getElementById("n-pub").checked };
+    var juntar = !drive && arqs.length > 1 && document.getElementById("n-car").checked;
+    try {
+      if (drive) await api.criarEntrega(Object.assign({ titulo: tit, link_externo: link }, base));
+      else if (juntar) { prog.textContent = "Enviando o carrossel (" + arqs.length + " arquivos)…"; await api.criarEntrega(Object.assign({ titulo: tit }, base, { tipo: "carrossel" }), arqs[0], function (t) { prog.textContent = t; }, arqs.slice(1)); }
+      else for (var i = 0; i < arqs.length; i++) {
+        prog.textContent = "Enviando " + (i + 1) + " de " + arqs.length + ": " + arqs[i].name + "…";
+        await api.criarEntrega(Object.assign({ titulo: arqs.length > 1 ? tit + " " + (i + 1) : tit }, base), arqs[i]);
+      }
+      CR.toast("Enviado! Já aparece no app do cliente.");
+      ["n-tit", "n-leg", "n-data", "n-link"].forEach(function (id) { document.getElementById(id).value = ""; });
+      document.getElementById("n-arq").value = ""; opcaoCarrossel();
+      document.getElementById("v-cli").value = c; document.getElementById("v-st").value = "";
+      await carregar();
+    } catch (x) { err.textContent = x.message; err.hidden = false; }
+    btn.disabled = false; prog.hidden = true;
+  });
+
+  // ---------------------------------------------------------------- clientes
+  function renderClientes() {
+    var tb = document.querySelector("#t-cli tbody"); tb.textContent = "";
+    if (!clientes.length) { tb.appendChild(el("tr", {}, el("td", { colspan: "9", class: "muted", text: "Nenhum cliente criou conta ainda. Mande o link criativosrapidos.com.br/entrar." }))); return; }
+    clientes.forEach(function (c) {
+      var plano = el("select", { "aria-label": "Plano de " + (c.nome || c.email) });
+      [["", "Sem plano"], ["plano", "Planos mensais"], ["pacote", "Pacotes"]].forEach(function (g) {
+        var grp = g[0] ? el("optgroup", { label: g[1] }) : plano;
+        CR.PLANOS.filter(function (p) { return p.grupo === g[0]; }).forEach(function (p) { grp.appendChild(el("option", { value: p.nome, text: p.nome + (p.preco ? " · " + p.preco : "") })); });
+        if (g[0]) plano.appendChild(grp);
+      });
+      plano.value = c.plano || "Sem plano";
+      var aj = el("input", { type: "number", min: "0", max: "20", value: String(c.ajustes_mes || 0), "aria-label": "Ajustes", style: "width:76px" });
+      plano.addEventListener("change", function () { aj.value = CR.plano(plano.value).ajustes; });
+      var resp = el("select", { "aria-label": "Responsável por " + (c.empresa || c.nome || c.email), style: "min-width:130px" });
+      resp.appendChild(el("option", { value: "", text: equipe.length ? "Ninguém" : "Cadastre em Equipe" }));
+      equipe.forEach(function (q) { resp.appendChild(el("option", { value: q.id, text: q.nome })); });
+      resp.value = c.responsavel || "";
+      var n = entregas.filter(function (e) { return e.cliente_id === c.id; });
+      var pend = n.filter(function (e) { return e.status !== "aprovado"; }).length;
+      var w = waLead(c.whatsapp);
+      tb.appendChild(el("tr", {}, [
+        el("td", {}, [el("b", { text: c.empresa || "—" }), el("div", { class: "small muted", text: c.nome || "" })]),
+        el("td", { class: "small" }, [c.email || "", el("br"), w ? el("a", { href: w, target: "_blank", rel: "noopener", text: c.whatsapp }) : (c.whatsapp || "")]),
+        el("td", { class: "small" }, c.instagram ? el("a", { href: "https://www.instagram.com/" + c.instagram + "/", target: "_blank", rel: "noopener", text: "@" + c.instagram }) : el("span", { class: "muted", text: "não conectado" })),
+        el("td", {}, plano), el("td", {}, aj), el("td", {}, resp),
+        el("td", {}, el("button", { class: "btn ghost sm", type: "button", text: (c.redes || []).length ? (c.redes.length === 1 ? "1 rede" : c.redes.length + " redes") : "Escolher", onclick: function () { abrirRedes(c); } })),
+        el("td", { class: "small", text: n.length + (pend ? " (" + pend + " pendentes)" : "") }),
+        el("td", {}, el("button", { class: "btn sm", type: "button", text: "Salvar", onclick: async function () {
+          try { await api.salvarPerfil(c.id, { plano: plano.value, ajustes_mes: parseInt(aj.value, 10) || 0, responsavel: resp.value || null }); CR.toast("Cliente atualizado."); await carregar(); } catch (x) { CR.toast(x.message, true); }
+        } }))
+      ]));
+    });
+  }
+
+  // ---------------------------------------------------------------- briefings
+  var ST_BRF = { novo: "Novo", em_producao: "Em produção", pronto: "Pronto" };
+  function renderBriefings() {
+    var l = document.getElementById("l-brf"); l.textContent = "";
+    document.getElementById("v-brf").hidden = briefings.length > 0;
+    briefings.forEach(function (b) {
+      var st = b.status || "novo";
+      var sel = el("select", { "aria-label": "Status do briefing", style: "width:auto" });
+      Object.keys(ST_BRF).forEach(function (k) { sel.appendChild(el("option", { value: k, text: ST_BRF[k] })); });
+      sel.value = st;
+      sel.addEventListener("change", async function () { try { await api.statusBriefing(b.id, sel.value); b.status = sel.value; badges(); visao(); renderBriefings(); } catch (x) { CR.toast(x.message, true); } });
+      l.appendChild(el("details", { class: "brf" }, [
+        el("summary", {}, [el("b", { text: b.empresa || b.nome || "Sem nome" }), el("span", { class: "pill " + st, text: ST_BRF[st] }), el("span", { class: "small muted", text: (b.plano || "") + " · " + CR.data(b.criado_em) + (b.whatsapp ? " · " + b.whatsapp : "") })]),
+        el("pre", { text: b.texto || JSON.stringify(b.respostas, null, 2) }),
+        el("div", { class: "acts" }, [
+          sel,
+          el("button", { class: "btn sm", type: "button", onclick: function () { var c = cliDoBriefing(b); verIdeias(c, "todas"); if (c) { document.getElementById("i-cli").value = c; briefDoCliente(); } document.getElementById("i-tit").focus(); } }, [ic("idea"), "Criar ideias"]),
+          el("button", { class: "btn ghost sm", type: "button", onclick: function () { var c = cliDoBriefing(b); if (!c) { CR.toast("Esse briefing não está ligado a uma conta de cliente.", true); return; } document.getElementById("mk-cli").value = c; renderMarca(); puxarBriefing(); location.hash = "marca"; } }, [ic("brand"), "Preencher marca"]),
+          el("button", { class: "btn ghost sm", type: "button", onclick: function () { CR.copiar(b.texto || "", "Briefing copiado"); } }, [ic("copy"), "Copiar"]),
+          el("button", { class: "btn danger sm", type: "button", "aria-label": "Apagar briefing", onclick: function () { confirmar(this, async function () { await api.apagarBriefing(b.id); await carregar(); }); } }, [ic("trash")])
+        ])
+      ]));
+    });
+  }
+
+  // ---------------------------------------------------------------- CRM
+  var ST_LEAD = { novo: "Novo", conversando: "Conversando", proposta: "Proposta enviada", fechou: "Fechou", perdido: "Não fechou" };
+  function msgLead(l) { return "Oi, " + l.nome.split(" ")[0] + "! Aqui é da Criativos Rápidos. Vi que você se interessou pelo " + (l.interesse || "nosso trabalho") + "."; }
+  document.getElementById("novo-lead").append(ic("plus"), "Novo contato");
+  var dlgLead = document.getElementById("dlg-lead");
+  (function () {
+    var s2 = document.getElementById("ld-int");
+    s2.appendChild(el("option", { value: "", text: "Ainda não sabe" }));
+    CR.PLANOS.filter(function (p) { return p.grupo; }).forEach(function (p) { s2.appendChild(el("option", { value: p.nome, text: p.nome + " · " + p.preco })); });
+  })();
+  function abrirLead(l) {
+    l = l || {};
+    document.getElementById("ld-titulo").textContent = l.id ? "Editar contato" : "Novo contato";
+    document.getElementById("ld-id").value = l.id || "";
+    [["ld-nome", "nome"], ["ld-whats", "whatsapp"], ["ld-emp", "empresa"], ["ld-int", "interesse"], ["ld-obs", "observacao"], ["ld-prox", "proximo_contato"]].forEach(function (x) { document.getElementById(x[0]).value = l[x[1]] || ""; });
+    ["ld-nome", "ld-whats"].forEach(function (id) { document.getElementById(id).disabled = !!l.id; });
+    document.getElementById("ld-err").hidden = true;
+    dlgLead.showModal();
+  }
+  document.getElementById("novo-lead").addEventListener("click", function () { abrirLead(); });
+  document.getElementById("ld-cancel").addEventListener("click", function () { dlgLead.close(); });
+  document.getElementById("f-lead").addEventListener("submit", async function (ev) {
+    ev.preventDefault();
+    var id = document.getElementById("ld-id").value, er = document.getElementById("ld-err");
+    var c = { empresa: document.getElementById("ld-emp").value.trim() || null, interesse: document.getElementById("ld-int").value || null, observacao: document.getElementById("ld-obs").value.trim() || null, proximo_contato: document.getElementById("ld-prox").value || null };
+    try {
+      if (id) await api.editarLead(id, c);
+      else {
+        var nome = document.getElementById("ld-nome").value.trim(), w = document.getElementById("ld-whats").value.trim();
+        var m = !nome ? "Coloque o nome." : CR.soDigitos(w).length < 8 ? "Coloque o WhatsApp com DDD." : "";
+        if (m) { er.textContent = m; er.hidden = false; return; }
+        await api.enviarLead(Object.assign({ nome: nome, whatsapp: w, origem: "manual" }, c));
+      }
+      dlgLead.close(); CR.toast("Contato salvo."); await carregar();
+    } catch (x) { er.textContent = x.message; er.hidden = false; }
+  });
+  function renderLeads() {
+    var k = document.getElementById("crm-kpis"); k.textContent = "";
+    var fecharamMes = leads.filter(function (l) { return l.status === "fechou" && noMes(l.criado_em, mesAtual); }).length;
+    var abertos = leads.filter(function (l) { return l.status !== "fechou" && l.status !== "perdido"; }).length;
+    var decididos = leads.filter(function (l) { return l.status === "fechou" || l.status === "perdido"; });
+    [[abertos, "em negociação"], [retornos().length, "pra retornar hoje", retornos().length > 0], [fecharamMes, "fecharam (chegaram este mês)"],
+     [decididos.length ? Math.round(leads.filter(function (l) { return l.status === "fechou"; }).length / decididos.length * 100) + "%" : "—", "taxa de fechamento"]].forEach(function (x) {
+      k.appendChild(el("div", { class: "stat" + (x[2] ? " alert" : "") }, [el("b", { text: String(x[0]) }), el("span", { text: x[1] })]));
+    });
+    placar();
+    var b = document.getElementById("board"); b.textContent = "";
+    Object.keys(ST_LEAD).forEach(function (st) {
+      var doSt = leads.filter(function (l) { return l.status === st; });
+      var col = el("section", { class: "col", "aria-label": ST_LEAD[st] }, [el("h3", {}, [el("span", { text: ST_LEAD[st] }), el("span", { class: "muted", text: String(doSt.length) })])]);
+      if (!doSt.length) col.appendChild(el("p", { class: "small muted", style: "margin:0;padding:0 6px 6px", text: "Ninguém aqui." }));
+      doSt.forEach(function (x) { col.appendChild(cartaoLead(x)); });
+      b.appendChild(col);
+    });
+  }
+  // cada vendedor de IA: contatos recebidos, reuniões, fechamentos e taxa (pra ver qual estilo vende mais)
+  function placar() {
+    var w = document.getElementById("placar"); w.textContent = "";
+    var vend = agentesIA.filter(function (a) { return a.etapa === "vendas"; });
+    document.getElementById("placar-sec").hidden = !vend.length;
+    var desde = Date.now() - 30 * 864e5;
+    vend.forEach(function (a) {
+      var meus = leads.filter(function (l) { return l.vendedor_id === a.id && Date.parse(l.criado_em) > desde; });
+      var reu = reunioes.filter(function (r) { return meus.some(function (l) { return l.id === r.lead_id; }); }).length;
+      var fech = meus.filter(function (l) { return l.status === "fechou"; }).length;
+      w.appendChild(el("div", { class: "ag" + (a.ativo === false ? " off" : "") }, [avatarEl(a), el("div", {}, [
+        el("div", { class: "nm", text: a.nome }), el("div", { class: "cg", text: a.cargo || "" }),
+        el("div", { class: "tags" }, [el("span", { text: meus.length + (meus.length === 1 ? " contato" : " contatos") }), el("span", { text: reu + (reu === 1 ? " reunião" : " reuniões") }), el("span", { class: fech ? "auto" : "", text: fech + " fechou" + (meus.length ? " · " + Math.round(fech / meus.length * 100) + "%" : "") })])
+      ])]));
+    });
+  }
+  function cartaoLead(x) {
+    var sel = el("select", { "aria-label": "Etapa de " + x.nome });
+    Object.keys(ST_LEAD).forEach(function (k) { sel.appendChild(el("option", { value: k, text: ST_LEAD[k] })); });
+    sel.value = x.status;
+    sel.addEventListener("change", async function () { try { await api.statusLead(x.id, sel.value); x.status = sel.value; badges(); visao(); renderLeads(); } catch (e) { CR.toast(e.message, true); } });
+    var w = waLead(x.whatsapp);
+    var origem = { videos: "veio da página de vídeos", home: "veio da home", manual: "cadastrado pela equipe", whatsapp: "chamou no WhatsApp", prospeccao: "lista de prospecção", "site-chat": "chat do site" }[x.origem] || "";
+    var vend = x.vendedor_id && agentesIA.find(function (a) { return a.id === x.vendedor_id; });
+    var prox = x.proximo_contato ? el("div", { class: x.proximo_contato <= hj ? "hoje-tag" : "muted" }, [ic("cal"), " Próximo contato: " + CR.dataLonga(x.proximo_contato)]) : null;
+    return el("article", { class: "lead-card" }, [
+      el("div", { style: "display:flex;align-items:center;gap:2px" }, [
+        el("b", { style: "flex:1;min-width:0" }, [x.nome, x.origem === "whatsapp" && x.ia_ativa !== false ? el("span", { class: "tag-mini ia", text: "IA" }) : null, x.optin === false ? el("span", { class: "tag-mini frio", text: "sem consentimento" }) : null]),
+        el("button", { class: "icon-btn", type: "button", style: "width:32px;height:32px", "aria-label": "Conversa com " + x.nome, title: "Conversa no WhatsApp", onclick: function () { abrirConversa(x); } }, ic("chat")),
+        el("button", { class: "icon-btn", type: "button", style: "width:32px;height:32px", "aria-label": "Anotar sobre " + x.nome, title: "Anotar", onclick: function () { abrirLead(x); } }, ic("edit")),
+        el("button", { class: "icon-btn", type: "button", style: "width:32px;height:32px", "aria-label": "Apagar " + x.nome, onclick: function () { confirmar(this, async function () { await api.apagarLead(x.id); await carregar(); }); } }, ic("trash"))
+      ]),
+      el("div", { class: "muted", text: [x.empresa, x.interesse ? "quer " + x.interesse : "", origem, vend ? "com " + vend.nome : "", CR.data(x.criado_em)].filter(Boolean).join(" · ") }),
+      x.observacao ? el("div", { style: "white-space:pre-wrap", text: x.observacao }) : null,
+      prox,
+      el("div", { class: "acts" }, [
+        w ? el("a", { class: "btn sm", href: w + "?text=" + encodeURIComponent(msgLead(x)), target: "_blank", rel: "noopener" }, [ic("chat"), "WhatsApp"]) : null,
+        sel
+      ])
+    ]);
+  }
+
+  // ---------------------------------------------------------------- briefing ↔ cliente
+  function norm(t) { return String(t || "").toLowerCase().normalize("NFD").replace(/[^a-z0-9]/g, ""); }
+  // o briefing enviado logado já vem com o cliente; senão, procura pelo nome da empresa
+  function cliDoBriefing(b) {
+    if (b.cliente_id && cli(b.cliente_id)) return b.cliente_id;
+    var c = clientes.find(function (x) { return norm(x.empresa) && norm(x.empresa) === norm(b.empresa); });
+    return c ? c.id : "";
+  }
+  function briefingDe(id) { return briefings.find(function (b) { return cliDoBriefing(b) === id; }); }
+
+  // ---------------------------------------------------------------- ideias
+  var ST_IDEIA = { nova: "Do cliente", sugerida: "Esperando o cliente", aprovada: "Na fila", producao: "Em produção", feita: "Feita", descartada: "Descartada" };
+  var FILTRO_IDEIA = [["todas", "Todas"], ["nova", "Do cliente"], ["sugerida", "Esperando o cliente"], ["aprovada", "Na fila"], ["producao", "Em produção"], ["feita", "Feitas"], ["descartada", "Descartadas"]];
+  var filtroIdeia = "todas";
+  ["reels", "post", "carrossel", "stories", "anuncio", "video", "outro"].forEach(function (k) { document.getElementById("i-tipo").appendChild(el("option", { value: k, text: CR.TIPOS[k] })); });
+  var segI = document.getElementById("seg-ideias");
+  FILTRO_IDEIA.forEach(function (f) {
+    segI.appendChild(el("button", { type: "button", "data-f": f[0], "aria-pressed": String(f[0] === filtroIdeia), onclick: function () { setFiltroIdeia(f[0]); } }, [f[1], el("span", { class: "c", hidden: true })]));
+  });
+  function setFiltroIdeia(f) { filtroIdeia = f; segI.querySelectorAll("button").forEach(function (x) { x.setAttribute("aria-pressed", String(x.dataset.f === f)); }); renderIdeias(); }
+  function verIdeias(clienteId, f) { document.getElementById("vi-cli").value = clienteId || ""; setFiltroIdeia(f || "todas"); location.hash = "ideias"; }
+  document.getElementById("vi-cli").addEventListener("change", renderIdeias);
+  document.getElementById("i-cli").addEventListener("change", briefDoCliente);
+  function renderIdeias() {
+    var c = document.getElementById("vi-cli").value;
+    var doCli = ideias.filter(function (i) { return !c || i.cliente_id === c; });
+    segI.querySelectorAll("button").forEach(function (b) {
+      var n = b.dataset.f === "nova" ? doCli.filter(function (i) { return i.status === "nova"; }).length : 0;
+      var sp = b.querySelector(".c"); sp.textContent = n; sp.hidden = !n;
+    });
+    var vis = doCli.filter(function (i) { return filtroIdeia === "todas" || i.status === filtroIdeia; });
+    var l = document.getElementById("l-ideias"); l.textContent = "";
+    vis.forEach(function (i) { l.appendChild(cartaoIdeia(i)); });
+    document.getElementById("v-ideias").hidden = vis.length > 0;
+  }
+  function cartaoIdeia(i) {
+    var sel = el("select", { "aria-label": "Status da ideia", style: "width:auto;padding:6px 8px;font-size:13px" });
+    Object.keys(ST_IDEIA).forEach(function (k) { sel.appendChild(el("option", { value: k, text: ST_IDEIA[k] })); });
+    sel.value = i.status;
+    sel.addEventListener("change", async function () { try { await api.editarIdeia(i.id, { status: sel.value }); i.status = sel.value; badges(); visao(); renderIdeias(); } catch (x) { CR.toast(x.message, true); } });
+    return el("article", { class: "idea" }, [
+      el("div", { class: "top" }, [el("span", { class: "chip", text: CR.TIPOS[i.tipo] || i.tipo }), el("span", { class: "pill " + i.status, text: ST_IDEIA[i.status] }),
+        el("button", { class: "icon-btn", type: "button", style: "margin-left:auto;width:32px;height:32px", "aria-label": "Apagar ideia", onclick: function () { confirmar(this, async function () { await api.apagarIdeia(i.id); await carregar(); }); } }, ic("trash"))]),
+      el("div", { class: "small muted", text: nomeCli(i.cliente_id) + " · " + (i.origem === "cliente" ? "o cliente mandou" : "sugestão da agência") + " · " + CR.data(i.criado_em) }),
+      el("h3", { text: i.titulo }),
+      i.descricao ? el("p", { text: i.descricao }) : null,
+      /^https?:\/\//i.test(i.referencia || "") ? el("a", { href: i.referencia, target: "_blank", rel: "noopener", class: "small", style: "font-weight:700" }, [ic("ext"), " Referência"]) : null,
+      el("div", { class: "acts" }, [
+        sel,
+        i.status !== "feita" && i.status !== "descartada" ? el("button", { class: "btn sm", type: "button", onclick: function () { virarEntrega(i); } }, [ic("grid"), "Virar entrega"]) : null
+      ])
+    ]);
+  }
+  // leva a ideia pro formulário de entrega já preenchido
+  async function virarEntrega(i) {
+    document.getElementById("n-cli").value = i.cliente_id;
+    document.getElementById("n-tit").value = i.titulo;
+    document.getElementById("n-tipo").value = CR.TIPOS[i.tipo] ? i.tipo : "outro";
+    if (i.status !== "producao") { try { await api.editarIdeia(i.id, { status: "producao" }); i.status = "producao"; renderIdeias(); badges(); } catch (x) {} }
+    location.hash = "entregas";
+    setTimeout(function () { document.getElementById("n-arq").focus(); }, 50);
+    CR.toast("Ideia em produção. Agora é só subir o arquivo.");
+  }
+  function briefDoCliente() {
+    var w = document.getElementById("i-brief"); w.textContent = "";
+    var c = document.getElementById("i-cli").value;
+    w.appendChild(el("h2", { text: "Do briefing", style: "margin-bottom:10px" }));
+    if (!c) { w.appendChild(el("p", { class: "small muted", style: "margin:0", text: "Escolha o cliente pra ver o que ele contou no briefing." })); return; }
+    var b = briefingDe(c);
+    if (!b) { w.appendChild(el("p", { class: "small muted", style: "margin:0", text: "Esse cliente ainda não mandou o briefing." })); return; }
+    var r = CR.briefingResumo(b), dl = el("dl", { class: "kv" });
+    [["Quer divulgar primeiro", r.primeiro], ["Promoção ou data especial", r.promo], ["Assuntos que domina", r.assuntos], ["Cliente dele", r.publico], ["Aparece nos vídeos?", r.aparecer], ["Tom", r.tom], ["Evitar", r.proibido]].forEach(function (x) {
+      if (x[1]) dl.appendChild(el("div", {}, [el("dt", { text: x[0] }), el("dd", { text: x[1] })]));
+    });
+    if (dl.children.length) w.appendChild(dl);
+    else w.appendChild(el("pre", { style: "white-space:pre-wrap;font:13px/1.6 var(--body);margin:0;max-height:320px;overflow:auto", text: b.texto || "" }));
+    var ja = ideias.filter(function (i) { return i.cliente_id === c; });
+    if (ja.length) w.appendChild(el("p", { class: "small muted", style: "margin:12px 0 0", text: "Já tem " + ja.length + (ja.length === 1 ? " ideia" : " ideias") + " pra esse cliente: " + ja.slice(0, 4).map(function (i) { return i.titulo; }).join(" · ") }));
+  }
+  document.getElementById("f-ideia").addEventListener("submit", async function (ev) {
+    ev.preventDefault();
+    var c = document.getElementById("i-cli").value, tit = document.getElementById("i-tit").value.trim(), ref = document.getElementById("i-ref").value.trim(), er = document.getElementById("i-err");
+    var m = !c ? "Escolha o cliente." : !tit ? "Escreva a ideia." : ref && !/^https?:\/\//i.test(ref) ? "O link precisa começar com https://" : "";
+    er.textContent = m; er.hidden = !m; if (m) return;
+    try {
+      await api.criarIdeia({ cliente_id: c, origem: "agencia", tipo: document.getElementById("i-tipo").value, titulo: tit, descricao: document.getElementById("i-desc").value.trim() || null, referencia: ref || null, status: document.getElementById("i-st").value });
+      ["i-tit", "i-desc", "i-ref"].forEach(function (id) { document.getElementById(id).value = ""; });
+      CR.toast(document.getElementById("i-st").value === "sugerida" ? "Ideia enviada. Já aparece no app do cliente." : "Ideia na fila de produção.");
+      await carregar();
+    } catch (x) { er.textContent = x.message; er.hidden = false; }
+  });
+
+  // ---------------------------------------------------------------- marca e materiais
+  var CAT = { marca: "Marca", guia: "Guia", arquivo: "Arquivo" };
+  document.querySelector("#mk-geral span").replaceWith(ic("info"));
+  document.getElementById("mk-cli").addEventListener("change", renderMarca);
+  function cores(t) { return String(t || "").split(/[\s,;]+/).map(function (x) { x = x.trim(); return x && x[0] !== "#" ? "#" + x : x; }).filter(function (x) { return /^#[0-9a-f]{3,8}$/i.test(x); }); }
+  function previaCores() {
+    var p = document.getElementById("mk-prev"); p.textContent = "";
+    cores(document.getElementById("mk-cores").value).forEach(function (h) { p.appendChild(el("span", { class: "sw", style: "cursor:default" }, [el("i", { style: "background:" + h }), h.toUpperCase()])); });
+  }
+  document.getElementById("mk-cores").addEventListener("input", previaCores);
+  var CAMPOS_MARCA = [["mk-fontes", "fontes"], ["mk-tom", "tom"], ["mk-palavras", "palavras"], ["mk-evitar", "evitar"], ["mk-obs", "obs"]];
+  function resumoMarcas(id) {
+    var w = document.getElementById("mk-resumo"); w.textContent = "";
+    clientes.concat([{ id: "", empresa: "Guias pra todos os clientes" }]).forEach(function (c) {
+      var m = c.marca || {}, cores = (m.cores || []).filter(function (h) { return /^#[0-9a-f]{3,8}$/i.test(h); }).slice(0, 5);
+      var nMat = materiais.filter(function (x) { return c.id ? x.cliente_id === c.id : !x.cliente_id; }).length;
+      var completa = c.id && cores.length && m.fontes && m.tom;
+      w.appendChild(el("button", { class: "mk-c", type: "button", "aria-pressed": String(c.id === id), onclick: function () { document.getElementById("mk-cli").value = c.id; renderMarca(); } }, [
+        el("b", { text: c.empresa || c.nome || c.email }),
+        c.id ? el("div", { class: "sws" + (cores.length ? "" : " vazio") }, cores.map(function (h) { return el("i", { style: "background:" + h }); })) : null,
+        el("span", { class: "small " + (c.id && !completa ? "hoje-tag" : "muted"), text: (c.id ? (completa ? "Marca completa" : "Falta completar a marca") + " · " : "") + nMat + (nMat === 1 ? " arquivo" : " arquivos") })
+      ]));
+    });
+  }
+  function renderMarca() {
+    var id = document.getElementById("mk-cli").value, c = cli(id), m = (c && c.marca) || {};
+    resumoMarcas(id);
+    document.getElementById("f-marca").hidden = !c;
+    document.getElementById("mk-geral").hidden = !!c;
+    if (!c && document.getElementById("m-cat").value === "marca") document.getElementById("m-cat").value = "guia";
+    document.getElementById("mk-cores").value = (m.cores || []).join(", ");
+    CAMPOS_MARCA.forEach(function (x) { document.getElementById(x[0]).value = m[x[1]] || ""; });
+    document.getElementById("mk-puxar").disabled = !briefingDe(id);
+    previaCores();
+    var l = document.getElementById("l-mat"); l.textContent = "";
+    var vis = materiais.filter(function (x) { return id ? x.cliente_id === id : !x.cliente_id; });
+    if (!vis.length) l.appendChild(el("div", { class: "empty", style: "padding:20px" }, [el("span", { text: id ? "Nenhum material desse cliente ainda." : "Nenhum guia geral ainda." })]));
+    vis.forEach(function (x) {
+      l.appendChild(el("div", { class: "mat" }, [
+        el("span", { class: "k" }, ic(x.categoria === "marca" ? "brand" : x.categoria === "guia" ? "report" : "file")),
+        el("div", { style: "min-width:0" }, [el("div", { class: "tt", text: x.titulo }), el("div", { class: "st", text: [CAT[x.categoria], x.descricao, x.arquivo_nome || (x.link_externo ? "link" : ""), CR.data(x.criado_em)].filter(Boolean).join(" · ") })]),
+        el("div", { style: "display:flex;gap:4px" }, [
+          el("button", { class: "icon-btn", type: "button", "aria-label": "Abrir", title: "Abrir", onclick: async function () { var u = await api.urlMaterial(x, false).catch(function () { return ""; }); if (u) window.open(u, "_blank", "noopener"); else CR.toast("Arquivo indisponível.", true); } }, ic("ext")),
+          el("button", { class: "icon-btn", type: "button", "aria-label": "Apagar material", onclick: function () { confirmar(this, async function () { await api.apagarMaterial(x); await carregar(); }); } }, ic("trash"))
+        ])
+      ]));
+    });
+  }
+  function puxarBriefing() {
+    var b = briefingDe(document.getElementById("mk-cli").value); if (!b) return;
+    var r = CR.briefingResumo(b);
+    function enche(id, v) { var n = document.getElementById(id); if (!n.value && v) n.value = v; }
+    enche("mk-tom", r.tom); enche("mk-palavras", r.palavras); enche("mk-evitar", r.proibido);
+    var extra = [r.cores ? "Cores que gosta: " + r.cores : "", r.naocores ? "Cores que não quer: " + r.naocores : "", r.estilo ? "Estilo: " + r.estilo : "", r.refs ? "Referências: " + r.refs : ""].filter(Boolean).join("\n");
+    enche("mk-obs", extra);
+    CR.toast("Preenchi com o briefing. Revise e salve.");
+  }
+  document.getElementById("mk-puxar").addEventListener("click", puxarBriefing);
+  document.getElementById("f-marca").addEventListener("submit", async function (ev) {
+    ev.preventDefault();
+    var id = document.getElementById("mk-cli").value, m = { cores: cores(document.getElementById("mk-cores").value) };
+    CAMPOS_MARCA.forEach(function (x) { m[x[1]] = document.getElementById(x[0]).value.trim(); });
+    try { await api.salvarPerfil(id, { marca: m }); CR.toast("Marca salva. Já aparece no app do cliente."); await carregar(); } catch (x) { CR.toast(x.message, true); }
+  });
+  document.querySelectorAll('input[name="morig"]').forEach(function (r) {
+    r.addEventListener("change", function () { var lk = document.getElementById("mo-link").checked; document.getElementById("mw-up").hidden = lk; document.getElementById("mw-link").hidden = !lk; });
+  });
+  document.getElementById("f-mat").addEventListener("submit", async function (ev) {
+    ev.preventDefault();
+    var er = document.getElementById("m-err"), tit = document.getElementById("m-tit").value.trim(), lk = document.getElementById("mo-link").checked;
+    var arq = document.getElementById("m-arq").files[0], link = document.getElementById("m-link").value.trim();
+    var m = !tit ? "Dê um título." : lk && !/^https?:\/\//i.test(link) ? "Cole o link começando com https://" : !lk && !arq ? "Escolha o arquivo." : "";
+    er.textContent = m; er.hidden = !m; if (m) return;
+    var btn = this.querySelector("button[type=submit]"); btn.disabled = true;
+    try {
+      await api.criarMaterial({ cliente_id: document.getElementById("mk-cli").value || null, categoria: document.getElementById("m-cat").value, titulo: tit, descricao: document.getElementById("m-desc").value.trim() || null, link_externo: lk ? link : null }, lk ? null : arq);
+      ["m-tit", "m-desc", "m-link"].forEach(function (id) { document.getElementById(id).value = ""; });
+      document.getElementById("m-arq").value = "";
+      CR.toast("Material adicionado."); await carregar();
+    } catch (x) { er.textContent = x.message; er.hidden = false; }
+    btn.disabled = false;
+  });
+
+  // ---------------------------------------------------------------- financeiro
+  var finMes = new Date(mesAtual);
+  navMes("fin", function () { return finMes; }, function (m) { finMes = m; }, renderFin);
+  var ST_COB = { aberta: "Em aberto", paga: "Paga", cancelada: "Cancelada" };
+  function stCob(c) { return c.status === "aberta" && c.vencimento < hj ? "atrasada" : c.status; }
+  function renderFin() {
+    document.getElementById("fin-mes").textContent = nomeMes(finMes);
+    document.getElementById("c-mensal").textContent = "Lançar mensalidades de " + CR.MESES[finMes.getMonth()];
+    var doMes = cobrancas.filter(function (c) { return noMes(c.vencimento, finMes); });
+    var soma = function (l) { return l.reduce(function (t, c) { return t + Number(c.valor || 0); }, 0); };
+    var mrr = clientes.filter(function (c) { return CR.plano(c.plano).grupo === "plano"; }).reduce(function (t, c) { return t + CR.precoNumero(CR.plano(c.plano).preco); }, 0);
+    var k = document.getElementById("fin-kpis"); k.textContent = "";
+    var atr = atrasadas();
+    [[CR.reais(soma(doMes.filter(function (c) { return c.status !== "cancelada"; }))), "previsto no mês"],
+     [CR.reais(soma(doMes.filter(function (c) { return c.status === "paga"; }))), "recebido"],
+     [CR.reais(soma(doMes.filter(function (c) { return c.status === "aberta" && c.vencimento >= hj; }))), "a receber"],
+     [CR.reais(soma(atr)), atr.length + (atr.length === 1 ? " cobrança em atraso" : " cobranças em atraso"), atr.length > 0],
+     [CR.reais(mrr), "por mês nos planos ativos"]].forEach(function (x) {
+      k.appendChild(el("div", { class: "stat" + (x[2] ? " alert" : "") }, [el("b", { text: x[0] }), el("span", { text: x[1] })]));
+    });
+    var tb = document.querySelector("#t-cob tbody"); tb.textContent = "";
+    // no mês: as do mês + as atrasadas de antes
+    var lista = doMes.concat(atr.filter(function (c) { return !noMes(c.vencimento, finMes) && c.vencimento < limites(finMes)[0]; }));
+    if (!lista.length) tb.appendChild(el("tr", {}, el("td", { colspan: "6", class: "muted", text: "Nenhuma cobrança em " + nomeMes(finMes) + "." })));
+    lista.sort(function (a, b) { return a.vencimento < b.vencimento ? -1 : 1; }).forEach(function (c) {
+      var st = stCob(c), cl = cli(c.cliente_id) || {};
+      var sel = el("select", { "aria-label": "Status da cobrança", style: "width:auto;padding:6px 8px;font-size:13px" });
+      Object.keys(ST_COB).forEach(function (k2) { sel.appendChild(el("option", { value: k2, text: ST_COB[k2] })); });
+      sel.value = c.status;
+      sel.addEventListener("change", async function () {
+        var campos = { status: sel.value, pago_em: sel.value === "paga" ? (c.pago_em || hj) : null };
+        try { await api.editarCobranca(c.id, campos); CR.toast(sel.value === "paga" ? "Pagamento registrado." : "Cobrança atualizada."); await carregar(); } catch (x) { CR.toast(x.message, true); }
+      });
+      var w = waLead(cl.whatsapp);
+      tb.appendChild(el("tr", {}, [
+        el("td", {}, el("b", { text: nomeCli(c.cliente_id) })),
+        el("td", { class: "small", text: c.descricao }),
+        el("td", { class: "small" }, [CR.data(c.vencimento), c.status === "paga" && c.pago_em ? el("div", { class: "muted", text: "pago " + CR.data(c.pago_em) }) : null]),
+        el("td", { style: "font-weight:700;white-space:nowrap", text: CR.reais(c.valor) }),
+        el("td", {}, el("span", { class: "pill " + st, text: st === "atrasada" ? "Em atraso" : ST_COB[st] })),
+        el("td", {}, el("div", { style: "display:flex;gap:6px;align-items:center;justify-content:flex-end" }, [
+          sel,
+          w && c.status === "aberta" ? el("a", { class: "icon-btn", href: w + "?text=" + encodeURIComponent("Oi, " + String(cl.nome || "").split(" ")[0] + "! Aqui é da Criativos Rápidos. Passando pra lembrar da " + c.descricao + " de " + CR.reais(c.valor) + ", com vencimento em " + CR.data(c.vencimento) + "."), target: "_blank", rel: "noopener", "aria-label": "Lembrar pelo WhatsApp", title: "Lembrar pelo WhatsApp" }, ic("chat")) : null,
+          el("button", { class: "icon-btn", type: "button", "aria-label": "Apagar cobrança", onclick: function () { confirmar(this, async function () { await api.apagarCobranca(c.id); await carregar(); }); } }, ic("trash"))
+        ]))
+      ]));
+    });
+  }
+  document.getElementById("c-cli").addEventListener("change", function () {
+    var c = cli(this.value); if (!c) return;
+    var P = CR.plano(c.plano), d = document.getElementById("c-desc"), v = document.getElementById("c-valor");
+    if (P.preco && !d.value) d.value = (P.grupo === "plano" ? "Mensalidade " : "Pacote ") + P.nome;
+    if (P.preco && !v.value) v.value = CR.precoNumero(P.preco);
+  });
+  document.getElementById("f-cob").addEventListener("submit", async function (ev) {
+    ev.preventDefault();
+    var er = document.getElementById("c-err"), c = document.getElementById("c-cli").value, d = document.getElementById("c-desc").value.trim();
+    var v = parseFloat(document.getElementById("c-valor").value), venc = document.getElementById("c-venc").value;
+    var m = !c ? "Escolha o cliente." : !d ? "Escreva a descrição." : !(v >= 0) ? "Coloque o valor." : !venc ? "Escolha o vencimento." : "";
+    er.textContent = m; er.hidden = !m; if (m) return;
+    try {
+      await api.criarCobranca({ cliente_id: c, descricao: d, valor: v, vencimento: venc, status: "aberta" });
+      ["c-desc", "c-valor", "c-venc"].forEach(function (id) { document.getElementById(id).value = ""; });
+      CR.toast("Cobrança lançada."); await carregar();
+    } catch (x) { er.textContent = x.message; er.hidden = false; }
+  });
+  document.getElementById("c-mensal").addEventListener("click", async function () {
+    var dia = Math.min(28, Math.max(1, parseInt(document.getElementById("c-dia").value, 10) || 10));
+    var venc = CR.iso(new Date(finMes.getFullYear(), finMes.getMonth(), dia));
+    var novas = clientes.filter(function (c) {
+      var P = CR.plano(c.plano);
+      return P.grupo === "plano" && !cobrancas.some(function (x) { return x.cliente_id === c.id && noMes(x.vencimento, finMes) && /^Mensalidade/.test(x.descricao); });
+    }).map(function (c) { var P = CR.plano(c.plano); return { cliente_id: c.id, descricao: "Mensalidade " + P.nome, valor: CR.precoNumero(P.preco), vencimento: venc, status: "aberta" }; });
+    if (!novas.length) { CR.toast("Todas as mensalidades de " + CR.MESES[finMes.getMonth()] + " já estão lançadas."); return; }
+    this.disabled = true;
+    try { await api.criarCobranca(novas); CR.toast(novas.length + (novas.length === 1 ? " mensalidade lançada." : " mensalidades lançadas.")); await carregar(); } catch (x) { CR.toast(x.message, true); }
+    this.disabled = false;
+  });
+
+  // ---------------------------------------------------------------- relatórios
+  var relMes = new Date(mesAtual), relAtual = null;
+  navMes("rel", function () { return relMes; }, function (m) { relMes = m; }, renderRel);
+  function renderRel() {
+    document.getElementById("rel-mes").textContent = nomeMes(relMes);
+    var ent = entregas.filter(function (e) { return noMes(e.criado_em, relMes); });
+    var pub = entregas.filter(function (e) { return noMes(e.publicado_em, relMes); });
+    var ajM = ajustes.filter(function (a) { return noMes(a.criado_em, relMes); });
+    var k = document.getElementById("rel-kpis"); k.textContent = "";
+    [[ent.length, "entregas no mês"], [ent.filter(function (e) { return e.status === "aprovado"; }).length, "aprovadas"], [pub.length, "publicadas no Instagram"], [ajM.length, "ajustes pedidos"],
+     [ideias.filter(function (i) { return noMes(i.criado_em, relMes); }).length, "ideias criadas"],
+     [CR.reais(cobrancas.filter(function (c) { return c.status === "paga" && noMes(c.pago_em || c.vencimento, relMes); }).reduce(function (t, c) { return t + Number(c.valor || 0); }, 0)), "recebido"]].forEach(function (x) {
+      k.appendChild(el("div", { class: "stat" }, [el("b", { text: String(x[0]) }), el("span", { text: x[1] })]));
+    });
+    var tb = document.querySelector("#t-rel tbody"); tb.textContent = "";
+    var ini = limites(relMes)[0];
+    var ativos = clientes.filter(function (c) { return (c.plano && c.plano !== "Sem plano") || ent.some(function (e) { return e.cliente_id === c.id; }); });
+    if (!ativos.length) tb.appendChild(el("tr", {}, el("td", { colspan: "8", class: "muted", text: "Nenhum cliente ativo." })));
+    ativos.forEach(function (c) {
+      var P = CR.plano(c.plano), tot = P.grupo === "plano" ? CR.totalPlano(P) : 0;
+      var e = ent.filter(function (x) { return x.cliente_id === c.id; });
+      var r = relatorios.find(function (x) { return x.cliente_id === c.id && String(x.mes).slice(0, 10) === ini; });
+      tb.appendChild(el("tr", {}, [
+        el("td", {}, [el("b", { text: c.empresa || c.nome || c.email }), el("div", { class: "small muted", text: c.nome || "" })]),
+        el("td", { class: "small", text: c.plano || "—" }),
+        el("td", { text: e.length + (tot ? " de " + tot : "") }),
+        el("td", { text: String(e.filter(function (x) { return x.status === "aprovado"; }).length) }),
+        el("td", { text: String(pub.filter(function (x) { return x.cliente_id === c.id; }).length) }),
+        el("td", { text: String(ajM.filter(function (a) { return a.cliente_id === c.id; }).length) }),
+        el("td", { class: "small" }, r && r.investido != null ? [CR.reais(r.investido) + " investidos", r.origem === "meta" ? el("div", { class: "muted", text: "Meta · " + quando(r.atualizado_em) }) : null]
+          : el("span", { class: "muted", text: c.meta_ad_account ? "conta ligada, falta atualizar" : P.trafego ? "falta lançar" : "—" })),
+        el("td", {}, el("button", { class: "btn sm " + (P.trafego && !r ? "" : "ghost"), type: "button", onclick: function () { abrirRel(c, r); } }, [ic("edit"), r ? "Editar" : "Lançar"]))
+      ]));
+    });
+  }
+  var dlgRel = document.getElementById("dlg-rel"), CAMPOS_REL = ["investido", "alcance", "impressoes", "cliques", "conversas", "seguidores", "resumo", "link"];
+  function quando(iso) { if (!iso) return ""; var d = new Date(iso); return "atualizado " + CR.data(CR.iso(d)) + " às " + String(d.getHours()).padStart(2, "0") + ":" + String(d.getMinutes()).padStart(2, "0"); }
+  function contaMeta(t) { var n = String(t || "").match(/\d{5,}/); return n ? "act_" + n[0] : ""; }
+  function abrirRel(c, r) {
+    relAtual = c; r = r || {};
+    document.getElementById("r-info").textContent = (c.empresa || c.nome) + " · " + nomeMes(relMes) + ". Os campos vazios não aparecem pro cliente.";
+    CAMPOS_REL.forEach(function (k) { document.getElementById("r-" + k).value = r[k] != null ? r[k] : ""; });
+    document.getElementById("r-conta").value = c.meta_ad_account || "";
+    document.getElementById("r-origem").textContent = r.origem === "meta" ? "Números do Meta, " + quando(r.atualizado_em) + "." : "";
+    var w = document.getElementById("r-camp"); w.textContent = "";
+    if (r.campanhas && r.campanhas.length) {
+      w.appendChild(el("div", { class: "eyebrow", style: "margin-bottom:6px", text: "Campanhas" }));
+      r.campanhas.forEach(function (x) { w.appendChild(el("div", { class: "small", style: "display:flex;justify-content:space-between;gap:10px;padding:4px 0;border-bottom:1px solid var(--line)" }, [el("span", { text: x.nome }), el("b", { text: CR.reais(x.investido) + " · " + x.conversas + " conv." })])); });
+      w.style.marginBottom = "14px";
+    }
+    document.getElementById("r-err").hidden = true;
+    dlgRel.showModal();
+  }
+  document.getElementById("r-puxar").append(ic("down"), "Puxar do Meta agora");
+  document.getElementById("rel-meta").append(ic("down"), "Atualizar tudo do Meta");
+  document.getElementById("rel-ig").append(ic("insta"), "Atualizar Instagram");
+  document.getElementById("rel-ig").addEventListener("click", async function () {
+    this.disabled = true;
+    try { var n = await api.atualizarMetricasIG(); CR.toast(n ? "Instagram de " + n + (n === 1 ? " cliente atualizado." : " clientes atualizado.") : "Nenhum cliente com Instagram conectado."); } catch (x) { CR.toast(x.message, true); }
+    this.disabled = false;
+  });
+  document.getElementById("r-buscar").addEventListener("click", async function () {
+    this.disabled = true;
+    try {
+      var contas = await api.trafegoContas(), dl = document.getElementById("r-contas"); dl.textContent = "";
+      contas.forEach(function (x) { dl.appendChild(el("option", { value: x.id, label: x.nome + (x.ativa ? "" : " (inativa)") })); });
+      CR.toast(contas.length + (contas.length === 1 ? " conta encontrada." : " contas encontradas.") + " Toque no campo pra escolher.");
+      document.getElementById("r-conta").focus();
+    } catch (x) { CR.toast(x.message, true); }
+    this.disabled = false;
+  });
+  // guarda a conta do cliente (se mudou) e puxa os números do mês
+  async function ligarEPuxar(btn) {
+    var er = document.getElementById("r-err"), act = contaMeta(document.getElementById("r-conta").value);
+    if (!act) { er.textContent = "Coloque a conta de anúncio (act_ seguido dos números)."; er.hidden = false; return; }
+    btn.disabled = true; er.hidden = true;
+    try {
+      if (act !== relAtual.meta_ad_account) { await api.salvarPerfil(relAtual.id, { meta_ad_account: act }); relAtual.meta_ad_account = act; }
+      var res = await api.sincronizarTrafego(limites(relMes)[0], relAtual.id);
+      var falha = Object.keys(res || {}).map(function (k) { return res[k]; }).find(function (v) { return /^erro/.test(v); });
+      if (falha) throw new Error(falha.replace(/^erro: /, ""));
+      await carregar();
+      abrirRel(relAtual, relatorios.find(function (x) { return x.cliente_id === relAtual.id && String(x.mes).slice(0, 10) === limites(relMes)[0]; }));
+      CR.toast("Números do Meta atualizados.");
+    } catch (x) { er.textContent = x.message; er.hidden = false; }
+    btn.disabled = false;
+  }
+  document.getElementById("r-puxar").addEventListener("click", function () { ligarEPuxar(this); });
+  document.getElementById("rel-meta").addEventListener("click", async function () {
+    if (!clientes.some(function (c) { return c.meta_ad_account; }) && !CR.demo) { CR.toast("Nenhum cliente com conta de anúncio ligada. Abra Lançar e coloque a conta.", true); return; }
+    this.disabled = true; CR.toast("Puxando do Meta…");
+    try {
+      var res = await api.sincronizarTrafego(limites(relMes)[0]);
+      var erros = Object.keys(res || {}).filter(function (k) { return /^erro/.test(res[k]); });
+      await carregar();
+      CR.toast(erros.length ? "Atualizado, mas deu erro em: " + erros.join(", ") + ". Abra o cliente pra ver o motivo." : "Tráfego de " + nomeMes(relMes) + " atualizado.", erros.length > 0);
+    } catch (x) { CR.toast(x.message, true); }
+    this.disabled = false;
+  });
+  document.getElementById("r-cancel").addEventListener("click", function () { dlgRel.close(); });
+  document.getElementById("f-rel").addEventListener("submit", async function (ev) {
+    ev.preventDefault();
+    var er = document.getElementById("r-err"), campos = { cliente_id: relAtual.id, mes: limites(relMes)[0] };
+    CAMPOS_REL.forEach(function (k) {
+      var v = document.getElementById("r-" + k).value.trim();
+      campos[k] = v === "" ? null : (k === "resumo" || k === "link") ? v : k === "investido" ? parseFloat(v) : parseInt(v, 10);
+    });
+    if (campos.link && !/^https?:\/\//i.test(campos.link)) { er.textContent = "O link precisa começar com https://"; er.hidden = false; return; }
+    var act = contaMeta(document.getElementById("r-conta").value);
+    try {
+      if (act !== (relAtual.meta_ad_account || "")) await api.salvarPerfil(relAtual.id, { meta_ad_account: act || null });
+      await api.salvarRelatorio(campos); dlgRel.close(); CR.toast("Relatório salvo. Já aparece no app do cliente."); await carregar(); } catch (x) { er.textContent = x.message; er.hidden = false; }
+  });
+
+  // ---------------------------------------------------------------- equipe
+  var AREAS = { relacionamento: "Relacionamento · CRM e clientes", producao: "Produção · briefings, ideias, entregas e marca", resultados: "Resultados · financeiro e relatórios" };
+  Object.keys(AREAS).forEach(function (k) { document.getElementById("q-areas").appendChild(el("label", {}, [el("input", { type: "checkbox", value: k }), el("span", { text: AREAS[k] })])); });
+  function limparMembro() {
+    ["q-id", "q-nome", "q-funcao", "q-email", "q-whats"].forEach(function (id) { document.getElementById(id).value = ""; });
+    document.querySelectorAll("#q-areas input").forEach(function (x) { x.checked = false; });
+    document.getElementById("q-titulo").textContent = "Novo agente"; document.getElementById("q-limpar").hidden = true; document.getElementById("q-err").hidden = true;
+  }
+  document.getElementById("q-limpar").addEventListener("click", limparMembro);
+  function renderEquipe() {
+    var l = document.getElementById("l-equipe"); l.textContent = "";
+    if (!equipe.length) l.appendChild(el("div", { class: "empty" }, [ic("team"), el("b", { text: "Ninguém cadastrado ainda" }), el("span", { text: "Cadastre quem trabalha com você e diga de que parte cada um cuida." })]));
+    equipe.forEach(function (q) {
+      var meus = clientes.filter(function (c) { return c.responsavel === q.id; });
+      var w = waLead(q.whatsapp);
+      l.appendChild(el("article", { class: "idea" }, [
+        el("div", { class: "top" }, [el("h3", { text: q.nome }), q.ativo === false ? el("span", { class: "pill descartada", text: "Inativo" }) : null]),
+        q.funcao ? el("div", { class: "small muted", text: q.funcao }) : null,
+        el("div", { class: "top" }, (q.cuida || []).map(function (a) { return el("span", { class: "pill aprovada", text: (AREAS[a] || a).split(" · ")[0] }); })),
+        el("p", { text: meus.length ? "Cuida de " + meus.length + (meus.length === 1 ? " cliente: " : " clientes: ") + meus.map(function (c) { return c.empresa || c.nome; }).join(", ") : "Nenhum cliente com essa pessoa como responsável." }),
+        el("div", { class: "acts" }, [
+          w ? el("a", { class: "btn sm", href: w, target: "_blank", rel: "noopener" }, [ic("chat"), "WhatsApp"]) : null,
+          q.email ? el("button", { class: "btn ghost sm", type: "button", onclick: function () { CR.copiar(q.email, "E-mail copiado"); } }, [ic("copy"), "E-mail"]) : null,
+          el("button", { class: "icon-btn", type: "button", "aria-label": "Editar " + q.nome, onclick: function () {
+            document.getElementById("q-id").value = q.id;
+            [["q-nome", "nome"], ["q-funcao", "funcao"], ["q-email", "email"], ["q-whats", "whatsapp"]].forEach(function (x) { document.getElementById(x[0]).value = q[x[1]] || ""; });
+            document.querySelectorAll("#q-areas input").forEach(function (x) { x.checked = (q.cuida || []).indexOf(x.value) >= 0; });
+            document.getElementById("q-titulo").textContent = "Editar " + q.nome; document.getElementById("q-limpar").hidden = false;
+            document.getElementById("q-nome").focus();
+          } }, ic("edit")),
+          el("button", { class: "icon-btn", type: "button", "aria-label": "Apagar " + q.nome, onclick: function () { confirmar(this, async function () { await api.apagarMembro(q.id); await carregar(); }); } }, ic("trash"))
+        ])
+      ]));
+    });
+  }
+  document.getElementById("f-membro").addEventListener("submit", async function (ev) {
+    ev.preventDefault();
+    var er = document.getElementById("q-err"), nome = document.getElementById("q-nome").value.trim();
+    if (!nome) { er.textContent = "Coloque o nome."; er.hidden = false; return; }
+    var m = { nome: nome, funcao: document.getElementById("q-funcao").value.trim() || null, email: document.getElementById("q-email").value.trim() || null, whatsapp: document.getElementById("q-whats").value.trim() || null,
+      cuida: Array.prototype.map.call(document.querySelectorAll("#q-areas input:checked"), function (x) { return x.value; }) };
+    var id = document.getElementById("q-id").value; if (id) m.id = id;
+    try { await api.salvarMembro(m); CR.toast("Equipe atualizada."); limparMembro(); await carregar(); } catch (x) { er.textContent = x.message; er.hidden = false; }
+  });
+
+  // ---------------------------------------------------------------- agentes de IA
+  var FONTES = { crm: "CRM", clientes: "Clientes e marca", briefings: "Briefings", entregas: "Entregas", ideias: "Ideias", relatorios: "Relatórios e tráfego", financeiro: "Financeiro", instagram: "Instagram dos clientes", site: "Site da agência" };
+  var SAIDAS = { mensagem_whatsapp: "Mensagem de WhatsApp", ideia: "Ideia de conteúdo", legenda: "Legenda", comentario_relatorio: "Comentário do relatório", alerta: "Alerta", tarefa: "Tarefa" };
+  var FREQ = { manual: "quando você mandar", diaria: "todo dia", semanal: "toda segunda" };
+  var MODELOS = { "claude-opus-5-5": "Máxima", "claude-sonnet-5-5": "Equilibrada", "claude-haiku-5-5": "Econômica" };
+  var filtroSug = "pendente";
+  document.getElementById("novo-agente").append(ic("plus"), "Novo agente");
+  [["ag-fontes", FONTES], ["ag-saidas", SAIDAS]].forEach(function (x) {
+    Object.keys(x[1]).forEach(function (k) { document.getElementById(x[0]).appendChild(el("label", {}, [el("input", { type: "checkbox", value: k }), el("span", { text: x[1][k] })])); });
+  });
+  var segS = document.getElementById("seg-sug");
+  [["pendente", "Pendentes"], ["aprovada", "Aprovados"], ["descartada", "Descartados"]].forEach(function (f) {
+    segS.appendChild(el("button", { type: "button", "data-f": f[0], "aria-pressed": String(f[0] === filtroSug), text: f[1], onclick: function () {
+      filtroSug = f[0]; segS.querySelectorAll("button").forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.f === filtroSug)); }); renderSug();
+    } }));
+  });
+  function nomeAgente(id) { var a = agentesIA.find(function (x) { return x.id === id; }); return a ? a.nome : "Agente"; }
+  function renderIA() { renderSug(); renderAgentes(); renderJornada(); renderCasa(); }
+
+  var AREAS_ORG = [["comercial", "Comercial"], ["operacional", "Operacional"], ["administrativo", "Administrativo"], ["financeiro", "Financeiro"]];
+  var ETAPAS_NOME = { whatsapp: "WhatsApp", vendas: "Vendedor", pauta: "Pauta", roteiro: "Roteiro", copy: "Copy", arte: "Arte", edicao: "Edição" };
+  function avatarEl(a) { var w = el("span"); w.innerHTML = CR.avatar(a.nome, a.genero); return w.firstChild; }
+  function cartaoAg(a, extra) {
+    var mini = !extra;
+    return el("div", { class: "ag" + (extra ? " " + extra : " mini") + (a.ativo === false ? " off" : ""), title: mini ? a.missao : false }, [
+      avatarEl(a),
+      el("div", { style: "min-width:0" }, [
+        el("div", { class: "nm", text: a.nome }), el("div", { class: "cg" }, [a.cargo || "", mini && a.autonomia === "automatico" ? el("span", { class: "flag", text: " · age sozinho" }) : null]),
+        el("div", { class: "tags" }, [
+          a.etapa ? el("span", { text: "Esteira · " + (ETAPAS_NOME[a.etapa] || a.etapa) }) : null,
+          el("span", { class: a.autonomia === "automatico" ? "auto" : "", text: a.autonomia === "automatico" ? "Age sozinho" : "Pede aprovação" }),
+          el("span", { text: a.ativo === false ? "Desligado" : (a.etapa === "whatsapp" || a.etapa === "vendas") ? "responde na hora" : FREQ[a.frequencia || "manual"] })
+        ]),
+        a.ultimo_resultado ? el("div", { class: "cg", style: "margin-top:4px", text: a.ultimo_resultado }) : null
+      ]),
+      el("div", { class: "bt" }, [
+        el("button", { class: "icon-btn", type: "button", "aria-label": "Rodar " + a.nome + " agora", title: "Rodar agora", onclick: async function () {
+          this.disabled = true; CR.toast(a.nome + " está trabalhando… pode levar até 1 minuto.");
+          try { var r = await api.rodarAgente(a.id); CR.toast(a.nome + ": " + (r.resumo || (r.novas ? r.novas + " novos." : "nada novo agora."))); await carregar(); }
+          catch (x) { CR.toast(x.message, true); }
+          this.disabled = false;
+        } }, ic("play")),
+        el("button", { class: "icon-btn", type: "button", "aria-label": "Configurar " + a.nome, title: "Configurar", onclick: function () { abrirAgente(a); } }, ic("edit"))
+      ])
+    ]);
+  }
+  function renderAgentes() {
+    var o = document.getElementById("org"); o.textContent = "";
+    if (!agentesIA.length) { o.appendChild(el("div", { class: "empty" }, [ic("bot"), el("b", { text: "Nenhum agente ainda" }), el("span", { text: "Rode o schema.sql do Supabase pra criar o time inicial, ou crie em Novo agente." })])); return; }
+    var ceo = agentesIA.filter(function (a) { return a.area === "direcao"; });
+    if (ceo.length) o.appendChild(el("div", { class: "org-top" }, ceo.map(function (a) { return cartaoAg(a, "chefe ceo"); })));
+    var areas = el("div", { class: "org-areas" });
+    AREAS_ORG.concat([["", "Outros"]]).forEach(function (ar) {
+      var doArea = agentesIA.filter(function (a) { return ar[0] ? a.area === ar[0] : ["direcao", "comercial", "operacional", "administrativo", "financeiro"].indexOf(a.area) < 0; });
+      if (!doArea.length) return;
+      var chefes = doArea.filter(function (a) { return !a.chefe_id || ceo.some(function (c) { return c.id === a.chefe_id; }); });
+      var time = doArea.filter(function (a) { return chefes.indexOf(a) < 0; });
+      areas.appendChild(el("section", { class: "org-area" }, [el("h3", { text: ar[1] }), el("div", { class: "cont", text: doArea.length + " agentes" })].concat(chefes.map(function (a) { return cartaoAg(a, "chefe"); })).concat(time.map(function (a) { return cartaoAg(a); }))));
+    });
+    o.appendChild(areas);
+  }
+  function agentesDe(fn) { return agentesIA.filter(fn).slice(0, 4); }
+  function renderJornada() {
+    var j = document.getElementById("jornada"); j.textContent = "";
+    var hjMes = limites(mesAtual)[0];
+    var pc = function (e) { return producao.filter(function (p) { return p.etapa === e; }).length; };
+    var semBrief = clientes.filter(function (c) { return CR.plano(c.plano).grupo && !briefingDe(c.id); }).length;
+    [["Venda", leads.filter(function (l) { return l.status !== "fechou" && l.status !== "perdido"; }).length, "contatos em aberto", function (a) { return a.area === "comercial" && /SDR|Prospec|vendas/i.test(a.cargo || ""); }],
+     ["Reunião", reunioes.filter(function (r) { return r.status === "marcada" && Date.parse(r.inicio) > Date.now(); }).length, "reuniões marcadas", function (a) { return /Agendamento|SDR/i.test(a.cargo || ""); }],
+     ["Pagamento", cobrancas.filter(function (c) { return c.status === "aberta"; }).length, "cobranças em aberto", function (a) { return a.area === "financeiro"; }],
+     ["Briefing", semBrief, "clientes sem briefing", function (a) { return /Onboarding/i.test(a.cargo || ""); }],
+     ["Pauta", producao.filter(function (p) { return p.mes === hjMes; }).length, "conteúdos na pauta do mês", function (a) { return a.etapa === "pauta"; }],
+     ["Roteiro", pc("roteiro"), "esperando roteiro", function (a) { return a.etapa === "roteiro"; }],
+     ["Copy", pc("copy"), "esperando legenda", function (a) { return a.etapa === "copy"; }],
+     ["Arte e edição", pc("arte") + pc("edicao"), "esperando direção", function (a) { return a.etapa === "arte" || a.etapa === "edicao"; }],
+     ["Produção", pc("producao"), "falta o arquivo", function () { return false; }],
+     ["Aprovação", entregas.filter(function (e) { return e.status === "aguardando"; }).length, "com o cliente", function (a) { return /Atendimento/i.test(a.cargo || ""); }],
+     ["Postagem", entregas.filter(function (e) { return e.status === "aprovado" && !e.publicado_em; }).length, "aprovados pra postar", function (a) { return /Social/i.test(a.cargo || ""); }],
+     ["Tráfego", clientes.filter(function (c) { return c.meta_ad_account; }).length, "contas de anúncio ligadas", function (a) { return /tráfego/i.test(a.cargo || ""); }],
+     ["Relatório", relatorios.filter(function (r) { return String(r.mes).slice(0, 10) === hjMes && !r.resumo; }).length, "relatórios sem comentário", function (a) { return /resultados/i.test(a.cargo || ""); }]
+    ].forEach(function (x, k) {
+      var quem = agentesDe(x[3]);
+      j.appendChild(el("div", { class: "jp" }, [
+        el("div", { class: "s", text: (k + 1) + ". " + x[0] }),
+        el("div", { class: "n", text: String(x[1]) }),
+        el("div", { class: "t", text: x[2] }),
+        el("div", { class: "avs", title: quem.map(function (a) { return a.nome; }).join(", ") }, quem.length ? quem.map(avatarEl) : [el("span", { class: "s", text: x[0] === "Produção" ? "vocês ou a ferramenta de vídeo" : "—" })])
+      ]));
+    });
+  }
+  // a própria agência como cliente: a esteira produz o conteúdo da Criativos Rápidos também
+  function renderCasa() {
+    var c = document.getElementById("casa"); c.textContent = "";
+    var sel = el("select", { "aria-label": "Plano da própria agência", style: "max-width:320px" });
+    sel.appendChild(el("option", { value: "Sem plano", text: "Não produzir pra nós" }));
+    CR.PLANOS.filter(function (p) { return p.grupo === "plano"; }).forEach(function (p) { sel.appendChild(el("option", { value: p.nome, text: "No ritmo do plano " + p.nome + " (" + CR.totalPlano(p) + " conteúdos/mês)" })); });
+    sel.value = CR.plano(eu.plano).grupo === "plano" ? eu.plano : "Sem plano";
+    var est = el("select", { "aria-label": "O que o Estúdio produz", style: "max-width:420px" });
+    [["nos", "Estúdio gera as artes e vídeos só do nosso marketing"], ["todos", "Estúdio gera as do nosso marketing e as dos clientes"]].forEach(function (o) { est.appendChild(el("option", { value: o[0], text: o[1] })); });
+    tenta(function () { return api.config("estudio"); }, {}).then(function (v) { est.value = v.quem || "nos"; });
+    est.addEventListener("change", async function () { try { await api.salvarConfig("estudio", { quem: est.value, max: 12 }); CR.toast("Estúdio atualizado."); } catch (x) { CR.toast(x.message, true); } });
+    c.append(el("h2", { text: "A Criativos Rápidos também é cliente" }),
+      el("p", { class: "small muted", style: "margin:0", text: "Escolha o ritmo e a esteira monta a pauta, os roteiros e as legendas do nosso marketing, o Estúdio gera as artes e os vídeos e tudo vai pras nossas redes, como faz com os clientes. Pra ela conhecer a agência, preencha o /brief logado como agência e a nossa marca em Marca e materiais." }),
+      el("div", { style: "display:flex;gap:8px;flex-wrap:wrap" }, [sel, el("button", { class: "btn sm", type: "button", text: "Salvar", onclick: async function () {
+        try { await api.salvarPerfil(eu.id, { plano: sel.value }); eu.plano = sel.value; CR.toast("Pronto. A esteira inclui a agência a partir da próxima pauta."); await carregar(); } catch (x) { CR.toast(x.message, true); }
+      } }), el("button", { class: "btn ghost sm", type: "button", text: (eu.redes || []).length ? "Nossas redes (" + eu.redes.length + ")" : "Escolher nossas redes", onclick: function () { abrirRedes(eu); } })]),
+      el("p", { class: "small muted", style: "margin:4px 0 0", text: "Fluxo do nosso marketing: a esteira escreve, o Estúdio gera a arte ou o vídeo, você aprova em Entregas e ele vai sozinho pras redes escolhidas no horário marcado." }),
+      est);
+  }
+
+  // ---------------------------------------------------------------- esteira de produção
+  var ETAPAS_EST = [["roteiro", "Roteiro"], ["copy", "Copy"], ["arte", "Direção de arte"], ["edicao", "Edição de vídeo"], ["producao", "Produção · falta o arquivo"], ["entregue", "Entregue"]];
+  var prodAtual = null, dlgProd = document.getElementById("dlg-prod");
+  ETAPAS_EST.concat([["cancelado", "Cancelado"]]).forEach(function (e) { document.getElementById("pd-etapa").appendChild(el("option", { value: e[0], text: e[1] })); });
+  document.getElementById("es-cli").addEventListener("change", renderEsteira);
+  function renderEsteira() {
+    var c = document.getElementById("es-cli").value, vis = producao.filter(function (p) { return !c || p.cliente_id === c; });
+    var k = document.getElementById("es-kpis"); k.textContent = "";
+    [[vis.filter(function (p) { return p.mes === limites(mesAtual)[0]; }).length, "na pauta do mês"], [vis.filter(function (p) { return ["roteiro", "copy", "arte", "edicao"].indexOf(p.etapa) >= 0; }).length, "com os agentes"], [vis.filter(function (p) { return p.etapa === "producao"; }).length, "esperando o arquivo", vis.some(function (p) { return p.etapa === "producao"; })], [vis.filter(function (p) { return p.etapa === "entregue"; }).length, "entregues"]].forEach(function (x) {
+      k.appendChild(el("div", { class: "stat" + (x[2] ? " alert" : "") }, [el("b", { text: String(x[0]) }), el("span", { text: x[1] })]));
+    });
+    var b = document.getElementById("es-board"); b.textContent = "";
+    ETAPAS_EST.forEach(function (e) {
+      var l = vis.filter(function (p) { return p.etapa === e[0]; });
+      var col = el("section", { class: "col", "aria-label": e[1] }, [el("h3", {}, [el("span", { text: e[1] }), el("span", { class: "muted", text: String(l.length) })])]);
+      if (!l.length) col.appendChild(el("p", { class: "small muted", style: "margin:0;padding:0 6px 6px", text: "Nada aqui." }));
+      l.slice(0, 40).forEach(function (p) {
+        col.appendChild(el("button", { class: "est-card", type: "button", onclick: function () { abrirProd(p); } }, [
+          el("span", { class: "chip", style: "justify-self:start", text: CR.TIPOS[p.tipo] || p.tipo }),
+          el("span", { class: "tt", text: p.titulo }),
+          el("span", { class: "st", text: [nomeCli(p.cliente_id), p.objetivo, p.data_sugerida ? CR.dataLonga(p.data_sugerida) : ""].filter(Boolean).join(" · ") })
+        ]));
+      });
+      if (l.length > 40) col.appendChild(el("p", { class: "small muted", style: "margin:0;padding:0 6px", text: "+" + (l.length - 40) + " (filtre pelo cliente)" }));
+      b.appendChild(col);
+    });
+  }
+  function abrirProd(p) {
+    prodAtual = p;
+    document.getElementById("pd-tipo").textContent = CR.TIPOS[p.tipo] || p.tipo;
+    document.getElementById("pd-sobre").textContent = [nomeCli(p.cliente_id), p.objetivo].filter(Boolean).join(" · ");
+    document.getElementById("pd-titulo").textContent = p.titulo;
+    [["pd-roteiro", "roteiro"], ["pd-arte", "texto_arte"], ["pd-legenda", "legenda"], ["pd-dir", "direcao_arte"], ["pd-ed", "plano_edicao"], ["pd-data", "data_sugerida"], ["pd-etapa", "etapa"]].forEach(function (x) { document.getElementById(x[0]).value = p[x[1]] || ""; });
+    document.getElementById("pd-arq").value = "";
+    document.getElementById("pd-err").hidden = true;
+    document.getElementById("pd-enviar").hidden = p.etapa === "entregue";
+    dlgProd.showModal();
+  }
+  function camposProd() {
+    return { roteiro: document.getElementById("pd-roteiro").value.trim() || null, texto_arte: document.getElementById("pd-arte").value.trim() || null, legenda: document.getElementById("pd-legenda").value.trim() || null,
+      direcao_arte: document.getElementById("pd-dir").value.trim() || null, plano_edicao: document.getElementById("pd-ed").value.trim() || null, data_sugerida: document.getElementById("pd-data").value || null, etapa: document.getElementById("pd-etapa").value };
+  }
+  document.getElementById("pd-cancel").addEventListener("click", function () { dlgProd.close(); });
+  document.getElementById("f-prod").addEventListener("submit", async function (ev) {
+    ev.preventDefault();
+    try { await api.editarProducao(prodAtual.id, camposProd()); dlgProd.close(); CR.toast("Salvo."); await carregar(); } catch (x) { var er = document.getElementById("pd-err"); er.textContent = x.message; er.hidden = false; }
+  });
+  document.getElementById("pd-enviar").addEventListener("click", async function () {
+    var er = document.getElementById("pd-err"), arqs = Array.prototype.slice.call(document.getElementById("pd-arq").files), c = camposProd();
+    if (!arqs.length) { er.textContent = "Escolha o arquivo pronto (imagem ou vídeo)."; er.hidden = false; return; }
+    this.disabled = true; CR.toast("Enviando…");
+    try {
+      var ent = await api.criarEntrega({ cliente_id: prodAtual.cliente_id, titulo: prodAtual.titulo, tipo: prodAtual.tipo, legenda: c.legenda, data_postagem: c.data_sugerida, hora_postagem: "10:00", publicar: true }, arqs[0], null, arqs.slice(1));
+      await api.editarProducao(prodAtual.id, Object.assign(c, { etapa: "entregue", entrega_id: ent && ent.id || null }));
+      dlgProd.close(); CR.toast("Enviado! Já aparece no app do cliente pra aprovar."); await carregar();
+    } catch (x) { er.textContent = x.message; er.hidden = false; }
+    this.disabled = false;
+  });
+
+  function renderSug() {
+    var l = document.getElementById("l-sug"); l.textContent = "";
+    var vis = sugestoes.filter(function (x) { return x.status === filtroSug; });
+    var ordem = { alta: 0, media: 1, baixa: 2 };
+    if (filtroSug === "pendente") vis.sort(function (a, b) { return (ordem[a.prioridade] || 1) - (ordem[b.prioridade] || 1); });
+    if (!vis.length) l.appendChild(el("div", { class: "empty", style: "padding:22px" }, [ic("check"), el("b", { text: filtroSug === "pendente" ? "Nada pra aprovar" : "Nada aqui" }), el("span", { text: "O que os agentes prepararem aparece aqui." })]));
+    vis.slice(0, 60).forEach(function (s) { l.appendChild(cartaoSug(s)); });
+  }
+  function cartaoSug(s) {
+    var c = s.conteudo || {}, lead = leads.find(function (x) { return x.id === s.lead_id; }), cl = cli(s.cliente_id);
+    var txt = el("textarea", { rows: "4", "aria-label": "Texto do rascunho", disabled: s.status !== "pendente" });
+    txt.value = c.texto || "";
+    async function concluir(btn, extra, msg) {
+      btn.disabled = true;
+      try {
+        if (extra) await extra(txt.value.trim());
+        await api.editarSugestao(s.id, { status: "aprovada", conteudo: Object.assign({}, c, { texto: txt.value.trim() }) });
+        CR.toast(msg || "Feito."); await carregar();
+      } catch (x) { CR.toast(x.message, true); btn.disabled = false; }
+    }
+    var acts = [];
+    if (s.status === "pendente") {
+      if (s.tipo === "mensagem_whatsapp") {
+        var num = waLead(lead ? lead.whatsapp : cl && cl.whatsapp);
+        acts.push(el("button", { class: "btn sm", type: "button", disabled: !num, title: num ? "" : "Sem WhatsApp cadastrado", onclick: async function () {
+          var t = txt.value.trim(), btn = this, foi = false;
+          // primeiro tenta pelo WhatsApp oficial (dentro da janela de 24 h); se não der, abre no WhatsApp do celular
+          if (lead && lead.optin !== false) { try { await api.enviarWhatsApp(lead.id, t); foi = true; } catch (x) {} }
+          if (!foi) window.open(num + "?text=" + encodeURIComponent(t), "_blank", "noopener");
+          concluir(btn, async function () { if (lead && lead.status === "novo") await api.statusLead(lead.id, "conversando"); }, foi ? "Enviado pelo WhatsApp oficial." : "Aberto no WhatsApp.");
+        } }, [ic("chat"), "Enviar no WhatsApp"]));
+      } else if (s.tipo === "ideia" && s.cliente_id) {
+        acts.push(el("button", { class: "btn sm", type: "button", onclick: function () {
+          var b = this; concluir(b, function (t) { return api.criarIdeia({ cliente_id: s.cliente_id, origem: "agencia", tipo: c.formato && CR.TIPOS[c.formato] ? c.formato : "post", titulo: s.titulo, descricao: t, status: "sugerida" }); }, "Ideia enviada pro app do cliente.");
+        } }, [ic("idea"), "Mandar pro cliente"]));
+      } else if (s.tipo === "legenda" && s.entrega_id) {
+        acts.push(el("button", { class: "btn sm", type: "button", onclick: function () { concluir(this, function (t) { return api.editarEntrega(s.entrega_id, { legenda: t }); }, "Legenda colocada na entrega."); } }, [ic("check"), "Usar na entrega"]));
+      } else if (s.tipo === "comentario_relatorio" && c.relatorio_id) {
+        var r = relatorios.find(function (x) { return x.id === c.relatorio_id; });
+        acts.push(el("button", { class: "btn sm", type: "button", disabled: !r, onclick: function () { concluir(this, function (t) { return api.salvarRelatorio({ cliente_id: r.cliente_id, mes: String(r.mes).slice(0, 10), resumo: t }); }, "Comentário no relatório do cliente."); } }, [ic("check"), "Salvar no relatório"]));
+      } else acts.push(el("button", { class: "btn sm", type: "button", onclick: function () { concluir(this, null, "Marcado como feito."); } }, [ic("check"), "Feito"]));
+      acts.push(el("button", { class: "btn ghost sm", type: "button", onclick: function () { CR.copiar(txt.value, "Copiado"); } }, [ic("copy"), "Copiar"]));
+      acts.push(el("button", { class: "btn danger sm", type: "button", text: "Descartar", onclick: async function () { try { await api.editarSugestao(s.id, { status: "descartada" }); await carregar(); } catch (x) { CR.toast(x.message, true); } } }));
+    }
+    var sobre = [nomeAgente(s.agente_id), SAIDAS[s.tipo] || s.tipo, lead ? "contato: " + lead.nome : cl ? nomeCli(cl.id) : "", c.formato ? CR.TIPOS[c.formato] : "", CR.data(s.criado_em)].filter(Boolean).join(" · ");
+    return el("article", { class: "idea" }, [
+      el("div", { class: "top" }, [el("span", { class: "pill " + (s.prioridade === "alta" ? "atrasada" : s.prioridade === "baixa" ? "aprovada" : "sugerida"), text: "Prioridade " + ({ alta: "alta", media: "média", baixa: "baixa" }[s.prioridade] || "média") }), el("span", { class: "small muted", text: sobre })]),
+      el("h3", { text: s.titulo || "" }),
+      txt,
+      acts.length ? el("div", { class: "acts" }, acts) : null
+    ]);
+  }
+
+  var dlgAg = document.getElementById("dlg-agente");
+  function abrirAgente(a) {
+    a = a || {};
+    document.getElementById("ag-titulo").textContent = a.id ? "Configurar " + a.nome : "Novo agente";
+    document.getElementById("ag-id").value = a.id || "";
+    document.getElementById("ag-nome").value = a.nome || "";
+    document.getElementById("ag-cargo").value = a.cargo || "";
+    document.getElementById("ag-missao").value = a.missao || "";
+    document.getElementById("ag-freq").value = a.frequencia || "manual";
+    document.getElementById("ag-modelo").value = a.modelo || "claude-opus-5-5";
+    document.getElementById("ag-ativo").checked = a.ativo !== false;
+    document.getElementById("ag-area").value = a.area || "operacional";
+    document.getElementById("ag-genero").value = a.genero || "f";
+    document.getElementById("ag-etapa").value = a.etapa || "";
+    document.getElementById("ag-auto").value = a.autonomia || "aprovar";
+    var ch = document.getElementById("ag-chefe"); ch.textContent = "";
+    ch.appendChild(el("option", { value: "", text: "Ninguém (topo)" }));
+    agentesIA.filter(function (x) { return x.id !== a.id; }).forEach(function (x) { ch.appendChild(el("option", { value: x.id, text: x.nome + (x.cargo ? " · " + x.cargo : "") })); });
+    ch.value = a.chefe_id || "";
+    document.querySelectorAll("#ag-fontes input").forEach(function (x) { x.checked = (a.fontes || []).indexOf(x.value) >= 0; });
+    document.querySelectorAll("#ag-saidas input").forEach(function (x) { x.checked = (a.saidas || ["alerta", "tarefa"]).indexOf(x.value) >= 0; });
+    document.getElementById("ag-err").hidden = true;
+    var del = document.getElementById("ag-apagar"); if (del) del.remove();
+    if (a.id) document.querySelector("#f-agente .acts").prepend(el("button", { class: "btn danger", type: "button", id: "ag-apagar", style: "margin-right:auto", text: "Apagar", onclick: function () { confirmar(this, async function () { await api.apagarAgente(a.id); dlgAg.close(); await carregar(); }); } }));
+    dlgAg.showModal();
+  }
+  document.getElementById("novo-agente").addEventListener("click", function () { abrirAgente(); });
+  document.getElementById("ag-cancel").addEventListener("click", function () { dlgAg.close(); });
+  document.getElementById("f-agente").addEventListener("submit", async function (ev) {
+    ev.preventDefault();
+    var er = document.getElementById("ag-err"), marcados = function (id) { return Array.prototype.map.call(document.querySelectorAll("#" + id + " input:checked"), function (x) { return x.value; }); };
+    var a = { nome: document.getElementById("ag-nome").value.trim(), cargo: document.getElementById("ag-cargo").value.trim() || null, missao: document.getElementById("ag-missao").value.trim(),
+      fontes: marcados("ag-fontes"), saidas: marcados("ag-saidas"), frequencia: document.getElementById("ag-freq").value, modelo: document.getElementById("ag-modelo").value, ativo: document.getElementById("ag-ativo").checked,
+      area: document.getElementById("ag-area").value, genero: document.getElementById("ag-genero").value, etapa: document.getElementById("ag-etapa").value || null,
+      autonomia: document.getElementById("ag-auto").value, chefe_id: document.getElementById("ag-chefe").value || null };
+    var m = !a.nome ? "Dê um nome." : a.missao.length < 20 ? "Explique a função com mais detalhe." : !a.saidas.length && !a.etapa ? "Marque pelo menos uma coisa que ele entrega." : "";
+    er.textContent = m; er.hidden = !m; if (m) return;
+    var id = document.getElementById("ag-id").value; if (id) a.id = id;
+    try { await api.salvarAgente(a); dlgAg.close(); CR.toast("Agente salvo."); await carregar(); } catch (x) { er.textContent = x.message; er.hidden = false; }
+  });
+
+  document.getElementById("as-ir").addEventListener("click", async function () {
+    var p = document.getElementById("as-perg").value.trim(), out = document.getElementById("as-resp");
+    if (!p) { document.getElementById("as-perg").focus(); return; }
+    this.disabled = true; out.hidden = false; out.textContent = "Pensando…";
+    try { out.textContent = await api.perguntar(p, document.getElementById("as-cli").value || null); } catch (x) { out.textContent = x.message; }
+    this.disabled = false;
+  });
+  document.getElementById("as-perg").addEventListener("keydown", function (ev) { if (ev.key === "Enter") document.getElementById("as-ir").click(); });
+
+  // ---------------------------------------------------------------- conversa no WhatsApp
+  var dlgCv = document.getElementById("dlg-conversa"), cvLead = null;
+  document.getElementById("cv-fechar").appendChild(ic("x"));
+  document.getElementById("cv-fechar").addEventListener("click", function () { dlgCv.close(); });
+  async function abrirConversa(l) {
+    cvLead = l;
+    document.getElementById("cv-nome").textContent = l.nome;
+    document.getElementById("cv-sobre").textContent = [l.whatsapp, l.empresa, ST_LEAD[l.status], l.optin === false ? "sem consentimento: não iniciar pelo WhatsApp oficial" : ""].filter(Boolean).join(" · ");
+    document.getElementById("cv-ia").checked = l.ia_ativa !== false;
+    document.getElementById("cv-txt").value = ""; document.getElementById("cv-err").hidden = true;
+    document.getElementById("cv-contato").hidden = l.optin === false;
+    var c = document.getElementById("cv-chat"); c.textContent = "";
+    var msgs = await tenta(function () { return api.conversa(l.id); }, []);
+    if (!msgs.length) c.appendChild(el("p", { class: "small muted", style: "margin:0", text: "Nenhuma mensagem pelo WhatsApp oficial ainda." }));
+    msgs.forEach(function (m) {
+      var d = new Date(m.criado_em);
+      c.appendChild(el("div", { class: "bolha " + m.direcao }, [m.texto || "(" + m.tipo + ")", el("small", { text: (m.direcao === "entrada" ? "" : m.autor === "ia" ? "Atendente de IA · " : "Equipe · ") + (m.tipo === "audio" ? "áudio · " : "") + CR.data(CR.iso(d)) + " " + String(d.getHours()).padStart(2, "0") + ":" + String(d.getMinutes()).padStart(2, "0") })]));
+    });
+    if (!dlgCv.open) dlgCv.showModal();
+    c.scrollTop = c.scrollHeight;
+  }
+  document.getElementById("cv-ia").addEventListener("change", async function () {
+    var ligado = this.checked;
+    try { await api.editarLead(cvLead.id, { ia_ativa: ligado }); cvLead.ia_ativa = ligado; CR.toast(ligado ? "A atendente volta a responder esse contato." : "A equipe assumiu: a IA não responde mais esse contato."); renderLeads(); } catch (x) { CR.toast(x.message, true); }
+  });
+  document.getElementById("cv-enviar").addEventListener("click", async function () {
+    var t = document.getElementById("cv-txt").value.trim(), er = document.getElementById("cv-err");
+    if (!t) return;
+    this.disabled = true;
+    try { await api.enviarWhatsApp(cvLead.id, t); await abrirConversa(cvLead); } catch (x) { er.textContent = x.message; er.hidden = false; }
+    this.disabled = false;
+  });
+  document.getElementById("cv-contato").addEventListener("click", async function () {
+    var er = document.getElementById("cv-err"); this.disabled = true;
+    try { await api.primeiroContato(cvLead.id); CR.toast("Primeiro contato enviado. Quando ele responder, a atendente assume."); await abrirConversa(cvLead); } catch (x) { er.textContent = x.message; er.hidden = false; }
+    this.disabled = false;
+  });
+
+  // importar lista de prospecção (sem consentimento: só abordagem manual)
+  var dlgIm = document.getElementById("dlg-import");
+  document.getElementById("importar-lista").addEventListener("click", function () { document.getElementById("im-err").hidden = true; dlgIm.showModal(); });
+  document.getElementById("im-cancel").addEventListener("click", function () { dlgIm.close(); });
+  document.getElementById("f-import").addEventListener("submit", async function (ev) {
+    ev.preventDefault();
+    var er = document.getElementById("im-err"), lista = [], ruins = 0;
+    document.getElementById("im-txt").value.split(/\n/).forEach(function (ln) {
+      var p = ln.split(/[;\t]/).map(function (x) { return x.trim(); });
+      if (!p[0]) return;
+      if (CR.soDigitos(p[1]).length < 10) { ruins++; return; }
+      lista.push({ nome: p[0].slice(0, 120), whatsapp: p[1].slice(0, 30), empresa: (p[2] || "").slice(0, 160) || null, origem: "prospeccao", status: "novo", optin: false, ia_ativa: false });
+    });
+    if (!lista.length) { er.textContent = "Nenhuma linha válida. Use: Nome; WhatsApp com DDD; Empresa"; er.hidden = false; return; }
+    try { await api.importarLeads(lista); dlgIm.close(); document.getElementById("im-txt").value = ""; CR.toast(lista.length + (lista.length === 1 ? " contato importado" : " contatos importados") + (ruins ? " (" + ruins + (ruins === 1 ? " linha sem WhatsApp válido ficou" : " linhas sem WhatsApp válido ficaram") + " de fora)" : "") + "."); await carregar(); }
+    catch (x) { er.textContent = x.message; er.hidden = false; }
+  });
+
+  // ---------------------------------------------------------------- agenda
+  var DIAS = [[1, "Seg"], [2, "Ter"], [3, "Qua"], [4, "Qui"], [5, "Sex"], [6, "Sáb"], [0, "Dom"]];
+  DIAS.forEach(function (d) { document.getElementById("ag-dias").appendChild(el("label", {}, [el("input", { type: "checkbox", value: String(d[0]) }), el("span", { text: d[1] })])); });
+  var ST_REU = { marcada: "Marcada", feita: "Aconteceu", faltou: "Não apareceu", cancelada: "Cancelada" };
+  (async function carregarConfig() {
+    var ag = await tenta(function () { return api.config("agenda"); }, {}), tr = await tenta(function () { return api.config("atendente"); }, {});
+    var dias = ag.dias || [1, 2, 3, 4, 5];
+    document.querySelectorAll("#ag-dias input").forEach(function (x) { x.checked = dias.indexOf(+x.value) >= 0; });
+    document.getElementById("ag-ini").value = ag.inicio || "09:00"; document.getElementById("ag-fim").value = ag.fim || "18:00";
+    document.getElementById("ag-dur").value = String(ag.duracao || 30); document.getElementById("ag-antes").value = String(ag.antecedencia_horas || 3);
+    document.getElementById("ag-link").value = ag.link || "";
+    document.getElementById("tr-texto").value = tr.texto || ""; document.getElementById("tr-audio").checked = !!tr.audio;
+  })();
+  document.getElementById("f-agenda").addEventListener("submit", async function (ev) {
+    ev.preventDefault();
+    var v = { dias: Array.prototype.map.call(document.querySelectorAll("#ag-dias input:checked"), function (x) { return +x.value; }), inicio: document.getElementById("ag-ini").value || "09:00", fim: document.getElementById("ag-fim").value || "18:00",
+      duracao: +document.getElementById("ag-dur").value, antecedencia_horas: +document.getElementById("ag-antes").value, link: document.getElementById("ag-link").value.trim() };
+    if (!v.dias.length || v.inicio >= v.fim) { CR.toast("Escolha os dias e um horário de início antes do fim.", true); return; }
+    try { await api.salvarConfig("agenda", v); CR.toast("Horários salvos. A atendente já oferece esses horários."); } catch (x) { CR.toast(x.message, true); }
+  });
+  document.getElementById("f-treino").addEventListener("submit", async function (ev) {
+    ev.preventDefault();
+    try { await api.salvarConfig("atendente", { texto: document.getElementById("tr-texto").value.trim(), audio: document.getElementById("tr-audio").checked }); CR.toast("Treino salvo. Vale a partir da próxima mensagem."); } catch (x) { CR.toast(x.message, true); }
+  });
+  function hora(d) { return String(d.getHours()).padStart(2, "0") + ":" + String(d.getMinutes()).padStart(2, "0"); }
+  function renderAgenda() {
+    var agora = Date.now(), semana = agora + 7 * 864e5;
+    var k = document.getElementById("ag-kpis"); k.textContent = "";
+    var prox = reunioes.filter(function (r) { return r.status === "marcada" && Date.parse(r.fim) > agora; });
+    var doMesR = reunioes.filter(function (r) { return noMes(r.inicio, mesAtual); });
+    [[prox.filter(function (r) { return CR.iso(new Date(r.inicio)) === hj; }).length, "reuniões hoje"], [prox.filter(function (r) { return Date.parse(r.inicio) < semana; }).length, "nos próximos 7 dias"],
+     [doMesR.filter(function (r) { return r.marcada_por === "ia"; }).length, "marcadas pela IA no mês"],
+     [doMesR.filter(function (r) { return r.status === "feita"; }).length + " de " + doMesR.filter(function (r) { return r.status !== "cancelada" && Date.parse(r.fim) < agora; }).length, "aconteceram no mês"]].forEach(function (x) {
+      k.appendChild(el("div", { class: "stat" }, [el("b", { text: String(x[0]) }), el("span", { text: x[1] })]));
+    });
+    var l = document.getElementById("l-reu"); l.textContent = "";
+    var vis = reunioes.filter(function (r) { return Date.parse(r.fim) > agora - 3 * 864e5; });
+    if (!vis.length) l.appendChild(el("div", { class: "empty", style: "padding:20px" }, [el("span", { text: "Nenhuma reunião marcada. Quando a atendente marcar uma no WhatsApp, ela aparece aqui." })]));
+    vis.forEach(function (r) {
+      var d = new Date(r.inicio), lead = leads.find(function (x) { return x.id === r.lead_id; });
+      var sel = el("select", { "aria-label": "Status da reunião", style: "width:auto;padding:6px 8px;font-size:13px" });
+      Object.keys(ST_REU).forEach(function (s2) { sel.appendChild(el("option", { value: s2, text: ST_REU[s2] })); });
+      sel.value = r.status;
+      sel.addEventListener("change", async function () { try { await api.salvarReuniao({ id: r.id, status: sel.value }); r.status = sel.value; renderAgenda(); renderJornada(); } catch (x) { CR.toast(x.message, true); } });
+      var w = waLead(r.telefone || (lead && lead.whatsapp));
+      l.appendChild(el("div", { class: "reu" + (Date.parse(r.fim) < agora ? " passada" : "") }, [
+        el("div", { class: "date" }, [el("b", { text: String(d.getDate()) }), el("span", { text: CR.SEMANA[d.getDay()] })]),
+        el("div", { style: "min-width:0" }, [
+          el("div", { style: "font-weight:700" }, [hora(d) + " · " + (r.nome || (lead && lead.nome) || "Contato"), r.marcada_por === "ia" ? el("span", { class: "tag-mini ia", text: "marcada pela IA" }) : null]),
+          r.observacao ? el("div", { class: "q", text: r.observacao }) : null
+        ]),
+        el("div", { style: "display:flex;gap:4px;align-items:center;flex-wrap:wrap;justify-content:flex-end" }, [
+          lead ? el("button", { class: "icon-btn", type: "button", "aria-label": "Ver conversa", title: "Ver conversa", onclick: function () { abrirConversa(lead); } }, ic("chat")) : null,
+          w ? el("a", { class: "icon-btn", href: w, target: "_blank", rel: "noopener", "aria-label": "WhatsApp", title: "WhatsApp" }, ic("phone")) : null,
+          sel
+        ])
+      ]));
+    });
+  }
+
+  // ---------------------------------------------------------------- redes (Postiz) de cada cliente e da agência
+  var dlgRd = document.getElementById("dlg-redes"), rdPerfil = null, canaisCache = null;
+  var NOME_REDE = { instagram: "Instagram", "instagram-standalone": "Instagram", facebook: "Facebook", tiktok: "TikTok", linkedin: "LinkedIn", "linkedin-page": "LinkedIn (página)", x: "X (Twitter)", youtube: "YouTube", threads: "Threads", pinterest: "Pinterest", gmb: "Google Meu Negócio" };
+  async function abrirRedes(perfil) {
+    rdPerfil = perfil;
+    document.getElementById("rd-titulo").textContent = "Redes de " + (perfil.id === eu.id ? "Criativos Rápidos" : (perfil.empresa || perfil.nome));
+    var l = document.getElementById("rd-lista"), er = document.getElementById("rd-err"); l.textContent = ""; er.hidden = true;
+    dlgRd.showModal();
+    try { canaisCache = canaisCache || await api.redesCanais(); } catch (x) { er.textContent = x.message; er.hidden = false; return; }
+    if (!canaisCache.length) l.appendChild(el("p", { class: "small muted", text: "Nenhum canal conectado no Postiz ainda. Conecte as redes lá (Instagram, Facebook, TikTok, LinkedIn, X, YouTube…) e volte aqui." }));
+    canaisCache.forEach(function (c) {
+      l.appendChild(el("label", { class: "chk", style: "margin:0" }, [el("input", { type: "checkbox", value: c.id, checked: (perfil.redes || []).indexOf(c.id) >= 0 }), el("span", {}, [el("b", { text: NOME_REDE[c.rede] || c.rede }), " · " + (c.nome || "")])]));
+    });
+  }
+  document.getElementById("rd-cancel").addEventListener("click", function () { dlgRd.close(); });
+  document.getElementById("rd-salvar").addEventListener("click", async function () {
+    var ids = Array.prototype.map.call(document.querySelectorAll("#rd-lista input:checked"), function (x) { return x.value; });
+    try { await api.salvarPerfil(rdPerfil.id, { redes: ids.length ? ids : null }); if (rdPerfil.id === eu.id) eu.redes = ids; dlgRd.close(); CR.toast("Redes salvas."); await carregar(); }
+    catch (x) { var er = document.getElementById("rd-err"); er.textContent = x.message; er.hidden = false; }
+  });
+  function nomeRedes(ids) { return (ids || []).map(function (id) { var c = (canaisCache || []).find(function (x) { return x.id === id; }); return c ? (NOME_REDE[c.rede] || c.rede) : null; }).filter(Boolean); }
+
+  nav.ir(location.hash.slice(1) || "visao");
+  carregar();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Vídeo Criativos Rápidos</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,800;0,900;1,900&family=Inter:ital,wght@0,500;0,600;0,700;0,800;1,800&display=swap" rel="stylesheet">
+<style>
+  :root { --y: #FFD400; --k: #101216; --k2: #1B1E24; --w: #FFFFFF; --m: #A7AAB2; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--k); font-family: "Inter", sans-serif; color: var(--w); }
+  .stage { position: relative; width: 1080px; height: 1920px; overflow: hidden; }
+  .grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,.04) 2px, transparent 2px), linear-gradient(90deg, rgba(255,255,255,.04) 2px, transparent 2px); background-size: 108px 108px; }
+  .scene { position: absolute; inset: 0; padding: 260px 90px 200px; display: flex; flex-direction: column; justify-content: center; opacity: 0; }
+  .scene.yel { background: var(--y); color: var(--k); }
+  .brand { position: absolute; top: 90px; left: 90px; display: flex; align-items: center; gap: 22px; z-index: 5; }
+  .brand img { width: 92px; height: 92px; }
+  .brand .wd { font-size: 40px; line-height: 1.02; letter-spacing: -.02em; }
+  .brand .wd b { display: block; font-weight: 500; }
+  .brand .wd b + b { font-weight: 800; font-style: italic; }
+  .bar { position: absolute; left: 90px; right: 90px; bottom: 110px; height: 10px; border-radius: 99px; background: rgba(255,255,255,.15); z-index: 5; }
+  .bar i { display: block; height: 100%; border-radius: 99px; background: var(--y); width: 0; }
+  h1, h2, .mont { font-family: "Montserrat", sans-serif; font-weight: 900; letter-spacing: -.02em; }
+  h1 { font-size: 132px; line-height: .98; }
+  h2 { font-size: 104px; line-height: 1; }
+  em { font-style: italic; color: var(--y); }
+  .yel em { color: var(--k); }
+  .lead { font-size: 50px; line-height: 1.3; color: #D9DAE0; font-weight: 600; margin-top: 44px; }
+  .yel .lead { color: var(--k); }
+  .hl { background: var(--y); color: var(--k); padding: 0 .16em; border-radius: .1em; }
+  .stack { display: grid; gap: 26px; margin-top: 64px; }
+  .pill { display: flex; align-items: center; gap: 30px; background: var(--k2); border: 2px solid rgba(255,255,255,.08); border-radius: 30px; padding: 32px 40px; font-size: 54px; font-weight: 800; }
+  .pill .dot { width: 72px; height: 72px; border-radius: 50%; background: var(--y); color: var(--k); display: grid; place-items: center; font-family: "Montserrat"; font-weight: 900; font-size: 38px; flex: none; }
+  .pill .r { margin-left: auto; font-family: "Montserrat"; font-weight: 900; color: var(--k); background: var(--y); border-radius: 18px; padding: 8px 24px; font-size: 46px; }
+  .card { background: var(--w); color: var(--k); border-radius: 36px; padding: 38px 46px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+  .card .nm { font-family: "Montserrat"; font-weight: 900; font-size: 62px; }
+  .card .sb { font-size: 34px; font-weight: 700; color: #5A5D66; margin-top: 6px; }
+  .card .pr { font-family: "Montserrat"; font-weight: 900; font-size: 92px; letter-spacing: -.03em; white-space: nowrap; }
+  .card .pr small { font-size: 40px; color: #5A5D66; margin-right: 6px; }
+  .card.star { outline: 8px solid var(--y); }
+  .tag { display: inline-block; margin-top: 50px; background: var(--y); color: var(--k); font-family: "Montserrat"; font-weight: 900; font-size: 58px; padding: 18px 40px; border-radius: 99px; align-self: flex-start; }
+  .yel .tag { background: var(--k); color: var(--y); }
+  .big { font-size: 210px; line-height: .92; }
+  .steps { display: grid; gap: 34px; margin-top: 70px; }
+  .st { display: flex; gap: 36px; align-items: center; font-size: 64px; font-weight: 800; }
+  .st .k { width: 120px; height: 120px; border-radius: 30px; background: var(--y); color: var(--k); display: grid; place-items: center; font-family: "Montserrat"; font-weight: 900; font-size: 64px; flex: none; }
+  .center { align-items: center; text-align: center; }
+  .cta { margin-top: 70px; background: var(--k); color: var(--y); font-family: "Montserrat"; font-weight: 900; font-size: 60px; padding: 34px 60px; border-radius: 99px; display: inline-flex; gap: 22px; align-items: center; }
+  .chips { display: flex; flex-wrap: wrap; gap: 22px; margin-top: 60px; }
+  .chips span { background: var(--k2); border: 2px solid rgba(255,255,255,.1); border-radius: 99px; padding: 22px 36px; font-size: 50px; font-weight: 800; }
+  .chips span b { color: var(--y); font-family: "Montserrat"; font-weight: 900; margin-left: 12px; }
+  .playbg { position: absolute; right: -260px; bottom: 120px; width: 1100px; opacity: .07; }
+
+  .x { display: flex; align-items: center; gap: 30px; background: var(--k2); border: 2px solid rgba(255,255,255,.08); border-radius: 30px; padding: 30px 38px; font-size: 50px; font-weight: 800; color: #C9CBD2; }
+  .x .dot { width: 72px; height: 72px; border-radius: 50%; background: #3A3D45; color: #fff; display: grid; place-items: center; font-family: "Montserrat"; font-weight: 900; font-size: 40px; flex: none; }
+  .x s { text-decoration-thickness: 5px; text-decoration-color: rgba(255,212,0,.9); }
+  .mega { font-size: 230px; line-height: .9; }
+  .price { font-family: "Montserrat"; font-weight: 900; font-size: 190px; line-height: .95; letter-spacing: -.04em; color: var(--y); margin-top: 30px; }
+  .price small { font-size: 70px; color: #fff; margin-right: 10px; }
+  .price i { font-style: normal; font-size: 64px; color: #fff; }
+
+  .prod { width: 640px; height: 640px; border-radius: 60px; background: linear-gradient(145deg, #2A2D34, #1B1E24); align-self: center; margin-top: 60px; position: relative; display: grid; place-items: center; }
+  .prod .box { width: 300px; height: 300px; border-radius: 40px; background: #FFFFFF; box-shadow: 0 40px 80px rgba(0,0,0,.4); }
+  .prod .tagp { position: absolute; right: -40px; top: 60px; background: #FFD400; color: #101216; font-family: "Montserrat"; font-weight: 900; font-size: 64px; padding: 18px 34px; border-radius: 24px; }
+  .prod .ofe { position: absolute; left: -30px; bottom: 70px; background: #101216; border: 4px solid #FFD400; color: #FFD400; font-family: "Montserrat"; font-weight: 900; font-size: 40px; padding: 14px 26px; border-radius: 99px; }
+  .prod .ex { position: absolute; bottom: -70px; left: 0; right: 0; text-align: center; font-size: 30px; color: #A7AAB2; font-weight: 600; }
+  .tier { display: flex; justify-content: space-between; align-items: center; background: var(--w); color: var(--k); border-radius: 34px; padding: 40px 46px; }
+  .tier .nm { font-family: "Montserrat"; font-weight: 900; font-size: 60px; }
+  .tier .sb { font-size: 32px; font-weight: 700; color: #5A5D66; margin-top: 4px; }
+  .tier .pr { font-family: "Montserrat"; font-weight: 900; font-size: 80px; letter-spacing: -.03em; white-space: nowrap; }
+  .tier .pr small { font-size: 36px; color: #5A5D66; margin-right: 6px; }
+  .tier.star { outline: 8px solid var(--y); }
+  .dica .n { font-family: "Montserrat"; font-weight: 900; font-size: 260px; line-height: .85; color: var(--y); letter-spacing: -.05em; }
+</style>
+</head>
+<body>
+<div class="stage" id="stage">
+  <section class="scene" data-start="0" data-end="3.2">
+    <h1 data-in="0.1">Sua loja ainda posta foto <em>parada?</em></h1>
+  </section>
+  <section class="scene" data-start="3.2" data-end="7.6">
+    <h2 data-in="0.1">Com motion, o produto <em>ganha vida</em></h2>
+    <div class="prod" data-in="0.4"><div class="box" id="box"></div><div class="tagp" id="tagp">R$ 89,90</div><div class="ofe" id="ofe">OFERTA</div><div class="ex">exemplo</div></div>
+  </section>
+  <section class="scene" data-start="7.6" data-end="12.8">
+    <h2 data-in="0.1">Vídeos com motion pra sua loja</h2>
+    <div class="stack">
+      <div class="tier" data-in="0.6"><div><div class="nm">Essencial</div><div class="sb">1 vídeo de 15 s</div></div><div class="pr"><small>R$</small>29,90</div></div>
+      <div class="tier star" data-in="1.1"><div><div class="nm">Completo</div><div class="sb">2 vídeos + 1 arte pra anúncio</div></div><div class="pr"><small>R$</small>39,90</div></div>
+      <div class="tier" data-in="1.6"><div><div class="nm">Premium</div><div class="sb">3 vídeos + 2 artes pra anúncio</div></div><div class="pr"><small>R$</small>49,90</div></div>
+    </div>
+  </section>
+  <section class="scene yel center" data-start="12.8" data-end="17">
+    <svg data-in="0.1" viewBox="0 0 100 74" width="240" height="178" fill="#101216"><rect x="14" y="15.6" width="19" height="7" rx="3.5"/><rect x="6.5" y="33.5" width="26.5" height="7" rx="3.5"/><rect x="19" y="51.3" width="14" height="7" rx="3.5"/><path d="M40.5 9.5c0-2.6 2.8-4.2 5-2.9l44.6 26.5c2.2 1.3 2.2 4.5 0 5.8L45.5 65.4c-2.2 1.3-5-.3-5-2.9z"/></svg>
+    <h2 data-in="0.4" style="margin-top:40px">Quer o seu?</h2>
+    <p class="lead" data-in="0.9">Chama no direct.</p>
+    <div class="cta" data-in="1.4">criativos <i style="font-family:Inter;font-weight:800">rápidos</i></div>
+  </section>
+  <div class="brand" id="brand"><img src="data:image/png;base64,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" alt=""><div class="wd"><b>criativos</b><b>rápidos</b></div></div>
+  <div class="bar"><i id="bar"></i></div>
+</div>
+<script>
+  const DURATION = 17;
+  const scenes = [...document.querySelectorAll('.scene')];
+  const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+  const easeOutBack = x => { const c1 = 1.5, c3 = c1 + 1; return 1 + c3 * Math.pow(x - 1, 3) + c1 * Math.pow(x - 1, 2); };
+  const easeOut = x => 1 - Math.pow(1 - x, 3);
+  window.render = function (t) {
+    const T = 0.35;
+    let onYellow = false;
+    scenes.forEach(s => {
+      const a = +s.dataset.start, b = +s.dataset.end;
+      const fin = clamp((t - a) / T), fout = clamp((b - t) / T);
+      const vis = Math.min(fin, fout);
+      s.style.opacity = (t >= a - 0.001 && t <= b + 0.001) ? vis : 0;
+      s.style.transform = `translateY(${(1 - easeOut(fin)) * 60}px) scale(${1 - (1 - fout) * 0.04})`;
+      if (t >= a && t < b && s.classList.contains('yel')) onYellow = true;
+      s.querySelectorAll('[data-in]').forEach(el => {
+        const p = clamp((t - a - +el.dataset.in) / 0.55);
+        el.style.opacity = easeOut(p);
+        el.style.transform = `translateY(${(1 - easeOutBack(p)) * 70}px)`;
+      });
+    });
+    const brand = document.getElementById('brand');
+    brand.style.opacity = onYellow ? 0 : 1;
+    if (window.extra) window.extra(t);
+    document.getElementById('bar').style.width = (clamp(t / DURATION) * 100) + '%';
+  };
+
+  window.extra = function (t) {
+    const box = document.getElementById('box'), tg = document.getElementById('tagp'), of = document.getElementById('ofe');
+    const r = t - 3.2;
+    box.style.transform = `rotate(${Math.sin(r * 2.2) * 8}deg) scale(${1 + Math.sin(r * 3) * 0.04})`;
+    const pop = x => { const p = Math.min(1, Math.max(0, x / 0.4)); return 1 + 2.7 * Math.pow(p - 1, 3) + 1.7 * Math.pow(p - 1, 2); };
+    tg.style.transform = `scale(${Math.max(0, pop(r - 1.2))}) rotate(-6deg)`;
+    of.style.transform = `scale(${Math.max(0, pop(r - 2.0))})`;
+  };
+  window.DURATION = DURATION;
+  render(0);
+</script>
+</body>
+</html>

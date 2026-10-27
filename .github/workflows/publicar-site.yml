@@ -1,0 +1,89 @@
+# Publica o site e a plataforma sempre que a pasta site/ muda neste branch (ou pelo botão "Run workflow").
+# Cada parte só roda se os acessos dela estiverem em Settings > Secrets and variables > Actions:
+#   HostGator (FTP):  FTP_SERVER, FTP_USERNAME, FTP_PASSWORD e, opcional, FTP_DIR (padrão public_html/)
+#   Supabase:         SUPABASE_ACCESS_TOKEN, SUPABASE_DB_URL e, opcional, SUPABASE_PROJECT_REF
+#   Chaves das funções (opcionais): ANTHROPIC_API_KEY, META_ADS_TOKEN, CRON_SECRET, IG_APP_ID, IG_APP_SECRET,
+#     WHATSAPP_TOKEN, WHATSAPP_PHONE_ID, WHATSAPP_VERIFY_TOKEN, WHATSAPP_APP_SECRET, WHATSAPP_TEMPLATE_CONTATO, ELEVENLABS_API_KEY, ELEVENLABS_VOZ, POSTIZ_API_KEY
+name: Publicar site e plataforma
+
+on:
+  push:
+    branches: [claude/generic-sales-proposal-lok7t4]
+    paths: ["site/**", ".github/workflows/publicar-site.yml"]
+  workflow_dispatch:
+
+concurrency: publicar-site
+
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+    env:
+      TEM_FTP: ${{ secrets.FTP_SERVER != '' }}
+      TEM_SUPABASE: ${{ secrets.SUPABASE_ACCESS_TOKEN != '' && secrets.SUPABASE_DB_URL != '' }}
+      SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+      SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+      PROJETO: ${{ secrets.SUPABASE_PROJECT_REF || 'glffgfjlhltahyatsjed' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      # o config.js com as chaves e o enviar.php ficam como estão no servidor
+      - name: Site na HostGator (FTP)
+        if: env.TEM_FTP == 'true'
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./site/
+          server-dir: ${{ secrets.FTP_DIR || 'public_html/' }}
+          exclude: |
+            **/.git*
+            **/.git*/**
+            assets/config.js
+            enviar.php
+            supabase/**
+            *.md
+
+      - name: Banco do Supabase (schema.sql)
+        if: env.TEM_SUPABASE == 'true'
+        run: psql "$SUPABASE_DB_URL" -v ON_ERROR_STOP=1 -q -f site/supabase/schema.sql
+
+      - uses: supabase/setup-cli@v1
+        if: env.TEM_SUPABASE == 'true'
+        with:
+          version: latest
+
+      - name: Chaves das funções
+        if: env.TEM_SUPABASE == 'true'
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          META_ADS_TOKEN: ${{ secrets.META_ADS_TOKEN }}
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+          IG_APP_ID: ${{ secrets.IG_APP_ID }}
+          IG_APP_SECRET: ${{ secrets.IG_APP_SECRET }}
+          WHATSAPP_TOKEN: ${{ secrets.WHATSAPP_TOKEN }}
+          WHATSAPP_PHONE_ID: ${{ secrets.WHATSAPP_PHONE_ID }}
+          WHATSAPP_VERIFY_TOKEN: ${{ secrets.WHATSAPP_VERIFY_TOKEN }}
+          WHATSAPP_APP_SECRET: ${{ secrets.WHATSAPP_APP_SECRET }}
+          WHATSAPP_TEMPLATE_CONTATO: ${{ secrets.WHATSAPP_TEMPLATE_CONTATO }}
+          ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}
+          ELEVENLABS_VOZ: ${{ secrets.ELEVENLABS_VOZ }}
+          POSTIZ_API_KEY: ${{ secrets.POSTIZ_API_KEY }}
+        run: |
+          args=()
+          for k in ANTHROPIC_API_KEY META_ADS_TOKEN CRON_SECRET IG_APP_ID IG_APP_SECRET WHATSAPP_TOKEN WHATSAPP_PHONE_ID WHATSAPP_VERIFY_TOKEN WHATSAPP_APP_SECRET WHATSAPP_TEMPLATE_CONTATO ELEVENLABS_API_KEY ELEVENLABS_VOZ POSTIZ_API_KEY; do
+            [ -n "${!k}" ] && args+=("$k=${!k}")
+          done
+          args+=("SITE_URL=https://criativosrapidos.com.br")
+          supabase secrets set --project-ref "$PROJETO" "${args[@]}"
+
+      - name: Funções (instagram, trafego, agentes)
+        if: env.TEM_SUPABASE == 'true'
+        working-directory: site
+        run: supabase functions deploy instagram trafego agentes whatsapp redes --project-ref "$PROJETO" --no-verify-jwt
+
+      - name: Agendamentos (pg_cron)
+        if: env.TEM_SUPABASE == 'true' && secrets.CRON_SECRET != ''
+        env:
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+        run: psql "$SUPABASE_DB_URL" -v ON_ERROR_STOP=1 -q -v projeto="$PROJETO" -v segredo="$CRON_SECRET" -f site/supabase/agendamentos.sql

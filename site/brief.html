@@ -1,0 +1,525 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Briefing · Criativos Rápidos</title>
+<meta name="description" content="Conte sobre o seu negócio para a Criativos Rápidos criar seus conteúdos.">
+<link rel="icon" href="assets/icons/favicon-32.png">
+<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+<meta name="theme-color" content="#101216">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,800&display=swap" rel="stylesheet">
+<style>
+  [hidden] { display: none !important; }
+  /* Layout: uma coluna de formulário, seções numeradas na ordem de preenchimento, barra de progresso fixa no topo */
+  :root {
+    --yellow: #FFD400;
+    --ink: #101216;
+    --bg: #F6F5F0;
+    --surface: #FFFFFF;
+    --fg: #15171B;
+    --muted: #64666E;
+    --line: #E4E2D9;
+    --field: #FBFAF6;
+    --focus: #101216;
+    --ok: #1F7A3A;
+    --warn: #B4231B;
+    --display: "Montserrat", "Arial Black", system-ui, sans-serif;
+    --body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) { --bg: #0E0F12; --surface: #17191E; --fg: #F2F2F4; --muted: #A2A4AC; --line: #2A2D34; --field: #1D2026; --focus: #FFD400; --ok: #5BD07E; --warn: #FF7A70; color-scheme: dark; }
+  }
+  :root[data-theme="dark"] { --bg: #0E0F12; --surface: #17191E; --fg: #F2F2F4; --muted: #A2A4AC; --line: #2A2D34; --field: #1D2026; --focus: #FFD400; --ok: #5BD07E; --warn: #FF7A70; color-scheme: dark; }
+
+  * { box-sizing: border-box; }
+  body { background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 16px; line-height: 1.5; margin: 0; }
+  .wrap { max-width: 760px; margin: 0 auto; padding-inline: 16px; padding-block: 0 80px; }
+
+  .bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--ink); color: #fff; }
+  .bar-in { max-width: 760px; margin: 0 auto; padding: 12px 16px; display: flex; align-items: center; gap: 14px; }
+  .bar img { width: 34px; height: 34px; border-radius: 8px; flex: none; }
+  .bar .word { font-size: 15px; line-height: 1.05; letter-spacing: -.01em; }
+  .bar .word b { display: block; font-weight: 500; }
+  .bar .word b + b { font-weight: 800; font-style: italic; }
+  .prog { margin-left: auto; display: flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .track { width: 120px; height: 8px; border-radius: 99px; background: rgba(255,255,255,.18); overflow: hidden; }
+  .track i { display: block; height: 100%; width: 0; background: var(--yellow); transition: width .3s; }
+
+  header.hero { padding-block: 44px 28px; }
+  .eyebrow { display: inline-block; background: var(--yellow); color: var(--ink); font-weight: 700; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; padding: 6px 12px; border-radius: 99px; }
+  h1 { font-family: var(--display); font-weight: 900; font-size: clamp(34px, 7vw, 52px); line-height: 1.02; letter-spacing: -.02em; margin: 18px 0 14px; text-wrap: balance; }
+  .lead { font-size: 18px; color: var(--muted); max-width: 60ch; margin: 0; }
+  .facts { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+  .facts span { border: 1px solid var(--line); background: var(--surface); border-radius: 99px; padding: 8px 14px; font-size: 14px; font-weight: 600; }
+  .facts b { font-weight: 800; }
+
+  form { display: grid; gap: 18px; }
+  fieldset { border: 0; margin: 0; padding: 26px 22px; background: var(--surface); border: 1px solid var(--line); border-radius: 20px; min-width: 0; display: grid; gap: 18px; }
+  legend { padding: 0; float: left; width: 100%; display: flex; align-items: center; gap: 12px; font-family: var(--display); font-weight: 900; font-size: 22px; letter-spacing: -.01em; }
+  legend + * { clear: both; }
+  .n { flex: none; width: 34px; height: 34px; border-radius: 10px; background: var(--yellow); color: var(--ink); display: grid; place-items: center; font-size: 16px; }
+  .hint { margin: -8px 0 0; font-size: 14px; color: var(--muted); }
+
+  .f { display: grid; gap: 7px; min-width: 0; }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 560px) { .row { grid-template-columns: 1fr; } }
+  label, .q { font-weight: 600; font-size: 15px; }
+  .req { color: var(--warn); margin-left: 2px; }
+  .sub { font-weight: 400; color: var(--muted); font-size: 13px; }
+  input[type=text], input[type=tel], input[type=url], textarea, select {
+    width: 100%; font: inherit; color: var(--fg); background: var(--field); border: 1.5px solid var(--line); border-radius: 12px; padding: 12px 14px;
+  }
+  textarea { min-height: 96px; resize: vertical; }
+  input:focus-visible, textarea:focus-visible, select:focus-visible, button:focus-visible, .opt input:focus-visible + span, .chip input:focus-visible + span { outline: 3px solid var(--focus); outline-offset: 2px; }
+  .invalid { border-color: var(--warn) !important; }
+
+  .opts { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; }
+  .opt { position: relative; }
+  .opt input { position: absolute; opacity: 0; inset: 0; }
+  .opt span { display: grid; gap: 2px; height: 100%; border: 1.5px solid var(--line); background: var(--field); border-radius: 14px; padding: 12px 14px; cursor: pointer; }
+  .opt span b { font-weight: 700; }
+  .opt span small { color: var(--muted); font-size: 13px; }
+  .opt input:checked + span { border-color: var(--ink); background: var(--yellow); color: var(--ink); }
+  .opt input:checked + span small { color: var(--ink); }
+  .group-t { font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin-top: 4px; }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip { position: relative; }
+  .chip input { position: absolute; opacity: 0; inset: 0; }
+  .chip span { display: inline-block; border: 1.5px solid var(--line); background: var(--field); border-radius: 99px; padding: 8px 14px; font-size: 14px; font-weight: 600; cursor: pointer; }
+  .chip input:checked + span { background: var(--ink); color: #fff; border-color: var(--ink); }
+
+  /* buffet de créditos */
+  .credits { display: grid; gap: 10px; }
+  .citem { display: grid; grid-template-columns: 1fr auto auto; align-items: center; gap: 14px; border: 1.5px solid var(--line); background: var(--field); border-radius: 14px; padding: 10px 12px 10px 16px; }
+  .citem .nm { font-weight: 700; }
+  .citem .cost { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .step { display: flex; align-items: center; gap: 6px; }
+  .step button { width: 38px; height: 38px; border-radius: 10px; border: 1.5px solid var(--line); background: var(--surface); color: var(--fg); font: 700 20px/1 var(--body); cursor: pointer; }
+  .step button:disabled { opacity: .35; cursor: not-allowed; }
+  .step output { width: 28px; text-align: center; font-weight: 800; font-variant-numeric: tabular-nums; }
+  .meter { display: flex; justify-content: space-between; align-items: center; gap: 12px; background: var(--ink); color: #fff; border-radius: 14px; padding: 14px 16px; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .meter .left b { color: var(--yellow); font-size: 20px; }
+  .meter.over { background: var(--warn); }
+  .muted-box { border: 1.5px dashed var(--line); border-radius: 14px; padding: 14px 16px; color: var(--muted); font-size: 14px; }
+
+  .actions { display: grid; gap: 12px; margin-top: 6px; }
+  .btn { font: 800 17px/1 var(--body); border-radius: 14px; padding: 18px 20px; cursor: pointer; border: 0; text-align: center; text-decoration: none; display: block; }
+  .btn.main { background: var(--yellow); color: var(--ink); }
+  .btn.dark { background: var(--ink); color: #fff; }
+  :root[data-theme="dark"] .btn.dark { background: #fff; color: var(--ink); }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .btn.dark { background: #fff; color: var(--ink); } }
+  .btn.ghost { background: transparent; color: var(--fg); border: 1.5px solid var(--line); }
+  .err { color: var(--warn); font-weight: 600; font-size: 14px; }
+  .saved { font-size: 13px; color: var(--muted); text-align: center; }
+
+  /* resumo */
+  #done { display: grid; gap: 16px; }
+  #done h2 { font-family: var(--display); font-weight: 900; font-size: 30px; margin: 0; letter-spacing: -.01em; }
+  #summary { width: 100%; min-height: 320px; font: 14px/1.55 ui-monospace, "SF Mono", Menlo, Consolas, monospace; white-space: pre-wrap; }
+  .ok { color: var(--ok); font-weight: 700; }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <div class="bar-in">
+    <img src="data:image/png;base64,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" alt="">
+    <div class="word"><b>criativos</b><b>rápidos</b></div>
+    <div class="prog"><span id="pct">0%</span><div class="track"><i id="trk"></i></div></div>
+  </div>
+</div>
+
+<div class="wrap">
+  <header class="hero">
+    <span class="eyebrow">Briefing</span>
+    <h1>Conta pra gente sobre o seu negócio</h1>
+    <p class="lead">Com essas respostas a gente cria seus conteúdos com a sua cara. Leva uns 10 minutos. Pode responder com calma: o que você digita fica salvo neste aparelho até você enviar.</p>
+    <div class="facts"><span>Responda em até <b>7 dias</b></span><span>Entrega em <b>24 h</b></span><span>Campos com <b style="color:var(--warn)">*</b> são obrigatórios</span></div>
+  </header>
+
+  <fieldset id="ia-box" style="margin-bottom:18px">
+    <legend><span class="n">✦</span>Prefere contar do seu jeito?</legend>
+    <p class="sub" style="margin:0">Escreva (ou dite pelo teclado do celular) sobre o seu negócio: o que vende, pra quem, o que te diferencia, o que quer divulgar. A nossa IA organiza e preenche o formulário pra você revisar.</p>
+    <textarea id="ia-texto" maxlength="6000" placeholder="Ex.: Tenho uma hamburgueria delivery no Guará, a carne é moída na hora, meu público é jovem de 18 a 35..."></textarea>
+    <button type="button" class="btn dark" id="ia-ir">Preencher pra mim</button>
+    <div class="saved" id="ia-msg" hidden></div>
+  </fieldset>
+
+  <form id="bf" novalidate>
+    <fieldset>
+      <legend><span class="n">1</span>Sobre você</legend>
+      <div class="row">
+        <div class="f"><label for="nome">Seu nome<span class="req">*</span></label><input type="text" id="nome" name="nome" required autocomplete="name"></div>
+        <div class="f"><label for="empresa">Nome da empresa<span class="req">*</span></label><input type="text" id="empresa" name="empresa" required autocomplete="organization"></div>
+      </div>
+      <div class="row">
+        <div class="f"><label for="whats">WhatsApp<span class="req">*</span></label><input type="tel" id="whats" name="whats" required placeholder="(61) 90000-0000" autocomplete="tel"></div>
+        <div class="f"><label for="insta">Instagram da empresa</label><input type="text" id="insta" name="insta" placeholder="@suaempresa"></div>
+      </div>
+      <div class="row">
+        <div class="f"><label for="cidade">Cidade onde atende</label><input type="text" id="cidade" name="cidade" placeholder="Ex.: Brasília, DF"></div>
+        <div class="f"><label for="segmento">Segmento</label><input type="text" id="segmento" name="segmento" placeholder="Ex.: clínica de estética, restaurante"></div>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend><span class="n">2</span>O que você contratou</legend>
+      <div class="group-t">Pacotes (pagamento único)</div>
+      <div class="opts">
+        <label class="opt"><input type="radio" name="plano" id="p-largada" value="Largada"><span><b>Largada · R$ 97</b><small>2 vídeos + 1 arte pra anúncio</small></span></label>
+        <label class="opt"><input type="radio" name="plano" id="p-acelera" value="Acelera"><span><b>Acelera · R$ 297</b><small>Identidade visual + 1 anúncio de brinde</small></span></label>
+        <label class="opt"><input type="radio" name="plano" id="p-turbo" value="Turbo"><span><b>Turbo · R$ 497</b><small>Identidade visual + landing page + PDFs</small></span></label>
+      </div>
+      <div class="group-t">Planos mensais</div>
+      <div class="opts">
+        <label class="opt"><input type="radio" name="plano" id="p-presenca" value="Presença"><span><b>Presença · R$ 597/mês</b><small>30 conteúdos, você posta</small></span></label>
+        <label class="opt"><input type="radio" name="plano" id="p-crescimento" value="Crescimento"><span><b>Crescimento · R$ 797/mês</b><small>50 conteúdos, a gente posta</small></span></label>
+        <label class="opt"><input type="radio" name="plano" id="p-autoridade" value="Autoridade"><span><b>Autoridade · R$ 997/mês</b><small>70 conteúdos, a gente posta + tráfego pago</small></span></label>
+      </div>
+      <label class="opt"><input type="radio" name="plano" id="p-nsei" value="Ainda não decidi"><span><b>Ainda não decidi</b><small>A gente te ajuda a escolher</small></span></label>
+    </fieldset>
+
+    <fieldset id="fs-credits" hidden>
+      <legend><span class="n">3</span>Monte seu pacote</legend>
+      <p class="hint">Escolha as peças que você quer usando seus créditos.</p>
+      <div id="credits-off" class="muted-box">Escolha um pacote (Largada, Acelera ou Turbo) na etapa 2 para montar suas peças. Nos planos mensais e nos vídeos as quantidades já vêm definidas.</div>
+      <div id="credits-on" hidden>
+        <div class="credits" id="clist"></div>
+        <div class="meter" id="meter" style="margin-top:12px"><span class="left">Créditos usados: <b id="used">0</b> de <span id="total">0</span></span><span id="mleft"></span></div>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend><span class="n">3</span>Seu negócio</legend>
+      <div class="f"><label for="vende">O que você vende?<span class="req">*</span> <span class="sub">Produtos ou serviços principais</span></label><textarea id="vende" name="vende" required></textarea></div>
+      <div class="f"><label for="carro">Qual produto ou serviço você mais quer vender agora?</label><input type="text" id="carro" name="carro"></div>
+      <div class="f"><label for="diferencial">Por que o cliente deveria comprar de você e não do concorrente?<span class="req">*</span></label><textarea id="diferencial" name="diferencial" required></textarea></div>
+      <div class="row">
+        <div class="f"><label for="preco">Faixa de preço</label><input type="text" id="preco" name="preco" placeholder="Ex.: de R$ 80 a R$ 300"></div>
+        <div class="f"><label for="atende">Como você atende?</label><select id="atende" name="atende"><option value="">Escolha</option><option>Só presencial</option><option>Só online / delivery</option><option>Presencial e online</option></select></div>
+      </div>
+      <div class="f"><label for="endereco">Endereço e horário <span class="sub">Se quiser que apareça nos conteúdos</span></label><input type="text" id="endereco" name="endereco"></div>
+    </fieldset>
+
+    <fieldset>
+      <legend><span class="n">4</span>Seu cliente</legend>
+      <div class="f"><label for="publico">Quem é o seu cliente?<span class="req">*</span> <span class="sub">Idade, homem ou mulher, região, o que faz</span></label><textarea id="publico" name="publico" required></textarea></div>
+      <div class="f"><label for="dor">Que problema ele tem que você resolve?</label><textarea id="dor" name="dor"></textarea></div>
+      <div class="f"><label for="objecao">O que ele mais fala antes de desistir de comprar? <span class="sub">Ex.: "tá caro", "vou pensar"</span></label><textarea id="objecao" name="objecao"></textarea></div>
+      <div class="f"><label for="perguntas">Quais perguntas ele mais faz no WhatsApp?</label><textarea id="perguntas" name="perguntas"></textarea></div>
+    </fieldset>
+
+    <fieldset>
+      <legend><span class="n">5</span>Sua marca</legend>
+      <div class="f"><span class="q">Você já tem logo?</span>
+        <div class="chips">
+          <label class="chip"><input type="radio" name="logo" id="logo-sim" value="Tenho e quero manter"><span>Tenho e quero manter</span></label>
+          <label class="chip"><input type="radio" name="logo" id="logo-renova" value="Tenho, mas quero renovar"><span>Tenho, mas quero renovar</span></label>
+          <label class="chip"><input type="radio" name="logo" id="logo-nao" value="Não tenho"><span>Não tenho</span></label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="f"><label for="cores">Cores que você gosta</label><input type="text" id="cores" name="cores"></div>
+        <div class="f"><label for="naocores">Cores que não quer de jeito nenhum</label><input type="text" id="naocores" name="naocores"></div>
+      </div>
+      <div class="f"><span class="q">Como você quer que sua marca pareça? <span class="sub">Marque quantas quiser</span></span>
+        <div class="chips" id="estilo">
+          <label class="chip"><input type="checkbox" name="estilo" id="e1" value="Moderna"><span>Moderna</span></label>
+          <label class="chip"><input type="checkbox" name="estilo" id="e2" value="Elegante"><span>Elegante</span></label>
+          <label class="chip"><input type="checkbox" name="estilo" id="e3" value="Divertida"><span>Divertida</span></label>
+          <label class="chip"><input type="checkbox" name="estilo" id="e4" value="Minimalista"><span>Minimalista</span></label>
+          <label class="chip"><input type="checkbox" name="estilo" id="e5" value="Popular"><span>Popular</span></label>
+          <label class="chip"><input type="checkbox" name="estilo" id="e6" value="Premium"><span>Premium</span></label>
+          <label class="chip"><input type="checkbox" name="estilo" id="e7" value="Acolhedora"><span>Acolhedora</span></label>
+          <label class="chip"><input type="checkbox" name="estilo" id="e8" value="Técnica / séria"><span>Técnica / séria</span></label>
+        </div>
+      </div>
+      <div class="f"><label for="refs">Perfis que você admira <span class="sub">Pode ser de qualquer área</span></label><input type="text" id="refs" name="refs" placeholder="@perfil1, @perfil2"></div>
+      <div class="f"><label for="concorrentes">Seus principais concorrentes</label><input type="text" id="concorrentes" name="concorrentes" placeholder="@concorrente1, @concorrente2"></div>
+    </fieldset>
+
+    <fieldset>
+      <legend><span class="n">6</span>Jeito de falar</legend>
+      <div class="f"><span class="q">Como você fala com seus clientes?</span>
+        <div class="chips">
+          <label class="chip"><input type="radio" name="tom" id="t1" value="Bem informal, como amigo"><span>Bem informal, como amigo</span></label>
+          <label class="chip"><input type="radio" name="tom" id="t2" value="Simpático, mas profissional"><span>Simpático, mas profissional</span></label>
+          <label class="chip"><input type="radio" name="tom" id="t3" value="Formal"><span>Formal</span></label>
+        </div>
+      </div>
+      <div class="f"><label for="palavras">Palavras ou expressões que você sempre usa</label><input type="text" id="palavras" name="palavras"></div>
+      <div class="f"><label for="proibido">O que não pode aparecer de jeito nenhum? <span class="sub">Palavras, assuntos, promessas</span></label><textarea id="proibido" name="proibido"></textarea></div>
+    </fieldset>
+
+    <fieldset>
+      <legend><span class="n">7</span>Conteúdo</legend>
+      <div class="f"><label for="primeiro">O que você quer divulgar primeiro?<span class="req">*</span></label><textarea id="primeiro" name="primeiro" required></textarea></div>
+      <div class="f"><label for="promo">Tem promoção, lançamento ou data especial chegando?</label><textarea id="promo" name="promo"></textarea></div>
+      <div class="f"><label for="assuntos">Assuntos que você entende e gostaria de ensinar</label><textarea id="assuntos" name="assuntos"></textarea></div>
+      <div class="f"><span class="q">Você topa aparecer nos vídeos?</span>
+        <div class="chips">
+          <label class="chip"><input type="radio" name="aparecer" id="a1" value="Sim, adoro"><span>Sim, adoro</span></label>
+          <label class="chip"><input type="radio" name="aparecer" id="a2" value="Às vezes"><span>Às vezes</span></label>
+          <label class="chip"><input type="radio" name="aparecer" id="a3" value="Prefiro não aparecer"><span>Prefiro não aparecer</span></label>
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend><span class="n">8</span>Materiais</legend>
+      <p class="hint">Fotos e vídeos reais do seu negócio deixam os conteúdos muito melhores.</p>
+      <div class="f"><label for="drive">Link de uma pasta com fotos, vídeos e logo <span class="sub">Google Drive, Dropbox ou parecido</span></label><input type="url" id="drive" name="drive" placeholder="https://"></div>
+      <div class="muted-box">Não tem link? Sem problema: mande os arquivos direto no nosso WhatsApp depois de enviar este briefing. <b>Nunca pedimos senha</b> do seu Instagram; quando for a hora, a gente te explica como liberar o acesso com segurança.</div>
+      <div class="f"><label for="extra">Mais alguma coisa que a gente precisa saber?</label><textarea id="extra" name="extra"></textarea></div>
+    </fieldset>
+
+    <div class="actions">
+      <div class="err" id="err" hidden></div>
+      <button type="submit" class="btn main">Finalizar briefing</button>
+      <div class="saved" id="saved">Suas respostas ficam salvas neste aparelho enquanto você preenche.</div>
+    </div>
+  </form>
+
+  <section id="done" hidden>
+    <span class="eyebrow">Quase lá</span>
+    <h2 id="done-t">Recebemos seu briefing!</h2>
+    <p class="lead" id="done-p">Já está com a gente. Assim que o pagamento for confirmado, seus conteúdos chegam em até 24 h na sua área do cliente. Se quiser, mande também uma cópia no nosso WhatsApp.</p>
+    <div class="actions">
+      <button type="button" class="btn main" id="copy">Copiar respostas</button>
+      <a class="btn dark" id="wa" href="#" target="_blank" rel="noopener" hidden>Abrir o WhatsApp com a mensagem</a>
+      <div id="copied" class="ok" hidden>Copiado! Agora cole na conversa com a gente.</div>
+    </div>
+    <label for="summary" class="q">Suas respostas</label>
+    <textarea id="summary" readonly></textarea>
+    <button type="button" class="btn ghost" id="edit">Voltar e editar respostas</button>
+  </section>
+</div>
+
+<script src="assets/config.js"></script>
+<script src="assets/vendor/supabase.js"></script>
+<script src="assets/core.js"></script>
+<script>
+(function () {
+  // Número do WhatsApp da agência com DDI e DDD, só dígitos (ex.: "5561900000000"). Vazio = esconde o botão.
+  var WHATSAPP = (window.CR_CONFIG && window.CR_CONFIG.WHATSAPP) || "";
+
+  var PIECES = [
+    { id: "stories", nome: "Stories", custo: 1 },
+    { id: "post", nome: "Post", custo: 2 },
+    { id: "carrossel", nome: "Carrossel", custo: 3 },
+    { id: "reels", nome: "Reels", custo: 4 },
+    { id: "anuncio", nome: "Anúncio", custo: 5 }
+  ];
+  var KEY = "cr-briefing-v1";
+  var form = document.getElementById("bf");
+  var qty = {};
+  PIECES.forEach(function (p) { qty[p.id] = 0; });
+
+  var clist = document.getElementById("clist");
+  PIECES.forEach(function (p) {
+    var row = document.createElement("div");
+    row.className = "citem";
+    row.innerHTML = '<div><div class="nm"></div><div class="cost"></div></div><div></div>' +
+      '<div class="step"><button type="button" aria-label="Remover">−</button><output aria-live="polite">0</output><button type="button" aria-label="Adicionar">+</button></div>';
+    row.querySelector(".nm").textContent = p.nome;
+    row.querySelector(".cost").textContent = p.custo + (p.custo === 1 ? " crédito" : " créditos");
+    var btns = row.querySelectorAll("button");
+    btns[0].setAttribute("aria-label", "Remover " + p.nome);
+    btns[1].setAttribute("aria-label", "Adicionar " + p.nome);
+    btns[0].addEventListener("click", function () { if (qty[p.id] > 0) { qty[p.id]--; renderCredits(); save(); } });
+    btns[1].addEventListener("click", function () { if (used() + p.custo <= total()) { qty[p.id]++; renderCredits(); save(); } });
+    p.row = row;
+    clist.appendChild(row);
+  });
+
+  function selectedPlan() { return form.querySelector('input[name="plano"]:checked'); }
+  function total() { var s = selectedPlan(); return s && s.dataset.credits ? Number(s.dataset.credits) : 0; }
+  function used() { return PIECES.reduce(function (a, p) { return a + qty[p.id] * p.custo; }, 0); }
+
+  function renderCredits() {
+    var t = total();
+    document.getElementById("credits-on").hidden = !t;
+    document.getElementById("credits-off").hidden = !!t;
+    var u = used();
+    document.getElementById("used").textContent = u;
+    document.getElementById("total").textContent = t;
+    var left = t - u;
+    var meter = document.getElementById("meter");
+    meter.classList.toggle("over", left < 0);
+    document.getElementById("mleft").textContent = left < 0 ? "Passou " + (-left) + " créditos" : "Sobram " + left;
+    PIECES.forEach(function (p) {
+      var b = p.row.querySelectorAll("button");
+      p.row.querySelector("output").textContent = qty[p.id];
+      b[0].disabled = qty[p.id] === 0;
+      b[1].disabled = u + p.custo > t;
+    });
+  }
+
+  function progress() {
+    var req = form.querySelectorAll("[required]");
+    var done = 0;
+    req.forEach(function (el) { if (el.value.trim()) done++; });
+    var all = req.length + 1;
+    if (selectedPlan()) done++;
+    var pct = Math.round(done / all * 100);
+    document.getElementById("pct").textContent = pct + "%";
+    document.getElementById("trk").style.width = pct + "%";
+  }
+
+  function collect() {
+    var d = { campos: {}, grupos: {}, qty: qty };
+    form.querySelectorAll("input[type=text],input[type=tel],input[type=url],textarea,select").forEach(function (el) { d.campos[el.id] = el.value; });
+    form.querySelectorAll("input[type=radio]:checked,input[type=checkbox]:checked").forEach(function (el) {
+      (d.grupos[el.name] = d.grupos[el.name] || []).push(el.id);
+    });
+    return d;
+  }
+
+  function save() {
+    progress();
+    try { localStorage.setItem(KEY, JSON.stringify(collect())); } catch (e) {}
+  }
+
+  function load() {
+    var d;
+    try { d = JSON.parse(localStorage.getItem(KEY) || "null"); } catch (e) { d = null; }
+    if (!d) return;
+    Object.keys(d.campos || {}).forEach(function (id) { var el = document.getElementById(id); if (el) el.value = d.campos[id]; });
+    Object.keys(d.grupos || {}).forEach(function (n) { d.grupos[n].forEach(function (id) { var el = document.getElementById(id); if (el) el.checked = true; }); });
+    PIECES.forEach(function (p) { qty[p.id] = (d.qty && d.qty[p.id]) || 0; });
+  }
+
+  function val(id) { return (document.getElementById(id).value || "").trim(); }
+  function pick(name) {
+    return Array.prototype.map.call(form.querySelectorAll('input[name="' + name + '"]:checked'), function (el) { return el.value; }).join(", ");
+  }
+  function line(label, v) { return v ? "• " + label + ": " + v + "\n" : ""; }
+  function block(title, body) { return body ? "\n*" + title + "*\n" + body : ""; }
+
+  function buildText() {
+    var plano = pick("plano");
+    var pecas = "";
+    if (total()) {
+      PIECES.forEach(function (p) { if (qty[p.id]) pecas += "• " + qty[p.id] + " " + p.nome + "\n"; });
+      pecas += "• Créditos usados: " + used() + " de " + total() + "\n";
+    }
+    var t = "*BRIEFING · CRIATIVOS RÁPIDOS*\n";
+    t += block("Sobre", line("Nome", val("nome")) + line("Empresa", val("empresa")) + line("WhatsApp", val("whats")) + line("Instagram", val("insta")) + line("Cidade", val("cidade")) + line("Segmento", val("segmento")));
+    t += block("Contratou", line("Opção", plano));
+    t += block("Peças do pacote", pecas);
+    t += block("Negócio", line("O que vende", val("vende")) + line("Quer vender mais", val("carro")) + line("Diferencial", val("diferencial")) + line("Preço", val("preco")) + line("Atendimento", val("atende")) + line("Endereço/horário", val("endereco")));
+    t += block("Cliente", line("Quem é", val("publico")) + line("Problema que resolve", val("dor")) + line("Objeções", val("objecao")) + line("Perguntas frequentes", val("perguntas")));
+    t += block("Marca", line("Logo", pick("logo")) + line("Cores que gosta", val("cores")) + line("Cores proibidas", val("naocores")) + line("Estilo", pick("estilo")) + line("Referências", val("refs")) + line("Concorrentes", val("concorrentes")));
+    t += block("Jeito de falar", line("Tom", pick("tom")) + line("Expressões", val("palavras")) + line("Não pode aparecer", val("proibido")));
+    t += block("Conteúdo", line("Divulgar primeiro", val("primeiro")) + line("Promoções/datas", val("promo")) + line("Assuntos", val("assuntos")) + line("Aparecer nos vídeos", pick("aparecer")));
+    t += block("Materiais", line("Pasta", val("drive")) + line("Observações", val("extra")));
+    return t.trim();
+  }
+
+  form.addEventListener("input", save);
+
+  // a IA lê o texto livre e preenche só os campos que ainda estão vazios
+  document.getElementById("ia-ir").addEventListener("click", function () {
+    var btn = this, msg = document.getElementById("ia-msg"), t = document.getElementById("ia-texto").value.trim();
+    if (t.length < 30) { msg.hidden = false; msg.textContent = "Escreva um pouco mais (pelo menos umas duas frases)."; return; }
+    btn.disabled = true; msg.hidden = false; msg.textContent = "Organizando suas respostas…";
+    CR.api.briefingIA(t).then(function (r) {
+      var n = 0;
+      Object.keys(r.campos || {}).forEach(function (id) {
+        var campo = document.getElementById(id), v = r.campos[id];
+        if (campo && v && !campo.value.trim()) { campo.value = v; n++; }
+      });
+      [r.tom, r.aparecer].concat(r.estilo || []).forEach(function (id) {
+        var x = id && document.getElementById(id);
+        if (x && !x.checked) { if (x.type === "radio" && form.querySelector('input[name="' + x.name + '"]:checked')) return; x.checked = true; n++; }
+      });
+      save();
+      msg.textContent = n ? "Pronto! Preenchi " + n + " campos. Revise abaixo e complete o que faltar." : "Não achei nada novo pra preencher. Complete direto no formulário.";
+      if (r.faltou && r.faltou.length) msg.textContent += " Ainda falta: " + r.faltou.join(" ");
+    }).catch(function (e) { msg.textContent = e.message; }).then(function () { btn.disabled = false; });
+  });
+  form.addEventListener("change", function (e) { if (e.target.name === "plano") { trim(); renderCredits(); } save(); });
+
+  // ao trocar para um pacote com menos créditos, remove peças a partir das mais caras
+  function trim() {
+    var t = total();
+    for (var i = PIECES.length - 1; i >= 0 && used() > t; i--) {
+      while (qty[PIECES[i].id] > 0 && used() > t) qty[PIECES[i].id]--;
+    }
+  }
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var missing = [];
+    form.querySelectorAll(".invalid").forEach(function (el) { el.classList.remove("invalid"); });
+    form.querySelectorAll("[required]").forEach(function (el) {
+      if (!el.value.trim()) { el.classList.add("invalid"); missing.push(el); }
+    });
+    var err = document.getElementById("err");
+    if (!selectedPlan()) {
+      err.textContent = "Escolha o que você contratou na etapa 2.";
+      err.hidden = false;
+      document.getElementById("p-largada").focus();
+      return;
+    }
+    if (missing.length) {
+      err.textContent = "Faltam " + missing.length + (missing.length === 1 ? " campo obrigatório" : " campos obrigatórios") + ", marcados em vermelho.";
+      err.hidden = false;
+      missing[0].focus();
+      return;
+    }
+    err.hidden = true;
+    var text = buildText();
+    document.getElementById("summary").value = text;
+    var btnF = form.querySelector("button[type=submit]");
+    btnF.disabled = true;
+    CR.api.enviarBriefing({ nome: val("nome"), empresa: val("empresa"), whatsapp: val("whats"), plano: pick("plano"), texto: text, respostas: collect() })
+      .then(function () {
+        document.getElementById("done-t").textContent = "Recebemos seu briefing!";
+        try { localStorage.removeItem(KEY); } catch (x) {}
+      })
+      .catch(function () {
+        document.getElementById("done-t").textContent = "Agora é só mandar pra gente";
+        document.getElementById("done-p").textContent = "Não conseguimos salvar automaticamente. Toque em copiar e cole a mensagem na nossa conversa do WhatsApp.";
+      })
+      .then(function () { btnF.disabled = false; });
+    var wa = document.getElementById("wa");
+    if (WHATSAPP) { wa.href = "https://wa.me/" + WHATSAPP + "?text=" + encodeURIComponent(text); wa.hidden = false; }
+    form.hidden = true; document.getElementById("ia-box").hidden = true;
+    document.querySelector("header.hero").hidden = true;
+    document.getElementById("done").hidden = false;
+    window.scrollTo(0, 0);
+  });
+
+  document.getElementById("copy").addEventListener("click", function () {
+    var ta = document.getElementById("summary");
+    var ok = function () { document.getElementById("copied").hidden = false; };
+    var fallback = function () { ta.focus(); ta.select(); try { if (document.execCommand("copy")) ok(); } catch (e) {} };
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(ta.value).then(ok, fallback);
+      else fallback();
+    } catch (e) { fallback(); }
+  });
+
+  document.getElementById("edit").addEventListener("click", function () {
+    form.hidden = false;
+    document.querySelector("header.hero").hidden = false;
+    document.getElementById("done").hidden = true;
+    document.getElementById("copied").hidden = true;
+  });
+
+  load();
+  var qp = (new URLSearchParams(location.search).get("plano") || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  var alvo = qp && document.getElementById("p-" + qp);
+  if (alvo) alvo.checked = true;
+  renderCredits();
+  progress();
+})();
+</script>
+</body>
+</html>
