@@ -14,3 +14,7 @@ verify_jwt = false
 # A "whatsapp" recebe o webhook da Meta (sem login) e confere a assinatura.
 [functions.whatsapp]
 verify_jwt = false
+
+# A "redes" confere o login sozinha (o agendador chama /agendado sem login).
+[functions.redes]
+verify_jwt = false

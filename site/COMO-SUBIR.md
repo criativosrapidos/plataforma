@@ -247,3 +247,19 @@ A atendente (Lili do Zap, no organograma) responde na hora quem chama a agência
 7. No painel, em **Agenda**, marque os horários livres, cole o link da sala e escreva o treino da atendente.
 
 **Custo:** responder quem chamou não paga mensagem à Meta (janela de 24 h); anúncio de clique pro WhatsApp abre janela grátis de 72 h. Só modelos que a agência inicia são cobrados por mensagem. A IA custa por resposta: no nível "Econômica" fica bem barato.
+
+## Parte 8 · Estúdio (artes e vídeos) e publicação em todas as redes
+
+**Fluxo do nosso marketing (e, se quiser, dos clientes):** a esteira escreve (pauta, roteiro, copy, direção) → o **Estúdio** gera a arte (post, carrossel, stories, anúncio) ou o vídeo (reels com texto animado e narração na voz da agência) → aparece em **Entregas** pra aprovar → vai sozinho pras redes escolhidas, no dia e horário marcados.
+
+**Estúdio** (pasta `estudio/`, roda no GitHub Actions de hora em hora, das 8h às 20h):
+1. Cadastre no GitHub o secret `SUPABASE_SERVICE_ROLE_KEY` (Supabase → Project Settings → API → service_role). Pra narração, `ELEVENLABS_API_KEY`.
+2. O GitHub só roda agendamentos de arquivos que estão no **branch principal** do repositório. Enquanto isso, dá pra rodar em **Actions → Estúdio → Run workflow**.
+3. Em Agentes IA → "A Criativos Rápidos também é cliente", escolha se o Estúdio produz só o nosso marketing ou também o dos clientes.
+4. As artes usam as cores, as fontes e o logo cadastrados em **Marcas dos clientes** (pra agência, as da Criativos Rápidos).
+
+**Redes pelo Postiz** (Instagram, Facebook, TikTok, LinkedIn, X, YouTube, Threads, Pinterest e outras):
+1. Crie a conta em https://postiz.com (ou instale o Postiz próprio) e conecte os perfis da agência e dos clientes. Dica: um "grupo" por cliente.
+2. Em **Settings → Public API**, gere a chave e cadastre no GitHub como `POSTIZ_API_KEY` (se for Postiz próprio, também `POSTIZ_API_URL`).
+3. No painel: **Clientes → Redes → Escolher** pra cada cliente, e **Agentes IA → Escolher nossas redes** pra agência.
+4. TikTok e YouTube só recebem vídeo; stories vão pro Instagram e Facebook. Se o Instagram do cliente for pelo Postiz, a postagem direta da plataforma é desligada pra não sair duas vezes.

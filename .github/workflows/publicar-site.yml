@@ -3,7 +3,7 @@
 #   HostGator (FTP):  FTP_SERVER, FTP_USERNAME, FTP_PASSWORD e, opcional, FTP_DIR (padrão public_html/)
 #   Supabase:         SUPABASE_ACCESS_TOKEN, SUPABASE_DB_URL e, opcional, SUPABASE_PROJECT_REF
 #   Chaves das funções (opcionais): ANTHROPIC_API_KEY, META_ADS_TOKEN, CRON_SECRET, IG_APP_ID, IG_APP_SECRET,
-#     WHATSAPP_TOKEN, WHATSAPP_PHONE_ID, WHATSAPP_VERIFY_TOKEN, WHATSAPP_APP_SECRET, WHATSAPP_TEMPLATE_CONTATO, ELEVENLABS_API_KEY, ELEVENLABS_VOZ
+#     WHATSAPP_TOKEN, WHATSAPP_PHONE_ID, WHATSAPP_VERIFY_TOKEN, WHATSAPP_APP_SECRET, WHATSAPP_TEMPLATE_CONTATO, ELEVENLABS_API_KEY, ELEVENLABS_VOZ, POSTIZ_API_KEY
 name: Publicar site e plataforma
 
 on:
@@ -68,9 +68,10 @@ jobs:
           WHATSAPP_TEMPLATE_CONTATO: ${{ secrets.WHATSAPP_TEMPLATE_CONTATO }}
           ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}
           ELEVENLABS_VOZ: ${{ secrets.ELEVENLABS_VOZ }}
+          POSTIZ_API_KEY: ${{ secrets.POSTIZ_API_KEY }}
         run: |
           args=()
-          for k in ANTHROPIC_API_KEY META_ADS_TOKEN CRON_SECRET IG_APP_ID IG_APP_SECRET WHATSAPP_TOKEN WHATSAPP_PHONE_ID WHATSAPP_VERIFY_TOKEN WHATSAPP_APP_SECRET WHATSAPP_TEMPLATE_CONTATO ELEVENLABS_API_KEY ELEVENLABS_VOZ; do
+          for k in ANTHROPIC_API_KEY META_ADS_TOKEN CRON_SECRET IG_APP_ID IG_APP_SECRET WHATSAPP_TOKEN WHATSAPP_PHONE_ID WHATSAPP_VERIFY_TOKEN WHATSAPP_APP_SECRET WHATSAPP_TEMPLATE_CONTATO ELEVENLABS_API_KEY ELEVENLABS_VOZ POSTIZ_API_KEY; do
             [ -n "${!k}" ] && args+=("$k=${!k}")
           done
           args+=("SITE_URL=https://criativosrapidos.com.br")
@@ -79,7 +80,7 @@ jobs:
       - name: Funções (instagram, trafego, agentes)
         if: env.TEM_SUPABASE == 'true'
         working-directory: site
-        run: supabase functions deploy instagram trafego agentes whatsapp --project-ref "$PROJETO" --no-verify-jwt
+        run: supabase functions deploy instagram trafego agentes whatsapp redes --project-ref "$PROJETO" --no-verify-jwt
 
       - name: Agendamentos (pg_cron)
         if: env.TEM_SUPABASE == 'true' && secrets.CRON_SECRET != ''

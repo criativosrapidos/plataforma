@@ -17,6 +17,7 @@ create table if not exists public.perfis (
 -- marca do cliente e quem da equipe cuida dele (a agência preenche)
 alter table public.perfis add column if not exists marca jsonb;        -- { cores: [], fontes, tom, palavras, evitar, obs }
 alter table public.perfis add column if not exists responsavel uuid;   -- id em public.equipe
+alter table public.perfis add column if not exists redes text[];       -- canais do Postiz onde os conteúdos dele são publicados
 alter table public.perfis add column if not exists meta_ad_account text; -- conta de anúncio no Meta (act_...), pro relatório de tráfego
 
 -- cria o perfil automaticamente quando alguém cria a conta em /entrar
@@ -48,7 +49,7 @@ language plpgsql security definer set search_path = public as $$
 begin
   if auth.uid() is not null and not public.is_admin() then
     new.papel := old.papel; new.plano := old.plano; new.ajustes_mes := old.ajustes_mes; new.email := old.email; new.instagram := old.instagram;
-    new.marca := old.marca; new.responsavel := old.responsavel; new.meta_ad_account := old.meta_ad_account;
+    new.marca := old.marca; new.responsavel := old.responsavel; new.redes := old.redes; new.meta_ad_account := old.meta_ad_account;
   end if;
   return new;
 end $$;
@@ -90,6 +91,9 @@ alter table public.entregas add column if not exists publicado_em timestamptz;
 alter table public.entregas add column if not exists publicado_link text;
 alter table public.entregas add column if not exists publicacao_erro text;
 alter table public.entregas add column if not exists ig_container text;                     -- vídeo ainda processando no Instagram
+alter table public.entregas add column if not exists redes text[];                          -- canais do Postiz só dessa entrega (senão, os do cliente)
+alter table public.entregas add column if not exists redes_enviado_em timestamptz;          -- quando foi pro Postiz
+alter table public.entregas add column if not exists redes_resultado jsonb;
 
 -- cliente só pode aprovar ou pedir ajuste (status + comentário); o resto só a agência
 create or replace function public.protege_entrega() returns trigger
@@ -104,6 +108,7 @@ begin
     new.link_externo := old.link_externo; new.hora_postagem := old.hora_postagem; new.extras := old.extras;
     new.publicar := old.publicar; new.publicado_em := old.publicado_em; new.publicado_link := old.publicado_link;
     new.publicacao_erro := old.publicacao_erro; new.ig_container := old.ig_container;
+    new.redes := old.redes; new.redes_enviado_em := old.redes_enviado_em; new.redes_resultado := old.redes_resultado;
   end if;
   new.atualizado_em := now();
   return new;
@@ -562,7 +567,8 @@ drop policy if exists "config: agência" on public.configuracoes;
 create policy "config: agência" on public.configuracoes for all using (public.is_admin()) with check (public.is_admin());
 insert into public.configuracoes (chave, valor) values
   ('agenda', '{"dias": [1, 2, 3, 4, 5], "inicio": "09:00", "fim": "18:00", "duracao": 30, "antecedencia_horas": 3, "link": ""}'),
-  ('atendente', '{"texto": "", "audio": false}')
+  ('atendente', '{"texto": "", "audio": false}'),
+  ('estudio', '{"quem": "nos", "max": 12}')
 on conflict (chave) do nothing;
 
 -- ============================================================ Instagram conectado (o token fica só no servidor)

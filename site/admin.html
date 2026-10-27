@@ -181,7 +181,7 @@
     <!-- CLIENTES -->
     <main class="view" id="v-clientes" hidden>
       <div class="view-head"><div><h1>Clientes</h1><p class="lead">O cliente cria a conta em <b>/entrar</b> com o e-mail do contrato. Aqui você escolhe o plano (os ajustes se preenchem sozinhos) e quem da equipe cuida dele.</p></div></div>
-      <div class="card scroll"><table class="t" id="t-cli"><thead><tr><th>Cliente</th><th>Contato</th><th>Instagram</th><th>Plano</th><th>Ajustes</th><th>Responsável</th><th>Entregas</th><th></th></tr></thead><tbody></tbody></table></div>
+      <div class="card scroll"><table class="t" id="t-cli"><thead><tr><th>Cliente</th><th>Contato</th><th>Instagram</th><th>Plano</th><th>Ajustes</th><th>Responsável</th><th>Redes</th><th>Entregas</th><th></th></tr></thead><tbody></tbody></table></div>
     </main>
 
     <!-- BRIEFINGS -->
@@ -422,6 +422,16 @@
     <div class="err" id="ld-err" hidden></div>
     <div class="acts"><button class="btn ghost" type="button" id="ld-cancel">Cancelar</button><button class="btn" type="submit">Salvar</button></div>
   </form>
+</dialog>
+
+<dialog id="dlg-redes">
+  <div class="in">
+    <h2 id="rd-titulo">Redes</h2>
+    <p class="small muted" style="margin:6px 0 12px">Os conteúdos aprovados vão pra esses canais no dia e horário do calendário. Os canais são os conectados na conta da agência no Postiz.</p>
+    <div id="rd-lista" style="display:grid;gap:8px"></div>
+    <div class="err" id="rd-err" hidden></div>
+    <div class="acts" style="margin-top:14px"><button class="btn ghost" type="button" id="rd-cancel">Cancelar</button><button class="btn" type="button" id="rd-salvar">Salvar</button></div>
+  </div>
 </dialog>
 
 <dialog id="dlg-conversa">
@@ -752,7 +762,16 @@
       el("div", { class: "meta", text: nomeCli(e.cliente_id) + (e.data_postagem ? " · postar " + CR.dataLonga(e.data_postagem) : "") }),
       e.status === "ajuste" && e.comentario ? el("div", { class: "coment" }, [el("b", { text: "Pedido do cliente: " }), e.comentario]) : null,
       linhaIG(e),
+      linhaRedes(e),
       el("div", { class: "acts" }, [
+        // o nosso próprio marketing: quem aprova é a agência
+        e.cliente_id === eu.id && e.status !== "aprovado" ? el("button", { class: "btn ok sm", type: "button", onclick: async function () {
+          this.disabled = true; try { await api.editarEntrega(e.id, { status: "aprovado" }); CR.toast("Aprovado. Vai pras nossas redes no horário marcado."); await carregar(); } catch (x) { CR.toast(x.message, true); this.disabled = false; }
+        } }, [ic("check"), "Aprovar"]) : null,
+        e.status === "aprovado" && e.arquivo_path && !e.redes_enviado_em && redesDe(e).length ? el("button", { class: "btn sm", type: "button", onclick: async function () {
+          this.disabled = true; CR.toast("Mandando pro Postiz…");
+          try { var r = await api.enviarRedes(e.id); CR.toast("Agendado em: " + r.map(function (x) { return NOME_REDE[x] || x; }).join(", ")); await carregar(); } catch (x) { CR.toast(x.message, true); this.disabled = false; }
+        } }, [ic("send"), "Mandar pras redes"]) : null,
         troca,
         podePostar(e) ? el("button", { class: "btn dark sm", type: "button", onclick: async function () {
           this.disabled = true; CR.toast("Publicando no Instagram…");
@@ -770,6 +789,13 @@
     ])]);
   }
 
+  function redesDe(e) { var c = cli(e.cliente_id); return (e.redes && e.redes.length ? e.redes : c && c.redes) || []; }
+  function linhaRedes(e) {
+    if (e.redes_resultado && e.redes_resultado.erro) return el("div", { class: "ig erro" }, [ic("info"), "Redes: " + e.redes_resultado.erro]);
+    if (e.redes_enviado_em) return el("div", { class: "ig ok" }, [ic("check"), "Agendado nas redes: " + ((e.redes_resultado && e.redes_resultado.canais) || []).map(function (x) { return NOME_REDE[x] || x; }).join(", ")]);
+    var n = redesDe(e).length;
+    return n ? el("div", { class: "ig muted" }, [ic("send"), (e.status === "aprovado" ? "Vai pra " : "Depois de aprovado, vai pra ") + n + (n === 1 ? " rede" : " redes") + " pelo Postiz"]) : null;
+  }
   function igDe(id) { var c = cli(id); return c && c.instagram; }
   function podePostar(e) { return e.status === "aprovado" && !e.publicado_em && igDe(e.cliente_id) && (e.arquivo_path || e.demo_url); }
   function linhaIG(e) {
@@ -820,7 +846,7 @@
   // ---------------------------------------------------------------- clientes
   function renderClientes() {
     var tb = document.querySelector("#t-cli tbody"); tb.textContent = "";
-    if (!clientes.length) { tb.appendChild(el("tr", {}, el("td", { colspan: "8", class: "muted", text: "Nenhum cliente criou conta ainda. Mande o link criativosrapidos.com.br/entrar." }))); return; }
+    if (!clientes.length) { tb.appendChild(el("tr", {}, el("td", { colspan: "9", class: "muted", text: "Nenhum cliente criou conta ainda. Mande o link criativosrapidos.com.br/entrar." }))); return; }
     clientes.forEach(function (c) {
       var plano = el("select", { "aria-label": "Plano de " + (c.nome || c.email) });
       [["", "Sem plano"], ["plano", "Planos mensais"], ["pacote", "Pacotes"]].forEach(function (g) {
@@ -843,6 +869,7 @@
         el("td", { class: "small" }, [c.email || "", el("br"), w ? el("a", { href: w, target: "_blank", rel: "noopener", text: c.whatsapp }) : (c.whatsapp || "")]),
         el("td", { class: "small" }, c.instagram ? el("a", { href: "https://www.instagram.com/" + c.instagram + "/", target: "_blank", rel: "noopener", text: "@" + c.instagram }) : el("span", { class: "muted", text: "não conectado" })),
         el("td", {}, plano), el("td", {}, aj), el("td", {}, resp),
+        el("td", {}, el("button", { class: "btn ghost sm", type: "button", text: (c.redes || []).length ? (c.redes.length === 1 ? "1 rede" : c.redes.length + " redes") : "Escolher", onclick: function () { abrirRedes(c); } })),
         el("td", { class: "small", text: n.length + (pend ? " (" + pend + " pendentes)" : "") }),
         el("td", {}, el("button", { class: "btn sm", type: "button", text: "Salvar", onclick: async function () {
           try { await api.salvarPerfil(c.id, { plano: plano.value, ajustes_mes: parseInt(aj.value, 10) || 0, responsavel: resp.value || null }); CR.toast("Cliente atualizado."); await carregar(); } catch (x) { CR.toast(x.message, true); }
@@ -1483,11 +1510,17 @@
     sel.appendChild(el("option", { value: "Sem plano", text: "Não produzir pra nós" }));
     CR.PLANOS.filter(function (p) { return p.grupo === "plano"; }).forEach(function (p) { sel.appendChild(el("option", { value: p.nome, text: "No ritmo do plano " + p.nome + " (" + CR.totalPlano(p) + " conteúdos/mês)" })); });
     sel.value = CR.plano(eu.plano).grupo === "plano" ? eu.plano : "Sem plano";
+    var est = el("select", { "aria-label": "O que o Estúdio produz", style: "max-width:420px" });
+    [["nos", "Estúdio gera as artes e vídeos só do nosso marketing"], ["todos", "Estúdio gera as do nosso marketing e as dos clientes"]].forEach(function (o) { est.appendChild(el("option", { value: o[0], text: o[1] })); });
+    tenta(function () { return api.config("estudio"); }, {}).then(function (v) { est.value = v.quem || "nos"; });
+    est.addEventListener("change", async function () { try { await api.salvarConfig("estudio", { quem: est.value, max: 12 }); CR.toast("Estúdio atualizado."); } catch (x) { CR.toast(x.message, true); } });
     c.append(el("h2", { text: "A Criativos Rápidos também é cliente" }),
-      el("p", { class: "small muted", style: "margin:0", text: "Escolha o ritmo e a esteira monta a pauta, os roteiros e as legendas do nosso próprio Instagram, como faz com os clientes. Pra ela conhecer a agência, preencha o /brief logado como agência e a nossa marca em Marca e materiais." }),
+      el("p", { class: "small muted", style: "margin:0", text: "Escolha o ritmo e a esteira monta a pauta, os roteiros e as legendas do nosso marketing, o Estúdio gera as artes e os vídeos e tudo vai pras nossas redes, como faz com os clientes. Pra ela conhecer a agência, preencha o /brief logado como agência e a nossa marca em Marca e materiais." }),
       el("div", { style: "display:flex;gap:8px;flex-wrap:wrap" }, [sel, el("button", { class: "btn sm", type: "button", text: "Salvar", onclick: async function () {
         try { await api.salvarPerfil(eu.id, { plano: sel.value }); eu.plano = sel.value; CR.toast("Pronto. A esteira inclui a agência a partir da próxima pauta."); await carregar(); } catch (x) { CR.toast(x.message, true); }
-      } })]));
+      } }), el("button", { class: "btn ghost sm", type: "button", text: (eu.redes || []).length ? "Nossas redes (" + eu.redes.length + ")" : "Escolher nossas redes", onclick: function () { abrirRedes(eu); } })]),
+      el("p", { class: "small muted", style: "margin:4px 0 0", text: "Fluxo do nosso marketing: a esteira escreve, o Estúdio gera a arte ou o vídeo, você aprova em Entregas e ele vai sozinho pras redes escolhidas no horário marcado." }),
+      est);
   }
 
   // ---------------------------------------------------------------- esteira de produção
@@ -1767,6 +1800,28 @@
       ]));
     });
   }
+
+  // ---------------------------------------------------------------- redes (Postiz) de cada cliente e da agência
+  var dlgRd = document.getElementById("dlg-redes"), rdPerfil = null, canaisCache = null;
+  var NOME_REDE = { instagram: "Instagram", "instagram-standalone": "Instagram", facebook: "Facebook", tiktok: "TikTok", linkedin: "LinkedIn", "linkedin-page": "LinkedIn (página)", x: "X (Twitter)", youtube: "YouTube", threads: "Threads", pinterest: "Pinterest", gmb: "Google Meu Negócio" };
+  async function abrirRedes(perfil) {
+    rdPerfil = perfil;
+    document.getElementById("rd-titulo").textContent = "Redes de " + (perfil.id === eu.id ? "Criativos Rápidos" : (perfil.empresa || perfil.nome));
+    var l = document.getElementById("rd-lista"), er = document.getElementById("rd-err"); l.textContent = ""; er.hidden = true;
+    dlgRd.showModal();
+    try { canaisCache = canaisCache || await api.redesCanais(); } catch (x) { er.textContent = x.message; er.hidden = false; return; }
+    if (!canaisCache.length) l.appendChild(el("p", { class: "small muted", text: "Nenhum canal conectado no Postiz ainda. Conecte as redes lá (Instagram, Facebook, TikTok, LinkedIn, X, YouTube…) e volte aqui." }));
+    canaisCache.forEach(function (c) {
+      l.appendChild(el("label", { class: "chk", style: "margin:0" }, [el("input", { type: "checkbox", value: c.id, checked: (perfil.redes || []).indexOf(c.id) >= 0 }), el("span", {}, [el("b", { text: NOME_REDE[c.rede] || c.rede }), " · " + (c.nome || "")])]));
+    });
+  }
+  document.getElementById("rd-cancel").addEventListener("click", function () { dlgRd.close(); });
+  document.getElementById("rd-salvar").addEventListener("click", async function () {
+    var ids = Array.prototype.map.call(document.querySelectorAll("#rd-lista input:checked"), function (x) { return x.value; });
+    try { await api.salvarPerfil(rdPerfil.id, { redes: ids.length ? ids : null }); if (rdPerfil.id === eu.id) eu.redes = ids; dlgRd.close(); CR.toast("Redes salvas."); await carregar(); }
+    catch (x) { var er = document.getElementById("rd-err"); er.textContent = x.message; er.hidden = false; }
+  });
+  function nomeRedes(ids) { return (ids || []).map(function (id) { var c = (canaisCache || []).find(function (x) { return x.id === id; }); return c ? (NOME_REDE[c.rede] || c.rede) : null; }).filter(Boolean); }
 
   nav.ir(location.hash.slice(1) || "visao");
   carregar();

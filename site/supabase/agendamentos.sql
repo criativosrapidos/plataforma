@@ -14,6 +14,12 @@ select cron.schedule('trafego-meta', '0 9 * * *', format($c$
     headers := jsonb_build_object('Content-Type', 'application/json', 'x-cron-secret', %L));
 $c$, :'projeto', :'segredo'));
 
+-- conteúdos aprovados vão pro Postiz (todas as redes) a cada 15 minutos
+select cron.schedule('redes-postiz', '*/15 * * * *', format($c$
+  select net.http_post(url := 'https://%s.supabase.co/functions/v1/redes/agendado',
+    headers := jsonb_build_object('Content-Type', 'application/json', 'x-cron-secret', %L), timeout_milliseconds := 120000);
+$c$, :'projeto', :'segredo'));
+
 -- a esteira roda de hora em hora, das 6h às 20h de Brasília, em sequência dentro da hora
 -- (pauta :00, roteiro :10, copy :20, arte :30, edição :35); cada rodada pega um lote, então com muitos clientes
 -- o trabalho vai sendo feito ao longo do dia. Os outros agentes rodam 1 vez por dia às 7h20.
