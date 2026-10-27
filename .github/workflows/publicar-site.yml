@@ -2,7 +2,8 @@
 # Cada parte só roda se os acessos dela estiverem em Settings > Secrets and variables > Actions:
 #   HostGator (FTP):  FTP_SERVER, FTP_USERNAME, FTP_PASSWORD e, opcional, FTP_DIR (padrão public_html/)
 #   Supabase:         SUPABASE_ACCESS_TOKEN, SUPABASE_DB_URL e, opcional, SUPABASE_PROJECT_REF
-#   Chaves das funções (opcionais): ANTHROPIC_API_KEY, META_ADS_TOKEN, CRON_SECRET, IG_APP_ID, IG_APP_SECRET
+#   Chaves das funções (opcionais): ANTHROPIC_API_KEY, META_ADS_TOKEN, CRON_SECRET, IG_APP_ID, IG_APP_SECRET,
+#     WHATSAPP_TOKEN, WHATSAPP_PHONE_ID, WHATSAPP_VERIFY_TOKEN, WHATSAPP_APP_SECRET, WHATSAPP_TEMPLATE_CONTATO, ELEVENLABS_API_KEY, ELEVENLABS_VOZ
 name: Publicar site e plataforma
 
 on:
@@ -60,9 +61,16 @@ jobs:
           CRON_SECRET: ${{ secrets.CRON_SECRET }}
           IG_APP_ID: ${{ secrets.IG_APP_ID }}
           IG_APP_SECRET: ${{ secrets.IG_APP_SECRET }}
+          WHATSAPP_TOKEN: ${{ secrets.WHATSAPP_TOKEN }}
+          WHATSAPP_PHONE_ID: ${{ secrets.WHATSAPP_PHONE_ID }}
+          WHATSAPP_VERIFY_TOKEN: ${{ secrets.WHATSAPP_VERIFY_TOKEN }}
+          WHATSAPP_APP_SECRET: ${{ secrets.WHATSAPP_APP_SECRET }}
+          WHATSAPP_TEMPLATE_CONTATO: ${{ secrets.WHATSAPP_TEMPLATE_CONTATO }}
+          ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}
+          ELEVENLABS_VOZ: ${{ secrets.ELEVENLABS_VOZ }}
         run: |
           args=()
-          for k in ANTHROPIC_API_KEY META_ADS_TOKEN CRON_SECRET IG_APP_ID IG_APP_SECRET; do
+          for k in ANTHROPIC_API_KEY META_ADS_TOKEN CRON_SECRET IG_APP_ID IG_APP_SECRET WHATSAPP_TOKEN WHATSAPP_PHONE_ID WHATSAPP_VERIFY_TOKEN WHATSAPP_APP_SECRET WHATSAPP_TEMPLATE_CONTATO ELEVENLABS_API_KEY ELEVENLABS_VOZ; do
             [ -n "${!k}" ] && args+=("$k=${!k}")
           done
           args+=("SITE_URL=https://criativosrapidos.com.br")
@@ -71,7 +79,7 @@ jobs:
       - name: Funções (instagram, trafego, agentes)
         if: env.TEM_SUPABASE == 'true'
         working-directory: site
-        run: supabase functions deploy instagram trafego agentes --project-ref "$PROJETO" --no-verify-jwt
+        run: supabase functions deploy instagram trafego agentes whatsapp --project-ref "$PROJETO" --no-verify-jwt
 
       - name: Agendamentos (pg_cron)
         if: env.TEM_SUPABASE == 'true' && secrets.CRON_SECRET != ''

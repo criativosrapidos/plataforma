@@ -230,3 +230,20 @@ Toda mudança na pasta `site/` do branch `claude/generic-sales-proposal-lok7t4` 
 | `IG_APP_ID`, `IG_APP_SECRET` | só se ainda não estiverem no Supabase (Parte 3) |
 
 O `assets/config.js` (com as chaves do Supabase) e o `enviar.php` que já estão na HostGator **não são substituídos**. Pra publicar na hora, sem esperar uma mudança: GitHub → **Actions → Publicar site e plataforma → Run workflow**.
+
+## Parte 7 · WhatsApp oficial com a atendente de IA
+
+A atendente (Lívia, no organograma) responde na hora quem chama a agência no WhatsApp, entende o negócio, tira dúvidas com os planos da tabela, manda áudio com a voz da agência (opcional) e marca a reunião nos horários livres da **Agenda**. A equipe vê a conversa no CRM (ícone de balão no cartão) e pode assumir a qualquer momento.
+
+**Regra que mantém o número vivo:** pela API oficial a plataforma só responde quem chamou ou quem pediu contato no site. Lista fria (Importar lista no CRM) fica marcada como "sem consentimento": o agente de Prospecção prepara a abordagem e a equipe manda do próprio celular, poucas por dia.
+
+**Configuração (uma vez só):**
+1. Em https://business.facebook.com → **WhatsApp Manager**, crie a conta do WhatsApp Business Platform e adicione um número **que não esteja em uso no WhatsApp do celular** (ou migre o atual).
+2. No app da Meta (o mesmo do Instagram), adicione o produto **WhatsApp**. Copie o **ID do número de telefone**.
+3. No usuário do sistema (Parte 4), gere um token com `whatsapp_business_messaging` e `whatsapp_business_management`.
+4. Em **WhatsApp → Configuração → Webhook**: URL `https://SEU-PROJETO.supabase.co/functions/v1/whatsapp/webhook`, token de verificação = uma senha que você inventar; assine o campo `messages`.
+5. (Opcional) Crie e aprove um **modelo** de primeiro contato (categoria Marketing ou Utilidade), ex.: "Oi, {{1}}! Aqui é da Criativos Rápidos, você pediu contato pelo nosso site. Posso te ajudar?".
+6. Cadastre no GitHub (Parte 6): `WHATSAPP_TOKEN`, `WHATSAPP_PHONE_ID`, `WHATSAPP_VERIFY_TOKEN` (a senha do passo 4), `WHATSAPP_APP_SECRET` (chave secreta do app), `WHATSAPP_TEMPLATE_CONTATO` (nome do modelo) e, pra áudio, `ELEVENLABS_API_KEY` (e `ELEVENLABS_VOZ` se quiser outra voz).
+7. No painel, em **Agenda**, marque os horários livres, cole o link da sala e escreva o treino da atendente.
+
+**Custo:** responder quem chamou não paga mensagem à Meta (janela de 24 h); anúncio de clique pro WhatsApp abre janela grátis de 72 h. Só modelos que a agência inicia são cobrados por mensagem. A IA custa por resposta: no nível "Econômica" fica bem barato.

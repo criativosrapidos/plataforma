@@ -72,6 +72,16 @@
   .est-card:hover { border-color: var(--fg); }
   .est-card .tt { font-weight: 700; font-size: 13.5px; }
   .est-card .st { font-size: 12px; color: var(--muted); }
+  .chat { display: grid; gap: 6px; max-height: 52vh; overflow-y: auto; padding: 4px 2px; margin: 10px 0; }
+  .bolha { max-width: 82%; padding: 8px 12px; border-radius: 14px; font-size: 14px; white-space: pre-wrap; background: var(--surface-2); border: 1px solid var(--line); justify-self: start; }
+  .bolha.saida { justify-self: end; background: var(--wait-bg); border-color: transparent; }
+  .bolha small { display: block; font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .reu { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 12px 14px; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 12px; align-items: center; }
+  .reu.passada { opacity: .6; }
+  .reu .q { font-size: 12.5px; color: var(--muted); }
+  .tag-mini { font-size: 11px; font-weight: 700; border-radius: 99px; padding: 1px 7px; background: var(--surface-2); border: 1px solid var(--line); margin-left: 6px; }
+  .tag-mini.ia { background: var(--ok-bg); color: var(--ok); border-color: transparent; }
+  .tag-mini.frio { background: var(--warn-bg); color: var(--warn); border-color: transparent; }
   #kpis, #fin-kpis, #rel-kpis { grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr)); }
   @media (max-width: 600px) { #kpis, #fin-kpis, #rel-kpis { grid-template-columns: 1fr 1fr; } .stat b { font-size: 21px; } }
 </style>
@@ -116,10 +126,40 @@
     <main class="view" id="v-crm" hidden>
       <div class="view-head">
         <div><h1>CRM</h1><p class="lead">Quem pediu contato pelo site e quem você cadastrou. Mude a etapa no cartão e anote o próximo contato.</p></div>
-        <button class="btn" type="button" id="novo-lead"></button>
+        <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn ghost" type="button" id="importar-lista">Importar lista</button><button class="btn" type="button" id="novo-lead"></button></div>
       </div>
       <div class="stats" id="crm-kpis"></div>
       <div class="board" id="board"></div>
+    </main>
+
+    <!-- AGENDA -->
+    <main class="view" id="v-agenda" hidden>
+      <div class="view-head"><div><h1>Agenda</h1><p class="lead">As reuniões que a atendente de IA marca no WhatsApp e as que vocês marcam. Aqui vocês dizem os horários livres e treinam a atendente.</p></div></div>
+      <div class="stats" id="ag-kpis"></div>
+      <section class="sec"><h2>Próximas reuniões</h2><div class="list" id="l-reu"></div></section>
+      <div class="two">
+        <form class="card pad-l" id="f-agenda" novalidate>
+          <h2 style="margin-bottom:14px">Horários livres</h2>
+          <div class="f"><span class="q">Dias</span><div class="chips-sel" id="ag-dias"></div></div>
+          <div class="row">
+            <div class="f"><label for="ag-ini">Das</label><input type="time" id="ag-ini"></div>
+            <div class="f"><label for="ag-fim">Até</label><input type="time" id="ag-fim"></div>
+          </div>
+          <div class="row">
+            <div class="f"><label for="ag-dur">Duração</label><select id="ag-dur"><option value="15">15 min</option><option value="20">20 min</option><option value="30">30 min</option><option value="45">45 min</option><option value="60">1 hora</option></select></div>
+            <div class="f"><label for="ag-antes">Marcar com antecedência de</label><select id="ag-antes"><option value="1">1 hora</option><option value="3">3 horas</option><option value="12">12 horas</option><option value="24">1 dia</option></select></div>
+          </div>
+          <div class="f"><label for="ag-link">Link da sala <span class="muted small">Google Meet, Zoom… vai junto na confirmação</span></label><input type="url" id="ag-link" placeholder="https://meet.google.com/..."></div>
+          <button class="btn" type="submit">Salvar horários</button>
+        </form>
+        <form class="card pad-l" id="f-treino" novalidate>
+          <h2 style="margin-bottom:6px">Treino da atendente</h2>
+          <p class="small muted" style="margin:0 0 12px">Escreva como vocês querem que ela atenda: perguntas que deve fazer, respostas pras dúvidas comuns, objeções, o que nunca falar. Ela segue isso em toda conversa.</p>
+          <div class="f"><label for="tr-texto">Instruções</label><textarea id="tr-texto" rows="9" placeholder="Ex.: Sempre pergunte o segmento e se já anuncia. Se falar que está caro, explique que o Largada custa R$ 97 e é um bom começo..."></textarea></div>
+          <label class="chk"><input type="checkbox" id="tr-audio"> Responder em áudio quando fizer sentido (voz da agência, precisa da ElevenLabs ligada)</label>
+          <button class="btn" type="submit">Salvar treino</button>
+        </form>
+      </div>
     </main>
 
     <!-- CLIENTES -->
@@ -367,6 +407,28 @@
   </form>
 </dialog>
 
+<dialog id="dlg-conversa">
+  <div class="in">
+    <div style="display:flex;justify-content:space-between;gap:10px;align-items:center"><h2 id="cv-nome"></h2><button class="icon-btn" type="button" id="cv-fechar" aria-label="Fechar"></button></div>
+    <div class="small muted" id="cv-sobre"></div>
+    <label class="chk" style="margin:10px 0 0"><input type="checkbox" id="cv-ia"> Atendente de IA respondendo esse contato</label>
+    <div class="chat" id="cv-chat"></div>
+    <div class="f" style="margin-bottom:8px"><label for="cv-txt">Responder como equipe</label><textarea id="cv-txt" rows="3"></textarea></div>
+    <div class="err" id="cv-err" hidden></div>
+    <div class="acts"><button class="btn ghost" type="button" id="cv-contato">Primeiro contato (modelo aprovado)</button><button class="btn" type="button" id="cv-enviar">Enviar</button></div>
+  </div>
+</dialog>
+
+<dialog id="dlg-import">
+  <form class="in" id="f-import" novalidate>
+    <h2>Importar lista de prospecção</h2>
+    <p class="small muted">Uma pessoa por linha: <b>Nome; WhatsApp; Empresa</b>. Quem entra por aqui fica marcado como <b>sem consentimento</b>: a plataforma não manda WhatsApp automático pra eles. O agente de Prospecção prepara a abordagem e a equipe manda do próprio celular, sem exagero.</p>
+    <div class="f"><label for="im-txt">Lista</label><textarea id="im-txt" rows="8" placeholder="Rafa Barbearia; (61) 98888-0000; Barbearia do Rafa"></textarea></div>
+    <div class="err" id="im-err" hidden></div>
+    <div class="acts"><button class="btn ghost" type="button" id="im-cancel">Cancelar</button><button class="btn" type="submit">Importar</button></div>
+  </form>
+</dialog>
+
 <dialog id="dlg-agente">
   <form class="in" id="f-agente" novalidate>
     <h2 id="ag-titulo">Novo agente</h2>
@@ -388,7 +450,7 @@
       <div class="f"><label for="ag-modelo">Inteligência</label><select id="ag-modelo"><option value="claude-opus-5-5">Máxima (Claude Opus 5.5)</option><option value="claude-sonnet-5-5">Equilibrada (Claude Sonnet 5.5)</option><option value="claude-haiku-5-5">Econômica (Claude Haiku 5.5)</option></select></div>
     </div>
     <div class="row">
-      <div class="f"><label for="ag-etapa">Trabalha na esteira</label><select id="ag-etapa"><option value="">Não (deixa rascunhos)</option><option value="pauta">Pauta do mês</option><option value="roteiro">Roteiro</option><option value="copy">Copy (legenda e texto da arte)</option><option value="arte">Direção de arte</option><option value="edicao">Plano de edição de vídeo</option></select></div>
+      <div class="f"><label for="ag-etapa">Trabalha na esteira</label><select id="ag-etapa"><option value="">Não (deixa rascunhos)</option><option value="whatsapp">Atende o WhatsApp (responde na hora)</option><option value="pauta">Pauta do mês</option><option value="roteiro">Roteiro</option><option value="copy">Copy (legenda e texto da arte)</option><option value="arte">Direção de arte</option><option value="edicao">Plano de edição de vídeo</option></select></div>
       <div class="f"><label for="ag-auto">Aprovação</label><select id="ag-auto"><option value="aprovar">Pede aprovação antes</option><option value="automatico">Age sozinho</option></select></div>
     </div>
     <label class="chk"><input type="checkbox" id="ag-ativo" checked> Ativo</label>
@@ -468,7 +530,7 @@
   var nav = CR.menu({
     grupos: [
       ["", [["visao", "Visão geral", "chart", "Geral"]]],
-      ["Relacionamento", [["crm", "CRM", "target"], ["clientes", "Clientes", "users"]]],
+      ["Relacionamento", [["crm", "CRM", "target"], ["agenda", "Agenda", "cal"], ["clientes", "Clientes", "users"]]],
       ["Produção", [["briefings", "Briefings", "inbox"], ["ideias", "Ideias", "idea"], ["esteira", "Esteira", "play"], ["entregas", "Entregas", "grid"], ["marca", "Marca e materiais", "brand"]]],
       ["Resultados", [["financeiro", "Financeiro", "money"], ["relatorios", "Relatórios", "report"]]],
       ["Equipe", [["ia", "Agentes IA", "bot"], ["equipe", "Equipe", "team"]]]
@@ -476,7 +538,7 @@
     aba: ["visao", "crm", "ideias", "entregas"]
   });
   var clientes = [], entregas = [], briefings = [], leads = [];
-  var ideias = [], materiais = [], relatorios = [], cobrancas = [], equipe = [], ajustes = [], agentesIA = [], sugestoes = [], producao = [];
+  var ideias = [], materiais = [], relatorios = [], cobrancas = [], equipe = [], ajustes = [], agentesIA = [], sugestoes = [], producao = [], reunioes = [];
   var hoje = new Date(); hoje.setHours(0, 0, 0, 0);
   var hj = CR.iso(hoje);
   var mesAtual = new Date(hoje.getFullYear(), hoje.getMonth(), 1);
@@ -523,8 +585,9 @@
     agentesIA = await tenta(function () { return api.agentes(); }, []);
     sugestoes = await tenta(function () { return api.sugestoes(); }, []);
     producao = await tenta(function () { return api.producao(); }, []);
+    reunioes = await tenta(function () { return api.reunioes(); }, []);
     selects(); badges(); visao(); renderEntregas(); renderClientes(); renderBriefings(); renderLeads();
-    renderIdeias(); briefDoCliente(); renderMarca(); renderFin(); renderRel(); renderEquipe(); renderIA(); renderEsteira();
+    renderIdeias(); briefDoCliente(); renderMarca(); renderFin(); renderRel(); renderEquipe(); renderIA(); renderEsteira(); renderAgenda();
   }
 
   function atrasadas() { return cobrancas.filter(function (c) { return c.status === "aberta" && c.vencimento < hj; }); }
@@ -537,7 +600,8 @@
       ideias: ideias.filter(function (i) { return i.status === "nova"; }).length,
       financeiro: atrasadas().length,
       ia: sugestoes.filter(function (x) { return x.status === "pendente"; }).length,
-      esteira: producao.filter(function (x) { return x.etapa === "producao"; }).length
+      esteira: producao.filter(function (x) { return x.etapa === "producao"; }).length,
+      agenda: reunioes.filter(function (r) { return r.status === "marcada" && r.inicio.slice(0, 10) === hj; }).length
     });
   }
 
@@ -854,11 +918,12 @@
     sel.value = x.status;
     sel.addEventListener("change", async function () { try { await api.statusLead(x.id, sel.value); x.status = sel.value; badges(); visao(); renderLeads(); } catch (e) { CR.toast(e.message, true); } });
     var w = waLead(x.whatsapp);
-    var origem = { videos: "veio da página de vídeos", home: "veio da home", manual: "cadastrado pela equipe" }[x.origem] || "";
+    var origem = { videos: "veio da página de vídeos", home: "veio da home", manual: "cadastrado pela equipe", whatsapp: "chamou no WhatsApp", prospeccao: "lista de prospecção" }[x.origem] || "";
     var prox = x.proximo_contato ? el("div", { class: x.proximo_contato <= hj ? "hoje-tag" : "muted" }, [ic("cal"), " Próximo contato: " + CR.dataLonga(x.proximo_contato)]) : null;
     return el("article", { class: "lead-card" }, [
       el("div", { style: "display:flex;align-items:center;gap:2px" }, [
-        el("b", { text: x.nome, style: "flex:1;min-width:0" }),
+        el("b", { style: "flex:1;min-width:0" }, [x.nome, x.origem === "whatsapp" && x.ia_ativa !== false ? el("span", { class: "tag-mini ia", text: "IA" }) : null, x.optin === false ? el("span", { class: "tag-mini frio", text: "sem consentimento" }) : null]),
+        el("button", { class: "icon-btn", type: "button", style: "width:32px;height:32px", "aria-label": "Conversa com " + x.nome, title: "Conversa no WhatsApp", onclick: function () { abrirConversa(x); } }, ic("chat")),
         el("button", { class: "icon-btn", type: "button", style: "width:32px;height:32px", "aria-label": "Anotar sobre " + x.nome, title: "Anotar", onclick: function () { abrirLead(x); } }, ic("edit")),
         el("button", { class: "icon-btn", type: "button", style: "width:32px;height:32px", "aria-label": "Apagar " + x.nome, onclick: function () { confirmar(this, async function () { await api.apagarLead(x.id); await carregar(); }); } }, ic("trash"))
       ]),
@@ -1291,7 +1356,7 @@
   function renderIA() { renderSug(); renderAgentes(); renderJornada(); renderCasa(); }
 
   var AREAS_ORG = [["comercial", "Comercial"], ["operacional", "Operacional"], ["administrativo", "Administrativo"], ["financeiro", "Financeiro"]];
-  var ETAPAS_NOME = { pauta: "Pauta", roteiro: "Roteiro", copy: "Copy", arte: "Arte", edicao: "Edição" };
+  var ETAPAS_NOME = { whatsapp: "WhatsApp", pauta: "Pauta", roteiro: "Roteiro", copy: "Copy", arte: "Arte", edicao: "Edição" };
   function avatarEl(a) { var w = el("span"); w.innerHTML = CR.avatar(a.nome, a.genero); return w.firstChild; }
   function cartaoAg(a, extra) {
     return el("div", { class: "ag" + (extra ? " " + extra : "") + (a.ativo === false ? " off" : "") }, [
@@ -1301,7 +1366,7 @@
         el("div", { class: "tags" }, [
           a.etapa ? el("span", { text: "Esteira · " + (ETAPAS_NOME[a.etapa] || a.etapa) }) : null,
           el("span", { class: a.autonomia === "automatico" ? "auto" : "", text: a.autonomia === "automatico" ? "Age sozinho" : "Pede aprovação" }),
-          el("span", { text: a.ativo === false ? "Desligado" : FREQ[a.frequencia || "manual"] })
+          el("span", { text: a.ativo === false ? "Desligado" : a.etapa === "whatsapp" ? "responde na hora" : FREQ[a.frequencia || "manual"] })
         ]),
         a.ultimo_resultado ? el("div", { class: "cg", style: "margin-top:4px", text: a.ultimo_resultado }) : null
       ]),
@@ -1337,9 +1402,10 @@
     var hjMes = limites(mesAtual)[0];
     var pc = function (e) { return producao.filter(function (p) { return p.etapa === e; }).length; };
     var semBrief = clientes.filter(function (c) { return CR.plano(c.plano).grupo && !briefingDe(c.id); }).length;
-    [["Venda", leads.filter(function (l) { return l.status !== "fechou" && l.status !== "perdido"; }).length, "contatos em aberto", function (a) { return a.area === "comercial" && /SDR|vendas/i.test(a.cargo || ""); }],
+    [["Venda", leads.filter(function (l) { return l.status !== "fechou" && l.status !== "perdido"; }).length, "contatos em aberto", function (a) { return a.area === "comercial" && /SDR|Prospec|vendas/i.test(a.cargo || ""); }],
+     ["Reunião", reunioes.filter(function (r) { return r.status === "marcada" && Date.parse(r.inicio) > Date.now(); }).length, "reuniões marcadas", function (a) { return /Agendamento|SDR/i.test(a.cargo || ""); }],
      ["Pagamento", cobrancas.filter(function (c) { return c.status === "aberta"; }).length, "cobranças em aberto", function (a) { return a.area === "financeiro"; }],
-     ["Briefing", semBrief, "clientes sem briefing", function (a) { return /Atendimento/i.test(a.cargo || ""); }],
+     ["Briefing", semBrief, "clientes sem briefing", function (a) { return /Onboarding/i.test(a.cargo || ""); }],
      ["Pauta", producao.filter(function (p) { return p.mes === hjMes; }).length, "conteúdos na pauta do mês", function (a) { return a.etapa === "pauta"; }],
      ["Roteiro", pc("roteiro"), "esperando roteiro", function (a) { return a.etapa === "roteiro"; }],
      ["Copy", pc("copy"), "esperando legenda", function (a) { return a.etapa === "copy"; }],
@@ -1456,10 +1522,13 @@
     if (s.status === "pendente") {
       if (s.tipo === "mensagem_whatsapp") {
         var num = waLead(lead ? lead.whatsapp : cl && cl.whatsapp);
-        acts.push(el("button", { class: "btn sm", type: "button", disabled: !num, title: num ? "" : "Sem WhatsApp cadastrado", onclick: function () {
-          var t = txt.value.trim(); window.open(num + "?text=" + encodeURIComponent(t), "_blank", "noopener");
-          concluir(this, async function () { if (lead && lead.status === "novo") await api.statusLead(lead.id, "conversando"); }, "Aberto no WhatsApp.");
-        } }, [ic("chat"), "Abrir no WhatsApp"]));
+        acts.push(el("button", { class: "btn sm", type: "button", disabled: !num, title: num ? "" : "Sem WhatsApp cadastrado", onclick: async function () {
+          var t = txt.value.trim(), btn = this, foi = false;
+          // primeiro tenta pelo WhatsApp oficial (dentro da janela de 24 h); se não der, abre no WhatsApp do celular
+          if (lead && lead.optin !== false) { try { await api.enviarWhatsApp(lead.id, t); foi = true; } catch (x) {} }
+          if (!foi) window.open(num + "?text=" + encodeURIComponent(t), "_blank", "noopener");
+          concluir(btn, async function () { if (lead && lead.status === "novo") await api.statusLead(lead.id, "conversando"); }, foi ? "Enviado pelo WhatsApp oficial." : "Aberto no WhatsApp.");
+        } }, [ic("chat"), "Enviar no WhatsApp"]));
       } else if (s.tipo === "ideia" && s.cliente_id) {
         acts.push(el("button", { class: "btn sm", type: "button", onclick: function () {
           var b = this; concluir(b, function (t) { return api.criarIdeia({ cliente_id: s.cliente_id, origem: "agencia", tipo: c.formato && CR.TIPOS[c.formato] ? c.formato : "post", titulo: s.titulo, descricao: t, status: "sugerida" }); }, "Ideia enviada pro app do cliente.");
@@ -1531,6 +1600,122 @@
     this.disabled = false;
   });
   document.getElementById("as-perg").addEventListener("keydown", function (ev) { if (ev.key === "Enter") document.getElementById("as-ir").click(); });
+
+  // ---------------------------------------------------------------- conversa no WhatsApp
+  var dlgCv = document.getElementById("dlg-conversa"), cvLead = null;
+  document.getElementById("cv-fechar").appendChild(ic("x"));
+  document.getElementById("cv-fechar").addEventListener("click", function () { dlgCv.close(); });
+  async function abrirConversa(l) {
+    cvLead = l;
+    document.getElementById("cv-nome").textContent = l.nome;
+    document.getElementById("cv-sobre").textContent = [l.whatsapp, l.empresa, ST_LEAD[l.status], l.optin === false ? "sem consentimento: não iniciar pelo WhatsApp oficial" : ""].filter(Boolean).join(" · ");
+    document.getElementById("cv-ia").checked = l.ia_ativa !== false;
+    document.getElementById("cv-txt").value = ""; document.getElementById("cv-err").hidden = true;
+    document.getElementById("cv-contato").hidden = l.optin === false;
+    var c = document.getElementById("cv-chat"); c.textContent = "";
+    var msgs = await tenta(function () { return api.conversa(l.id); }, []);
+    if (!msgs.length) c.appendChild(el("p", { class: "small muted", style: "margin:0", text: "Nenhuma mensagem pelo WhatsApp oficial ainda." }));
+    msgs.forEach(function (m) {
+      var d = new Date(m.criado_em);
+      c.appendChild(el("div", { class: "bolha " + m.direcao }, [m.texto || "(" + m.tipo + ")", el("small", { text: (m.direcao === "entrada" ? "" : m.autor === "ia" ? "Atendente de IA · " : "Equipe · ") + (m.tipo === "audio" ? "áudio · " : "") + CR.data(CR.iso(d)) + " " + String(d.getHours()).padStart(2, "0") + ":" + String(d.getMinutes()).padStart(2, "0") })]));
+    });
+    if (!dlgCv.open) dlgCv.showModal();
+    c.scrollTop = c.scrollHeight;
+  }
+  document.getElementById("cv-ia").addEventListener("change", async function () {
+    var ligado = this.checked;
+    try { await api.editarLead(cvLead.id, { ia_ativa: ligado }); cvLead.ia_ativa = ligado; CR.toast(ligado ? "A atendente volta a responder esse contato." : "A equipe assumiu: a IA não responde mais esse contato."); renderLeads(); } catch (x) { CR.toast(x.message, true); }
+  });
+  document.getElementById("cv-enviar").addEventListener("click", async function () {
+    var t = document.getElementById("cv-txt").value.trim(), er = document.getElementById("cv-err");
+    if (!t) return;
+    this.disabled = true;
+    try { await api.enviarWhatsApp(cvLead.id, t); await abrirConversa(cvLead); } catch (x) { er.textContent = x.message; er.hidden = false; }
+    this.disabled = false;
+  });
+  document.getElementById("cv-contato").addEventListener("click", async function () {
+    var er = document.getElementById("cv-err"); this.disabled = true;
+    try { await api.primeiroContato(cvLead.id); CR.toast("Primeiro contato enviado. Quando ele responder, a atendente assume."); await abrirConversa(cvLead); } catch (x) { er.textContent = x.message; er.hidden = false; }
+    this.disabled = false;
+  });
+
+  // importar lista de prospecção (sem consentimento: só abordagem manual)
+  var dlgIm = document.getElementById("dlg-import");
+  document.getElementById("importar-lista").addEventListener("click", function () { document.getElementById("im-err").hidden = true; dlgIm.showModal(); });
+  document.getElementById("im-cancel").addEventListener("click", function () { dlgIm.close(); });
+  document.getElementById("f-import").addEventListener("submit", async function (ev) {
+    ev.preventDefault();
+    var er = document.getElementById("im-err"), lista = [], ruins = 0;
+    document.getElementById("im-txt").value.split(/\n/).forEach(function (ln) {
+      var p = ln.split(/[;\t]/).map(function (x) { return x.trim(); });
+      if (!p[0]) return;
+      if (CR.soDigitos(p[1]).length < 10) { ruins++; return; }
+      lista.push({ nome: p[0].slice(0, 120), whatsapp: p[1].slice(0, 30), empresa: (p[2] || "").slice(0, 160) || null, origem: "prospeccao", status: "novo", optin: false, ia_ativa: false });
+    });
+    if (!lista.length) { er.textContent = "Nenhuma linha válida. Use: Nome; WhatsApp com DDD; Empresa"; er.hidden = false; return; }
+    try { await api.importarLeads(lista); dlgIm.close(); document.getElementById("im-txt").value = ""; CR.toast(lista.length + (lista.length === 1 ? " contato importado" : " contatos importados") + (ruins ? " (" + ruins + (ruins === 1 ? " linha sem WhatsApp válido ficou" : " linhas sem WhatsApp válido ficaram") + " de fora)" : "") + "."); await carregar(); }
+    catch (x) { er.textContent = x.message; er.hidden = false; }
+  });
+
+  // ---------------------------------------------------------------- agenda
+  var DIAS = [[1, "Seg"], [2, "Ter"], [3, "Qua"], [4, "Qui"], [5, "Sex"], [6, "Sáb"], [0, "Dom"]];
+  DIAS.forEach(function (d) { document.getElementById("ag-dias").appendChild(el("label", {}, [el("input", { type: "checkbox", value: String(d[0]) }), el("span", { text: d[1] })])); });
+  var ST_REU = { marcada: "Marcada", feita: "Aconteceu", faltou: "Não apareceu", cancelada: "Cancelada" };
+  (async function carregarConfig() {
+    var ag = await tenta(function () { return api.config("agenda"); }, {}), tr = await tenta(function () { return api.config("atendente"); }, {});
+    var dias = ag.dias || [1, 2, 3, 4, 5];
+    document.querySelectorAll("#ag-dias input").forEach(function (x) { x.checked = dias.indexOf(+x.value) >= 0; });
+    document.getElementById("ag-ini").value = ag.inicio || "09:00"; document.getElementById("ag-fim").value = ag.fim || "18:00";
+    document.getElementById("ag-dur").value = String(ag.duracao || 30); document.getElementById("ag-antes").value = String(ag.antecedencia_horas || 3);
+    document.getElementById("ag-link").value = ag.link || "";
+    document.getElementById("tr-texto").value = tr.texto || ""; document.getElementById("tr-audio").checked = !!tr.audio;
+  })();
+  document.getElementById("f-agenda").addEventListener("submit", async function (ev) {
+    ev.preventDefault();
+    var v = { dias: Array.prototype.map.call(document.querySelectorAll("#ag-dias input:checked"), function (x) { return +x.value; }), inicio: document.getElementById("ag-ini").value || "09:00", fim: document.getElementById("ag-fim").value || "18:00",
+      duracao: +document.getElementById("ag-dur").value, antecedencia_horas: +document.getElementById("ag-antes").value, link: document.getElementById("ag-link").value.trim() };
+    if (!v.dias.length || v.inicio >= v.fim) { CR.toast("Escolha os dias e um horário de início antes do fim.", true); return; }
+    try { await api.salvarConfig("agenda", v); CR.toast("Horários salvos. A atendente já oferece esses horários."); } catch (x) { CR.toast(x.message, true); }
+  });
+  document.getElementById("f-treino").addEventListener("submit", async function (ev) {
+    ev.preventDefault();
+    try { await api.salvarConfig("atendente", { texto: document.getElementById("tr-texto").value.trim(), audio: document.getElementById("tr-audio").checked }); CR.toast("Treino salvo. Vale a partir da próxima mensagem."); } catch (x) { CR.toast(x.message, true); }
+  });
+  function hora(d) { return String(d.getHours()).padStart(2, "0") + ":" + String(d.getMinutes()).padStart(2, "0"); }
+  function renderAgenda() {
+    var agora = Date.now(), semana = agora + 7 * 864e5;
+    var k = document.getElementById("ag-kpis"); k.textContent = "";
+    var prox = reunioes.filter(function (r) { return r.status === "marcada" && Date.parse(r.fim) > agora; });
+    var doMesR = reunioes.filter(function (r) { return noMes(r.inicio, mesAtual); });
+    [[prox.filter(function (r) { return CR.iso(new Date(r.inicio)) === hj; }).length, "reuniões hoje"], [prox.filter(function (r) { return Date.parse(r.inicio) < semana; }).length, "nos próximos 7 dias"],
+     [doMesR.filter(function (r) { return r.marcada_por === "ia"; }).length, "marcadas pela IA no mês"],
+     [doMesR.filter(function (r) { return r.status === "feita"; }).length + " de " + doMesR.filter(function (r) { return r.status !== "cancelada" && Date.parse(r.fim) < agora; }).length, "aconteceram no mês"]].forEach(function (x) {
+      k.appendChild(el("div", { class: "stat" }, [el("b", { text: String(x[0]) }), el("span", { text: x[1] })]));
+    });
+    var l = document.getElementById("l-reu"); l.textContent = "";
+    var vis = reunioes.filter(function (r) { return Date.parse(r.fim) > agora - 3 * 864e5; });
+    if (!vis.length) l.appendChild(el("div", { class: "empty", style: "padding:20px" }, [el("span", { text: "Nenhuma reunião marcada. Quando a atendente marcar uma no WhatsApp, ela aparece aqui." })]));
+    vis.forEach(function (r) {
+      var d = new Date(r.inicio), lead = leads.find(function (x) { return x.id === r.lead_id; });
+      var sel = el("select", { "aria-label": "Status da reunião", style: "width:auto;padding:6px 8px;font-size:13px" });
+      Object.keys(ST_REU).forEach(function (s2) { sel.appendChild(el("option", { value: s2, text: ST_REU[s2] })); });
+      sel.value = r.status;
+      sel.addEventListener("change", async function () { try { await api.salvarReuniao({ id: r.id, status: sel.value }); r.status = sel.value; renderAgenda(); renderJornada(); } catch (x) { CR.toast(x.message, true); } });
+      var w = waLead(r.telefone || (lead && lead.whatsapp));
+      l.appendChild(el("div", { class: "reu" + (Date.parse(r.fim) < agora ? " passada" : "") }, [
+        el("div", { class: "date" }, [el("b", { text: String(d.getDate()) }), el("span", { text: CR.SEMANA[d.getDay()] })]),
+        el("div", { style: "min-width:0" }, [
+          el("div", { style: "font-weight:700" }, [hora(d) + " · " + (r.nome || (lead && lead.nome) || "Contato"), r.marcada_por === "ia" ? el("span", { class: "tag-mini ia", text: "marcada pela IA" }) : null]),
+          r.observacao ? el("div", { class: "q", text: r.observacao }) : null
+        ]),
+        el("div", { style: "display:flex;gap:4px;align-items:center;flex-wrap:wrap;justify-content:flex-end" }, [
+          lead ? el("button", { class: "icon-btn", type: "button", "aria-label": "Ver conversa", title: "Ver conversa", onclick: function () { abrirConversa(lead); } }, ic("chat")) : null,
+          w ? el("a", { class: "icon-btn", href: w, target: "_blank", rel: "noopener", "aria-label": "WhatsApp", title: "WhatsApp" }, ic("phone")) : null,
+          sel
+        ])
+      ]));
+    });
+  }
 
   nav.ir(location.hash.slice(1) || "visao");
   carregar();

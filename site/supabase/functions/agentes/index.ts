@@ -117,6 +117,15 @@ async function lerFontes(fontes: string[], clienteId?: string) {
       posts_recentes: (l[l.length - 1].posts ?? []).map((p: Linha) => ({ ...p, legenda: corta(p.legenda, 120) })),
     }));
   }
+  if (tem("whatsapp") && !clienteId) {
+    const desde = new Date(Date.now() - 7 * 864e5).toISOString();
+    const { data } = await db.from("whatsapp_mensagens").select("lead_id, direcao, autor, texto, criado_em").gte("criado_em", desde).order("criado_em").limit(400);
+    ctx.whatsapp_7_dias = (data ?? []).map((m: Linha) => ({ ...m, texto: corta(m.texto, 300) }));
+  }
+  if (tem("agenda") && !clienteId) {
+    const { data } = await db.from("reunioes").select("id, lead_id, nome, inicio, status, observacao, marcada_por").gte("inicio", new Date(Date.now() - 14 * 864e5).toISOString()).order("inicio");
+    ctx.reunioes = data;
+  }
   if (tem("site") && !clienteId) ctx.site = await lerSite();
   return ctx;
 }
@@ -168,6 +177,7 @@ async function rodar(agenteId: string) {
   semChave();
   const { data: a } = await db.from("agentes").select("*").eq("id", agenteId).single();
   if (!a) throw new Erro("Agente não encontrado.", 404);
+  if (a.etapa === "whatsapp") throw new Erro(a.nome + " trabalha sozinha: responde no WhatsApp assim que alguém chama a agência.");
   if (a.etapa) return await esteira(a);
   const ctx = await lerFontes(a.fontes ?? []);
   const { data: pend } = await db.from("agente_sugestoes").select("titulo, tipo").eq("agente_id", a.id).eq("status", "pendente");
