@@ -61,6 +61,21 @@
   .ag .tags span.auto { background: var(--ok-bg); color: var(--ok); border-color: transparent; }
   .ag .bt { grid-column: 2; display: flex; gap: 2px; margin: 0 0 -6px -10px; }
   .ag .bt .icon-btn { width: 34px; height: 34px; }
+  .ag.mini { grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; padding: 8px 10px; }
+  .ag.mini .av { width: 34px; height: 34px; }
+  .ag.mini .nm { font-size: 13.5px; }
+  .ag.mini .cg { font-size: 12px; }
+  .ag.mini .bt { grid-column: auto; margin: 0; }
+  .ag.mini .tags { display: none; }
+  .ag.mini .icon-btn { width: 30px; height: 30px; }
+  .ag.mini .flag { font-weight: 700; color: var(--ok); }
+  .org-area .cont { font-size: 11px; color: var(--muted); font-weight: 700; padding: 0 6px; }
+  .mk-resumo { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+  .mk-c { background: var(--surface); border: 1.5px solid var(--line); border-radius: 16px; padding: 12px; display: grid; gap: 8px; text-align: left; font: inherit; color: inherit; cursor: pointer; }
+  .mk-c[aria-pressed="true"] { border-color: var(--fg); }
+  .mk-c .sws { display: flex; gap: 4px; height: 22px; }
+  .mk-c .sws i { flex: 1; border-radius: 6px; border: 1px solid rgba(0,0,0,.08); }
+  .mk-c .sws.vazio { background: repeating-linear-gradient(45deg, var(--surface-2), var(--surface-2) 6px, var(--line) 6px, var(--line) 8px); border-radius: 6px; }
   .jornada { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(118px, 1fr); gap: 8px; overflow-x: auto; padding-bottom: 6px; }
   .jp { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 10px; display: grid; gap: 6px; align-content: start; position: relative; }
   .jp .n { font: 900 22px/1 var(--display); }
@@ -256,8 +271,9 @@
 
     <!-- MARCA E MATERIAIS -->
     <main class="view" id="v-marca" hidden>
-      <div class="view-head"><div><h1>Marca e materiais</h1><p class="lead">A identidade de cada cliente e os arquivos que aparecem no app dele, em Marca e em Materiais.</p></div></div>
-      <div class="f" style="max-width:420px;margin:0"><label for="mk-cli">Cliente</label><select id="mk-cli"></select></div>
+      <div class="view-head"><div><h1>Marcas dos clientes</h1><p class="lead">A identidade de cada cliente (cores, fontes, jeito de falar) e os arquivos dele. É o que os agentes seguem pra criar e o que o cliente vê no app, em Marca e Materiais.</p></div></div>
+      <div class="mk-resumo" id="mk-resumo"></div>
+      <div class="f" style="max-width:420px;margin:0"><label for="mk-cli">Editando</label><select id="mk-cli"></select></div>
       <div class="two">
         <form class="card pad-l" id="f-marca" novalidate>
           <h2 style="margin-bottom:14px">Identidade</h2>
@@ -529,14 +545,15 @@
 
   // menu na ordem do trabalho: captar e atender, produzir, acompanhar os resultados, cuidar da equipe
   var nav = CR.menu({
+    // as 4 áreas na ordem da jornada: vender, entregar, organizar e cuidar do dinheiro
     grupos: [
       ["", [["visao", "Visão geral", "chart", "Geral"]]],
-      ["Relacionamento", [["crm", "CRM", "target"], ["agenda", "Agenda", "cal"], ["clientes", "Clientes", "users"]]],
-      ["Produção", [["briefings", "Briefings", "inbox"], ["ideias", "Ideias", "idea"], ["esteira", "Esteira", "play"], ["entregas", "Entregas", "grid"], ["marca", "Marca e materiais", "brand"]]],
-      ["Resultados", [["financeiro", "Financeiro", "money"], ["relatorios", "Relatórios", "report"]]],
-      ["Equipe", [["ia", "Agentes IA", "bot"], ["equipe", "Equipe", "team"]]]
+      ["Comercial", [["crm", "CRM e vendas", "target", "CRM"], ["agenda", "Agenda", "cal"]]],
+      ["Operacional", [["briefings", "Briefings", "inbox"], ["ideias", "Ideias", "idea"], ["esteira", "Esteira", "play"], ["entregas", "Entregas", "grid"], ["marca", "Marcas dos clientes", "brand", "Marcas"], ["relatorios", "Relatórios", "report"]]],
+      ["Administrativo", [["clientes", "Clientes", "users"], ["ia", "Agentes IA", "bot"], ["equipe", "Equipe", "team"]]],
+      ["Financeiro", [["financeiro", "Financeiro", "money"]]]
     ],
-    aba: ["visao", "crm", "ideias", "entregas"]
+    aba: ["visao", "crm", "esteira", "entregas"]
   });
   var clientes = [], entregas = [], briefings = [], leads = [];
   var ideias = [], materiais = [], relatorios = [], cobrancas = [], equipe = [], ajustes = [], agentesIA = [], sugestoes = [], producao = [], reunioes = [];
@@ -1059,8 +1076,22 @@
   }
   document.getElementById("mk-cores").addEventListener("input", previaCores);
   var CAMPOS_MARCA = [["mk-fontes", "fontes"], ["mk-tom", "tom"], ["mk-palavras", "palavras"], ["mk-evitar", "evitar"], ["mk-obs", "obs"]];
+  function resumoMarcas(id) {
+    var w = document.getElementById("mk-resumo"); w.textContent = "";
+    clientes.concat([{ id: "", empresa: "Guias pra todos os clientes" }]).forEach(function (c) {
+      var m = c.marca || {}, cores = (m.cores || []).filter(function (h) { return /^#[0-9a-f]{3,8}$/i.test(h); }).slice(0, 5);
+      var nMat = materiais.filter(function (x) { return c.id ? x.cliente_id === c.id : !x.cliente_id; }).length;
+      var completa = c.id && cores.length && m.fontes && m.tom;
+      w.appendChild(el("button", { class: "mk-c", type: "button", "aria-pressed": String(c.id === id), onclick: function () { document.getElementById("mk-cli").value = c.id; renderMarca(); } }, [
+        el("b", { text: c.empresa || c.nome || c.email }),
+        c.id ? el("div", { class: "sws" + (cores.length ? "" : " vazio") }, cores.map(function (h) { return el("i", { style: "background:" + h }); })) : null,
+        el("span", { class: "small " + (c.id && !completa ? "hoje-tag" : "muted"), text: (c.id ? (completa ? "Marca completa" : "Falta completar a marca") + " · " : "") + nMat + (nMat === 1 ? " arquivo" : " arquivos") })
+      ]));
+    });
+  }
   function renderMarca() {
     var id = document.getElementById("mk-cli").value, c = cli(id), m = (c && c.marca) || {};
+    resumoMarcas(id);
     document.getElementById("f-marca").hidden = !c;
     document.getElementById("mk-geral").hidden = !!c;
     if (!c && document.getElementById("m-cat").value === "marca") document.getElementById("m-cat").value = "guia";
@@ -1378,10 +1409,11 @@
   var ETAPAS_NOME = { whatsapp: "WhatsApp", vendas: "Vendedor", pauta: "Pauta", roteiro: "Roteiro", copy: "Copy", arte: "Arte", edicao: "Edição" };
   function avatarEl(a) { var w = el("span"); w.innerHTML = CR.avatar(a.nome, a.genero); return w.firstChild; }
   function cartaoAg(a, extra) {
-    return el("div", { class: "ag" + (extra ? " " + extra : "") + (a.ativo === false ? " off" : "") }, [
+    var mini = !extra;
+    return el("div", { class: "ag" + (extra ? " " + extra : " mini") + (a.ativo === false ? " off" : ""), title: mini ? a.missao : false }, [
       avatarEl(a),
       el("div", { style: "min-width:0" }, [
-        el("div", { class: "nm", text: a.nome }), el("div", { class: "cg", text: a.cargo || "" }),
+        el("div", { class: "nm", text: a.nome }), el("div", { class: "cg" }, [a.cargo || "", mini && a.autonomia === "automatico" ? el("span", { class: "flag", text: " · age sozinho" }) : null]),
         el("div", { class: "tags" }, [
           a.etapa ? el("span", { text: "Esteira · " + (ETAPAS_NOME[a.etapa] || a.etapa) }) : null,
           el("span", { class: a.autonomia === "automatico" ? "auto" : "", text: a.autonomia === "automatico" ? "Age sozinho" : "Pede aprovação" }),
@@ -1411,7 +1443,7 @@
       if (!doArea.length) return;
       var chefes = doArea.filter(function (a) { return !a.chefe_id || ceo.some(function (c) { return c.id === a.chefe_id; }); });
       var time = doArea.filter(function (a) { return chefes.indexOf(a) < 0; });
-      areas.appendChild(el("section", { class: "org-area" }, [el("h3", { text: ar[1] })].concat(chefes.map(function (a) { return cartaoAg(a, "chefe"); })).concat(time.map(function (a) { return cartaoAg(a); }))));
+      areas.appendChild(el("section", { class: "org-area" }, [el("h3", { text: ar[1] }), el("div", { class: "cont", text: doArea.length + " agentes" })].concat(chefes.map(function (a) { return cartaoAg(a, "chefe"); })).concat(time.map(function (a) { return cartaoAg(a); }))));
     });
     o.appendChild(areas);
   }

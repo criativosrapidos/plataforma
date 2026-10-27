@@ -315,7 +315,7 @@ async function esteira(a: Linha) {
         if (n > tem) faltam[t] = n - tem;
       }
       return { c, faltam };
-    }).filter((x) => Object.keys(x.faltam).length).slice(0, 6);
+    }).filter((x) => Object.keys(x.faltam).length).slice(0, Number(env("ESTEIRA_CLIENTES", "8")));
     const res = await emParalelo(alvos, async ({ c, faltam }) => {
       const ctx = await contextoCliente(c.id);
       if (!ctx.briefing && !ctx.cliente?.marca) return 0; // sem briefing nem marca, espera o briefing chegar
@@ -348,7 +348,7 @@ async function esteira(a: Linha) {
     const porCli: Record<string, Linha[]> = {};
     (itens ?? []).forEach((i) => (porCli[i.cliente_id] ??= []).push(i));
     // até 12 itens por chamada, vários clientes ao mesmo tempo
-    const lotes = Object.entries(porCli).flatMap(([id, l]) => Array.from({ length: Math.ceil(l.length / 12) }, (_, k) => ({ id, l: l.slice(k * 12, k * 12 + 12) }))).slice(0, 8);
+    const lotes = Object.entries(porCli).flatMap(([id, l]) => Array.from({ length: Math.ceil(l.length / 12) }, (_, k) => ({ id, l: l.slice(k * 12, k * 12 + 12) }))).slice(0, Number(env("ESTEIRA_LOTES", "10")));
     const res = await emParalelo(lotes, async ({ id, l }) => {
       const ctx = await contextoCliente(id);
       const out = await pedir(a, cfg.tarefa, { ...ctx, itens: l.map((i) => ({ id: i.id, tipo: i.tipo, titulo: i.titulo, objetivo: i.objetivo, roteiro: i.roteiro, legenda: i.legenda, texto_arte: i.texto_arte })) }, cfg.saida) as { itens: Linha[] };
