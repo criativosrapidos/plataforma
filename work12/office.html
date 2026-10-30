@@ -1,0 +1,30 @@
+<!doctype html><html><head><meta charset="utf-8"><style>html,body{margin:0}canvas{display:block}</style></head><body>
+<canvas id="c" width="1920" height="1080"></canvas>
+<script src="lib.js"></script><script src="logo.js"></script>
+<script>
+// Escritório: foto de fundo + logo em "letreiro neon" na parede. mirror=true espelha a imagem inteira
+// (o Meet espelha a sua prévia; quem está na chamada vê a versão normal).
+cv.width = 1920; cv.height = 1080;
+window.compose = async (src, x, y, w, mirror, mode) => {
+  const im = new Image(); im.src = src; await im.decode();
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  const s = Math.max(1920 / im.naturalWidth, 1080 / im.naturalHeight);
+  ctx.drawImage(im, (1920 - im.naturalWidth * s) / 2, (1080 - im.naturalHeight * s) / 2, im.naturalWidth * s, im.naturalHeight * s);
+  if (mode === 'board') {
+    // logo "impressa" no quadro branco, com leve desfoque pra combinar com a foto
+    ctx.save(); ctx.filter = 'blur(1.1px)';
+    drawLogo(x, y - 20, w, 0.95, C.K);
+    ctx.font = '800 34px Inter'; ctx.fillStyle = '#3A3D44'; ctx.textAlign = 'center'; ctx.fillText('Criativos que vendem.', x, y + 110);
+    ctx.restore();
+  } else {
+  // brilho do letreiro na parede
+  const g = ctx.createRadialGradient(x, y, 0, x, y, w * 0.75);
+  g.addColorStop(0, 'rgba(255,212,0,0.22)'); g.addColorStop(1, 'rgba(255,212,0,0)');
+  ctx.fillStyle = g; ctx.fillRect(x - w, y - w, w * 2, w * 2);
+  ctx.save(); ctx.shadowColor = 'rgba(255,212,0,0.9)'; ctx.shadowBlur = 28;
+  drawLogo(x, y, w, 1, C.Y); ctx.shadowBlur = 10; drawLogo(x, y, w, 1, '#FFF4B0'); ctx.restore();
+  }
+  if (mirror) { const c2 = document.createElement('canvas'); c2.width = 1920; c2.height = 1080; c2.getContext('2d').drawImage(cv, 0, 0);
+    ctx.save(); ctx.translate(1920, 0); ctx.scale(-1, 1); ctx.drawImage(c2, 0, 0); ctx.restore(); }
+};
+</script></body></html>
