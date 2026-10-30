@@ -1,0 +1,50 @@
+<!doctype html><html><head><meta charset="utf-8"><style>html,body{margin:0}canvas{display:block}</style></head><body>
+<canvas id="c" width="1920" height="1080"></canvas>
+<script src="lib.js"></script><script src="logo.js"></script>
+<script>
+// Fundos de Google Meet 1920x1080: centro livre pra pessoa; logo no topo à esquerda, frase à direita.
+const MW = 1920, MH = 1080;
+cv.width = MW; cv.height = MH;
+function gridM(color, a) { ctx.save(); ctx.globalAlpha = a; ctx.strokeStyle = color; ctx.lineWidth = 2;
+  for (let x = 0; x <= MW; x += 96) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, MH); ctx.stroke(); }
+  for (let y = 0; y <= MH; y += 96) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(MW, y); ctx.stroke(); } ctx.restore(); }
+function bigMark(x, y, s, color, a) { ctx.save(); ctx.globalAlpha = a; logoMark(x, y, s, color); ctx.restore(); }
+function chips(list, x, y, bgc, fg) { let cx = x; list.forEach((s) => { const w = measure(s, 26, 800) + 46;
+  ctx.fillStyle = bgc; roundRect(cx, y - 28, w, 56, 28); ctx.fill(); text(s, cx + w / 2, y + 9, 26, fg, { align: 'center' }); cx += w + 12; }); }
+const V = {
+  escuro() {
+    ctx.fillStyle = C.K; ctx.fillRect(0, 0, MW, MH); gridM('#FFFFFF', 0.05);
+    const g = ctx.createRadialGradient(1700, 900, 0, 1700, 900, 900); g.addColorStop(0, 'rgba(255,212,0,0.22)'); g.addColorStop(1, 'rgba(255,212,0,0)');
+    ctx.fillStyle = g; ctx.fillRect(0, 0, MW, MH);
+    bigMark(1440, 560, 3.4, C.Y, 0.08);
+    drawLogo(330, 130, 440, 1, C.WH);
+    text('Criativos que', 1400, 330, 56, C.WH);
+    text('VENDEM.', 1400, 400, 72, C.Y, { skew: -9 });
+    text('Entrega em até 24h', 1400, 470, 28, '#B9BBC1', { weight: 700 });
+    chips(['Reels', 'Anúncios', 'Posts'], 1400, 540, C.Y, C.K);
+    speedLines(80, 940, 260, 16, C.Y, 32);
+  },
+  amarelo() {
+    ctx.fillStyle = C.Y; ctx.fillRect(0, 0, MW, MH); gridM('#101216', 0.06);
+    bigMark(-120, 520, 4.2, C.K, 0.07);
+    drawLogo(330, 130, 440, 1, C.K);
+    ctx.fillStyle = C.K; roundRect(1420, 250, 430, 330, 36); ctx.fill();
+    text('Criativos que', 1460, 340, 50, C.WH);
+    text('VENDEM.', 1460, 410, 68, C.Y, { skew: -9 });
+    text('Reels · Anúncios · Posts', 1460, 470, 26, '#B9BBC1', { weight: 700 });
+    text('Entrega em até 24h', 1460, 530, 28, C.Y, { weight: 800 });
+    speedLines(1560, 950, 280, 16, C.K, 32);
+  },
+  claro() {
+    ctx.fillStyle = C.OW; ctx.fillRect(0, 0, MW, MH); gridM('#101216', 0.05);
+    ctx.fillStyle = C.Y; ctx.beginPath(); ctx.moveTo(1500, 0); ctx.lineTo(MW, 0); ctx.lineTo(MW, MH); ctx.lineTo(1700, MH); ctx.closePath(); ctx.fill();
+    ctx.fillStyle = C.K; ctx.beginPath(); ctx.moveTo(1470, 0); ctx.lineTo(1500, 0); ctx.lineTo(1700, MH); ctx.lineTo(1670, MH); ctx.closePath(); ctx.fill();
+    drawLogo(330, 130, 440, 1, C.K);
+    text('Criativos que', 80, 860, 50, C.K);
+    text('VENDEM.', 80, 930, 66, C.K, { skew: -9 });
+    text('Entrega em até 24h', 80, 985, 26, '#5B5E66', { weight: 700 });
+    bigMark(1640, 470, 1.6, C.K, 0.9);
+  },
+};
+window.draw = (k) => { ctx.setTransform(1, 0, 0, 1, 0, 0); V[k](); };
+</script></body></html>
