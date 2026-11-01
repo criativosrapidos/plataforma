@@ -215,8 +215,17 @@ export function camposBaixaConfianca(json: unknown, motivo: string | null, limia
   const c = obj(json);
   const out: Record<string, string> = {};
   const mapa = obj(c.confianca_campos ?? c._confianca);
-  for (const [k, v] of Object.entries(mapa)) {
-    if (typeof v === "number" && v < limiar) out[k] = `Confiança ${Math.round(v * 100)}% na extração`;
+  // O extrator grava a confiança por grupo (geral, orgao, numero_edital, cargos, datas, taxa, materias).
+  const ALIAS: Record<string, string | null> = { geral: null, taxa: "taxa_centavos" };
+  for (const [k0, v] of Object.entries(mapa)) {
+    if (typeof v !== "number" || v >= limiar) continue;
+    const msg = `Confiança ${Math.round(v * 100)}% na extração`;
+    if (k0 === "materias") {
+      arr(c.cargos).forEach((_, i) => (out[`cargos.${i}.materias`] ??= msg));
+      continue;
+    }
+    const k = k0 in ALIAS ? ALIAS[k0] : k0;
+    if (k) out[k] = msg;
   }
   arr(c.datas).forEach((d, i) => {
     const o = obj(obj(d).origem);

@@ -1,7 +1,7 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "crons": [
-    { "path": "/api/cron/coletar-dou", "schedule": "0 9 * * *" },
+    { "path": "/api/cron/coletar-dou", "schedule": "0 8-15 * * *" },
     { "path": "/api/cron/coletar-bancas", "schedule": "7 * * * *" },
     { "path": "/api/cron/coletar-municipais", "schedule": "23 */6 * * *" },
     { "path": "/api/cron/processar", "schedule": "*/10 * * * *" },

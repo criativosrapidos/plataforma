@@ -2,7 +2,7 @@ import "server-only";
 import { sql, type Tx } from "@/lib/db";
 import { enviarEmail } from "@/lib/email";
 import { assinaturaAtual } from "@/lib/repo/assinaturas";
-import { appUrl, configNumero, horaBR, inicioDoMesBR, instanteBR } from "@/lib/pipeline/config";
+import { appUrl, configNumero, enviosPausados, horaBR, inicioDoMesBR, instanteBR } from "@/lib/pipeline/config";
 import {
   calcularAcesso, canaisPermitidos, dataBR, emHorarioSilencioso, hojeISO, somarDias,
   type Acesso, type AlertCanal, type AlertTipo,
@@ -161,10 +161,13 @@ function htmlEmail(a: AlertaPendente): string {
  */
 export async function enviarPendentes(opts: { agora?: Date; limite?: number; userId?: string } = {}) {
   const agora = opts.agora ?? new Date();
-  const res = { enviados: 0, adiados: 0, suprimidos: 0, falhas: 0, push: 0, whatsapp: 0, email: 0 };
+  const res = { enviados: 0, adiados: 0, suprimidos: 0, falhas: 0, push: 0, whatsapp: 0, email: 0, pausado: false };
+  const pausa = await enviosPausados();
+  if (pausa.todos) return { ...res, pausado: true };
+  const canaisAtivos = pausa.whatsapp ? ["push", "email"] : ["push", "whatsapp", "email"];
   const candidatos = await sql<{ id: string }[]>`
     select id from alerts
-    where status = 'pendente' and canal in ('push', 'whatsapp', 'email')
+    where status = 'pendente' and canal = any(${canaisAtivos}::text[])
       and (agendado_para is null or agendado_para <= ${agora}::timestamptz)
       ${opts.userId ? sql`and user_id = ${opts.userId}` : sql``}
     order by created_at limit ${opts.limite ?? 500}`;

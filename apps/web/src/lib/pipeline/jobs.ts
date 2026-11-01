@@ -11,7 +11,7 @@ import {
   type AssinaturaLike, type Ciclo, type DateTipo, type Plano,
 } from "@aviso/shared";
 import { fontesVencidas, rodarFonteImpl } from "./coletores";
-import { appUrl } from "./config";
+import { appUrl, configValor, horaBR, instanteBR } from "./config";
 import { processarPendentes } from "./processar";
 
 /** Jobs agendados (Vercel Cron → /api/cron/<nome>; local: npx tsx scripts/job.ts <nome>). */
@@ -38,6 +38,22 @@ export interface OpcoesJob {
   /** Data de coleta AAAA-MM-DD (DOU, Querido Diário). */
   data?: string;
   limite?: number;
+  /** true quando quem chama é o agendador (Vercel Cron); habilita a janela de horário do DOU. */
+  agendado?: boolean;
+}
+
+/**
+ * O agendador chama o coletor do DOU de hora em hora pela manhã; ele só roda a partir do horário
+ * configurado no painel (app_config.coletor_dou_horario, padrão 06:00) e uma vez por dia.
+ */
+async function douForaDaJanela(agora: Date): Promise<string | null> {
+  const horario = await configValor<string>("coletor_dou_horario", "06:00");
+  if (horaBR(agora) < horario) return `antes do horário configurado (${horario})`;
+  const hoje = hojeISO(agora);
+  const [ja] = await sql`
+    select 1 from job_runs where nome = 'coletar-dou' and status = 'ok' and resultado->>'pulado' is null
+      and iniciado_em >= ${instanteBR(hoje, "00:00")} limit 1`;
+  return ja ? "já coletado hoje" : null;
 }
 
 // ---------- Lembretes de prazo ----------
@@ -209,6 +225,10 @@ async function executar(nome: NomeJob, opts: OpcoesJob): Promise<Record<string, 
   const agora = opts.agora;
   switch (nome) {
     case "coletar-dou": {
+      if (opts.agendado && !opts.data) {
+        const motivo = await douForaDaJanela(agora ?? new Date());
+        if (motivo) return { pulado: motivo };
+      }
       const r = await rodarFonteImpl("dou", { data: opts.data, agora });
       return { coleta: { encontrados: r.encontrados, novos: r.novos, avisos: r.avisos }, ...(await processarEEnviar(opts)) };
     }

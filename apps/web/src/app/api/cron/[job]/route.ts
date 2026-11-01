@@ -21,7 +21,7 @@ async function executar(req: Request, ctx: Ctx) {
   const { job } = await ctx.params;
   if (!ehJob(job)) return NextResponse.json({ erro: { codigo: "nao_encontrado", mensagem: `Job desconhecido: ${job}` } }, { status: 404 });
   const data = new URL(req.url).searchParams.get("data");
-  const r = await rodarJob(job, { data: data && /^\d{4}-\d{2}-\d{2}$/.test(data) ? data : undefined });
+  const r = await rodarJob(job, { data: data && /^\d{4}-\d{2}-\d{2}$/.test(data) ? data : undefined, agendado: true });
   return NextResponse.json(r, { status: r.ok ? 200 : 500 });
 }
 

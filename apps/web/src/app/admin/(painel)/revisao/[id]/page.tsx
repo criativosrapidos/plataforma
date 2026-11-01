@@ -12,7 +12,7 @@ export default async function RevisarExtracao({ params }: { params: Promise<{ id
   const { id } = await params;
   await exigirPainel("editor", `/admin/revisao/${id}`);
   if (!ehUuid(id)) notFound();
-  const [ex, nav, materias, limiar] = await Promise.all([extracaoDetalhe(id), vizinhosNaFila(id), nomesMaterias(), lerConfigValor("revisao_limiar_confianca")]);
+  const [ex, nav, materias, limiar] = await Promise.all([extracaoDetalhe(id), vizinhosNaFila(id), nomesMaterias(), lerConfigValor("limiar_confianca")]);
   if (!ex) notFound();
   // key: remonta o formulário ao trocar de item (J/K) sem carregar estado do anterior.
   return <TelaRevisao key={ex.id} ex={ex} nav={nav} materias={materias} limiar={Number(limiar)} />;

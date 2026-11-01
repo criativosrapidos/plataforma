@@ -23,7 +23,7 @@ export default async function Revisao({ searchParams }: { searchParams: Promise<
   const [{ itens, total }, fontes, limiar] = await Promise.all([
     listarFila({ status, tipo: um(sp, "tipo", ACT_TIPOS), fonte: str(sp, "fonte"), pagina, porPagina }),
     fontesComExtracao(),
-    lerConfigValor("revisao_limiar_confianca").then(Number),
+    lerConfigValor("limiar_confianca").then(Number),
   ]);
   const primeira = status === "pendente" ? itens[0] : undefined;
 

@@ -22,6 +22,18 @@ export async function configNumero(chave: ChaveConfig, tx: Tx = sql): Promise<nu
   return Number.isFinite(v) ? v : CONFIG_PADRAO[chave];
 }
 
+/** Lê um valor qualquer de app_config (jsonb). */
+export async function configValor<T>(chave: string, padrao: T, tx: Tx = sql): Promise<T> {
+  const [r] = await tx<{ valor: unknown }[]>`select valor from app_config where chave = ${chave}`;
+  return r && r.valor !== null && r.valor !== undefined ? (r.valor as T) : padrao;
+}
+
+/** Interruptores do painel (Configurações): freio de emergência dos envios. */
+export async function enviosPausados(tx: Tx = sql): Promise<{ todos: boolean; whatsapp: boolean }> {
+  const [todos, whatsapp] = await Promise.all([configValor("avisos_pausados", false, tx), configValor("whatsapp_pausado", false, tx)]);
+  return { todos: todos === true, whatsapp: whatsapp === true };
+}
+
 /** Hora "HH:MM" no fuso de Brasília. */
 export function horaBR(agora: Date): string {
   return agora.toLocaleTimeString("en-GB", { timeZone: TZ, hour: "2-digit", minute: "2-digit", hour12: false });
