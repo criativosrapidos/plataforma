@@ -1,0 +1,34 @@
+{
+  "total_gazettes": 2,
+  "gazettes": [
+    {
+      "territory_id": "3509502",
+      "territory_name": "Campinas",
+      "state_code": "SP",
+      "date": "2026-10-30",
+      "scraped_at": "2026-10-30T10:12:44.000000",
+      "url": "https://data.queridodiario.ok.org.br/3509502/2026-10-30/3a1f0c5e9b2d.pdf",
+      "txt_url": "https://data.queridodiario.ok.org.br/3509502/2026-10-30/3a1f0c5e9b2d.txt",
+      "edition": "12.345",
+      "is_extra_edition": false,
+      "excerpts": [
+        "PREFEITURA MUNICIPAL DE CAMPINAS\nSECRETARIA MUNICIPAL DE GESTÃO E DESENVOLVIMENTO DE PESSOAS\nEDITAL DE ABERTURA Nº 3/2026\nCONCURSO PÚBLICO\nA Prefeitura Municipal de Campinas torna pública a abertura das inscrições do concurso público para o cargo de Professor de Educação Básica, organizado pelo Instituto AOCP.\nProfessor de Educação Básica | Nível superior | 50 | R$ 5.200,00\nAs inscrições serão realizadas no período de 5/11/2026 a 4/12/2026.\nA prova objetiva será aplicada em 24/1/2027.",
+        "O valor da taxa de inscrição é de R$ 75,00."
+      ]
+    },
+    {
+      "territory_id": "3550308",
+      "territory_name": "São Paulo",
+      "state_code": "SP",
+      "date": "2026-10-30",
+      "scraped_at": "2026-10-30T10:15:02.000000",
+      "url": "https://data.queridodiario.ok.org.br/3550308/2026-10-30/7c2b9d1e4f60.pdf",
+      "txt_url": "https://data.queridodiario.ok.org.br/3550308/2026-10-30/7c2b9d1e4f60.txt",
+      "edition": "201",
+      "is_extra_edition": false,
+      "excerpts": [
+        "PROCESSO SELETIVO SIMPLIFICADO PARA ESTAGIÁRIOS DE NÍVEL SUPERIOR – bolsa-auxílio, sem vínculo empregatício. Inscrições pelo site da Secretaria Municipal."
+      ]
+    }
+  ]
+}

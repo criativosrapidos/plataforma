@@ -1,0 +1,17 @@
+{
+  "id": "evt_2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e&368604950",
+  "event": "SUBSCRIPTION_DELETED",
+  "dateCreated": "2026-11-05 10:00:00",
+  "subscription": {
+    "object": "subscription",
+    "id": "sub_OUTRA123",
+    "customer": "cus_000005219614",
+    "billingType": "PIX",
+    "cycle": "MONTHLY",
+    "value": 9.9,
+    "nextDueDate": "2026-12-01",
+    "status": "INACTIVE",
+    "deleted": true,
+    "externalReference": null
+  }
+}

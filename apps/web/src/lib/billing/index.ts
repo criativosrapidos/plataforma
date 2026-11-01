@@ -25,7 +25,7 @@ export interface BillingProvider {
 
 const provedores: Record<string, () => Promise<BillingProvider>> = {
   mock: async () => mockProvider,
-  // asaas: async () => (await import("./asaas")).asaasProvider,
+  asaas: async () => (await import("./asaas")).asaasProvider,
 };
 
 export async function billing(): Promise<BillingProvider> {

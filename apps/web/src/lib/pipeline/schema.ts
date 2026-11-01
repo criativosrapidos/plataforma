@@ -17,7 +17,11 @@ export const CargoExtraido = z.object({
   origem: Origem.optional(),
 });
 
-/** Campos que o extrator com IA devolve (validados com este schema). Também é o formulário da fila de revisão. */
+/**
+ * Campos que o extrator com IA devolve (validados com este schema). Também é o formulário da fila de revisão.
+ * `numero_edital`/`ano` identificam o EDITAL DO CONCURSO (dedup: órgão + número + ano). Em retificação,
+ * homologação, resultado e convocação, são os do edital de abertura a que o ato se refere.
+ */
 export const CamposExtraidos = z.object({
   tipo_ato: z.enum(ACT_TIPOS),
   orgao: z.string().min(2),
@@ -38,5 +42,7 @@ export const CamposExtraidos = z.object({
   etapas: z.array(z.string()).optional().default([]),
   url_oficial: z.string().url(),
   areas: z.array(z.string()).optional().default([]),
+  /** Confiança (0 a 1) por campo, informada pelo extrator. Opcional. */
+  confianca_campos: z.record(z.string(), z.number()).optional(),
 });
 export type CamposExtraidos = z.infer<typeof CamposExtraidos>;

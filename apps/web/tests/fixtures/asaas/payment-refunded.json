@@ -1,0 +1,63 @@
+{
+  "id": "evt_3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b&368604940",
+  "event": "PAYMENT_REFUNDED",
+  "dateCreated": "2026-11-04 08:12:01",
+  "payment": {
+    "object": "payment",
+    "id": "pay_080225913252",
+    "dateCreated": "2026-11-01",
+    "customer": "cus_000005219613",
+    "subscription": "sub_VXJBYgP2u0eO",
+    "installment": null,
+    "paymentLink": null,
+    "value": 19.9,
+    "netValue": 19.11,
+    "originalValue": null,
+    "interestValue": null,
+    "description": "Aviso Concurso · plano Aprovado (mensal)",
+    "billingType": "CREDIT_CARD",
+    "confirmedDate": "2026-11-04",
+    "creditCard": {
+      "creditCardNumber": "8829",
+      "creditCardBrand": "MASTERCARD",
+      "creditCardToken": "a75a1d98-c52d-4a6b-a413-71e00b193c99"
+    },
+    "pixTransaction": null,
+    "status": "REFUNDED",
+    "dueDate": "2026-11-04",
+    "originalDueDate": "2026-11-04",
+    "paymentDate": null,
+    "clientPaymentDate": "2026-11-04",
+    "installmentNumber": null,
+    "invoiceUrl": "https://sandbox.asaas.com/i/080225913252",
+    "invoiceNumber": "07905433",
+    "externalReference": null,
+    "deleted": false,
+    "anticipated": false,
+    "anticipable": false,
+    "creditDate": "2026-12-06",
+    "estimatedCreditDate": "2026-12-06",
+    "transactionReceiptUrl": "https://sandbox.asaas.com/comprovantes/1234567890",
+    "nossoNumero": null,
+    "bankSlipUrl": null,
+    "lastInvoiceViewedDate": null,
+    "lastBankSlipViewedDate": null,
+    "discount": {
+      "value": 0,
+      "limitDate": null,
+      "dueDateLimitDays": 0,
+      "type": "FIXED"
+    },
+    "fine": {
+      "value": 0,
+      "type": "FIXED"
+    },
+    "interest": {
+      "value": 0,
+      "type": "PERCENTAGE"
+    },
+    "postalService": false,
+    "custody": null,
+    "refunds": null
+  }
+}
