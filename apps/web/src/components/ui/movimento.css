@@ -1,0 +1,87 @@
+/* Animações do site e da área do cliente. Tudo some com prefers-reduced-motion. */
+
+@keyframes ac-notif-entra {
+  0% { opacity: 0; transform: translateY(-18px) scale(0.96); }
+  60% { opacity: 1; transform: translateY(2px) scale(1); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+.ac-notif {
+  opacity: 0;
+  animation: ac-notif-entra 0.7s cubic-bezier(0.2, 0.9, 0.3, 1.15) forwards;
+  animation-delay: var(--atraso, 0s);
+}
+
+@keyframes ac-varre {
+  from { background-size: 0% 100%; }
+  to { background-size: 100% 100%; }
+}
+/* grifo que "passa o marca-texto" da esquerda para a direita */
+.ac-grifo-varre {
+  background-image: linear-gradient(transparent 52%, var(--color-marca) 52%, var(--color-marca) 92%, transparent 92%);
+  background-repeat: no-repeat;
+  background-size: 0% 100%;
+  padding: 0 0.12em;
+  margin: 0 -0.12em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  animation: ac-varre 0.8s 0.35s cubic-bezier(0.6, 0, 0.2, 1) forwards;
+}
+
+@keyframes ac-pulso {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgb(255 225 77 / 0.7); }
+  50% { transform: scale(1.08); box-shadow: 0 0 0 8px rgb(255 225 77 / 0); }
+}
+.ac-pulso { animation: ac-pulso 2.4s ease-in-out infinite; }
+
+@keyframes ac-flutua {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+.ac-flutua { animation: ac-flutua 5s ease-in-out infinite; animation-delay: var(--atraso, 0s); }
+
+/* Revelar ao rolar: os elementos ficam visíveis sem JS; com JS, entram suavemente. */
+.ac-js [data-revelar] { opacity: 0; transform: translateY(14px); transition: opacity 0.6s ease, transform 0.6s ease; transition-delay: var(--atraso, 0s); }
+.ac-js [data-revelar][data-visto] { opacity: 1; transform: none; }
+
+/* Barras das matérias em comum crescem ao aparecer */
+.ac-js [data-revelar] .ac-barra { transform: scaleX(0); }
+.ac-barra { transform-origin: left center; transition: transform 1s cubic-bezier(0.2, 0.8, 0.2, 1); transition-delay: var(--atraso, 0s); }
+.ac-js [data-revelar][data-visto] .ac-barra { transform: scaleX(1); }
+
+/* Carimbo "encerrada" */
+.ac-js [data-revelar] .ac-carimbo { opacity: 0; transform: rotate(-8deg) scale(1.6); }
+.ac-carimbo { transform: rotate(-8deg); transition: opacity 0.25s ease 0.5s, transform 0.35s cubic-bezier(0.3, 1.6, 0.5, 1) 0.5s; }
+.ac-js [data-revelar][data-visto] .ac-carimbo { opacity: 1; transform: rotate(-8deg) scale(1); }
+
+/* Risco vermelho sobre o que se perdeu */
+.ac-risco { position: relative; }
+.ac-risco::after {
+  content: ""; position: absolute; left: -2%; right: -2%; top: 55%; height: 3px; border-radius: 3px;
+  background: var(--color-verm); transform-origin: left center; transform: scaleX(1);
+  transition: transform 0.6s cubic-bezier(0.6, 0, 0.2, 1); transition-delay: var(--atraso, 0.2s);
+}
+.ac-js [data-revelar] .ac-risco::after { transform: scaleX(0); }
+.ac-js [data-revelar][data-visto] .ac-risco::after { transform: scaleX(1); }
+
+@keyframes ac-brilho { from { background-position: -200% 0; } to { background-position: 200% 0; } }
+.ac-esqueleto {
+  background: linear-gradient(90deg, var(--color-linha) 25%, #eef0f4 50%, var(--color-linha) 75%);
+  background-size: 200% 100%;
+  animation: ac-brilho 1.4s linear infinite;
+  border-radius: 12px;
+}
+
+dialog.ac-dialogo::backdrop { background: rgb(15 21 48 / 0.55); backdrop-filter: blur(2px); }
+dialog.ac-dialogo[open] { animation: ac-notif-entra 0.35s ease-out; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ac-notif, .ac-grifo-varre, .ac-pulso, .ac-flutua, dialog.ac-dialogo[open], .ac-esqueleto { animation: none !important; }
+  .ac-notif { opacity: 1; }
+  .ac-grifo-varre { background-size: 100% 100%; }
+  .ac-js [data-revelar], .ac-js [data-revelar] .ac-barra, .ac-js [data-revelar] .ac-carimbo, .ac-js [data-revelar] .ac-risco::after {
+    opacity: 1 !important; transform: none !important; transition: none !important;
+  }
+  .ac-carimbo { transform: rotate(-8deg) !important; }
+  .ac-js [data-revelar] .ac-risco::after { transform: scaleX(1) !important; }
+  html { scroll-behavior: auto !important; }
+}
