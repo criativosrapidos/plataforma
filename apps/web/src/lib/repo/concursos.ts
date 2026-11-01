@@ -27,6 +27,8 @@ export interface FiltrosBusca {
   salarioMin?: number;
   radar?: boolean; // previstos e autorizados
   abertos?: boolean;
+  /** false = esconde concursos de exemplo (seed). Sem valor, não filtra. */
+  exemplos?: boolean;
   pagina?: number;
   porPagina?: number;
   ordem?: "recentes" | "salario" | "vagas" | "prazo";
@@ -46,7 +48,8 @@ export async function buscarConcursos(f: FiltrosBusca, userId: string | null = n
     ${f.esfera ? sql`and c.esfera = ${f.esfera}` : sql``}
     ${f.salarioMin ? sql`and coalesce(c.salario_max_centavos, 0) >= ${f.salarioMin}` : sql``}
     ${f.radar ? sql`and c.status in ('previsto','autorizado','banca_definida')` : sql``}
-    ${f.abertos ? sql`and c.status = 'edital_aberto'` : sql``}`;
+    ${f.abertos ? sql`and c.status = 'edital_aberto'` : sql``}
+    ${f.exemplos === false ? sql`and not c.exemplo` : sql``}`;
   const ordem =
     f.ordem === "salario" ? sql`c.salario_max_centavos desc nulls last`
     : f.ordem === "vagas" ? sql`c.vagas_total desc nulls last`
