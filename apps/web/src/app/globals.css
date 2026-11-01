@@ -1,0 +1,48 @@
+@import "tailwindcss";
+
+/* Identidade Aviso Concurso: caneta azul, marca-texto e gabarito. */
+@theme {
+  --color-azul: #1F3FD1;
+  --color-azul-2: #162FA3;
+  --color-azul-t: #E8ECFC;
+  --color-marca: #FFE14D;
+  --color-marca-t: #FFF7CC;
+  --color-tinta: #0F1530;
+  --color-papel: #F5F6F1;
+  --color-branco: #FFFFFF;
+  --color-linha: #E1E3EA;
+  --color-tx2: #4F566E;
+  --color-verde: #0E8A45;
+  --color-verde-t: #E3F4EA;
+  --color-verm: #D93A40;
+  --color-verm-t: #FBE7E8;
+  --color-ambar: #7A5B00;
+  --color-c1: #1F3FD1;
+  --color-c2: #7A3FD1;
+  --color-c3: #0B7F86;
+
+  --font-display: var(--font-barlow), "Barlow Condensed", "Arial Narrow", sans-serif;
+  --font-sans: var(--font-figtree), Figtree, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), "JetBrains Mono", ui-monospace, monospace;
+
+  --radius-card: 20px;
+}
+
+@layer base {
+  html { -webkit-tap-highlight-color: transparent; }
+  body { @apply bg-papel text-tinta font-sans antialiased; }
+  :focus-visible { outline: 3px solid var(--color-azul); outline-offset: 2px; }
+  h1, h2, .titulo { font-family: var(--font-display); font-weight: 800; text-transform: uppercase; line-height: .95; letter-spacing: -0.01em; text-wrap: balance; }
+}
+
+@layer components {
+  /* grifo de marca-texto atrás da palavra-chave */
+  .grifo { background: linear-gradient(transparent 52%, var(--color-marca) 52%, var(--color-marca) 90%, transparent 90%); padding: 0 .2em; margin: 0 -.2em; }
+  .rotulo { font-family: var(--font-mono); font-size: .75rem; letter-spacing: .12em; text-transform: uppercase; font-weight: 700; }
+  .card { @apply bg-branco border border-linha rounded-[20px]; }
+  .btn { @apply inline-flex items-center justify-center gap-2 rounded-full bg-azul px-6 font-bold text-white transition-colors hover:bg-azul-2 disabled:opacity-50 min-h-12; }
+  .btn-sec { @apply inline-flex items-center justify-center gap-2 rounded-full border-[1.5px] border-linha bg-branco px-6 font-bold text-tinta transition-colors hover:border-tinta min-h-12; }
+  .btn-marca { @apply inline-flex items-center justify-center gap-2 rounded-full bg-marca px-6 font-extrabold text-tinta min-h-12; }
+  .campo { @apply w-full rounded-xl border-[1.5px] border-linha bg-branco px-4 py-3 text-base outline-none focus:border-azul min-h-12; }
+  .etiqueta { @apply inline-flex items-center rounded-full px-2.5 py-0.5 font-mono text-[11px] font-bold tracking-wide; }
+}

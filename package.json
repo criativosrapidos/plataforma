@@ -1,0 +1,12 @@
+{
+  "name": "aviso-concurso",
+  "private": true,
+  "description": "Aviso Concurso: app (iOS/Android/web), site, área do cliente, painel admin e coletores.",
+  "scripts": {
+    "dev": "npm --prefix apps/web run dev",
+    "db:migrate": "npm --prefix apps/web run db:migrate",
+    "db:seed": "npm --prefix apps/web run db:seed",
+    "test": "npm --prefix apps/web test",
+    "mobile": "npm --prefix apps/mobile start"
+  }
+}
