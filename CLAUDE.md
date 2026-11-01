@@ -30,6 +30,9 @@ ana@exemplo.com (teste do plano Aprovado, acompanha 3 concursos), bruno@exemplo.
 
 Para parar o servidor, não use `pkill -f "next dev"` (mata o próprio shell): use `fuser -k 3000/tcp`.
 
+App (Expo, fora dos workspaces npm): `cd apps/mobile && npm install && cp .env.example .env.local && npx expo start`
+(navegador: `--web --port 8081`; API em `EXPO_PUBLIC_API_URL`, CORS em `apps/web/src/proxy.ts`). Detalhes em `apps/mobile/README.md`.
+
 ## Regras que não podem quebrar
 - Sem plano grátis. Sem teste ativo nem assinatura em dia → só a tela de planos (`calcularAcesso`).
 - Todo aviso tem `url_oficial`. Nada de notícia sem fonte oficial, nada de política.
