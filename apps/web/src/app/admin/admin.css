@@ -1,0 +1,22 @@
+/* Painel admin: só o que não sai com utilitários do Tailwind. */
+@keyframes aparecer {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* Destaque de busca no texto do documento original (fila de revisão). */
+mark.adm-achado { background: var(--color-marca); color: var(--color-tinta); border-radius: 2px; padding: 0 1px; }
+mark.adm-achado[data-atual="1"] { outline: 2px solid var(--color-azul); }
+
+/* Tabelas: primeira coluna de texto não quebra feio no mobile. */
+.adm-texto-doc { white-space: pre-wrap; word-break: break-word; tab-size: 4; }
+
+/* Filtros no celular: só a busca e o botão "Filtros" até abrir. */
+@media (max-width: 639px) {
+  .adm-filtros-fechado > :not(.adm-busca):not(.adm-filtros-botao):not([type="hidden"]) { display: none; }
+  .adm-filtros:not(:has(.adm-busca)).adm-filtros-fechado { justify-content: flex-start; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
