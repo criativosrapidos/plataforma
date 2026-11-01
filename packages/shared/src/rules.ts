@@ -56,7 +56,7 @@ export function casarPerfil(perfil: PerfilBusca, c: ConcursoParaMatch): MatchRes
     motivos.push("área");
   }
   if (perfil.ufs.length) {
-    const nacional = c.esfera === "federal" && (!c.uf || perfil.incluir_nacional);
+    const nacional = c.esfera === "federal" && !c.uf && perfil.incluir_nacional;
     if (!nacional && !(c.uf && perfil.ufs.includes(c.uf))) return { casa: false, motivos: ["UF"] };
     motivos.push(nacional ? "nacional" : `UF ${c.uf}`);
   }
