@@ -1,0 +1,249 @@
+<title>Aviso Concurso</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;800&family=Figtree:wght@400;500;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--azul:#1F3FD1;--azul2:#162FA3;--marca:#FFE14D;--papel:#F5F6F1;--branco:#FFFFFF;--tinta:#0F1530;--tx2:#4F566E;--linha:#DDE0E8;--verde:#0E8A45;--verm:#D93A40;
+--f-d:"Barlow Condensed","Arial Narrow",sans-serif;--f-t:Figtree,system-ui,sans-serif;--f-m:"JetBrains Mono",ui-monospace,monospace}
+*{box-sizing:border-box}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--papel)}
+body{margin:0;font-family:var(--f-t);color:var(--tinta);background:var(--papel);font-size:17px;line-height:1.55}
+a{color:var(--azul)}
+:focus-visible{outline:3px solid var(--azul);outline-offset:2px}
+.w{max-width:1160px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+h1,h2{font-family:var(--f-d);font-weight:800;text-transform:uppercase;line-height:.95;letter-spacing:-.5px;margin:0;text-wrap:balance}
+h1{font-size:clamp(3rem,8vw,6.4rem)}h2{font-size:clamp(2.2rem,5vw,3.6rem)}
+h3{margin:0;font-size:1.15rem}
+p{margin:0}
+.g{background:linear-gradient(transparent 52%,var(--marca) 52%,var(--marca) 90%,transparent 90%);padding:0 6px;margin:0 -6px}
+.rot{font-family:var(--f-m);font-size:.78rem;letter-spacing:1.6px;text-transform:uppercase;color:var(--azul);font-weight:700}
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--papel);border-bottom:1px solid var(--linha)}
+nav .w{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:12px}
+.mk{display:flex;align-items:center;gap:10px;font-family:var(--f-d);font-size:28px;line-height:1;text-decoration:none;color:var(--tinta)}
+.mk img{width:36px;height:36px}.mk b{font-weight:800}.mk span{font-weight:600}
+.links{display:flex;gap:22px;font-weight:700;font-size:.95rem}
+.links a{color:var(--tinta);text-decoration:none}
+.btn{display:inline-flex;align-items:center;justify-content:center;background:var(--azul);color:#fff;font-weight:800;text-decoration:none;padding:14px 24px;border-radius:999px;border:0;font-size:1rem;min-height:48px;font-family:inherit;cursor:pointer}
+.btn:hover{background:var(--azul2)}
+.btn.am{background:var(--marca);color:var(--tinta)}
+.hero{padding-block:56px 72px}
+.hero .w{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:48px;align-items:center}
+.hero .lead{font-size:1.25rem;color:var(--tx2);max-width:560px;margin-top:22px}
+.hero .acoes{display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin-top:28px}
+.hero small{color:var(--tx2);font-size:.9rem}
+.fone{background:var(--tinta);border-radius:44px;padding:18px;max-width:360px;margin-left:auto;width:100%}
+.tela{background:#E9ECF7;border-radius:30px;padding:22px 14px;display:grid;gap:12px;min-height:520px;align-content:start}
+.hr{font-family:var(--f-m);font-size:.8rem;text-align:center;color:var(--tx2)}
+.nt{background:var(--branco);border-radius:20px;padding:14px 16px;display:grid;gap:5px;font-size:.88rem;box-shadow:0 6px 20px rgba(15,21,48,.08)}
+.nt .hd{display:flex;align-items:center;gap:8px;font-family:var(--f-m);font-size:.72rem;color:var(--tx2)}
+.nt .hd img{width:20px}
+.nt b{font-size:.98rem}
+.tg{display:inline-block;font-family:var(--f-m);font-weight:700;font-size:.66rem;letter-spacing:1px;padding:2px 9px;border-radius:999px;justify-self:start;color:#fff;background:var(--verde)}
+.tg.y{background:var(--marca);color:var(--tinta)}.tg.r{background:var(--verm)}.tg.b{background:var(--azul)}
+.ex{font-family:var(--f-m);font-size:.72rem;letter-spacing:1px;color:var(--tx2)}
+section{padding-block:72px;border-top:1px solid var(--linha)}
+.cab{display:grid;gap:12px;max-width:720px;margin-bottom:36px}
+.cab p{color:var(--tx2);font-size:1.1rem}
+.passos{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.passo{background:var(--branco);border:1px solid var(--linha);border-radius:22px;padding:24px;display:grid;gap:10px;align-content:start}
+.bol{width:44px;height:44px;border-radius:50%;border:3px solid var(--tinta);display:grid;place-items:center;font-family:var(--f-m);font-weight:700}
+.passo:nth-child(3) .bol{background:var(--azul);border-color:var(--azul);color:#fff}
+.passo p{color:var(--tx2);font-size:.97rem}
+.azul{background:var(--azul);color:#fff;border:0}
+.azul .rot{color:var(--marca)}.azul .cab p{color:#D6DCFA}.azul .g{background:none;color:var(--marca)}
+.ciclo{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px;counter-reset:c}
+.et{border-top:4px solid var(--marca);padding-top:14px;display:grid;gap:6px}
+.et b{font-family:var(--f-d);font-size:1.5rem;text-transform:uppercase;line-height:1}
+.et span{color:#D6DCFA;font-size:.93rem}
+.fontes{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px;align-items:start}
+.lista{list-style:none;padding:0;margin:0;display:grid;gap:12px}
+.lista li{background:var(--branco);border:1px solid var(--linha);border-radius:16px;padding:16px 18px;display:grid;gap:2px}
+.lista li span{color:var(--tx2);font-size:.95rem}
+.resumo{background:var(--branco);border:1px solid var(--linha);border-radius:22px;padding:24px;display:grid;gap:12px}
+.resumo dl{display:grid;grid-template-columns:auto 1fr;gap:8px 18px;margin:0;font-size:.97rem}
+.resumo dt{font-family:var(--f-m);font-size:.75rem;letter-spacing:1px;color:var(--tx2);text-transform:uppercase;padding-top:3px}
+.resumo dd{margin:0;font-weight:700}
+.tg2{display:flex;gap:6px;background:var(--branco);border:1px solid var(--linha);border-radius:999px;padding:4px;width:max-content;margin-bottom:24px}
+.tg2 button{border:0;background:none;border-radius:999px;padding:10px 18px;font:inherit;font-weight:700;cursor:pointer;min-height:44px;color:var(--tinta)}
+.tg2 button[aria-pressed="true"]{background:var(--tinta);color:#fff}
+.planos{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.plano{background:var(--branco);border:1px solid var(--linha);border-radius:24px;padding:28px;display:grid;gap:14px;align-content:start}
+.plano.dest{border:2px solid var(--azul)}
+.plano h3{font-family:var(--f-d);font-size:2rem;text-transform:uppercase;font-weight:800;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.preco{font-family:var(--f-d);font-weight:800;font-size:3.2rem;line-height:1;font-variant-numeric:tabular-nums}
+.preco small{font-family:var(--f-t);font-size:1rem;font-weight:500;color:var(--tx2)}
+.plano .sub{color:var(--tx2);font-size:.92rem;min-height:1.4em}
+.plano ul{list-style:none;margin:0;padding:0;display:grid;gap:8px;font-size:.97rem}
+.plano li{display:grid;grid-template-columns:20px 1fr;gap:10px}
+.plano li::before{content:"";width:14px;height:14px;border-radius:50%;background:var(--azul);margin-top:5px}
+.plano li.nao{color:var(--tx2)}.plano li.nao::before{background:none;border:2px solid var(--linha)}
+.tag{font-family:var(--f-m);font-size:.7rem;font-weight:700;padding:3px 10px;border-radius:999px;background:var(--marca);color:var(--tinta);letter-spacing:.5px}
+.tw{overflow-x:auto;background:var(--branco);border:1px solid var(--linha);border-radius:20px}
+table{width:100%;border-collapse:collapse;min-width:560px}
+th,td{padding:14px 18px;text-align:left;border-bottom:1px solid var(--linha)}
+tr:last-child td{border:0}
+thead th{font-family:var(--f-m);font-size:.75rem;letter-spacing:1px;text-transform:uppercase;color:var(--tx2);font-weight:500}
+td:nth-child(3){font-weight:700;color:var(--azul)}
+.faq{display:grid;gap:10px;max-width:820px}
+details{background:var(--branco);border:1px solid var(--linha);border-radius:16px;padding:16px 20px}
+summary{cursor:pointer;font-weight:800}
+details p{margin-top:10px;color:var(--tx2)}
+.cta{background:var(--marca);border:0}
+.cta .w{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:36px;align-items:center}
+form{display:grid;gap:12px}
+label{font-weight:700;font-size:.9rem;display:grid;gap:6px}
+input,select{font:inherit;padding:13px 14px;border-radius:12px;border:2px solid var(--tinta);background:var(--branco);min-height:48px;color:var(--tinta)}
+.ok{font-weight:800}
+footer{padding-block:36px;color:var(--tx2);font-size:.9rem}
+footer .w{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px}
+@media (max-width:900px){.hero .w,.fontes,.cta .w{grid-template-columns:1fr}.fone{margin:0 auto}.passos{grid-template-columns:repeat(2,minmax(0,1fr))}.ciclo{grid-template-columns:repeat(3,minmax(0,1fr))}.planos{grid-template-columns:1fr}.links{display:none}}
+@media (max-width:520px){.passos,.ciclo{grid-template-columns:1fr}}
+</style>
+
+<nav><div class="w"><a class="mk" href="#topo"><img src="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Ccircle%20cx%3D%2246%22%20cy%3D%2254%22%20r%3D%2238%22%20fill%3D%22%231F3FD1%22/%3E%3Crect%20x%3D%2240%22%20y%3D%2230%22%20width%3D%2212%22%20height%3D%2232%22%20rx%3D%226%22%20fill%3D%22%23FFFFFF%22/%3E%3Ccircle%20cx%3D%2246%22%20cy%3D%2275%22%20r%3D%226.5%22%20fill%3D%22%23FFFFFF%22/%3E%3Ccircle%20cx%3D%2280%22%20cy%3D%2220%22%20r%3D%2215%22%20fill%3D%22%23FFE14D%22%20stroke%3D%22%23F5F6F1%22%20stroke-width%3D%226%22/%3E%3C/svg%3E" alt=""><span><b>aviso</b><span>concurso</span></span></a>
+<div class="links"><a href="#como">Como funciona</a><a href="#fontes">Fontes</a><a href="#planos">Planos</a><a href="#duvidas">Dúvidas</a></div>
+<a class="btn" href="#lista">Testar grátis</a></div></nav>
+
+<header class="hero" id="topo"><div class="w">
+  <div>
+    <span class="rot">Alertas de concurso público</span>
+    <h1 style="margin-top:14px">Você já perdeu concurso. <span class="g">E nem viu.</span></h1>
+    <p class="lead">Edital que saiu e você não viu. Isenção que passou. Inscrição que fechou. O Aviso Concurso lê o Diário Oficial e os sites das bancas todo dia e te avisa no celular. Nunca mais se preocupe em perder uma data.</p>
+    <div class="acoes"><a class="btn" href="#lista">Testar 3 dias grátis</a><small>Depois, R$ 9,90 por mês. Cancele quando quiser.</small></div>
+  </div>
+  <div class="fone" aria-label="Exemplo de avisos no celular">
+    <div class="tela">
+      <span class="hr">terça, 08:14</span>
+      <div class="nt"><div class="hd"><img src="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Ccircle%20cx%3D%2246%22%20cy%3D%2254%22%20r%3D%2238%22%20fill%3D%22%231F3FD1%22/%3E%3Crect%20x%3D%2240%22%20y%3D%2230%22%20width%3D%2212%22%20height%3D%2232%22%20rx%3D%226%22%20fill%3D%22%23FFFFFF%22/%3E%3Ccircle%20cx%3D%2246%22%20cy%3D%2275%22%20r%3D%226.5%22%20fill%3D%22%23FFFFFF%22/%3E%3Ccircle%20cx%3D%2280%22%20cy%3D%2220%22%20r%3D%2215%22%20fill%3D%22%23FFE14D%22%20stroke%3D%22%23F5F6F1%22%20stroke-width%3D%226%22/%3E%3C/svg%3E" alt="">Aviso Concurso · agora</div><span class="tg">EDITAL PUBLICADO</span><b>Tribunal Regional · Técnico Judiciário</b><span>Nível médio · 42 vagas + CR · R$ 8.500,00<br>Inscrições de 03/11 a 02/12</span></div>
+      <div class="nt"><div class="hd"><img src="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Ccircle%20cx%3D%2246%22%20cy%3D%2254%22%20r%3D%2238%22%20fill%3D%22%231F3FD1%22/%3E%3Crect%20x%3D%2240%22%20y%3D%2230%22%20width%3D%2212%22%20height%3D%2232%22%20rx%3D%226%22%20fill%3D%22%23FFFFFF%22/%3E%3Ccircle%20cx%3D%2246%22%20cy%3D%2275%22%20r%3D%226.5%22%20fill%3D%22%23FFFFFF%22/%3E%3Ccircle%20cx%3D%2280%22%20cy%3D%2220%22%20r%3D%2215%22%20fill%3D%22%23FFE14D%22%20stroke%3D%22%23F5F6F1%22%20stroke-width%3D%226%22/%3E%3C/svg%3E" alt="">Aviso Concurso · 1 h</div><span class="tg r">ISENÇÃO ACABA EM 2 DIAS</span><b>SEFAZ · Auditor Fiscal</b><span>Pedido de isenção até 28/10</span></div>
+      <div class="nt"><div class="hd"><img src="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Ccircle%20cx%3D%2246%22%20cy%3D%2254%22%20r%3D%2238%22%20fill%3D%22%231F3FD1%22/%3E%3Crect%20x%3D%2240%22%20y%3D%2230%22%20width%3D%2212%22%20height%3D%2232%22%20rx%3D%226%22%20fill%3D%22%23FFFFFF%22/%3E%3Ccircle%20cx%3D%2246%22%20cy%3D%2275%22%20r%3D%226.5%22%20fill%3D%22%23FFFFFF%22/%3E%3Ccircle%20cx%3D%2280%22%20cy%3D%2220%22%20r%3D%2215%22%20fill%3D%22%23FFE14D%22%20stroke%3D%22%23F5F6F1%22%20stroke-width%3D%226%22/%3E%3C/svg%3E" alt="">Aviso Concurso · ontem</div><span class="tg y">ERRATA</span><b>Prova mudou de 14/12 para 21/12</b><span>Prefeitura · Professor PEB II</span></div>
+      <span class="ex" style="text-align:center">EXEMPLO ILUSTRATIVO</span>
+    </div>
+  </div>
+</div></header>
+
+<section id="como"><div class="w">
+  <div class="cab"><span class="rot">Como funciona</span><h2>Você escolhe. A gente <span class="g">procura.</span></h2><p>Nada de abrir 30 sites por dia. Configure uma vez e receba no app só o que serve para você.</p></div>
+  <div class="passos">
+    <div class="passo"><span class="bol">A</span><h3>Monte seu perfil</h3><p>Escolaridade, área, cargo, estados, salário mínimo e bancas.</p></div>
+    <div class="passo"><span class="bol">B</span><h3>A gente lê tudo</h3><p>Diário Oficial da União, diários estaduais e municipais e sites das bancas, todo dia.</p></div>
+    <div class="passo"><span class="bol">C</span><h3>Notificação em minutos</h3><p>No celular, com vagas, salário, taxa, datas, etapas e o link do edital oficial.</p></div>
+    <div class="passo"><span class="bol">D</span><h3>Até a posse</h3><p>Isenção, fim da inscrição, errata, local de prova, gabarito, resultado e convocação.</p></div>
+  </div>
+</div></section>
+
+<section id="agenda"><div class="w fontes">
+  <div>
+    <div class="cab"><span class="rot">Agenda</span><h2>Estudando para <span class="g">vários</span> concursos?</h2><p>A agenda junta todos os concursos que você acompanha: isenção, inscrição, local de prova e prova, cada um com sua cor. E mostra as matérias que caem em mais de um edital.</p></div>
+    <ul class="lista">
+      <li><b>Contagem regressiva</b><span>Quantos dias faltam para cada prova</span></li>
+      <li><b>Checklist por concurso</b><span>Isenção, boleto, local de prova, documento, caneta</span></li>
+      <li><b>Matérias em comum</b><span>Português cai nos 3? Ela aparece primeiro</span></li>
+    </ul>
+  </div>
+  <div class="resumo">
+    <span class="tg b">MATÉRIAS EM COMUM</span>
+    <dl>
+      <dt>Português</dt><dd>3 de 3 concursos · 50 questões</dd>
+      <dt>Raciocínio</dt><dd>3 de 3 concursos · 30 questões</dd>
+      <dt>Dir. Adm.</dt><dd>3 de 3 concursos · 25 questões</dd>
+      <dt>Dir. Const.</dt><dd>2 de 3 concursos · 20 questões</dd>
+      <dt>Informática</dt><dd>2 de 3 concursos · 15 questões</dd>
+    </dl>
+    <span class="ex">EXEMPLO ILUSTRATIVO · A GENTE ORGANIZA, NÃO DÁ AULA</span>
+  </div>
+</div></section>
+
+<section class="azul"><div class="w">
+  <div class="cab"><span class="rot">O ciclo do concurso</span><h2>Avisamos antes do <span class="g">edital</span></h2><p>No plano Aprovado, você acompanha o concurso desde o pedido de vagas.</p></div>
+  <div class="ciclo">
+    <div class="et"><b>Previsto</b><span>Órgão pede vagas ao ministério</span></div>
+    <div class="et"><b>Autorizado</b><span>Portaria publicada no Diário Oficial</span></div>
+    <div class="et"><b>Banca</b><span>Organizadora contratada</span></div>
+    <div class="et"><b>Edital</b><span>Resumo e prazos no mesmo dia</span></div>
+    <div class="et"><b>Prova</b><span>Local, horário e gabarito</span></div>
+    <div class="et"><b>Resultado</b><span>Classificação e convocação</span></div>
+  </div>
+</div></section>
+
+<section id="fontes"><div class="w fontes">
+  <div>
+    <div class="cab"><span class="rot">Fontes oficiais</span><h2>Só link <span class="g">oficial.</span></h2><p>Sites falsos de inscrição existem. Todo aviso traz a fonte para você conferir.</p></div>
+    <ul class="lista">
+      <li><b>Diário Oficial da União</b><span>Editais, autorizações e convocações federais</span></li>
+      <li><b>Diários oficiais dos estados e municípios</b><span>Concursos estaduais, prefeituras e câmaras</span></li>
+      <li><b>Sites das bancas</b><span>Cebraspe, FGV, FCC, Vunesp, Cesgranrio e outras</span></li>
+    </ul>
+  </div>
+  <div class="resumo">
+    <span class="tg">EDITAL PUBLICADO</span>
+    <h3>Resumo do edital, do jeito que chega</h3>
+    <dl>
+      <dt>Órgão</dt><dd>Tribunal Regional</dd>
+      <dt>Cargo</dt><dd>Técnico Judiciário · nível médio</dd>
+      <dt>Vagas</dt><dd>42 + cadastro reserva</dd>
+      <dt>Salário</dt><dd>R$ 8.500,00</dd>
+      <dt>Taxa</dt><dd>R$ 85,00 · isenção até 07/11</dd>
+      <dt>Inscrição</dt><dd>03/11 a 02/12</dd>
+      <dt>Etapas</dt><dd>Prova objetiva e redação</dd>
+      <dt>Banca</dt><dd>Cebraspe</dd>
+      <dt>Fonte</dt><dd><a href="https://www.in.gov.br" target="_blank" rel="noopener">DOU · Seção 3</a></dd>
+    </dl>
+    <span class="ex">EXEMPLO ILUSTRATIVO</span>
+  </div>
+</div></section>
+
+<section id="planos"><div class="w">
+  <div class="cab"><span class="rot">Planos</span><h2>Menos que uma <span class="g">taxa de inscrição</span></h2><p>3 dias grátis para testar. Depois, escolha o plano. Cancele quando quiser.</p></div>
+  <div class="tg2" role="group" aria-label="Período"><button type="button" aria-pressed="true" data-per="m">Mensal</button><button type="button" aria-pressed="false" data-per="a">Anual · 2 meses grátis</button></div>
+  <div class="planos" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr));max-width:820px">
+    <div class="plano dest"><h3>Aviso <span class="tag">MAIS ESCOLHIDO</span></h3><div class="preco" data-m="R$ 9,90" data-a="R$ 99">R$ 9,90<small> /mês</small></div><p class="sub" data-m="3 dias grátis" data-a="3 dias grátis · sai R$ 8,25 por mês">3 dias grátis</p><ul><li>Perfis de busca ilimitados</li><li>Notificação no celular na hora</li><li>Lembrete de isenção e inscrição</li><li>Erratas: o que mudou</li><li>Agenda com todos os concursos</li><li>Matérias em comum</li></ul></div>
+    <div class="plano"><h3>Aprovado</h3><div class="preco" data-m="R$ 19,90" data-a="R$ 199">R$ 19,90<small> /mês</small></div><p class="sub" data-m="3 dias grátis" data-a="3 dias grátis · sai R$ 16,58 por mês">3 dias grátis</p><ul><li>Tudo do Aviso</li><li>Prazos acabando também no WhatsApp</li><li>Pergunte ao edital com IA</li><li>Radar: previstos e autorizados</li><li>Aviso de convocação com seu nome</li></ul></div>
+  </div>
+</div></section>
+
+<section><div class="w">
+  <div class="cab"><span class="rot">Comparação</span><h2>Procurar sozinho <span class="g">cansa</span></h2></div>
+  <div class="tw"><table>
+    <thead><tr><th></th><th>Procurar sozinho</th><th>Aviso Concurso</th></tr></thead>
+    <tbody>
+      <tr><td>Onde procurar</td><td>Diários, bancas, portais e grupos</td><td>Um lugar só</td></tr>
+      <tr><td>Quando você sabe</td><td>Quando lembra de olhar</td><td>Minutos depois da publicação</td></tr>
+      <tr><td>Prazo de isenção</td><td>Fácil de perder</td><td>Lembrete 2 dias antes</td></tr>
+      <tr><td>Errata</td><td>Ler o edital de novo</td><td>Só o que mudou</td></tr>
+      <tr><td>Link falso</td><td>Risco</td><td>Sempre a fonte oficial</td></tr>
+    </tbody>
+  </table></div>
+</div></section>
+
+<section id="duvidas"><div class="w">
+  <div class="cab"><span class="rot">Dúvidas</span><h2>Perguntas <span class="g">frequentes</span></h2></div>
+  <div class="faq">
+    <details open><summary>Como funciona o teste de 3 dias?</summary><p>Você usa tudo do plano por 3 dias sem pagar. Se não quiser continuar, cancela antes e não é cobrado.</p></details>
+    <details><summary>O aviso chega pelo WhatsApp?</summary><p>O aviso principal chega como notificação do app, na hora. No plano Aprovado, os prazos que estão acabando também chegam no WhatsApp.</p></details>
+    <details><summary>Vocês fazem a minha inscrição?</summary><p>Não. A inscrição é feita no site oficial da banca. A gente avisa e manda o link certo.</p></details>
+    <details><summary>Quais concursos vocês cobrem?</summary><p>Federais, estaduais e municipais publicados em diários oficiais e nos sites das bancas. Começamos pelos federais e pelas capitais e ampliamos a cada mês.</p></details>
+    <details><summary>Quanto tempo depois da publicação chega o aviso?</summary><p>O Diário Oficial da União é lido logo cedo. A meta é avisar em até 1 hora depois da publicação.</p></details>
+    <details><summary>Vocês dão aula ou vendem curso?</summary><p>Não. A gente avisa e organiza: editais, prazos, agenda e matérias em comum. O estudo é com você.</p></details>
+    <details><summary>Vocês têm lado político?</summary><p>Não. A gente fala de edital, vaga e prazo. Notícia sobre previsão só entra com fonte oficial.</p></details>
+    <details><summary>Posso cancelar quando quiser?</summary><p>Pode. Sem multa e sem fidelidade.</p></details>
+  </div>
+</div></section>
+
+<section class="cta" id="lista"><div class="w">
+  <div><h2>Nunca mais se preocupe em perder <span style="background:var(--tinta);color:var(--marca);padding:0 8px">uma data.</span></h2><p style="margin-top:14px;font-size:1.15rem">Deixe seu contato e receba o link do app no lançamento. Os 3 primeiros dias são grátis.</p></div>
+  <form id="form">
+    <label for="nome">Nome<input id="nome" required autocomplete="name"></label>
+    <label for="zap">WhatsApp<input id="zap" required inputmode="tel" placeholder="(11) 90000-0000"></label>
+    <label for="esc">Escolaridade<select id="esc"><option>Nível médio</option><option>Nível superior</option><option>Os dois</option></select></label>
+    <button class="btn" type="submit">Quero testar 3 dias grátis</button>
+    <p class="ok" id="ok" hidden>Pronto. Você recebe o link do app no lançamento.</p>
+  </form>
+</div></section>
+
+<footer><div class="w"><span class="mk" style="font-size:22px"><img src="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Ccircle%20cx%3D%2246%22%20cy%3D%2254%22%20r%3D%2238%22%20fill%3D%22%231F3FD1%22/%3E%3Crect%20x%3D%2240%22%20y%3D%2230%22%20width%3D%2212%22%20height%3D%2232%22%20rx%3D%226%22%20fill%3D%22%23FFFFFF%22/%3E%3Ccircle%20cx%3D%2246%22%20cy%3D%2275%22%20r%3D%226.5%22%20fill%3D%22%23FFFFFF%22/%3E%3Ccircle%20cx%3D%2280%22%20cy%3D%2220%22%20r%3D%2215%22%20fill%3D%22%23FFE14D%22%20stroke%3D%22%23F5F6F1%22%20stroke-width%3D%226%22/%3E%3C/svg%3E" alt="" style="width:26px;height:26px"><span><b>aviso</b><span>concurso</span></span></span><span>avisoconcurso.com.br · @avisoconcurso · Não somos órgão público nem banca organizadora.</span></div></footer>
+
+<script>
+document.querySelectorAll('[data-per]').forEach(b=>b.addEventListener('click',()=>{const p=b.dataset.per;document.querySelectorAll('[data-per]').forEach(x=>x.setAttribute('aria-pressed',x===b));document.querySelectorAll('.preco[data-m]').forEach(e=>{e.innerHTML='';e.append(e.dataset[p]);const s=document.createElement('small');s.textContent=p==='m'?' /mês':' /ano';e.append(s)});document.querySelectorAll('.sub[data-m]').forEach(e=>e.textContent=e.dataset[p])}));
+document.getElementById('form').addEventListener('submit',e=>{e.preventDefault();document.getElementById('ok').hidden=false});
+</script>
+

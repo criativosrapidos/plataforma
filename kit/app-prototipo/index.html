@@ -1,0 +1,399 @@
+<title>Aviso Concurso App</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;800&family=Figtree:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  /* Layout: protótipo de app de celular; no computador, o aparelho fica centralizado com a lista de telas ao lado. Visual único claro. */
+  :root {
+    --azul: #1F3FD1; --azul2: #162FA3; --azul-t: #E8ECFC; --marca: #FFE14D; --marca-t: #FFF7CC;
+    --papel: #F5F6F1; --branco: #FFFFFF; --tinta: #0F1530; --tx2: #4F566E; --linha: #E1E3EA;
+    --verde: #0E8A45; --verde-t: #E3F4EA; --verm: #D93A40; --verm-t: #FBE7E8;
+    --c1: #1F3FD1; --c2: #7A3FD1; --c3: #0B7F86;
+    --f-d: "Barlow Condensed", "Arial Narrow", sans-serif;
+    --f-t: Figtree, system-ui, sans-serif;
+    --f-m: "JetBrains Mono", ui-monospace, monospace;
+    color-scheme: light;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #DCDFE8; color: var(--tinta); font-family: var(--f-t); font-size: 15px; line-height: 1.45; }
+  button { font-family: inherit; cursor: pointer; color: inherit; }
+  :focus-visible { outline: 3px solid var(--azul); outline-offset: 2px; }
+  .palco { min-height: 100vh; display: grid; grid-template-columns: minmax(0, 300px) auto; gap: 48px; justify-content: center; align-items: center; padding-block: 32px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+  .lado { display: grid; gap: 14px; align-content: center; }
+  .lado .mk { display: flex; align-items: center; gap: 10px; font-family: var(--f-d); font-size: 30px; line-height: 1; }
+  .lado .mk b { font-weight: 800; } .lado .mk span span { font-weight: 600; }
+  .lado p { color: var(--tx2); margin: 0; }
+  .lado ol { margin: 0; padding-left: 20px; display: grid; gap: 6px; color: var(--tx2); }
+  .lado ol b { color: var(--tinta); }
+  .ex { font-family: var(--f-m); font-size: 11px; letter-spacing: 1px; color: var(--tx2); }
+
+  .aparelho { width: 390px; height: 820px; background: var(--tinta); border-radius: 56px; padding: 12px; box-shadow: 0 30px 80px rgba(15, 21, 48, .25); }
+  .tela { width: 100%; height: 100%; background: var(--papel); border-radius: 46px; overflow: hidden; position: relative; display: flex; flex-direction: column; }
+  .conteudo { flex: 1; overflow-y: auto; padding: 18px 16px 24px; display: grid; gap: 14px; align-content: start; scrollbar-width: none; }
+  .conteudo::-webkit-scrollbar { display: none; }
+
+  .topo { display: flex; justify-content: space-between; align-items: center; padding-top: 22px; }
+  .topo h1 { font-family: var(--f-d); font-weight: 800; text-transform: uppercase; font-size: 34px; line-height: 1; margin: 0; }
+  .ola { color: var(--tx2); font-size: 14px; }
+  .sino { width: 44px; height: 44px; border-radius: 50%; background: var(--branco); border: 1px solid var(--linha); display: grid; place-items: center; position: relative; }
+  .sino i { position: absolute; top: 9px; right: 10px; width: 10px; height: 10px; border-radius: 50%; background: var(--marca); border: 2px solid var(--branco); }
+
+  .hero { background: var(--azul); color: #fff; border-radius: 26px; padding: 18px; display: grid; gap: 6px; }
+  .hero .rot { font-family: var(--f-m); font-size: 11px; letter-spacing: 1.4px; color: #C9D0F5; }
+  .hero b { font-family: var(--f-d); font-weight: 800; font-size: 46px; line-height: .95; text-transform: uppercase; }
+  .hero b em { font-style: normal; color: var(--marca); }
+  .hero span { color: #DCE2FB; font-size: 14px; }
+
+  .sec { display: flex; justify-content: space-between; align-items: baseline; margin-top: 4px; }
+  .sec h2 { font-size: 16px; margin: 0; }
+  .sec button { background: none; border: 0; color: var(--azul); font-weight: 700; font-size: 13px; min-height: 32px; }
+
+  .card { background: var(--branco); border: 1px solid var(--linha); border-radius: 20px; padding: 14px 16px; display: grid; gap: 6px; }
+  .tg { display: inline-block; font-family: var(--f-m); font-weight: 700; font-size: 10.5px; letter-spacing: .8px; padding: 3px 9px; border-radius: 999px; justify-self: start; }
+  .tg.ed { background: var(--verde-t); color: var(--verde); } .tg.rt { background: var(--marca-t); color: #7A5B00; } .tg.fi { background: var(--verm-t); color: var(--verm); } .tg.au { background: var(--azul-t); color: var(--azul); }
+  .card .t { font-weight: 800; font-size: 15px; }
+  .card .m { color: var(--tx2); font-size: 13px; }
+  .card .lin { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+  .hora { font-family: var(--f-m); font-size: 11px; color: var(--tx2); }
+  .btn { background: var(--azul); color: #fff; border: 0; border-radius: 12px; padding: 9px 14px; font-weight: 700; font-size: 13px; min-height: 40px; }
+  .btn.sec2 { background: var(--branco); color: var(--tinta); border: 1.5px solid var(--linha); }
+  .btn[aria-pressed="true"] { background: var(--verde); }
+
+  .semana { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px; }
+  .dia { background: var(--branco); border: 1px solid var(--linha); border-radius: 14px; padding: 8px 0; text-align: center; display: grid; gap: 2px; min-height: 64px; }
+  .dia small { font-size: 11px; color: var(--tx2); }
+  .dia b { font-family: var(--f-m); font-size: 15px; }
+  .dia .pts { display: flex; gap: 3px; justify-content: center; min-height: 6px; }
+  .dia .pts i { width: 6px; height: 6px; border-radius: 50%; }
+  .dia[aria-pressed="true"] { background: var(--tinta); color: #fff; border-color: var(--tinta); }
+  .dia[aria-pressed="true"] small { color: #C9D0F5; }
+  .filtros { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; }
+  .fc { flex: none; display: inline-flex; align-items: center; gap: 6px; border: 1.5px solid var(--linha); background: var(--branco); border-radius: 999px; padding: 6px 12px; font-weight: 700; font-size: 12.5px; min-height: 36px; }
+  .fc i { width: 10px; height: 10px; border-radius: 50%; }
+  .fc[aria-pressed="false"] { opacity: .45; }
+  .ev { display: grid; grid-template-columns: 54px minmax(0, 1fr); gap: 12px; align-items: center; background: var(--branco); border: 1px solid var(--linha); border-radius: 18px; padding: 12px; border-left-width: 6px; }
+  .ev .dt { font-family: var(--f-m); font-weight: 700; text-align: center; font-size: 12px; line-height: 1.2; }
+  .ev .dt b { display: block; font-size: 20px; }
+  .ev .t { font-weight: 800; font-size: 14px; }
+  .ev .m { color: var(--tx2); font-size: 12.5px; }
+
+  .cont { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+  .cd { background: var(--branco); border: 1px solid var(--linha); border-radius: 18px; padding: 10px; display: grid; gap: 2px; border-top: 5px solid; }
+  .cd small { font-family: var(--f-m); font-size: 10px; color: var(--tx2); }
+  .cd b { font-family: var(--f-d); font-weight: 800; font-size: 30px; line-height: 1; }
+  .cd span { font-size: 12px; font-weight: 700; }
+
+  .mat { background: var(--branco); border: 1px solid var(--linha); border-radius: 18px; padding: 12px 14px; display: grid; gap: 8px; }
+  .mat .lin { display: flex; justify-content: space-between; align-items: center; }
+  .mat b { font-size: 14.5px; }
+  .dots { display: flex; gap: 4px; }
+  .dots i { width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; font-style: normal; font-size: 10px; font-weight: 800; color: #fff; }
+  .dots i.off { background: var(--linha) !important; color: var(--tx2); }
+  .barra { height: 8px; border-radius: 4px; background: var(--linha); overflow: hidden; }
+  .barra i { display: block; height: 100%; background: var(--azul); }
+  .mat .m { color: var(--tx2); font-size: 12px; }
+  .dica { background: var(--marca-t); border-radius: 16px; padding: 12px 14px; font-size: 13px; }
+
+  .pipe { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 3px; }
+  .pipe i { height: 6px; border-radius: 3px; background: var(--linha); }
+  .chk { display: grid; gap: 6px; margin-top: 4px; }
+  .chk label { display: flex; gap: 10px; align-items: center; font-size: 13.5px; min-height: 32px; }
+  .chk input { width: 20px; height: 20px; accent-color: var(--verde); }
+  .chk label.ok span { text-decoration: line-through; color: var(--tx2); }
+
+  .chat { display: grid; gap: 8px; }
+  .msg { padding: 10px 12px; border-radius: 16px; max-width: 86%; font-size: 13.5px; }
+  .msg.eu { background: var(--azul); color: #fff; justify-self: end; border-bottom-right-radius: 4px; }
+  .msg.ia { background: var(--branco); border: 1px solid var(--linha); border-bottom-left-radius: 4px; }
+  .msg.ia small { display: block; font-family: var(--f-m); font-size: 10.5px; color: var(--tx2); margin-top: 4px; }
+  .perg { display: flex; gap: 6px; flex-wrap: wrap; }
+  .pq { border: 1.5px solid var(--linha); background: var(--branco); border-radius: 999px; padding: 6px 12px; font-weight: 700; font-size: 12.5px; min-height: 36px; }
+
+  .aj { background: var(--branco); border: 1px solid var(--linha); border-radius: 20px; padding: 4px 14px; }
+  .aj .lin { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--linha); gap: 10px; }
+  .aj .lin:last-child { border: 0; }
+  .aj .m { color: var(--tx2); font-size: 12.5px; }
+  .sw { width: 48px; height: 28px; border-radius: 999px; background: var(--linha); border: 0; position: relative; flex: none; }
+  .sw::after { content: ""; position: absolute; top: 3px; left: 3px; width: 22px; height: 22px; border-radius: 50%; background: #fff; transition: left .15s; }
+  .sw[aria-checked="true"] { background: var(--verde); }
+  .sw[aria-checked="true"]::after { left: 23px; }
+  .aj select { font: inherit; border: 1.5px solid var(--linha); border-radius: 10px; padding: 6px 8px; background: var(--branco); min-height: 36px; }
+  .pro { font-family: var(--f-m); font-size: 10px; font-weight: 700; background: var(--marca); padding: 2px 7px; border-radius: 999px; margin-left: 6px; }
+
+  .tabbar { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); background: var(--branco); border-top: 1px solid var(--linha); padding: 6px 4px 18px; }
+  .tabbar button { background: none; border: 0; display: grid; justify-items: center; gap: 2px; font-size: 11px; font-weight: 700; color: var(--tx2); padding: 6px 0; min-height: 48px; }
+  .tabbar svg { width: 22px; height: 22px; }
+  .tabbar button[aria-current="page"] { color: var(--azul); }
+
+  .push { position: absolute; left: 10px; right: 10px; top: 10px; background: rgba(255,255,255,.97); border-radius: 22px; padding: 12px 14px; box-shadow: 0 12px 30px rgba(15, 21, 48, .25); display: grid; grid-template-columns: 36px minmax(0, 1fr); gap: 10px; z-index: 3; transform: translateY(0); transition: transform .4s, opacity .4s; }
+  .push.fora { transform: translateY(-140%); opacity: 0; }
+  .push .ic { width: 36px; height: 36px; border-radius: 10px; background: var(--azul); display: grid; place-items: center; }
+  .push b { font-size: 13.5px; } .push span { font-size: 12.5px; color: var(--tx2); }
+  .push .hd { display: flex; justify-content: space-between; font-family: var(--f-m); font-size: 10px; color: var(--tx2); }
+  [hidden] { display: none !important; }
+  @media (prefers-reduced-motion: reduce) { .push, .sw::after { transition: none; } }
+  @media (max-width: 760px) {
+    .palco { grid-template-columns: 1fr; padding: 0; gap: 0; }
+    .lado { display: none; }
+    .aparelho { width: 100%; height: 100vh; height: 100dvh; border-radius: 0; padding: 0; box-shadow: none; }
+    .tela { border-radius: 0; }
+    .topo { padding-top: max(8px, env(safe-area-inset-top, 0px)); }
+    .tabbar { padding-bottom: max(10px, env(safe-area-inset-bottom, 0px)); }
+  }
+</style>
+
+<div class="palco">
+  <div class="lado">
+    <div class="mk"><svg viewBox="0 0 100 100" width="40" height="40" aria-hidden="true"><circle cx="46" cy="54" r="38" fill="#1F3FD1"/><rect x="40" y="30" width="12" height="32" rx="6" fill="#fff"/><circle cx="46" cy="75" r="6.5" fill="#fff"/><circle cx="80" cy="20" r="15" fill="#FFE14D" stroke="#DCDFE8" stroke-width="6"/></svg><span><b>aviso</b><span>concurso</span></span></div>
+    <p>Protótipo clicável do app. Toque nas abas de baixo.</p>
+    <ol>
+      <li><b>Hoje:</b> notificações do dia e contagem regressiva</li>
+      <li><b>Agenda:</b> todos os concursos num calendário só</li>
+      <li><b>Matérias:</b> o que cai em mais de um concurso</li>
+      <li><b>Concursos:</b> etapas, checklist e Pergunte ao edital</li>
+      <li><b>Ajustes:</b> notificações e WhatsApp</li>
+    </ol>
+    <span class="ex">DADOS DE EXEMPLO · ÓRGÃOS GENÉRICOS</span>
+  </div>
+
+  <div class="aparelho">
+    <div class="tela">
+      <div class="push" id="push" role="status">
+        <span class="ic"><svg viewBox="0 0 100 100" width="26" height="26" aria-hidden="true"><circle cx="46" cy="54" r="38" fill="#fff"/><rect x="40" y="30" width="12" height="32" rx="6" fill="#1F3FD1"/><circle cx="46" cy="75" r="6.5" fill="#1F3FD1"/><circle cx="80" cy="20" r="15" fill="#FFE14D"/></svg></span>
+        <div><div class="hd"><span>AVISO CONCURSO</span><span>agora</span></div><b>📢 Edital publicado: Técnico Judiciário</b><br><span>42 vagas · R$ 8.500,00 · inscrições até 02/12</span></div>
+      </div>
+
+      <div class="conteudo" id="scroll">
+
+        <!-- HOJE -->
+        <section data-tela="hoje">
+          <div style="display:grid;gap:14px">
+            <div class="topo"><div><span class="ola">Bom dia, Ana 👋</span><h1>Hoje</h1></div><span class="sino" aria-label="3 notificações novas"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg><i></i></span></div>
+            <div class="hero"><span class="rot">PRÓXIMA PROVA</span><b>Faltam <em>21 dias</em></b><span>Tribunal Regional · Técnico Judiciário · 24/11</span></div>
+            <div class="cont">
+              <div class="cd" style="border-top-color:var(--c1)"><small>TRIBUNAL</small><b>21</b><span>dias</span></div>
+              <div class="cd" style="border-top-color:var(--c2)"><small>SEFAZ</small><b>35</b><span>dias</span></div>
+              <div class="cd" style="border-top-color:var(--c3)"><small>PREFEITURA</small><b>52</b><span>dias</span></div>
+            </div>
+            <div class="sec"><h2>Avisos de hoje</h2><button type="button" data-ir="concursos">Ver concursos</button></div>
+            <div class="card"><div class="lin"><span class="tg ed">EDITAL PUBLICADO</span><span class="hora">06:04</span></div><span class="t">📢 Agência reguladora · Analista</span><span class="m">Superior · 120 vagas · R$ 16.400,00 · banca Cebraspe</span><div class="lin"><span class="m">Combina com seu perfil</span><button class="btn" type="button" data-seguir aria-pressed="false">Acompanhar</button></div></div>
+            <div class="card"><div class="lin"><span class="tg fi">ISENÇÃO ACABA EM 2 DIAS</span><span class="hora">06:04</span></div><span class="t">⏰ SEFAZ · Auditor Fiscal</span><span class="m">Peça até 28/10. Você marcou que tem CadÚnico.</span></div>
+            <div class="card"><div class="lin"><span class="tg rt">ERRATA</span><span class="hora">ontem</span></div><span class="t">✏️ Prefeitura · Agente Administrativo</span><span class="m">Prova mudou de 14/12 para 21/12 (item 9.1). Sua agenda já foi atualizada.</span></div>
+          </div>
+        </section>
+
+        <!-- AGENDA -->
+        <section data-tela="agenda" hidden>
+          <div style="display:grid;gap:14px">
+            <div class="topo"><div><span class="ola">Novembro</span><h1>Agenda</h1></div></div>
+            <div class="filtros" role="group" aria-label="Concursos na agenda">
+              <button class="fc" type="button" aria-pressed="true" data-c="c1"><i style="background:var(--c1)"></i>Tribunal</button>
+              <button class="fc" type="button" aria-pressed="true" data-c="c2"><i style="background:var(--c2)"></i>SEFAZ</button>
+              <button class="fc" type="button" aria-pressed="true" data-c="c3"><i style="background:var(--c3)"></i>Prefeitura</button>
+            </div>
+            <div class="semana" id="semana"></div>
+            <div class="sec"><h2>Próximos compromissos</h2></div>
+            <div id="eventos" style="display:grid;gap:10px"></div>
+          </div>
+        </section>
+
+        <!-- MATÉRIAS -->
+        <section data-tela="materias" hidden>
+          <div style="display:grid;gap:14px">
+            <div class="topo"><div><span class="ola">Seus 3 concursos</span><h1>Matérias em comum</h1></div></div>
+            <div class="dica">💡 Lido do conteúdo programático de cada edital. As matérias que caem em mais concursos aparecem primeiro.</div>
+            <div class="filtros" role="group" aria-label="Concursos considerados">
+              <button class="fc" type="button" aria-pressed="true" data-m="0"><i style="background:var(--c1)"></i>Tribunal</button>
+              <button class="fc" type="button" aria-pressed="true" data-m="1"><i style="background:var(--c2)"></i>SEFAZ</button>
+              <button class="fc" type="button" aria-pressed="true" data-m="2"><i style="background:var(--c3)"></i>Prefeitura</button>
+            </div>
+            <div id="materias" style="display:grid;gap:10px"></div>
+            <span class="ex">EXEMPLO ILUSTRATIVO</span>
+          </div>
+        </section>
+
+        <!-- CONCURSOS -->
+        <section data-tela="concursos" hidden>
+          <div style="display:grid;gap:14px">
+            <div class="topo"><div><span class="ola">Acompanhando 3</span><h1>Concursos</h1></div></div>
+            <div class="card" style="border-top:5px solid var(--c1)">
+              <div class="lin"><span class="t">Tribunal Regional · Técnico Judiciário</span></div>
+              <span class="tg ed">INSCRITO</span>
+              <div class="pipe"><i style="background:var(--c1)"></i><i style="background:var(--c1)"></i><i style="background:var(--c1)"></i><i style="background:var(--c1)"></i><i></i><i></i></div>
+              <span class="m">Prova em 24/11 · Cebraspe · objetiva + redação</span>
+              <div class="chk">
+                <label class="ok"><input type="checkbox" checked><span>Pedir isenção</span></label>
+                <label class="ok"><input type="checkbox" checked><span>Fazer inscrição</span></label>
+                <label><input type="checkbox"><span>Conferir local de prova (sai 17/11)</span></label>
+                <label><input type="checkbox"><span>Separar documento com foto</span></label>
+                <label><input type="checkbox"><span>Caneta preta de tubo transparente</span></label>
+              </div>
+              <button class="btn" type="button" data-ir="pergunte" style="justify-self:start">💬 Pergunte ao edital</button>
+            </div>
+            <div class="card" style="border-top:5px solid var(--c2)">
+              <span class="t">SEFAZ · Auditor Fiscal</span>
+              <span class="tg fi">ISENÇÃO ATÉ 28/10</span>
+              <div class="pipe"><i style="background:var(--c2)"></i><i style="background:var(--c2)"></i><i style="background:var(--c2)"></i><i style="background:var(--c2)"></i><i></i><i></i></div>
+              <div class="chk">
+                <label><input type="checkbox"><span>Pedir isenção (CadÚnico)</span></label>
+                <label><input type="checkbox"><span>Fazer inscrição até 18/11</span></label>
+              </div>
+            </div>
+            <div class="card" style="border-top:5px solid var(--c3)">
+              <span class="t">Prefeitura · Agente Administrativo</span>
+              <span class="tg rt">PROVA ADIADA PARA 21/12</span>
+              <div class="pipe"><i style="background:var(--c3)"></i><i style="background:var(--c3)"></i><i style="background:var(--c3)"></i><i style="background:var(--c3)"></i><i></i><i></i></div>
+              <div class="chk"><label class="ok"><input type="checkbox" checked><span>Boleto pago</span></label></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- PERGUNTE -->
+        <section data-tela="pergunte" hidden>
+          <div style="display:grid;gap:14px">
+            <div class="topo"><div><span class="ola">Técnico Judiciário · 82 páginas</span><h1>Pergunte ao edital <span class="pro">APROVADO</span></h1></div></div>
+            <div class="chat" id="chat">
+              <div class="msg eu">Tem teste físico?</div>
+              <div class="msg ia">Não. São prova objetiva e redação, as duas eliminatórias.<small>Fonte: item 8.1, página 14</small></div>
+            </div>
+            <div class="perg">
+              <button class="pq" type="button" data-q="0">Quem tem isenção?</button>
+              <button class="pq" type="button" data-q="1">Salário total</button>
+              <button class="pq" type="button" data-q="2">Vagas na minha cidade</button>
+              <button class="pq" type="button" data-q="3">Posso levar garrafa?</button>
+            </div>
+            <span class="ex">RESPOSTAS DE EXEMPLO · SEMPRE COM ITEM E PÁGINA</span>
+          </div>
+        </section>
+
+        <!-- AJUSTES -->
+        <section data-tela="ajustes" hidden>
+          <div style="display:grid;gap:14px">
+            <div class="topo"><div><span class="ola">Plano Aviso · teste grátis: 2 dias</span><h1>Ajustes</h1></div></div>
+            <div class="aj">
+              <div class="lin"><span><b>Notificações no celular</b><br><span class="m">Edital, prazo, errata, resultado</span></span><button class="sw" type="button" role="switch" aria-checked="true" aria-label="Notificações no celular"></button></div>
+              <div class="lin"><span><b>WhatsApp</b><span class="pro">APROVADO</span><br><span class="m">Só prazos que estão acabando</span></span><button class="sw" type="button" role="switch" aria-checked="false" aria-label="WhatsApp"></button></div>
+              <div class="lin"><span><b>Resumo por e-mail</b><br><span class="m">Toda segunda, 7h</span></span><button class="sw" type="button" role="switch" aria-checked="true" aria-label="Resumo por e-mail"></button></div>
+            </div>
+            <div class="aj">
+              <div class="lin"><label for="ant"><b>Avisar prazo antes</b></label><select id="ant"><option>1 dia</option><option>2 dias</option><option selected>3 dias</option><option>5 dias</option></select></div>
+              <div class="lin"><label for="sil"><b>Horário silencioso</b></label><select id="sil"><option>Desligado</option><option selected>22h às 7h</option><option>23h às 6h</option></select></div>
+            </div>
+            <div class="aj">
+              <div class="lin"><span><b>Meu perfil</b><br><span class="m">Médio e superior · tribunais, fiscal · SP, MG e federal · a partir de R$ 4.000</span></span></div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+
+      <nav class="tabbar" aria-label="Abas do app">
+        <button type="button" data-aba="hoje" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>Hoje</button>
+        <button type="button" data-aba="agenda"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>Agenda</button>
+        <button type="button" data-aba="materias"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z"/><path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5"/></svg>Matérias</button>
+        <button type="button" data-aba="concursos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 13h7M9 17h5"/></svg>Concursos</button>
+        <button type="button" data-aba="ajustes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Ajustes</button>
+      </nav>
+    </div>
+  </div>
+</div>
+
+<script>
+  var telas = document.querySelectorAll('[data-tela]'), abas = document.querySelectorAll('[data-aba]');
+  function abrir(t) {
+    telas.forEach(function (s) { s.hidden = s.dataset.tela !== t; });
+    var aba = t === 'pergunte' ? 'concursos' : t;
+    abas.forEach(function (b) { if (b.dataset.aba === aba) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current'); });
+    document.getElementById('scroll').scrollTop = 0;
+  }
+  abas.forEach(function (b) { b.addEventListener('click', function () { abrir(b.dataset.aba); }); });
+  document.querySelectorAll('[data-ir]').forEach(function (b) { b.addEventListener('click', function () { abrir(b.dataset.ir); }); });
+  var h = location.hash.slice(1); if (h && document.querySelector('[data-tela="' + h + '"]')) abrir(h);
+
+  var push = document.getElementById('push');
+  setTimeout(function () { push.classList.add('fora'); }, 4200);
+  push.addEventListener('click', function () { push.classList.add('fora'); });
+
+  document.querySelectorAll('[data-seguir]').forEach(function (b) { b.addEventListener('click', function () { var on = b.getAttribute('aria-pressed') !== 'true'; b.setAttribute('aria-pressed', on); b.textContent = on ? 'Acompanhando ✓' : 'Acompanhar'; }); });
+  document.querySelectorAll('.sw').forEach(function (s) { s.addEventListener('click', function () { s.setAttribute('aria-checked', s.getAttribute('aria-checked') !== 'true'); }); });
+  document.querySelectorAll('.chk input').forEach(function (c) { c.addEventListener('change', function () { c.parentElement.classList.toggle('ok', c.checked); }); });
+
+  // Agenda
+  var EV = [
+    { d: 28, m: 'OUT', c: 'c1', t: 'Prazo de isenção · SEFAZ', s: 'Fim do pedido de isenção', k: 'c2' },
+    { d: 3, m: 'NOV', c: 'c1', t: 'Inscrições abertas', s: 'Tribunal · até 02/12' },
+    { d: 17, m: 'NOV', c: 'c1', t: 'Local de prova sai', s: 'Tribunal · consultar no site da banca' },
+    { d: 18, m: 'NOV', c: 'c2', t: 'Fim das inscrições', s: 'SEFAZ · boleto até 19/11' },
+    { d: 24, m: 'NOV', c: 'c1', t: '📝 Prova objetiva e redação', s: 'Tribunal · 13h, portões fecham 12h30' },
+    { d: 30, m: 'NOV', c: 'c2', t: '📝 Prova objetiva', s: 'SEFAZ · 8h' },
+    { d: 21, m: 'DEZ', c: 'c3', t: '📝 Prova (adiada)', s: 'Prefeitura · errata nº 2' }
+  ];
+  EV[0].c = 'c2';
+  var ativos = { c1: true, c2: true, c3: true };
+  var semana = document.getElementById('semana'), dias = ['S', 'T', 'Q', 'Q', 'S', 'S', 'D'];
+  for (var i = 0; i < 7; i++) {
+    var d = 26 + i, b = document.createElement('button'); b.type = 'button'; b.className = 'dia'; b.setAttribute('aria-pressed', i === 0 ? 'true' : 'false');
+    b.innerHTML = '<small>' + dias[i] + '</small><b>' + (d > 31 ? d - 31 : d) + '</b><span class="pts"></span>';
+    semana.appendChild(b);
+    b.addEventListener('click', function (e) { semana.querySelectorAll('.dia').forEach(function (x) { x.setAttribute('aria-pressed', x === e.currentTarget); }); });
+  }
+  var pts = semana.querySelectorAll('.pts');
+  [['c2', 2]].forEach(function (p) { var dot = document.createElement('i'); dot.style.background = 'var(--' + p[0] + ')'; pts[p[1]].appendChild(dot); });
+  function desenharAgenda() {
+    var box = document.getElementById('eventos'); box.innerHTML = '';
+    EV.filter(function (e) { return ativos[e.c]; }).forEach(function (e) {
+      var el = document.createElement('div'); el.className = 'ev'; el.style.borderLeftColor = 'var(--' + e.c + ')';
+      var dt = document.createElement('div'); dt.className = 'dt'; dt.innerHTML = '<b></b>'; dt.firstChild.textContent = e.d; dt.append(e.m);
+      var tx = document.createElement('div'); var t = document.createElement('div'); t.className = 't'; t.textContent = e.t; var m = document.createElement('div'); m.className = 'm'; m.textContent = e.s; tx.append(t, m);
+      el.append(dt, tx); box.appendChild(el);
+    });
+  }
+  document.querySelectorAll('[data-c]').forEach(function (b) { b.addEventListener('click', function () { ativos[b.dataset.c] = !ativos[b.dataset.c]; b.setAttribute('aria-pressed', ativos[b.dataset.c]); desenharAgenda(); }); });
+  desenharAgenda();
+
+  // Matérias em comum: [nome, [questões por concurso: tribunal, sefaz, prefeitura]]
+  var MAT = [
+    ['Língua Portuguesa', [20, 15, 15]], ['Raciocínio Lógico', [10, 10, 10]], ['Direito Constitucional', [10, 10, 0]],
+    ['Direito Administrativo', [10, 10, 5]], ['Informática', [5, 0, 10]], ['Contabilidade', [0, 20, 0]],
+    ['Legislação Tributária', [0, 20, 0]], ['Regimento Interno', [10, 0, 0]], ['Legislação Municipal', [0, 0, 10]]
+  ];
+  var cores = ['c1', 'c2', 'c3'], nomes = ['T', 'S', 'P'], usar = [true, true, true];
+  function desenharMaterias() {
+    var box = document.getElementById('materias'); box.innerHTML = '';
+    var lista = MAT.map(function (m) {
+      var n = 0, q = 0; m[1].forEach(function (v, i) { if (usar[i] && v > 0) { n++; q += v; } }); return { nome: m[0], qs: m[1], n: n, q: q };
+    }).filter(function (m) { return m.n > 0; }).sort(function (a, b) { return b.n - a.n || b.q - a.q; });
+    var total = usar.filter(Boolean).length, max = Math.max.apply(null, lista.map(function (m) { return m.q; }));
+    lista.forEach(function (m) {
+      var el = document.createElement('div'); el.className = 'mat';
+      var lin = document.createElement('div'); lin.className = 'lin'; var b = document.createElement('b'); b.textContent = m.nome;
+      var dots = document.createElement('span'); dots.className = 'dots';
+      m.qs.forEach(function (v, i) { if (!usar[i]) return; var d = document.createElement('i'); d.textContent = nomes[i]; d.style.background = 'var(--' + cores[i] + ')'; if (!v) d.className = 'off'; dots.appendChild(d); });
+      lin.append(b, dots);
+      var bar = document.createElement('div'); bar.className = 'barra'; bar.innerHTML = '<i></i>'; bar.firstChild.style.width = (m.q / max * 100) + '%';
+      var info = document.createElement('span'); info.className = 'm'; info.textContent = 'Cai em ' + m.n + ' de ' + total + ' · ' + m.q + ' questões somadas';
+      el.append(lin, bar, info); box.appendChild(el);
+    });
+  }
+  document.querySelectorAll('[data-m]').forEach(function (b) { b.addEventListener('click', function () { var i = +b.dataset.m; if (usar[i] && usar.filter(Boolean).length === 1) return; usar[i] = !usar[i]; b.setAttribute('aria-pressed', usar[i]); desenharMaterias(); }); });
+  desenharMaterias();
+
+  // Pergunte ao edital
+  var QA = [
+    ['Quem tem direito à isenção?', 'Inscritos no CadÚnico, doadores de medula óssea e doadores de sangue, com comprovante. O pedido vai até 07/11.', 'item 5.2, página 7'],
+    ['Qual o salário total?', 'Vencimento de R$ 5.300,00 mais gratificação de R$ 3.200,00: R$ 8.500,00. Auxílio-alimentação à parte.', 'item 2.3, página 3'],
+    ['Tem vaga para minha cidade?', 'São Paulo tem 18 vagas imediatas e Campinas tem 6. As outras cidades formam cadastro reserva.', 'Anexo I, página 52'],
+    ['Posso levar garrafa de água?', 'Pode, desde que seja transparente e sem rótulo.', 'item 10.14, página 21']
+  ];
+  var chat = document.getElementById('chat');
+  document.querySelectorAll('[data-q]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var q = QA[+b.dataset.q];
+      var eu = document.createElement('div'); eu.className = 'msg eu'; eu.textContent = q[0];
+      var ia = document.createElement('div'); ia.className = 'msg ia'; ia.textContent = q[1];
+      var f = document.createElement('small'); f.textContent = 'Fonte: ' + q[2]; ia.appendChild(f);
+      chat.append(eu, ia); document.getElementById('scroll').scrollTop = 1e6;
+    });
+  });
+</script>

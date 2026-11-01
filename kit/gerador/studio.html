@@ -1,0 +1,402 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;700;800&family=Figtree:wght@400;500;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--azul:#1F3FD1;--azul2:#162FA3;--marca:#FFE14D;--papel:#F5F6F1;--tinta:#0F1530;--cinza:#4F566E;--linha:#D9DCE6;--verde:#0E8A45;--verm:#D93A40}
+body{margin:0;background:#888;display:flex;flex-wrap:wrap;gap:40px;padding:40px}
+.s{position:relative;overflow:hidden;box-sizing:border-box;font-family:Figtree,sans-serif;color:var(--tinta);background:var(--papel);flex:none}
+.p{width:1080px;height:1350px;padding:80px 88px;display:flex;flex-direction:column;gap:44px}
+.st{width:1080px;height:1920px;padding:230px 90px 300px;display:flex;flex-direction:column;gap:52px}
+.az{background:var(--azul);color:#fff}.tn{background:var(--tinta);color:#fff}.am{background:var(--marca);color:var(--tinta)}
+.top{display:flex;justify-content:space-between;align-items:center;font-family:'JetBrains Mono',monospace;font-size:26px;letter-spacing:2px;text-transform:uppercase;font-weight:500}
+.mk{display:flex;align-items:center;gap:14px;font-family:'Barlow Condensed';font-size:46px;letter-spacing:0;text-transform:none;line-height:1}
+.mk img{width:58px;height:58px}.mk b{font-weight:800}.mk span{font-weight:500}
+.H{font-family:'Barlow Condensed',sans-serif;font-weight:800;text-transform:uppercase;line-height:.92;letter-spacing:-1px;font-size:150px;margin:0}
+.H.m{font-size:120px}.H.s2{font-size:96px}
+.g{background:linear-gradient(transparent 50%,var(--marca) 50%,var(--marca) 88%,transparent 88%);padding:0 10px;margin:0 -10px;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.az .g,.tn .g{background:none;color:var(--marca)}
+.L{font-size:42px;line-height:1.32;max-width:880px;margin:0}
+.L.sm{font-size:36px}
+.foot{margin-top:auto;display:flex;justify-content:space-between;align-items:center;font-family:'JetBrains Mono',monospace;font-size:26px;font-weight:500}
+.gab{display:flex;gap:18px}
+.gab i{width:66px;height:66px;border-radius:50%;border:4px solid currentColor;display:grid;place-items:center;font-style:normal;font-family:'JetBrains Mono';font-size:28px;font-weight:700;box-sizing:border-box}
+.gab i.on{background:var(--azul);border-color:var(--azul);color:#fff}
+.az .gab i.on,.tn .gab i.on{background:var(--marca);border-color:var(--marca);color:var(--tinta)}
+.nt{background:#fff;color:var(--tinta);border-radius:36px;padding:36px 42px;box-shadow:0 30px 70px rgba(15,21,48,.22);display:grid;gap:12px;font-size:33px;line-height:1.35}
+.nt .hd{display:flex;align-items:center;gap:14px;font-size:24px;color:var(--cinza);font-family:'JetBrains Mono'}
+.nt .hd img{width:44px;height:44px}
+.nt b.t{font-size:40px;line-height:1.15}
+.nt .lk{color:var(--azul);font-weight:700}
+.tag{display:inline-block;font-family:'JetBrains Mono';font-weight:700;font-size:24px;letter-spacing:1.5px;padding:8px 18px;border-radius:999px;background:var(--verde);color:#fff;justify-self:start}
+.tag.r{background:var(--verm)}.tag.b{background:var(--azul)}.tag.y{background:var(--marca);color:var(--tinta)}
+.ex{font-family:'JetBrains Mono';font-size:22px;letter-spacing:1px;color:var(--cinza)}
+.az .ex,.tn .ex{color:#C9D0F5}
+.n{font-family:'JetBrains Mono';font-weight:700}
+.lista{display:grid;gap:22px;margin:0;padding:0;list-style:none;font-size:40px;font-weight:700}
+.lista li{display:grid;grid-template-columns:60px 1fr;gap:22px;align-items:center}
+.lista li i{width:56px;height:56px;border-radius:50%;border:4px solid currentColor;box-sizing:border-box}
+.lista li i.on{background:var(--azul);border-color:var(--azul)}
+.az .lista li i.on{background:var(--marca);border-color:var(--marca)}
+.etapas{display:grid;gap:0}
+.etapa{display:grid;grid-template-columns:70px 1fr auto;gap:26px;align-items:center;padding:22px 0;border-bottom:3px solid var(--linha);font-size:42px;font-weight:700}
+.etapa:last-child{border:0}
+.etapa i{width:56px;height:56px;border-radius:50%;background:var(--azul);display:grid;place-items:center;color:#fff;font-style:normal;font-size:26px;font-family:'JetBrains Mono'}
+.etapa small{font-family:'JetBrains Mono';font-size:24px;color:var(--cinza);font-weight:500}
+.box{background:#fff;border-radius:32px;padding:44px;display:grid;gap:18px}
+.az .box,.tn .box{background:rgba(255,255,255,.1)}
+.big{font-family:'Barlow Condensed';font-weight:800;font-size:220px;line-height:.85}
+.cnt{font-family:'JetBrains Mono';font-size:26px}
+.planos{display:grid;gap:22px}
+.pl{display:grid;grid-template-columns:1fr auto;align-items:center;background:#fff;border-radius:28px;padding:30px 40px;font-size:34px}
+.pl b{font-family:'Barlow Condensed';font-size:58px;font-weight:800;text-transform:uppercase;line-height:1}
+.pl .pr{font-family:'Barlow Condensed';font-size:72px;font-weight:800}
+.pl.dest{background:var(--azul);color:#fff}
+.pl small{display:block;font-size:26px;color:var(--cinza)}
+.pl.dest small{color:#D6DCFA}
+.arr{font-family:'JetBrains Mono';font-size:28px;font-weight:700}
+.dot{position:absolute;border-radius:50%}
+.btnf{display:inline-flex;align-self:flex-start;background:var(--tinta);color:#fff;font-weight:800;font-size:40px;padding:28px 48px;border-radius:999px}
+.az .btnf,.tn .btnf{background:var(--marca);color:var(--tinta)}
+.sticker{border:5px dashed currentColor;border-radius:36px;padding:40px;font-family:'JetBrains Mono';font-size:28px;text-align:center;opacity:.7}
+.fonte{font-family:'JetBrains Mono';font-size:24px;color:var(--cinza)}
+.az .fonte{color:#C9D0F5}
+</style></head><body>
+
+<!-- ============ LOGOS ============ -->
+<div class="s" data-shot="logo-claro" style="width:1200px;height:420px;display:grid;place-items:center">
+  <div class="mk" style="font-size:150px;gap:34px"><img src="../img/simbolo.svg" style="width:180px;height:180px"><span><b>aviso</b><span>concurso</span></span></div>
+</div>
+<div class="s tn" data-shot="logo-escuro" style="width:1200px;height:420px;display:grid;place-items:center">
+  <div class="mk" style="font-size:150px;gap:34px"><img src="../img/simbolo-escuro.svg" style="width:180px;height:180px"><span><b>aviso</b><span style="color:#C9D0F5">concurso</span></span></div>
+</div>
+<div class="s az" data-shot="perfil" style="width:800px;height:800px;display:grid;place-items:center">
+  <svg viewBox="0 0 100 100" width="520" height="520"><circle cx="46" cy="54" r="38" fill="#FFFFFF"/><rect x="40" y="30" width="12" height="32" rx="6" fill="#1F3FD1"/><circle cx="46" cy="75" r="6.5" fill="#1F3FD1"/><circle cx="80" cy="20" r="15" fill="#FFE14D" stroke="#1F3FD1" stroke-width="6"/></svg>
+</div>
+
+<!-- Prancha de identidade -->
+<div class="s" data-shot="identidade" style="width:1600px;height:1000px;padding:70px;display:grid;grid-template-columns:1fr 1fr;gap:40px">
+  <div style="display:grid;gap:30px;align-content:start">
+    <div class="mk" style="font-size:96px;gap:22px"><img src="../img/simbolo.svg" style="width:120px;height:120px"><span><b>aviso</b><span>concurso</span></span></div>
+    <p class="L sm" style="font-size:30px">O símbolo é a bolinha do gabarito, já marcada, com o ponto amarelo de notificação. Marcar a resposta certa e receber o aviso: o que o concurseiro quer.</p>
+    <div class="gab" style="color:var(--tinta)"><i>A</i><i>B</i><i class="on">C</i><i>D</i><i>E</i></div>
+    <p class="H s2" style="font-size:80px">Edital <span class="g">saiu.</span><br>Você sabe primeiro.</p>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;align-content:start;font-family:'JetBrains Mono';font-size:22px">
+    <div style="background:#1F3FD1;color:#fff;border-radius:22px;padding:24px;height:150px;display:flex;flex-direction:column;justify-content:flex-end"><b>Azul caneta</b>#1F3FD1</div>
+    <div style="background:#FFE14D;border-radius:22px;padding:24px;height:150px;display:flex;flex-direction:column;justify-content:flex-end"><b>Marca-texto</b>#FFE14D</div>
+    <div style="background:#0F1530;color:#fff;border-radius:22px;padding:24px;height:150px;display:flex;flex-direction:column;justify-content:flex-end"><b>Tinta</b>#0F1530</div>
+    <div style="background:#fff;border:2px solid #D9DCE6;border-radius:22px;padding:24px;height:150px;display:flex;flex-direction:column;justify-content:flex-end"><b>Papel</b>#F5F6F1</div>
+    <div style="background:#0E8A45;color:#fff;border-radius:22px;padding:24px;height:110px;display:flex;flex-direction:column;justify-content:flex-end"><b>Aberto</b>#0E8A45</div>
+    <div style="background:#D93A40;color:#fff;border-radius:22px;padding:24px;height:110px;display:flex;flex-direction:column;justify-content:flex-end"><b>Encerra</b>#D93A40</div>
+    <div style="grid-column:1/3;background:#fff;border-radius:22px;padding:24px;display:grid;gap:8px;font-family:Figtree;font-size:26px">
+      <span style="font-family:'Barlow Condensed';font-weight:800;font-size:64px;text-transform:uppercase;line-height:1">Barlow Condensed</span>
+      <span>Figtree no texto corrido e na interface.</span>
+      <span style="font-family:'JetBrains Mono'">JetBrains Mono · 03/11 a 02/12 · DOU Seção 3</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============ POSTS ============ -->
+<div class="s p az" data-shot="post-01-lancamento">
+  <div class="top"><div class="mk"><img src="../img/perfil-mini.svg"><span><b>aviso</b><span>concurso</span></span></div><span>em breve</span></div>
+  <p class="H" style="margin-top:40px">Você já<br>perdeu<br>concurso.<br><span class="g">E nem viu.</span></p>
+  <p class="L">Edital que saiu e você não viu. Isenção que passou. Inscrição que fechou. Com o Aviso Concurso, você nunca mais se preocupa em perder uma data.</p>
+  <div class="foot"><div class="gab"><i>A</i><i>B</i><i class="on">C</i><i>D</i><i>E</i></div><span>@avisoconcurso</span></div>
+</div>
+
+<div class="s p" data-shot="post-02-nao-espera">
+  <div class="top"><div class="mk"><img src="../img/simbolo.svg"><span><b>aviso</b><span>concurso</span></span></div><span>08:14</span></div>
+  <p class="H m">O edital <span class="g">não espera</span> você abrir o site.</p>
+  <div class="nt" style="margin-top:10px">
+    <div class="hd"><img src="../img/simbolo.svg">Aviso Concurso · agora</div>
+    <span class="tag">EDITAL PUBLICADO</span>
+    <b class="t">📢 Tribunal Regional · Técnico Judiciário</b>
+    <span>Nível médio · 42 vagas + cadastro reserva<br>R$ 8.500,00 · inscrições de 03/11 a 02/12</span>
+    <span class="lk">Ver resumo e edital oficial →</span>
+  </div>
+  <div class="foot"><span class="ex">EXEMPLO ILUSTRATIVO</span><span>@avisoconcurso</span></div>
+</div>
+
+<div class="s p" data-shot="post-03-agenda">
+  <div class="top"><div class="mk"><img src="../img/simbolo.svg"><span><b>aviso</b><span>concurso</span></span></div><span>agenda</span></div>
+  <p class="H m">Estudando para <span class="g">3 concursos</span> ao mesmo tempo?</p>
+  <div class="box" style="gap:14px">
+    <span class="n" style="font-size:24px;color:var(--cinza)">MATÉRIAS EM COMUM</span>
+    <div style="display:flex;justify-content:space-between;font-size:36px;font-weight:700"><span>📘 Português</span><span class="n" style="color:var(--azul)">3 de 3</span></div>
+    <div style="display:flex;justify-content:space-between;font-size:36px;font-weight:700"><span>🧮 Raciocínio lógico</span><span class="n" style="color:var(--azul)">3 de 3</span></div>
+    <div style="display:flex;justify-content:space-between;font-size:36px;font-weight:700"><span>⚖️ Dir. Constitucional</span><span class="n" style="color:var(--azul)">2 de 3</span></div>
+    <div style="display:flex;justify-content:space-between;font-size:36px;font-weight:700"><span>💻 Informática</span><span class="n" style="color:var(--azul)">2 de 3</span></div>
+  </div>
+  <p class="L sm">A agenda junta as provas e mostra o que cai em todos os seus concursos.</p>
+  <div class="foot"><span class="ex">EXEMPLO ILUSTRATIVO</span><span>@avisoconcurso</span></div>
+</div>
+
+<div class="s p tn" data-shot="post-04-perdeu">
+  <div class="top"><div class="mk"><img src="../img/simbolo-escuro.svg"><span><b>aviso</b><span style="color:#C9D0F5">concurso</span></span></div><span>acontece</span></div>
+  <p class="H" style="margin-top:30px">Perdeu a<br>inscrição<br>por <span class="g">1 dia?</span></p>
+  <p class="L">Você estudou meses e soube do edital quando já tinha fechado. Com o Aviso Concurso, o lembrete chega 3 dias antes do fim.</p>
+  <div class="foot"><div class="gab" style="color:#fff"><i>A</i><i>B</i><i>C</i><i class="on">D</i><i>E</i></div><span>@avisoconcurso</span></div>
+</div>
+
+<div class="s p am" data-shot="post-05-isencao">
+  <div class="top"><div class="mk"><img src="../img/simbolo.svg"><span><b>aviso</b><span>concurso</span></span></div><span>fica a dica</span></div>
+  <p class="H m">A isenção da taxa tem prazo próprio. E costuma ser menor.</p>
+  <div class="box">
+    <div style="display:flex;justify-content:space-between;font-size:36px;font-weight:700"><span>Pedido de isenção</span><span class="n" style="color:var(--verm)">até 07/11</span></div>
+    <div style="height:3px;background:var(--linha)"></div>
+    <div style="display:flex;justify-content:space-between;font-size:36px;font-weight:700"><span>Inscrições</span><span class="n">03/11 a 02/12</span></div>
+  </div>
+  <p class="L sm">CadÚnico, doador de medula, doador de sangue: cada edital diz quem tem direito. A gente avisa os dois prazos.</p>
+  <div class="foot"><span class="ex">DATAS DE EXEMPLO</span><span>@avisoconcurso</span></div>
+</div>
+
+<div class="s p" data-shot="post-06-golpe">
+  <div class="top"><div class="mk"><img src="../img/simbolo.svg"><span><b>aviso</b><span>concurso</span></span></div><span>cuidado</span></div>
+  <p class="H m">Edital falso <span class="g">existe.</span></p>
+  <p class="L">Sites falsos de inscrição já foram alvo de alerta do governo federal. Todo aviso nosso vem com o link da fonte oficial: Diário Oficial, órgão ou banca.</p>
+  <div class="box" style="font-size:34px;gap:14px">
+    <div><span class="tag">OFICIAL</span></div>
+    <span class="n" style="font-size:30px">in.gov.br · DOU · Seção 3</span>
+    <span style="color:var(--cinza)">Pagou taxa em site que não é da banca? Desconfie.</span>
+  </div>
+  <div class="foot"><span></span><span>@avisoconcurso</span></div>
+</div>
+
+<div class="s p az" data-shot="post-07-retificacao">
+  <div class="top"><div class="mk"><img src="../img/perfil-mini.svg"><span><b>aviso</b><span>concurso</span></span></div><span>retificação</span></div>
+  <p class="H m">Saiu errata. <span class="g">Mudou a data</span> da prova.</p>
+  <div class="nt">
+    <div class="hd"><img src="../img/simbolo.svg">Aviso Concurso · 2 min</div>
+    <span class="tag y">EDITAL RETIFICADO</span>
+    <b class="t">✏️ Prova objetiva: de 14/12 para 21/12</b>
+    <span>Retificação nº 2 · item 9.1 alterado</span>
+    <span class="lk">Ver o que mudou →</span>
+  </div>
+  <p class="L sm">Edital muda depois de publicado. A gente compara as versões e diz só o que mudou.</p>
+  <div class="foot"><span class="ex">EXEMPLO ILUSTRATIVO</span><span>@avisoconcurso</span></div>
+</div>
+
+<div class="s p" data-shot="post-08-planos">
+  <div class="top"><div class="mk"><img src="../img/simbolo.svg"><span><b>aviso</b><span>concurso</span></span></div><span>planos</span></div>
+  <p class="H m">Menos que <span class="g">uma taxa</span> de inscrição.</p>
+  <div class="planos">
+    <div class="pl dest"><div><b>Aviso</b><small>notificação no app · prazos · erratas · agenda</small></div><span class="pr">R$ 9,90</span></div>
+    <div class="pl"><div><b>Aprovado</b><small>+ WhatsApp · pergunte ao edital · radar</small></div><span class="pr">R$ 19,90</span></div>
+  </div>
+  <p class="L sm">🎁 3 dias grátis para testar. Cancele quando quiser.</p>
+  <div class="foot"><span class="fonte">por mês</span><span>@avisoconcurso</span></div>
+</div>
+
+<div class="s p tn" data-shot="post-09-lista">
+  <div class="top"><div class="mk"><img src="../img/simbolo-escuro.svg"><span><b>aviso</b><span style="color:#C9D0F5">concurso</span></span></div><span>3 dias grátis</span></div>
+  <p class="H" style="margin-top:30px">Marque<br>essa.</p>
+  <div class="gab" style="transform:scale(1.6);transform-origin:left;margin:30px 0"><i>A</i><i>B</i><i class="on">C</i><i>D</i><i>E</i></div>
+  <p class="L">Teste o Aviso Concurso por 3 dias grátis. Depois, R$ 9,90 por mês.</p>
+  <span class="btnf">Link na bio</span>
+  <div class="foot"><span></span><span>@avisoconcurso</span></div>
+</div>
+
+<!-- ============ CARROSSEL 1 · COMO FUNCIONA ============ -->
+<div class="s p az" data-shot="c1-01">
+  <div class="top"><div class="mk"><img src="../img/perfil-mini.svg"><span><b>aviso</b><span>concurso</span></span></div><span class="cnt">1/6</span></div>
+  <p class="H" style="margin-top:40px">Como<br>funciona o<br><span class="g">aviso</span></p>
+  <p class="L">Em 4 passos, do Diário Oficial para o seu celular.</p>
+  <div class="foot"><span class="arr">arrasta →</span><span>@avisoconcurso</span></div>
+</div>
+<div class="s p" data-shot="c1-02">
+  <div class="top"><span class="n" style="font-size:30px;color:var(--azul)">PASSO 1</span><span class="cnt">2/6</span></div>
+  <p class="H m">Diga o que você <span class="g">procura</span></p>
+  <ul class="lista">
+    <li><i class="on"></i>Nível médio ou superior</li>
+    <li><i class="on"></i>Área: tribunais e fiscal</li>
+    <li><i class="on"></i>Estados: SP, MG e federal</li>
+    <li><i></i>Salário a partir de R$ 4.000</li>
+    <li><i></i>Banca: Cebraspe, FGV, FCC</li>
+  </ul>
+  <div class="foot"><span class="arr">→</span><span>@avisoconcurso</span></div>
+</div>
+<div class="s p" data-shot="c1-03">
+  <div class="top"><span class="n" style="font-size:30px;color:var(--azul)">PASSO 2</span><span class="cnt">3/6</span></div>
+  <p class="H m">A gente lê <span class="g">tudo</span> todo dia</p>
+  <ul class="lista" style="font-size:38px">
+    <li><i class="on"></i>Diário Oficial da União</li>
+    <li><i class="on"></i>Diários oficiais dos estados</li>
+    <li><i class="on"></i>Diários dos municípios</li>
+    <li><i class="on"></i>Sites das bancas organizadoras</li>
+  </ul>
+  <p class="L sm">Você não precisa abrir 30 sites. O robô abre por você.</p>
+  <div class="foot"><span class="arr">→</span><span>@avisoconcurso</span></div>
+</div>
+<div class="s p" data-shot="c1-04">
+  <div class="top"><span class="n" style="font-size:30px;color:var(--azul)">PASSO 3</span><span class="cnt">4/6</span></div>
+  <p class="H m">Aviso com <span class="g">resumo</span></p>
+  <div class="nt">
+    <div class="hd"><img src="../img/simbolo.svg">Aviso Concurso · agora</div>
+    <span class="tag">EDITAL PUBLICADO</span>
+    <b class="t">📢 Tribunal Regional · Técnico Judiciário</b>
+    <span>Nível médio · 42 vagas + CR<br>R$ 8.500,00 · taxa R$ 85,00<br>Inscrições 03/11 a 02/12 · isenção até 07/11<br>Prova objetiva + redação</span>
+    <span class="lk">Edital oficial (DOU) →</span>
+  </div>
+  <div class="foot"><span class="ex">EXEMPLO ILUSTRATIVO</span><span>@avisoconcurso</span></div>
+</div>
+<div class="s p" data-shot="c1-05">
+  <div class="top"><span class="n" style="font-size:30px;color:var(--azul)">PASSO 4</span><span class="cnt">5/6</span></div>
+  <p class="H m">E não para <span class="g">no edital</span></p>
+  <div class="etapas">
+    <div class="etapa"><i>!</i>Isenção acabando<small>2 dias antes</small></div>
+    <div class="etapa"><i>!</i>Inscrição acabando<small>3 dias antes</small></div>
+    <div class="etapa"><i>!</i>Errata publicada<small>o que mudou</small></div>
+    <div class="etapa"><i>!</i>Agenda de provas<small>todos os concursos</small></div>
+    <div class="etapa"><i>!</i>Gabarito e resultado<small>no dia</small></div>
+  </div>
+  <div class="foot"><span class="arr">→</span><span>@avisoconcurso</span></div>
+</div>
+<div class="s p az" data-shot="c1-06">
+  <div class="top"><div class="mk"><img src="../img/perfil-mini.svg"><span><b>aviso</b><span>concurso</span></span></div><span class="cnt">6/6</span></div>
+  <p class="H m">Teste <span class="g">3 dias</span> grátis</p>
+  <p class="L">Depois, R$ 9,90 por mês no plano Aviso. Cancele quando quiser.</p>
+  <span class="btnf">Link na bio</span>
+  <div class="foot"><span>salva este post</span><span>@avisoconcurso</span></div>
+</div>
+
+<!-- ============ CARROSSEL 2 · 2027 NO RADAR ============ -->
+<div class="s p tn" data-shot="c2-01">
+  <div class="top"><div class="mk"><img src="../img/simbolo-escuro.svg"><span><b>aviso</b><span style="color:#C9D0F5">concurso</span></span></div><span class="cnt">1/6</span></div>
+  <p class="big" style="color:var(--marca);margin-top:40px">2027</p>
+  <p class="H m">O que já se sabe sobre os <span class="g">concursos</span></p>
+  <p class="L sm">Sem achismo: só o que está em documento oficial ou foi dito publicamente.</p>
+  <div class="foot"><span class="arr">arrasta →</span><span>@avisoconcurso</span></div>
+</div>
+<div class="s p" data-shot="c2-02">
+  <div class="top"><span class="n" style="font-size:30px;color:var(--azul)">ORÇAMENTO</span><span class="cnt">2/6</span></div>
+  <p class="H m">A LDO 2027 <span class="g">permite</span> novos concursos</p>
+  <p class="L">O projeto da Lei de Diretrizes Orçamentárias mantém a autorização para concursos e nomeações.</p>
+  <div class="box"><span style="font-size:34px;font-weight:700">A condição</span><span style="font-size:32px;color:var(--cinza)">Precisa ter cargo vago e dinheiro previsto no Orçamento de 2027.</span></div>
+  <div class="foot"><span class="fonte">Fonte: PLDO 2027</span><span>@avisoconcurso</span></div>
+</div>
+<div class="s p" data-shot="c2-03">
+  <div class="top"><span class="n" style="font-size:30px;color:var(--azul)">CNU 2024</span><span class="cnt">3/6</span></div>
+  <p class="H m">Aprovado no CNU? A validade <span class="g">vai até 2027</span></p>
+  <div class="box"><span class="n" style="font-size:64px;color:var(--azul)">06/03/2027</span><span style="font-size:32px;color:var(--cinza)">Prorrogação para cargos que não exigem curso de formação.</span></div>
+  <p class="L sm">Quem está no cadastro reserva ainda pode ser chamado. O plano Aprovado avisa quando sai convocação com o seu nome.</p>
+  <div class="foot"><span class="fonte">Fonte: MGI / DOU</span><span>@avisoconcurso</span></div>
+</div>
+<div class="s p" data-shot="c2-04">
+  <div class="top"><span class="n" style="font-size:30px;color:var(--azul)">CNU 3</span><span class="cnt">4/6</span></div>
+  <p class="H m">Terceiro CNU: <span class="g">sem data</span> confirmada</p>
+  <p class="L">O governo já falou em tornar o CNU uma política permanente. Uma nova edição depende de orçamento e de decisão do ministério.</p>
+  <div class="box"><span class="tag y">STATUS: PREVISTO</span><span style="font-size:32px;color:var(--cinza)">Ainda não tem edital, banca nem número de vagas.</span></div>
+  <div class="foot"><span class="fonte">Fonte: declarações do MGI</span><span>@avisoconcurso</span></div>
+</div>
+<div class="s p" data-shot="c2-05">
+  <div class="top"><span class="n" style="font-size:30px;color:var(--azul)">MAIS AGUARDADOS</span><span class="cnt">5/6</span></div>
+  <p class="H m">Pedidos <span class="g">na fila</span></p>
+  <div class="etapas">
+    <div class="etapa"><i>?</i>Receita Federal<small>autorização esperada</small></div>
+    <div class="etapa"><i>?</i>Ministério da Saúde<small>vagas solicitadas</small></div>
+    <div class="etapa"><i>?</i>INC<small>vagas solicitadas</small></div>
+  </div>
+  <p class="L sm">Pedido não é autorização. Quando a portaria sair no Diário Oficial, você fica sabendo no mesmo dia.</p>
+  <div class="foot"><span class="fonte">Situação em out/2026</span><span>@avisoconcurso</span></div>
+</div>
+<div class="s p az" data-shot="c2-06">
+  <div class="top"><div class="mk"><img src="../img/perfil-mini.svg"><span><b>aviso</b><span>concurso</span></span></div><span class="cnt">6/6</span></div>
+  <p class="H m">Ligue o <span class="g">radar</span> antes do edital</p>
+  <p class="L">Escolha os órgãos que você espera e receba cada passo: pedido, autorização, banca e edital. 📡</p>
+  <span class="btnf">3 dias grátis · link na bio</span>
+  <div class="foot"><span>salva e compartilha</span><span>@avisoconcurso</span></div>
+</div>
+
+<!-- ============ CARROSSEL 3 · ANATOMIA DO EDITAL ============ -->
+<div class="s p am" data-shot="c3-01">
+  <div class="top"><div class="mk"><img src="../img/simbolo.svg"><span><b>aviso</b><span>concurso</span></span></div><span class="cnt">1/7</span></div>
+  <p class="H" style="margin-top:40px">Saiu o<br>edital.<br>Leia isto<br>primeiro.</p>
+  <p class="L">6 pontos que decidem se o concurso é para você, antes de pagar a taxa.</p>
+  <div class="foot"><span class="arr">arrasta →</span><span>@avisoconcurso</span></div>
+</div>
+<div class="s p" data-shot="c3-02">
+  <div class="top"><span class="n" style="font-size:30px;color:var(--azul)">1 · REQUISITOS</span><span class="cnt">2/7</span></div>
+  <p class="H m">Você <span class="g">pode</span> assumir?</p>
+  <p class="L">Escolaridade, formação específica, registro em conselho, CNH, idade. O requisito vale na posse, mas confira agora.</p>
+  <div class="foot"><span class="fonte">Procure: "requisitos para investidura"</span><span>@avisoconcurso</span></div>
+</div>
+<div class="s p" data-shot="c3-03">
+  <div class="top"><span class="n" style="font-size:30px;color:var(--azul)">2 · VAGAS</span><span class="cnt">3/7</span></div>
+  <p class="H m">Vaga imediata ou <span class="g">cadastro reserva?</span></p>
+  <p class="L">"CR" quer dizer que não há vaga garantida. Veja também a cidade de lotação e as cotas.</p>
+  <div class="foot"><span class="fonte">Procure: "quadro de vagas"</span><span>@avisoconcurso</span></div>
+</div>
+<div class="s p" data-shot="c3-04">
+  <div class="top"><span class="n" style="font-size:30px;color:var(--azul)">3 · REMUNERAÇÃO</span><span class="cnt">4/7</span></div>
+  <p class="H m">Salário-base <span class="g">não é</span> o total</p>
+  <p class="L">Some vencimento, gratificações e auxílios. Jornada de 30 ou 40 horas muda tudo.</p>
+  <div class="foot"><span class="fonte">Procure: "remuneração" e "jornada"</span><span>@avisoconcurso</span></div>
+</div>
+<div class="s p" data-shot="c3-05">
+  <div class="top"><span class="n" style="font-size:30px;color:var(--azul)">4 · DATAS</span><span class="cnt">5/7</span></div>
+  <p class="H m">Anote <span class="g">três</span> prazos</p>
+  <div class="etapas">
+    <div class="etapa"><i>1</i>Pedido de isenção<small>o mais curto</small></div>
+    <div class="etapa"><i>2</i>Inscrição e boleto<small>pague no prazo</small></div>
+    <div class="etapa"><i>3</i>Data da prova<small>pode mudar</small></div>
+  </div>
+  <div class="foot"><span class="fonte">Procure: "cronograma"</span><span>@avisoconcurso</span></div>
+</div>
+<div class="s p" data-shot="c3-06">
+  <div class="top"><span class="n" style="font-size:30px;color:var(--azul)">5 · CONTEÚDO</span><span class="cnt">6/7</span></div>
+  <p class="H m">O que <span class="g">cai</span> na prova</p>
+  <p class="L">O conteúdo programático fica no anexo, no fim do edital. Compare com o que você já estudou.</p>
+  <div class="foot"><span class="fonte">Procure: "Anexo · conteúdo programático"</span><span>@avisoconcurso</span></div>
+</div>
+<div class="s p az" data-shot="c3-07">
+  <div class="top"><span class="n" style="font-size:30px;color:var(--marca)">6 · ETAPAS</span><span class="cnt">7/7</span></div>
+  <p class="H m">Só prova? Ou tem <span class="g">TAF e títulos?</span></p>
+  <p class="L">Prova discursiva, teste físico, avaliação psicológica, títulos. No plano Aprovado, a IA monta esse resumo do edital para você.</p>
+  <span class="btnf">3 dias grátis · link na bio</span>
+  <div class="foot"><span>salva para o próximo edital</span><span>@avisoconcurso</span></div>
+</div>
+
+<!-- ============ STORIES ============ -->
+<div class="s st az" data-shot="story-01-em-breve">
+  <div class="mk"><img src="../img/perfil-mini.svg"><span><b>aviso</b><span>concurso</span></span></div>
+  <p class="H" style="font-size:190px;margin-top:120px">Em<br><span class="g">breve.</span></p>
+  <p class="L">Você já perdeu concurso. Isso vai parar. 🔔</p>
+  <div class="gab" style="margin-top:auto;transform:scale(1.4);transform-origin:left"><i>A</i><i>B</i><i class="on">C</i><i>D</i><i>E</i></div>
+</div>
+<div class="s st" data-shot="story-02-enquete">
+  <div class="mk"><img src="../img/simbolo.svg"><span><b>aviso</b><span>concurso</span></span></div>
+  <p class="H m" style="margin-top:100px">Você já perdeu uma <span class="g">inscrição</span> por não saber do edital? 😩</p>
+  <div class="sticker" style="margin-top:60px;height:360px;display:grid;place-items:center">figurinha de enquete aqui<br>Sim · Quase · Nunca</div>
+</div>
+<div class="s st am" data-shot="story-03-caixinha">
+  <div class="mk"><img src="../img/simbolo.svg"><span><b>aviso</b><span>concurso</span></span></div>
+  <p class="H m" style="margin-top:100px">Qual concurso você está esperando? 👀</p>
+  <div class="sticker" style="margin-top:60px;height:380px;display:grid;place-items:center">caixinha de pergunta aqui</div>
+  <p class="L sm">A gente responde com o status de cada um.</p>
+</div>
+<div class="s st tn" data-shot="story-04-bastidores">
+  <div class="mk"><img src="../img/simbolo-escuro.svg"><span><b>aviso</b><span style="color:#C9D0F5">concurso</span></span></div>
+  <p class="H m" style="margin-top:80px">Bastidores: o robô lendo o <span class="g">Diário Oficial</span></p>
+  <div class="box" style="font-family:'JetBrains Mono';font-size:28px;line-height:1.7;gap:4px">
+    <span>06:00 DOU de hoje baixado</span>
+    <span>06:01 1.284 atos lidos</span>
+    <span>06:02 17 com "concurso público"</span>
+    <span style="color:var(--marca)">06:03 4 editais novos</span>
+    <span>06:04 notificações enviadas 🔔</span>
+  </div>
+  <span class="ex">SIMULAÇÃO</span>
+</div>
+<div class="s st az" data-shot="story-05-link">
+  <div class="mk"><img src="../img/perfil-mini.svg"><span><b>aviso</b><span>concurso</span></span></div>
+  <p class="H" style="margin-top:100px;font-size:160px">Teste <span class="g">3 dias</span> grátis.</p>
+  <p class="L">Depois, R$ 9,90 por mês. Nunca mais se preocupe em perder uma data. 🔔</p>
+  <div class="sticker" style="height:220px;display:grid;place-items:center">figurinha de link aqui</div>
+</div>
+
+<!-- ============ DESTAQUES ============ -->
+<div class="s az" data-shot="destaque-sobre" style="width:400px;height:400px;display:grid;place-items:center"><svg viewBox="0 0 100 100" width="200" height="200"><circle cx="46" cy="54" r="38" fill="#FFFFFF"/><rect x="40" y="30" width="12" height="32" rx="6" fill="#1F3FD1"/><circle cx="46" cy="75" r="6.5" fill="#1F3FD1"/><circle cx="80" cy="20" r="15" fill="#FFE14D" stroke="#1F3FD1" stroke-width="6"/></svg></div>
+<div class="s az" data-shot="destaque-como" style="width:400px;height:400px;display:grid;place-items:center"><svg viewBox="0 0 24 24" width="190" height="190" fill="none" stroke="#FFE14D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
+<div class="s az" data-shot="destaque-planos" style="width:400px;height:400px;display:grid;place-items:center"><svg viewBox="0 0 24 24" width="190" height="190" fill="none" stroke="#FFE14D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 10h18M7 15h3"/></svg></div>
+<div class="s az" data-shot="destaque-editais" style="width:400px;height:400px;display:grid;place-items:center"><svg viewBox="0 0 24 24" width="190" height="190" fill="none" stroke="#FFE14D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 13h7M9 17h5"/></svg></div>
+
+</body></html>

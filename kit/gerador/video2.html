@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;700;800&family=Figtree:wght@400;500;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--azul:#1F3FD1;--marca:#FFE14D;--papel:#F5F6F1;--tinta:#0F1530;--cinza:#4F566E;--linha:#D9DCE6;--verde:#0E8A45;--verm:#E5484D}
+*{box-sizing:border-box}
+body{margin:0;background:#000}
+#v{width:1080px;height:1920px;position:relative;overflow:hidden;background:var(--tinta);font-family:Figtree,sans-serif}
+#cam{position:absolute;inset:-40px;transform-origin:50% 50%}
+.sc{position:absolute;inset:40px;overflow:hidden;opacity:0}
+.tn{background:var(--tinta);color:#fff}.az{background:var(--azul);color:#fff}.pp{background:var(--papel);color:var(--tinta)}.vm{background:#2A0E14;color:#fff}
+.a{position:absolute;will-change:transform,opacity,filter;margin:0}
+p{margin:0}
+.hl.full{bottom:-4%;height:100%;border-radius:10px}
+.H{font-family:'Barlow Condensed',sans-serif;font-weight:800;text-transform:uppercase;line-height:.88;letter-spacing:-1px;margin:0;white-space:nowrap}
+.grid{position:absolute;inset:-200px;background-image:linear-gradient(rgba(255,255,255,.05) 2px,transparent 2px),linear-gradient(90deg,rgba(255,255,255,.05) 2px,transparent 2px);background-size:90px 90px}
+.pp .grid{background-image:linear-gradient(rgba(15,21,48,.05) 2px,transparent 2px),linear-gradient(90deg,rgba(15,21,48,.05) 2px,transparent 2px)}
+.hl{position:absolute;left:-14px;bottom:4%;height:42%;background:var(--marca);z-index:-1;transform-origin:left;width:calc(100% + 28px)}
+.wrap{position:relative;display:inline-block;z-index:0}
+.card{background:#fff;color:var(--tinta);border-radius:44px;padding:44px 48px;box-shadow:0 40px 90px rgba(0,0,0,.35);display:grid;gap:14px}
+.tag{display:inline-block;font-family:'JetBrains Mono';font-weight:700;font-size:30px;letter-spacing:1.5px;padding:10px 22px;border-radius:999px;background:var(--verde);color:#fff;justify-self:start}
+.mono{font-family:'JetBrains Mono',monospace}
+.stamp{font-family:'Barlow Condensed';font-weight:800;text-transform:uppercase;color:var(--verm);border:14px solid var(--verm);border-radius:28px;padding:16px 40px;font-size:150px;line-height:.9;text-align:center;letter-spacing:3px}
+.ring{position:absolute;border-radius:50%;border:6px solid var(--marca)}
+.dust{position:absolute;width:18px;height:18px;border-radius:50%;background:#F7C7C9}
+.conf{position:absolute;width:22px;height:34px;border-radius:4px}
+.phone{width:640px;height:1240px;background:#0A0F24;border-radius:96px;padding:26px;box-shadow:0 60px 140px rgba(0,0,0,.55),inset 0 0 0 3px #2B3566}
+.scr{width:100%;height:100%;border-radius:72px;background:linear-gradient(170deg,#3550E8,#1F3FD1 45%,#162FA3);overflow:hidden;position:relative}
+.clock{position:absolute;top:120px;left:0;right:0;text-align:center;color:#fff;font-size:170px;font-weight:300;letter-spacing:-4px;line-height:1}
+.date{position:absolute;top:310px;left:0;right:0;text-align:center;color:#DCE2FB;font-size:36px}
+.nt{position:absolute;left:28px;right:28px;background:rgba(255,255,255,.97);border-radius:40px;padding:30px 32px;display:grid;gap:8px;font-size:32px;line-height:1.3;color:var(--tinta);box-shadow:0 20px 50px rgba(0,0,0,.25)}
+.nt .hd{display:flex;align-items:center;gap:14px;font-size:24px;color:var(--cinza);font-family:'JetBrains Mono'}
+.nt .ic{width:46px;height:46px;border-radius:12px;background:var(--azul);display:grid;place-items:center}
+.nt b{font-size:35px}
+.chip{background:#fff;border-radius:34px;padding:26px 30px;width:290px;display:grid;gap:4px;box-shadow:0 20px 50px rgba(15,21,48,.12);border-top:10px solid}
+.chip small{font-family:'JetBrains Mono';font-size:24px;color:var(--cinza)}
+.chip b{font-family:'Barlow Condensed';font-weight:800;font-size:104px;line-height:.9}
+.chip span{font-weight:800;font-size:30px}
+.bar{display:grid;grid-template-columns:360px 1fr 110px;gap:22px;align-items:center;font-size:40px;font-weight:800}
+.bar .t{height:34px;background:var(--linha);border-radius:17px;overflow:hidden}
+.bar .t i{display:block;height:100%;background:var(--azul);border-radius:17px}
+.bar .n{font-family:'JetBrains Mono';color:var(--azul);text-align:right}
+.bub{width:130px;height:130px;border-radius:50%;border:8px solid #fff;display:grid;place-items:center;font-family:'JetBrains Mono';font-weight:700;font-size:54px;color:#fff}
+.bub.on{background:var(--marca);border-color:var(--marca);color:var(--tinta)}
+.btn{background:var(--marca);color:var(--tinta);font-weight:900;font-size:72px;padding:40px 80px;border-radius:999px;box-shadow:0 20px 60px rgba(255,225,77,.35)}
+.doc{position:absolute;width:760px;background:#fff;border-radius:30px;padding:40px;display:grid;gap:24px;box-shadow:0 30px 70px rgba(15,21,48,.15)}
+.doc i{display:block;height:24px;border-radius:12px;background:var(--linha)}
+.doc i.y{background:var(--marca)}
+.doc .h{height:40px;width:60%;background:var(--tinta);border-radius:10px}
+.beam{position:absolute;left:0;right:0;height:14px;background:var(--azul);box-shadow:0 0 60px 20px rgba(31,63,209,.5)}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:14px;width:900px}
+.cal div{height:96px;border-radius:20px;background:#fff;font-family:'JetBrains Mono';font-size:28px;padding:10px 14px;position:relative;color:var(--cinza)}
+.cal div i{position:absolute;right:14px;bottom:14px;width:26px;height:26px;border-radius:50%}
+#cap{position:absolute;left:60px;right:60px;bottom:190px;text-align:center;font-weight:900;font-size:58px;line-height:1.22;color:#fff;z-index:20}
+#cap .bx{display:inline-block;background:rgba(15,21,48,.88);border-radius:26px;padding:14px 24px;box-shadow:0 10px 30px rgba(0,0,0,.3)}
+#cap span{display:inline-block;margin:0 14px;text-shadow:0 4px 0 rgba(0,0,0,.55),0 0 24px rgba(0,0,0,.5);transform-origin:50% 80%}
+#cap span.now{color:var(--marca)}
+#cap span.fut{opacity:.25}
+#flash{position:absolute;inset:0;background:#fff;opacity:0;z-index:30;pointer-events:none}
+#vig{position:absolute;inset:0;z-index:25;pointer-events:none;background:radial-gradient(ellipse at center,transparent 55%,rgba(0,0,0,.45))}
+#grain{position:absolute;inset:0;width:100%;height:100%;z-index:26;opacity:.07;mix-blend-mode:overlay;image-rendering:pixelated}
+#prog{position:absolute;left:0;top:0;height:12px;background:var(--marca);z-index:31}
+.glitch{position:absolute;inset:0}
+</style></head><body>
+<div id="v"><div id="cam">
+
+<!-- S1 0-2.51 -->
+<section class="sc tn" id="s1"><div class="grid" id="g1"></div>
+  <div class="a" id="s1red" style="inset:0;background:radial-gradient(circle at 50% 45%,rgba(229,72,77,.45),transparent 60%);opacity:0"></div>
+  <p class="H a" id="w1" style="font-size:250px;left:80px;top:330px">Você já</p>
+  <p class="H a" id="w3" style="font-size:300px;left:80px;top:560px;color:var(--verm)">perdeu</p>
+  <p class="H a" id="w3b" style="font-size:300px;left:80px;top:560px;color:#3CE0FF;mix-blend-mode:screen;opacity:0">perdeu</p>
+  <p class="H a" id="w4" style="font-size:250px;left:80px;top:830px">concurso.</p>
+</section>
+<!-- S2 2.51-4.31 -->
+<section class="sc tn" id="s2"><div class="grid" id="g2"></div>
+  <div class="a" id="s2t" style="left:80px;top:560px">
+    <p class="H" style="font-size:230px"><span class="a2" id="e1">E nem</span></p>
+    <p class="H" style="font-size:230px;color:#0F1530"><span class="wrap"><span class="hl full" id="hl2"></span><span id="e2" style="display:inline-block">ficou</span></span></p>
+    <p class="H" style="font-size:230px;color:var(--marca)"><span id="e3" style="display:inline-block">sabendo.</span></p>
+  </div>
+</section>
+<!-- S3 4.31-6.94 -->
+<section class="sc pp" id="s3"><div class="grid" id="g3"></div>
+  <p class="a mono" id="tday" style="left:0;right:0;top:250px;text-align:center;font-size:56px;font-weight:700;color:var(--cinza);letter-spacing:6px">TERÇA-FEIRA</p>
+  <p class="a" id="tclock" style="left:0;right:0;top:330px;text-align:center;font-family:'Barlow Condensed';font-weight:800;font-size:380px;line-height:1;color:var(--tinta)">05:59</p>
+  <div class="a card" id="tcard" style="left:90px;right:90px;top:820px">
+    <span class="tag">📢 EDITAL PUBLICADO</span>
+    <b style="font-size:54px">Técnico Judiciário · 42 vagas</b>
+    <span style="font-size:40px;color:var(--cinza)">Você estava dormindo. 😴</span>
+  </div>
+</section>
+<!-- S4 6.94-9.15 -->
+<section class="sc tn" id="s4"><div class="grid" id="g4"></div>
+  <p class="H a" id="isen" style="font-size:150px;left:0;right:0;top:250px;text-align:center">Isenção fecha em</p>
+  <svg class="a" id="ringsvg" width="640" height="640" viewBox="0 0 640 640" style="left:180px;top:500px">
+    <circle cx="320" cy="320" r="280" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="34"/>
+    <circle id="arc" cx="320" cy="320" r="280" fill="none" stroke="#E5484D" stroke-width="34" stroke-linecap="round" stroke-dasharray="1759" stroke-dashoffset="0" transform="rotate(-90 320 320)"/>
+  </svg>
+  <p class="a" id="dnum" style="left:0;right:0;top:590px;text-align:center;font-family:'Barlow Condensed';font-weight:800;font-size:380px;line-height:1;color:#fff">5</p>
+  <p class="a mono" id="dlab" style="left:0;right:0;top:960px;text-align:center;font-size:52px;color:#C9D0F5;letter-spacing:4px">DIAS</p>
+</section>
+<!-- S5 9.15-12.21 -->
+<section class="sc vm" id="s5"><div class="grid" id="g5"></div>
+  <p class="H a" id="qv" style="font-size:190px;left:80px;top:300px">Quando<br>você viu...</p>
+  <div class="a stamp" id="stamp" style="left:110px;top:820px;width:860px">Inscrições<br>encerradas</div>
+  <div id="dusts"></div>
+</section>
+<!-- S6 12.21-15.26 -->
+<section class="sc az" id="s6"><div class="grid" id="g6"></div>
+  <p class="H a" id="nf1" style="font-size:170px;left:80px;top:330px">Não foi falta</p>
+  <p class="H a" id="nf2" style="font-size:170px;left:80px;top:490px">de estudo. 📚</p>
+  <p class="H a" id="ff1" style="font-size:240px;left:80px;top:760px">Foi falta</p>
+  <div class="a" id="ff2" style="left:80px;top:980px"><p class="H" style="font-size:260px;color:var(--tinta)"><span class="wrap"><span class="hl full" id="hl6"></span>de aviso.</span></p></div>
+</section>
+<!-- S7 15.26-19.39 -->
+<section class="sc pp" id="s7"><div class="grid" id="g7"></div>
+  <div class="a" id="logo7" style="left:0;right:0;top:170px;display:flex;justify-content:center;align-items:center;gap:30px">
+    <svg width="170" height="170" viewBox="0 0 100 100"><circle id="lb" cx="46" cy="54" r="38" fill="#1F3FD1"/><g id="lx"><rect x="40" y="30" width="12" height="32" rx="6" fill="#fff"/><circle cx="46" cy="75" r="6.5" fill="#fff"/></g><circle id="ld" cx="80" cy="20" r="15" fill="#FFE14D" stroke="#F5F6F1" stroke-width="6"/></svg>
+    <span style="font-family:'Barlow Condensed';font-size:130px;line-height:1"><b style="font-weight:800">aviso</b><span style="font-weight:500">concurso</span></span>
+  </div>
+  <div id="docs" style="position:absolute;left:160px;top:470px;width:760px;height:900px;overflow:hidden;border-radius:30px"></div>
+  <div class="a beam" id="beam" style="left:120px;right:120px;top:600px"></div>
+  <div class="a card" id="cnt7" style="left:200px;right:200px;top:1180px;padding:30px 40px;text-align:center;gap:0">
+    <b id="atos" class="mono" style="font-size:96px;color:var(--azul)">0</b><span style="font-size:36px;color:var(--cinza)">atos lidos hoje no Diário Oficial</span>
+  </div>
+</section>
+<!-- S8 19.39-24.79 -->
+<section class="sc tn" id="s8"><div class="grid" id="g8"></div>
+  <p class="H a" id="sp" style="font-size:120px;left:0;right:0;top:90px;text-align:center">Saiu do seu <span style="color:var(--marca)">perfil?</span></p>
+  <div class="a" id="ph" style="left:220px;top:300px;perspective:1600px"><div class="phone" id="phi"><div class="scr">
+    <div class="clock">06:04</div><div class="date">terça-feira, 3 de novembro</div>
+    <div id="rings"></div>
+    <div class="nt a" id="n1" style="top:400px"><div class="hd"><span class="ic"><svg viewBox="0 0 100 100" width="30" height="30"><circle cx="46" cy="54" r="38" fill="#fff"/><rect x="40" y="30" width="12" height="32" rx="6" fill="#1F3FD1"/><circle cx="46" cy="75" r="6.5" fill="#1F3FD1"/></svg></span>AVISO CONCURSO · agora</div><b>📢 Edital publicado</b><span>Técnico Judiciário · 42 vagas<br>R$ 8.500,00 · até 02/12</span></div>
+    <div class="nt a" id="n2" style="top:700px"><div class="hd"><span class="ic"><svg viewBox="0 0 100 100" width="30" height="30"><circle cx="46" cy="54" r="38" fill="#fff"/><rect x="40" y="30" width="12" height="32" rx="6" fill="#1F3FD1"/><circle cx="46" cy="75" r="6.5" fill="#1F3FD1"/></svg></span>AVISO CONCURSO · agora</div><b>⏰ Isenção acaba em 2 dias</b><span>Peça até 07/11</span></div>
+    <div class="nt a" id="n3" style="top:960px"><div class="hd"><span class="ic"><svg viewBox="0 0 100 100" width="30" height="30"><circle cx="46" cy="54" r="38" fill="#fff"/><rect x="40" y="30" width="12" height="32" rx="6" fill="#1F3FD1"/><circle cx="46" cy="75" r="6.5" fill="#1F3FD1"/></svg></span>AVISO CONCURSO · agora</div><b>🔗 Link oficial do edital</b><span>DOU · Seção 3</span></div>
+  </div></div></div>
+</section>
+<!-- S9 24.79-29.97 -->
+<section class="sc pp" id="s9"><div class="grid" id="g9"></div>
+  <p class="H a" id="ag" style="font-size:140px;left:80px;top:120px"><span class="wrap"><span class="hl" id="hl9"></span>Sua agenda</span><br>de concursos</p>
+  <div class="a" id="chips" style="left:70px;top:470px;display:flex;gap:25px">
+    <div class="chip a" id="c1" style="position:relative;border-top-color:#1F3FD1"><small>TRIBUNAL</small><b id="d1" style="color:#1F3FD1">0</b><span>dias</span></div>
+    <div class="chip a" id="c2" style="position:relative;border-top-color:#7A3FD1"><small>SEFAZ</small><b id="d2" style="color:#7A3FD1">0</b><span>dias</span></div>
+    <div class="chip a" id="c3" style="position:relative;border-top-color:#0B7F86"><small>PREFEITURA</small><b id="d3" style="color:#0B7F86">0</b><span>dias</span></div>
+  </div>
+  <div class="a card" id="mat" style="left:70px;right:70px;top:840px;gap:30px">
+    <span class="mono" style="font-size:30px;color:var(--cinza);letter-spacing:2px">MATÉRIAS EM COMUM</span>
+    <div class="bar"><span>Português</span><span class="t"><i id="b1"></i></span><span class="n">3/3</span></div>
+    <div class="bar"><span>Raciocínio</span><span class="t"><i id="b2"></i></span><span class="n">3/3</span></div>
+    <div class="bar"><span>Dir. Adm.</span><span class="t"><i id="b3"></i></span><span class="n">3/3</span></div>
+    <div class="bar"><span>Dir. Const.</span><span class="t"><i id="b4"></i></span><span class="n">2/3</span></div>
+  </div>
+</section>
+<!-- S10 29.97-32.52 -->
+<section class="sc az" id="s10"><div class="grid" id="g10"></div>
+  <p class="H a" id="k1" style="font-size:205px;left:80px;top:300px">Nunca mais</p>
+  <p class="H a" id="k2" style="font-size:180px;left:80px;top:520px">se preocupe</p>
+  <p class="H a" id="k3" style="font-size:180px;left:80px;top:690px">em perder</p>
+  <div class="a" id="k4" style="left:80px;top:880px"><p class="H" style="font-size:240px;color:var(--tinta)"><span class="wrap"><span class="hl full" id="hl10"></span>uma data.</span></p></div>
+  <div id="confs"></div>
+</section>
+<!-- S11 32.52-36.2 -->
+<section class="sc tn" id="s11"><div class="grid" id="g11"></div>
+  <div class="a" id="lg" style="left:0;right:0;top:240px;display:flex;justify-content:center;align-items:center;gap:30px">
+    <svg width="160" height="160" viewBox="0 0 100 100"><circle cx="46" cy="54" r="38" fill="#3D5AF0"/><rect x="40" y="30" width="12" height="32" rx="6" fill="#fff"/><circle cx="46" cy="75" r="6.5" fill="#fff"/><circle id="ld2" cx="80" cy="20" r="15" fill="#FFE14D" stroke="#0F1530" stroke-width="6"/></svg>
+    <span style="font-family:'Barlow Condensed';font-size:130px;line-height:1;color:#fff"><b style="font-weight:800">aviso</b><span style="font-weight:500;color:#C9D0F5">concurso</span></span>
+  </div>
+  <div class="a" id="bubs" style="left:0;right:0;top:560px;display:flex;justify-content:center;gap:34px">
+    <div class="bub a" id="u0" style="position:relative">A</div><div class="bub a" id="u1" style="position:relative">B</div><div class="bub a" id="u2" style="position:relative">C</div><div class="bub a" id="u3" style="position:relative">D</div><div class="bub a" id="u4" style="position:relative">E</div>
+  </div>
+  <p class="H a" id="tres" style="font-size:150px;left:0;right:0;top:820px;text-align:center">🎁 3 dias <span style="color:var(--marca)">grátis</span></p>
+  <div class="a" id="cta" style="left:0;right:0;top:1120px;display:flex;justify-content:center"><span class="btn">Link na bio 👆</span></div>
+</section>
+
+</div>
+<canvas id="grain" width="270" height="480"></canvas>
+<div id="vig"></div>
+<div id="flash"></div>
+<div id="prog"></div>
+<div id="cap"></div>
+</div>
+<script>
+const T=36.2;
+const cl=x=>Math.max(0,Math.min(1,x));
+const E={lin:x=>x,o3:x=>1-Math.pow(1-x,3),o5:x=>1-Math.pow(1-x,5),io:x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2,
+ back:x=>{const c=1.9;return 1+(c+1)*Math.pow(x-1,3)+c*Math.pow(x-1,2)},
+ el:x=>x===0||x===1?x:Math.pow(2,-10*x)*Math.sin((x*10-.75)*(2*Math.PI)/3)+1,
+ i3:x=>x*x*x};
+const $=id=>document.getElementById(id);
+// keyframes: [[t,{x,y,s,r,o,b,rx,ry,sx}],...] with optional ease per segment (3rd item)
+function K(el,t,kf){if(typeof el==='string')el=$(el);let a=kf[0],b=kf[kf.length-1],p=1,ez=E.o3;
+ if(t<=kf[0][0]){a=b=kf[0];p=0}else if(t>=b[0]){a=b}else{for(let i=0;i<kf.length-1;i++){if(t>=kf[i][0]&&t<kf[i+1][0]){a=kf[i];b=kf[i+1];ez=E[b[2]||'o3'];p=ez((t-a[0])/(b[0]-a[0]));break}}}
+ const g=(k,d)=>{const va=a[1][k]??d,vb=b[1][k]??va;return va+(vb-va)*p};
+ const x=g('x',0),y=g('y',0),s=g('s',1),r=g('r',0),o=g('o',1),bl=g('b',0),rx=g('rx',0),ry=g('ry',0),sx=g('sx',1);
+ el.style.transform=`translate(${x}px,${y}px) rotateX(${rx}deg) rotateY(${ry}deg) rotate(${r}deg) scale(${s*sx},${s})`;
+ el.style.opacity=o;el.style.filter=bl>0.05?`blur(${bl}px)`:'none';}
+function rnd(seed){let s=seed;return()=>{s=(s*16807)%2147483647;return(s-1)/2147483646}}
+// scenes [id, start, end, in-type, out-type]
+const SC=[['s1',0,2.51,'cut'],['s2',2.51,4.31,'zoom'],['s3',4.31,6.94,'up'],['s4',6.94,9.15,'left'],['s5',9.15,12.21,'cut'],['s6',12.21,15.26,'wipe'],['s7',15.26,19.39,'up'],['s8',19.39,24.79,'left'],['s9',24.79,29.97,'up'],['s10',29.97,32.52,'wipe'],['s11',32.52,T,'zoom']];
+const SH=[[0.05,26,.3],[0.35,26,.3],[0.6,46,.45],[1.0,30,.35],[10.4,70,.7],[13.77,40,.4],[15.3,20,.3],[20.98,18,.3],[29.97,22,.3],[31.4,40,.45],[32.52,34,.4],[33.76,26,.35]];
+const FL=[[0.6,.5],[10.4,.85],[13.77,.5],[31.4,.45],[32.52,.6]];
+const PH=[[0,1.71,"Você já perdeu concurso."],[2.51,3.74,"E nem ficou sabendo."],[4.31,6.51,"O edital saiu numa terça, seis da manhã."],[6.94,8.74,"A isenção fechou em cinco dias."],[9.15,9.97,"Quando você viu..."],[10.38,11.66,"a inscrição já tinha acabado."],[12.21,13.45,"Não foi falta de estudo."],[13.77,14.87,"Foi falta de aviso."],[15.26,19.04,"O Aviso Concurso lê o Diário Oficial e os sites das bancas todo dia."],[19.39,20.69,"Saiu concurso do seu perfil?"],[20.98,24.52,"Chega uma notificação no seu celular, com resumo e link oficial."],[24.79,27.07,"E a agenda junta todos os seus concursos:"],[27.30,29.68,"as datas, as provas e as matérias em comum."],[29.97,32.18,"Nunca mais se preocupe em perder uma data."],[32.52,33.57,"Aviso Concurso."],[33.76,34.81,"Três dias grátis."],[34.96,35.7,"Link na bio."]];
+// word timings
+PH.forEach(p=>{const ws=p[2].split(' ');const tot=ws.reduce((a,w)=>a+w.length+1,0);let acc=p[0];p.w=ws.map(w=>{const d=(p[1]-p[0])*(w.length+1)/tot;const r=[acc,w];acc+=d;return r})});
+// build docs
+const docs=$('docs');for(let i=0;i<4;i++){const d=document.createElement('div');d.className='doc';d.style.top=(i*560)+'px';d.style.left='0';let h='<div class="h"></div>';const R=rnd(7+i);for(let j=0;j<13;j++){h+=`<i class="${R()<.22?'y':''}" style="width:${55+R()*45}%"></i>`}d.innerHTML=h;docs.appendChild(d)}
+// dust
+const DU=[];const dz=$('dusts');{const R=rnd(3);for(let i=0;i<40;i++){const d=document.createElement('div');d.className='dust a';dz.appendChild(d);const ang=R()*Math.PI*2,sp=300+R()*900;DU.push([d,Math.cos(ang)*sp,Math.sin(ang)*sp*.6-200,6+R()*16])}}
+// confetti
+const CF=[];const cz=$('confs');{const R=rnd(11);const cols=['#FFE14D','#FFFFFF','#0F1530','#3CE0FF','#E5484D'];for(let i=0;i<70;i++){const d=document.createElement('div');d.className='conf a';d.style.background=cols[i%5];cz.appendChild(d);CF.push([d,(R()-.5)*1700,-900-R()*900,R()*720-360,R()])}}
+// rings
+const rz=$('rings');for(let i=0;i<3;i++){const r=document.createElement('div');r.className='ring a';r.style.left='170px';r.style.top='400px';r.style.width='250px';r.style.height='250px';rz.appendChild(r)}
+const gctx=$('grain').getContext('2d');const gimg=gctx.createImageData(270,480);
+function sceneT(id){return SC.find(s=>s[0]===id)}
+function render(t){
+ // scenes transitions
+ SC.forEach(([id,a,b,tin])=>{const el=$(id);if(t<a-0.001||t>=b+0.25){el.style.opacity=0;el.style.zIndex=0;return}
+  el.style.zIndex=1;const p=cl((t-a)/0.35),e=E.o5(p);let x=0,y=0,s=1,o=1,clip='none';
+  if(tin==='zoom'){s=1.25-0.25*e;o=cl((t-a)/0.12)}else if(tin==='up'){y=(1-e)*1920}else if(tin==='left'){x=(1-e)*1080}else if(tin==='wipe'){clip=`inset(0 ${100-e*100}% 0 0)`}
+  if(t>=b){o=1;el.style.zIndex=0}
+  el.style.transform=`translate(${x}px,${y}px) scale(${s})`;el.style.opacity=o;el.style.clipPath=clip});
+ // grid drift
+ document.querySelectorAll('.grid').forEach((g,i)=>{g.style.transform=`translate(${(t*40+i*13)%90}px,${(t*25)%90}px)`});
+ // S1
+ K('w1',t,[[0.05,{s:3,o:0,b:20}],[0.3,{s:1,o:1,b:0},'o5']]);
+ K('w3',t,[[0.6,{s:3.2,o:0,b:20,r:-4}],[0.85,{s:1,o:1,b:0,r:0},'o5']]);
+ const gl=(t>0.6&&t<1.1)||(t>1.6&&t<1.75);K('w3b',t,[[0,{o:0}]]);$('w3b').style.opacity=gl?.8:0;$('w3b').style.transform=gl?`translate(${(Math.sin(t*90)*14)}px,${Math.cos(t*70)*6}px)`:'none';
+ K('w4',t,[[1.0,{x:-1100,o:1}],[1.25,{x:0,o:1},'o5'],[2.2,{s:1},],[2.51,{s:1.06}]]);
+ K('s1red',t,[[0.6,{o:0}],[0.75,{o:1}],[1.6,{o:.4}],[2.5,{o:.8}]]);
+ // S2
+ K('s2t',t,[[2.51,{s:1.15}],[4.31,{s:0.95},'lin']]);
+ K('e1',t,[[2.55,{y:120,o:0}],[2.8,{y:0,o:1},'back']]);
+ K('e2',t,[[2.85,{y:120,o:0}],[3.1,{y:0,o:1},'back']]);
+ K('e3',t,[[3.15,{y:120,o:0,s:1.4}],[3.45,{y:0,o:1,s:1},'back']]);
+ $('hl2').style.transform=`scaleX(${E.o3(cl((t-3.05)/0.35))})`;
+ // S3
+ K('tday',t,[[4.4,{y:-60,o:0}],[4.7,{y:0,o:1}]]);
+ K('tclock',t,[[4.35,{s:.6,o:0}],[4.7,{s:1,o:1},'back'],[5.3,{s:1}],[5.45,{s:1.15}],[5.7,{s:1},'back']]);
+ $('tclock').textContent=t<5.4?'05:59':'06:00';$('tclock').style.color=t<5.4?'#0F1530':'#0E8A45';
+ K('tcard',t,[[5.6,{y:600,o:0,r:6}],[6.0,{y:0,o:1,r:-1.5},'back'],[6.9,{r:0,s:1.02}]]);
+ // S4
+ K('isen',t,[[7.0,{y:-80,o:0}],[7.3,{y:0,o:1},'back']]);
+ const dp=cl((t-7.2)/1.5);const dn=Math.max(0,5-Math.floor(dp*6));$('dnum').textContent=dn;
+ const tick=(dp*6)%1;$('dnum').style.transform=`scale(${1+0.25*Math.max(0,1-tick*4)*(dp<1?1:0)})`;$('dnum').style.color=dn<=1?'#E5484D':'#fff';
+ $('arc').setAttribute('stroke-dashoffset',1759*dp);
+ K('ringsvg',t,[[6.95,{s:.4,o:0,r:-90}],[7.4,{s:1,o:1,r:0},'back'],[8.9,{s:1}],[9.15,{s:1.1}]]);
+ // S5
+ K('qv',t,[[9.15,{x:-900,o:0}],[9.45,{x:0,o:1},'o5'],[10.4,{x:0}],[10.5,{x:-10,s:.96}]]);
+ K('stamp',t,[[10.38,{s:3.2,o:0,r:-20}],[10.52,{s:1,o:1,r:-9},'i3'],[10.7,{s:1.04,r:-8}],[12.2,{s:1,r:-8}]]);
+ DU.forEach(([d,vx,vy,sz])=>{const q=t-10.5;if(q<0||q>1.4){d.style.opacity=0;return}const e=E.o3(cl(q/1.2));d.style.width=d.style.height=sz+'px';d.style.left=(540+vx*e)+'px';d.style.top=(1000+vy*e+500*q*q)+'px';d.style.opacity=1-q/1.4;d.style.transform='none'});
+ $('s5').style.filter=t>10.5?`saturate(${1-cl((t-10.5)/1)*.5})`:'none';
+ // S6
+ K('nf1',t,[[12.25,{y:80,o:0}],[12.5,{y:0,o:1},'back'],[13.7,{o:1}],[13.9,{o:.35}]]);
+ K('nf2',t,[[12.5,{y:80,o:0}],[12.75,{y:0,o:1},'back'],[13.7,{o:1}],[13.9,{o:.35}]]);
+ K('ff1',t,[[13.75,{s:2.5,o:0,b:18}],[13.95,{s:1,o:1,b:0},'o5']]);
+ K('ff2',t,[[14.1,{s:2.6,o:0,b:18,r:-3}],[14.32,{s:1,o:1,b:0,r:0},'o5'],[15.2,{s:1.04}]]);
+ $('hl6').style.transform=`scaleX(${E.o3(cl((t-14.3)/0.3))})`;
+ // S7
+ K('logo7',t,[[15.3,{s:.3,o:0}],[15.7,{s:1,o:1},'back']]);
+ $('ld').setAttribute('transform',`translate(0 ${t<15.9?-60:-60*Math.max(0,1-E.el(cl((t-15.9)/0.8)))*(-1)+0})`);
+ $('ld').style.opacity=t<15.85?0:1;$('ld').style.transformBox='fill-box';$('ld').style.transformOrigin='center';$('ld').style.transform=`scale(${t<15.85?0:E.el(cl((t-15.85)/0.8))})`;$('ld').removeAttribute('transform');
+ docs.style.opacity=cl((t-16)/0.3);[...docs.children].forEach((d,i)=>{d.style.transform=`translateY(${-((t-16)*620)%2240+0}px)`;});
+ [...docs.children].forEach((d,i)=>{let y=(i*560-(Math.max(0,t-16)*620))%2240;if(y<-560)y+=2240;d.style.top=y+'px';d.style.transform='none'});
+ K('beam',t,[[16.0,{o:0}],[16.2,{o:1}]]);$('beam').style.top=(560+((Math.max(0,t-16)*900)%820))+'px';
+ K('cnt7',t,[[16.4,{y:200,o:0}],[16.8,{y:0,o:1},'back']]);
+ $('atos').textContent=Math.round(1284*E.o3(cl((t-16.5)/2.2))).toLocaleString('pt-BR');
+ // S8
+ K('sp',t,[[19.4,{y:-120,o:0}],[19.7,{y:0,o:1},'back']]);
+ K('ph',t,[[19.39,{y:900,ry:0}],[20.0,{y:0},'o5'],[24.79,{y:-30},'lin']]);
+ $('phi').style.transform=`rotateY(${-16+Math.sin(t*1.3)*6}deg) rotateX(${8+Math.cos(t*1.1)*3}deg)`;
+ K('n1',t,[[20.98,{y:-500,o:0,s:.9}],[21.4,{y:0,o:1,s:1},'back'],[21.55,{s:1.04}],[21.75,{s:1}]]);
+ K('n2',t,[[22.5,{y:-500,o:0,s:.9}],[22.9,{y:0,o:1,s:1},'back']]);
+ K('n3',t,[[23.6,{y:-500,o:0,s:.9}],[24.0,{y:0,o:1,s:1},'back']]);
+ [...rz.children].forEach((r,i)=>{const q=t-21.1-i*0.18;if(q<0||q>1){r.style.opacity=0;return}r.style.opacity=1-q;r.style.transform=`scale(${0.6+q*2.6})`});
+ // S9
+ K('ag',t,[[24.85,{x:-900,o:0}],[25.2,{x:0,o:1},'o5']]);$('hl9').style.transform=`scaleX(${E.o3(cl((t-25.2)/0.35))})`;
+ [['c1',25.4,21,'d1'],['c2',25.6,35,'d2'],['c3',25.8,52,'d3']].forEach(([c,s0,n,d])=>{K(c,t,[[s0,{y:300,o:0,r:8}],[s0+0.4,{y:0,o:1,r:0},'back']]);$(d).textContent=Math.round(n*E.o3(cl((t-s0-0.1)/1.2)))});
+ K('mat',t,[[27.2,{y:900,o:0}],[27.6,{y:0,o:1},'o5']]);
+ [['b1',27.7,100],['b2',27.95,100],['b3',28.2,100],['b4',28.45,66]].forEach(([b,s0,w])=>{$(b).style.width=(w*E.o3(cl((t-s0)/0.6)))+'%'});
+ // S10
+ K('k1',t,[[30.0,{s:2.6,o:0,b:14}],[30.2,{s:1,o:1,b:0},'o5']]);
+ K('k2',t,[[30.55,{x:1000,o:0}],[30.8,{x:0,o:1},'o5']]);
+ K('k3',t,[[30.95,{x:-1000,o:0}],[31.2,{x:0,o:1},'o5']]);
+ K('k4',t,[[31.35,{s:3,o:0,r:-6}],[31.55,{s:1,o:1,r:0},'o5'],[32.4,{s:1.05}]]);
+ $('hl10').style.transform=`scaleX(${E.o3(cl((t-31.55)/0.3))})`;
+ CF.forEach(([d,vx,vy,vr,ph])=>{const q=t-31.5;if(q<0){d.style.opacity=0;return}d.style.opacity=1;const x=540+vx*E.o3(cl(q/1.2))+Math.sin(q*6+ph*9)*40,y=1150+vy*E.o3(cl(q/0.9))+900*q*q;d.style.left=x+'px';d.style.top=y+'px';d.style.transform=`rotate(${vr*q}deg) scaleX(${Math.cos(q*8+ph*6)})`});
+ // S11
+ K('lg',t,[[32.55,{s:2.4,o:0,b:16}],[32.8,{s:1,o:1,b:0},'o5'],[36,{s:1.04},'lin']]);
+ for(let i=0;i<5;i++){const s0=33.0+i*0.09;K('u'+i,t,[[s0,{s:0,o:0}],[s0+0.35,{s:1,o:1},'back']]);$('u'+i).className='bub a'+(i===2&&t>33.55?' on':'')}
+ const cp=t>33.55?E.el(cl((t-33.55)/0.7)):0;if(t>33.55)$('u2').style.transform=`scale(${0.7+0.3*cp+0})`;
+ K('tres',t,[[33.76,{y:200,o:0,s:.6}],[34.1,{y:0,o:1,s:1},'back']]);
+ K('cta',t,[[34.96,{s:0,o:0}],[35.3,{s:1,o:1},'back']]);if(t>35.3)$('cta').style.transform=`scale(${1+Math.sin((t-35.3)*9)*0.04})`;
+ // camera shake + slow zoom
+ let sx=0,sy=0,sr=0;SH.forEach(([s0,amp,d])=>{const q=t-s0;if(q>=0&&q<d){const f=amp*(1-q/d);sx+=Math.sin(q*95)*f;sy+=Math.cos(q*83)*f;sr+=Math.sin(q*60)*f*0.03}});
+ const zoom=1+0.03*Math.sin(t*0.6);$('cam').style.transform=`translate(${sx}px,${sy}px) rotate(${sr}deg) scale(${zoom})`;
+ let fo=0;FL.forEach(([s0,a])=>{const q=t-s0;if(q>=0&&q<.25)fo=Math.max(fo,a*(1-q/.25))});$('flash').style.opacity=fo;
+ // grain
+ const R=rnd(Math.floor(t*30)+1);const dd=gimg.data;for(let i=0;i<dd.length;i+=4){const v=R()*255;dd[i]=dd[i+1]=dd[i+2]=v;dd[i+3]=255}gctx.putImageData(gimg,0,0);
+ $('prog').style.width=(t/T*100)+'%';
+ // captions
+ const cap=$('cap');const ph=PH.find(p=>t>=p[0]-0.05&&t<p[1]+0.25);cap.innerHTML='';
+ if(ph){const bx=document.createElement('div');bx.className='bx';cap.appendChild(bx);ph.w.forEach(([wt,w],i)=>{const s=document.createElement('span');s.textContent=w;const nxt=ph.w[i+1]?ph.w[i+1][0]:ph[1];if(t<wt){s.className='fut'}else if(t<nxt){s.className='now';const q=cl((t-wt)/0.12);s.style.transform=`scale(${1.1-0.1*q})`}bx.appendChild(s)})}
+}
+window.render=render;window.DUR=T;render(0);
+</script>
+</body></html>

@@ -1,0 +1,847 @@
+<title>Aviso Concurso</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;800&family=Figtree:wght@400;500;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  /* Layout: briefing de uma coluna larga, capa azul, menu de seções fixo, bandas por seção. Visual único claro (papel de edital). */
+  :root {
+    --azul: #1F3FD1; --azul2: #162FA3; --azul-t: #E8ECFC; --marca: #FFE14D; --marca-t: #FFF7CC;
+    --papel: #F5F6F1; --branco: #FFFFFF; --tinta: #0F1530; --tx2: #4F566E; --linha: #DDE0E8;
+    --verde: #0E8A45; --verde-t: #E3F4EA; --verm: #D93A40; --verm-t: #FBE7E8;
+    --f-d: "Barlow Condensed", "Arial Narrow", sans-serif;
+    --f-t: Figtree, system-ui, sans-serif;
+    --f-m: "JetBrains Mono", ui-monospace, Menlo, monospace;
+    color-scheme: light;
+  }
+  * { box-sizing: border-box; }
+  body { background: var(--papel); color: var(--tinta); font-family: var(--f-t); font-size: 16px; line-height: 1.6; margin: 0; -webkit-font-smoothing: antialiased; }
+  body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--tinta); }
+  h1, h2, h3 { margin: 0; text-wrap: balance; }
+  h1, h2 { font-family: var(--f-d); font-weight: 800; text-transform: uppercase; line-height: .95; letter-spacing: -.3px; }
+  p { margin: 0; }
+  a { color: var(--azul); }
+  .wrap { max-width: 1100px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+  section { padding-block: 64px; border-top: 1px solid var(--linha); scroll-margin-top: 56px; }
+  .rotulo { font-family: var(--f-m); font-weight: 700; font-size: .76rem; letter-spacing: 1.6px; text-transform: uppercase; color: var(--azul); }
+  .sec-cab { display: grid; gap: 10px; margin-bottom: 30px; max-width: 740px; }
+  .sec-cab h2 { font-size: clamp(2rem, 4.6vw, 3rem); }
+  .sec-cab p { color: var(--tx2); font-size: 1.05rem; }
+  .g { background: linear-gradient(transparent 52%, var(--marca) 52%, var(--marca) 90%, transparent 90%); padding: 0 5px; margin: 0 -5px; }
+  .mono { font-family: var(--f-m); font-variant-numeric: tabular-nums; }
+  :focus-visible { outline: 3px solid var(--azul); outline-offset: 2px; }
+
+  .capa { background: var(--azul); color: #fff; padding-block: 44px 52px; }
+  .capa .wrap { display: grid; gap: 24px; }
+  .marca { display: flex; align-items: center; gap: 12px; font-family: var(--f-d); font-size: 2rem; line-height: 1; }
+  .marca img { width: 46px; height: 46px; }
+  .marca b { font-weight: 800; } .marca span span { font-weight: 600; }
+  .capa h1 { font-size: clamp(2.8rem, 8vw, 5.4rem); max-width: 900px; }
+  .capa h1 em { font-style: normal; color: var(--marca); }
+  .capa .lead { font-size: 1.15rem; color: #DCE2FB; max-width: 680px; }
+  .fatos { display: flex; flex-wrap: wrap; gap: 10px; }
+  .fato { background: rgba(255,255,255,.12); border-radius: 999px; padding: 6px 14px; font-weight: 700; font-size: .92rem; }
+  .fato b { color: var(--marca); }
+  .links-rapidos { display: flex; flex-wrap: wrap; gap: 10px; }
+  .links-rapidos a { background: var(--marca); color: var(--tinta); font-weight: 800; text-decoration: none; padding: 12px 20px; border-radius: 999px; min-height: 44px; display: inline-flex; align-items: center; }
+  .links-rapidos a.sec { background: rgba(255,255,255,.14); color: #fff; }
+
+  .menu { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--tinta); }
+  .menu .wrap { display: flex; gap: 6px; overflow-x: auto; padding-block: 10px; scrollbar-width: none; }
+  .menu a { color: #fff; text-decoration: none; font-weight: 700; font-size: .9rem; padding: 6px 14px; border-radius: 999px; white-space: nowrap; background: rgba(255,255,255,.1); }
+  .menu a:hover { background: var(--marca); color: var(--tinta); }
+
+  .passos { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px; }
+  .passo { background: var(--branco); border: 1px solid var(--linha); border-radius: 18px; padding: 22px; display: grid; gap: 8px; align-content: start; }
+  .passo .n { font-family: var(--f-m); font-size: .78rem; letter-spacing: 1px; color: var(--tx2); font-weight: 700; }
+  .passo h3 { font-size: 1.15rem; }
+  .passo p { color: var(--tx2); font-size: .95rem; }
+  .passo.dest { border: 2px solid var(--azul); }
+  .passo.dest .n { color: var(--azul); }
+  .duas { margin-top: 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; }
+  .caixa { border-radius: 18px; padding: 20px 22px; display: grid; gap: 8px; align-content: start; }
+  .caixa.sim { background: var(--azul-t); }
+  .caixa.nao { border: 2px dashed var(--linha); }
+  .caixa.alerta { background: var(--marca-t); }
+  .caixa b { font-size: 1.05rem; }
+  .caixa ul { margin: 0; padding-left: 18px; color: var(--tx2); display: grid; gap: 4px; }
+  .caixa p { color: var(--tx2); }
+  h3.sub2 { font-family: var(--f-d); font-size: 1.7rem; text-transform: uppercase; font-weight: 800; margin: 40px 0 14px; }
+
+  .veredito { background: var(--tinta); color: #fff; border-radius: 22px; padding: 24px 26px; display: grid; gap: 10px; }
+  .veredito b { font-family: var(--f-d); font-size: 1.9rem; text-transform: uppercase; line-height: 1; color: var(--marca); }
+  .veredito p { color: #DCE2FB; }
+
+  .tabela { overflow-x: auto; border: 1px solid var(--linha); border-radius: 16px; background: var(--branco); }
+  table { width: 100%; border-collapse: collapse; font-size: .95rem; }
+  th, td { text-align: left; padding: 12px 16px; border-bottom: 1px solid var(--linha); vertical-align: top; }
+  tr:last-child td, tr:last-child th { border-bottom: 0; }
+  thead th { font-family: var(--f-m); font-size: .72rem; letter-spacing: 1px; text-transform: uppercase; color: var(--tx2); font-weight: 500; }
+  tbody th { font-weight: 700; }
+  td.num, th.num { text-align: right; font-family: var(--f-m); white-space: nowrap; font-variant-numeric: tabular-nums; }
+  tr.total td, tr.total th { background: var(--azul-t); font-weight: 800; }
+  .pl { display: inline-block; font-family: var(--f-m); font-size: .7rem; font-weight: 700; padding: 2px 10px; border-radius: 999px; white-space: nowrap; }
+  .pl.mvp { background: var(--azul); color: #fff; }
+  .pl.v2 { background: var(--marca); color: var(--tinta); }
+  .pl.dep { color: var(--tx2); border: 1px dashed var(--tx2); }
+
+  .fluxo { overflow-x: auto; background: var(--branco); border: 1px solid var(--linha); border-radius: 18px; padding: 18px; }
+  .fluxo svg { display: block; min-width: 860px; width: 100%; height: auto; }
+  .nota { margin-top: 18px; padding: 16px 20px; background: var(--marca-t); border-radius: 14px; }
+
+  .telas { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; }
+  .telas figure { margin: 0; display: grid; gap: 6px; }
+  .telas img { width: 100%; height: auto; display: block; max-width: 100%; }
+  figure { margin: 0; }
+  figcaption { font-size: .9rem; color: var(--tx2); }
+  figcaption b { color: var(--tinta); }
+  .site-imgs { display: grid; grid-template-columns: minmax(0, 2.2fr) minmax(0, 1fr); gap: 16px; align-items: start; }
+  .site-imgs figure { border: 1px solid var(--linha); border-radius: 16px; overflow: hidden; background: var(--branco); }
+  .site-imgs img { display: block; width: 100%; height: auto; }
+  .site-imgs figcaption { padding: 10px 14px; }
+  @media (max-width: 760px) { .site-imgs { grid-template-columns: 1fr; } }
+  .btn { display: inline-flex; align-items: center; gap: 8px; background: var(--azul); color: #fff; font-weight: 800; text-decoration: none; padding: 12px 22px; border-radius: 999px; border: 0; cursor: pointer; font-size: 1rem; font-family: var(--f-t); min-height: 44px; }
+  .btn:hover { background: var(--azul2); color: #fff; }
+  .btn.sec { background: var(--branco); color: var(--tinta); border: 2px solid var(--tinta); }
+  .btn.am { background: var(--marca); color: var(--tinta); }
+  .acoes { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 18px; align-items: center; }
+  .estado { font-size: .9rem; color: var(--tx2); }
+
+  .faixa { background: var(--tinta); color: #fff; border-radius: 18px; padding: 18px 22px; display: flex; flex-wrap: wrap; gap: 6px 20px; align-items: center; margin-bottom: 22px; font-weight: 600; }
+  .faixa b { font-family: var(--f-d); font-size: 1.5rem; font-weight: 800; color: var(--marca); }
+  .planos { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; max-width: 820px; }
+  .plano { background: var(--branco); border: 1px solid var(--linha); border-radius: 22px; padding: 26px; display: grid; gap: 14px; align-content: start; }
+  .plano.top { border: 2px solid var(--azul); }
+  .plano h3 { font-family: var(--f-d); font-size: 1.9rem; text-transform: uppercase; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  .preco { font-family: var(--f-d); font-weight: 800; font-size: 3rem; line-height: 1; font-variant-numeric: tabular-nums; }
+  .preco small { font-family: var(--f-t); font-size: 1rem; color: var(--tx2); font-weight: 500; }
+  .sub { color: var(--tx2); font-size: .92rem; }
+  .plano ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+  .plano li { display: grid; grid-template-columns: 18px 1fr; gap: 10px; font-size: .95rem; }
+  .plano li::before { content: ""; width: 13px; height: 13px; border-radius: 50%; background: var(--azul); margin-top: 6px; }
+  .tag { font-family: var(--f-m); font-size: .68rem; font-weight: 700; padding: 3px 10px; border-radius: 999px; background: var(--marca); color: var(--tinta); letter-spacing: .5px; }
+
+  .marca-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
+  .logo-box { border-radius: 18px; overflow: hidden; border: 1px solid var(--linha); display: grid; place-items: center; }
+  .logo-box img { display: block; width: 100%; height: auto; }
+  .cores { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-top: 18px; }
+  .cor { border-radius: 14px; overflow: hidden; border: 1px solid var(--linha); background: var(--branco); }
+  .cor i { display: block; height: 60px; }
+  .cor div { padding: 10px 12px; font-size: .85rem; color: var(--tx2); }
+  .cor b { display: block; font-size: .92rem; color: var(--tinta); }
+  .cor code { font-family: var(--f-m); font-size: .8rem; }
+  .tipo { margin-top: 18px; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
+  .tipo > div { background: var(--branco); border: 1px solid var(--linha); border-radius: 18px; padding: 20px; color: var(--tx2); display: grid; gap: 6px; align-content: start; }
+  .tipo .amostra { color: var(--tinta); font-size: 2rem; line-height: 1.1; }
+  .tipo b { color: var(--tinta); }
+
+  .video-box { display: grid; grid-template-columns: minmax(0, 340px) minmax(0, 1fr); gap: 28px; align-items: start; }
+  .video-box video { width: 100%; max-width: 100%; aspect-ratio: 9 / 16; border-radius: 22px; background: var(--tinta); display: block; }
+  .roteiro { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
+  .roteiro li { display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 12px; background: var(--branco); border: 1px solid var(--linha); border-radius: 12px; padding: 10px 14px; font-size: .95rem; }
+  .roteiro .mono { color: var(--azul); font-weight: 700; font-size: .82rem; padding-top: 2px; }
+  @media (max-width: 760px) { .video-box { grid-template-columns: 1fr; } .video-box video { max-width: 340px; } }
+
+  .baixar { background: var(--tinta); color: #fff; border-radius: 22px; padding: 22px 24px; display: flex; flex-wrap: wrap; gap: 14px 24px; align-items: center; justify-content: space-between; margin-bottom: 26px; }
+  .baixar b { font-family: var(--f-d); font-size: 1.6rem; text-transform: uppercase; }
+  .baixar p { color: #DCE2FB; font-size: .95rem; }
+  .baixar .estado { color: #DCE2FB; }
+  .bio { background: var(--branco); border: 1px solid var(--linha); border-radius: 18px; padding: 20px; display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 18px; align-items: start; margin-bottom: 22px; }
+  .bio img { width: 96px; height: 96px; border-radius: 50%; }
+  .bio pre, .leg pre { white-space: pre-wrap; font-family: var(--f-t); font-size: .95rem; }
+  .bio pre { margin: 6px 0 10px; color: var(--tx2); }
+  .feed { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 18px; }
+  .item { background: var(--branco); border: 1px solid var(--linha); border-radius: 18px; overflow: hidden; display: flex; flex-direction: column; min-width: 0; }
+  .item .img { aspect-ratio: 4 / 5; max-width: 100%; background: var(--papel); }
+  .item .img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .carrossel { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; aspect-ratio: 4 / 5; max-width: 100%; }
+  .carrossel img { flex: 0 0 100%; width: 100%; height: 100%; object-fit: cover; scroll-snap-align: start; }
+  .item .corpo { padding: 16px; display: grid; gap: 10px; }
+  .item h3 { font-size: 1.02rem; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .item h3 .n { font-family: var(--f-m); font-size: .8rem; color: var(--tx2); font-weight: 500; }
+  .tag2 { font-family: var(--f-m); font-size: .68rem; font-weight: 700; padding: 2px 10px; border-radius: 999px; background: var(--azul-t); color: var(--azul); }
+  details.leg summary { cursor: pointer; font-weight: 700; color: var(--tx2); font-size: .9rem; }
+  .leg pre { margin: 10px 0; background: var(--papel); border-radius: 12px; padding: 12px; color: var(--tinta); }
+  .copiar { justify-self: start; background: var(--branco); border: 2px solid var(--tinta); color: var(--tinta); border-radius: 999px; padding: 8px 16px; font-weight: 800; font-size: .82rem; cursor: pointer; font-family: var(--f-t); min-height: 40px; }
+  .copiar:hover { background: var(--marca); }
+  .stories { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 16px; }
+  .stories img { width: 100%; aspect-ratio: 9 / 16; object-fit: cover; border-radius: 16px; border: 1px solid var(--linha); display: block; max-width: 100%; }
+  .stories figcaption { padding: 6px 2px 0; font-size: .85rem; }
+  .destaques { display: flex; flex-wrap: wrap; gap: 22px; }
+  .destaques figure { text-align: center; font-size: .85rem; font-weight: 700; color: var(--tx2); }
+  .destaques img { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; display: block; margin: 0 auto 6px; }
+  .dica { color: var(--tx2); font-size: .9rem; margin-top: 12px; }
+  .grade { display: grid; grid-template-columns: minmax(0, 360px) minmax(0, 1fr); gap: 24px; align-items: start; }
+  @media (max-width: 760px) { .grade { grid-template-columns: 1fr; } }
+  .ig { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 3px; background: var(--branco); border: 1px solid var(--linha); border-radius: 14px; padding: 3px; }
+  .ig img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; display: block; max-width: 100%; }
+
+  .prompt pre { white-space: pre-wrap; font-family: var(--f-m); font-size: .8rem; line-height: 1.55; background: var(--branco); border: 1px solid var(--linha); border-radius: 16px; padding: 18px; max-height: 560px; overflow: auto; margin: 0; color: var(--tinta); }
+
+  .lista { display: grid; gap: 10px; padding: 0; margin: 0; list-style: none; }
+  .lista li { background: var(--branco); border: 1px solid var(--linha); border-radius: 14px; padding: 14px 16px; display: grid; grid-template-columns: 26px 1fr; gap: 10px; }
+  .lista li::before { content: ""; width: 18px; height: 18px; border-radius: 50%; border: 2.5px solid var(--azul); margin-top: 3px; }
+  footer { padding-block: 32px 48px; color: var(--tx2); font-size: .9rem; border-top: 1px solid var(--linha); }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  @media (max-width: 520px) { .bio { grid-template-columns: 1fr; } }
+</style>
+
+<header class="capa">
+  <div class="wrap">
+    <div class="marca"><img src="img/perfil-mini.svg" alt=""><span><b>aviso</b><span>concurso</span></span></div>
+    <h1>Você já perdeu concurso. <em>E nem viu.</em></h1>
+    <p class="lead">Briefing do Aviso Concurso, versão 2: aviso pelo app, agenda de vários concursos, só planos pagos com 3 dias grátis, custos reais, vídeo e kit de Instagram pronto para baixar.</p>
+    <div class="fatos">
+      <span class="fato">🔔 Aviso por <b>notificação no app</b></span>
+      <span class="fato">📅 <b>Agenda</b> e matérias em comum</span>
+      <span class="fato">🎁 <b>3 dias grátis</b>, depois <b>R$ 9,90</b></span>
+    </div>
+    <div class="links-rapidos">
+      <a href="https://claude.ai/artifact/HSn35vPHeUq1S1t2ujdS6H" target="_blank" rel="noopener">Abrir a landing page</a>
+      <a href="https://claude.ai/artifact/XZm2WtQWUGVGuiD38d6m9y" target="_blank" rel="noopener">Abrir o app</a>
+      <a class="sec" href="#instagram">Baixar o kit de Instagram</a>
+    </div>
+  </div>
+</header>
+
+<nav class="menu" aria-label="Seções">
+  <div class="wrap">
+    <a href="#produto">Produto</a>
+    <a href="#whatsapp">WhatsApp ou app?</a>
+    <a href="#custos">Custos</a>
+    <a href="#app">App</a>
+    <a href="#planos">Planos</a>
+    <a href="#dados">Dados</a>
+    <a href="#video">Vídeo</a>
+    <a href="#instagram">Instagram</a>
+    <a href="#site">Site</a>
+    <a href="#marca">Marca</a>
+    <a href="#prompt">Prompt</a>
+    <a href="#pendencias">Pendências</a>
+  </div>
+</nav>
+
+<main>
+  <section id="produto">
+    <div class="wrap">
+      <div class="sec-cab">
+        <span class="rotulo">O produto</span>
+        <h2>Você estuda. O Aviso Concurso <span class="g">vigia</span> e organiza.</h2>
+        <p>A dor que a gente resolve: o concurseiro já perdeu concurso por não saber do edital, do prazo da isenção ou da mudança de data. O app lê os diários oficiais e as bancas todo dia, avisa no celular e junta todos os concursos da pessoa numa agenda só. A gente não dá aula nem vende material.</p>
+      </div>
+      <div class="passos">
+        <div class="passo"><span class="n">PERFIL</span><h3>Diz o que procura</h3><p>Escolaridade, área, cargo, estados, salário mínimo, bancas e palavras-chave.</p></div>
+        <div class="passo dest"><span class="n">NOTIFICAÇÃO</span><h3>Aviso na hora</h3><p>Saiu concurso do perfil? O celular apita com vagas, salário, prazos e o link oficial.</p></div>
+        <div class="passo"><span class="n">AGENDA</span><h3>Todos os concursos</h3><p>Isenção, inscrição, local de prova e prova de cada concurso, com contagem regressiva.</p></div>
+        <div class="passo"><span class="n">MATÉRIAS EM COMUM</span><h3>O que cai em vários</h3><p>Lê o conteúdo programático e mostra primeiro o que cai em mais concursos.</p></div>
+      </div>
+      <div class="duas">
+        <div class="caixa sim"><b>Funcionalidades novas desta versão</b><ul><li>Agenda com vários concursos ao mesmo tempo, cada um com sua cor</li><li>Matérias em comum entre os editais, com número de questões</li><li>Checklist por concurso: isenção, boleto, local de prova, documento, caneta</li><li>Contagem regressiva para cada prova</li><li>Errata atualiza a agenda sozinha</li></ul></div>
+        <div class="caixa nao"><b>Fora do escopo</b><ul><li>Aula, apostila, questões ou curso</li><li>Fazer inscrição pelo candidato</li><li>Notícia sem fonte oficial</li><li>Opinião política</li></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="whatsapp">
+    <div class="wrap">
+      <div class="sec-cab">
+        <span class="rotulo">WhatsApp ou app?</span>
+        <h2>O aviso principal vai pelo <span class="g">app</span></h2>
+        <p>As duas coisas funcionam. Mas uma custa zero por mensagem e a outra cobra a cada envio.</p>
+      </div>
+      <div class="veredito">
+        <b>Recomendação: notificação do app para tudo, WhatsApp só para prazo acabando</b>
+        <p>A notificação do app é de graça, chega na hora e traz a pessoa para dentro do app, onde estão a agenda e as matérias, o que ajuda a reter assinante. O WhatsApp entra no plano Aprovado só para "isenção acaba amanhã" e "inscrição acaba amanhã", com limite por mês. Assim ele vira um bônus de valor, sem comer a margem.</p>
+      </div>
+      <div class="duas">
+        <div class="caixa sim"><b>🔔 Notificação do app</b><ul><li>Custo por envio: zero (Firebase e Apple Push)</li><li>Sem limite de mensagens</li><li>Abre direto na tela do concurso</li><li>No iPhone precisa ser app de loja; site salvo na tela inicial também recebe, mas pouca gente instala</li><li>Risco: a pessoa desligar as notificações. Por isso o app pede permissão na hora certa, depois do 1º concurso salvo</li></ul></div>
+        <div class="caixa alerta"><b>💬 WhatsApp oficial (API da Meta)</b><ul><li>Dá para fazer, com conta Business verificada, modelos de mensagem aprovados e consentimento da pessoa</li><li>Cobra por mensagem enviada. Aviso de serviço ("utilidade") sai por cerca de R$ 0,04 a R$ 0,12; se a Meta classificar como marketing, cerca de R$ 0,35</li><li>APIs não oficiais são mais baratas, mas o número pode ser banido. Não recomendo</li><li>Melhor uso: poucos avisos urgentes por mês</li></ul></div>
+      </div>
+      <p class="nota"><b>Pergunte ao edital também cabe no custo.</b> Um edital de 80 páginas tem uns 60 mil tokens. Com o Claude Haiku 5.5 (US$ 0,10 por milhão de tokens de entrada e US$ 0,50 de saída), uma pergunta sai por menos de R$ 0,04, e fica mais barata quando o edital já está em cache. Com limite de 30 perguntas por mês no plano Aprovado, o pior caso é cerca de R$ 1 por assinante.</p>
+    </div>
+  </section>
+
+  <section id="custos">
+    <div class="wrap">
+      <div class="sec-cab">
+        <span class="rotulo">Custos e investimento</span>
+        <h2>Quanto precisa colocar</h2>
+        <p>Estimativa para lançar e rodar até uns mil assinantes. Câmbio usado: US$ 1 = R$ 5,50. Os preços de terceiros mudam; confirme cada um antes de fechar o orçamento.</p>
+      </div>
+      <h3 class="sub2" style="margin-top:0">Para começar (uma vez)</h3>
+      <div class="tabela">
+        <table>
+          <thead><tr><th>Item</th><th>Para quê</th><th class="num">Valor</th></tr></thead>
+          <tbody>
+            <tr><th>Conta de desenvolvedor Apple</th><td>Publicar na App Store (anual)</td><td class="num">US$ 99 ≈ R$ 545</td></tr>
+            <tr><th>Conta Google Play</th><td>Publicar na Play Store (taxa única)</td><td class="num">US$ 25 ≈ R$ 140</td></tr>
+            <tr><th>Domínio avisoconcurso.com.br</th><td>Site e e-mail (anual)</td><td class="num">≈ R$ 40</td></tr>
+            <tr><th>Registro de marca no INPI</th><td>Proteger o nome</td><td class="num">consultar tabela</td></tr>
+            <tr class="total"><th>Total para começar</th><td></td><td class="num">≈ R$ 725 + INPI</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <h3 class="sub2">Por mês (fixo)</h3>
+      <div class="tabela">
+        <table>
+          <thead><tr><th>Item</th><th>Para quê</th><th class="num">Valor</th></tr></thead>
+          <tbody>
+            <tr><th>Supabase Pro</th><td>Banco de dados, login e arquivos</td><td class="num">US$ 25 ≈ R$ 140</td></tr>
+            <tr><th>Vercel Pro</th><td>Site, painel e coletores agendados</td><td class="num">US$ 20 ≈ R$ 110</td></tr>
+            <tr><th>Leitura dos editais com IA</th><td>Claude Haiku 5.5 em todo edital; Claude Sonnet 5.5 só nos difíceis</td><td class="num">≈ R$ 150 a R$ 400</td></tr>
+            <tr><th>E-mail</th><td>Resumo semanal e recibos</td><td class="num">R$ 0 a R$ 110</td></tr>
+            <tr><th>Notificações do app</th><td>Firebase e Apple Push</td><td class="num">R$ 0</td></tr>
+            <tr class="total"><th>Total fixo</th><td></td><td class="num">≈ R$ 400 a R$ 760</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <h3 class="sub2">Por assinante por mês (variável)</h3>
+      <div class="tabela">
+        <table>
+          <thead><tr><th>Item</th><th class="num">Aviso · R$ 9,90</th><th class="num">Aprovado · R$ 19,90</th></tr></thead>
+          <tbody>
+            <tr><th>Notificações do app</th><td class="num">R$ 0</td><td class="num">R$ 0</td></tr>
+            <tr><th>WhatsApp (até 10 avisos urgentes)</th><td class="num">não tem</td><td class="num">R$ 0,40 a R$ 1,20</td></tr>
+            <tr><th>Pergunte ao edital (até 30 perguntas)</th><td class="num">não tem</td><td class="num">até ≈ R$ 1,00</td></tr>
+            <tr><th>Taxa de cobrança (Pix ou cartão, 3% a 5%)</th><td class="num">≈ R$ 0,30 a R$ 0,50</td><td class="num">≈ R$ 0,60 a R$ 1,00</td></tr>
+            <tr class="total"><th>Sobra por assinante</th><td class="num">≈ R$ 9,40</td><td class="num">≈ R$ 16,70</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="duas">
+        <div class="caixa sim"><b>Ponto de equilíbrio</b><p>Com o fixo em torno de R$ 600, umas <b>65 assinaturas do plano Aviso</b> pagam a estrutura. Com 1.000 assinantes no Aviso, a receita é de R$ 9.900 por mês.</p></div>
+        <div class="caixa alerta"><b>Cuidado com a taxa das lojas</b><p>Se a assinatura for vendida dentro do app, Apple e Google ficam com 15% (programa para pequenos desenvolvedores), cerca de R$ 1,49 por mês no plano Aviso. Vender pelo site com Pix evita essa taxa onde as regras da loja permitirem. Confirmar as regras atuais antes do lançamento.</p></div>
+      </div>
+      <p class="nota"><b>Fora desta conta:</b> a verba de anúncio. Para validar o vídeo e os posts, um teste de R$ 30 a R$ 50 por dia durante 7 dias (R$ 210 a R$ 350) já mostra o custo por teste iniciado.</p>
+    </div>
+  </section>
+
+  <section id="app">
+    <div class="wrap">
+      <div class="sec-cab">
+        <span class="rotulo">App</span>
+        <h2>O app, tela por tela</h2>
+        <p>Protótipo clicável num link próprio: troque de aba, filtre a agenda por concurso, ligue e desligue concursos nas matérias em comum, marque o checklist e faça perguntas ao edital.</p>
+      </div>
+      <div class="telas">
+        <figure><img src="img/app-push.png" alt="Notificação de edital publicado chegando no app"><figcaption><b>Notificação</b> · edital publicado</figcaption></figure>
+        <figure><img src="img/app-hoje.png" alt="Tela Hoje com contagem regressiva e avisos"><figcaption><b>Hoje</b> · contagem e avisos do dia</figcaption></figure>
+        <figure><img src="img/app-agenda.png" alt="Agenda com três concursos"><figcaption><b>Agenda</b> · vários concursos, uma cor cada</figcaption></figure>
+        <figure><img src="img/app-materias.png" alt="Matérias em comum entre os concursos"><figcaption><b>Matérias em comum</b> · o que cai em mais editais</figcaption></figure>
+        <figure><img src="img/app-concursos.png" alt="Concursos com etapas e checklist"><figcaption><b>Concursos</b> · etapas e checklist</figcaption></figure>
+        <figure><img src="img/app-pergunte.png" alt="Pergunte ao edital com respostas citando item e página"><figcaption><b>Pergunte ao edital</b> · plano Aprovado</figcaption></figure>
+      </div>
+      <div class="acoes"><a class="btn" href="https://claude.ai/artifact/XZm2WtQWUGVGuiD38d6m9y" target="_blank" rel="noopener">Abrir o app clicável</a></div>
+    </div>
+  </section>
+
+  <section id="planos">
+    <div class="wrap">
+      <div class="sec-cab">
+        <span class="rotulo">Planos</span>
+        <h2>Sem plano grátis. <span class="g">3 dias</span> para testar.</h2>
+        <p>Quem usa grátis no Brasil tende a não pagar. Aqui todo mundo entra pelo teste de 3 dias com o plano completo e decide se continua.</p>
+      </div>
+      <div class="faixa"><b>3 dias grátis · R$ 9,90 · R$ 19,90</b><span>Anual: R$ 99 e R$ 199 (2 meses grátis) · cancele quando quiser</span></div>
+      <div class="planos">
+        <div class="plano top">
+          <h3>Aviso <span class="tag">PRINCIPAL</span></h3>
+          <div class="preco">R$ 9,90<small> /mês</small></div>
+          <div class="sub">3 dias grátis · ou R$ 99 por ano</div>
+          <ul>
+            <li>Perfis de busca ilimitados</li>
+            <li>Notificação no celular na hora</li>
+            <li>Lembrete de isenção e de inscrição</li>
+            <li>Aviso de errata, com o que mudou</li>
+            <li>Agenda com todos os concursos</li>
+            <li>Matérias em comum e checklist</li>
+          </ul>
+        </div>
+        <div class="plano">
+          <h3>Aprovado</h3>
+          <div class="preco">R$ 19,90<small> /mês</small></div>
+          <div class="sub">3 dias grátis · ou R$ 199 por ano</div>
+          <ul>
+            <li>Tudo do Aviso</li>
+            <li>Prazo acabando também no WhatsApp (até 10 por mês)</li>
+            <li>Pergunte ao edital com IA (30 por mês)</li>
+            <li>Radar de previstos e autorizados</li>
+            <li>Aviso de convocação com seu nome no Diário Oficial</li>
+          </ul>
+        </div>
+      </div>
+      <p class="nota"><b>Como funciona o teste:</b> a pessoa cadastra o cartão ou o Pix automático, usa 3 dias e é cobrada no 4º dia se não cancelar. O app avisa 1 dia antes da cobrança, o que evita reclamação e pedido de estorno.</p>
+    </div>
+  </section>
+
+  <section id="dados">
+    <div class="wrap">
+      <div class="sec-cab">
+        <span class="rotulo">De onde vêm os dados</span>
+        <h2>Como a gente <span class="g">puxa</span> os concursos</h2>
+        <p>Tudo sai de fonte pública e oficial. O trabalho é coletar todo dia, achar o que é concurso no meio de milhares de atos e transformar o PDF em campos que dá para filtrar.</p>
+      </div>
+      <div class="fluxo">
+        <svg viewBox="0 0 1000 300" role="img" aria-label="Fluxo: fontes oficiais, coletor, filtro, leitor com IA, banco de concursos, cruzamento com perfis e envio de notificações">
+          <g font-family="Figtree, sans-serif" font-size="14" fill="#0F1530">
+            <rect x="10" y="20" width="170" height="56" rx="12" fill="#E8ECFC"/><text x="24" y="44" font-weight="700">DOU (INLABS)</text><text x="24" y="63" fill="#4F566E" font-size="12">XML diário, Seção 3</text>
+            <rect x="10" y="90" width="170" height="56" rx="12" fill="#E8ECFC"/><text x="24" y="114" font-weight="700">Querido Diário</text><text x="24" y="133" fill="#4F566E" font-size="12">API de diários municipais</text>
+            <rect x="10" y="160" width="170" height="56" rx="12" fill="#E8ECFC"/><text x="24" y="184" font-weight="700">Diários estaduais</text><text x="24" y="203" fill="#4F566E" font-size="12">um coletor por estado</text>
+            <rect x="10" y="230" width="170" height="56" rx="12" fill="#E8ECFC"/><text x="24" y="254" font-weight="700">Sites das bancas</text><text x="24" y="273" fill="#4F566E" font-size="12">páginas de concursos</text>
+            <path d="M180 48 H215 V153 M180 118 H215 M180 188 H215 M180 258 H215 V153 M215 153 H240" stroke="#1F3FD1" stroke-width="2" fill="none"/>
+            <rect x="240" y="118" width="130" height="70" rx="12" fill="#FFFFFF" stroke="#0F1530" stroke-width="2"/><text x="254" y="146" font-weight="700">Coletor</text><text x="254" y="166" fill="#4F566E" font-size="12">guarda o original</text>
+            <path d="M370 153 H395" stroke="#1F3FD1" stroke-width="2"/>
+            <rect x="395" y="118" width="130" height="70" rx="12" fill="#FFFFFF" stroke="#0F1530" stroke-width="2"/><text x="409" y="146" font-weight="700">Filtro</text><text x="409" y="166" fill="#4F566E" font-size="12">"concurso público"</text>
+            <path d="M525 153 H550" stroke="#1F3FD1" stroke-width="2"/>
+            <rect x="550" y="118" width="140" height="70" rx="12" fill="#1F3FD1"/><text x="564" y="146" font-weight="700" fill="#FFFFFF">Leitor com IA</text><text x="564" y="166" fill="#DCE2FB" font-size="12">campos e matérias</text>
+            <path d="M690 153 H715" stroke="#1F3FD1" stroke-width="2"/>
+            <rect x="715" y="118" width="130" height="70" rx="12" fill="#FFFFFF" stroke="#0F1530" stroke-width="2"/><text x="729" y="146" font-weight="700">Concursos</text><text x="729" y="166" fill="#4F566E" font-size="12">sem duplicar</text>
+            <path d="M845 153 H870" stroke="#1F3FD1" stroke-width="2"/>
+            <rect x="870" y="118" width="120" height="70" rx="12" fill="#FFE14D"/><text x="884" y="146" font-weight="700">Notificação</text><text x="884" y="166" fill="#0F1530" font-size="12">perfil × concurso</text>
+            <text x="550" y="230" fill="#4F566E" font-size="12">Baixa confiança na extração? Vai para revisão humana antes de enviar.</text>
+            <text x="550" y="250" fill="#4F566E" font-size="12">O conteúdo programático vira lista de matérias padronizadas para a agenda.</text>
+          </g>
+        </svg>
+      </div>
+      <h3 class="sub2">Fontes</h3>
+      <div class="tabela">
+        <table>
+          <thead><tr><th>Fonte</th><th>O que traz</th><th>Como puxar</th><th>Fase</th></tr></thead>
+          <tbody>
+            <tr><th>Diário Oficial da União</th><td>Editais federais, autorizações, homologações e nomeações</td><td>INLABS da Imprensa Nacional: download diário do DOU em XML, com cadastro gratuito</td><td><span class="pl mvp">MVP</span></td></tr>
+            <tr><th>Sites das bancas</th><td>Cebraspe, FGV, FCC, Vunesp, Cesgranrio, IBFC, AOCP, Quadrix, Idecan</td><td>Leitura da página de concursos a cada hora, avisando quando aparece item novo</td><td><span class="pl mvp">MVP</span></td></tr>
+            <tr><th>Diários municipais</th><td>Prefeituras e câmaras</td><td>API do Querido Diário (Open Knowledge Brasil). A cobertura de cidades é parcial: conferir</td><td><span class="pl mvp">MVP</span></td></tr>
+            <tr><th>Diários estaduais</th><td>Concursos do estado, TJ, MP, PM, PC, Sefaz</td><td>Um coletor por estado, começando por SP, MG, RJ, BA, PR, RS e DF</td><td><span class="pl v2">v2</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section id="video">
+    <div class="wrap">
+      <div class="sec-cab">
+        <span class="rotulo">Criativo em vídeo</span>
+        <h2>"Você já perdeu concurso"</h2>
+        <p>Anúncio vertical de 36 segundos para Reels, Stories e tráfego pago. Bate na dor que a pessoa já sentiu, mostra a causa (falta de aviso) e fecha com a promessa: nunca mais se preocupar em perder uma data. Tem legenda na tela inteira, para quem assiste sem som.</p>
+      </div>
+      <div class="video-box">
+        <video controls playsinline preload="metadata" poster="video/capa2.jpg" src="video/anuncio-locucao.mp4"></video>
+        <div style="min-width:0;display:grid;gap:14px">
+          <div class="caixa sim"><b>Versão para tráfego, com locução</b><p>Voz "Marcio – Viral Hook Narrator" (ElevenLabs), trilha com tensão e batida, efeitos sincronizados (impactos, whoosh, glitch, carimbo, notificação, pop), tremida de câmera, flashes, contadores, celular em 3D, confete e legenda que acompanha a fala palavra por palavra. 36 segundos, 1080 × 1920.</p></div>
+          <ol class="roteiro">
+            <li><span class="mono">0:00</span><span>Você já perdeu concurso. E nem ficou sabendo.</span></li>
+            <li><span class="mono">0:04</span><span>O edital saiu numa terça, seis da manhã. A isenção fechou em cinco dias. Quando você viu... a inscrição já tinha acabado.</span></li>
+            <li><span class="mono">0:12</span><span>Não foi falta de estudo. Foi falta de aviso.</span></li>
+            <li><span class="mono">0:15</span><span>O Aviso Concurso lê o Diário Oficial e os sites das bancas todo dia.</span></li>
+            <li><span class="mono">0:19</span><span>Saiu concurso do seu perfil? Chega uma notificação no seu celular, com resumo e link oficial.</span></li>
+            <li><span class="mono">0:24</span><span>E a agenda junta todos os seus concursos: as datas, as provas e as matérias em comum.</span></li>
+            <li><span class="mono">0:29</span><span>Nunca mais se preocupe em perder uma data.</span></li>
+            <li><span class="mono">0:32</span><span>Aviso Concurso. Três dias grátis. Link na bio.</span></li>
+          </ol>
+          <details class="leg"><summary>Ver legenda do Reels</summary><pre id="leg-video">Você já perdeu concurso. E nem ficou sabendo. 😶
+
+Não foi falta de estudo. Foi falta de aviso. 🔔
+
+O Aviso Concurso lê o Diário Oficial e os sites das bancas todo dia, te avisa no celular e junta todos os seus concursos numa agenda só. 📅
+
+🎁 3 dias grátis. Link na bio.
+
+#concursopublico #concursos #concurseiro #edital #concursos2027 #servidorpublico</pre></details>
+          <div class="acoes" style="margin-top:0"><button class="copiar" data-alvo="leg-video" type="button">Copiar legenda</button><button class="btn sec" type="button" data-baixar="video/anuncio-locucao.mp4" data-nome="aviso-concurso-anuncio.mp4">Baixar o vídeo</button></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="instagram">
+    <div class="wrap">
+      <div class="sec-cab">
+        <span class="rotulo">Instagram</span>
+        <h2>Kit de lançamento do @avisoconcurso</h2>
+        <p>9 posts, 3 carrosséis, 5 stories, 4 capas de destaque, foto de perfil e o vídeo. Bio e legendas com emojis, prontas para copiar.</p>
+      </div>
+
+      <div class="baixar">
+        <div><b>Baixar tudo de uma vez</b><p>Um .zip com todas as imagens em pastas, o vídeo e um arquivo com a bio e as legendas, na ordem de postagem.</p></div>
+        <div class="acoes" style="margin-top:0"><button class="btn am" type="button" data-baixar="kit" data-nome="aviso-concurso-kit-instagram.zip">Baixar o kit (.zip)</button><span class="estado" id="estado-baixar" role="status"></span></div>
+      </div>
+
+      <div class="bio">
+        <img src="img/perfil.png" alt="Foto de perfil">
+        <div style="min-width:0">
+          <b>Aviso Concurso | Alertas de edital</b> · <span class="mono">@avisoconcurso</span>
+          <pre id="txt-bio">Você já perdeu concurso. Isso vai parar. 🔔
+📢 Edital, prazo e prova no seu celular
+📅 Agenda de todos os seus concursos
+🎁 3 dias grátis ↓</pre>
+          <button class="copiar" data-alvo="txt-bio" type="button">Copiar bio</button>
+        </div>
+      </div>
+
+      <div class="grade">
+        <div class="ig" aria-label="Prévia da grade do feed com as 12 publicações, mais recente no topo">
+          <img src="img/post-09-lista.png" alt="12"><img src="img/c3-01.png" alt="11"><img src="img/post-08-planos.png" alt="10">
+          <img src="img/post-07-retificacao.png" alt="9"><img src="img/post-06-golpe.png" alt="8"><img src="img/c2-01.png" alt="7">
+          <img src="img/post-04-perdeu.png" alt="6"><img src="img/c1-01.png" alt="5"><img src="img/post-03-agenda.png" alt="4">
+          <img src="img/post-05-isencao.png" alt="3"><img src="img/post-02-nao-espera.png" alt="2"><img src="img/post-01-lancamento.png" alt="1">
+        </div>
+        <div style="min-width:0">
+          <h3 class="sub2" style="margin-top:0">Ordem de postagem</h3>
+          <div class="tabela">
+            <table>
+              <thead><tr><th>#</th><th>Publicação</th></tr></thead>
+              <tbody>
+                <tr><td class="mono">1</td><td>Post: você já perdeu concurso (fixar)</td></tr>
+                <tr><td class="mono">2</td><td>Post: o edital não espera</td></tr>
+                <tr><td class="mono">3</td><td>Post: isenção tem prazo próprio</td></tr>
+                <tr><td class="mono">4</td><td>Post: estudando para 3 concursos</td></tr>
+                <tr><td class="mono">5</td><td><b>Carrossel: como funciona</b></td></tr>
+                <tr><td class="mono">6</td><td>Post: perdeu a inscrição por 1 dia?</td></tr>
+                <tr><td class="mono">7</td><td><b>Carrossel: 2027 no radar</b></td></tr>
+                <tr><td class="mono">8</td><td>Post: edital falso existe</td></tr>
+                <tr><td class="mono">9</td><td>Post: saiu errata</td></tr>
+                <tr><td class="mono">10</td><td>Post: planos (fixar)</td></tr>
+                <tr><td class="mono">11</td><td><b>Carrossel: leia isto primeiro</b></td></tr>
+                <tr><td class="mono">12</td><td>Post: 3 dias grátis (fixar)</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="dica">O vídeo vai como Reels no mesmo dia do post 1. Comece com 3 publicações no primeiro dia e depois faça 1 a cada 2 dias. Confira os fatos do carrossel "2027 no radar" na fonte no dia de postar.</p>
+        </div>
+      </div>
+
+      <h3 class="sub2">Carrosséis</h3>
+      <div class="feed">
+        <article class="item">
+          <div class="carrossel" aria-label="Carrossel como funciona, arraste para o lado"><img src="img/c1-01.png" alt="Capa: como funciona o aviso"><img src="img/c1-02.png" alt="Passo 1"><img src="img/c1-03.png" alt="Passo 2"><img src="img/c1-04.png" alt="Passo 3"><img src="img/c1-05.png" alt="Passo 4"><img src="img/c1-06.png" alt="3 dias grátis"></div>
+          <div class="corpo">
+            <h3>Como funciona <span class="tag2">6 imagens · arraste</span></h3>
+            <details class="leg"><summary>Ver legenda</summary><pre id="leg-c1">Do Diário Oficial para o seu celular, em 4 passos 👇
+
+1️⃣ Você diz o que procura: nível, área, estado, salário
+2️⃣ A gente lê os diários oficiais e os sites das bancas todo dia
+3️⃣ Saiu edital do seu perfil? 🔔 Notificação na hora, com resumo e link oficial
+4️⃣ E segue até o resultado: isenção, inscrição, errata e agenda de provas
+
+🎁 Teste 3 dias grátis. Link na bio.
+
+#concursopublico #concursos #concurseiro #edital #servidorpublico #estudos</pre></details>
+            <button class="copiar" data-alvo="leg-c1" type="button">Copiar legenda</button>
+          </div>
+        </article>
+        <article class="item">
+          <div class="carrossel" aria-label="Carrossel 2027 no radar, arraste para o lado"><img src="img/c2-01.png" alt="Capa: 2027"><img src="img/c2-02.png" alt="LDO 2027"><img src="img/c2-03.png" alt="Validade do CNU"><img src="img/c2-04.png" alt="Terceiro CNU"><img src="img/c2-05.png" alt="Pedidos na fila"><img src="img/c2-06.png" alt="Ligue o radar"></div>
+          <div class="corpo">
+            <h3>2027 no radar <span class="tag2">6 imagens · arraste</span></h3>
+            <details class="leg"><summary>Ver legenda</summary><pre id="leg-c2">Novo ano, novo orçamento, novos concursos? 📡 O que já se sabe sobre 2027, sem achismo:
+
+📌 A LDO 2027 mantém a autorização para concursos, se houver cargo vago e orçamento
+📌 A validade do CNU 2024 vai até 06/03/2027 para cargos sem curso de formação
+📌 Um 3º CNU foi sinalizado, mas ainda não tem data
+📌 Receita Federal, Ministério da Saúde e INC estão entre os pedidos na fila
+
+Pedido não é autorização. Quando sair no Diário Oficial, a gente avisa no mesmo dia. 🔔
+
+Salva e manda para quem está estudando. 📲
+
+#concursos2027 #cnu #concursopublico #concurseiro #receitafederal #edital</pre></details>
+            <button class="copiar" data-alvo="leg-c2" type="button">Copiar legenda</button>
+          </div>
+        </article>
+        <article class="item">
+          <div class="carrossel" aria-label="Carrossel leia isto primeiro, arraste para o lado"><img src="img/c3-01.png" alt="Capa: saiu o edital, leia isto primeiro"><img src="img/c3-02.png" alt="Requisitos"><img src="img/c3-03.png" alt="Vagas"><img src="img/c3-04.png" alt="Remuneração"><img src="img/c3-05.png" alt="Datas"><img src="img/c3-06.png" alt="Conteúdo"><img src="img/c3-07.png" alt="Etapas"></div>
+          <div class="corpo">
+            <h3>Saiu o edital: leia isto primeiro <span class="tag2">7 imagens · arraste</span></h3>
+            <details class="leg"><summary>Ver legenda</summary><pre id="leg-c3">📄 Edital tem 80 páginas. Antes de pagar a taxa, leia estes 6 pontos:
+
+✅ Requisitos
+✅ Vagas ou cadastro reserva
+✅ Remuneração total
+✅ Prazos
+✅ Conteúdo programático
+✅ Etapas
+
+Salva para usar no próximo edital. 📌 Qual desses você sempre esquece de olhar? 👇
+
+#edital #concursopublico #concurseiro #dicasdeestudo #concursos #servidorpublico</pre></details>
+            <button class="copiar" data-alvo="leg-c3" type="button">Copiar legenda</button>
+          </div>
+        </article>
+      </div>
+
+      <h3 class="sub2">Posts</h3>
+      <div class="feed">
+        <article class="item"><div class="img"><img src="img/post-01-lancamento.png" alt="Post: você já perdeu concurso"></div><div class="corpo"><h3><span class="n">01</span> Você já perdeu concurso <span class="tag2">fixar</span></h3><details class="leg"><summary>Ver legenda</summary><pre id="leg-01">Você já perdeu concurso. E nem viu. 😶
+
+Edital que saiu e você não viu. Isenção que passou. Inscrição que fechou.
+
+O Aviso Concurso lê o Diário Oficial e os sites das bancas todo dia e te avisa no celular. Nunca mais se preocupe em perder uma data. 🔔
+
+🎁 3 dias grátis. Link na bio.
+
+#concursopublico #concursos #concurseiro #edital #concursos2027</pre></details><button class="copiar" data-alvo="leg-01" type="button">Copiar legenda</button></div></article>
+        <article class="item"><div class="img"><img src="img/post-02-nao-espera.png" alt="Post o edital não espera"></div><div class="corpo"><h3><span class="n">02</span> O edital não espera</h3><details class="leg"><summary>Ver legenda</summary><pre id="leg-02">O edital não espera você abrir o site. 📢
+
+Vagas, salário, prazos e link oficial: tudo numa notificação no seu celular, minutos depois da publicação. 📲
+
+(Exemplo ilustrativo.)
+
+#concursopublico #edital #concurseiro</pre></details><button class="copiar" data-alvo="leg-02" type="button">Copiar legenda</button></div></article>
+        <article class="item"><div class="img"><img src="img/post-05-isencao.png" alt="Post isenção"></div><div class="corpo"><h3><span class="n">03</span> Isenção tem prazo próprio</h3><details class="leg"><summary>Ver legenda</summary><pre id="leg-05">⏰ A isenção da taxa tem prazo próprio. E costuma ser bem mais curto que o da inscrição.
+
+Quem tem direito muda de edital para edital: CadÚnico, doador de medula, doador de sangue e outros casos. O Aviso Concurso lembra os dois prazos. 🔔
+
+Marca alguém que sempre perde a isenção. 👇
+
+#isencao #concursopublico #concurseiro #edital</pre></details><button class="copiar" data-alvo="leg-05" type="button">Copiar legenda</button></div></article>
+        <article class="item"><div class="img"><img src="img/post-03-agenda.png" alt="Post estudando para 3 concursos"></div><div class="corpo"><h3><span class="n">04</span> Estudando para 3 concursos</h3><details class="leg"><summary>Ver legenda</summary><pre id="leg-03">Estudando para 3 concursos ao mesmo tempo? 📚
+
+A agenda do Aviso Concurso junta as provas e os prazos de todos eles e mostra as matérias que caem em mais de um. Português cai nos 3? Ela aparece primeiro. 📅
+
+A gente não dá aula. A gente organiza. ✅
+
+#concursopublico #concurseiro #rotinadeestudos #estudos #edital</pre></details><button class="copiar" data-alvo="leg-03" type="button">Copiar legenda</button></div></article>
+        <article class="item"><div class="img"><img src="img/post-04-perdeu.png" alt="Post perdeu a inscrição"></div><div class="corpo"><h3><span class="n">05</span> Perdeu por 1 dia?</h3><details class="leg"><summary>Ver legenda</summary><pre id="leg-04">Perdeu a inscrição por 1 dia? 😩
+
+Meses de estudo e você descobre o edital quando já fechou. Com o Aviso Concurso, o lembrete chega 3 dias antes do fim. ⏰
+
+Conta nos comentários: já aconteceu com você? 👇</pre></details><button class="copiar" data-alvo="leg-04" type="button">Copiar legenda</button></div></article>
+        <article class="item"><div class="img"><img src="img/post-06-golpe.png" alt="Post edital falso"></div><div class="corpo"><h3><span class="n">06</span> Edital falso existe</h3><details class="leg"><summary>Ver legenda</summary><pre id="leg-06">🚨 Edital falso existe.
+
+O governo federal já alertou para sites falsos de inscrição. Regra de ouro: só pague taxa no site da banca organizadora.
+
+Todo aviso nosso vem com o link da fonte oficial: Diário Oficial, órgão ou banca. ✅
+
+#golpe #concursopublico #edital #concurseiro</pre></details><button class="copiar" data-alvo="leg-06" type="button">Copiar legenda</button></div></article>
+        <article class="item"><div class="img"><img src="img/post-07-retificacao.png" alt="Post errata"></div><div class="corpo"><h3><span class="n">07</span> Saiu errata</h3><details class="leg"><summary>Ver legenda</summary><pre id="leg-07">✏️ Saiu errata. Mudou a data da prova.
+
+Edital muda depois de publicado, e ninguém relê 80 páginas. O Aviso Concurso compara as versões, te diz só o que mudou e já atualiza sua agenda. 📅
+
+(Exemplo ilustrativo.)</pre></details><button class="copiar" data-alvo="leg-07" type="button">Copiar legenda</button></div></article>
+        <article class="item"><div class="img"><img src="img/post-08-planos.png" alt="Post planos"></div><div class="corpo"><h3><span class="n">08</span> Planos <span class="tag2">fixar</span></h3><details class="leg"><summary>Ver legenda</summary><pre id="leg-08">💸 Menos que uma taxa de inscrição.
+
+🔔 Aviso: R$ 9,90/mês · notificação na hora, prazos, erratas e agenda
+🏆 Aprovado: R$ 19,90/mês · + WhatsApp, Pergunte ao edital e radar
+
+🎁 3 dias grátis para testar. Cancele quando quiser. Link na bio.</pre></details><button class="copiar" data-alvo="leg-08" type="button">Copiar legenda</button></div></article>
+        <article class="item"><div class="img"><img src="img/post-09-lista.png" alt="Post 3 dias grátis"></div><div class="corpo"><h3><span class="n">09</span> 3 dias grátis <span class="tag2">fixar</span></h3><details class="leg"><summary>Ver legenda</summary><pre id="leg-09">Marque essa. ✅
+
+Teste o Aviso Concurso por 3 dias grátis. Depois, R$ 9,90 por mês. Nunca mais se preocupe em perder uma data. 🔔
+
+Link na bio.
+
+#concursopublico #concursos2027 #concurseiro</pre></details><button class="copiar" data-alvo="leg-09" type="button">Copiar legenda</button></div></article>
+      </div>
+
+      <h3 class="sub2">Stories</h3>
+      <div class="stories">
+        <figure><img src="img/story-01-em-breve.png" alt="Story em breve"><figcaption>Em breve · sem figurinha</figcaption></figure>
+        <figure><img src="img/story-02-enquete.png" alt="Story enquete"><figcaption>Enquete no quadro: Sim / Quase / Nunca</figcaption></figure>
+        <figure><img src="img/story-03-caixinha.png" alt="Story caixinha"><figcaption>Caixinha de pergunta no quadro</figcaption></figure>
+        <figure><img src="img/story-04-bastidores.png" alt="Story bastidores"><figcaption>Bastidores · simulação do robô</figcaption></figure>
+        <figure><img src="img/story-05-link.png" alt="Story 3 dias grátis"><figcaption>Figurinha de link no quadro</figcaption></figure>
+      </div>
+
+      <h3 class="sub2">Capas de destaque</h3>
+      <div class="destaques">
+        <figure><img src="img/destaque-sobre.png" alt="">Sobre</figure>
+        <figure><img src="img/destaque-como.png" alt="">Como funciona</figure>
+        <figure><img src="img/destaque-planos.png" alt="">Planos</figure>
+        <figure><img src="img/destaque-editais.png" alt="">Editais</figure>
+      </div>
+      <p class="dica">Se o botão de baixar não aparecer no seu aparelho: no celular, toque e segure cada imagem; no computador, clique com o botão direito. Hashtags base: #concursopublico #concursos #concurseiro #concurseiros #edital #concursos2027 #cnu #servidorpublico #estudos</p>
+    </div>
+  </section>
+
+  <section id="site">
+    <div class="wrap">
+      <div class="sec-cab">
+        <span class="rotulo">Site</span>
+        <h2>Landing page num link próprio</h2>
+        <p>Agora abre direto, sem passar por esta página. Abre na dor, mostra o aviso no celular, a agenda, as fontes oficiais, os dois planos com 3 dias grátis, dúvidas e o formulário.</p>
+      </div>
+      <div class="site-imgs">
+        <figure><img src="img/site-topo.png" alt="Topo do site do Aviso Concurso"><figcaption>Topo no computador</figcaption></figure>
+        <figure><img src="img/site-celular.png" alt="Topo do site no celular"><figcaption>No celular</figcaption></figure>
+      </div>
+      <div class="acoes"><a class="btn" href="https://claude.ai/artifact/HSn35vPHeUq1S1t2ujdS6H" target="_blank" rel="noopener">Abrir a landing page</a></div>
+    </div>
+  </section>
+
+  <section id="marca">
+    <div class="wrap">
+      <div class="sec-cab">
+        <span class="rotulo">Identidade visual</span>
+        <h2>Caneta azul, marca-texto e gabarito</h2>
+        <p>Vem do material do concurseiro: a caneta que todo edital exige, o marca-texto que grifa o edital e a bolinha do gabarito. O símbolo é a bolinha já marcada, com um ponto amarelo de notificação.</p>
+      </div>
+      <div class="marca-grid">
+        <div class="logo-box"><img src="img/logo-claro.png" alt="Logo Aviso Concurso em fundo claro"></div>
+        <div class="logo-box"><img src="img/logo-escuro.png" alt="Logo Aviso Concurso em fundo escuro"></div>
+        <div class="logo-box" style="background:#1F3FD1"><img src="img/perfil.png" alt="Ícone do app" style="max-width:180px"></div>
+      </div>
+      <div class="cores">
+        <div class="cor"><i style="background:#1F3FD1"></i><div><b>Azul caneta</b><code>#1F3FD1</code> · marca, ações</div></div>
+        <div class="cor"><i style="background:#FFE14D"></i><div><b>Marca-texto</b><code>#FFE14D</code> · grifo, destaque</div></div>
+        <div class="cor"><i style="background:#0F1530"></i><div><b>Tinta</b><code>#0F1530</code> · texto, fundo escuro</div></div>
+        <div class="cor"><i style="background:#F5F6F1"></i><div><b>Papel</b><code>#F5F6F1</code> · fundo</div></div>
+        <div class="cor"><i style="background:#0E8A45"></i><div><b>Aberto</b><code>#0E8A45</code> · edital publicado</div></div>
+        <div class="cor"><i style="background:#D93A40"></i><div><b>Encerra</b><code>#D93A40</code> · prazo acabando</div></div>
+      </div>
+      <div class="tipo">
+        <div><span class="amostra" style="font-family:var(--f-d);font-weight:800;text-transform:uppercase">Edital <span class="g">saiu</span></span><span><b>Barlow Condensed 800</b> em caixa alta nos títulos. O grifo amarelo marca a palavra-chave.</span></div>
+        <div><span class="amostra mono" style="font-size:1.5rem">03/11 a 02/12</span><span><b>JetBrains Mono</b> em datas, valores e etiquetas. <b>Figtree</b> no texto corrido.</span></div>
+        <div><b>Tom de voz</b><span>Direto, de concurseiro para concurseiro. Bate na dor real, sem exagero: nada de "vai salvar sua vida". Promete tranquilidade com datas, não aprovação. Emojis nas redes, nunca na interface do app além dos avisos.</span><span style="color:var(--azul);font-weight:800">"Nunca mais se preocupe em perder uma data."</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="prompt" class="prompt">
+    <div class="wrap">
+      <div class="sec-cab">
+        <span class="rotulo">Prompt da plataforma</span>
+        <h2>Prompt para construir o Aviso Concurso no Claude</h2>
+        <p>Atualizado com o app, a agenda, as matérias em comum, o teste de 3 dias e o WhatsApp só no Aprovado.</p>
+      </div>
+      <pre id="txt-prompt">Você vai construir o **Aviso Concurso**: app de celular (iOS e Android) + site (avisoconcurso.com.br) + painel admin. Avisa concurseiros sobre editais, prazos e provas e organiza a agenda de vários concursos. Tudo em **português do Brasil**, datas DD/MM/AAAA, valores R$ 8.500,00.
+
+## 1. O produto
+O usuário monta um perfil (escolaridade, áreas, cargos, UFs, salário mínimo, bancas, palavras-chave). Todo dia coletamos diários oficiais e sites das bancas, identificamos atos de concurso, extraímos os campos com IA e mandamos **notificação push** com resumo e link da fonte oficial. O usuário acompanha vários concursos ao mesmo tempo numa agenda e vê as matérias em comum entre eles. Não damos aula nem vendemos material.
+
+## 2. Fora do escopo
+- Inscrição pelo usuário, aulas, questões, cursos.
+- Aviso sem ato oficial com link.
+- Conteúdo político.
+
+## 3. Coleta
+1. **DOU via INLABS** (Imprensa Nacional): job diário às 6h, XML das Seções 1, 2 e 3. Confirmar formato e termos de uso; não inventar campos.
+2. **Bancas** (Cebraspe, FGV, FCC, Vunesp, Cesgranrio, IBFC, AOCP, Quadrix, Idecan): coletor por banca, a cada hora, detecção por hash, respeitando robots.txt.
+3. **Querido Diário**: API de diários municipais com os termos "concurso público", "edital de abertura", "processo seletivo".
+4. Guardar sempre o original no Storage com URL e data.
+5. **Classificador**: previsto, autorizacao, edital_abertura, retificacao, homologacao, resultado, convocacao, outro.
+6. **Extrator com IA** (Claude Haiku 5.5 em todos; Claude Sonnet 5.5 quando a confiança for baixa): JSON com orgao, esfera, uf, cidade, banca, cargos[] (nome, escolaridade, vagas, cadastro_reserva, salario, jornada, requisitos), taxa, isencao_inicio/fim, inscricao_inicio/fim, data_prova, etapas[], url_oficial, e **materias[]** por cargo (nome padronizado, numero_questoes quando houver), cada campo com item e página de origem. Validar com schema. Confiança baixa → fila de revisão no admin.
+7. **Dedup**: órgão + número do edital + ano. Retificação liga ao edital original e gera diff de campos; o diff atualiza as datas na agenda de quem acompanha.
+8. **Matérias padronizadas**: tabela de disciplinas canônicas ("Língua Portuguesa", "Raciocínio Lógico", "Direito Constitucional"...) com sinônimos, para cruzar editais diferentes.
+
+## 4. App (React Native com Expo)
+Abas: **Hoje** (contagem regressiva da próxima prova, avisos do dia), **Agenda** (semana + lista de compromissos de todos os concursos acompanhados, uma cor por concurso, filtro por concurso), **Matérias** (matérias em comum: ordenar por número de concursos em que cai, depois por questões somadas; ligar/desligar concursos), **Concursos** (etapas previsto → autorizado → banca → edital → prova → resultado, checklist editável por concurso: isenção, inscrição, boleto, local de prova, documento, caneta; botão Pergunte ao edital), **Ajustes** (push, WhatsApp, e-mail, antecedência do lembrete 1/2/3/5 dias, horário silencioso, perfil).
+- Pedir permissão de notificação depois do primeiro concurso salvo, não na abertura.
+- Push via Expo Notifications (APNs + FCM). Deep link de cada notificação para a tela do concurso.
+
+## 5. Avisos
+- Tipos: edital publicado, autorizado (Aprovado), isenção acabando, inscrição acabando, errata (o que mudou), local de prova, prova amanhã, gabarito, resultado, convocação.
+- **Push para tudo.** **WhatsApp** (Business Cloud API, templates de utilidade aprovados) só no plano Aprovado e só para "isenção acaba amanhã" e "inscrição acaba amanhã", máximo 10 por usuário por mês. E-mail: resumo semanal. Registrar canal, envio e custo de cada aviso.
+- Meta: notificação em até 1 hora depois da publicação.
+
+## 6. Pergunte ao edital (plano Aprovado)
+Chat que responde só com base no PDF do edital, citando item e página; se não estiver no edital, diz que não encontrou. Claude Haiku 5.5 com prompt caching do edital. Limite de 30 perguntas por mês. Registrar tokens por pergunta.
+
+## 7. Planos (sem plano grátis; checar no backend)
+| Plano | Preço | Inclui |
+|---|---|---|
+| Aviso | R$ 9,90/mês ou R$ 99/ano | perfis ilimitados, push na hora, lembretes de isenção e inscrição, erratas, agenda, matérias em comum, checklist |
+| Aprovado | R$ 19,90/mês ou R$ 199/ano | + WhatsApp para prazos (10/mês), Pergunte ao edital (30/mês), radar de previstos e autorizados, convocação nominal no DOU |
+- **Teste de 3 dias** com o plano escolhido, cartão ou Pix automático cadastrado; cobrança no 4º dia; push 1 dia antes da cobrança. Sem teste: o app mostra só a tela de planos.
+- Cobrança: Asaas, Mercado Pago ou Stripe. Avaliar vender pelo site para evitar a comissão das lojas, respeitando as regras da Apple e do Google.
+
+## 8. Modelo de dados (mínimo)
+users (plano, trial_ends_at, push_token, whatsapp, wa_enviados_mes), profiles, sources, raw_documents, acts, contests, contest_roles, contest_dates (tipo, inicio, fim), contest_subjects (subject_id, questoes), subjects (nome, sinonimos[]), contest_versions (diff_json), extractions (campos_json, confianca, revisado_por), follows (user_id, contest_id, cor), checklist_items (follow_id, texto, feito), alerts (user_id, contest_id, tipo, canal, enviado_em, custo), questions (user_id, contest_id, pergunta, resposta, tokens_in, tokens_out).
+
+## 9. Stack
+Expo (React Native) + TypeScript no app; Next.js + Tailwind no site e no admin; Supabase (Postgres, Auth, Storage); jobs agendados (Supabase cron ou worker Node); API do Claude para extração e chat; Vercel. Proponha antes se preferir outra.
+
+## 10. Identidade visual
+Azul caneta #1F3FD1, marca-texto #FFE14D (grifo; nunca texto amarelo em fundo claro), tinta #0F1530, papel #F5F6F1, cards brancos, linha #E1E3EA, texto secundário #4F566E, aberto #0E8A45, encerra #D93A40; cores por concurso #1F3FD1, #7A3FD1, #0B7F86. Barlow Condensed 800 em caixa alta nos títulos, Figtree na interface, JetBrains Mono em datas e valores. Logo: bolinha de gabarito azul com "!" branco e ponto amarelo. Tom direto, sem prometer aprovação, sem política. Toque ≥ 44px, contraste AA.
+
+## 11. Ordem de entrega
+1. Coletor do DOU + classificador + extrator + fila de revisão.
+2. Login, perfil, teste de 3 dias e cobrança.
+3. App: Hoje, Concursos e push.
+4. Agenda, checklist e lembretes de prazo.
+5. Matérias em comum.
+6. Coletores das bancas e Querido Diário.
+7. Plano Aprovado: WhatsApp, Pergunte ao edital, radar.
+8. Landing page.
+
+## 12. Critérios de pronto
+- Rodar o coletor duas vezes não duplica concursos nem avisos.
+- Toda notificação tem url_oficial que abre.
+- Uma errata muda a data na agenda de quem acompanha e manda push só para essas pessoas.
+- Matérias em comum batem com o conteúdo programático de 3 editais conferidos à mão.
+- WhatsApp nunca passa de 10 por usuário por mês e nunca sai para o plano Aviso.
+- 20 editais reais conferidos à mão batem com a extração em vagas, salário e datas.</pre>
+      <div class="acoes"><button class="copiar" data-alvo="txt-prompt" type="button">Copiar prompt</button></div>
+    </div>
+  </section>
+
+  <section id="pendencias">
+    <div class="wrap">
+      <div class="sec-cab">
+        <span class="rotulo">Pendências</span>
+        <h2>Antes de publicar</h2>
+      </div>
+      <ul class="lista">
+        <li><span><b>Vídeo:</b> a versão da página é comprimida (12 MB). Para subir no anúncio, use o arquivo em alta (42 MB) enviado na conversa.</span></li>
+        <li><span><b>Postagem hoje, antes do app existir:</b> os posts dizem "3 dias grátis · link na bio". Enquanto o app não estiver nas lojas, o link da bio leva para a landing page, que pede o contato e manda o link do app no lançamento.</span></li>
+        <li><span><b>Marca e nome:</b> existe um app Android chamado "Alerta Concurso". Pesquisar "Aviso Concurso" no INPI e nas lojas antes de investir em anúncio.</span></li>
+        <li><span><b>Domínio e perfil:</b> conferir se avisoconcurso.com.br e @avisoconcurso estão livres.</span></li>
+        <li><span><b>Fatos de 2027:</b> conferir cada slide do carrossel "2027 no radar" no DOU e no site do MGI no dia de postar.</span></li>
+        <li><span><b>WhatsApp:</b> verificar a empresa na Meta, aprovar os modelos de mensagem como "utilidade" e confirmar o preço por mensagem no Brasil.</span></li>
+        <li><span><b>Lojas:</b> criar as contas Apple e Google e confirmar as regras de assinatura vendida fora do app.</span></li>
+        <li><span><b>LGPD:</b> política de privacidade, consentimento para WhatsApp e autorização explícita para buscar o nome do usuário em convocações.</span></li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<footer><div class="wrap">Aviso Concurso · briefing de lançamento, versão 2 · outubro de 2026. Preços de WhatsApp: Hyperleap, Message Central e Monty Mobile (fontes divergem; confirmar com a Meta). Preços de IA: tabela da Anthropic.</div></footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script>
+document.querySelectorAll('.copiar').forEach(function (b) {
+  b.addEventListener('click', function () {
+    var el = document.getElementById(b.dataset.alvo); var txt = el.textContent; var orig = b.textContent;
+    var ok = function () { b.textContent = 'Copiado'; setTimeout(function () { b.textContent = orig; }, 1600); };
+    var sel = function () { var r = document.createRange(); r.selectNodeContents(el); var s = getSelection(); s.removeAllRanges(); s.addRange(r); b.textContent = 'Selecionado: Ctrl+C'; setTimeout(function () { b.textContent = orig; }, 2500); };
+    try { navigator.clipboard.writeText(txt).then(ok, sel); } catch (e) { sel(); }
+  });
+});
+
+var KIT = [["aviso-concurso/LEGENDAS-E-BIO.txt", "kit/legendas-e-bio.txt"], ["aviso-concurso/1-posts/01-lancamento.png", "img/post-01-lancamento.png"], ["aviso-concurso/1-posts/02-nao-espera.png", "img/post-02-nao-espera.png"], ["aviso-concurso/1-posts/03-isencao.png", "img/post-05-isencao.png"], ["aviso-concurso/1-posts/04-agenda.png", "img/post-03-agenda.png"], ["aviso-concurso/1-posts/06-perdeu.png", "img/post-04-perdeu.png"], ["aviso-concurso/1-posts/08-golpe.png", "img/post-06-golpe.png"], ["aviso-concurso/1-posts/09-retificacao.png", "img/post-07-retificacao.png"], ["aviso-concurso/1-posts/10-planos.png", "img/post-08-planos.png"], ["aviso-concurso/1-posts/12-lista.png", "img/post-09-lista.png"], ["aviso-concurso/2-carrosseis/05-como-funciona/1.png", "img/c1-01.png"], ["aviso-concurso/2-carrosseis/05-como-funciona/2.png", "img/c1-02.png"], ["aviso-concurso/2-carrosseis/05-como-funciona/3.png", "img/c1-03.png"], ["aviso-concurso/2-carrosseis/05-como-funciona/4.png", "img/c1-04.png"], ["aviso-concurso/2-carrosseis/05-como-funciona/5.png", "img/c1-05.png"], ["aviso-concurso/2-carrosseis/05-como-funciona/6.png", "img/c1-06.png"], ["aviso-concurso/2-carrosseis/07-2027-no-radar/1.png", "img/c2-01.png"], ["aviso-concurso/2-carrosseis/07-2027-no-radar/2.png", "img/c2-02.png"], ["aviso-concurso/2-carrosseis/07-2027-no-radar/3.png", "img/c2-03.png"], ["aviso-concurso/2-carrosseis/07-2027-no-radar/4.png", "img/c2-04.png"], ["aviso-concurso/2-carrosseis/07-2027-no-radar/5.png", "img/c2-05.png"], ["aviso-concurso/2-carrosseis/07-2027-no-radar/6.png", "img/c2-06.png"], ["aviso-concurso/2-carrosseis/11-leia-isto-primeiro/1.png", "img/c3-01.png"], ["aviso-concurso/2-carrosseis/11-leia-isto-primeiro/2.png", "img/c3-02.png"], ["aviso-concurso/2-carrosseis/11-leia-isto-primeiro/3.png", "img/c3-03.png"], ["aviso-concurso/2-carrosseis/11-leia-isto-primeiro/4.png", "img/c3-04.png"], ["aviso-concurso/2-carrosseis/11-leia-isto-primeiro/5.png", "img/c3-05.png"], ["aviso-concurso/2-carrosseis/11-leia-isto-primeiro/6.png", "img/c3-06.png"], ["aviso-concurso/2-carrosseis/11-leia-isto-primeiro/7.png", "img/c3-07.png"], ["aviso-concurso/3-stories/story-01-em-breve.png", "img/story-01-em-breve.png"], ["aviso-concurso/3-stories/story-02-enquete.png", "img/story-02-enquete.png"], ["aviso-concurso/3-stories/story-03-caixinha.png", "img/story-03-caixinha.png"], ["aviso-concurso/3-stories/story-04-bastidores.png", "img/story-04-bastidores.png"], ["aviso-concurso/3-stories/story-05-link.png", "img/story-05-link.png"], ["aviso-concurso/4-destaques/destaque-sobre.png", "img/destaque-sobre.png"], ["aviso-concurso/4-destaques/destaque-como.png", "img/destaque-como.png"], ["aviso-concurso/4-destaques/destaque-planos.png", "img/destaque-planos.png"], ["aviso-concurso/4-destaques/destaque-editais.png", "img/destaque-editais.png"], ["aviso-concurso/5-perfil/foto-de-perfil.png", "img/perfil.png"], ["aviso-concurso/6-video/aviso-concurso-anuncio.mp4", "video/anuncio-locucao.mp4"]];
+(async function () {
+  var botoes = document.querySelectorAll('[data-baixar]');
+  var estado = document.getElementById('estado-baixar');
+  var downloads = null;
+  try { downloads = window.claude && window.claude.use ? await window.claude.use('downloads') : null; } catch (e) { downloads = null; }
+  if (!downloads) { botoes.forEach(function (b) { b.hidden = true; }); if (estado) estado.textContent = 'Download indisponível aqui. Toque e segure cada imagem para salvar.'; return; }
+  botoes.forEach(function (b) {
+    b.addEventListener('click', async function () {
+      var orig = b.textContent; b.disabled = true; b.textContent = 'Preparando...';
+      try {
+        var blob;
+        if (b.dataset.baixar === 'kit') {
+          if (!window.JSZip) throw new Error('jszip');
+          var zip = new JSZip();
+          for (var i = 0; i < KIT.length; i++) {
+            b.textContent = 'Preparando ' + (i + 1) + '/' + KIT.length;
+            var rr = await fetch(KIT[i][1]); if (!rr.ok) throw new Error('fetch');
+            zip.file(KIT[i][0], await rr.blob());
+          }
+          blob = await zip.generateAsync({ type: 'blob' });
+        } else {
+          var r = await fetch(b.dataset.baixar); if (!r.ok) throw new Error('fetch');
+          blob = await r.blob();
+        }
+        await downloads.save({ filename: b.dataset.nome, data: blob });
+        b.textContent = 'Baixado';
+      } catch (e) {
+        b.textContent = orig;
+        if (estado && !(e && e.code === 'declined')) estado.textContent = 'Não deu para baixar agora. Tente de novo ou salve cada imagem.';
+      }
+      b.disabled = false; setTimeout(function () { if (b.textContent === 'Baixado') b.textContent = orig; }, 2500);
+    });
+  });
+})();
+</script>
