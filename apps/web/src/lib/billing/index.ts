@@ -18,7 +18,13 @@ export interface BillingProvider {
     metodo: "cartao" | "pix_automatico";
     valorCentavos: number;
     primeiraCobranca: Date;
-  }): Promise<{ customerId: string; subscriptionId: string; checkoutUrl: string | null }>;
+  }): Promise<{
+    customerId: string;
+    subscriptionId: string;
+    checkoutUrl: string | null;
+    /** true quando a 1ª cobrança já foi confirmada na hora (só o mock). Senão, o acesso pago espera o webhook. */
+    confirmadoNaHora?: boolean;
+  }>;
   atualizarValor(p: { subscriptionId: string; valorCentavos: number; ciclo: Ciclo }): Promise<void>;
   cancelarAssinatura(subscriptionId: string): Promise<void>;
 }

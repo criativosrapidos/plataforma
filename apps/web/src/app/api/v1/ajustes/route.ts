@@ -4,7 +4,7 @@ import { ajustesDoUsuario, atualizarAjustes } from "@/lib/repo/usuarios";
 
 export const GET = rota(async () => ok(await ajustesDoUsuario((await exigirUsuario()).id)));
 
-const hora = z.string().regex(/^\d{2}:\d{2}$/).nullable();
+const hora = z.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/, "Use HH:MM, ex.: 22:00").nullable();
 const Schema = z.object({
   push_on: z.boolean().optional(),
   whatsapp_on: z.boolean().optional(),

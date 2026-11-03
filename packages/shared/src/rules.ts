@@ -135,15 +135,19 @@ export function lembretesDoDia(
   antecedencia: number,
 ): { tipo: "isencao_acabando" | "inscricao_acabando" | "prova_amanha"; diasAteFim: number }[] {
   const out: { tipo: "isencao_acabando" | "inscricao_acabando" | "prova_amanha"; diasAteFim: number }[] = [];
-  const alvo = d.fim ?? d.inicio;
-  if (!alvo) return out;
-  const faltam = diasEntre(hoje, alvo);
   if (d.tipo === "isencao" || d.tipo === "inscricao") {
+    // "Acabando" só faz sentido com data de fim; só com início, o prazo ainda vai abrir.
+    if (!d.fim) return out;
+    const faltam = diasEntre(hoje, d.fim);
     if (faltam === antecedencia || faltam === 1) {
       out.push({ tipo: d.tipo === "isencao" ? "isencao_acabando" : "inscricao_acabando", diasAteFim: faltam });
     }
   }
-  if (d.tipo === "prova" && faltam === 1) out.push({ tipo: "prova_amanha", diasAteFim: 1 });
+  if (d.tipo === "prova") {
+    // Prova de vários dias: o lembrete é na véspera do PRIMEIRO dia.
+    const primeiroDia = d.inicio ?? d.fim;
+    if (primeiroDia && diasEntre(hoje, primeiroDia) === 1) out.push({ tipo: "prova_amanha", diasAteFim: 1 });
+  }
   return out;
 }
 

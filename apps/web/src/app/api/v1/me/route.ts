@@ -1,8 +1,8 @@
 import { z } from "zod";
 import { sql } from "@/lib/db";
-import { exigirUsuario, lerJson, ok, rota } from "@/lib/api";
+import { ErroApi, exigirUsuario, lerJson, ok, rota } from "@/lib/api";
+import { assinaturaAtual, cancelarNoProvedor, travarUsuario } from "@/lib/repo/assinaturas";
 import { ajustesDoUsuario, usoDoMes, usuarioPorId } from "@/lib/repo/usuarios";
-import { assinaturaAtual } from "@/lib/repo/assinaturas";
 import { calcularAcesso, PLANO_INFO, type MeResponse } from "@aviso/shared";
 import { encerrarSessao } from "@/lib/auth/session";
 
@@ -56,16 +56,33 @@ export const PATCH = rota(async (req: Request) => {
   return ok(await usuarioPorId(s.id));
 });
 
-/** LGPD: excluir conta. Anonimiza os dados pessoais e encerra sessões e assinatura. */
+/**
+ * LGPD: excluir conta. Primeiro cancela a cobrança no provedor (senão a pessoa seguiria sendo cobrada
+ * sem conseguir entrar); depois anonimiza os dados pessoais e encerra sessões e assinatura.
+ * O hash do e-mail em testes_usados continua (prevenção de fraude do teste grátis).
+ */
 export const DELETE = rota(async () => {
   const s = await exigirUsuario();
   await sql.begin(async (tx) => {
-    await tx`update subscriptions set status = 'cancelada', canceled_at = now() where user_id = ${s.id} and status in ('trial','ativa','inadimplente')`;
+    await travarUsuario(tx, s.id);
+    const vivas = await tx<{ id: string; provider: string; provider_subscription_id: string | null }[]>`
+      select id, provider, provider_subscription_id from subscriptions where user_id = ${s.id} and status in ('trial','ativa','inadimplente')`;
+    for (const v of vivas) {
+      try {
+        await cancelarNoProvedor(v);
+      } catch (e) {
+        console.error("[me] falha ao cancelar no provedor", e);
+        throw new ErroApi(502, "cobranca_indisponivel", "Não conseguimos cancelar a cobrança agora. Tente de novo em alguns minutos; nada foi apagado.");
+      }
+    }
+    await tx`update subscriptions set status = 'cancelada', cancel_at_period_end = true, canceled_at = now(), updated_at = now()
+             where user_id = ${s.id} and status in ('trial','ativa','inadimplente')`;
     await tx`delete from devices where user_id = ${s.id}`;
     await tx`delete from profiles where user_id = ${s.id}`;
     await tx`update sessions set revoked_at = now() where user_id = ${s.id} and revoked_at is null`;
     await tx`update users set nome = 'Conta excluída', email = ${`excluido+${s.id}@avisoconcurso.invalid`}, telefone = null,
              nome_busca = null, whatsapp_optin = false, busca_nominal_optin = false, deleted_at = now() where id = ${s.id}`;
+    await tx`insert into audit_log (actor_id, acao, entidade, entidade_id) values (${s.id}, 'conta_excluida', 'user', ${s.id})`;
   });
   await encerrarSessao(s.sessaoId);
   return ok({ ok: true });

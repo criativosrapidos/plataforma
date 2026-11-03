@@ -32,6 +32,7 @@ export function GerenciarAssinatura({ assinatura, viva, liberado, podeTestar }: 
   const troca = useEnvio();
   const cancelar = useEnvio();
   const nova = useEnvio();
+  const reativacao = useEnvio();
 
   const mudou = !!assinatura && (plano !== assinatura.plano || ciclo !== assinatura.ciclo);
   const ate = assinatura ? (assinatura.status === "trial" ? assinatura.trial_ends_at : (assinatura.current_period_end ?? assinatura.trial_ends_at)) : null;
@@ -50,6 +51,19 @@ export function GerenciarAssinatura({ assinatura, viva, liberado, podeTestar }: 
     if (r) {
       setConfirmarCancelar(false);
       setSucesso(`Assinatura cancelada. Você continua usando até ${dataHoraBR(r.current_period_end ?? r.trial_ends_at)} e não será cobrado de novo.`);
+      router.refresh();
+    }
+  }
+
+  async function reativar() {
+    setSucesso(null);
+    const r = await reativacao.enviar(() => api<AssinaturaDTO>("/api/v1/assinatura/reativar", { corpo: {} }));
+    if (r) {
+      setSucesso(
+        r.status === "trial"
+          ? `Cancelamento desfeito. Seu teste continua até ${dataBR(r.trial_ends_at)}.`
+          : `Cancelamento desfeito. A próxima cobrança é em ${dataBR(r.current_period_end)}; nada é cobrado agora.`,
+      );
       router.refresh();
     }
   }
@@ -144,6 +158,17 @@ export function GerenciarAssinatura({ assinatura, viva, liberado, podeTestar }: 
             {cancelar.erro ? <Aviso tom="erro" className="mt-4">{cancelar.erro}</Aviso> : null}
           </Dialogo>
         </>
+      ) : liberado && assinatura?.status === "cancelada" ? (
+        <Painel
+          id="reativar"
+          titulo="Mudou de ideia?"
+          descricao={`Sua assinatura está cancelada, mas vale até ${dataHoraBR(ate)}. Reative para continuar depois dessa data: nada é cobrado agora.`}
+        >
+          {reativacao.erro ? <Aviso tom="erro" className="mb-4">{reativacao.erro}</Aviso> : null}
+          <Botao onClick={reativar} carregando={reativacao.enviando}>
+            Desfazer cancelamento
+          </Botao>
+        </Painel>
       ) : liberado ? (
         <Painel titulo="Quer continuar depois?" descricao={`Quando o acesso atual terminar (${dataHoraBR(ate)}), você pode assinar de novo aqui. Seus perfis e concursos continuam salvos.`} />
       ) : (

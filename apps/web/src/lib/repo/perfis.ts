@@ -1,6 +1,6 @@
 import "server-only";
 import { sql } from "@/lib/db";
-import { casarPerfil, type ConcursoResumoDTO, type PerfilDTO } from "@aviso/shared";
+import { casarPerfil, STATUS_RADAR, type ConcursoResumoDTO, type PerfilDTO } from "@aviso/shared";
 import { resumosPorIds } from "./concursos";
 
 export async function listarPerfis(userId: string): Promise<PerfilDTO[]> {
@@ -44,12 +44,12 @@ export async function concursosParaMatch(contestIds?: string[]) {
 }
 
 /** Concursos abertos/recentes que casam com algum perfil ativo do usuário e que ele ainda não acompanha. */
-export async function novidadesParaUsuario(userId: string, limite = 10): Promise<ConcursoResumoDTO[]> {
+export async function novidadesParaUsuario(userId: string, limite = 10, comRadar = false): Promise<ConcursoResumoDTO[]> {
   const perfis = (await listarPerfis(userId)).filter((p) => p.ativo);
   if (!perfis.length) return [];
   const candidatos = await sql<{ id: string }[]>`
     select c.id from contests c
-    where c.publicado and c.status in ('edital_aberto','autorizado','previsto','banca_definida')
+    where c.publicado and c.status = any(${comRadar ? ["edital_aberto", ...STATUS_RADAR] : ["edital_aberto"]}::text[])
       and not exists (select 1 from follows f where f.contest_id = c.id and f.user_id = ${userId})
     order by coalesce(c.publicado_em, c.created_at::date) desc limit 200`;
   const dados = await concursosParaMatch(candidatos.map((c) => c.id));

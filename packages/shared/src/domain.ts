@@ -112,6 +112,9 @@ export const CONTEST_STATUS_LABEL: Record<ContestStatus, string> = {
   homologado: "Homologado",
   cancelado: "Cancelado",
 };
+/** Status do "radar" (previsto/autorizado/banca definida): recurso do plano Aprovado no app. */
+export const STATUS_RADAR: ContestStatus[] = ["previsto", "autorizado", "banca_definida"];
+
 /** Etapas exibidas na trilha do app: previsto → autorizado → banca → edital → prova → resultado. */
 export const ETAPAS_TRILHA: { status: ContestStatus[]; label: string }[] = [
   { status: ["previsto"], label: "Previsto" },

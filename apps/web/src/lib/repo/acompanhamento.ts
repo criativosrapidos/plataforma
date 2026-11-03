@@ -17,6 +17,8 @@ export async function acompanhar(userId: string, contestId: string, roleId?: str
   const existente = await acompanhamentoDe(userId, contestId);
   if (existente) return existente;
   await sql.begin(async (tx) => {
+    // Serializa por pessoa: dois "acompanhar" ao mesmo tempo não pegam a mesma cor.
+    await tx`select pg_advisory_xact_lock(hashtext(${"follows:" + userId}))`;
     const usadas = (await tx<{ cor: string }[]>`select cor from follows where user_id = ${userId}`).map((r) => r.cor);
     const cor = CONTEST_COLORS.find((c) => !usadas.includes(c)) ?? CONTEST_COLORS[usadas.length % CONTEST_COLORS.length];
     const [f] = await tx<{ id: string }[]>`
@@ -53,7 +55,7 @@ export async function listarAcompanhando(userId: string): Promise<AcompanhandoIt
     select f.id, f.contest_id, f.cor, f.role_id, f.nas_materias, f.created_at,
       coalesce((select json_agg(json_build_object('id', i.id, 'texto', i.texto, 'feito', i.feito, 'ordem', i.ordem) order by i.ordem, i.created_at)
                 from checklist_items i where i.follow_id = f.id), '[]') as checklist
-    from follows f join contests c on c.id = f.contest_id
+    from follows f join contests c on c.id = f.contest_id and c.publicado
     where f.user_id = ${userId} order by f.created_at`;
   const ids = follows.map((f) => f.contest_id);
   const [resumos, datas] = await Promise.all([resumosPorIds(ids, userId), datasDoConcurso(ids)]);

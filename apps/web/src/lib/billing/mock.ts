@@ -6,7 +6,7 @@ import type { BillingProvider } from "./index";
 export const mockProvider: BillingProvider = {
   nome: "mock",
   async criarAssinatura() {
-    return { customerId: `mock_cus_${randomUUID()}`, subscriptionId: `mock_sub_${randomUUID()}`, checkoutUrl: null };
+    return { customerId: `mock_cus_${randomUUID()}`, subscriptionId: `mock_sub_${randomUUID()}`, checkoutUrl: null, confirmadoNaHora: true };
   },
   async atualizarValor() {},
   async cancelarAssinatura() {},

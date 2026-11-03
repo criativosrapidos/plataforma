@@ -13,13 +13,14 @@ Cada regra tem um código (RN-xx) e aponta onde está implementada. A fonte úni
 ## Conta e acesso
 
 - **RN-10 · Cadastro.** Nome, e-mail, senha (mín. 8) e aceite dos termos. E-mail único.
+- **RN-10a · Tentativas.** Login: até 10 erros por e-mail e 30 por IP a cada 15 min (depois, 429); a resposta não revela se o e-mail tem conta. Cadastro: 10 por IP por hora. Formulário da landing: 20 por IP por hora.
 - **RN-11 · Sem plano grátis.** Sem teste ativo nem assinatura em dia, o app mostra só a tela de planos. A API responde `402 assinatura_necessaria`. (`calcularAcesso`, `exigirAcesso`)
-- **RN-12 · Teste de 3 dias.** Com o plano escolhido completo, exigindo cartão ou Pix automático cadastrado. Um teste por pessoa; quem já testou assina direto. (`iniciarAssinatura`, `jaUsouTeste`)
+- **RN-12 · Teste de 3 dias.** Com o plano escolhido completo, exigindo cartão ou Pix automático cadastrado. **Um teste por pessoa e por e-mail**, mesmo depois de excluir a conta (guardamos só o hash do e-mail em `testes_usados`). Quem já testou assina direto: **o acesso só libera quando o provedor confirma o 1º pagamento** (até lá, status `inadimplente` sem acesso). (`assinar`, `jaUsouTeste`)
 - **RN-13 · Cobrança no 4º dia.** Se não cancelar, a primeira cobrança acontece no fim do teste. Push e e-mail **1 dia antes** da cobrança. (job `cobrancas`, `subscriptions.aviso_cobranca_enviado_em`)
-- **RN-14 · Cancelamento.** Cancelar a qualquer momento; continua usando até o fim do período pago (ou do teste). Sem multa.
+- **RN-14 · Cancelamento.** Cancelar a qualquer momento (cancela também a cobrança recorrente no provedor); continua usando até o fim do período pago (ou do teste). Sem multa. Enquanto o período vale, dá para **desfazer o cancelamento** (`POST /assinatura/reativar`), sem cobrança imediata: a próxima cobrança fica para o fim do período.
 - **RN-15 · Inadimplência.** Cobrança falhou → status `inadimplente`, com **3 dias de tolerância** após o vencimento; depois, bloqueio (só tela de planos). (`DIAS_TOLERANCIA_INADIMPLENCIA`)
 - **RN-16 · Troca de plano.** Upgrade e downgrade a qualquer momento; o novo valor vale a partir da próxima cobrança.
-- **RN-17 · Uma assinatura viva por pessoa.** (índice único `subscriptions_uma_viva`)
+- **RN-17 · Uma assinatura viva por pessoa.** (índice único `subscriptions_uma_viva`). Checkout, cancelamento, reativação e cortesia são serializados por pessoa (duplo clique não cria duas cobranças). Quem já tem acesso em dia troca de plano em vez de assinar de novo; assinatura antiga sem acesso é cancelada no provedor antes da nova.
 - **RN-18 · Venda pelo site.** A assinatura é vendida no site (Pix/cartão) para evitar a comissão das lojas, respeitando as regras vigentes da Apple e do Google.
 
 ## Planos
@@ -33,7 +34,8 @@ Cada regra tem um código (RN-xx) e aponta onde está implementada. A fonte úni
 | Radar de previstos e autorizados | — | ✔ |
 | Convocação com o nome no Diário Oficial | — | ✔ |
 
-- **RN-20 · Recursos por plano** são checados no backend (`temRecurso`). Limites mensais contam pelo mês civil no fuso de Brasília e renovam no dia 1º. (`usoDoMes`)
+- **RN-20 · Recursos por plano** são checados no backend (`temRecurso`). Limites mensais contam pelo mês civil no fuso de Brasília e renovam no dia 1º, com reserva atômica (pedidos simultâneos não passam do limite). (`usoDoMes`)
+- **RN-21 · Radar.** No app, previstos/autorizados/banca definida só aparecem (busca, novidades do Hoje) e só podem ser acompanhados no plano Aprovado. No site público (SEO) eles aparecem, com chamada para o plano.
 
 ## Perfil de busca e casamento
 
@@ -48,9 +50,9 @@ Cada regra tem um código (RN-xx) e aponta onde está implementada. A fonte úni
 
 ## Acompanhar, agenda, matérias e checklist
 
-- **RN-40 · Acompanhar** um concurso exige plano ativo. Cada concurso ganha uma cor (azul, roxo, petróleo, laranja, verde, vinho, cinza, nessa ordem) e um checklist padrão: pedir isenção, fazer inscrição, pagar boleto, conferir local de prova, documento com foto, caneta preta de tubo transparente. Itens podem ser marcados, editados, criados e apagados.
+- **RN-40 · Acompanhar** um concurso exige plano ativo. Concurso despublicado pela equipe sai da agenda de quem acompanha, e a pessoa sempre consegue deixar de acompanhar. Cada concurso ganha uma cor (azul, roxo, petróleo, laranja, verde, vinho, cinza, nessa ordem) e um checklist padrão: pedir isenção, fazer inscrição, pagar boleto, conferir local de prova, documento com foto, caneta preta de tubo transparente. Itens podem ser marcados, editados, criados e apagados.
 - **RN-41 · Agenda** junta isenção, inscrição, boleto, local de prova, prova, gabarito, recurso e resultado de todos os concursos acompanhados, filtrável por concurso.
-- **RN-42 · Matérias em comum** (`materiasEmComum`): ordena pelo número de concursos em que a matéria cai e, no empate, pela soma de questões. A pessoa liga/desliga concursos no cálculo. Se escolheu um cargo, usa as matérias desse cargo.
+- **RN-42 · Matérias em comum** (`materiasEmComum`): ordena pelo número de concursos em que a matéria cai e, no empate, pela soma de questões. A pessoa liga/desliga concursos no cálculo. Cada edital conta uma vez por matéria: sem cargo escolhido, vale o conteúdo geral do edital; com cargo escolhido, o do cargo.
 - **RN-43 · Matérias canônicas.** Nomes diferentes nos editais ("Português", "Língua Portuguesa") viram a mesma matéria pela tabela de sinônimos. Matéria nova sem correspondência vai para revisão.
 
 ## Avisos
@@ -93,7 +95,7 @@ Cada regra tem um código (RN-xx) e aponta onde está implementada. A fonte úni
 
 - **RN-80** WhatsApp só com consentimento explícito (data registrada em `whatsapp_optin_em`).
 - **RN-81** Busca do nome em convocações só com autorização explícita e nome informado pela pessoa.
-- **RN-82** A pessoa pode baixar todos os seus dados e excluir a conta (anonimização, fim das sessões, cancelamento da assinatura).
+- **RN-82** A pessoa pode baixar todos os seus dados e excluir a conta: primeiro cancelamos a cobrança no provedor (se falhar, nada é apagado), depois anonimização e fim das sessões. Fica só o hash do e-mail, para não liberar outro teste grátis.
 - **RN-83** Ações sensíveis da equipe ficam no `audit_log`.
 
 ## Papéis da equipe

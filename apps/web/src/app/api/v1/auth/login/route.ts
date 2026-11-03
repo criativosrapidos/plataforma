@@ -1,24 +1,21 @@
 import { z } from "zod";
-import { sql } from "@/lib/db";
-import { conferirSenha } from "@/lib/auth/password";
+import { autenticar } from "@/lib/auth/login";
 import { criarSessao, definirCookieSessao } from "@/lib/auth/session";
+import { ipDaRequisicao } from "@/lib/limite";
 import { usuarioPorId } from "@/lib/repo/usuarios";
 import { ErroApi, lerJson, ok, rota } from "@/lib/api";
 
 const Schema = z.object({
   email: z.string().trim().toLowerCase().email("E-mail inválido"),
-  senha: z.string().min(1, "Informe a senha"),
+  senha: z.string().min(1, "Informe a senha").max(200),
   cliente: z.enum(["web", "app"]).default("app"),
 });
 
 export const POST = rota(async (req: Request) => {
   const d = await lerJson(req, Schema);
-  const [u] = await sql<{ id: string; senha_hash: string }[]>`
-    select id, senha_hash from users where email = ${d.email} and deleted_at is null`;
-  if (!u || !(await conferirSenha(d.senha, u.senha_hash))) {
-    throw new ErroApi(401, "credenciais_invalidas", "E-mail ou senha incorretos.");
-  }
-  const { token, expira } = await criarSessao(u.id, d.cliente, req.headers.get("user-agent"));
+  const r = await autenticar(d.email, d.senha, await ipDaRequisicao());
+  if (!r.ok) throw new ErroApi(r.codigo === "muitas_tentativas" ? 429 : 401, r.codigo, r.mensagem);
+  const { token, expira } = await criarSessao(r.id, d.cliente, req.headers.get("user-agent"));
   if (d.cliente === "web") await definirCookieSessao(token, expira);
-  return ok({ token, usuario: await usuarioPorId(u.id) });
+  return ok({ token, usuario: await usuarioPorId(r.id) });
 });

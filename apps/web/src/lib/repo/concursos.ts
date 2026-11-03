@@ -1,5 +1,6 @@
 import "server-only";
 import { sql } from "@/lib/db";
+import { STATUS_RADAR } from "@aviso/shared";
 import type {
   CargoDTO, ConcursoDetalheDTO, ConcursoResumoDTO, DataDTO, Paginado, VersaoDTO,
 } from "@aviso/shared";
@@ -25,7 +26,10 @@ export interface FiltrosBusca {
   status?: string;
   esfera?: string;
   salarioMin?: number;
-  radar?: boolean; // previstos e autorizados
+  /** só previstos/autorizados/banca definida (o radar). */
+  radar?: boolean;
+  /** inclui os status do radar na busca geral. Padrão false: no app o radar é do plano Aprovado. */
+  incluirRadar?: boolean;
   abertos?: boolean;
   /** false = esconde concursos de exemplo (seed). Sem valor, não filtra. */
   exemplos?: boolean;
@@ -34,20 +38,25 @@ export interface FiltrosBusca {
   ordem?: "recentes" | "salario" | "vagas" | "prazo";
 }
 
+/** Escapa % e _ para o ILIKE tratar o texto digitado literalmente. */
+function escaparLike(s: string): string {
+  return s.replace(/[\\%_]/g, (m) => "\\" + m);
+}
+
 export async function buscarConcursos(f: FiltrosBusca, userId: string | null = null): Promise<Paginado<ConcursoResumoDTO>> {
   const pagina = Math.max(1, f.pagina ?? 1);
   const porPagina = Math.min(50, Math.max(1, f.porPagina ?? 20));
   const where = sql`
     c.publicado
-    ${f.q ? sql`and (c.orgao || ' ' || c.titulo || ' ' || coalesce(c.resumo,'') || ' ' || coalesce(c.orgao_sigla,'')) ilike ${"%" + f.q + "%"}` : sql``}
+    ${f.q ? sql`and (c.orgao || ' ' || c.titulo || ' ' || coalesce(c.resumo, '') || ' ' || coalesce(c.orgao_sigla, '')) ilike ${"%" + escaparLike(f.q) + "%"}` : sql``}
     ${f.uf ? sql`and (c.uf = ${f.uf} or (c.esfera = 'federal' and c.uf is null))` : sql``}
     ${f.escolaridade ? sql`and ${f.escolaridade} = any(c.escolaridades)` : sql``}
     ${f.area ? sql`and ${f.area} = any(c.areas)` : sql``}
-    ${f.banca ? sql`and c.banca ilike ${f.banca}` : sql``}
+    ${f.banca ? sql`and lower(c.banca) = lower(${f.banca})` : sql``}
     ${f.status ? sql`and c.status = ${f.status}` : sql``}
     ${f.esfera ? sql`and c.esfera = ${f.esfera}` : sql``}
     ${f.salarioMin ? sql`and coalesce(c.salario_max_centavos, 0) >= ${f.salarioMin}` : sql``}
-    ${f.radar ? sql`and c.status in ('previsto','autorizado','banca_definida')` : sql``}
+    ${f.radar ? sql`and c.status = any(${STATUS_RADAR}::text[])` : f.incluirRadar ? sql`` : sql`and not (c.status = any(${STATUS_RADAR}::text[]))`}
     ${f.abertos ? sql`and c.status = 'edital_aberto'` : sql``}
     ${f.exemplos === false ? sql`and not c.exemplo` : sql``}`;
   const ordem =
@@ -64,7 +73,7 @@ export async function buscarConcursos(f: FiltrosBusca, userId: string | null = n
 
 export async function resumosPorIds(ids: string[], userId: string | null): Promise<ConcursoResumoDTO[]> {
   if (!ids.length) return [];
-  return sql<ConcursoResumoDTO[]>`select ${selectResumo(userId)} from contests c where c.id = any(${ids}::uuid[])`;
+  return sql<ConcursoResumoDTO[]>`select ${selectResumo(userId)} from contests c where c.id = any(${ids}::uuid[]) and c.publicado`;
 }
 
 export async function datasDoConcurso(contestIds: string[]): Promise<(DataDTO & { contest_id: string })[]> {

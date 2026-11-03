@@ -11,6 +11,13 @@ const dir = path.join(__dirname, "..", "db", "migrations");
 async function main() {
   if (process.argv.includes("--reset")) {
     if (process.env.NODE_ENV === "production") throw new Error("--reset bloqueado em produção");
+    // Só apaga banco local. Para um banco remoto (ex.: staging), exija o nome dele: PERMITIR_RESET=<nome do banco>.
+    const alvo = new URL(process.env.DATABASE_URL!);
+    const nomeBanco = alvo.pathname.replace(/^\//, "");
+    const local = ["localhost", "127.0.0.1", "::1", "[::1]"].includes(alvo.hostname);
+    if (!local && process.env.PERMITIR_RESET !== nomeBanco) {
+      throw new Error(`--reset recusado: ${alvo.hostname} não é local. Se é isso mesmo, rode com PERMITIR_RESET=${nomeBanco}.`);
+    }
     await sql.unsafe("drop schema public cascade; create schema public;");
     console.log("schema recriado");
   }

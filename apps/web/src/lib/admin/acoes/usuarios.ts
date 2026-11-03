@@ -3,6 +3,7 @@
 import { PLANOS } from "@aviso/shared";
 import { exigirAdmin } from "@/lib/auth/guards";
 import { sql } from "@/lib/db";
+import { cancelarNoProvedor, travarUsuario } from "@/lib/repo/assinaturas";
 import { enviarAvisoTeste } from "@/lib/pipeline";
 import { atualizarPainel } from "../atualizar";
 import { auditar } from "../audit";
@@ -51,6 +52,11 @@ export async function concederCortesiaAcao(userId: string, plano: string, ate: s
   if (fim.getTime() > Date.now() + 366 * 86_400_000) return falha("Cortesia de no máximo 1 ano.");
   try {
     return await sql.begin(async (tx) => {
+      await travarUsuario(tx, userId);
+      // A cobrança recorrente da assinatura substituída é cancelada no provedor (senão a pessoa pagaria em dobro).
+      const vivas = await tx<{ id: string; provider: string; provider_subscription_id: string | null }[]>`
+        select id, provider, provider_subscription_id from subscriptions where user_id = ${userId} and status in ('trial', 'ativa', 'inadimplente')`;
+      for (const v of vivas) await cancelarNoProvedor(v);
       const encerradas = await tx<{ id: string; plano: string; status: string; provider: string }[]>`
         update subscriptions set status = 'expirada', updated_at = now()
         where user_id = ${userId} and status in ('trial', 'ativa', 'inadimplente') returning id, plano, status, provider`;
@@ -59,10 +65,10 @@ export async function concederCortesiaAcao(userId: string, plano: string, ate: s
         values (${userId}, ${plano}, 'mensal', 'ativa', ${fim}, true, 'cortesia') returning id`;
       await auditar(s.id, "usuario.cortesia", "user", userId, { plano, ate, nova: nova.id, encerradas }, tx);
       atualizarPainel();
-      const pagaNoProvedor = encerradas.some((e) => e.provider !== "cortesia" && e.provider !== "mock" && e.status !== "trial");
+      const cobrancaCancelada = vivas.some((v) => v.provider_subscription_id && v.provider !== "cortesia");
       return sucesso(
         `Cortesia ${plano === "aprovado" ? "Aprovado" : "Aviso"} até ${ate.split("-").reverse().join("/")}.` +
-          (pagaNoProvedor ? " Atenção: cancele a cobrança no provedor de pagamento." : ""),
+          (cobrancaCancelada ? " A cobrança recorrente anterior foi cancelada no provedor." : ""),
       );
     });
   } catch (e) {

@@ -4,6 +4,7 @@ import { hashSenha } from "@/lib/auth/password";
 import { criarSessao, definirCookieSessao } from "@/lib/auth/session";
 import { usuarioPorId } from "@/lib/repo/usuarios";
 import { ErroApi, lerJson, ok, rota } from "@/lib/api";
+import { contarTentativa, ipDaRequisicao, mensagemEspera } from "@/lib/limite";
 
 const Schema = z.object({
   nome: z.string().trim().min(2, "Informe seu nome").max(120),
@@ -15,6 +16,8 @@ const Schema = z.object({
 
 export const POST = rota(async (req: Request) => {
   const d = await lerJson(req, Schema);
+  const lim = await contarTentativa(`cadastro:ip:${await ipDaRequisicao()}`, 10, 60 * 60);
+  if (lim.bloqueado) throw new ErroApi(429, "muitas_tentativas", mensagemEspera(lim.restamSegundos));
   const [existe] = await sql`select 1 from users where email = ${d.email}`;
   if (existe) throw new ErroApi(409, "email_em_uso", "Já existe uma conta com este e-mail.", { email: "E-mail já cadastrado" });
   const [u] = await sql<{ id: string }[]>`

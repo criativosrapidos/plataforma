@@ -3,9 +3,9 @@
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { exigirAdmin } from "@/lib/auth/guards";
-import { conferirSenha } from "@/lib/auth/password";
+import { autenticar } from "@/lib/auth/login";
+import { ipDaRequisicao } from "@/lib/limite";
 import { criarSessao, definirCookieSessao, encerrarSessao } from "@/lib/auth/session";
-import { sql } from "@/lib/db";
 import { auditar } from "../audit";
 import { buscaGlobal, type ResultadoBusca } from "../consultas/busca";
 
@@ -30,9 +30,8 @@ export async function entrarNoPainel(_anterior: { erro: string } | null, fd: For
   const senha = String(fd.get("senha") ?? "");
   const voltar = destinoSeguro(String(fd.get("voltar") ?? "/admin"));
   if (!email || !senha) return { erro: "Informe e-mail e senha." };
-  const [u] = await sql<{ id: string; role: string; senha_hash: string }[]>`
-    select id, role, senha_hash from users where email = ${email} and deleted_at is null`;
-  if (!u || !(await conferirSenha(senha, u.senha_hash))) return { erro: "E-mail ou senha incorretos." };
+  const u = await autenticar(email, senha, await ipDaRequisicao());
+  if (!u.ok) return { erro: u.mensagem };
   if (u.role === "user") return { erro: "Esta conta não tem acesso ao painel." };
   const { token, expira } = await criarSessao(u.id, "web", (await headers()).get("user-agent"));
   await definirCookieSessao(token, expira);

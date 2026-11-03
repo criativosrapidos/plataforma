@@ -12,7 +12,8 @@
 
 ## 2. Infraestrutura
 1. **Supabase**: criar projeto (região São Paulo), copiar a connection string do pooler para `DATABASE_URL`, criar o bucket `originais` (privado) no Storage.
-2. **Migrações**: `cd apps/web && DATABASE_URL=... npm run db:migrate`. Rodar o seed só com `SEED_EXEMPLOS=0` (cria matérias, fontes e usuários; troque as senhas dos usuários de dev ou apague-os).
+2. **Migrações**: `cd apps/web && DATABASE_URL=... npm run db:migrate`. Depois `SEED_EXEMPLOS=0 npm run db:seed`: carrega só matérias e fontes (em produção o seed nunca cria usuários nem concursos de exemplo).
+   Conta da equipe: `npx tsx scripts/criar-admin.ts "Seu Nome" voce@avisoconcurso.com.br admin` (gera uma senha forte e mostra uma vez). `db:reset` só roda em banco local.
 3. **Vercel**: importar o repositório com raiz `apps/web`, configurar as variáveis de `apps/web/.env.example`, domínio, e os crons do `vercel.json`.
 4. **Resend**: domínio verificado para `avisos@avisoconcurso.com.br`.
 

@@ -5,7 +5,8 @@ import { avisosRecentes } from "@/lib/repo/agenda";
 
 export const GET = rota(async (req: Request) => {
   const s = await exigirUsuario();
-  const limite = Math.min(100, Number(new URL(req.url).searchParams.get("limite") ?? 50));
+  const n = Number(new URL(req.url).searchParams.get("limite") ?? 50);
+  const limite = Number.isFinite(n) ? Math.min(100, Math.max(1, Math.trunc(n))) : 50;
   return ok(await avisosRecentes(s.id, limite));
 });
 

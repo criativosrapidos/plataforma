@@ -176,7 +176,13 @@ async function main() {
               values (${f.slug}, ${f.nome}, ${f.tipo}, ${f.url}, ${f.frequencia_min}, ${sql.json(f.config)})
               on conflict (slug) do nothing`;
   }
-  // Usuários de desenvolvimento
+  // Usuários e concursos de desenvolvimento: nunca em produção (senha pública aviso1234).
+  // Produção: SEED_EXEMPLOS=0 carrega só matérias e fontes; o admin real é criado por scripts/criar-admin.ts.
+  const producao = process.env.NODE_ENV === "production" || process.env.SEED_EXEMPLOS === "0";
+  if (producao) {
+    console.log(`seed ok (produção) · ${MATERIAS_CANONICAS.length} matérias · ${FONTES.length} fontes · sem usuários nem concursos de exemplo`);
+    return;
+  }
   const senha = await hashSenha("aviso1234");
   const usuarios = [
     { nome: "Admin Aviso", email: "admin@avisoconcurso.com.br", role: "admin" },
@@ -188,9 +194,11 @@ async function main() {
   for (const u of usuarios) {
     const [r] = await sql<{ id: string }[]>`
       insert into users (nome, email, senha_hash, role, termos_aceitos_em) values (${u.nome}, ${u.email}, ${senha}, ${u.role}, now())
-      on conflict (email) do update set role = excluded.role returning id`;
-    ids[u.email] = r.id;
-    await sql`insert into user_settings (user_id) values (${r.id}) on conflict do nothing`;
+      on conflict (email) do nothing returning id`;
+    // Conta já existente: nunca muda o papel (evita promover uma conta cadastrada por terceiros).
+    const id = r?.id ?? (await sql<{ id: string }[]>`select id from users where email = ${u.email}`)[0].id;
+    ids[u.email] = id;
+    await sql`insert into user_settings (user_id) values (${id}) on conflict do nothing`;
   }
   const ana = ids["ana@exemplo.com"];
   const [temSub] = await sql`select 1 from subscriptions where user_id = ${ana}`;
@@ -208,7 +216,6 @@ async function main() {
               where not exists (select 1 from subscriptions where user_id = ${id})`;
   }
 
-  if (process.env.SEED_EXEMPLOS === "0") return;
   const subj = new Map((await sql<{ id: string; nome: string }[]>`select id, nome from subjects`).map((s) => [s.nome, s.id]));
   const contestIds: string[] = [];
   for (const e of EXEMPLOS) {

@@ -125,6 +125,8 @@ export default async function PaginaConcursos({ searchParams }: { searchParams: 
     pagina: f.pagina,
     porPagina: POR_PAGINA,
     exemplos: mostrarExemplos() ? undefined : false,
+    // No site (SEO) os autorizados/previstos aparecem; no app, o radar é do plano Aprovado.
+    incluirRadar: true,
   });
   const valores: ValoresFiltro = {
     q: f.q,

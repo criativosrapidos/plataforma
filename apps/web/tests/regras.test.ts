@@ -116,6 +116,16 @@ test("lembretes: antecedência e véspera; prova amanhã", () => {
   assert.deepEqual(lembretesDoDia({ tipo: "prova", inicio: "2026-11-02", fim: "2026-11-02" }, hoje, 3), [{ tipo: "prova_amanha", diasAteFim: 1 }]);
 });
 
+test("lembretes: prova de 2 dias avisa na véspera do 1º dia; prazo só com início não está 'acabando'", () => {
+  assert.deepEqual(lembretesDoDia({ tipo: "prova", inicio: "2026-11-10", fim: "2026-11-11" }, "2026-11-09", 3), [{ tipo: "prova_amanha", diasAteFim: 1 }]);
+  assert.deepEqual(lembretesDoDia({ tipo: "prova", inicio: "2026-11-10", fim: "2026-11-11" }, "2026-11-10", 3), []);
+  assert.deepEqual(lembretesDoDia({ tipo: "inscricao", inicio: "2026-11-10", fim: null }, "2026-11-09", 3), []);
+});
+
+test("assinatura 'ativa' sem fim de período não libera acesso", () => {
+  assert.equal(calcularAcesso({ plano: "aprovado", status: "ativa", trial_ends_at: null, current_period_end: null }, agora).liberado, false);
+});
+
 test("horário silencioso atravessa a meia-noite", () => {
   assert.equal(emHorarioSilencioso("23:30", "22:00", "07:00"), true);
   assert.equal(emHorarioSilencioso("06:59", "22:00", "07:00"), true);

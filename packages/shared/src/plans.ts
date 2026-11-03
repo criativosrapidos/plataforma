@@ -128,7 +128,8 @@ export function calcularAcesso(sub: AssinaturaLike | null | undefined, agora: Da
       if (trialEnd && t < trialEnd) return liberar(true);
       return { ...base, plano: sub.plano, status: sub.status, motivoBloqueio: "teste_acabou" };
     case "ativa":
-      if (!periodEnd || t < periodEnd + DIAS_TOLERANCIA_INADIMPLENCIA * DIA) return liberar(false);
+      // Sem fim de período não há pagamento confirmado: não libera (evita acesso eterno).
+      if (periodEnd && t < periodEnd + DIAS_TOLERANCIA_INADIMPLENCIA * DIA) return liberar(false);
       return { ...base, plano: sub.plano, status: sub.status, motivoBloqueio: "pagamento_pendente" };
     case "inadimplente":
       if (periodEnd && t < periodEnd + DIAS_TOLERANCIA_INADIMPLENCIA * DIA) return liberar(false);
