@@ -1,44 +1,37 @@
-# Roteiro: anúncio UGC do Protocolo AM Melasma (60 dias)
+# Copy do anúncio UGC: Protocolo AM Melasma
 
-- **Formato:** Reels/Stories, vertical 9:16, cerca de 30 s.
-- **Estilo:** UGC. A Alessandra fala direto para a câmera do celular, de forma natural, e entram cortes curtos mostrando o processo.
-- **Público:** mulheres de 28 a 55 anos de Águas Claras e região que têm melasma e já tentaram outros tratamentos.
+**Formato:** Reels/Stories em 9:16, 34 s. Só a Alessandra real, com a voz real dela, sem cena de IA.
 
-## Lógica do anúncio
+**Estilo:** cara de vídeo nativo do Instagram:
+- caixinhas brancas de texto, como as do Stories;
+- legenda simples em branco;
+- zooms de câmera para dar ritmo.
 
-O anúncio segue a estrutura que mais converte em UGC: **gancho → problema → virada → processo → prova → oferta → CTA**.
+## A ideia
 
-1. **Gancho (até 3 s):** mostra a dor específica, para a pessoa parar de rolar a tela.
-2. **Virada:** "não tem cura, mas tem controle" quebra a objeção de "já tentei de tudo".
-3. **Processo:** mostra os 4 encontros. Quando a pessoa vê o caminho, ela confia.
-4. **Prova:** reavaliação com fotos no dia 60, usando só fotos reais de pacientes que autorizaram.
-5. **Oferta e CTA:** o preço fica claro e a chamada soa como conselho de amiga.
+A dor de quem tem melasma é a mancha que **volta**. O anúncio abre nessa dor e fecha nela. No meio, a Ale mostra o tratamento com as palavras dela. A promessa não é "clarear", é **controlar e não deixar voltar**. Isso é honesto, porque melasma não tem cura, e fala direto com quem já tentou de tudo.
 
-A narração é toda na voz da Alessandra, num único fio do começo ao fim. As imagens de processo entram por cima da fala dela. É isso que conecta tudo.
+## Texto na tela
 
-## Roteiro (fala da Alessandra + o que aparece)
+| Tempo | Texto | Fala da Ale (real) |
+|---|---|---|
+| 0–3 s | **Seu melasma sempre volta?** | "Você que não conhece o melhor tratamento de melasma em Brasília…" |
+| 3–6 s | só legenda | "…eu vou te apresentar. Venha comigo." |
+| 6–24 s | só legenda | Limpeza com Adcos, peeling específico, "por sete dias vai renovar a sua pele", home care em casa, "aí você retorna no tratamento" |
+| 24–29 s | **não é só clarear. é não deixar voltar.** | "Te acompanhando… para que esse melasma não possa retornar à sua pele." |
+| 29–34 s | **Protocolo AM Melasma · em até 10x de R$ 69,70 · agende sua avaliação no link** | "Venha garantir sua vaga, é oportunidade única." |
 
-| Tempo | Fala (voz da Ale) | Imagem | Texto na tela |
-|---|---|---|---|
-| 0–3 s | "Se a sua mancha volta todo verão, presta atenção." | Ale em close, selfie, olhando para a câmera | **Seu melasma sempre volta?** |
-| 3–7 s | "Melasma não tem cura. Mas tem controle. E controle é método." | Ale falando e apontando para a câmera | **Não tem cura. Tem controle.** |
-| 7–11 s | "No primeiro encontro eu faço a avaliação completa da sua pele e já começo a primeira sessão." | Paciente chegando e sendo recebida; avaliação com lupa | **Dia 0 · avaliação + 1ª sessão** |
-| 11–16 s | "Depois são mais três sessões, uma a cada quinze dias." | Aplicação do tratamento no rosto (sem mostrar agulha nem sangue) | **Dias 15 · 30 · 45** |
-| 16–20 s | "E em casa você não fica sozinha: home care e acompanhamento comigo no WhatsApp." | Paciente em casa passando protetor; celular com mensagem da clínica | **Home care + WhatsApp** |
-| 20–24 s | "No dia sessenta, a gente reavalia e compara com as fotos do começo." | Ale mostrando fotos no tablet; antes e depois **real**, se autorizado | **Dia 60 · reavaliação com fotos** |
-| 24–28 s | "São sessenta dias de protocolo por seiscentos e noventa e sete à vista, ou dez de sessenta e nove e setenta." | Ale de volta na selfie, sorrindo | **R$ 697 à vista ou 10x R$ 69,70** |
-| 28–30 s | "Toca no botão e agenda a sua avaliação." | Ale apontando para baixo | **Agende sua avaliação · Águas Claras** |
+Rodapé no fim: "Águas Claras · DF · resultados variam de pessoa para pessoa".
+
+## Legenda do post (sugestão)
+
+> Melasma não tem cura. Mas tem controle. ✨
+> No Protocolo AM eu cuido da sua pele do começo ao fim: limpeza, peeling específico pro seu caso, home care pra usar em casa e acompanhamento pra mancha não voltar.
+> Em até 10x de R$ 69,70.
+> Toca em "Saiba mais" e agenda sua avaliação. 📍 Águas Claras · DF
 
 ## Regras
 
-- **Antes e depois:** só fotos reais de pacientes com autorização por escrito. Nada gerado por IA como se fosse resultado. Colocar a legenda "resultados variam de pessoa para pessoa".
-- **Cenas de apoio geradas por IA** (paciente, recepção, casa): levam a legenda "imagens ilustrativas". Ninguém nelas se passa pela Alessandra.
-- **Voz:** a voz da Alessandra é a original dos vídeos dela. Se usarmos clone de voz para alguma frase nova, só com autorização dela.
-- **Regras do conselho profissional:** checar com a Alessandra as regras de publicidade do conselho dela antes de publicar.
-
-## O que preciso dos vídeos dela
-
-- Trechos dela falando para a câmera (selfie ou tripé), com boa luz.
-- Imagens dela atendendo: recepção, avaliação, aplicação.
-- Fotos de antes e depois que as pacientes autorizaram (opcional, mas é o que mais converte).
-- **Melhor caminho:** ela grava o roteiro acima no celular, em 2 ou 3 tomadas. Leva uns 5 minutos e o resultado sai 100% real.
+- Nada de antes e depois gerado por IA. Se usar, só fotos reais com autorização das pacientes.
+- Sem promessa de cura; sempre "resultados variam".
+- Versão com clone de voz: só com autorização da Alessandra.
