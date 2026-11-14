@@ -1,0 +1,40 @@
+# Estúdio automático: de hora em hora (8h às 20h de Brasília) gera as artes e os vídeos que chegaram em
+# "Produção" na esteira e manda pro app como entrega. Também dá pra rodar pelo botão "Run workflow".
+# Precisa dos secrets SUPABASE_SERVICE_ROLE_KEY (Supabase > Project Settings > API) e, pra narração, ELEVENLABS_API_KEY.
+# Atenção: o GitHub só roda agendamentos de arquivos que estão no branch principal do repositório.
+name: Estúdio (artes e vídeos)
+
+on:
+  schedule:
+    - cron: "15 11-23 * * *"
+  workflow_dispatch:
+
+concurrency: estudio
+
+jobs:
+  estudio:
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    if: ${{ vars.ESTUDIO_DESLIGADO != 'sim' }}
+    env:
+      SUPABASE_URL: https://${{ secrets.SUPABASE_PROJECT_REF || 'glffgfjlhltahyatsjed' }}.supabase.co
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+      ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}
+      ELEVENLABS_VOZ: ${{ secrets.ELEVENLABS_VOZ }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: claude/generic-sales-proposal-lok7t4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Preparar
+        working-directory: estudio
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg fonts-noto-color-emoji >/dev/null
+          npm install --no-audit --no-fund
+          npx playwright install --with-deps chromium
+      - name: Gerar e enviar
+        if: env.SUPABASE_SERVICE_ROLE_KEY != ''
+        working-directory: estudio
+        run: node estudio.mjs

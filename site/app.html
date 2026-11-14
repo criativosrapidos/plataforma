@@ -1,0 +1,907 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>Criativos Rápidos · App do cliente</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#101216">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Criativos">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="assets/icons/favicon-32.png">
+<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,800;0,900;1,900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body class="app">
+<div class="shell">
+  <aside class="side" aria-label="Menu">
+    <a class="logo" href="./"><img src="assets/logo-icone.png" alt=""><span><b>criativos</b><i>rápidos</i></span></a>
+    <nav id="nav-side"></nav>
+    <div class="foot">
+      <nav id="nav-rodape" aria-label="Ajuda e conta"></nav>
+      <div class="card-mini" id="side-plano"></div>
+      <button class="btn ghost-w" type="button" data-sair>Sair</button>
+    </div>
+  </aside>
+
+  <div class="main">
+    <header class="appbar">
+      <div class="appbar-in">
+        <a class="logo" href="./"><img src="assets/logo-icone.png" alt=""><span><b>criativos</b><i>rápidos</i></span></a>
+        <div class="sp"></div>
+        <div class="who" id="who"></div>
+        <button class="avatar" id="avatar" type="button" aria-label="Abrir minha conta"></button>
+      </div>
+    </header>
+
+    <!-- INÍCIO -->
+    <main class="view" id="v-inicio">
+      <div>
+        <span class="eyebrow" id="hoje"></span>
+        <h1 id="ola" style="margin-top:6px">Olá!</h1>
+      </div>
+      <section class="plan" id="plano-card" aria-label="Seu plano"></section>
+      <div id="aviso-briefing"></div>
+      <section class="sec">
+        <div class="sec-head"><h2>Para aprovar</h2><button class="link" type="button" data-ir="conteudos" data-filtro="aguardando">Ver todos</button></div>
+        <div class="rail" id="rail"></div>
+      </section>
+      <section class="sec">
+        <div class="sec-head"><h2>Próximas postagens</h2><button class="link" type="button" data-ir="calendario">Calendário</button></div>
+        <p class="small muted" id="quem-posta" style="margin:-4px 0 0"></p>
+        <div class="list" id="proximas"></div>
+      </section>
+      <div class="stats" id="stats"></div>
+      <div id="instalar-inicio"></div>
+    </main>
+
+    <!-- CONTEÚDOS -->
+    <main class="view" id="v-conteudos" hidden>
+      <div class="view-head"><div><h1>Conteúdos</h1><p class="lead">Toque no conteúdo pra ver grande, aprovar ou pedir ajuste.</p></div></div>
+      <div class="seg" role="group" aria-label="Filtrar conteúdos">
+        <button type="button" data-f="aguardando" aria-pressed="true">Para aprovar <span class="c" id="c-aguardando">0</span></button>
+        <button type="button" data-f="ajuste" aria-pressed="false">Em ajuste</button>
+        <button type="button" data-f="aprovado" aria-pressed="false">Aprovados</button>
+        <button type="button" data-f="todos" aria-pressed="false">Todos</button>
+      </div>
+      <div class="grid" id="lista"></div>
+      <div class="empty" id="vazio" hidden></div>
+    </main>
+
+    <!-- CALENDÁRIO -->
+    <main class="view" id="v-calendario" hidden>
+      <div class="view-head"><div><h1>Calendário</h1><p class="lead" id="cal-dica"></p></div></div>
+      <div class="cal">
+        <div class="cal-head">
+          <button class="icon-btn" type="button" id="mes-ant" aria-label="Mês anterior"></button>
+          <b id="mes-nome"></b>
+          <button class="icon-btn" type="button" id="mes-prox" aria-label="Próximo mês"></button>
+        </div>
+        <div class="cal-grid" id="cal-grid"></div>
+      </div>
+      <section class="sec">
+        <h2 id="dia-titulo"></h2>
+        <div class="list" id="dia-lista"></div>
+      </section>
+    </main>
+
+    <!-- IDEIAS -->
+    <main class="view" id="v-ideias" hidden>
+      <div class="view-head">
+        <div><h1>Ideias</h1><p class="lead">Ideias de reels, posts e stories pensadas para o seu perfil. Diga quais você quer ou mande as suas.</p></div>
+        <button class="btn" type="button" id="nova-ideia"></button>
+      </div>
+      <section class="sec"><h2>Pensadas para o seu perfil</h2><div class="cards" id="id-sug"></div></section>
+      <section class="sec"><h2>Andamento das ideias</h2><div class="list" id="id-and"></div></section>
+    </main>
+
+    <!-- RELATÓRIOS -->
+    <main class="view" id="v-relatorios" hidden>
+      <div class="view-head">
+        <div><h1>Relatórios</h1><p class="lead">O resumo do mês: conteúdos entregues, aprovados e publicados e, no plano com tráfego, os números dos anúncios.</p></div>
+        <div class="monthnav"><button class="icon-btn" type="button" id="rel-ant" aria-label="Mês anterior"></button><b id="rel-mes"></b><button class="icon-btn" type="button" id="rel-prox" aria-label="Próximo mês"></button></div>
+      </div>
+      <section class="sec"><h2>Conteúdos</h2><div class="stats" id="rel-cont"></div><div class="card" id="rel-tipos"></div></section>
+      <section class="sec"><h2>Tráfego pago</h2><div id="rel-traf"></div></section>
+      <section class="sec"><h2>Instagram</h2><div id="rel-ig"></div></section>
+      <section class="card pad-l" id="as-rel"></section>
+    </main>
+
+    <!-- MATERIAIS -->
+    <main class="view" id="v-materiais" hidden>
+      <div class="view-head"><div><h1>Materiais</h1><p class="lead">Guias, arquivos e documentos que a gente separou pra você. Toque pra abrir ou baixar.</p></div></div>
+      <div class="seg" role="group" aria-label="Filtrar materiais" id="seg-mat"></div>
+      <div class="list" id="mat-lista"></div>
+      <div class="empty" id="mat-vazio" hidden><b>Nenhum material por aqui ainda</b><span>Guias e arquivos que a gente preparar pra você aparecem aqui.</span></div>
+    </main>
+
+    <!-- MARCA -->
+    <main class="view" id="v-marca" hidden>
+      <div class="view-head"><div><h1>Sua marca</h1><p class="lead">Sua identidade visual e o jeito de falar da sua marca, num lugar só. É o que a gente segue em todo conteúdo.</p></div></div>
+      <div class="two">
+        <section class="card pad-l" style="display:grid;gap:12px">
+          <h2>Cores</h2><div id="mk-cores"></div>
+          <h2>Fontes</h2><p id="mk-fontes" style="margin:0"></p>
+        </section>
+        <section class="card pad-l" style="display:grid;gap:12px"><h2>Jeito de falar</h2><dl class="kv" id="mk-voz"></dl></section>
+      </div>
+      <section class="sec"><h2>Arquivos da marca</h2><div class="list" id="mk-arq"></div></section>
+    </main>
+
+    <!-- AJUDA -->
+    <main class="view" id="v-ajuda" hidden>
+      <div class="view-head"><div><h1>Ajuda</h1><p class="lead">Fala com a gente ou tira a dúvida por aqui.</p></div></div>
+      <section class="card pad-l">
+        <h2>Fale com a gente</h2>
+        <p class="small muted" style="margin:6px 0 12px">Qualquer dúvida, é só chamar.</p>
+        <div id="ajuda" style="display:flex;gap:8px;flex-wrap:wrap"></div>
+      </section>
+      <section class="card pad-l" id="as-ajuda"></section>
+      <section class="sec faq"><h2>Dúvidas comuns</h2><div style="display:grid;gap:8px" id="faq"></div></section>
+    </main>
+
+    <!-- CONTA -->
+    <main class="view" id="v-conta" hidden>
+      <div class="view-head"><div><h1>Conta e configurações</h1><p class="lead">Seus dados, seu plano, o Instagram conectado e os pagamentos.</p></div></div>
+      <div class="row" style="gap:16px;align-items:start">
+        <form class="card pad-l" id="f-perfil" novalidate>
+          <h2 style="margin-bottom:14px">Seus dados</h2>
+          <div class="f"><label for="p-nome">Nome</label><input type="text" id="p-nome" autocomplete="name"></div>
+          <div class="f"><label for="p-empresa">Empresa</label><input type="text" id="p-empresa" autocomplete="organization"></div>
+          <div class="f"><label for="p-whats">WhatsApp</label><input type="tel" id="p-whats" autocomplete="tel"></div>
+          <div class="f"><label for="p-email">E-mail</label><input type="email" id="p-email" disabled></div>
+          <button class="btn" type="submit">Salvar</button>
+        </form>
+        <div style="display:grid;gap:16px">
+          <section class="card pad-l" id="conta-plano"></section>
+          <section class="card pad-l" id="conta-ig" hidden></section>
+          <section class="card pad-l" id="conta-pag" hidden></section>
+          <section class="card pad-l" id="conta-instalar"></section>
+          <button class="btn ghost" type="button" data-sair>Sair da conta</button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <nav class="tabbar" id="nav-tab" aria-label="Menu"></nav>
+</div>
+
+<dialog class="viewer" id="viewer" aria-label="Conteúdo">
+  <button class="icon-btn x" type="button" id="v-fechar" aria-label="Fechar"></button>
+  <div class="viewer-in"><div class="media" id="v-media"></div><div class="info" id="v-info"></div></div>
+</dialog>
+
+<dialog id="dlg-ajuste">
+  <form class="in" id="f-ajuste" novalidate>
+    <h2>Pedir ajuste</h2>
+    <p class="muted small" id="aj-info"></p>
+    <div class="f"><label for="aj-txt">O que você quer mudar?</label><textarea id="aj-txt" placeholder="Ex.: trocar a foto do fundo e mudar o preço para R$ 89"></textarea></div>
+    <div class="err" id="aj-err" hidden></div>
+    <div class="acts"><button class="btn ghost" type="button" id="aj-cancel">Cancelar</button><button class="btn" type="submit">Enviar pedido</button></div>
+  </form>
+</dialog>
+
+<dialog id="dlg-ideia">
+  <form class="in" id="f-ideia" novalidate>
+    <h2>Mandar uma ideia</h2>
+    <p class="muted small">Conta do jeito que vier. A gente transforma em conteúdo e te mostra aqui pra aprovar.</p>
+    <div class="f"><span class="q">Formato</span><div class="chips-sel" id="ii-tipo" role="radiogroup" aria-label="Formato"></div></div>
+    <div class="f"><label for="ii-tit">A ideia em uma frase</label><input type="text" id="ii-tit" maxlength="160" placeholder="Ex.: Mostrar como a gente monta o combo"></div>
+    <div class="f"><label for="ii-desc">Detalhes <span class="muted small">opcional</span></label><textarea id="ii-desc" maxlength="4000" placeholder="O que mostrar, o que falar, quando postar…"></textarea></div>
+    <div class="f"><label for="ii-ref">Link de referência <span class="muted small">opcional</span></label><input type="url" id="ii-ref" maxlength="500" placeholder="Um reels ou post que você gostou"></div>
+    <div class="note small" id="ii-brief" hidden style="margin-bottom:14px"></div>
+    <div class="err" id="ii-err" hidden></div>
+    <div class="acts"><button class="btn ghost" type="button" id="ii-cancel">Cancelar</button><button class="btn" type="submit">Enviar ideia</button></div>
+  </form>
+</dialog>
+
+<script src="assets/config.js"></script>
+<script src="assets/vendor/supabase.js"></script>
+<script src="assets/core.js"></script>
+<script src="assets/icons.js"></script>
+<script>
+(async function () {
+  var api = CR.api, el = CR.el, ic = CR.ic;
+  CR.avisoDemo();
+  CR.registrarApp();
+  var eu = await CR.exigirLogin();
+  if (!eu) return;
+  if (eu.papel === "admin") { location.replace("admin.html"); return; }
+
+  var P = CR.plano(eu.plano);
+  var itens = [], usados = 0, meusBriefings = [], filtro = "aguardando", atual = null;
+  var ideias = [], materiais = [], relatorios = [], cobrancas = [], meusAjustes = [], igm = [], filtroMat = "todos";
+  var hoje = new Date(); hoje.setHours(0, 0, 0, 0);
+  var calMes = new Date(hoje.getFullYear(), hoje.getMonth(), 1), calDia = CR.iso(hoje);
+
+  // ---------------------------------------------------------------- navegação
+  // menu: o dia a dia em cima, Ajuda e Conta por último
+  var nav = CR.menu({
+    grupos: [
+      ["", [["inicio", "Início", "home"], ["conteudos", "Conteúdos", "grid"], ["calendario", "Calendário", "cal"], ["ideias", "Ideias", "idea"]]],
+      ["Sua empresa", [["relatorios", "Relatórios", "report"], ["materiais", "Materiais", "folder"], ["marca", "Marca", "brand"]]]
+    ],
+    rodape: [["ajuda", "Ajuda", "help"], ["conta", "Conta", "user"]],
+    aba: ["inicio", "conteudos", "calendario", "ideias"]
+  });
+  document.querySelectorAll("[data-ir]").forEach(function (b) {
+    b.addEventListener("click", function () { if (b.dataset.filtro) setFiltro(b.dataset.filtro); location.hash = b.dataset.ir; });
+  });
+  document.getElementById("avatar").addEventListener("click", function () { location.hash = "conta"; });
+  document.querySelectorAll("[data-sair]").forEach(function (b) {
+    b.addEventListener("click", async function () { await api.sair(); location.replace(CR.demoForcado ? "./" : "entrar.html"); });
+  });
+
+  // ---------------------------------------------------------------- cabeçalho e dados fixos
+  var primeiro = (eu.nome || "").split(" ")[0];
+  document.getElementById("ola").textContent = primeiro ? "Olá, " + primeiro + "!" : "Olá!";
+  document.getElementById("hoje").textContent = CR.SEMANA[hoje.getDay()] + ", " + hoje.getDate() + " de " + CR.MESES[hoje.getMonth()];
+  var who = document.getElementById("who");
+  who.appendChild(el("b", { text: eu.empresa || eu.nome || eu.email }));
+  who.appendChild(document.createTextNode(P.grupo ? (P.grupo === "plano" ? "Plano " : "") + P.nome : "Conta ativa"));
+  document.getElementById("avatar").textContent = (eu.empresa || eu.nome || "?").trim().charAt(0).toUpperCase();
+  if (CR.demo && eu.empresa === "Brasa Burger") document.getElementById("avatar").innerHTML = '<img src="assets/demo/brasa-avatar.png" alt="">';
+  document.getElementById("side-plano").appendChild(el("div", {}, [el("b", { text: P.grupo ? P.nome : "Sem plano ativo" }), el("span", { text: P.papel || "A gente ativa seu plano assim que fechar." })]));
+  ["mes-ant", "mes-prox"].forEach(function (id, i) { document.getElementById(id).appendChild(ic(i ? "right" : "left")); });
+  document.getElementById("v-fechar").appendChild(ic("x"));
+  var posta = !!P.posta;
+  document.getElementById("quem-posta").textContent = posta ? "A gente programa e posta pra você nesses dias." : "Você posta: baixe o conteúdo e copie a legenda no dia marcado.";
+  document.getElementById("cal-dica").textContent = posta ? "Os dias em que a gente vai postar no seu perfil." : "Seu calendário de postagem. No dia marcado, baixe o conteúdo e copie a legenda.";
+
+  // as seções novas não derrubam o app se a tabela ainda não existir no banco
+  async function tenta(fn, padrao) { try { return await fn(); } catch (e) { return padrao; } }
+  async function carregar() {
+    try {
+      itens = await api.entregas(eu.id);
+      usados = await api.ajustesNoMes(eu.id);
+      meusBriefings = (await api.briefings()).filter(function (b) { return b.cliente_id === eu.id; });
+    } catch (e) { CR.toast(e.message, true); }
+    ideias = await tenta(function () { return api.ideias(eu.id); }, []);
+    materiais = await tenta(function () { return api.materiais(eu.id); }, []);
+    relatorios = await tenta(function () { return api.relatorios(eu.id); }, []);
+    cobrancas = await tenta(function () { return api.cobrancas(eu.id); }, []);
+    igm = await tenta(function () { return api.igMetricas(eu.id); }, []);
+    meusAjustes = (await tenta(function () { return api.ajustes(); }, [])).filter(function (a) { return a.cliente_id === eu.id; });
+    renderTudo();
+  }
+  function renderTudo() { badge(); planoCard(); avisoBriefing(); rail(); proximas(); stats(); renderLista(); renderCal(); renderIdeias(); renderRel(); renderIG(); renderMat(); renderMarca(); contaPag(); ajuda(); faq(); }
+
+  function contar(st) { return itens.filter(function (i) { return i.status === st; }).length; }
+  function sugeridas() { return ideias.filter(function (i) { return i.status === "sugerida"; }); }
+  function badge() {
+    var n = contar("aguardando");
+    nav.badges({ conteudos: n, ideias: sugeridas().length });
+    document.getElementById("c-aguardando").textContent = n;
+  }
+
+  // ---------------------------------------------------------------- cartão do plano com o progresso do mês
+  function planoCard() {
+    var c = document.getElementById("plano-card"); c.textContent = "";
+    if (!P.grupo) {
+      c.appendChild(el("div", {}, [el("div", { class: "nm" }, [el("small", { text: "Sua conta" }), "Tudo pronto por aqui"]), el("p", { class: "papel", text: "Assim que a gente ativar seu plano, você acompanha tudo nesta tela." })]));
+      return;
+    }
+    var grupo = { plano: "Plano mensal", pacote: "Pacote", video: "Vídeo motion" }[P.grupo];
+    c.appendChild(el("div", { class: "top" }, [
+      el("div", {}, [el("div", { class: "nm" }, [el("small", { text: grupo }), P.nome]), el("p", { class: "papel", text: P.papel })]),
+      el("span", { class: "tag", text: P.trafego ? "Social + tráfego" : P.posta ? "A gente posta" : P.grupo === "plano" ? "Você posta" : P.preco })
+    ]));
+    var bars = el("div", { class: "bars" });
+    function barra(rotulo, feito, total) {
+      bars.appendChild(el("div", { class: "bar" }, [el("span", {}, [rotulo + " ", el("b", { text: feito + "/" + total })]), el("div", { class: "track" }, el("i", { style: "width:" + Math.min(100, total ? feito / total * 100 : 0) + "%" }))]));
+    }
+    if (!P.qtd) {
+      c.appendChild(el("div", { class: "small", style: "color:#C9CAD0", text: (P.inclui || []).join(" · ") }));
+      return;
+    } else {
+      var ini = CR.iso(new Date(hoje.getFullYear(), hoje.getMonth(), 1));
+      var doMes = P.grupo === "plano" ? itens.filter(function (i) { return String(i.criado_em).slice(0, 10) >= ini; }) : itens;
+      Object.keys(P.qtd).forEach(function (t) {
+        var feito = doMes.filter(function (i) { return i.tipo === t || (t === "video" && i.tipo === "reels"); }).length;
+        barra(t === "anuncio" && P.grupo !== "plano" ? "Artes pra anúncio" : t === "video" ? "Vídeos" : (CR.TIPOS[t] || t), Math.min(feito, P.qtd[t]), P.qtd[t]);
+      });
+    }
+    c.appendChild(el("div", {}, [el("div", { class: "small", style: "color:#A2A4AC;margin-bottom:8px", text: P.grupo === "plano" ? "Entregues neste mês" : "Entregues" }), bars]));
+  }
+
+  function slugPlano() { return (P.nome || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").split(" ").pop(); }
+  function avisoBriefing() {
+    var w = document.getElementById("aviso-briefing"); w.textContent = "";
+    var sug = sugeridas().length;
+    if (sug) w.appendChild(el("div", { class: "note", style: "margin-bottom:10px" }, [ic("idea"), el("div", {}, [el("b", { text: sug === 1 ? "Tem 1 ideia nova pro seu perfil. " : "Tem " + sug + " ideias novas pro seu perfil. " }), "Diga se você quer que a gente produza. ", el("a", { href: "#ideias", style: "font-weight:700", text: "Ver ideias" })])]));
+    if (posta && !eu.instagram) w.appendChild(el("div", { class: "note", style: "margin-bottom:10px" }, [ic("info"), el("div", {}, [el("b", { text: "Conecte seu Instagram. " }), "Assim seus conteúdos aprovados vão ao ar sozinhos, com a legenda. ", el("a", { href: "#conta", style: "font-weight:700", text: "Conectar" })])]));
+    if (meusBriefings.length) return;
+    w.appendChild(el("div", { class: "note" }, [ic("info"), el("div", {}, [
+      el("b", { text: "Falta seu briefing. " }), "Conta pra gente sobre o seu negócio pra criarmos com a sua cara. Leva uns 10 minutos. ",
+      el("a", { href: "brief.html" + (P.grupo ? "?plano=" + slugPlano() : ""), style: "font-weight:700", text: "Preencher agora" })
+    ])]));
+  }
+
+  // ---------------------------------------------------------------- miniaturas e visualizador
+  function thumb(e, aoAbrir) {
+    var b = el("button", { class: "thumb", type: "button", "aria-label": "Ver " + e.titulo });
+    var tipo = CR.tipoArquivo(e.arquivo_nome || e.demo_url || "");
+    if (e.link_externo && !e.arquivo_path && !e.demo_url) b.appendChild(el("span", { class: "file" }, [ic("ext"), el("br"), "Arquivo no Google Drive"]));
+    else if (e.demo_capa) { b.appendChild(el("img", { src: e.demo_capa, alt: "", loading: "lazy" })); b.appendChild(CR.playIcon()); }
+    else api.urlArquivo(e, false).then(function (url) {
+      if (!url) { b.appendChild(el("span", { class: "file", text: "Arquivo indisponível" })); return; }
+      if (tipo === "imagem") b.insertBefore(el("img", { src: url, alt: "", loading: "lazy" }), b.firstChild);
+      else if (tipo === "video") { b.insertBefore(el("video", { src: url.indexOf("blob:") === 0 ? url : url + "#t=0.1", muted: true, playsinline: true, preload: "metadata" }), b.firstChild); b.appendChild(CR.playIcon()); }
+      else b.appendChild(el("span", { class: "file" }, [ic("file"), el("br"), e.arquivo_nome || "Arquivo"]));
+    }).catch(function () { b.appendChild(el("span", { class: "file", text: "Arquivo indisponível" })); });
+    b.appendChild(el("span", { class: "ov" }, [el("span", { class: "chip", text: CR.TIPOS[e.tipo] || e.tipo }), el("span", { class: "pill " + e.status, text: CR.STATUS[e.status] })]));
+    b.addEventListener("click", function () { (aoAbrir || abrir)(e); });
+    return b;
+  }
+
+  var viewer = document.getElementById("viewer");
+  document.getElementById("v-fechar").addEventListener("click", function () { viewer.close(); });
+  viewer.addEventListener("close", function () { document.getElementById("v-media").textContent = ""; });
+  viewer.addEventListener("click", function (ev) { if (ev.target === viewer) viewer.close(); });
+
+  async function abrir(e) {
+    atual = e;
+    var m = document.getElementById("v-media"), info = document.getElementById("v-info");
+    m.textContent = ""; info.textContent = "";
+    var url = await api.urlArquivo(e, false).catch(function () { return ""; });
+    var tipo = CR.tipoArquivo(e.arquivo_nome || e.demo_url || "");
+    if (!url) m.appendChild(el("div", { class: "muted", style: "padding:40px", text: "Arquivo indisponível" }));
+    else if (e.link_externo && !e.arquivo_path && !e.demo_url) m.appendChild(el("iframe", { src: url, allow: "autoplay", title: e.titulo }));
+    else if (tipo === "video") m.appendChild(el("video", { src: url, controls: true, playsinline: true, autoplay: true, poster: e.demo_capa || false }));
+    else if (tipo === "imagem") {
+      m.appendChild(el("img", { src: url, alt: e.titulo + (e.extras && e.extras.length ? " · 1 de " + (e.extras.length + 1) : "") }));
+      if (e.extras && e.extras.length) {
+        m.classList.add("multi");
+        api.urlExtras(e).then(function (us) { us.forEach(function (u, i) { if (u) m.appendChild(el("img", { src: u, alt: e.titulo + " · " + (i + 2) + " de " + (us.length + 1) })); }); });
+      }
+    }
+    else m.appendChild(el("div", { style: "color:#fff;padding:40px;text-align:center" }, [ic("file"), el("p", { text: e.arquivo_nome || "Arquivo" })]));
+
+    info.appendChild(el("div", { style: "display:flex;gap:8px;align-items:center;flex-wrap:wrap" }, [el("span", { class: "chip", text: CR.TIPOS[e.tipo] || e.tipo }), el("span", { class: "pill " + e.status, text: CR.STATUS[e.status] })]));
+    info.appendChild(el("h2", { text: e.titulo, style: "font-size:22px" }));
+    if (e.data_postagem) info.appendChild(el("p", { class: "small muted", style: "margin:0", text: (posta ? "A gente posta " : "Postar ") + CR.dataLonga(e.data_postagem) + " (" + CR.data(e.data_postagem) + ")" }));
+    if (e.status === "ajuste" && e.comentario) info.appendChild(el("div", { class: "coment" }, [el("b", { text: "Seu pedido: " }), e.comentario, el("div", { class: "small muted", text: "A gente entrega o ajuste em até 24 h." })]));
+    var ps = statusPost(e);
+    if (ps) info.appendChild(ps);
+    if (e.extras && e.extras.length) info.appendChild(el("p", { class: "small muted", style: "margin:0", text: "Carrossel com " + (e.extras.length + 1) + " imagens. Role a imagem pra ver todas." }));
+    if (e.legenda) {
+      info.appendChild(el("div", { class: "eyebrow", text: "Legenda" }));
+      info.appendChild(el("div", { class: "leg", text: e.legenda }));
+    }
+    var acts = el("div", { style: "display:grid;gap:8px;grid-template-columns:1fr 1fr" });
+    if (e.status !== "aprovado") acts.appendChild(el("button", { class: "btn ok", type: "button", onclick: function () { aprovar(e, this, true); } }, [ic("check"), "Aprovar"]));
+    if (e.status === "aguardando") acts.appendChild(el("button", { class: "btn ghost", type: "button", onclick: function () { viewer.close(); abrirAjuste(e); } }, [ic("edit"), "Pedir ajuste"]));
+    acts.appendChild(el("button", { class: "btn dark", type: "button", onclick: function () { baixar(e, this); } }, [ic("down"), "Baixar em alta"]));
+    if (e.legenda) acts.appendChild(el("button", { class: "btn ghost", type: "button", onclick: function () { CR.copiar(e.legenda, "Legenda copiada"); } }, [ic("copy"), "Copiar legenda"]));
+    info.appendChild(acts);
+    viewer.showModal();
+  }
+
+  // situação da postagem no Instagram (só nos planos em que a gente posta)
+  function statusPost(e) {
+    if (e.publicado_em) return el("div", { class: "note", style: "border-left-color:var(--ok)" }, [ic("check"), el("div", {}, [el("b", { text: "Publicado no Instagram " }), CR.dataLonga(e.publicado_em.slice(0, 10)) + ". ", e.publicado_link ? el("a", { href: e.publicado_link, target: "_blank", rel: "noopener", style: "font-weight:700", text: "Ver post" }) : null])]);
+    if (!posta || !eu.instagram || e.publicar === false || !e.data_postagem) return null;
+    var h = String(e.hora_postagem || "10:00").slice(0, 5);
+    return el("div", { class: "note" }, [ic("cal"), el("div", {}, e.status === "aprovado"
+      ? [el("b", { text: "Agendado. " }), "Vai ao ar sozinho no @" + eu.instagram + " " + CR.dataLonga(e.data_postagem) + " às " + h + "."]
+      : [el("b", { text: "Aprove pra agendar. " }), "Depois de aprovado, vai ao ar sozinho no @" + eu.instagram + " " + CR.dataLonga(e.data_postagem) + " às " + h + "."])]);
+  }
+
+  async function aprovar(e, btn, fechar) {
+    btn.disabled = true;
+    try { await api.aprovar(e.id); CR.toast("Aprovado! Obrigado."); if (fechar) viewer.close(); await carregar(); }
+    catch (x) { CR.toast(x.message, true); btn.disabled = false; }
+  }
+  async function baixar(e, btn) {
+    btn.disabled = true;
+    try {
+      var url = await api.urlArquivo(e, true);
+      var a = el("a", { href: url, download: e.arquivo_nome || "", target: "_blank", rel: "noopener" });
+      document.body.appendChild(a); a.click(); a.remove();
+    } catch (x) { CR.toast(x.message, true); }
+    btn.disabled = false;
+  }
+
+  // ---------------------------------------------------------------- início
+  function rail() {
+    var r = document.getElementById("rail"); r.textContent = "";
+    var pend = itens.filter(function (i) { return i.status === "aguardando"; });
+    if (!pend.length) {
+      r.style.display = "block";
+      r.appendChild(el("div", { class: "empty" }, [ic("check"), el("b", { text: itens.length ? "Tudo aprovado" : "Seus conteúdos aparecem aqui" }), el("span", { text: itens.length ? "Quando tiver conteúdo novo, ele aparece aqui pra você aprovar." : "Em até 24 h depois do briefing e do pagamento." })]));
+      return;
+    }
+    r.style.display = "";
+    pend.forEach(function (e) {
+      r.appendChild(el("article", { class: "ent" }, [thumb(e), el("div", { class: "body" }, [
+        el("h3", { text: e.titulo }),
+        e.data_postagem ? el("div", { class: "meta", text: (posta ? "Vai ao ar " : "Postar ") + CR.dataLonga(e.data_postagem) }) : null,
+        el("div", { class: "acts" }, [
+          el("button", { class: "btn ok sm", type: "button", onclick: function () { aprovar(e, this); } }, [ic("check"), "Aprovar"]),
+          el("button", { class: "btn ghost sm", type: "button", text: "Ver", onclick: function () { abrir(e); } })
+        ])
+      ])]));
+    });
+  }
+
+  function linha(e) {
+    var p = String(e.data_postagem || "").split("-");
+    var d = e.data_postagem ? new Date(+p[0], +p[1] - 1, +p[2]) : null;
+    var mini = el("button", { class: "mini", type: "button", "aria-label": "Ver " + e.titulo, onclick: function () { abrir(e); } });
+    if (e.demo_capa) mini.style.backgroundImage = "url(" + e.demo_capa + ")";
+    else if (CR.tipoArquivo(e.arquivo_nome || e.demo_url || "") === "imagem") api.urlArquivo(e, false).then(function (u) { mini.style.backgroundImage = "url(" + u + ")"; }).catch(function () {});
+    return el("div", { class: "li" }, [
+      d ? el("div", { class: "date" }, [el("b", { text: String(d.getDate()) }), el("span", { text: CR.SEMANA[d.getDay()] })]) : mini,
+      el("div", { style: "display:flex;gap:12px;align-items:center;min-width:0" }, [d ? mini : null, el("div", { style: "min-width:0" }, [
+        el("div", { class: "tt", text: e.titulo }),
+        el("div", { class: "st" }, [CR.TIPOS[e.tipo] || e.tipo, " · ", el("span", { class: "pill " + e.status, style: "padding:1px 8px", text: CR.STATUS[e.status] })])
+      ])]),
+      el("div", { style: "display:flex;gap:4px" }, [
+        e.legenda ? el("button", { class: "icon-btn", type: "button", "aria-label": "Copiar legenda", title: "Copiar legenda", onclick: function () { CR.copiar(e.legenda, "Legenda copiada"); } }, ic("copy")) : null,
+        el("button", { class: "icon-btn", type: "button", "aria-label": "Baixar em alta", title: "Baixar em alta", onclick: function () { baixar(e, this); } }, ic("down"))
+      ])
+    ]);
+  }
+
+  function proximas() {
+    var l = document.getElementById("proximas"); l.textContent = "";
+    var hj = CR.iso(hoje);
+    var prox = itens.filter(function (i) { return i.data_postagem && i.data_postagem >= hj; }).sort(function (a, b) { return a.data_postagem < b.data_postagem ? -1 : 1; }).slice(0, 4);
+    if (!prox.length) { l.appendChild(el("div", { class: "empty", style: "padding:20px" }, [el("span", { text: "Nenhuma postagem marcada pros próximos dias." })])); return; }
+    prox.forEach(function (e) { l.appendChild(linha(e)); });
+  }
+
+  function stats() {
+    var s = document.getElementById("stats"); s.textContent = "";
+    var aj = eu.ajustes_mes || 0;
+    [[contar("aguardando"), "para aprovar", "conteudos", "aguardando"], [contar("ajuste"), "em ajuste", "conteudos", "ajuste"], [contar("aprovado"), "aprovados", "conteudos", "aprovado"], [usados + " de " + aj, P.grupo === "plano" ? "ajustes usados no mês" : "ajustes usados", null]].forEach(function (x) {
+      var b = el(x[2] ? "button" : "div", { class: "stat", type: x[2] ? "button" : false }, [el("b", { text: String(x[0]) }), el("span", { text: x[1] })]);
+      if (x[2]) b.addEventListener("click", function () { setFiltro(x[3]); location.hash = x[2]; });
+      s.appendChild(b);
+    });
+  }
+
+  // ---------------------------------------------------------------- conteúdos
+  function setFiltro(f) {
+    filtro = f;
+    document.querySelectorAll("#v-conteudos .seg button").forEach(function (x) { x.setAttribute("aria-pressed", String(x.dataset.f === f)); });
+    renderLista();
+  }
+  document.querySelectorAll("#v-conteudos .seg button").forEach(function (b) { b.addEventListener("click", function () { setFiltro(b.dataset.f); }); });
+
+  function card(e) {
+    var acts = el("div", { class: "acts" });
+    if (e.status !== "aprovado") acts.appendChild(el("button", { class: "btn ok sm", type: "button", onclick: function () { aprovar(e, this); } }, [ic("check"), "Aprovar"]));
+    if (e.status === "aguardando") acts.appendChild(el("button", { class: "btn ghost sm", type: "button", text: "Ajuste", onclick: function () { abrirAjuste(e); } }));
+    acts.appendChild(el("button", { class: "btn dark sm", type: "button", "aria-label": "Baixar em alta", onclick: function () { baixar(e, this); } }, [ic("down"), e.status === "aprovado" ? "Baixar em alta" : ""]));
+    return el("article", { class: "ent" }, [thumb(e), el("div", { class: "body" }, [
+      el("h3", { text: e.titulo }),
+      el("div", { class: "meta", text: e.data_postagem ? (posta ? "Vai ao ar " : "Postar ") + CR.dataLonga(e.data_postagem) : "Entregue em " + CR.data(e.criado_em) }),
+      e.status === "ajuste" && e.comentario ? el("div", { class: "coment" }, [el("b", { text: "Seu pedido: " }), e.comentario]) : null,
+      acts
+    ])]);
+  }
+
+  function renderLista() {
+    var lista = document.getElementById("lista"); lista.textContent = "";
+    var vis = itens.filter(function (i) { return filtro === "todos" || i.status === filtro; });
+    vis.forEach(function (e) { lista.appendChild(card(e)); });
+    var v = document.getElementById("vazio"); v.textContent = "";
+    v.hidden = vis.length > 0;
+    v.appendChild(el("b", { text: !itens.length ? "Ainda não tem conteúdo aqui" : { aguardando: "Nada pra aprovar agora", ajuste: "Nenhum ajuste em andamento", aprovado: "Nenhum conteúdo aprovado ainda", todos: "" }[filtro] }));
+    v.appendChild(el("span", { text: !itens.length ? "Assim que recebermos seu briefing e o pagamento, seus conteúdos aparecem aqui em até 24 h." : "Tudo em dia por aqui." }));
+  }
+
+  // ---------------------------------------------------------------- calendário
+  document.getElementById("mes-ant").addEventListener("click", function () { calMes = new Date(calMes.getFullYear(), calMes.getMonth() - 1, 1); renderCal(); });
+  document.getElementById("mes-prox").addEventListener("click", function () { calMes = new Date(calMes.getFullYear(), calMes.getMonth() + 1, 1); renderCal(); });
+  function renderCal() {
+    document.getElementById("mes-nome").textContent = CR.MESES[calMes.getMonth()] + " " + calMes.getFullYear();
+    var g = document.getElementById("cal-grid"); g.textContent = "";
+    CR.SEMANA.forEach(function (d) { g.appendChild(el("div", { class: "wd", text: d })); });
+    var ini = new Date(calMes); ini.setDate(1 - ini.getDay());
+    var porDia = {};
+    itens.forEach(function (i) { if (i.data_postagem) (porDia[i.data_postagem] = porDia[i.data_postagem] || []).push(i); });
+    for (var k = 0; k < 42; k++) {
+      var d = new Date(ini); d.setDate(ini.getDate() + k);
+      if (k >= 35 && d.getMonth() !== calMes.getMonth()) break;
+      var s = CR.iso(d), lista = porDia[s] || [];
+      var b = el("button", { class: "day" + (d.getMonth() !== calMes.getMonth() ? " out" : "") + (s === CR.iso(hoje) ? " today" : ""), type: "button", "aria-pressed": String(s === calDia), "aria-label": d.getDate() + " de " + CR.MESES[d.getMonth()] + (lista.length ? ", " + lista.length + " conteúdo(s)" : ""), "data-d": s }, [
+        el("span", { text: String(d.getDate()) }), el("span", { class: "dots" }, lista.slice(0, 4).map(function (i) { return el("i", { class: i.status }); }))
+      ]);
+      b.addEventListener("click", function () { calDia = this.dataset.d; renderCal(); });
+      g.appendChild(b);
+    }
+    var p = calDia.split("-"), dd = new Date(+p[0], +p[1] - 1, +p[2]);
+    document.getElementById("dia-titulo").textContent = CR.dataLonga(calDia).replace(/^./, function (c) { return c.toUpperCase(); }) + (["hoje", "amanhã", "ontem"].indexOf(CR.dataLonga(calDia)) >= 0 ? " · " + dd.getDate() + " de " + CR.MESES[dd.getMonth()] : "");
+    var dl = document.getElementById("dia-lista"); dl.textContent = "";
+    var doDia = porDia[calDia] || [];
+    if (!doDia.length) dl.appendChild(el("div", { class: "empty", style: "padding:20px" }, [el("span", { text: "Nada marcado pra esse dia." })]));
+    doDia.forEach(function (e) { dl.appendChild(linha(e)); });
+  }
+
+  // ---------------------------------------------------------------- ajuste
+  var dlg = document.getElementById("dlg-ajuste");
+  function abrirAjuste(e) {
+    atual = e;
+    var resta = (eu.ajustes_mes || 0) - usados;
+    document.getElementById("aj-info").textContent = "“" + e.titulo + "”. " + (resta > 0 ? "Você ainda tem " + resta + (resta === 1 ? " ajuste" : " ajustes") + (P.grupo === "plano" ? " neste mês." : ".") : "Seus ajustes acabaram. Pode mandar mesmo assim: a gente te passa o valor antes de fazer.");
+    document.getElementById("aj-txt").value = ""; document.getElementById("aj-err").hidden = true;
+    dlg.showModal();
+  }
+  document.getElementById("aj-cancel").addEventListener("click", function () { dlg.close(); });
+  document.getElementById("f-ajuste").addEventListener("submit", async function (ev) {
+    ev.preventDefault();
+    var t = document.getElementById("aj-txt").value.trim(), er = document.getElementById("aj-err");
+    if (!t) { er.textContent = "Conta pra gente o que você quer mudar."; er.hidden = false; return; }
+    try { await api.pedirAjuste(atual, t); dlg.close(); CR.toast("Pedido enviado. Entregamos o ajuste em até 24 h."); await carregar(); }
+    catch (x) { er.textContent = x.message; er.hidden = false; }
+  });
+
+  // ---------------------------------------------------------------- conta
+  document.getElementById("p-nome").value = eu.nome || "";
+  document.getElementById("p-empresa").value = eu.empresa || "";
+  document.getElementById("p-whats").value = eu.whatsapp || "";
+  document.getElementById("p-email").value = eu.email || "";
+  document.getElementById("f-perfil").addEventListener("submit", async function (ev) {
+    ev.preventDefault();
+    var campos = { nome: document.getElementById("p-nome").value.trim(), empresa: document.getElementById("p-empresa").value.trim(), whatsapp: document.getElementById("p-whats").value.trim() };
+    try { await api.salvarPerfil(eu.id, campos); Object.assign(eu, campos); CR.toast("Dados salvos."); } catch (x) { CR.toast(x.message, true); }
+  });
+
+  (function contaPlano() {
+    var c = document.getElementById("conta-plano");
+    c.appendChild(el("h2", { text: "Seu plano" }));
+    if (!P.grupo) { c.appendChild(el("p", { class: "small muted", text: "Nenhum plano ativo ainda." })); return; }
+    c.appendChild(el("p", { style: "margin:8px 0 2px;font:900 20px var(--display)", text: P.nome + " · " + P.preco }));
+    c.appendChild(el("p", { class: "small muted", style: "margin:0 0 10px", text: P.papel }));
+    var ul = el("ul", { style: "margin:0;padding-left:18px;display:grid;gap:4px;font-size:14px" });
+    var PLURAL = { stories: "stories", post: "posts", carrossel: "carrosséis", reels: "reels", anuncio: "anúncios", video: "vídeos" };
+    if (P.qtd && P.grupo === "plano") ul.appendChild(el("li", { text: Object.keys(P.qtd).map(function (t) { return P.qtd[t] + " " + PLURAL[t]; }).join(", ") + " por mês" }));
+    (P.inclui || []).forEach(function (t) { ul.appendChild(el("li", { text: t })); });
+    ul.appendChild(el("li", { text: (eu.ajustes_mes || 0) + (eu.ajustes_mes === 1 ? " ajuste" : " ajustes") + (P.grupo === "plano" ? " por mês" : "") }));
+    c.appendChild(ul);
+  })();
+
+  function cartaoInstalar(alvo, curto) {
+    var c = document.getElementById(alvo); c.textContent = "";
+    if (CR.instalado()) { if (!curto) { c.appendChild(el("h2", { text: "App instalado" })); c.appendChild(el("p", { class: "small muted", text: "Você está usando o app da Criativos." })); } else c.hidden = true; return; }
+    var box = curto ? el("div", { class: "note" }) : c;
+    var corpo = el("div", {}, [el(curto ? "b" : "h2", { text: "Instale o app no seu celular" })]);
+    if (CR.podeInstalar()) corpo.appendChild(el("button", { class: "btn sm", type: "button", style: "margin-top:10px", onclick: async function () { if (await CR.instalar()) cartaoInstalar(alvo, curto); } }, [ic("phone"), "Instalar app"]));
+    else if (CR.ios()) corpo.appendChild(el("p", { class: "small muted", style: "margin:6px 0 0", text: "No iPhone: toque em Compartilhar, depois em “Adicionar à Tela de Início”." }));
+    else corpo.appendChild(el("p", { class: "small muted", style: "margin:6px 0 0", text: "No Android: abra o menu do navegador (⋮) e toque em “Instalar app” ou “Adicionar à tela inicial”." }));
+    if (curto) { box.appendChild(ic("phone")); box.appendChild(corpo); c.appendChild(box); } else c.appendChild(corpo);
+  }
+  cartaoInstalar("conta-instalar");
+
+  function cartaoIG() {
+    var c = document.getElementById("conta-ig"); c.textContent = "";
+    if (!posta) { c.hidden = true; return; }
+    c.hidden = false;
+    c.appendChild(el("h2", { text: "Seu Instagram" }));
+    if (eu.instagram) {
+      c.appendChild(el("p", { style: "margin:8px 0 4px;font-weight:700", text: "Conectado: @" + eu.instagram }));
+      c.appendChild(el("p", { class: "small muted", style: "margin:0 0 12px", text: "Quando você aprova um conteúdo, ele vai ao ar sozinho no dia e horário do calendário, com a legenda." }));
+      c.appendChild(el("button", { class: "btn ghost sm", type: "button", text: "Desconectar", onclick: async function () {
+        try { await api.instagramDesconectar(); eu.instagram = null; cartaoIG(); renderTudo(); CR.toast("Instagram desconectado."); } catch (x) { CR.toast(x.message, true); }
+      } }));
+    } else {
+      c.appendChild(el("p", { class: "small muted", style: "margin:6px 0 12px", text: "Conecte uma vez e a gente posta por você: aprovou no app, vai ao ar sozinho no dia marcado. A conta precisa ser profissional (comercial ou criador de conteúdo). A gente nunca vê sua senha." }));
+      c.appendChild(el("button", { class: "btn", type: "button", onclick: async function () {
+        this.disabled = true;
+        try { location.href = await api.instagramLink(); } catch (x) { CR.toast(x.message, true); this.disabled = false; }
+      } }, [ic("ext"), "Conectar meu Instagram"]));
+    }
+  }
+  cartaoIG();
+  (function retornoIG() {
+    var q = new URLSearchParams(location.search).get("ig");
+    if (!q) return;
+    var msg = { ok: "Instagram conectado!", erro: "Não deu pra conectar. Confira se a conta é profissional e tente de novo.", cancelado: "Conexão cancelada.", expirado: "O link expirou. Tente conectar de novo." }[q];
+    if (msg) CR.toast(msg, q !== "ok");
+    try { history.replaceState(null, "", location.pathname + location.hash); } catch (x) {}
+  })();
+  if (matchMedia("(max-width: 959px)").matches) cartaoInstalar("instalar-inicio", true);
+  document.addEventListener("cr-instalavel", function () { cartaoInstalar("conta-instalar"); if (matchMedia("(max-width: 959px)").matches) cartaoInstalar("instalar-inicio", true); });
+
+  function ajuda() {
+    var aj = document.getElementById("ajuda"); aj.textContent = "";
+    var w = CR.whats("Olá! Sou " + (eu.nome || "") + " (" + (eu.empresa || "") + ") e preciso de ajuda no app.");
+    if (w) aj.appendChild(el("a", { class: "btn", href: w, target: "_blank", rel: "noopener" }, [ic("chat"), "Falar no WhatsApp"]));
+    aj.appendChild(el("button", { class: "btn ghost", type: "button", onclick: function () { CR.copiar(CR.config.EMAIL, "E-mail copiado"); } }, [ic("copy"), CR.config.EMAIL]));
+    aj.appendChild(el("a", { class: "btn ghost", href: "brief.html" + (P.grupo ? "?plano=" + slugPlano() : "") }, [ic("edit"), meusBriefings.length ? "Refazer briefing" : "Preencher briefing"]));
+  }
+
+  // ---------------------------------------------------------------- ideias
+  var ST_IDEIA = { nova: "Recebida", sugerida: "Pra você ver", aprovada: "Na fila", producao: "Em produção", feita: "Virou conteúdo", descartada: "Descartada" };
+  var TIPOS_IDEIA = ["reels", "post", "carrossel", "stories", "outro"];
+  document.getElementById("nova-ideia").append(ic("plus"), "Mandar uma ideia");
+  function renderIdeias() {
+    var s = document.getElementById("id-sug"); s.textContent = "";
+    var sug = sugeridas();
+    s.style.display = sug.length ? "" : "block";
+    if (!sug.length) s.appendChild(el("div", { class: "empty" }, [ic("idea"), el("b", { text: "Nenhuma ideia nova agora" }), el("span", { text: "A gente manda por aqui ideias pensadas pro seu perfil. Você também pode mandar as suas." })]));
+    sug.forEach(function (i) {
+      s.appendChild(el("article", { class: "idea" }, [
+        el("div", { class: "top" }, [el("span", { class: "chip", text: CR.TIPOS[i.tipo] || i.tipo }), el("span", { class: "small muted", text: "Sugestão da equipe" })]),
+        el("h3", { text: i.titulo }),
+        i.descricao ? el("p", { text: i.descricao }) : null,
+        linkRef(i.referencia),
+        el("div", { class: "acts" }, [
+          el("button", { class: "btn ok sm", type: "button", onclick: function () { responder(i, "aprovada", this); } }, [ic("check"), "Quero essa"]),
+          el("button", { class: "btn ghost sm", type: "button", text: "Agora não", onclick: function () { responder(i, "descartada", this); } })
+        ])
+      ]));
+    });
+    var a = document.getElementById("id-and"); a.textContent = "";
+    var resto = ideias.filter(function (i) { return i.status !== "sugerida"; });
+    if (!resto.length) a.appendChild(el("div", { class: "empty", style: "padding:20px" }, [el("span", { text: "As ideias que você mandar ou escolher aparecem aqui com o andamento." })]));
+    resto.forEach(function (i) {
+      a.appendChild(el("div", { class: "li" }, [
+        el("span", { class: "chip", text: CR.TIPOS[i.tipo] || i.tipo }),
+        el("div", { style: "min-width:0" }, [el("div", { class: "tt", text: i.titulo }), el("div", { class: "st", text: (i.origem === "cliente" ? "Você mandou" : "Sugestão da equipe") + " · " + CR.data(i.criado_em) })]),
+        el("span", { class: "pill " + i.status, text: ST_IDEIA[i.status] || i.status })
+      ]));
+    });
+  }
+  function linkRef(u) {
+    return /^https?:\/\//i.test(u || "") ? el("a", { href: u, target: "_blank", rel: "noopener", class: "small", style: "font-weight:700" }, [ic("ext"), " Ver referência"]) : null;
+  }
+  async function responder(i, st, btn) {
+    btn.disabled = true;
+    try { await api.editarIdeia(i.id, { status: st }); CR.toast(st === "aprovada" ? "Boa! Entrou na fila de produção." : "Tudo bem, a gente pensa em outra."); await carregar(); }
+    catch (x) { CR.toast(x.message, true); btn.disabled = false; }
+  }
+  var dlgIdeia = document.getElementById("dlg-ideia");
+  TIPOS_IDEIA.forEach(function (t, k) {
+    document.getElementById("ii-tipo").appendChild(el("label", {}, [el("input", { type: "radio", name: "ii-tipo", value: t, checked: k === 0 }), el("span", { text: CR.TIPOS[t] })]));
+  });
+  document.getElementById("nova-ideia").addEventListener("click", function () {
+    ["ii-tit", "ii-desc", "ii-ref"].forEach(function (id) { document.getElementById(id).value = ""; });
+    document.getElementById("ii-err").hidden = true;
+    var br = CR.briefingResumo(meusBriefings[0]), dica = document.getElementById("ii-brief"); dica.textContent = "";
+    var partes = [];
+    if (br.primeiro) partes.push("quer divulgar primeiro: “" + br.primeiro + "”");
+    if (br.promo) partes.push("data especial: “" + br.promo + "”");
+    if (br.assuntos) partes.push("assuntos que gosta de ensinar: “" + br.assuntos + "”");
+    dica.hidden = !partes.length;
+    if (partes.length) { dica.appendChild(ic("info")); dica.appendChild(el("div", {}, [el("b", { text: "Do seu briefing: " }), partes.join("; ") + "."])); }
+    dlgIdeia.showModal();
+  });
+  document.getElementById("ii-cancel").addEventListener("click", function () { dlgIdeia.close(); });
+  document.getElementById("f-ideia").addEventListener("submit", async function (ev) {
+    ev.preventDefault();
+    var tit = document.getElementById("ii-tit").value.trim(), er = document.getElementById("ii-err");
+    var ref = document.getElementById("ii-ref").value.trim();
+    var m = !tit ? "Escreva a ideia em uma frase." : ref && !/^https?:\/\//i.test(ref) ? "O link precisa começar com https://" : "";
+    er.textContent = m; er.hidden = !m; if (m) return;
+    var btn = this.querySelector("button[type=submit]"); btn.disabled = true;
+    try {
+      await api.criarIdeia({ cliente_id: eu.id, origem: "cliente", status: "nova", tipo: (document.querySelector('input[name="ii-tipo"]:checked') || {}).value || "post", titulo: tit, descricao: document.getElementById("ii-desc").value.trim() || null, referencia: ref || null });
+      dlgIdeia.close(); CR.toast("Ideia enviada! A gente te responde por aqui."); await carregar();
+    } catch (x) { er.textContent = x.message; er.hidden = false; }
+    btn.disabled = false;
+  });
+
+  // ---------------------------------------------------------------- relatórios
+  var relMes = new Date(hoje.getFullYear(), hoje.getMonth(), 1);
+  ["rel-ant", "rel-prox"].forEach(function (id, i) {
+    var b = document.getElementById(id); b.appendChild(ic(i ? "right" : "left"));
+    b.addEventListener("click", function () { relMes = new Date(relMes.getFullYear(), relMes.getMonth() + (i ? 1 : -1), 1); renderRel(); renderIG(); });
+  });
+  function num(n) { return Number(n || 0).toLocaleString("pt-BR"); }
+  function renderRel() {
+    document.getElementById("rel-mes").textContent = CR.MESES[relMes.getMonth()] + " " + relMes.getFullYear();
+    document.getElementById("rel-prox").disabled = relMes >= new Date(hoje.getFullYear(), hoje.getMonth(), 1);
+    var ini = CR.iso(relMes), fim = CR.iso(new Date(relMes.getFullYear(), relMes.getMonth() + 1, 1));
+    function noMes(d) { var x = String(d || "").slice(0, 10); return x && x >= ini && x < fim; }
+    var ent = itens.filter(function (i) { return noMes(i.criado_em); });
+    var total = P.grupo === "plano" ? CR.totalPlano(P) : 0;
+    var c = document.getElementById("rel-cont"); c.textContent = "";
+    [[ent.length + (total ? " de " + total : ""), "entregues"], [ent.filter(function (i) { return i.status === "aprovado"; }).length, "aprovados"],
+     posta ? [itens.filter(function (i) { return noMes(i.publicado_em); }).length, "publicados no Instagram"] : null,
+     [meusAjustes.filter(function (a) { return noMes(a.criado_em); }).length, "ajustes pedidos"]].forEach(function (x) {
+      if (x) c.appendChild(el("div", { class: "stat" }, [el("b", { text: String(x[0]) }), el("span", { text: x[1] })]));
+    });
+    var t = document.getElementById("rel-tipos"); t.textContent = "";
+    var tipos = P.qtd ? Object.keys(P.qtd) : Object.keys(CR.TIPOS).filter(function (k) { return ent.some(function (i) { return i.tipo === k; }); });
+    t.hidden = !tipos.length;
+    var g = el("div", { style: "display:grid;gap:12px" });
+    tipos.forEach(function (k) {
+      var feito = ent.filter(function (i) { return i.tipo === k || (k === "video" && i.tipo === "reels"); }).length, meta = P.qtd ? P.qtd[k] : 0;
+      g.appendChild(el("div", { class: "prog" }, [
+        el("div", { class: "lb" }, [el("span", { text: CR.TIPOS[k] || k }), el("b", { text: meta ? feito + " de " + meta : String(feito) })]),
+        el("div", { class: "track" }, el("i", { style: "width:" + (meta ? Math.min(100, feito / meta * 100) : 100) + "%" }))
+      ]));
+    });
+    t.appendChild(g);
+
+    var w = document.getElementById("rel-traf"); w.textContent = "";
+    var r = relatorios.find(function (x) { return String(x.mes).slice(0, 10) === ini; });
+    var temNumeros = r && ["investido", "alcance", "impressoes", "cliques", "conversas", "seguidores"].some(function (k) { return r[k] != null && r[k] !== ""; });
+    if (temNumeros) {
+      var st = el("div", { class: "stats" });
+      [["investido", "investidos em anúncios", CR.reais], ["alcance", "pessoas alcançadas", num], ["impressoes", "impressões", num], ["cliques", "cliques", num], ["conversas", "conversas e contatos", num], ["seguidores", "seguidores novos", num]].forEach(function (x) {
+        if (r[x[0]] != null && r[x[0]] !== "") st.appendChild(el("div", { class: "stat" }, [el("b", { text: x[2](r[x[0]]) }), el("span", { text: x[1] })]));
+      });
+      if (r.investido && r.conversas) st.appendChild(el("div", { class: "stat" }, [el("b", { text: CR.reais(r.investido / r.conversas) }), el("span", { text: "por conversa" })]));
+      w.appendChild(st);
+      if (r.origem === "meta" && r.atualizado_em) {
+        var d = new Date(r.atualizado_em);
+        w.appendChild(el("p", { class: "small muted", style: "margin:8px 0 0", text: "Números direto do Meta Ads, atualizados em " + CR.data(CR.iso(d)) + " às " + String(d.getHours()).padStart(2, "0") + ":" + String(d.getMinutes()).padStart(2, "0") + "." }));
+      }
+      if (r.campanhas && r.campanhas.length) {
+        var cp = el("div", { class: "card", style: "margin-top:12px;display:grid;gap:12px" }, [el("div", { class: "eyebrow", text: "Campanhas do mês" })]);
+        var maior = Math.max.apply(null, r.campanhas.map(function (x) { return x.investido || 0; })) || 1;
+        r.campanhas.forEach(function (x) {
+          cp.appendChild(el("div", { class: "prog" }, [
+            el("div", { class: "lb" }, [el("span", { text: x.nome }), el("b", { text: CR.reais(x.investido) })]),
+            el("div", { class: "track" }, el("i", { style: "width:" + Math.round((x.investido || 0) / maior * 100) + "%" })),
+            el("div", { class: "small muted", text: [num(x.alcance) + " pessoas", num(x.cliques) + " cliques", x.conversas ? num(x.conversas) + " conversas" : ""].filter(Boolean).join(" · ") })
+          ]));
+        });
+        w.appendChild(cp);
+      }
+    } else if (P.trafego) {
+      w.appendChild(el("div", { class: "empty", style: "padding:22px" }, [ic("chart"), el("b", { text: "Relatório de tráfego ainda não saiu" }), el("span", { text: "Os números dos anúncios deste mês aparecem aqui quando a gente fechar o mês." })]));
+    } else {
+      var wa = CR.whats("Olá! Sou " + (eu.nome || "") + " (" + (eu.empresa || "") + ") e quero saber mais sobre gestão de tráfego pago.");
+      w.appendChild(el("div", { class: "note" }, [ic("info"), el("div", {}, ["Gestão de tráfego pago faz parte do plano ", el("b", { text: "Autoridade" }), ". ", wa ? el("a", { href: wa, target: "_blank", rel: "noopener", style: "font-weight:700", text: "Quero saber mais" }) : null])]));
+    }
+    if (r && (r.resumo || /^https?:\/\//i.test(r.link || ""))) {
+      w.appendChild(el("div", { class: "card", style: "margin-top:12px;display:grid;gap:10px" }, [
+        r.resumo ? el("div", {}, [el("div", { class: "eyebrow", text: "Comentário da equipe" }), el("p", { style: "margin:6px 0 0;white-space:pre-wrap", text: r.resumo })]) : null,
+        /^https?:\/\//i.test(r.link || "") ? el("a", { class: "btn ghost sm", style: "justify-self:start", href: r.link, target: "_blank", rel: "noopener" }, [ic("ext"), "Ver relatório completo"]) : null
+      ]));
+    }
+  }
+
+  // Instagram: seguidores no mês e como foram os últimos posts (coleta diária da plataforma)
+  function renderIG() {
+    var w = document.getElementById("rel-ig"); w.textContent = "";
+    if (!eu.instagram && !igm.length) { w.appendChild(el("div", { class: "note" }, [ic("info"), el("div", {}, [posta ? "Conecte seu Instagram em " : "Os números do seu Instagram aparecem aqui quando ele estiver conectado na plataforma. ", posta ? el("a", { href: "#conta", style: "font-weight:700", text: "Conta" }) : null, posta ? " pra ver seguidores e engajamento aqui." : ""])])); return; }
+    var ini = CR.iso(relMes), fim = CR.iso(new Date(relMes.getFullYear(), relMes.getMonth() + 1, 1));
+    var doMes = igm.filter(function (m) { return m.dia >= ini && m.dia < fim; }).sort(function (a, b) { return a.dia < b.dia ? -1 : 1; });
+    if (!doMes.length) { w.appendChild(el("div", { class: "empty", style: "padding:20px" }, [el("span", { text: "Ainda sem números do Instagram nesse mês. A plataforma atualiza uma vez por dia." })])); return; }
+    var prim = doMes[0], ult = doMes[doMes.length - 1], posts = ult.posts || [];
+    var dif = (ult.seguidores || 0) - (prim.seguidores || 0);
+    var eng = posts.reduce(function (t, p) { return t + (p.curtidas || 0) + (p.comentarios || 0); }, 0);
+    var st = el("div", { class: "stats" });
+    [[num(ult.seguidores), "seguidores"], [(dif > 0 ? "+" : "") + num(dif), "seguidores no mês" + (doMes.length > 1 ? " (desde " + CR.data(prim.dia) + ")" : "")], [posts.length ? num(Math.round(eng / posts.length)) : "—", "curtidas + comentários por post"]].forEach(function (x) {
+      st.appendChild(el("div", { class: "stat" }, [el("b", { text: String(x[0]) }), el("span", { text: x[1] })]));
+    });
+    w.appendChild(st);
+    if (posts.length) {
+      var maior = Math.max.apply(null, posts.map(function (p) { return (p.curtidas || 0) + (p.comentarios || 0); })) || 1;
+      var cp = el("div", { class: "card", style: "margin-top:12px;display:grid;gap:12px" }, [el("div", { class: "eyebrow", text: "Últimos posts" })]);
+      posts.slice(0, 8).forEach(function (p) {
+        var e = (p.curtidas || 0) + (p.comentarios || 0);
+        cp.appendChild(el("div", { class: "prog" }, [
+          el("div", { class: "lb" }, [/^https?:\/\//.test(p.link || "") ? el("a", { href: p.link, target: "_blank", rel: "noopener", text: (p.legenda || "Post").slice(0, 60) || "Post" }) : el("span", { text: (p.legenda || "Post").slice(0, 60) }), el("b", { text: num(e) })]),
+          el("div", { class: "track" }, el("i", { style: "width:" + Math.round(e / maior * 100) + "%" })),
+          el("div", { class: "small muted", text: [CR.data(String(p.data || "").slice(0, 10)), num(p.curtidas) + " curtidas", num(p.comentarios) + " comentários"].join(" · ") })
+        ]));
+      });
+      w.appendChild(cp);
+    }
+  }
+
+  // assistente: o cliente pergunta sobre os conteúdos, os resultados e o Instagram dele
+  function assistente(id, titulo) {
+    var c = document.getElementById(id); c.textContent = "";
+    var inp = el("input", { type: "text", maxlength: "1500", placeholder: "Ex.: Qual post foi melhor esse mês?", "aria-label": "Sua pergunta", style: "flex:1 1 220px;min-width:0" });
+    var out = el("div", { class: "leg", hidden: true });
+    var btn = el("button", { class: "btn dark", type: "button", text: "Perguntar", onclick: async function () {
+      var p = inp.value.trim(); if (!p) { inp.focus(); return; }
+      btn.disabled = true; out.hidden = false; out.textContent = "Pensando…";
+      try { out.textContent = await api.perguntar(p); } catch (x) { out.textContent = x.message; }
+      btn.disabled = false;
+    } });
+    inp.addEventListener("keydown", function (ev) { if (ev.key === "Enter") btn.click(); });
+    c.appendChild(el("div", { style: "display:grid;gap:10px" }, [el("h2", { text: titulo }), el("p", { class: "small muted", style: "margin:0", text: "Responde na hora com os dados da sua conta: conteúdos, relatórios e Instagram." }), el("div", { style: "display:flex;gap:8px;flex-wrap:wrap" }, [inp, btn]), out]));
+  }
+  assistente("as-rel", "Dúvida sobre os números?");
+  assistente("as-ajuda", "Pergunte ao assistente");
+
+  // ---------------------------------------------------------------- materiais e marca
+  var CAT = { guia: "Guia", arquivo: "Arquivo", marca: "Marca" };
+  var segMat = document.getElementById("seg-mat");
+  [["todos", "Todos"], ["guia", "Guias"], ["arquivo", "Arquivos"]].forEach(function (x) {
+    segMat.appendChild(el("button", { type: "button", "data-f": x[0], "aria-pressed": String(x[0] === filtroMat), text: x[1], onclick: function () {
+      filtroMat = x[0]; segMat.querySelectorAll("button").forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.f === filtroMat)); }); renderMat();
+    } }));
+  });
+  function linhaMat(m) {
+    var k = el("span", { class: "k" }, ic(m.categoria === "guia" ? "report" : "file"));
+    if (CR.tipoArquivo(m.arquivo_nome || m.demo_url || "") === "imagem") api.urlMaterial(m, false).then(function (u) { if (u) { k.textContent = ""; k.style.backgroundImage = "url(" + u + ")"; } }).catch(function () {});
+    async function abre(baixar, btn) {
+      btn.disabled = true;
+      try {
+        var u = await api.urlMaterial(m, baixar);
+        if (!u) throw new Error("Arquivo indisponível.");
+        var a = el("a", { href: u, target: "_blank", rel: "noopener", download: baixar ? (m.arquivo_nome || "") : false });
+        document.body.appendChild(a); a.click(); a.remove();
+      } catch (x) { CR.toast(x.message, true); }
+      btn.disabled = false;
+    }
+    return el("div", { class: "mat" }, [k,
+      el("div", { style: "min-width:0" }, [el("div", { class: "tt", text: m.titulo }), el("div", { class: "st", text: [m.descricao, CAT[m.categoria], m.cliente_id ? "" : "Pra todos os clientes", CR.data(m.criado_em)].filter(Boolean).join(" · ") })]),
+      el("div", { style: "display:flex;gap:4px" }, [
+        el("button", { class: "icon-btn", type: "button", "aria-label": "Abrir " + m.titulo, title: "Abrir", onclick: function () { abre(false, this); } }, ic("ext")),
+        m.arquivo_path || m.demo_url || m.arquivo_nome ? el("button", { class: "icon-btn", type: "button", "aria-label": "Baixar " + m.titulo, title: "Baixar", onclick: function () { abre(true, this); } }, ic("down")) : null
+      ])
+    ]);
+  }
+  function renderMat() {
+    var l = document.getElementById("mat-lista"); l.textContent = "";
+    var vis = materiais.filter(function (m) { return m.categoria !== "marca" && (filtroMat === "todos" || m.categoria === filtroMat); });
+    vis.forEach(function (m) { l.appendChild(linhaMat(m)); });
+    document.getElementById("mat-vazio").hidden = vis.length > 0;
+  }
+  function corValida(c) { return /^#[0-9a-f]{3,8}$/i.test(String(c || "").trim()); }
+  function renderMarca() {
+    var m = eu.marca || {}, br = CR.briefingResumo(meusBriefings[0]);
+    var c = document.getElementById("mk-cores"); c.textContent = "";
+    var cores = (m.cores || []).filter(corValida);
+    if (cores.length) {
+      var row = el("div", { class: "sw-row" });
+      cores.forEach(function (h) { row.appendChild(el("button", { class: "sw", type: "button", title: "Copiar " + h, onclick: function () { CR.copiar(h, "Cor " + h + " copiada"); } }, [el("i", { style: "background:" + h }), h.toUpperCase()])); });
+      c.appendChild(row);
+      c.appendChild(el("p", { class: "small muted", style: "margin:8px 0 0", text: "Toque na cor pra copiar o código." }));
+    } else c.appendChild(el("p", { class: "small muted", style: "margin:0", text: br.cores ? "No briefing você disse que gosta de " + br.cores + ". Sua paleta aparece aqui assim que a gente montar." : "Sua paleta aparece aqui assim que a gente montar." }));
+    document.getElementById("mk-fontes").textContent = m.fontes || "As fontes da sua marca aparecem aqui.";
+    var v = document.getElementById("mk-voz"); v.textContent = "";
+    [["Tom de voz", m.tom || br.tom], ["Estilo", br.estilo], ["Palavras que a marca usa", m.palavras || br.palavras], ["O que evitar", m.evitar || br.proibido], ["Observações", m.obs]].forEach(function (x) {
+      if (x[1]) v.appendChild(el("div", {}, [el("dt", { text: x[0] }), el("dd", { text: x[1] })]));
+    });
+    if (!v.children.length) v.appendChild(el("p", { class: "small muted", style: "margin:0", text: "Depois do briefing, o jeito de falar da sua marca aparece aqui." }));
+    var a = document.getElementById("mk-arq"); a.textContent = "";
+    var arqs = materiais.filter(function (x) { return x.categoria === "marca"; });
+    if (!arqs.length) a.appendChild(el("div", { class: "empty", style: "padding:20px" }, [el("span", { text: "Logo, manual da marca e outros arquivos da sua identidade aparecem aqui." })]));
+    arqs.forEach(function (x) { a.appendChild(linhaMat(x)); });
+  }
+
+  // ---------------------------------------------------------------- pagamentos (na conta)
+  function contaPag() {
+    var c = document.getElementById("conta-pag"); c.textContent = "";
+    c.hidden = !cobrancas.length;
+    if (!cobrancas.length) return;
+    c.appendChild(el("h2", { text: "Pagamentos", style: "margin-bottom:10px" }));
+    var hj = CR.iso(hoje), l = el("div", { style: "display:grid;gap:8px" });
+    cobrancas.slice(0, 6).forEach(function (x) {
+      var st = x.status === "aberta" && x.vencimento < hj ? "atrasada" : x.status;
+      l.appendChild(el("div", { style: "display:flex;justify-content:space-between;gap:10px;align-items:center;font-size:14px" }, [
+        el("div", { style: "min-width:0" }, [el("b", { text: x.descricao }), el("div", { class: "small muted", text: (x.status === "paga" ? "Pago em " + CR.data(x.pago_em || x.vencimento) : "Vence " + CR.data(x.vencimento)) })]),
+        el("div", { style: "text-align:right" }, [el("div", { style: "font-weight:700", text: CR.reais(x.valor) }), el("span", { class: "pill " + st, text: { aberta: "Em aberto", paga: "Pago", atrasada: "Em atraso", cancelada: "Cancelado" }[st] })])
+      ]));
+    });
+    c.appendChild(l);
+  }
+
+  // ---------------------------------------------------------------- dúvidas comuns
+  function faq() {
+    var f = document.getElementById("faq"); f.textContent = "";
+    var aj = eu.ajustes_mes || 0;
+    [["Como aprovo um conteúdo?", "Em Conteúdos, toque no conteúdo e em Aprovar. Se quiser mudar alguma coisa, toque em Pedir ajuste e escreva o que mudar."],
+     ["Quantos ajustes eu tenho?", P.grupo ? "Seu plano tem " + aj + (aj === 1 ? " ajuste" : " ajustes") + (P.grupo === "plano" ? " por mês. Neste mês você usou " + usados + "." : ". Você usou " + usados + ".") : "Os ajustes aparecem aqui quando o seu plano estiver ativo."],
+     ["Em quanto tempo sai um ajuste?", "A gente entrega o ajuste em até 24 h."],
+     ["Quem posta os conteúdos?", posta ? "A gente. Depois que você aprova, o conteúdo vai ao ar no dia e horário do calendário, com a legenda." + (eu.instagram ? "" : " Pra isso, conecte seu Instagram em Conta.") : "Você. No dia marcado no calendário, baixe o conteúdo em alta e copie a legenda."],
+     ["Como mando uma ideia de conteúdo?", "Em Ideias, toque em Mandar uma ideia. A gente responde por ali mesmo e, quando virar conteúdo, ele aparece pra você aprovar."],
+     ["Onde ficam os arquivos da minha marca?", "Em Marca ficam suas cores, fontes, o jeito de falar e os arquivos da identidade. Guias e outros arquivos ficam em Materiais."]].forEach(function (x) {
+      f.appendChild(el("details", {}, [el("summary", { text: x[0] }), el("p", { text: x[1] })]));
+    });
+  }
+
+  nav.ir(location.hash.slice(1) || "inicio");
+  carregar();
+})();
+</script>
+</body>
+</html>

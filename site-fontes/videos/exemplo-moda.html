@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Exemplo · loja de roupas (marca fictícia Lis Moda)</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;1,9..144,500;1,9..144,700&family=Inter:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root { --blush: #F4DCD6; --plum: #3B1F2B; --rose: #C76B7E; --cream: #FFF8F4; --gold: #B8893B; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--blush); font-family: Inter, sans-serif; color: var(--plum); }
+  .stage { position: relative; width: 1080px; height: 1920px; overflow: hidden; }
+  .sc { position: absolute; inset: 0; overflow: hidden; visibility: hidden; }
+  .abs { position: absolute; }
+  .serif { font-family: Fraunces, Georgia, serif; font-weight: 500; letter-spacing: -.01em; }
+  .logo { font-family: Inter; font-weight: 800; letter-spacing: .5em; font-size: 34px; }
+  .line { height: 3px; background: currentColor; }
+
+  #s1 { background: var(--blush); }
+  #s1 .logo { left: 0; right: 0; top: 170px; text-align: center; }
+  #s1 .l1 { left: 0; right: 0; top: 620px; text-align: center; font-size: 230px; font-style: italic; line-height: 1; }
+  #s1 .l2 { left: 0; right: 0; top: 850px; text-align: center; font-size: 250px; line-height: 1; }
+  #s1 .ln1 { left: 120px; top: 560px; width: 840px; }
+  #s1 .ln2 { left: 120px; top: 1180px; width: 840px; }
+  #s1 .sub { left: 0; right: 0; top: 1240px; text-align: center; font-weight: 700; font-size: 44px; letter-spacing: .2em; }
+
+  #s2 { background: var(--plum); color: var(--cream); }
+  #s2 .dress { left: 240px; top: 330px; width: 600px; transform-origin: 300px 40px; }
+  #s2 .nm { left: 0; right: 0; top: 1390px; text-align: center; font-size: 120px; font-style: italic; }
+  #s2 .sw { top: 1580px; width: 96px; height: 96px; border-radius: 50%; border: 6px solid var(--cream); }
+  #s2 .cores { left: 0; right: 0; top: 1710px; text-align: center; font-weight: 700; font-size: 40px; letter-spacing: .2em; }
+
+  #s3 { background: var(--cream); }
+  #s3 .ap { left: 90px; top: 520px; font-weight: 700; font-size: 60px; letter-spacing: .12em; text-transform: uppercase; color: var(--rose); }
+  #s3 .pr { left: 70px; top: 600px; font-size: 400px; line-height: 1; white-space: nowrap; }
+  #s3 .pr small { font-size: 150px; margin-right: 20px; }
+  #s3 .ul { left: 90px; top: 1070px; height: 12px; background: var(--gold); border-radius: 9px; }
+  #s3 .chip { left: 90px; top: 1200px; border: 4px solid var(--plum); border-radius: 99px; padding: 22px 44px; font-weight: 800; font-size: 46px; }
+  #s3 .chip2 { top: 1340px; }
+  #s3 .logo { left: 90px; top: 200px; }
+
+  #s4 { background: var(--rose); color: var(--cream); }
+  #s4 .g1 { left: 0; right: 0; top: 600px; text-align: center; font-size: 180px; font-style: italic; line-height: 1.02; }
+  #s4 .btn { left: 50%; top: 1100px; background: var(--plum); color: var(--cream); font-weight: 800; font-size: 56px; padding: 38px 76px; border-radius: 99px; white-space: nowrap; }
+  #s4 .logo { left: 0; right: 0; top: 1640px; text-align: center; }
+</style>
+</head>
+<body>
+<div class="stage">
+  <section class="sc" id="s1">
+    <div class="abs logo" id="a0">LIS MODA</div>
+    <div class="abs line ln1" id="a1"></div>
+    <div class="abs serif l1" id="a2">Nova</div>
+    <div class="abs serif l2" id="a3">coleção</div>
+    <div class="abs line ln2" id="a4"></div>
+    <div class="abs sub" id="a5">PRIMAVERA · VERÃO</div>
+  </section>
+
+  <section class="sc" id="s2">
+    <svg class="abs dress" id="dress" viewBox="0 0 600 1000">
+      <path d="M300 40a34 34 0 1 1 34 34v26" fill="none" stroke="#B8893B" stroke-width="12" stroke-linecap="round"/>
+      <path d="M300 100L90 200h420z" fill="none" stroke="#B8893B" stroke-width="12" stroke-linejoin="round"/>
+      <g id="tecido">
+        <path d="M226 190c10 40 20 70 26 96h96c6-26 16-56 26-96l-30-6c-6 26-26 44-44 44s-38-18-44-44z" fill="currentColor"/>
+        <path d="M252 286h96l18 70H234z" fill="currentColor"/>
+        <path d="M234 352h132c60 170 130 360 170 560-90 40-180 52-236 52s-146-12-236-52c40-200 110-390 170-560z" fill="currentColor"/>
+        <path d="M234 352h132" stroke="#FFF8F4" stroke-width="8" opacity=".6"/>
+        <path d="M300 360c-20 200-40 400-60 590M300 360c20 200 40 400 60 590M300 360c-70 190-150 380-220 540M300 360c70 190 150 380 220 540" stroke="#000" stroke-width="5" opacity=".12" fill="none"/>
+      </g>
+    </svg>
+    <div class="abs serif nm" id="b1">Vestido Lia</div>
+    <div class="abs sw" id="sw1" style="left:342px;background:#C76B7E"></div>
+    <div class="abs sw" id="sw2" style="left:492px;background:#8FA98B"></div>
+    <div class="abs sw" id="sw3" style="left:642px;background:#E3B04B"></div>
+    <div class="abs cores" id="b2">3 CORES</div>
+  </section>
+
+  <section class="sc" id="s3">
+    <div class="abs logo" id="c0">LIS MODA</div>
+    <div class="abs ap" id="c1">a partir de</div>
+    <div class="abs serif pr" id="c2"><small>R$</small>89</div>
+    <div class="abs ul" id="c3"></div>
+    <div class="abs chip" id="c4">tamanhos P ao GG</div>
+    <div class="abs chip chip2" id="c5">entrega na sua casa</div>
+  </section>
+
+  <section class="sc" id="s4">
+    <div class="abs serif g1" id="d1">Garanta<br>o seu</div>
+    <div class="abs btn" id="d2">Chama no direct</div>
+    <div class="abs logo" id="d3">LIS MODA</div>
+  </section>
+</div>
+<script>
+  const DURATION = 15;
+  window.DURATION = DURATION;
+  window.POSTER = 6.2;
+  const $ = id => document.getElementById(id);
+  const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+  const p = (t, a, d) => clamp((t - a) / d);
+  const out3 = x => 1 - Math.pow(1 - x, 3);
+  const io = x => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+  const back = x => { const c = 1.4, c3 = c + 1; return 1 + c3 * Math.pow(x - 1, 3) + c * Math.pow(x - 1, 2); };
+  const set = (el, o, tr) => { el.style.opacity = o; if (tr != null) el.style.transform = tr; };
+  const rise = (el, t, a, d = 0.7, dist = 80) => { const k = out3(p(t, a, d)); set(el, k, `translateY(${(1 - k) * dist}px)`); };
+
+  const CENAS = [['s1', 0, 3.2], ['s2', 3.2, 8.2], ['s3', 8.2, 11.6], ['s4', 11.6, 15]];
+  const CORES = ['#C76B7E', '#8FA98B', '#E3B04B'];
+
+  window.render = function (t) {
+    CENAS.forEach(([id, a, b], i) => {
+      const el = $(id), last = i === CENAS.length - 1;
+      el.style.visibility = (t >= a && (last || t < b + 0.8)) ? 'visible' : 'hidden';
+      el.style.zIndex = i + 1;
+      // entrada em cortina vinda da direita, suave
+      const r = io(p(t, a, 0.8));
+      el.style.clipPath = i === 0 ? 'none' : `inset(0 0 0 ${(1 - r) * 100}%)`;
+    });
+
+    rise($('a0'), t, 0.1, 0.8, 30);
+    $('a1').style.transform = `scaleX(${io(p(t, 0.2, 0.9))})`; $('a1').style.transformOrigin = '0 50%';
+    $('a4').style.transform = `scaleX(${io(p(t, 0.5, 0.9))})`; $('a4').style.transformOrigin = '100% 50%';
+    rise($('a2'), t, 0.35, 0.9, 120);
+    rise($('a3'), t, 0.7, 0.9, 120);
+    rise($('a5'), t, 1.3, 0.8, 30);
+
+    const a = 3.2;
+    const kd = out3(p(t, a + 0.3, 0.9));
+    const ang = Math.sin((t - a) * 2.1) * 4 * kd;
+    set($('dress'), kd, `translateY(${(1 - kd) * -200}px) rotate(${ang}deg)`);
+    // a cor do vestido troca a cada 1,2 s, com as bolinhas de cor acompanhando
+    const fase = Math.max(0, (t - a - 1.4) / 1.2);
+    const idx = Math.min(2, Math.floor(fase));
+    $('tecido').style.color = CORES[t < a + 1.4 ? 0 : idx];
+    $('tecido').style.transition = 'none';
+    ['sw1', 'sw2', 'sw3'].forEach((id, i) => {
+      const k = back(p(t, a + 0.9 + i * 0.15, 0.4));
+      const ativo = (t < a + 1.4 ? 0 : idx) === i;
+      set($(id), k > 0 ? 1 : 0, `scale(${k * (ativo ? 1.25 : 1)})`);
+      $(id).style.borderColor = ativo ? '#FFF8F4' : 'rgba(255,248,244,.25)';
+    });
+    rise($('b1'), t, a + 0.7, 0.8, 50);
+    rise($('b2'), t, a + 1.1, 0.8, 30);
+
+    const c = 8.2;
+    rise($('c0'), t, c + 0.3, 0.6, 20);
+    rise($('c1'), t, c + 0.4, 0.6, 30);
+    const kp = out3(p(t, c + 0.55, 0.8));
+    set($('c2'), kp, `translateY(${(1 - kp) * 90}px)`);
+    $('c3').style.width = (io(p(t, c + 1.1, 0.7)) * 700) + 'px';
+    rise($('c4'), t, c + 1.5, 0.6, 40);
+    rise($('c5'), t, c + 1.75, 0.6, 40);
+
+    const d = 11.6;
+    rise($('d1'), t, d + 0.4, 0.9, 80);
+    const kb = p(t, d + 1.0, 0.5);
+    const pulse = t > d + 1.6 ? 1 + Math.sin((t - d - 1.6) * 5) * 0.03 : 1;
+    set($('d2'), kb > 0 ? 1 : 0, `translateX(-50%) scale(${back(kb) * pulse})`);
+    rise($('d3'), t, d + 1.3, 0.7, 20);
+  };
+  render(0);
+</script>
+</body>
+</html>

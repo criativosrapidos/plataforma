@@ -1,0 +1,8 @@
+{
+  "name": "criativos-estudio",
+  "private": true,
+  "type": "module",
+  "description": "Gera as artes e os vídeos da esteira e manda pro app como entrega.",
+  "scripts": { "estudio": "node estudio.mjs", "exemplo": "node estudio.mjs --exemplo" },
+  "dependencies": { "playwright": "1.56.1" }
+}

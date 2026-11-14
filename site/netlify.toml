@@ -1,0 +1,8 @@
+# Netlify já serve /brief a partir de brief.html. Este arquivo só garante as regras abaixo.
+[build]
+  publish = "."
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=3600"

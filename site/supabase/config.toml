@@ -1,0 +1,20 @@
+# Usado pela linha de comando do Supabase ao publicar a função.
+# A função "instagram" confere o login por conta própria, porque o Instagram chama /callback sem login.
+[functions.instagram]
+verify_jwt = false
+
+# A "trafego" também confere o login sozinha, porque o agendador chama /agendado sem login.
+[functions.trafego]
+verify_jwt = false
+
+# A "agentes" confere o login sozinha (o /briefing é público e o agendador chama sem login).
+[functions.agentes]
+verify_jwt = false
+
+# A "whatsapp" recebe o webhook da Meta (sem login) e confere a assinatura.
+[functions.whatsapp]
+verify_jwt = false
+
+# A "redes" confere o login sozinha (o agendador chama /agendado sem login).
+[functions.redes]
+verify_jwt = false
